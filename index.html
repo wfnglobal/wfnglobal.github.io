@@ -139,8 +139,13 @@ body::before{
 
 .word-feature-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:32px;}
 @media (max-width:760px){ .word-feature-grid{grid-template-columns:1fr;} }
-.x-embed-card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; min-width:0; min-height:260px; display:flex; flex-direction:column;}
-.x-embed-label{font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:12px;}
+.verse-card{position:relative; border-radius:12px; overflow:hidden; min-width:0; min-height:280px; display:flex; flex-direction:column; justify-content:flex-end; padding:22px; isolation:isolate; background-color:var(--ink); background-size:cover; background-position:center; transition:background-image .4s ease;}
+.verse-card::before{content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(0deg, rgba(20,16,10,0.88) 0%, rgba(20,16,10,0.55) 40%, rgba(20,16,10,0.15) 72%, rgba(20,16,10,0.05) 100%);}
+.verse-card-avatar{position:absolute; top:16px; left:16px; width:44px; height:44px; border-radius:50%; overflow:hidden; border:2px solid rgba(251,248,241,0.85); box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+.verse-card-avatar img{width:100%; height:100%; object-fit:cover; display:block;}
+.verse-card-label{font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-light); margin-bottom:10px;}
+.verse-card-text{font-family:var(--font-display); font-style:italic; font-size:1.05rem; color:#FBF8F1; line-height:1.5; margin-bottom:8px;}
+.verse-card-ref{font-size:11px; color:rgba(251,248,241,0.82); font-weight:600; letter-spacing:0.04em;}
 .featured-article-card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:26px 22px; min-width:0; display:flex; flex-direction:column; justify-content:center;}
 .featured-article-card .word-kicker{margin-bottom:10px;}
 .featured-article-card h3{font-size:1.25rem; color:var(--ink); margin-bottom:10px; line-height:1.3;}
@@ -364,13 +369,13 @@ body::before{
       </div>
     </div>
     <div class="word-feature-grid">
-      <div class="x-embed-card" style="align-items:center; justify-content:center; text-align:center; gap:14px;">
-        <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" fill="var(--ink)"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-        <div>
-          <div class="x-embed-label" style="margin-bottom:6px;">Follow Us on X</div>
-          <p style="font-size:13px; color:var(--ink-2); line-height:1.6; margin-bottom:14px;">New scripture, prayer, and teaching posted three times a day — @wfnglobal.</p>
+      <div class="verse-card" id="verseCard">
+        <div class="verse-card-avatar">
+          <img src="assets/oladapo.jpg" alt="Oladapo, Word and Faith Network">
         </div>
-        <a class="btn btn-gold btn-sm" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow @wfnglobal →</a>
+        <div class="verse-card-label">Verse of the Day</div>
+        <div class="verse-card-text" id="verseText">"But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles."</div>
+        <div class="verse-card-ref" id="verseRef">Isaiah 40:31 KJV</div>
       </div>
       <div class="featured-article-card">
         <div class="word-kicker">Featured Bible Study</div>
@@ -510,5 +515,43 @@ body::before{
       done(false);
     }
   });
+})();
+</script>
+
+<script>
+(function(){
+  var card = document.getElementById('verseCard');
+  if (!card) return;
+  var textEl = document.getElementById('verseText');
+  var refEl = document.getElementById('verseRef');
+
+  var verses = [
+    {
+      text: '"But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary."',
+      ref: 'Isaiah 40:31 KJV',
+      img: 'https://images.unsplash.com/photo-1598810229859-a5a1d6f75088?fm=jpg&q=70&w=1400&auto=format&fit=crop'
+    },
+    {
+      text: '"The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters."',
+      ref: 'Psalm 23:1-2 KJV',
+      img: 'https://images.unsplash.com/photo-1619523931399-4613ca7e82fb?fm=jpg&q=70&w=1400&auto=format&fit=crop'
+    },
+    {
+      text: '"For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end."',
+      ref: 'Jeremiah 29:11 KJV',
+      img: 'https://images.unsplash.com/photo-1738480665197-78ae97c71b27?fm=jpg&q=70&w=1400&auto=format&fit=crop'
+    }
+  ];
+
+  var dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  var pick = verses[dayOfYear % verses.length];
+
+  var preload = new Image();
+  preload.onload = function(){ card.style.backgroundImage = "url('" + pick.img + "')"; };
+  preload.onerror = function(){ /* keep solid fallback background */ };
+  preload.src = pick.img;
+
+  textEl.textContent = pick.text;
+  refEl.textContent = pick.ref;
 })();
 </script>

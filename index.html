@@ -137,6 +137,15 @@ body::before{
 .word-cta{text-align:center;}
 .word-cta-note{font-size:12.5px; color:var(--ink-3); margin-top:12px;}
 
+.word-feature-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:32px;}
+@media (max-width:760px){ .word-feature-grid{grid-template-columns:1fr;} }
+.x-embed-card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; min-width:0; min-height:260px; display:flex; flex-direction:column;}
+.x-embed-label{font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:12px;}
+.featured-article-card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:26px 22px; min-width:0; display:flex; flex-direction:column; justify-content:center;}
+.featured-article-card .word-kicker{margin-bottom:10px;}
+.featured-article-card h3{font-size:1.25rem; color:var(--ink); margin-bottom:10px; line-height:1.3;}
+.featured-article-card p{font-size:13px; color:var(--ink-2); line-height:1.65; margin-bottom:16px;}
+
 /* ── prayer / community cards ────────────────────────────── */
 .prayer-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:28px;}
 @media (max-width:860px){ .prayer-grid{grid-template-columns:1fr;} }
@@ -148,6 +157,11 @@ body::before{
 .prayer-meta{font-size:12.5px; color:var(--ink-3); font-weight:500; display:flex; align-items:flex-start; gap:7px;}
 .prayer-meta svg{width:14px; height:14px; flex-shrink:0; margin-top:2px;}
 .prayer-note{font-size:11px; color:var(--ink-3); font-style:italic; line-height:1.4;}
+
+.declaration-box{background:var(--surface-3); border:1px solid var(--border); border-radius:14px; padding:28px 26px; text-align:center; margin-bottom:28px;}
+.declaration-label{font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:14px;}
+.declaration-text{font-family:var(--font-display); font-style:italic; font-size:1.15rem; color:var(--ink); line-height:1.6; max-width:560px; margin:0 auto 10px;}
+.declaration-ref{font-size:12px; font-weight:600; color:var(--ink-3);}
 
 .contact-strip{
   background:var(--surface-2); border:1px solid var(--border); border-radius:12px;
@@ -271,6 +285,7 @@ body::before{
         <p>Word and Faith Network is a gospel ministry dedicated to one thing: giving believers around the world a daily encounter with the Word of God.</p>
         <p>We believe faith is not wishful thinking — it is a lifestyle rooted in scripture, sustained by prayer, and proven by God's track record. That is why everything we publish is anchored in the Bible, written for people who are serious about their walk with Christ.</p>
         <p>We have no building and no address — and we don't need one. Wherever two or three gather in His name, in person or across a screen, that is enough. WFN exists to make that gathering possible, every day, for anyone, anywhere.</p>
+        <p>Our core belief is simple: the Word produces faith, and faith prays. Scripture is not background noise to our ministry — it is the entire ministry. Every prayer we write and every teaching we share traces back to something God has already said. <a href="articles/the-word-faith-and-prayer.html" style="color:var(--gold); font-weight:600; text-decoration:none; border-bottom:1px solid var(--gold-light);">Read our full statement of belief on the Word, Faith, and Prayer →</a></p>
       </div>
       <div class="about-art">
         <svg viewBox="0 0 200 200" aria-hidden="true">
@@ -341,6 +356,19 @@ body::before{
         <div class="word-note">Were — past tense. The work is already done. The question is whether we receive what's already provided.</div>
       </div>
     </div>
+    <div class="word-feature-grid">
+      <div class="x-embed-card">
+        <div class="x-embed-label">Live from X · @wfnglobal</div>
+        <a class="twitter-timeline" data-height="320" data-theme="light" data-chrome="noheader nofooter noborders transparent" href="https://twitter.com/wfnglobal?ref_src=twsrc%5Etfw">Tweets by wfnglobal</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+      <div class="featured-article-card">
+        <div class="word-kicker">Featured Bible Study</div>
+        <h3>The Word, Faith, and Prayer</h3>
+        <p>Our founding teaching — why Word and Faith Network exists, and what we believe about scripture, faith, and prayer working together.</p>
+        <a class="btn btn-outline btn-sm" href="articles/the-word-faith-and-prayer.html" style="align-self:flex-start;">Read the Full Study →</a>
+      </div>
+    </div>
     <div class="word-cta">
       <a class="btn btn-gold" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow @wfnglobal on X →</a>
       <p class="word-cta-note">New scripture, prayer, and teaching posted three times a day.</p>
@@ -354,6 +382,11 @@ body::before{
       <p class="section-eyebrow">Prayer &amp; Community</p>
       <h2 class="section-title">Pray With Us, Wherever You Are</h2>
       <p class="section-sub">You were never meant to pray alone. Join believers from every nation declaring the Word together — live, every week.</p>
+    </div>
+    <div class="declaration-box">
+      <div class="declaration-label">Today's Declaration</div>
+      <div class="declaration-text">"Father, I thank You that Your word never fails. I declare that faith is rising in me right now as I hear it — faith for my family, faith for my health, faith for my future. Whatever I am facing today, I speak Your promise over it, and I believe it is already done in Jesus' name."</div>
+      <div class="declaration-ref">Romans 10:17 · Mark 11:24</div>
     </div>
     <div class="prayer-grid">
       <div class="prayer-card">

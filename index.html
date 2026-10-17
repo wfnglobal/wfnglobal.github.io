@@ -69,6 +69,31 @@ body::before{
 .main-nav a{font-size:13px; font-weight:500; color:var(--ink-2); text-decoration:none; letter-spacing:0.01em; white-space:nowrap;}
 .main-nav a:hover{color:var(--gold);}
 @media (max-width:640px){ .main-nav .nav-links{display:none;} }
+
+/* ── mobile nav toggle + drawer ──────────────────────────── */
+.nav-toggle{display:none; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px; border:1px solid var(--border); background:var(--surface); cursor:pointer; flex-shrink:0;}
+.nav-toggle svg{width:19px; height:19px; color:var(--ink);}
+@media (max-width:640px){ .nav-toggle{display:inline-flex;} }
+
+.nav-drawer{position:fixed; inset:0; z-index:200; visibility:hidden; opacity:0; transition:opacity .2s ease, visibility .2s;}
+.nav-drawer.is-open{visibility:visible; opacity:1;}
+.nav-drawer-scrim{position:absolute; inset:0; background:rgba(35,31,24,0.45);}
+.nav-drawer-panel{
+  position:absolute; top:0; right:0; left:0; max-width:420px; margin-left:auto;
+  background:var(--bg); height:100%; padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);
+  box-shadow:-8px 0 30px rgba(0,0,0,0.18); transform:translateX(12px); transition:transform .22s ease;
+  display:flex; flex-direction:column;
+}
+.nav-drawer.is-open .nav-drawer-panel{transform:translateX(0);}
+.nav-drawer-top{display:flex; align-items:center; justify-content:space-between; padding:16px max(20px, env(safe-area-inset-right,0px)) 16px 20px; border-bottom:1px solid var(--border);}
+.nav-drawer-top .logo-mark svg{width:24px; height:24px;}
+.nav-drawer-close{width:36px; height:36px; border-radius:50%; border:1px solid var(--border); background:var(--surface); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;}
+.nav-drawer-close svg{width:16px; height:16px; color:var(--ink);}
+.nav-drawer-links{display:flex; flex-direction:column; padding:10px 20px; overflow-y:auto; flex:1;}
+.nav-drawer-links a{display:block; padding:16px 2px; font-family:var(--font-display); font-size:1.3rem; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--border);}
+.nav-drawer-links a:active{color:var(--gold);}
+.nav-drawer-cta{padding:16px 20px calc(20px + env(safe-area-inset-bottom,0px));}
+.nav-drawer-cta .btn{width:100%; justify-content:center;}
 .btn{
   display:inline-flex; align-items:center; gap:7px; border-radius:100px;
   font-family:var(--font-body); font-size:13.5px; font-weight:600; letter-spacing:0.01em;
@@ -239,9 +264,42 @@ body::before{
         <a href="#prayer">Prayer</a>
       </span>
       <a class="btn btn-gold btn-sm" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </nav>
   </div>
 </header>
+
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-scrim" id="navDrawerScrim"></div>
+  <div class="nav-drawer-panel">
+    <div class="nav-drawer-top">
+      <div class="logo-mark">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="20" fill="none" stroke="#9C7A34" stroke-width="1.3"/>
+          <path d="M24 17 C19.5 14 13.5 14 9.5 16 L9.5 29 C13.5 27 19.5 27 24 30 C28.5 27 34.5 27 38.5 29 L38.5 16 C34.5 14 28.5 14 24 17 Z" fill="none" stroke="#9C7A34" stroke-width="1.3" stroke-linejoin="round"/>
+          <line x1="24" y1="17" x2="24" y2="30" stroke="#9C7A34" stroke-width="1.1"/>
+          <path d="M24 5 C21.5 9 20.5 11.5 22 14 C22.8 15.3 25.2 15.3 26 14 C27.5 11.5 26.5 9 24 5 Z" fill="#C9A968" stroke="#9C7A34" stroke-width="1"/>
+        </svg>
+      </div>
+      <button class="nav-drawer-close" id="navDrawerClose" type="button" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </button>
+    </div>
+    <nav class="nav-drawer-links">
+      <a href="#" data-drawer-link>Home</a>
+      <a href="#about" data-drawer-link>About</a>
+      <a href="#word" data-drawer-link>The Word</a>
+      <a href="articles/" data-drawer-link>Sermons</a>
+      <a href="#watch" data-drawer-link>Watch</a>
+      <a href="#prayer" data-drawer-link>Prayer</a>
+    </nav>
+    <div class="nav-drawer-cta">
+      <a class="btn btn-gold" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow @wfnglobal on X →</a>
+    </div>
+  </div>
+</div>
 
 <section class="hero">
   <div class="hero-illustration-wrap gutter">
@@ -593,6 +651,36 @@ body::before{
   toggle();
   btn.addEventListener('click', function(){
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var toggle = document.getElementById('navToggle');
+  var drawer = document.getElementById('navDrawer');
+  if (!toggle || !drawer) return;
+  var closeBtn = document.getElementById('navDrawerClose');
+  var scrim = document.getElementById('navDrawerScrim');
+  var links = drawer.querySelectorAll('[data-drawer-link]');
+
+  function open(){
+    drawer.classList.add('is-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function close(){
+    drawer.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.documentElement.style.overflow = '';
+  }
+
+  toggle.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  scrim.addEventListener('click', close);
+  links.forEach(function(a){ a.addEventListener('click', close); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') close();
   });
 })();
 </script>

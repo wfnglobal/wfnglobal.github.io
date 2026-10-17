@@ -204,6 +204,19 @@ body::before{
 .footer-links a{font-size:12.5px; color:var(--ink-2); text-decoration:none; font-weight:500;}
 .footer-links a:hover{color:var(--gold);}
 .footer-copy{font-size:11.5px; color:var(--ink-3);}
+
+/* ── back to top ──────────────────────────────────────────── */
+.back-to-top{
+  position:fixed; right:max(18px, env(safe-area-inset-right,0px)); bottom:max(18px, env(safe-area-inset-bottom,0px));
+  z-index:90; width:46px; height:46px; border-radius:50%; background:var(--gold); color:#FFFDF8;
+  border:1px solid rgba(255,253,248,0.25); box-shadow:0 4px 14px var(--shadow); cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; visibility:hidden; transform:translateY(8px);
+  transition:opacity .22s ease, transform .22s ease, visibility .22s, background .15s;
+}
+.back-to-top.is-visible{opacity:1; visibility:visible; transform:translateY(0);}
+.back-to-top:hover{background:#8A6A2C;}
+.back-to-top svg{width:19px; height:19px;}
 </style>
 
 <header class="site-header">
@@ -476,6 +489,10 @@ body::before{
   </div>
 </div>
 
+<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
 <footer class="site-footer">
   <div class="footer-inner gutter">
     <div class="footer-verse">"For the word of God is quick, and powerful, and sharper than any twoedged sword…" — Hebrews 4:12</div>
@@ -558,5 +575,21 @@ body::before{
 
   textEl.textContent = pick.text;
   refEl.textContent = pick.ref;
+})();
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById('backToTop');
+  if (!btn) return;
+  var threshold = 480;
+  function toggle(){
+    btn.classList.toggle('is-visible', window.scrollY > threshold);
+  }
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+  btn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 })();
 </script>

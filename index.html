@@ -173,7 +173,7 @@ body::before{
 /* ── watch / youtube ──────────────────────────────────────── */
 .watch-frame-wrap{position:relative; width:100%; max-width:720px; margin:0 auto 24px; border-radius:14px; overflow:hidden; border:1px solid var(--border); box-shadow:0 2px 10px var(--shadow); background:var(--surface);}
 .watch-frame-ratio{position:relative; width:100%; padding-top:56.25%;}
-.watch-frame-ratio iframe{position:absolute; inset:0; width:100%; height:100%; border:0;}
+.watch-frame-ratio iframe, .watch-frame-ratio video{position:absolute; inset:0; width:100%; height:100%; border:0; background:#000;}
 .watch-cta{text-align:center;}
 
 /* ── prayer / community cards ────────────────────────────── */
@@ -444,6 +444,15 @@ body::before{
       <p class="section-eyebrow">Watch &amp; Grow</p>
       <h2 class="section-title">The Word, Faith, and Prayer — On Video</h2>
       <p class="section-sub">Teachings, declarations, and prayer sessions from our YouTube channel.</p>
+    </div>
+    <div class="watch-frame-wrap" style="margin-bottom:14px;">
+      <span class="prayer-badge" style="margin-bottom:10px; display:inline-block;">New</span>
+      <div class="watch-frame-ratio">
+        <video controls preload="metadata" poster="assets/video/word-faith-and-prayer-poster.jpg" playsinline>
+          <source src="assets/video/word-faith-and-prayer.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p class="word-note" style="margin-top:12px; text-align:center;">The Word, Faith, and Prayer — our founding teaching, now on video.</p>
     </div>
     <div class="watch-frame-wrap">
       <div class="watch-frame-ratio">

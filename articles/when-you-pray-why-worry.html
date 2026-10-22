@@ -1,0 +1,134 @@
+<title>When You Pray, Why Do You Still Worry?</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap">
+
+<style>
+:root{
+  --bg:#FBF8F1; --surface:#FFFFFF; --surface-2:#F4EEE0; --surface-3:#EEE5D2;
+  --ink:#231F18; --ink-2:#564E3E; --ink-3:#8C8370;
+  --gold:#9C7A34; --gold-light:#C9A968; --gold-wash:#E9D9AE; --blue:#5E7C94;
+  --border:rgba(35,31,24,0.11); --shadow:rgba(80,64,24,0.09);
+  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:'Inter', -apple-system, system-ui, sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box; margin:0;}
+html,body{background:var(--bg);}
+body{color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+img{max-width:100%;} [hidden]{display:none!important;} a{color:inherit;}
+h1,h2,h3{font-family:var(--font-display); text-wrap:balance; font-weight:600;}
+.gutter{padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px));}
+
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:101; background:rgba(251,248,241,0.92);}
+.site-header{position:sticky; top:env(safe-area-inset-top,0px); z-index:100; background:rgba(251,248,241,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--border);}
+.header-inner.gutter{max-width:760px; margin:0 auto; padding-block:14px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+.logo-mark{display:flex; align-items:center; gap:9px; min-width:0;}
+.logo-mark svg{width:24px; height:24px; flex-shrink:0;}
+.logo-text{font-family:var(--font-display); font-size:1rem; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.logo-text em{color:var(--gold); font-style:normal;}
+.back-link{font-size:13px; font-weight:600; color:var(--gold); text-decoration:none; display:flex; align-items:center; gap:6px; white-space:nowrap;}
+
+.article-wrap.gutter{max-width:680px; margin:0 auto; padding-block:48px 72px;}
+.kicker{font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; text-align:center;}
+.article-title{font-size:clamp(2rem,6vw,2.7rem); line-height:1.15; text-align:center; margin-bottom:18px;}
+.article-sub{font-size:16px; color:var(--ink-2); text-align:center; max-width:520px; margin:0 auto 28px; line-height:1.65;}
+.article-meta{display:flex; justify-content:center; gap:14px; font-size:12.5px; color:var(--ink-3); margin-bottom:36px; font-weight:500;}
+.article-meta span{display:flex; align-items:center; gap:5px;}
+
+.scripture{background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--gold); border-radius:0 10px 10px 0; padding:20px 24px; margin:0 0 40px; text-align:center;}
+.scripture-text{font-family:var(--font-display); font-size:1.2rem; font-style:italic; color:var(--ink); line-height:1.55; margin-bottom:8px;}
+.scripture-ref{font-size:11.5px; color:var(--gold); font-weight:700; letter-spacing:0.1em; text-transform:uppercase;}
+
+.article-body p{color:var(--ink-2); font-size:16.5px; line-height:1.85; margin-bottom:22px;}
+.article-body h2{font-size:1.6rem; color:var(--ink); margin:44px 0 18px; padding-top:28px; border-top:1px solid var(--border);}
+.article-body h2:first-of-type{border-top:none; padding-top:0; margin-top:8px;}
+.pull-verse{font-family:var(--font-display); font-style:italic; font-size:1.15rem; color:var(--ink); background:var(--surface-2); border-radius:10px; padding:18px 22px; margin:24px 0; line-height:1.55;}
+.pull-verse cite{display:block; font-family:var(--font-body); font-style:normal; font-size:11.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--gold); margin-top:10px;}
+
+.closing-card{background:var(--surface-3); border:1px solid var(--border); border-radius:14px; padding:30px 26px; text-align:center; margin-top:48px;}
+.closing-card h3{font-size:1.3rem; margin-bottom:12px;}
+.closing-card p{color:var(--ink-2); font-size:14.5px; margin-bottom:22px; line-height:1.65;}
+.btn{display:inline-flex; align-items:center; gap:7px; border-radius:100px; font-family:var(--font-body); font-size:13.5px; font-weight:600; padding:10px 22px; text-decoration:none; background:var(--gold); color:#FFFDF8;}
+
+.site-footer{padding-block:40px; border-top:1px solid var(--border);}
+.footer-inner.gutter{max-width:760px; margin:0 auto; text-align:center;}
+.footer-links{display:flex; justify-content:center; gap:20px; margin-bottom:18px; flex-wrap:wrap;}
+.footer-links a{font-size:12.5px; color:var(--ink-2); text-decoration:none; font-weight:500;}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{font-size:11.5px; color:var(--ink-3);}
+</style>
+
+<header class="site-header">
+  <div class="header-inner gutter">
+    <div class="logo-mark">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="navLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
+        </linearGradient></defs>
+        <circle cx="24" cy="24" r="21.5" fill="none" stroke="#9C7A34" stroke-width="0.9"/>
+        <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#navLogoGrad)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
+      </svg>
+      <span class="logo-text">Word <em>&amp;</em> Faith Network</span>
+    </div>
+    <a class="back-link" href="/">&larr; Home</a>
+  </div>
+</header>
+
+<main class="article-wrap gutter">
+  <p class="kicker">Today's Sermon &middot; Daily Word</p>
+  <h1 class="article-title">When You Pray, Why Do You Still Worry?</h1>
+  <p class="article-sub">Prayer and anxiety cannot occupy the same heart for long. One of them has to go — and God tells us which.</p>
+  <div class="article-meta">
+    <span>Word and Faith Network</span>
+    <span>&middot;</span>
+    <span>Philippians 4</span>
+  </div>
+
+  <div class="scripture">
+    <div class="scripture-text">"Be anxious for nothing, but in everything by prayer and supplication, with thanksgiving, let your requests be made known to God; and the peace of God, which surpasses all understanding, will guard your hearts and minds through Christ Jesus."</div>
+    <div class="scripture-ref">Philippians 4:6&ndash;7</div>
+  </div>
+
+  <div class="article-body">
+    <p>It is a fair question, and an honest one: if prayer really works, why do so many of us pray and then keep carrying the weight anyway? We ask God about the diagnosis, the bill, the wayward child, the job &mdash; and then we lie awake running the same worry in circles, as if we never prayed at all. Paul's words to the Philippians do not shame us for this. They correct it, and they show us exactly where the gap is.</p>
+    <p>Notice the command comes first: "Be anxious for nothing." Not "be anxious for less," not "manage your anxiety better." Paul, writing this from a prison cell, is not offering an abstract ideal he never had to live out himself. He is describing a real exchange he had made &mdash; and inviting us to make the same one.</p>
+
+    <h2>Prayer Is Not a Request Line. It's an Exchange.</h2>
+    <p>Look closely at the structure of the verse: "in everything by prayer and supplication, with thanksgiving, let your requests be made known to God." Prayer here is not a form you fill out and walk away from. It is a transfer &mdash; you hand God the burden, and thanksgiving is what proves your hands are actually open. It is hard to thank God for His faithfulness while still gripping the thing you claim to have given Him.</p>
+    <div class="pull-verse">"Casting all your care upon him; for he careth for you."<cite>1 Peter 5:7, KJV</cite></div>
+    <p>This is the piece many of us skip. We ask, but we do not cast. We say the words "I give this to You, Lord" and then pick the worry right back up five minutes later, turning it over and over, as if carrying it ourselves were somehow more responsible than trusting God with it. Peter's word "casting" is deliberate &mdash; it describes a decisive throw, not a cautious loan you plan to take back.</p>
+
+    <h2>The Peace That Doesn't Make Sense</h2>
+    <p>Paul promises something specific: not that the circumstance will necessarily change first, but that "the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus." This peace is not the relief that comes <em>after</em> the problem is solved. It is a guard that is posted <em>before</em> the problem is solved &mdash; peace that doesn't make logical sense given what you're still facing.</p>
+    <p>That is exactly why it is called a peace that "passeth all understanding." Human understanding looks at an unresolved crisis and expects worry to be the appropriate response. God's peace overrides that expectation. It is not denial. It is not pretending the situation isn't real. It is a supernatural calm that stands guard over your heart and your mind &mdash; two places anxiety usually attacks first &mdash; because the matter has genuinely been placed in more capable hands than yours.</p>
+
+    <h2>Why Worry Still Creeps Back</h2>
+    <p>If you have prayed and still feel the weight returning, you are not disqualified from this promise &mdash; you are simply in the ongoing practice of it. Casting a care is rarely a one-time event; anxious thoughts tend to come back and ask to be picked up again. The discipline is not praying once and never feeling the pull of worry again. The discipline is recognizing the pull, and returning it to God again, as many times as it takes.</p>
+    <div class="pull-verse">"What time I am afraid, I will trust in thee."<cite>Psalm 56:3, KJV</cite></div>
+    <p>David does not claim he never felt fear. He tells us what he did with it the moment he felt it: he trusted. That is the pattern Philippians 4 is teaching &mdash; not the absence of anxious moments, but the habit of meeting every one of them with prayer, thanksgiving, and a deliberate release, until peace becomes the thing standing guard instead of worry.</p>
+
+    <h2>The Word for Today</h2>
+    <p>If you prayed about it and you're still carrying it, go back to God &mdash; not because the first prayer failed, but because surrender is a practice, not a single transaction. Tell Him again. Thank Him again, even before you see the answer. And let the peace that doesn't make sense to anyone watching you stand guard over your heart today.</p>
+  </div>
+
+  <div class="closing-card">
+    <h3>Stand on This With Us</h3>
+    <p>Receive the Word, pray with us, and grow in faith &mdash; every day, on X.</p>
+    <a class="btn" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow @wfnglobal &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner gutter">
+    <div class="footer-links">
+      <a href="/#about">About</a>
+      <a href="/#word">The Word</a>
+      <a href="/#prayer">Prayer</a>
+      <a href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Word and Faith Network &middot; wfnglobal.org</div>
+  </div>
+</footer>

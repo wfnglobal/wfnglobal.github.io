@@ -1,0 +1,57 @@
+<svg viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="covTitle covDesc">
+  <title id="covTitle">Ask Boldly — Word and Faith Network</title>
+  <desc id="covDesc">Book cover: deep ink background with radiating gold arcs, the title Ask Boldly in serif type, and the Word and Faith Network mark.</desc>
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2A2217"/>
+      <stop offset="55%" stop-color="#1B1611"/>
+      <stop offset="100%" stop-color="#120E0A"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="34%" r="55%">
+      <stop offset="0%" stop-color="#C9A968" stop-opacity="0.35"/>
+      <stop offset="55%" stop-color="#C9A968" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#C9A968" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F0DFAE"/>
+      <stop offset="100%" stop-color="#C9A968"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="900" fill="url(#bgGrad)"/>
+  <rect width="600" height="900" fill="url(#glow)"/>
+
+  <!-- radiating arcs -->
+  <g stroke="#C9A968" fill="none" opacity="0.5">
+    <circle cx="300" cy="300" r="90" stroke-width="1"/>
+    <circle cx="300" cy="300" r="140" stroke-width="1" opacity="0.75"/>
+    <circle cx="300" cy="300" r="190" stroke-width="1" opacity="0.55"/>
+    <circle cx="300" cy="300" r="240" stroke-width="1" opacity="0.35"/>
+    <circle cx="300" cy="300" r="290" stroke-width="1" opacity="0.18"/>
+  </g>
+  <circle cx="300" cy="300" r="5" fill="#F0DFAE"/>
+
+  <!-- frame -->
+  <rect x="34" y="34" width="532" height="832" fill="none" stroke="#C9A968" stroke-width="1" opacity="0.5"/>
+
+  <!-- top mark: dove/flame echo -->
+  <g transform="translate(300,138)" opacity="0.92">
+    <path d="M0 -17 C -17.5 -24 -29 -24 -37 -20 L -37 10 C -29 6 -17.5 6 0 14 C 17.5 6 29 6 37 10 L 37 -20 C 29 -24 17.5 -24 0 -17 Z" fill="none" stroke="#E9D9AE" stroke-width="1.4" stroke-linejoin="round"/>
+    <line x1="0" y1="-17" x2="0" y2="14" stroke="#E9D9AE" stroke-width="1.1"/>
+    <path d="M0 -44 C -4.5 -37 -6 -31.5 -3 -27 C -1 -24 4 -24 6 -27 C 9 -31.5 7.5 -37 0 -44 Z" fill="#C9A968" stroke="#E9D9AE" stroke-width="0.8"/>
+  </g>
+
+  <!-- title -->
+  <text x="300" y="470" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="88" font-weight="600" fill="url(#goldText)" letter-spacing="2">ASK</text>
+  <text x="300" y="560" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="88" font-weight="600" fill="url(#goldText)" letter-spacing="2">BOLDLY</text>
+
+  <line x1="220" y1="600" x2="380" y2="600" stroke="#C9A968" stroke-width="1" opacity="0.7"/>
+
+  <!-- subtitle -->
+  <text x="300" y="636" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="21" fill="#D8C79C">Why Some Prayers Move Heaven</text>
+  <text x="300" y="665" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="21" fill="#D8C79C">and Others Don't</text>
+
+  <!-- footer mark -->
+  <text x="300" y="800" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13" font-weight="700" letter-spacing="3.5" fill="#C9A968">WORD &amp; FAITH NETWORK</text>
+  <text x="300" y="822" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="10.5" letter-spacing="2" fill="#8C8370">BOOK ONE &#183; THE LIBRARY</text>
+</svg>

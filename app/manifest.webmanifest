@@ -1,0 +1,18 @@
+{
+  "name": "Word and Faith Network",
+  "short_name": "WFN",
+  "description": "Daily scripture, sermons, and prayer from Word and Faith Network — with the full King James Bible, available offline.",
+  "start_url": "/app/",
+  "scope": "/",
+  "id": "/app/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FBF8F1",
+  "theme_color": "#1D1810",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "categories": ["lifestyle", "education", "books"]
+}

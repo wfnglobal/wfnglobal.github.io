@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Word and Faith Network</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -259,6 +260,7 @@ body::before{
         <a href="library/">Library</a>
         <a href="#watch">Watch</a>
         <a href="#prayer">Prayer</a>
+        <a href="app/">Get the App</a>
       </span>
       <a class="btn btn-gold btn-sm" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
       <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
@@ -274,10 +276,12 @@ body::before{
     <div class="nav-drawer-top">
       <div class="logo-mark">
         <svg viewBox="0 0 48 48" aria-hidden="true">
-          <circle cx="24" cy="24" r="20" fill="none" stroke="#9C7A34" stroke-width="1.3"/>
-          <path d="M24 17 C19.5 14 13.5 14 9.5 16 L9.5 29 C13.5 27 19.5 27 24 30 C28.5 27 34.5 27 38.5 29 L38.5 16 C34.5 14 28.5 14 24 17 Z" fill="none" stroke="#9C7A34" stroke-width="1.3" stroke-linejoin="round"/>
-          <line x1="24" y1="17" x2="24" y2="30" stroke="#9C7A34" stroke-width="1.1"/>
-          <path d="M24 5 C21.5 9 20.5 11.5 22 14 C22.8 15.3 25.2 15.3 26 14 C27.5 11.5 26.5 9 24 5 Z" fill="#C9A968" stroke="#9C7A34" stroke-width="1"/>
+          <defs><linearGradient id="navDrawerLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
+          </linearGradient></defs>
+          <circle cx="24" cy="24" r="21.5" fill="none" stroke="#9C7A34" stroke-width="0.9"/>
+          <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#navDrawerLogoGrad)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
         </svg>
       </div>
       <button class="nav-drawer-close" id="navDrawerClose" type="button" aria-label="Close menu">
@@ -292,6 +296,7 @@ body::before{
       <a href="library/" data-drawer-link>Library</a>
       <a href="#watch" data-drawer-link>Watch</a>
       <a href="#prayer" data-drawer-link>Prayer</a>
+      <a href="app/" data-drawer-link>Get the App</a>
     </nav>
     <div class="nav-drawer-cta">
       <a class="btn btn-gold" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow @wfnglobal on X →</a>
@@ -461,6 +466,30 @@ body::before{
   </div>
 </section>
 
+<section class="section" id="app-promo" style="background:var(--surface-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="section-inner gutter">
+    <div class="section-head">
+      <p class="section-eyebrow">New</p>
+      <h2 class="section-title">Word &amp; Faith, In Your Pocket</h2>
+      <p class="section-sub">Install the WFN app — daily sermons, prayer, and the complete King James Bible, readable offline, anywhere.</p>
+    </div>
+    <div style="max-width:560px; margin:0 auto; background:linear-gradient(145deg,#332B1C,#1D1810 60%,#100C08); border-radius:18px; padding:36px 28px; text-align:center; color:#fff;">
+      <svg viewBox="0 0 48 48" aria-hidden="true" style="width:44px; height:44px; margin:0 auto 18px;">
+        <defs><linearGradient id="appPromoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#F6E8BE"/><stop offset="100%" stop-color="#C9A968"/>
+        </linearGradient></defs>
+        <circle cx="24" cy="24" r="21.5" fill="none" stroke="#C9A968" stroke-width="1"/>
+        <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#appPromoGrad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#F6E8BE"/>
+      </svg>
+      <p style="font-family:var(--font-display); font-size:1.3rem; margin-bottom:10px;">The full Bible. Even offline.</p>
+      <p style="font-size:14px; color:var(--gold-wash); line-height:1.7; max-width:420px; margin:0 auto 26px;">Works on iPhone and Android. Install it once from your browser — no app store needed — and every book, chapter, and verse stays with you, signal or not.</p>
+      <a class="btn btn-gold" href="app/">Open the App →</a>
+      <p style="font-size:12px; color:#9C8A5E; margin-top:16px;">iPhone: open in Safari, tap Share, then "Add to Home Screen." &nbsp;·&nbsp; Android: open in Chrome, tap "Install app."</p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="prayer">
   <div class="section-inner gutter">
     <div class="section-head">
@@ -542,10 +571,11 @@ body::before{
       <a href="library/">Library</a>
       <a href="#watch">Watch</a>
       <a href="#prayer">Prayer</a>
+      <a href="app/">Get the App</a>
       <a href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
       <a href="https://www.youtube.com/@WordandFaithNetwork-l2x" target="_blank" rel="noopener">YouTube</a>
     </div>
-    <div class="footer-copy">Word and Faith Network · wfnglobal.org</div>
+    <div class="footer-copy">&copy; 2026 Word and Faith Network · wfnglobal.org</div>
   </div>
 </footer>
 

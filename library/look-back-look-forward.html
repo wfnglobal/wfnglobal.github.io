@@ -1,0 +1,435 @@
+<title>Look Back, Look Forward — The Library</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap">
+
+<style>
+:root{
+  --bg:#FBF8F1; --surface:#FFFFFF; --surface-2:#F4EEE0; --surface-3:#EEE5D2;
+  --ink:#231F18; --ink-2:#564E3E; --ink-3:#8C8370;
+  --gold:#9C7A34; --gold-light:#C9A968; --gold-wash:#E9D9AE; --blue:#5E7C94;
+  --border:rgba(35,31,24,0.11); --shadow:rgba(80,64,24,0.09);
+  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:'Inter', -apple-system, system-ui, sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box; margin:0;}
+html,body{background:var(--bg);}
+body{color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+img,svg{max-width:100%;} [hidden]{display:none!important;} a{color:inherit;}
+h1,h2,h3{font-family:var(--font-display); text-wrap:balance; font-weight:600;}
+.gutter{padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px));}
+
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:101; background:rgba(251,248,241,0.92);}
+.site-header{position:sticky; top:env(safe-area-inset-top,0px); z-index:100; background:rgba(251,248,241,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--border);}
+.read-progress-track{position:sticky; top:calc(env(safe-area-inset-top,0px) + 53px); z-index:99; height:3px; background:var(--border);}
+.read-progress-bar{height:100%; width:0%; background:linear-gradient(90deg, var(--gold-light), var(--gold)); transition:width .08s linear;}
+.header-inner.gutter{max-width:760px; margin:0 auto; padding-block:14px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+.logo-mark{display:flex; align-items:center; gap:9px; min-width:0;}
+.logo-mark svg{width:24px; height:24px; flex-shrink:0;}
+.logo-text{font-family:var(--font-display); font-size:1rem; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.logo-text em{color:var(--gold); font-style:normal;}
+.back-link{font-size:13px; font-weight:600; color:var(--gold); text-decoration:none; display:flex; align-items:center; gap:6px; white-space:nowrap;}
+
+/* ── cover / hero ─────────────────────────────── */
+.book-hero{padding-block:48px 40px;}
+.book-hero.gutter{max-width:760px; margin:0 auto;}
+.cover-wrap{max-width:240px; margin:0 auto 32px; border-radius:10px; overflow:hidden; box-shadow:0 18px 40px var(--shadow), 0 2px 8px var(--shadow);}
+.cover-wrap svg{display:block; width:100%; height:auto;}
+.kicker{font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; text-align:center;}
+.book-title{font-size:clamp(2.1rem,7vw,3rem); line-height:1.1; text-align:center; margin-bottom:14px;}
+.book-sub{font-family:var(--font-display); font-style:italic; font-size:1.15rem; color:var(--ink-2); text-align:center; max-width:480px; margin:0 auto 22px; line-height:1.5;}
+.book-meta{display:flex; justify-content:center; gap:14px; font-size:12.5px; color:var(--ink-3); margin-bottom:30px; font-weight:500; flex-wrap:wrap;}
+.hero-cta{display:flex; justify-content:center; gap:12px; flex-wrap:wrap;}
+.copyright-line{margin-top:18px; text-align:center; font-size:11.5px; color:var(--ink-3);}
+.btn{display:inline-flex; align-items:center; gap:7px; border-radius:100px; font-family:var(--font-body); font-size:13.5px; font-weight:600; padding:11px 24px; text-decoration:none; background:var(--gold); color:#FFFDF8; border:1px solid transparent;}
+.btn-outline{background:transparent; color:var(--gold); border-color:var(--gold);}
+
+/* ── resume banner ────────────────────────────── */
+.resume-banner{display:none; align-items:center; justify-content:space-between; gap:14px; max-width:680px; margin:24px auto 0; padding:14px 18px; background:var(--surface-3); border:1px solid var(--border); border-radius:12px; flex-wrap:wrap;}
+.resume-banner.is-visible{display:flex;}
+.resume-text{font-size:13.5px; color:var(--ink-2); line-height:1.5;}
+.resume-text strong{color:var(--ink); font-weight:600;}
+.resume-actions{display:flex; align-items:center; gap:14px; flex-shrink:0;}
+.resume-btn{font-size:12.5px; font-weight:700; color:var(--gold); text-decoration:none; white-space:nowrap;}
+.resume-dismiss{background:none; border:none; color:var(--ink-3); font-size:12px; cursor:pointer; padding:4px; line-height:1;}
+
+/* ── intro / toc ──────────────────────────────── */
+.book-section{max-width:680px; margin:0 auto; padding-block:8px 40px;}
+.book-section p{color:var(--ink-2); font-size:16.5px; line-height:1.85; margin-bottom:20px;}
+.toc-card{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:26px 28px; margin:36px auto; max-width:680px;}
+.toc-title{font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:16px;}
+.toc-list{list-style:none; display:flex; flex-direction:column; gap:2px;}
+.toc-list a{display:flex; align-items:baseline; gap:12px; padding:9px 2px; text-decoration:none; color:var(--ink); font-size:14.5px; font-weight:500; border-bottom:1px solid var(--border);}
+.toc-list li:last-child a{border-bottom:none;}
+.toc-num{font-family:var(--font-display); font-style:italic; color:var(--gold); font-size:14px; flex-shrink:0; width:18px;}
+
+.legal-block{max-width:520px; margin:0 auto 48px; text-align:center;}
+.legal-block p{font-size:11.5px; color:var(--ink-3); line-height:1.7; margin-bottom:8px;}
+
+/* ── chapters ─────────────────────────────────── */
+.chapter{max-width:680px; margin:0 auto; padding:56px 0; border-top:1px solid var(--border);}
+.chapter-eyebrow{font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:10px;}
+.chapter-title{font-size:clamp(1.6rem,5vw,2.1rem); margin-bottom:22px; line-height:1.2;}
+.scripture{background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--gold); border-radius:0 10px 10px 0; padding:18px 22px; margin:0 0 28px;}
+.scripture-text{font-family:var(--font-display); font-size:1.08rem; font-style:italic; color:var(--ink); line-height:1.55; margin-bottom:8px;}
+.scripture-ref{font-size:11.5px; color:var(--gold); font-weight:700; letter-spacing:0.1em; text-transform:uppercase;}
+.chapter p{color:var(--ink-2); font-size:16.5px; line-height:1.85; margin-bottom:22px;}
+.pull-verse{font-family:var(--font-display); font-style:italic; font-size:1.1rem; color:var(--ink); background:var(--surface-2); border-radius:10px; padding:18px 22px; margin:24px 0; line-height:1.55;}
+.pull-verse cite{display:block; font-family:var(--font-body); font-style:normal; font-size:11.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--gold); margin-top:10px;}
+
+/* ── closing ──────────────────────────────────── */
+.closing-card{background:var(--surface-3); border:1px solid var(--border); border-radius:14px; padding:34px 28px; text-align:center; margin:16px auto 64px; max-width:680px;}
+.closing-card h3{font-size:1.4rem; margin-bottom:12px;}
+.closing-card p{color:var(--ink-2); font-size:14.5px; margin-bottom:22px; line-height:1.65; max-width:460px; margin-inline:auto;}
+.closing-actions{display:flex; justify-content:center; gap:10px; flex-wrap:wrap;}
+
+.site-footer{padding-block:40px; border-top:1px solid var(--border);}
+.footer-inner.gutter{max-width:760px; margin:0 auto; text-align:center;}
+.footer-links{display:flex; justify-content:center; gap:20px; margin-bottom:18px; flex-wrap:wrap;}
+.footer-links a{font-size:12.5px; color:var(--ink-2); text-decoration:none; font-weight:500;}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{font-size:11.5px; color:var(--ink-3);}
+</style>
+
+<header class="site-header">
+  <div class="header-inner gutter">
+    <a href="/" class="logo-mark" style="text-decoration:none;">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="navLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
+        </linearGradient></defs>
+        <circle cx="24" cy="24" r="21.5" fill="none" stroke="#9C7A34" stroke-width="0.9"/>
+        <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#navLogoGrad)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
+      </svg>
+      <span class="logo-text">Word <em>&amp;</em> Faith Network</span>
+    </a>
+    <a class="back-link" href="/library/">&larr; The Library</a>
+  </div>
+</header>
+<div class="read-progress-track"><div class="read-progress-bar" id="readProgressBar"></div></div>
+
+<main>
+  <div class="resume-banner gutter" id="resumeBanner">
+    <p class="resume-text">You left off at <strong id="resumeLabel"></strong></p>
+    <div class="resume-actions">
+      <a href="#" class="resume-btn" id="resumeBtn">Continue reading →</a>
+      <button class="resume-dismiss" id="resumeDismiss" type="button" aria-label="Dismiss">✕</button>
+    </div>
+  </div>
+
+  <div class="book-hero gutter">
+    <div class="cover-wrap">
+      <svg viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="covTitle covDesc">
+        <title id="covTitle">Look Back, Look Forward — Word and Faith Network, by Oladapo Olaleye</title>
+        <desc id="covDesc">Book cover: deep night-sky background with scattered golden bokeh light, radiating rays from the Word and Faith Network mark, and the title Look Back, Look Forward.</desc>
+        <defs>
+          <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#332B1C"/>
+            <stop offset="50%" stop-color="#1D1810"/>
+            <stop offset="100%" stop-color="#100C08"/>
+          </linearGradient>
+          <radialGradient id="glow" cx="50%" cy="24%" r="60%">
+            <stop offset="0%" stop-color="#C9A968" stop-opacity="0.45"/>
+            <stop offset="55%" stop-color="#C9A968" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="#C9A968" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#F6E8BE"/>
+            <stop offset="100%" stop-color="#C9A968"/>
+          </linearGradient>
+          <linearGradient id="flameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#F6E8BE"/>
+            <stop offset="100%" stop-color="#C9A968"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="900" fill="url(#bgGrad)"/>
+        <rect width="600" height="900" fill="url(#glow)"/>
+        <g fill="#C9A968">
+          <circle cx="70" cy="110" r="4" opacity="0.5"/>
+          <circle cx="130" cy="70" r="2.5" opacity="0.35"/>
+          <circle cx="520" cy="95" r="5" opacity="0.4"/>
+          <circle cx="470" cy="150" r="2.5" opacity="0.3"/>
+          <circle cx="60" cy="230" r="3" opacity="0.3"/>
+          <circle cx="545" cy="240" r="3.5" opacity="0.35"/>
+          <circle cx="40" cy="340" r="2.5" opacity="0.25"/>
+          <circle cx="560" cy="360" r="2.5" opacity="0.25"/>
+        </g>
+        <g stroke="#C9A968" stroke-width="1" opacity="0.4">
+          <line x1="300" y1="220" x2="95" y2="35"/>
+          <line x1="300" y1="220" x2="300" y2="-10"/>
+          <line x1="300" y1="220" x2="505" y2="35"/>
+          <line x1="300" y1="220" x2="45" y2="150"/>
+          <line x1="300" y1="220" x2="555" y2="150"/>
+        </g>
+        <rect x="28" y="28" width="544" height="844" fill="none" stroke="#C9A968" stroke-width="1" opacity="0.55"/>
+        <rect x="38" y="38" width="524" height="824" fill="none" stroke="#C9A968" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(300,165)">
+          <circle cx="0" cy="0" r="50" fill="none" stroke="#C9A968" stroke-width="1.2" opacity="0.85"/>
+          <path d="M-42 18 L-31 -33 L-18.5 6.25 L0 -21 L18.5 6.25 L31 -33 L42 18" fill="none" stroke="url(#flameGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M0 -21 C-5.2 -30 -4 -40 0 -50 C4 -40 5.2 -30 0 -21 Z" fill="#F6E8BE"/>
+        </g>
+        <text x="300" y="312" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13" font-weight="700" letter-spacing="5" fill="#C9A968">WORD &amp; FAITH NETWORK</text>
+        <line x1="255" y1="334" x2="345" y2="334" stroke="#C9A968" stroke-width="1" opacity="0.6"/>
+        <text x="300" y="438" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="52" font-weight="900" fill="url(#goldText)" letter-spacing="0.5">LOOK BACK,</text>
+        <text x="300" y="502" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="52" font-weight="900" fill="url(#goldText)" letter-spacing="0.5">LOOK FORWARD</text>
+        <line x1="200" y1="570" x2="400" y2="570" stroke="#9C7A34" stroke-width="1" opacity="0.7"/>
+        <text x="300" y="604" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="22" fill="#E3D3A4">Thank God for the Past.</text>
+        <text x="300" y="634" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="22" fill="#E3D3A4">Trust Him for What's Next.</text>
+        <text x="300" y="682" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13.5" font-weight="600" letter-spacing="1.2" fill="#9C8A5E" font-style="italic">Every mile behind you is a reason to trust the miles ahead.</text>
+        <text x="300" y="800" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#F0DFAE">OLADAPO OLALEYE</text>
+        <text x="300" y="822" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="10.5" letter-spacing="2" fill="#8C8370">BOOK TWO &#183; THE LIBRARY</text>
+      </svg>
+    </div>
+    <p class="kicker">Book Two &middot; The Library</p>
+    <h1 class="book-title">Look Back, Look Forward</h1>
+    <p class="book-sub">Thank God for the Past. Trust Him for What's Next.</p>
+    <div class="book-meta">
+      <span>By Oladapo Olaleye</span>
+      <span>&middot;</span>
+      <span>Word and Faith Network</span>
+      <span>&middot;</span>
+      <span>8 Chapters</span>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="#toc">Begin Reading →</a>
+      <a class="btn btn-outline" href="../assets/library/look-back-look-forward.pdf" download>Download PDF</a>
+      <a class="btn btn-outline" href="/library/">All Books</a>
+    </div>
+    <p class="copyright-line">&copy; 2026 Oladapo Olaleye &amp; Word and Faith Network. All rights reserved.</p>
+  </div>
+
+  <div class="legal-block gutter">
+    <p><strong style="color:var(--ink-2);">Look Back, Look Forward: Thank God for the Past. Trust Him for What's Next.</strong></p>
+    <p>Copyright &copy; 2026 by Oladapo Olaleye. Published by Word and Faith Network.</p>
+    <p>All rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form or by any means &mdash; including photocopying, recording, or other electronic or mechanical methods &mdash; without prior written permission from the publisher, except for brief quotations in reviews and other noncommercial uses permitted by copyright law.</p>
+    <p>Unless otherwise noted, scripture quotations are taken from the King James Version (KJV), public domain.</p>
+  </div>
+
+  <div class="book-section gutter">
+    <p>There is a billboard we passed that said it best, in nine words: <em>Look back and thank God. Look forward and trust God.</em> It stopped us because it compresses an entire way of walking with God into a single, simple instruction &mdash; one most of us know in theory and rarely practice on purpose.</p>
+    <p>We are often taught to do one or the other. Some seasons call us to count our blessings; others call us to step out in faith for what's next. Rarely are we shown how the two connect &mdash; that gratitude for what God has already done is not a separate exercise from trust for what He hasn't done yet. It is the foundation trust is built on.</p>
+    <p>This book follows that one sentence through scripture, in two movements. The first four chapters look back &mdash; at Israel's wilderness, at David's inventory of mercies, at the danger of looking back for the wrong reasons, and at the stone Samuel set down to remember help already given. The last four chapters look forward &mdash; releasing what's behind, trusting a future we cannot see, walking with courage into it, and discovering that both postures were never two different postures at all.</p>
+    <p>Eight chapters, each built on one passage. This is Book Two in the Library &mdash; a new title from Word and Faith Network every two weeks.</p>
+  </div>
+
+  <nav class="toc-card" id="toc">
+    <p class="toc-title">Contents</p>
+    <ol class="toc-list">
+      <li><a href="#ch1"><span class="toc-num">I</span> Remember All the Way</a></li>
+      <li><a href="#ch2"><span class="toc-num">II</span> Forget Not All His Benefits</a></li>
+      <li><a href="#ch3"><span class="toc-num">III</span> The Looking Back That Hurts You</a></li>
+      <li><a href="#ch4"><span class="toc-num">IV</span> Hitherto Hath the Lord Helped Us</a></li>
+      <li><a href="#ch5"><span class="toc-num">V</span> Forgetting Those Things Which Are Behind</a></li>
+      <li><a href="#ch6"><span class="toc-num">VI</span> Trust in the Lord With All Thine Heart</a></li>
+      <li><a href="#ch7"><span class="toc-num">VII</span> Be Strong and of a Good Courage</a></li>
+      <li><a href="#ch8"><span class="toc-num">VIII</span> New Every Morning</a></li>
+    </ol>
+  </nav>
+
+  <article class="chapter" id="ch1">
+    <p class="chapter-eyebrow">Chapter One</p>
+    <h2 class="chapter-title">Remember All the Way</h2>
+    <div class="scripture">
+      <div class="scripture-text">"And thou shalt remember all the way which the LORD thy God led thee these forty years in the wilderness, to humble thee, and to prove thee, to know what was in thine heart, whether thou wouldest keep his commandments, or no."</div>
+      <div class="scripture-ref">Deuteronomy 8:2 &mdash; KJV</div>
+    </div>
+    <p>Moses is standing at the edge of the Promised Land with a generation that has never known anything but wilderness, and before he lets them cross over, he gives them one instruction that sounds almost strange for the moment: remember. Not prepare. Not strategize. Not even pray, not yet. Remember &mdash; all the way, the whole forty years, every mile of it, the good and the humiliating both.</p>
+    <p>This is worth noticing, because most of us treat remembering as optional, a sentimental extra for people who have time for nostalgia. Moses treats it as a command, placed deliberately at the threshold of something new. Before Israel takes one step into the land flowing with milk and honey, God wants them to look back first. Why would the doorway into the future require a long look at the past?</p>
+    <p>Because the wilderness was not wasted time. "To humble thee, and to prove thee, to know what was in thine heart" &mdash; the forty years were not a detour God regretted. They were formation. Every provided manna, every water from rock, every garment that did not wear out (v.4) was God proving something to Israel that no sermon could have taught them as effectively as the experience itself: that He is faithful even when the way is hard and the end is not yet visible.</p>
+    <div class="pull-verse">"Hitherto hath the LORD helped us."<cite>1 Samuel 7:12, KJV</cite></div>
+    <p>If you skip the remembering, you walk into your future carrying none of the evidence that got you here. You face the new mountain as if God has never moved a mountain for you before &mdash; and that is a dangerous way to face anything. The believer who remembers rightly does not walk into tomorrow empty-handed. They walk in holding receipts: the time provision came from nowhere expected, the relationship that healed, the diagnosis that did not become the whole story, the year that should have broken them and somehow didn't.</p>
+    <p>This is not about living in the past. Moses is not telling Israel to stay in the wilderness &mdash; the very next chapters are full of forward movement, cities to take, a land to possess. Remembering all the way is not the opposite of moving forward; it is what makes moving forward possible without fear. You do not look back to stay there. You look back to gather what you need for the road ahead, the way a traveler checks the map of the road already walked before trusting the road not yet walked.</p>
+    <p>So before this book goes any further into what it means to trust God for what's next, it asks what Moses asked first: have you actually remembered? Not in a vague, general way &mdash; "God has been good" &mdash; but specifically, all the way, mile by mile. The chapters ahead will ask you to trust God for a future you cannot see. That trust will stand on firmer ground once you have taken an honest, detailed look at the ground already covered.</p>
+  </article>
+
+  <article class="chapter" id="ch2">
+    <p class="chapter-eyebrow">Chapter Two</p>
+    <h2 class="chapter-title">Forget Not All His Benefits</h2>
+    <div class="scripture">
+      <div class="scripture-text">"Bless the LORD, O my soul, and forget not all his benefits: Who forgiveth all thine iniquities; who healeth all thy diseases; Who redeemeth thy life from destruction; who crowneth thee with lovingkindness and tender mercies."</div>
+      <div class="scripture-ref">Psalm 103:2-4 &mdash; KJV</div>
+    </div>
+    <p>David does not simply say "remember" &mdash; he says "forget not," which is a sharper, more honest command. It assumes forgetting is the default. Left alone, the human mind does not naturally hold onto mercy the way it holds onto injury. We can recite the one time a prayer seemed to go unanswered in detail, while a hundred quiet provisions from the same month slip past unnoticed and unthanked. David is writing to correct that imbalance on purpose, out loud, to his own soul.</p>
+    <p>Notice he does not say "forget not <em>a</em> benefit" &mdash; a single highlight reel moment. He says "forget not <em>all</em> his benefits," and then immediately starts listing categories: forgiveness, healing, redemption, lovingkindness, tender mercies, satisfaction, renewal (vv.3-5). This is not vague gratitude. This is an inventory. David is doing with his own life what Moses asked Israel to do with the wilderness &mdash; counting it specifically, not just feeling generally thankful in passing.</p>
+    <div class="pull-verse">"In every thing give thanks: for this is the will of God in Christ Jesus concerning you."<cite>1 Thessalonians 5:18, KJV</cite></div>
+    <p>Try this honestly: could you list, right now, five specific things God has done in the last year that you have never actually said "thank you" for out loud? Most of us could not, not because God has been inactive, but because gratitude that is never specifically named tends to evaporate. It becomes a feeling we assume we have rather than a practice we actually do.</p>
+    <p>This matters for more than sentiment. A soul that has catalogued God's past faithfulness carries a different weight into hardship than a soul that hasn't. When the next trial comes &mdash; and it will &mdash; the question in the quiet hours is rarely "is God real?" It is usually "has He actually been good to me, or have I just been lucky and told myself it was Him?" David's psalm is the answer written in advance: yes, specifically, repeatedly, by name. Forgiven. Healed. Redeemed. Crowned. Satisfied. Renewed.</p>
+    <p>Before you move into the next chapter, take the exercise literally. Not as a thought, but as a list. Write five things, with dates if you can remember them, that God actually did &mdash; not things you hoped for that are still pending, but things already received. This is not busywork. It is building the exact inventory the rest of this book is going to ask you to stand on.</p>
+  </article>
+
+  <article class="chapter" id="ch3">
+    <p class="chapter-eyebrow">Chapter Three</p>
+    <h2 class="chapter-title">The Looking Back That Hurts You</h2>
+    <div class="scripture">
+      <div class="scripture-text">"But his wife looked back from behind him, and she became a pillar of salt."</div>
+      <div class="scripture-ref">Genesis 19:26 &mdash; KJV</div>
+    </div>
+    <p>So far this book has made the case that looking back rightly is not optional &mdash; it is commanded, it builds faith, it is the evidence we carry into tomorrow. But scripture does not let that stand uncomplicated for long. Tucked into the story of Sodom's destruction is one of the Bible's starkest warnings: Lot's wife, told plainly to flee and not look back, looks back anyway, and the text does not soften what happens next.</p>
+    <p>This is not a contradiction of everything chapters one and two established. It is a necessary corrective, because there are two entirely different ways to look back, and confusing them will cost you. One kind of looking back gathers evidence of God's faithfulness and carries it forward as fuel. The other kind looks back with longing for what God has already told you to leave &mdash; and it does not fuel the journey. It stops it cold.</p>
+    <div class="pull-verse">"No man, having put his hand to the plough, and looking back, is fit for the kingdom of God."<cite>Luke 9:62, KJV</cite></div>
+    <p>Jesus' words here echo the same warning in a gentler key. A plowman who keeps turning to look behind him cannot cut a straight furrow &mdash; his attention divided between where he's going and where he's been guarantees he does neither well. The issue was never that Lot's wife remembered Sodom existed. The issue was that some part of her heart had not actually left it, and the backward glance revealed where her trust still lived.</p>
+    <p>This is the test worth applying honestly to your own remembering: are you looking back at what God did, or are you looking back at what you miss? The first builds faith for what's ahead. The second anchors you to a place &mdash; a season, a relationship, a version of your life &mdash; that God has already called you out of. Gratitude says, "look what He carried me through." Lingering regret says, "I wish I were still there," even when "there" was never safe to begin with.</p>
+    <p>If this chapter stings a little, let it. Most of us are not tempted to look back at genuine wilderness and miss it &mdash; we are tempted to look back at a version of comfort, control, or familiarity that God interrupted for good reason. Paul names the better posture plainly in the next chapter of scripture we'll study: not staying fixed on what's behind, but forgetting it in the sense that matters &mdash; releasing its grip &mdash; so both hands are free to press toward what's ahead.</p>
+  </article>
+
+  <article class="chapter" id="ch4">
+    <p class="chapter-eyebrow">Chapter Four</p>
+    <h2 class="chapter-title">Hitherto Hath the Lord Helped Us</h2>
+    <div class="scripture">
+      <div class="scripture-text">"Then Samuel took a stone, and set it between Mizpeh and Shen, and called the name of it Ebenezer, saying, Hitherto hath the LORD helped us."</div>
+      <div class="scripture-ref">1 Samuel 7:12 &mdash; KJV</div>
+    </div>
+    <p>This chapter is the hinge of the book &mdash; the point where looking back rightly turns into looking forward with faith. Samuel has just watched God deliver Israel from the Philistines in a battle they did not win by their own strength, and his response is not simply relief. He builds a monument. A physical stone, set in the ground, with a name attached to it, so that every time anyone passed that spot afterward, they would be reminded: hitherto &mdash; up to this very point &mdash; the LORD has helped us.</p>
+    <p>Notice what the stone does not say. It does not say "the LORD has finished helping us," as if the victory meant no more battles were coming. Israel's story did not end at Ebenezer; there were more enemies, more fights, more need for help still ahead. The stone was never a monument to a closed chapter. It was evidence collected for the chapters not yet written &mdash; proof to stand on the next time fear whispered that God might not come through.</p>
+    <div class="pull-verse">"I am the LORD, I change not."<cite>Malachi 3:6, KJV</cite></div>
+    <p>This is the exact bridge this book has been building toward. The looking back of chapters one and two was never meant to end in a scrapbook. It was meant to become a stone &mdash; something you can point to and stand on the next time the ground feels uncertain. "Hitherto" is a word that faces two directions at once: it surveys everything behind and uses it to steady everything ahead. That is what rightly remembered history does. It does not just comfort you about yesterday. It arms you for tomorrow.</p>
+    <p>Think of your own life this way for a moment. What is your Ebenezer? Not a vague memory, but a specific moment you could set a stone down for &mdash; a point where help arrived that you could not have manufactured yourself. Maybe it was provision when the money did not add up. Maybe it was a door that closed that you now recognize as mercy. Maybe it was simply still standing after a year that should have taken you under. Name it. That is your stone.</p>
+    <p>Here is why this matters for everything that follows in this book: the same God who was faithful "hitherto" is the God you are being asked to trust for "henceforth." Those two words are not separate promises. They are the same faithfulness, viewed from two different points on the same timeline. If He helped you up to this point, that is not proof the help is over. It is the strongest available evidence that it isn't.</p>
+  </article>
+
+  <article class="chapter" id="ch5">
+    <p class="chapter-eyebrow">Chapter Five</p>
+    <h2 class="chapter-title">Forgetting Those Things Which Are Behind</h2>
+    <div class="scripture">
+      <div class="scripture-text">"Forgetting those things which are behind, and reaching forth unto those things which are before, I press toward the mark for the prize of the high calling of God in Christ Jesus."</div>
+      <div class="scripture-ref">Philippians 3:13-14 &mdash; KJV</div>
+    </div>
+    <p>Paul writes this from a position almost no one else could claim: a résumé most Pharisees would have envied &mdash; of the tribe of Benjamin, a Hebrew of Hebrews, blameless according to the law (vv.5-6). And in the same breath, he calls all of it loss, dung, worthless, compared to knowing Christ. If anyone had reason to keep looking back at an impressive past, it was Paul. Instead, he does something deliberate: he forgets it, on purpose, so both hands are free for what's ahead.</p>
+    <p>This is not the same forgetting this book warned against in chapter three. Paul is not pretending his past did not happen, or refusing to learn from it. The Greek sense here is closer to "no longer being controlled by" &mdash; releasing the past's grip on his identity and his pace, whether that past was impressive or shameful. A runner does not forget the track behind him exists. He simply stops looking at it, because looking back while running only slows the runner down and does nothing for the one behind.</p>
+    <div class="pull-verse">"Behold, I will do a new thing; now it shall spring forth; shall ye not know it?"<cite>Isaiah 43:19, KJV</cite></div>
+    <p>Here is the part worth sitting with: Paul needed to forget both kinds of past &mdash; the failures that could have shackled him with shame, and the achievements that could have made him comfortable, satisfied, finished. Both pulls are real. Some of us are held back by regret over what we did. Others are held back by pride over who we used to be, coasting on a version of faith or success we reached years ago. Both postures look backward instead of forward, and Paul says plainly: neither one is where the prize is.</p>
+    <p>"Reaching forth" is a physical image &mdash; a runner's whole body leaning into the next stride before the current one is even finished, eyes fixed past the current position toward the line still ahead. That posture is not possible while still looking over your shoulder. You cannot lean fully into what God is doing next while one hand is still gripping what He finished doing last season.</p>
+    <p>This is the turn this book has been building to since its opening pages. Chapters one through four asked you to look back honestly, gather the evidence, set the stone. This chapter asks you to do something different with what you found: release its grip on your pace. Let gratitude remain. Let regret and even nostalgia for old comfort go. The God who met you yesterday is already at work on what's ahead &mdash; and He is asking for your full attention there now.</p>
+  </article>
+
+  <article class="chapter" id="ch6">
+    <p class="chapter-eyebrow">Chapter Six</p>
+    <h2 class="chapter-title">Trust in the Lord With All Thine Heart</h2>
+    <div class="scripture">
+      <div class="scripture-text">"Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths."</div>
+      <div class="scripture-ref">Proverbs 3:5-6 &mdash; KJV</div>
+    </div>
+    <p>Looking forward in faith is harder than looking back in gratitude, for one simple reason: the past is settled, and the future is not. You can examine what God already did with total confidence, because it already happened. But trusting Him for what has not happened yet requires something gratitude alone cannot supply &mdash; a willingness to walk a path you cannot fully see, led by understanding that is not your own.</p>
+    <p>"Lean not unto thine own understanding" is a command most of us quietly resist, because understanding feels like safety. We want to know the plan before we commit to the road. But Proverbs is not telling you to abandon wisdom &mdash; it is telling you where ultimate trust belongs when your own understanding runs out, which it eventually always does. No amount of planning gives a human being full sight of tomorrow. The only question is whether you will trust the One who already sees it.</p>
+    <div class="pull-verse">"Now faith is the substance of things hoped for, the evidence of things not seen."<cite>Hebrews 11:1, KJV</cite></div>
+    <p>This is where the Ebenezer stone from chapter four becomes essential again. Trusting an unseen future is not a blind leap taken with no information &mdash; it is a reasoned step taken on the strength of a track record. You are not asked to trust a stranger with your next ten years. You are asked to trust the same God whose faithfulness you already catalogued in chapter two. The evidence of things not seen is not evidence pulled from nowhere; it is built on the evidence of things already seen and already proven trustworthy.</p>
+    <p>"In all thy ways acknowledge him" extends this trust beyond the big, obvious decisions into the ordinary ones &mdash; not reserving God for the crossroads moments only, but bringing Him into the daily, unremarkable ways as well. A life that only turns to God at major decisions and otherwise leans entirely on its own understanding has not actually learned to trust Him; it has simply learned to consult Him occasionally. Full acknowledgment is a continuous posture, not an emergency measure.</p>
+    <p>And the promise attached to this trust is worth noting carefully: "he shall direct thy paths." Not reveal the whole map in advance. Direct &mdash; step by step, turn by turn, exactly as much as is needed for the next stretch of road. This is why looking back matters so much to looking forward well: you are not being asked to trust a God who has never directed a path before. You are being asked to trust Him for the next turn, based on how reliably He has turned every corner so far.</p>
+  </article>
+
+  <article class="chapter" id="ch7">
+    <p class="chapter-eyebrow">Chapter Seven</p>
+    <h2 class="chapter-title">Be Strong and of a Good Courage</h2>
+    <div class="scripture">
+      <div class="scripture-text">"Have not I commanded thee? Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest."</div>
+      <div class="scripture-ref">Joshua 1:9 &mdash; KJV</div>
+    </div>
+    <p>Joshua inherits the leadership of Israel at the worst possible moment to feel unprepared: Moses, the only leader this generation had ever truly known, is dead, and an entire nation is waiting at the edge of a land full of walled cities and giants, looking to Joshua for what comes next. If there was ever a reasonable moment for fear, this was it. God's response is not a strategy briefing. It is a direct command: be strong and of a good courage. Not a suggestion, not encouragement offered gently &mdash; a command, repeated three times across this short chapter (vv.6, 7, 9), as if God knew exactly how much Joshua would need to hear it.</p>
+    <p>What makes the command bearable is not Joshua's own strength &mdash; scripture gives us no indication Joshua felt particularly ready for this. What makes it bearable is the reason attached to it: "for the LORD thy God is with thee whithersoever thou goest." Courage here is not a personality trait some people have and others lack. It is a direct response to a specific fact: wherever this road goes, God is already there before you arrive.</p>
+    <div class="pull-verse">"Fear thou not; for I am with thee: be not dismayed; for I am thy God."<cite>Isaiah 41:10, KJV</cite></div>
+    <p>This is where chapters one through six of this book converge into something practical. You looked back honestly (chapters 1-2). You learned to release the backward glance that only paralyzes (chapter 3). You built your Ebenezer &mdash; the specific stone of evidence that God has helped you before (chapter 4). You learned to stop gripping the past so both hands are free (chapter 5), and to trust a future you cannot fully see, based on a past you can (chapter 6). Joshua 1:9 is the command that puts all of that to work: walk forward, without the paralysis of fear, because the same God who directed every step so far has already gone ahead of the step you haven't taken yet.</p>
+    <p>Notice, too, that courage is commanded before the victories, not after them. God does not wait until Jericho has fallen to tell Joshua to be strong. The courage is required at the threshold, while the walls are still standing and the outcome is still unknown. This is precisely the kind of forward trust this book has been building toward &mdash; not confidence that waits for proof the battle is already won, but confidence rooted in who is walking beside you into the battle.</p>
+    <p>Wherever you are standing at your own version of the Jordan &mdash; a decision, a transition, a door you are not sure you are ready to walk through &mdash; hear the same command Joshua heard. Not because the unknown ahead is small, but because it is not unknown to the One going with you. Be strong. Be of good courage. He has not changed addresses since the last time He helped you.</p>
+  </article>
+
+  <article class="chapter" id="ch8">
+    <p class="chapter-eyebrow">Chapter Eight</p>
+    <h2 class="chapter-title">New Every Morning</h2>
+    <div class="scripture">
+      <div class="scripture-text">"It is of the LORD's mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness."</div>
+      <div class="scripture-ref">Lamentations 3:22-23 &mdash; KJV</div>
+    </div>
+    <p>It is worth knowing where these words come from. Lamentations is not a book of easy praise &mdash; it is Jeremiah's grief over a Jerusalem in ruins, written in the wreckage of real loss. And yet in the exact middle of that grief, these verses sit like a window suddenly opened in a dark room: His mercies are new every morning. Great is His faithfulness. This is not denial of the pain surrounding it. It is a declaration made <em>from inside</em> the pain, which is a different and far sturdier thing than praise offered only when life is easy.</p>
+    <p>This final chapter exists to hold together everything the book has built. Looking back (chapters 1-4) and looking forward (chapters 5-7) are not two separate disciplines you alternate between. They meet, every single day, in this one verse. His mercy toward yesterday is not exhausted; it is new again this morning. The faithfulness that carried you through what's behind is the same faithfulness already active in what's ahead &mdash; not a reservoir that runs low, but one renewed before you even wake to need it.</p>
+    <div class="pull-verse">"Jesus Christ the same yesterday, and to day, and for ever."<cite>Hebrews 13:8, KJV</cite></div>
+    <p>This is the real answer to the question a reader might reasonably ask after seven chapters: which posture am I actually supposed to hold &mdash; gratitude for the past, or faith for the future? The honest answer is both, held at once, the way Lamentations holds them. You do not graduate out of looking back once you learn to look forward. Every new morning offers fresh mercy specifically because yesterday's mercy was real and is not being withdrawn &mdash; it is simply being renewed into a new day that has not happened yet.</p>
+    <p>If you take nothing else from this book, take this: your life is not divided into a settled past you look back on and an uncertain future you brace for. It is one continuous story, held by one unchanging God, whose compassions do not run dry between yesterday and tomorrow. Set your stone. Name what He has done. Then lift your eyes, strong and of good courage, because the mercy that met you yesterday is already waiting in tomorrow morning, new again, exactly on time.</p>
+    <p>Look back, and thank Him. Look forward, and trust Him. They were never two different postures &mdash; only two directions to face the same faithful God.</p>
+  </article>
+
+  <div class="closing-card">
+    <h3>Carry This With You</h3>
+    <p>Follow Word and Faith Network for the next book in the Library, plus daily scripture and sermons as they're published.</p>
+    <div class="closing-actions">
+      <a class="btn" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow @wfnglobal &rarr;</a>
+      <a class="btn btn-outline" href="/library/">Back to the Library</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner gutter">
+    <div class="footer-links">
+      <a href="/#about">About</a>
+      <a href="/#word">The Word</a>
+      <a href="/articles/">Sermons</a>
+      <a href="/library/">Library</a>
+      <a href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Word and Faith Network &middot; wfnglobal.org</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  try{
+    var STORE_KEY = 'wfn-library-look-back-look-forward-progress';
+    var chapters = Array.prototype.slice.call(document.querySelectorAll('.chapter'));
+    var titles = {};
+    chapters.forEach(function(ch){
+      var h = ch.querySelector('.chapter-title');
+      var eyebrow = ch.querySelector('.chapter-eyebrow');
+      titles[ch.id] = (eyebrow ? eyebrow.textContent + ': ' : '') + (h ? h.textContent : ch.id);
+    });
+
+    var bar = document.getElementById('readProgressBar');
+    var banner = document.getElementById('resumeBanner');
+    var label = document.getElementById('resumeLabel');
+    var btn = document.getElementById('resumeBtn');
+    var dismiss = document.getElementById('resumeDismiss');
+
+    var saved = null;
+    try{ saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); }catch(e){}
+    if (saved && saved.chapterId && titles[saved.chapterId] && window.scrollY < 400) {
+      label.textContent = titles[saved.chapterId];
+      btn.href = '#' + saved.chapterId;
+      banner.classList.add('is-visible');
+    }
+    function hideBanner(){ banner.classList.remove('is-visible'); }
+    if (dismiss) dismiss.addEventListener('click', hideBanner);
+    if (btn) btn.addEventListener('click', hideBanner);
+
+    var content = document.querySelector('main');
+    var currentChapter = null;
+    var ticking = false;
+
+    function update(){
+      ticking = false;
+      var total = content.scrollHeight - window.innerHeight;
+      var scrolled = Math.min(Math.max(window.scrollY - content.offsetTop, 0), total);
+      var pct = total > 0 ? (scrolled / total) * 100 : 0;
+      if (bar) bar.style.width = pct.toFixed(1) + '%';
+
+      var viewLine = window.scrollY + 140;
+      var active = null;
+      chapters.forEach(function(ch){
+        if (ch.offsetTop <= viewLine) active = ch;
+      });
+      if (active && active.id !== currentChapter) {
+        currentChapter = active.id;
+        try{
+          localStorage.setItem(STORE_KEY, JSON.stringify({ chapterId: currentChapter, savedAt: Date.now() }));
+        }catch(e){}
+      }
+    }
+    function onScroll(){
+      if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    update();
+  }catch(e){ /* progress tracking is a nicety, never block the page */ }
+})();
+</script>

@@ -750,7 +750,36 @@
     return viewHome();
   }
 
-  window.addEventListener("hashchange", route);
+  // ---------------------------------------------------------------------
+  // Back navigation: a real in-app history stack, so the header's back
+  // arrow returns to wherever the person actually came from (e.g. the
+  // chapter list after reading a chapter) instead of always jumping Home.
+  // ---------------------------------------------------------------------
+
+  let backStack = [];
+  let isBackNav = false;
+
+  backEl.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (backStack.length) {
+      isBackNav = true;
+      location.hash = backStack.pop();
+    } else {
+      location.hash = "#/home";
+    }
+  });
+
+  window.addEventListener("hashchange", (e) => {
+    if (!isBackNav) {
+      const oldHash = (() => {
+        try { return new URL(e.oldURL).hash || "#/home"; } catch (err) { return "#/home"; }
+      })();
+      backStack.push(oldHash);
+    }
+    isBackNav = false;
+    route();
+  });
+
   window.addEventListener("DOMContentLoaded", () => {
     route();
     if ("serviceWorker" in navigator) {

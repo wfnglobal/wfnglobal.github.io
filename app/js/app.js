@@ -5,6 +5,33 @@
   const titleEl = document.getElementById("headerTitle");
   const backEl = document.getElementById("appBack");
   const tabBtns = document.querySelectorAll(".tab-btn");
+  const sheetEl = document.getElementById("sheet");
+  const sheetScrimEl = document.getElementById("sheetScrim");
+  const sheetBodyEl = document.getElementById("sheetBody");
+
+  // ---------------------------------------------------------------------
+  // Bottom sheet: generic modal used for verse actions, notes, profile edit
+  // ---------------------------------------------------------------------
+
+  function openSheet(html) {
+    sheetBodyEl.innerHTML = html;
+    sheetEl.hidden = false;
+    sheetScrimEl.hidden = false;
+    requestAnimationFrame(() => {
+      sheetEl.classList.add("show");
+      sheetScrimEl.classList.add("show");
+    });
+  }
+  function closeSheet() {
+    sheetEl.classList.remove("show");
+    sheetScrimEl.classList.remove("show");
+    setTimeout(() => {
+      sheetEl.hidden = true;
+      sheetScrimEl.hidden = true;
+      sheetBodyEl.innerHTML = "";
+    }, 200);
+  }
+  sheetScrimEl.addEventListener("click", closeSheet);
 
   // ---------------------------------------------------------------------
   // Content that mirrors wfnglobal.org (kept as small static lists here so
@@ -198,8 +225,15 @@
     saveBiblePosition(slug, data.name, chapter);
 
     const verses = data.chapters[chapter - 1];
+    const marks = WFNStore.getMarks();
+    const markFor = (vi) => marks.find((m) => m.bookSlug === slug && m.chapter === chapter && m.verse === vi + 1);
     const verseHtml = verses
-      .map((v, i) => `<p class="v"><span class="vnum">${i + 1}</span>${v}</p>`)
+      .map((v, i) => {
+        const m = markFor(i);
+        const colorAttr = m && m.color ? ` data-color="${m.color}"` : "";
+        const savedDot = m && m.saved ? `<span class="saved-dot"></span>` : "";
+        return `<p class="v" data-verse="${i + 1}"${colorAttr}><span class="vnum">${i + 1}</span>${v}${savedDot}</p>`;
+      })
       .join("");
 
     const prevDisabled = chapter <= 1 ? "disabled" : "";
@@ -217,7 +251,7 @@
           Next <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
         </button>
       </div>
-      <div class="verse-list">${verseHtml}</div>
+      <div class="verse-list" id="verseList">${verseHtml}</div>
     `;
     viewEl.scrollTo(0, 0);
     window.scrollTo(0, 0);
@@ -225,6 +259,96 @@
       const btn = document.getElementById(id);
       if (btn && !btn.disabled) {
         btn.addEventListener("click", () => { location.hash = btn.dataset.href; });
+      }
+    });
+
+    document.getElementById("verseList").addEventListener("click", (e) => {
+      const p = e.target.closest(".v");
+      if (!p) return;
+      const vi = parseInt(p.dataset.verse, 10);
+      openVerseSheet(slug, data.name, chapter, vi, WFNBible.plain(verses[vi - 1]));
+    });
+
+    showNoteFab(() => openNoteSheet("bible", `bible:${slug}:${chapter}`, `${data.name} ${chapter}`));
+  }
+
+  function showNoteFab(onClick) {
+    let fab = document.getElementById("noteFab");
+    if (fab) fab.remove();
+    fab = document.createElement("button");
+    fab.id = "noteFab";
+    fab.className = "note-fab";
+    fab.setAttribute("aria-label", "Add a note");
+    fab.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>`;
+    fab.addEventListener("click", onClick);
+    document.getElementById("app").appendChild(fab);
+  }
+  function hideNoteFab() {
+    const fab = document.getElementById("noteFab");
+    if (fab) fab.remove();
+  }
+
+  function openVerseSheet(bookSlug, bookName, chapter, verse, text) {
+    const mark = WFNStore.getMark(bookSlug, chapter, verse) || { color: null, saved: false };
+    const colors = ["gold", "green", "blue", "pink"];
+    const swatches = colors
+      .map((c) => `<button class="swatch swatch-${c}" data-color="${c}" data-active="${mark.color === c ? 1 : 0}" aria-label="Highlight ${c}"></button>`)
+      .join("");
+    openSheet(`
+      <div class="sheet-ref">${esc(bookName)} ${chapter}:${verse}</div>
+      <div class="sheet-verse-text">&ldquo;${esc(text)}&rdquo;</div>
+      <div class="sheet-row">
+        <div class="sheet-row-label">Highlight</div>
+        <div class="swatches">${swatches}</div>
+      </div>
+      <div class="sheet-row">
+        <div class="sheet-row-label">Save to My Verses</div>
+        <button class="sheet-toggle" id="savedToggle" data-on="${mark.saved ? 1 : 0}"></button>
+      </div>
+      <a class="btn btn-outline btn-block" style="margin-top:10px;" id="addVerseNoteBtn">Add a Note on This Verse</a>
+    `);
+    sheetBodyEl.querySelectorAll(".swatch").forEach((sw) => {
+      sw.addEventListener("click", () => {
+        const current = sw.dataset.active === "1";
+        const next = current ? null : sw.dataset.color;
+        WFNStore.setHighlight(bookSlug, bookName, chapter, verse, text, next);
+        sheetBodyEl.querySelectorAll(".swatch").forEach((s) => (s.dataset.active = s === sw && next ? 1 : 0));
+        const p = document.querySelector(`#verseList .v[data-verse="${verse}"]`);
+        if (p) { if (next) p.dataset.color = next; else delete p.dataset.color; }
+      });
+    });
+    const savedBtn = document.getElementById("savedToggle");
+    savedBtn.addEventListener("click", () => {
+      const m = WFNStore.toggleSaved(bookSlug, bookName, chapter, verse, text);
+      savedBtn.dataset.on = m && m.saved ? 1 : 0;
+      const p = document.querySelector(`#verseList .v[data-verse="${verse}"]`);
+      if (p) {
+        let dot = p.querySelector(".saved-dot");
+        if (m && m.saved && !dot) {
+          p.insertAdjacentHTML("beforeend", '<span class="saved-dot"></span>');
+        } else if ((!m || !m.saved) && dot) {
+          dot.remove();
+        }
+      }
+    });
+    document.getElementById("addVerseNoteBtn").addEventListener("click", () => {
+      openNoteSheet("bible", `bible:${bookSlug}:${chapter}:${verse}`, `${bookName} ${chapter}:${verse}`);
+    });
+  }
+
+  function openNoteSheet(type, refKey, refLabel, onSaved) {
+    openSheet(`
+      <h3>Note</h3>
+      <div class="sheet-ref">${esc(refLabel)}</div>
+      <textarea id="noteText" placeholder="Write what this means to you, what stood out, or a prayer it brings to mind…"></textarea>
+      <button class="btn btn-block" id="saveNoteBtn">Save Note</button>
+    `);
+    const ta = document.getElementById("noteText");
+    ta.focus();
+    document.getElementById("saveNoteBtn").addEventListener("click", () => {
+      if (WFNStore.addNote(type, refKey, refLabel, ta.value)) {
+        closeSheet();
+        if (onSaved) onSaved();
       }
     });
   }
@@ -275,17 +399,34 @@
   function viewSermonsList() {
     setHeader("Sermons", true);
     setActiveTab("sermons");
-    viewEl.innerHTML = SERMONS.map(
-      (s) => `
-      <a class="entry" href="/articles/${s.slug}.html">
-        <div class="entry-top">
-          <span class="entry-badge">${esc(s.ref)}</span>
-          <span class="entry-date">${esc(s.date)}</span>
+    hideNoteFab();
+    const notes = WFNStore.getNotes();
+    const noteCount = (slug) => notes.filter((n) => n.refKey === `sermon:${slug}`).length;
+    viewEl.innerHTML = SERMONS.map((s) => {
+      const nc = noteCount(s.slug);
+      return `
+      <div class="entry" style="padding-bottom:12px;">
+        <a href="/articles/${s.slug}.html" style="display:block;">
+          <div class="entry-top">
+            <span class="entry-badge">${esc(s.ref)}</span>
+            <span class="entry-date">${esc(s.date)}</span>
+          </div>
+          <h2 class="entry-title">${esc(s.title)}</h2>
+          <p class="entry-excerpt">${esc(s.excerpt)}</p>
+        </a>
+        <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border); display:flex; justify-content:flex-end;">
+          <button class="sermon-note-btn" data-slug="${s.slug}" data-title="${esc(s.title)}" style="background:none; border:none; display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; color:var(--gold); padding:0;">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            ${nc ? `${nc} Note${nc === 1 ? "" : "s"}` : "Add Note"}
+          </button>
         </div>
-        <h2 class="entry-title">${esc(s.title)}</h2>
-        <p class="entry-excerpt">${esc(s.excerpt)}</p>
-      </a>`
-    ).join("");
+      </div>`;
+    }).join("");
+    viewEl.querySelectorAll(".sermon-note-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        openNoteSheet("sermon", `sermon:${btn.dataset.slug}`, btn.dataset.title, viewSermonsList);
+      });
+    });
   }
 
   function viewPrayer() {
@@ -353,10 +494,196 @@
   }
 
   // ---------------------------------------------------------------------
+  // Profile: name/avatar, notes, highlights, saved verses, personal prayer list
+  // ---------------------------------------------------------------------
+
+  function dateLabel(ts) {
+    return new Date(ts).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  function viewProfile() {
+    const profile = WFNStore.getProfile();
+    setHeader("Profile", true);
+    setActiveTab("profile");
+
+    if (!profile) {
+      viewEl.innerHTML = `
+        <div class="card profile-setup-card">
+          <h2>Set Up Your Profile</h2>
+          <p>Your name is kept on this device only — there's no account or sign-in.</p>
+          <input type="text" id="profileNameInput" placeholder="Your name" style="width:100%; border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:15px; margin-bottom:14px; text-align:center;">
+          <button class="btn btn-block" id="profileSaveBtn">Save Profile</button>
+        </div>
+      `;
+      document.getElementById("profileSaveBtn").addEventListener("click", () => {
+        const input = document.getElementById("profileNameInput");
+        if (WFNStore.saveProfile(input.value)) viewProfile();
+      });
+      return;
+    }
+
+    const notes = WFNStore.getNotes();
+    const marks = WFNStore.getMarks();
+    const highlights = marks.filter((m) => m.color);
+    const savedVerses = marks.filter((m) => m.saved);
+    const prayers = WFNStore.getPrayers();
+
+    viewEl.innerHTML = `
+      <div class="profile-header">
+        <div class="profile-avatar">${esc(profile.initial)}</div>
+        <div>
+          <h2 class="profile-name">${esc(profile.name)}</h2>
+          <a class="profile-edit-link" href="#/profile/edit">Edit Profile</a>
+        </div>
+      </div>
+
+      <a class="menu-row" href="#/profile/notes">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v13l-4 3-4-3-4 3-4-3V4z"/></svg></div>
+        <div class="label">Notes</div>
+        <div class="count">${notes.length}</div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="menu-row" href="#/profile/highlights">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg></div>
+        <div class="label">Highlights</div>
+        <div class="count">${highlights.length}</div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="menu-row" href="#/profile/verses">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12v18l-6-4-6 4V3z"/></svg></div>
+        <div class="label">Saved Verses</div>
+        <div class="count">${savedVerses.length}</div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="menu-row" href="#/profile/prayer">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg></div>
+        <div class="label">My Prayer List</div>
+        <div class="count">${prayers.length}</div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+    `;
+  }
+
+  function viewProfileEdit() {
+    const profile = WFNStore.getProfile();
+    setHeader("Edit Profile", true);
+    setActiveTab("profile");
+    viewEl.innerHTML = `
+      <div class="card">
+        <input type="text" id="profileNameInput" value="${esc(profile ? profile.name : "")}" placeholder="Your name" style="width:100%; border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:15px; margin-bottom:14px;">
+        <button class="btn btn-block" id="profileSaveBtn">Save</button>
+      </div>
+    `;
+    document.getElementById("profileSaveBtn").addEventListener("click", () => {
+      const input = document.getElementById("profileNameInput");
+      WFNStore.saveProfile(input.value);
+      location.hash = "#/profile";
+    });
+  }
+
+  function emptyState(msg) {
+    return `<div class="empty-state">${esc(msg)}</div>`;
+  }
+
+  function viewProfileNotes() {
+    setHeader("Notes", true);
+    setActiveTab("profile");
+    const notes = WFNStore.getNotes();
+    if (!notes.length) { viewEl.innerHTML = emptyState("No notes yet. Add one from any sermon or Bible chapter."); return; }
+    viewEl.innerHTML = notes.map((n) => `
+      <div class="list-item" data-id="${n.id}">
+        <div class="list-item-top">
+          <span class="list-item-ref">${esc(n.refLabel)}</span>
+          <span class="list-item-date">${dateLabel(n.createdAt)}</span>
+        </div>
+        <p class="list-item-text">${esc(n.text)}</p>
+        <div class="list-item-actions">
+          <button class="danger" data-action="delete">Delete</button>
+        </div>
+      </div>`).join("");
+    wireListDeletes(viewEl, (id) => { WFNStore.deleteNote(id); viewProfileNotes(); });
+  }
+
+  function viewProfileHighlights() {
+    setHeader("Highlights", true);
+    setActiveTab("profile");
+    const highlights = WFNStore.getMarks().filter((m) => m.color);
+    if (!highlights.length) { viewEl.innerHTML = emptyState("No highlighted verses yet. Tap any verse in the Bible to highlight it."); return; }
+    viewEl.innerHTML = highlights.map((m) => `
+      <a class="list-item" data-id="${m.id}" href="#/bible/${m.bookSlug}/${m.chapter}" data-color="${m.color}" style="display:block; border-left:4px solid var(--gold-light);">
+        <div class="list-item-top">
+          <span class="list-item-ref">${esc(m.bookName)} ${m.chapter}:${m.verse}</span>
+          <span class="list-item-date">${dateLabel(m.createdAt)}</span>
+        </div>
+        <p class="list-item-text">${esc(m.text)}</p>
+      </a>`).join("");
+  }
+
+  function viewProfileVerses() {
+    setHeader("Saved Verses", true);
+    setActiveTab("profile");
+    const saved = WFNStore.getMarks().filter((m) => m.saved);
+    if (!saved.length) { viewEl.innerHTML = emptyState("No saved verses yet. Tap any verse in the Bible to save it."); return; }
+    viewEl.innerHTML = saved.map((m) => `
+      <a class="list-item" data-id="${m.id}" href="#/bible/${m.bookSlug}/${m.chapter}" style="display:block;">
+        <div class="list-item-top">
+          <span class="list-item-ref">${esc(m.bookName)} ${m.chapter}:${m.verse}</span>
+          <span class="list-item-date">${dateLabel(m.createdAt)}</span>
+        </div>
+        <p class="list-item-text">${esc(m.text)}</p>
+      </a>`).join("");
+  }
+
+  function viewProfilePrayer() {
+    setHeader("My Prayer List", true);
+    setActiveTab("profile");
+    hideNoteFab();
+    const prayers = WFNStore.getPrayers();
+    const list = prayers.length
+      ? prayers.map((p) => `
+        <div class="list-item ${p.answered ? "answered" : ""}" data-id="${p.id}">
+          <p class="list-item-text">${esc(p.text)}</p>
+          <div class="list-item-actions">
+            <button data-action="answered">${p.answered ? "Mark Unanswered" : "Mark Answered"}</button>
+            <button class="danger" data-action="delete">Delete</button>
+          </div>
+        </div>`).join("")
+      : emptyState("Nothing here yet. Add a prayer request below.");
+    viewEl.innerHTML = `
+      <div class="card" style="margin-bottom:20px; display:flex; gap:10px;">
+        <input type="text" id="prayerInput" placeholder="Add a prayer request…" style="flex:1; border:1px solid var(--border); border-radius:12px; padding:11px 14px; font-size:14px;">
+        <button class="btn" id="prayerAddBtn">Add</button>
+      </div>
+      ${list}
+    `;
+    document.getElementById("prayerAddBtn").addEventListener("click", () => {
+      const input = document.getElementById("prayerInput");
+      if (WFNStore.addPrayer(input.value)) viewProfilePrayer();
+    });
+    viewEl.querySelectorAll('[data-action="answered"]').forEach((btn) => {
+      btn.addEventListener("click", () => {
+        WFNStore.togglePrayerAnswered(btn.closest(".list-item").dataset.id);
+        viewProfilePrayer();
+      });
+    });
+    wireListDeletes(viewEl, (id) => { WFNStore.deletePrayer(id); viewProfilePrayer(); });
+  }
+
+  function wireListDeletes(container, onDelete) {
+    container.querySelectorAll('[data-action="delete"]').forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        onDelete(btn.closest(".list-item").dataset.id);
+      });
+    });
+  }
+
+  // ---------------------------------------------------------------------
   // Router
   // ---------------------------------------------------------------------
 
   function route() {
+    hideNoteFab();
     const hash = location.hash.replace(/^#\/?/, "");
     const parts = hash.split("/").filter(Boolean);
 
@@ -377,6 +704,15 @@
     }
     if (parts[0] === "prayer") return viewPrayer();
     if (parts[0] === "library") return viewLibrary();
+    if (parts[0] === "profile") {
+      if (parts.length === 1) return viewProfile();
+      if (parts[1] === "edit") return viewProfileEdit();
+      if (parts[1] === "notes") return viewProfileNotes();
+      if (parts[1] === "highlights") return viewProfileHighlights();
+      if (parts[1] === "verses") return viewProfileVerses();
+      if (parts[1] === "prayer") return viewProfilePrayer();
+      return viewProfile();
+    }
 
     return viewHome();
   }

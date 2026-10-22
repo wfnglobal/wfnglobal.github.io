@@ -1,50 +1,50 @@
 <svg viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="covTitle covDesc">
         <title id="covTitle">Ask Boldly — Word and Faith Network, by Oladapo Olaleye</title>
-        <desc id="covDesc">Book cover: deep ink background with radiating gold rays from the Word and Faith Network mark, the bold title Ask Boldly, a tagline, and the author's name.</desc>
+        <desc id="covDesc">Book cover: deep crimson-to-midnight gradient background with a modern keyhole emblem breaking into gold light inside a circle, the bold title Ask Boldly, a tagline, and the author's name.</desc>
         <defs>
           <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#332B1C"/>
-            <stop offset="50%" stop-color="#1D1810"/>
-            <stop offset="100%" stop-color="#100C08"/>
+            <stop offset="0%" stop-color="#4A1420"/>
+            <stop offset="55%" stop-color="#230A10"/>
+            <stop offset="100%" stop-color="#0C0506"/>
           </linearGradient>
-          <radialGradient id="glow" cx="50%" cy="26%" r="60%">
-            <stop offset="0%" stop-color="#C9A968" stop-opacity="0.45"/>
-            <stop offset="55%" stop-color="#C9A968" stop-opacity="0.1"/>
-            <stop offset="100%" stop-color="#C9A968" stop-opacity="0"/>
+          <radialGradient id="glow" cx="50%" cy="24%" r="60%">
+            <stop offset="0%" stop-color="#E8A33D" stop-opacity="0.4"/>
+            <stop offset="55%" stop-color="#E8A33D" stop-opacity="0.09"/>
+            <stop offset="100%" stop-color="#E8A33D" stop-opacity="0"/>
           </radialGradient>
           <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#F6E8BE"/>
-            <stop offset="100%" stop-color="#C9A968"/>
+            <stop offset="0%" stop-color="#FBE3B8"/>
+            <stop offset="100%" stop-color="#E8A33D"/>
           </linearGradient>
-          <linearGradient id="flameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#F6E8BE"/>
-            <stop offset="100%" stop-color="#C9A968"/>
+          <linearGradient id="keyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F2A65A"/>
+            <stop offset="100%" stop-color="#C9344A"/>
           </linearGradient>
         </defs>
         <rect width="600" height="900" fill="url(#bgGrad)"/>
         <rect width="600" height="900" fill="url(#glow)"/>
-        <g stroke="#C9A968" stroke-width="1" opacity="0.45">
-          <line x1="300" y1="230" x2="90" y2="30"/>
-          <line x1="300" y1="230" x2="300" y2="-10"/>
-          <line x1="300" y1="230" x2="510" y2="30"/>
-          <line x1="300" y1="230" x2="40" y2="150"/>
-          <line x1="300" y1="230" x2="560" y2="150"/>
+        <g fill="#E8A33D">
+          <circle cx="68" cy="100" r="3" opacity="0.4"/>
+          <circle cx="524" cy="88" r="3.5" opacity="0.35"/>
+          <circle cx="50" cy="210" r="2.2" opacity="0.25"/>
+          <circle cx="548" cy="225" r="2.6" opacity="0.25"/>
         </g>
-        <rect x="28" y="28" width="544" height="844" fill="none" stroke="#C9A968" stroke-width="1" opacity="0.55"/>
-        <rect x="38" y="38" width="524" height="824" fill="none" stroke="#C9A968" stroke-width="0.5" opacity="0.3"/>
-        <g transform="translate(300,170)">
-          <circle cx="0" cy="0" r="54" fill="none" stroke="#C9A968" stroke-width="1.2" opacity="0.85"/>
-          <path d="M-45 20 L-33 -36 L-19.75 6.75 L0 -22.5 L19.75 6.75 L33 -36 L45 20" fill="none" stroke="url(#flameGrad)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M0 -22.5 C-5.6 -32.5 -4.4 -43 0 -54 C4.4 -43 5.6 -32.5 0 -22.5 Z" fill="#F6E8BE"/>
+        <rect x="28" y="28" width="544" height="844" fill="none" stroke="#E8A33D" stroke-width="1" opacity="0.5"/>
+        <rect x="38" y="38" width="524" height="824" fill="none" stroke="#E8A33D" stroke-width="0.5" opacity="0.25"/>
+        <g transform="translate(300,165)">
+          <circle cx="0" cy="0" r="52" fill="none" stroke="url(#keyGrad)" stroke-width="1.4" opacity="0.9"/>
+          <path d="M -11 40 L -19 2 A19 19 0 1 1 19 2 L 11 40 Z" fill="url(#keyGrad)"/>
+          <circle cx="0" cy="-10" r="4" fill="#FBE3B8" opacity="0.9"/>
+          <path d="M0 40 L-26 68 M0 40 L26 68" stroke="#F6E8BE" stroke-width="1.5" opacity="0.65" stroke-linecap="round"/>
         </g>
-        <text x="300" y="330" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13" font-weight="700" letter-spacing="5" fill="#C9A968">WORD &amp; FAITH NETWORK</text>
-        <line x1="255" y1="352" x2="345" y2="352" stroke="#C9A968" stroke-width="1" opacity="0.6"/>
+        <text x="300" y="330" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13" font-weight="700" letter-spacing="5" fill="#E8A33D">WORD &amp; FAITH NETWORK</text>
+        <line x1="255" y1="352" x2="345" y2="352" stroke="#E8A33D" stroke-width="1" opacity="0.6"/>
         <text x="300" y="460" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="98" font-weight="900" fill="url(#goldText)" letter-spacing="1">ASK</text>
         <text x="300" y="558" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="98" font-weight="900" fill="url(#goldText)" letter-spacing="1">BOLDLY</text>
-        <line x1="200" y1="590" x2="400" y2="590" stroke="#C9A968" stroke-width="1" opacity="0.7"/>
-        <text x="300" y="622" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="22" fill="#E3D3A4">Why Some Prayers Move Heaven</text>
-        <text x="300" y="652" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="22" fill="#E3D3A4">and Others Don't</text>
-        <text x="300" y="700" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13.5" font-weight="600" letter-spacing="1.5" fill="#9C8A5E" font-style="italic">The prayers that move Heaven aren't louder. They're aimed right.</text>
-        <text x="300" y="800" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#F0DFAE">OLADAPO OLALEYE</text>
-        <text x="300" y="822" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="10.5" letter-spacing="2" fill="#8C8370">BOOK ONE &#183; THE LIBRARY</text>
+        <line x1="200" y1="590" x2="400" y2="590" stroke="#E8A33D" stroke-width="1" opacity="0.7"/>
+        <text x="300" y="622" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="22" fill="#E8B8BE">Why Some Prayers Move Heaven</text>
+        <text x="300" y="652" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="22" fill="#F4D9A9">and Others Don't</text>
+        <text x="300" y="700" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13.5" font-weight="600" letter-spacing="1.5" fill="#B89098" font-style="italic">The prayers that move Heaven aren't louder. They're aimed right.</text>
+        <text x="300" y="800" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#F4E3C4">OLADAPO OLALEYE</text>
+        <text x="300" y="822" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="10.5" letter-spacing="2" fill="#A9767E">BOOK ONE &#183; THE LIBRARY</text>
       </svg>

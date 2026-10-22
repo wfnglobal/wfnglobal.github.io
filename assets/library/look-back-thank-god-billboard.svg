@@ -1,0 +1,124 @@
+<svg viewBox="0 0 1600 1100" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
+  <title id="t">Look Back and Thank God, Look Forward and Trust God — illuminated billboard</title>
+  <desc id="d">A modern illuminated billboard at night on a city overpass, glowing warm light, with the message in bold serif type.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0B0E16"/>
+      <stop offset="55%" stop-color="#15181F"/>
+      <stop offset="100%" stop-color="#1D1810"/>
+    </linearGradient>
+    <radialGradient id="boardGlow" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#C9A968" stop-opacity="0.55"/>
+      <stop offset="45%" stop-color="#C9A968" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#C9A968" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="boardFace" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FBF4E2"/>
+      <stop offset="100%" stop-color="#EFE3C4"/>
+    </linearGradient>
+    <linearGradient id="goldFrame" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F6E8BE"/>
+      <stop offset="100%" stop-color="#9C7A34"/>
+    </linearGradient>
+    <radialGradient id="lampGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFF6DD" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFF6DD" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="roadGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1D1810"/>
+      <stop offset="100%" stop-color="#0B0E16"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <filter id="soft2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+  </defs>
+
+  <!-- night sky backdrop -->
+  <rect width="1600" height="1100" fill="url(#sky)"/>
+
+  <!-- distant city skyline, soft silhouettes -->
+  <g opacity="0.55" fill="#0B0E16">
+    <rect x="40" y="620" width="70" height="300"/>
+    <rect x="120" y="560" width="50" height="360"/>
+    <rect x="190" y="660" width="90" height="260"/>
+    <rect x="1360" y="600" width="60" height="320"/>
+    <rect x="1430" y="650" width="80" height="270"/>
+    <rect x="1510" y="580" width="55" height="340"/>
+  </g>
+  <g opacity="0.3" fill="#C9A968">
+    <rect x="55" y="700" width="6" height="8"/><rect x="70" y="740" width="6" height="8"/>
+    <rect x="135" y="650" width="6" height="8"/><rect x="150" y="720" width="6" height="8"/>
+    <rect x="1375" y="690" width="6" height="8"/><rect x="1450" y="700" width="6" height="8"/>
+    <rect x="1525" y="660" width="6" height="8"/>
+  </g>
+
+  <!-- road -->
+  <rect x="0" y="980" width="1600" height="120" fill="url(#roadGrad)"/>
+  <g stroke="#C9A968" stroke-width="3" opacity="0.35" stroke-dasharray="36 28">
+    <line x1="0" y1="1040" x2="1600" y2="1040"/>
+  </g>
+
+  <!-- overpass / scaffold structure framing the board, echoing the reference photo -->
+  <g stroke="#060708" stroke-width="10" fill="none" opacity="0.9">
+    <path d="M0 150 L1600 90"/>
+    <path d="M0 150 L1600 90" stroke="#0B0E16" stroke-width="4"/>
+  </g>
+  <g stroke="#0B0E16" stroke-width="5" opacity="0.8">
+    <line x1="120" y1="150" x2="120" y2="260"/>
+    <line x1="1480" y1="90" x2="1480" y2="230"/>
+  </g>
+
+  <!-- billboard support legs -->
+  <rect x="330" y="860" width="26" height="150" fill="#0B0E16"/>
+  <rect x="1240" y="860" width="26" height="150" fill="#0B0E16"/>
+
+  <!-- warm light bloom behind the board -->
+  <rect x="140" y="240" width="1320" height="660" fill="url(#boardGlow)" filter="url(#soft)"/>
+
+  <!-- billboard frame -->
+  <rect x="220" y="300" width="1160" height="580" rx="4" fill="#15181F" stroke="url(#goldFrame)" stroke-width="3"/>
+  <rect x="246" y="326" width="1108" height="528" fill="url(#boardFace)"/>
+  <rect x="246" y="326" width="1108" height="528" fill="none" stroke="#C9A968" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- top-mounted spotlights casting light down onto the board -->
+  <g>
+    <ellipse cx="420" cy="258" rx="140" ry="60" fill="url(#lampGlow)" filter="url(#soft2)"/>
+    <ellipse cx="800" cy="248" rx="150" ry="62" fill="url(#lampGlow)" filter="url(#soft2)"/>
+    <ellipse cx="1180" cy="258" rx="140" ry="60" fill="url(#lampGlow)" filter="url(#soft2)"/>
+    <g fill="#0B0E16">
+      <rect x="390" y="262" width="60" height="16" rx="4"/>
+      <rect x="770" y="252" width="60" height="16" rx="4"/>
+      <rect x="1150" y="262" width="60" height="16" rx="4"/>
+    </g>
+    <g stroke="#0B0E16" stroke-width="5">
+      <line x1="420" y1="278" x2="420" y2="300"/>
+      <line x1="800" y1="268" x2="800" y2="300"/>
+      <line x1="1180" y1="278" x2="1180" y2="300"/>
+    </g>
+  </g>
+
+  <!-- billboard copy -->
+  <text x="800" y="548" text-anchor="middle" font-family="'Fraunces', Georgia, serif" font-weight="700" font-size="62" fill="#1D1810" letter-spacing="0.3">LOOK BACK AND</text>
+  <text x="800" y="624" text-anchor="middle" font-family="'Fraunces', Georgia, serif" font-weight="700" font-size="62" fill="#1D1810" letter-spacing="0.3">THANK <tspan fill="#9C7A34">GOD.</tspan></text>
+
+  <line x1="640" y1="672" x2="960" y2="672" stroke="#9C7A34" stroke-width="2" opacity="0.6"/>
+
+  <text x="800" y="738" text-anchor="middle" font-family="'Fraunces', Georgia, serif" font-weight="700" font-size="62" fill="#1D1810" letter-spacing="0.3">LOOK FORWARD AND</text>
+  <text x="800" y="814" text-anchor="middle" font-family="'Fraunces', Georgia, serif" font-weight="700" font-size="62" fill="#1D1810" letter-spacing="0.3">TRUST <tspan fill="#9C7A34">GOD.</tspan></text>
+
+  <!-- WFN mark, bottom-right of board, like a sponsor tag -->
+  <g transform="translate(1280,780)">
+    <circle cx="0" cy="0" r="17" fill="none" stroke="#9C7A34" stroke-width="1"/>
+    <path d="M-11 9 L-8 -9 L-5 5 L0 -7 L5 5 L8 -9 L11 9" fill="none" stroke="#9C7A34" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="1280" y="820" text-anchor="middle" font-family="'Inter', -apple-system, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#8C7A50">WORD &amp; FAITH NETWORK</text>
+
+  <!-- subtle lens-flare / bokeh for a premium night-photo feel -->
+  <circle cx="160" cy="180" r="4" fill="#C9A968" opacity="0.5"/>
+  <circle cx="1480" cy="150" r="3" fill="#C9A968" opacity="0.4"/>
+  <circle cx="1530" cy="340" r="5" fill="#C9A968" opacity="0.3"/>
+  <circle cx="90" cy="420" r="3" fill="#C9A968" opacity="0.4"/>
+</svg>

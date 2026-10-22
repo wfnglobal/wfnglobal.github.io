@@ -471,8 +471,8 @@
     viewEl.innerHTML = `
       <div class="declaration-box">
         <div class="declaration-label">Today's Declaration</div>
-        <div class="declaration-text">&ldquo;Father, I thank You that Your word never fails. I declare that faith is rising in me right now as I hear it &mdash; faith for my family, faith for my health, faith for my future. Whatever I am facing today, I speak Your promise over it, and I believe it is already done in Jesus' name.&rdquo;</div>
-        <div class="declaration-ref">Romans 10:17 &middot; Mark 11:24</div>
+        <div class="declaration-text">&ldquo;Father, I step into this Thursday under an open heaven. What You have spoken over my life will not return empty. This day is covered, ordered, and aligned with Your purpose. I declare that Thursday is a day of advancement. What was delayed is moving. What was blocked is opening. What was hidden is being revealed. I rise above every limitation assigned to this season. Mercy goes before me, and favor follows me. I speak life over my mind, my body, my household, and every assignment in my hands. Confusion is silenced. Fear has no voice. Delay is broken. The work of my hands is established, and I will not labor in vain. I receive grace for this day. I walk in peace, not pressure. I move with confidence, knowing heaven has already gone ahead of me. Let it be evident by evening that Your hand was upon me. In Jesus' name, amen.&rdquo;</div>
+        <div class="declaration-ref">Isaiah 55:11 &middot; Psalm 90:17</div>
       </div>
 
       <div class="section-label">Pray This With Us</div>

@@ -107,6 +107,23 @@
     } catch (e) {}
   }
 
+  // Reading text size for the Bible — a few steps, remembered on this device,
+  // so anyone who needs larger type (or just prefers it) only has to set it once.
+  const READER_SIZES = [19, 21, 24, 27, 31, 35];
+  function getReaderSizeIndex() {
+    try {
+      const raw = parseInt(localStorage.getItem("wfn-app-reader-size-idx"), 10);
+      return isNaN(raw) ? 1 : Math.min(Math.max(raw, 0), READER_SIZES.length - 1);
+    } catch (e) {
+      return 1;
+    }
+  }
+  function applyReaderSize(idx) {
+    document.documentElement.style.setProperty("--verse-font-size", READER_SIZES[idx] + "px");
+    try { localStorage.setItem("wfn-app-reader-size-idx", String(idx)); } catch (e) {}
+  }
+  applyReaderSize(getReaderSizeIndex()); // apply immediately on app load, before any chapter renders
+
   // ---------------------------------------------------------------------
   // Views
   // ---------------------------------------------------------------------
@@ -251,6 +268,11 @@
           Next <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
         </button>
       </div>
+      <div class="text-size-row">
+        <span class="text-size-label">Text Size</span>
+        <button class="text-size-btn" id="textSizeDown" aria-label="Smaller text">A</button>
+        <button class="text-size-btn" id="textSizeUp" aria-label="Larger text">A</button>
+      </div>
       <div class="verse-list" id="verseList">${verseHtml}</div>
     `;
     viewEl.scrollTo(0, 0);
@@ -261,6 +283,17 @@
         btn.addEventListener("click", () => { location.hash = btn.dataset.href; });
       }
     });
+
+    const downBtn = document.getElementById("textSizeDown");
+    const upBtn = document.getElementById("textSizeUp");
+    const refreshSizeBtns = () => {
+      const idx = getReaderSizeIndex();
+      downBtn.disabled = idx <= 0;
+      upBtn.disabled = idx >= READER_SIZES.length - 1;
+    };
+    refreshSizeBtns();
+    downBtn.addEventListener("click", () => { applyReaderSize(Math.max(0, getReaderSizeIndex() - 1)); refreshSizeBtns(); });
+    upBtn.addEventListener("click", () => { applyReaderSize(Math.min(READER_SIZES.length - 1, getReaderSizeIndex() + 1)); refreshSizeBtns(); });
 
     document.getElementById("verseList").addEventListener("click", (e) => {
       const p = e.target.closest(".v");

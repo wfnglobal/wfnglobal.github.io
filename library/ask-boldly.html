@@ -42,6 +42,7 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .book-sub{font-family:var(--font-display); font-style:italic; font-size:1.15rem; color:var(--ink-2); text-align:center; max-width:480px; margin:0 auto 22px; line-height:1.5;}
 .book-meta{display:flex; justify-content:center; gap:14px; font-size:12.5px; color:var(--ink-3); margin-bottom:30px; font-weight:500; flex-wrap:wrap;}
 .hero-cta{display:flex; justify-content:center; gap:12px; flex-wrap:wrap;}
+.copyright-line{margin-top:18px; text-align:center; font-size:11.5px; color:var(--ink-3);}
 .btn{display:inline-flex; align-items:center; gap:7px; border-radius:100px; font-family:var(--font-body); font-size:13.5px; font-weight:600; padding:11px 24px; text-decoration:none; background:var(--gold); color:#FFFDF8; border:1px solid transparent;}
 .btn-outline{background:transparent; color:var(--gold); border-color:var(--gold);}
 
@@ -63,6 +64,9 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .toc-list a{display:flex; align-items:baseline; gap:12px; padding:9px 2px; text-decoration:none; color:var(--ink); font-size:14.5px; font-weight:500; border-bottom:1px solid var(--border);}
 .toc-list li:last-child a{border-bottom:none;}
 .toc-num{font-family:var(--font-display); font-style:italic; color:var(--gold); font-size:14px; flex-shrink:0; width:18px;}
+
+.legal-block{max-width:520px; margin:0 auto 48px; text-align:center;}
+.legal-block p{font-size:11.5px; color:var(--ink-3); line-height:1.7; margin-bottom:8px;}
 
 /* ── chapters ─────────────────────────────────── */
 .chapter{max-width:680px; margin:0 auto; padding:56px 0; border-top:1px solid var(--border);}
@@ -93,10 +97,12 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
   <div class="header-inner gutter">
     <div class="logo-mark">
       <svg viewBox="0 0 48 48" aria-hidden="true">
-        <circle cx="24" cy="24" r="20" fill="none" stroke="#9C7A34" stroke-width="1.3"/>
-        <path d="M24 17 C19.5 14 13.5 14 9.5 16 L9.5 29 C13.5 27 19.5 27 24 30 C28.5 27 34.5 27 38.5 29 L38.5 16 C34.5 14 28.5 14 24 17 Z" fill="none" stroke="#9C7A34" stroke-width="1.3" stroke-linejoin="round"/>
-        <line x1="24" y1="17" x2="24" y2="30" stroke="#9C7A34" stroke-width="1.1"/>
-        <path d="M24 5 C21.5 9 20.5 11.5 22 14 C22.8 15.3 25.2 15.3 26 14 C27.5 11.5 26.5 9 24 5 Z" fill="#C9A968" stroke="#9C7A34" stroke-width="1"/>
+        <defs><linearGradient id="navLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
+        </linearGradient></defs>
+        <circle cx="24" cy="24" r="21.5" fill="none" stroke="#9C7A34" stroke-width="0.9"/>
+        <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#navLogoGrad)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
       </svg>
       <span class="logo-text">Word <em>&amp;</em> Faith Network</span>
     </div>
@@ -116,46 +122,53 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
   <div class="book-hero gutter">
     <div class="cover-wrap">
       <svg viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="covTitle covDesc">
-        <title id="covTitle">Ask Boldly — Word and Faith Network</title>
-        <desc id="covDesc">Book cover: deep ink background with radiating gold arcs, the title Ask Boldly in serif type, and the Word and Faith Network mark.</desc>
+        <title id="covTitle">Ask Boldly — Word and Faith Network, by Oladapo Olaleye</title>
+        <desc id="covDesc">Book cover: deep ink background with radiating gold rays from the Word and Faith Network mark, the bold title Ask Boldly, a tagline, and the author's name.</desc>
         <defs>
           <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#2A2217"/>
-            <stop offset="55%" stop-color="#1B1611"/>
-            <stop offset="100%" stop-color="#120E0A"/>
+            <stop offset="0%" stop-color="#332B1C"/>
+            <stop offset="50%" stop-color="#1D1810"/>
+            <stop offset="100%" stop-color="#100C08"/>
           </linearGradient>
-          <radialGradient id="glow" cx="50%" cy="34%" r="55%">
-            <stop offset="0%" stop-color="#C9A968" stop-opacity="0.35"/>
-            <stop offset="55%" stop-color="#C9A968" stop-opacity="0.08"/>
+          <radialGradient id="glow" cx="50%" cy="26%" r="60%">
+            <stop offset="0%" stop-color="#C9A968" stop-opacity="0.45"/>
+            <stop offset="55%" stop-color="#C9A968" stop-opacity="0.1"/>
             <stop offset="100%" stop-color="#C9A968" stop-opacity="0"/>
           </radialGradient>
           <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#F0DFAE"/>
+            <stop offset="0%" stop-color="#F6E8BE"/>
+            <stop offset="100%" stop-color="#C9A968"/>
+          </linearGradient>
+          <linearGradient id="flameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#F6E8BE"/>
             <stop offset="100%" stop-color="#C9A968"/>
           </linearGradient>
         </defs>
         <rect width="600" height="900" fill="url(#bgGrad)"/>
         <rect width="600" height="900" fill="url(#glow)"/>
-        <g stroke="#C9A968" fill="none" opacity="0.5">
-          <circle cx="300" cy="300" r="90" stroke-width="1"/>
-          <circle cx="300" cy="300" r="140" stroke-width="1" opacity="0.75"/>
-          <circle cx="300" cy="300" r="190" stroke-width="1" opacity="0.55"/>
-          <circle cx="300" cy="300" r="240" stroke-width="1" opacity="0.35"/>
-          <circle cx="300" cy="300" r="290" stroke-width="1" opacity="0.18"/>
+        <g stroke="#C9A968" stroke-width="1" opacity="0.45">
+          <line x1="300" y1="230" x2="90" y2="30"/>
+          <line x1="300" y1="230" x2="300" y2="-10"/>
+          <line x1="300" y1="230" x2="510" y2="30"/>
+          <line x1="300" y1="230" x2="40" y2="150"/>
+          <line x1="300" y1="230" x2="560" y2="150"/>
         </g>
-        <circle cx="300" cy="300" r="5" fill="#F0DFAE"/>
-        <rect x="34" y="34" width="532" height="832" fill="none" stroke="#C9A968" stroke-width="1" opacity="0.5"/>
-        <g transform="translate(300,138)" opacity="0.92">
-          <path d="M0 -17 C -17.5 -24 -29 -24 -37 -20 L -37 10 C -29 6 -17.5 6 0 14 C 17.5 6 29 6 37 10 L 37 -20 C 29 -24 17.5 -24 0 -17 Z" fill="none" stroke="#E9D9AE" stroke-width="1.4" stroke-linejoin="round"/>
-          <line x1="0" y1="-17" x2="0" y2="14" stroke="#E9D9AE" stroke-width="1.1"/>
-          <path d="M0 -44 C -4.5 -37 -6 -31.5 -3 -27 C -1 -24 4 -24 6 -27 C 9 -31.5 7.5 -37 0 -44 Z" fill="#C9A968" stroke="#E9D9AE" stroke-width="0.8"/>
+        <rect x="28" y="28" width="544" height="844" fill="none" stroke="#C9A968" stroke-width="1" opacity="0.55"/>
+        <rect x="38" y="38" width="524" height="824" fill="none" stroke="#C9A968" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(300,170)">
+          <circle cx="0" cy="0" r="54" fill="none" stroke="#C9A968" stroke-width="1.2" opacity="0.85"/>
+          <path d="M-45 20 L-33 -36 L-19.75 6.75 L0 -22.5 L19.75 6.75 L33 -36 L45 20" fill="none" stroke="url(#flameGrad)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M0 -22.5 C-5.6 -32.5 -4.4 -43 0 -54 C4.4 -43 5.6 -32.5 0 -22.5 Z" fill="#F6E8BE"/>
         </g>
-        <text x="300" y="470" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="88" font-weight="600" fill="url(#goldText)" letter-spacing="2">ASK</text>
-        <text x="300" y="560" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="88" font-weight="600" fill="url(#goldText)" letter-spacing="2">BOLDLY</text>
-        <line x1="220" y1="600" x2="380" y2="600" stroke="#C9A968" stroke-width="1" opacity="0.7"/>
-        <text x="300" y="636" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="21" fill="#D8C79C">Why Some Prayers Move Heaven</text>
-        <text x="300" y="665" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="21" fill="#D8C79C">and Others Don't</text>
-        <text x="300" y="800" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13" font-weight="700" letter-spacing="3.5" fill="#C9A968">WORD &amp; FAITH NETWORK</text>
+        <text x="300" y="330" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13" font-weight="700" letter-spacing="5" fill="#C9A968">WORD &amp; FAITH NETWORK</text>
+        <line x1="255" y1="352" x2="345" y2="352" stroke="#C9A968" stroke-width="1" opacity="0.6"/>
+        <text x="300" y="460" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="98" font-weight="900" fill="url(#goldText)" letter-spacing="1">ASK</text>
+        <text x="300" y="558" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="98" font-weight="900" fill="url(#goldText)" letter-spacing="1">BOLDLY</text>
+        <line x1="200" y1="590" x2="400" y2="590" stroke="#C9A968" stroke-width="1" opacity="0.7"/>
+        <text x="300" y="622" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="22" fill="#E3D3A4">Why Some Prayers Move Heaven</text>
+        <text x="300" y="652" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="22" fill="#E3D3A4">and Others Don't</text>
+        <text x="300" y="700" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13.5" font-weight="600" letter-spacing="1.5" fill="#9C8A5E" font-style="italic">The prayers that move Heaven aren't louder. They're aimed right.</text>
+        <text x="300" y="800" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#F0DFAE">OLADAPO OLALEYE</text>
         <text x="300" y="822" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="10.5" letter-spacing="2" fill="#8C8370">BOOK ONE &#183; THE LIBRARY</text>
       </svg>
     </div>
@@ -163,16 +176,25 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
     <h1 class="book-title">Ask Boldly</h1>
     <p class="book-sub">Why Some Prayers Move Heaven and Others Don't</p>
     <div class="book-meta">
+      <span>By Oladapo Olaleye</span>
+      <span>&middot;</span>
       <span>Word and Faith Network</span>
       <span>&middot;</span>
       <span>8 Chapters</span>
-      <span>&middot;</span>
-      <span>~30 min read</span>
     </div>
     <div class="hero-cta">
       <a class="btn" href="#toc">Begin Reading →</a>
+      <a class="btn btn-outline" href="../assets/library/ask-boldly.pdf" download>Download PDF</a>
       <a class="btn btn-outline" href="/library/">All Books</a>
     </div>
+    <p class="copyright-line">&copy; 2026 Oladapo Olaleye &amp; Word and Faith Network. All rights reserved.</p>
+  </div>
+
+  <div class="legal-block gutter">
+    <p><strong style="color:var(--ink-2);">Ask Boldly: Why Some Prayers Move Heaven and Others Don't</strong></p>
+    <p>Copyright &copy; 2026 by Oladapo Olaleye. Published by Word and Faith Network.</p>
+    <p>All rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form or by any means &mdash; including photocopying, recording, or other electronic or mechanical methods &mdash; without prior written permission from the publisher, except for brief quotations in reviews and other noncommercial uses permitted by copyright law.</p>
+    <p>Unless otherwise noted, scripture quotations are taken from the King James Version (KJV), public domain.</p>
   </div>
 
   <div class="book-section gutter">
@@ -358,7 +380,7 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
       <a href="/library/">Library</a>
       <a href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
     </div>
-    <div class="footer-copy">Word and Faith Network &middot; wfnglobal.org</div>
+    <div class="footer-copy">&copy; 2026 Word and Faith Network &middot; wfnglobal.org</div>
   </div>
 </footer>
 

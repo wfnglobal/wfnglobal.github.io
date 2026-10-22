@@ -23,6 +23,8 @@ h1,h2,h3{font-family:var(--font-display); text-wrap:balance; font-weight:600;}
 
 body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:101; background:rgba(251,248,241,0.92);}
 .site-header{position:sticky; top:env(safe-area-inset-top,0px); z-index:100; background:rgba(251,248,241,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--border);}
+.read-progress-track{position:sticky; top:calc(env(safe-area-inset-top,0px) + 53px); z-index:99; height:3px; background:var(--border);}
+.read-progress-bar{height:100%; width:0%; background:linear-gradient(90deg, var(--gold-light), var(--gold)); transition:width .08s linear;}
 .header-inner.gutter{max-width:760px; margin:0 auto; padding-block:14px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
 .logo-mark{display:flex; align-items:center; gap:9px; min-width:0;}
 .logo-mark svg{width:24px; height:24px; flex-shrink:0;}
@@ -42,6 +44,15 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .hero-cta{display:flex; justify-content:center; gap:12px; flex-wrap:wrap;}
 .btn{display:inline-flex; align-items:center; gap:7px; border-radius:100px; font-family:var(--font-body); font-size:13.5px; font-weight:600; padding:11px 24px; text-decoration:none; background:var(--gold); color:#FFFDF8; border:1px solid transparent;}
 .btn-outline{background:transparent; color:var(--gold); border-color:var(--gold);}
+
+/* ── resume banner ────────────────────────────── */
+.resume-banner{display:none; align-items:center; justify-content:space-between; gap:14px; max-width:680px; margin:24px auto 0; padding:14px 18px; background:var(--surface-3); border:1px solid var(--border); border-radius:12px; flex-wrap:wrap;}
+.resume-banner.is-visible{display:flex;}
+.resume-text{font-size:13.5px; color:var(--ink-2); line-height:1.5;}
+.resume-text strong{color:var(--ink); font-weight:600;}
+.resume-actions{display:flex; align-items:center; gap:14px; flex-shrink:0;}
+.resume-btn{font-size:12.5px; font-weight:700; color:var(--gold); text-decoration:none; white-space:nowrap;}
+.resume-dismiss{background:none; border:none; color:var(--ink-3); font-size:12px; cursor:pointer; padding:4px; line-height:1;}
 
 /* ── intro / toc ──────────────────────────────── */
 .book-section{max-width:680px; margin:0 auto; padding-block:8px 40px;}
@@ -92,8 +103,16 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
     <a class="back-link" href="/library/">&larr; The Library</a>
   </div>
 </header>
+<div class="read-progress-track"><div class="read-progress-bar" id="readProgressBar"></div></div>
 
 <main>
+  <div class="resume-banner gutter" id="resumeBanner">
+    <p class="resume-text">You left off at <strong id="resumeLabel"></strong></p>
+    <div class="resume-actions">
+      <a href="#" class="resume-btn" id="resumeBtn">Continue reading →</a>
+      <button class="resume-dismiss" id="resumeDismiss" type="button" aria-label="Dismiss">✕</button>
+    </div>
+  </div>
   <div class="book-hero gutter">
     <div class="cover-wrap">
       <svg viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="covTitle covDesc">
@@ -342,3 +361,66 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
     <div class="footer-copy">Word and Faith Network &middot; wfnglobal.org</div>
   </div>
 </footer>
+
+<script>
+(function(){
+  try{
+    var STORE_KEY = 'wfn-library-ask-boldly-progress';
+    var chapters = Array.prototype.slice.call(document.querySelectorAll('.chapter'));
+    var titles = {};
+    chapters.forEach(function(ch){
+      var h = ch.querySelector('.chapter-title');
+      var eyebrow = ch.querySelector('.chapter-eyebrow');
+      titles[ch.id] = (eyebrow ? eyebrow.textContent + ': ' : '') + (h ? h.textContent : ch.id);
+    });
+
+    var bar = document.getElementById('readProgressBar');
+    var banner = document.getElementById('resumeBanner');
+    var label = document.getElementById('resumeLabel');
+    var btn = document.getElementById('resumeBtn');
+    var dismiss = document.getElementById('resumeDismiss');
+
+    // Offer to resume, if we have a saved spot and the reader scrolls back in fresh.
+    var saved = null;
+    try{ saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); }catch(e){}
+    if (saved && saved.chapterId && titles[saved.chapterId] && window.scrollY < 400) {
+      label.textContent = titles[saved.chapterId];
+      btn.href = '#' + saved.chapterId;
+      banner.classList.add('is-visible');
+    }
+    function hideBanner(){ banner.classList.remove('is-visible'); }
+    if (dismiss) dismiss.addEventListener('click', hideBanner);
+    if (btn) btn.addEventListener('click', hideBanner);
+
+    // Track reading progress across the article content, and which chapter is in view.
+    var content = document.querySelector('main');
+    var currentChapter = null;
+    var ticking = false;
+
+    function update(){
+      ticking = false;
+      var total = content.scrollHeight - window.innerHeight;
+      var scrolled = Math.min(Math.max(window.scrollY - content.offsetTop, 0), total);
+      var pct = total > 0 ? (scrolled / total) * 100 : 0;
+      if (bar) bar.style.width = pct.toFixed(1) + '%';
+
+      var viewLine = window.scrollY + 140;
+      var active = null;
+      chapters.forEach(function(ch){
+        if (ch.offsetTop <= viewLine) active = ch;
+      });
+      if (active && active.id !== currentChapter) {
+        currentChapter = active.id;
+        try{
+          localStorage.setItem(STORE_KEY, JSON.stringify({ chapterId: currentChapter, savedAt: Date.now() }));
+        }catch(e){}
+      }
+    }
+    function onScroll(){
+      if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    update();
+  }catch(e){ /* progress tracking is a nicety, never block the page */ }
+})();
+</script>

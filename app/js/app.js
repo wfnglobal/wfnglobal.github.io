@@ -488,38 +488,71 @@
     `;
   }
 
+  var LIBRARY_BOOKS = [
+    {
+      badge: "Book Three", slug: "not-consumed",
+      top: "NOT", bottom: "CONSUMED",
+      bg0: "#3B1740", bg1: "#1D0C22", bg2: "#0A0509",
+      gold0: "#F6E8BE", gold1: "#C9A968",
+      title: "Not Consumed",
+      desc: "Sin took the covering. Mercy would not let go — what sin costs us, and the faithfulness of Christ that keeps us from being consumed."
+    },
+    {
+      badge: "Book Two", slug: "look-back-look-forward",
+      top: "LOOK BACK,", bottom: "LOOK FORWARD",
+      bg0: "#2A3F2E", bg1: "#162419", bg2: "#0A120B",
+      gold0: "#F6E8BE", gold1: "#C9A968",
+      title: "Look Back, Look Forward",
+      desc: "Thank God for the past. Trust Him for what's next — eight chapters on remembering rightly and stepping forward without fear."
+    },
+    {
+      badge: "Book One", slug: "ask-boldly",
+      top: "ASK", bottom: "BOLDLY",
+      bg0: "#332B1C", bg1: "#1D1810", bg2: "#100C08",
+      gold0: "#F6E8BE", gold1: "#C9A968",
+      title: "Ask Boldly",
+      desc: "Why some prayers move Heaven and others don't — eight chapters on boldness, honest motive, and faith that doesn't faint."
+    }
+  ];
+
   function viewLibrary() {
     setHeader("Library", true);
     setActiveTab("library");
-    viewEl.innerHTML = `
-      <div class="section-label">Book One</div>
+    viewEl.innerHTML = LIBRARY_BOOKS.map(function(b, i){
+      var gradId = "libBg" + i, textId = "libGold" + i;
+      var topSize = b.top.length > 8 ? 46 : 78;
+      var bottomSize = b.bottom.length > 8 ? 46 : 78;
+      return `
+      <div class="section-label">${esc(b.badge)}</div>
       <div class="library-row">
         <div class="library-cover">
           <svg viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
             <defs>
-              <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#332B1C"/><stop offset="50%" stop-color="#1D1810"/><stop offset="100%" stop-color="#100C08"/>
+              <linearGradient id="${gradId}" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="${b.bg0}"/><stop offset="50%" stop-color="${b.bg1}"/><stop offset="100%" stop-color="${b.bg2}"/>
               </linearGradient>
-              <linearGradient id="goldText2" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#F6E8BE"/><stop offset="100%" stop-color="#C9A968"/>
+              <linearGradient id="${textId}" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="${b.gold0}"/><stop offset="100%" stop-color="${b.gold1}"/>
               </linearGradient>
             </defs>
-            <rect width="600" height="900" fill="url(#bgGrad2)"/>
-            <text x="300" y="460" text-anchor="middle" font-family="Georgia, serif" font-size="98" font-weight="900" fill="url(#goldText2)">ASK</text>
-            <text x="300" y="558" text-anchor="middle" font-family="Georgia, serif" font-size="98" font-weight="900" fill="url(#goldText2)">BOLDLY</text>
+            <rect width="600" height="900" fill="url(#${gradId})"/>
+            <text x="300" y="460" text-anchor="middle" font-family="Georgia, serif" font-size="${topSize}" font-weight="900" fill="url(#${textId})">${esc(b.top)}</text>
+            <text x="300" y="548" text-anchor="middle" font-family="Georgia, serif" font-size="${bottomSize}" font-weight="900" fill="url(#${textId})">${esc(b.bottom)}</text>
             <text x="300" y="800" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#F0DFAE">OLADAPO OLALEYE</text>
           </svg>
         </div>
         <div class="body">
-          <h3>Ask Boldly</h3>
+          <h3>${esc(b.title)}</h3>
           <div class="author">By Oladapo Olaleye &middot; Word and Faith Network</div>
-          <p>Why some prayers move Heaven and others don't. A new title from the Library every two weeks.</p>
+          <p>${esc(b.desc)}</p>
           <div class="library-actions">
-            <a class="btn btn-sm" href="/library/ask-boldly.html">Read</a>
-            <a class="btn btn-outline btn-sm" href="/assets/library/ask-boldly.pdf" download>Download PDF</a>
+            <a class="btn btn-sm" href="/library/${b.slug}.html">Read</a>
+            <a class="btn btn-outline btn-sm" href="/assets/library/${b.slug}.pdf" download>Download PDF</a>
           </div>
         </div>
       </div>
+      `;
+    }).join("") + `
       <a class="home-row" href="/library/" style="margin-top:4px;">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/></svg></div>
         <div class="body"><h3>Browse the Library</h3><p>All titles on wfnglobal.org</p></div>

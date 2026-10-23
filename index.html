@@ -178,8 +178,9 @@ body::before{
 .watch-cta{text-align:center;}
 
 /* ── prayer / community cards ────────────────────────────── */
-.prayer-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:28px;}
-@media (max-width:860px){ .prayer-grid{grid-template-columns:1fr;} }
+.prayer-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:28px;}
+@media (max-width:980px){ .prayer-grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:600px){ .prayer-grid{grid-template-columns:1fr;} }
 .prayer-card{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:26px 22px; min-width:0; display:flex; flex-direction:column; gap:12px;}
 .prayer-card-top{border-top:3px solid var(--gold); margin:-26px -22px 0; border-radius:14px 14px 0 0; height:3px;}
 .prayer-badge{align-self:flex-start; font-size:10px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--blue); background:rgba(94,124,148,0.12); padding:4px 10px; border-radius:100px;}
@@ -503,6 +504,17 @@ body::before{
       <div class="declaration-ref">Isaiah 55:11 · Psalm 90:17</div>
     </div>
     <div class="prayer-grid">
+      <div class="prayer-card">
+        <div class="prayer-card-top"></div>
+        <span class="prayer-badge">Daily</span>
+        <h3 class="prayer-card-title">Prayer &amp; Bible Study — WhatsApp</h3>
+        <p class="prayer-card-desc">Join a daily WhatsApp group for prayer requests, Bible study, and encouragement with the WFN family — wherever you are.</p>
+        <div class="prayer-meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20l1.4-4.1A8 8 0 1 1 9 18.8L4 20Z"/><path d="M8.5 9.5c0 3.5 2.5 6 6 6"/></svg>
+          <span>Open to every believer, everywhere</span>
+        </div>
+        <a class="btn btn-outline btn-sm" href="https://chat.whatsapp.com/J0JkLpylQiVKTHKcJkaKEs?s=cl&amp;p=i&amp;mlu=4&amp;ilr=4&amp;iam=0" target="_blank" rel="noopener">Join on WhatsApp →</a>
+      </div>
       <div class="prayer-card">
         <div class="prayer-card-top"></div>
         <span class="prayer-badge">Weekly</span>

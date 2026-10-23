@@ -124,7 +124,240 @@
     document.documentElement.style.setProperty("--verse-font-size", READER_SIZES[idx] + "px");
     try { localStorage.setItem("wfn-app-reader-size-idx", String(idx)); } catch (e) {}
   }
+
+  // Reading font — a short, deliberate list including an accessibility-first face.
+  const READER_FONTS = [
+    { key: "sans", label: "Sans", stack: "'Inter', -apple-system, system-ui, sans-serif" },
+    { key: "serif", label: "Serif", stack: "'Fraunces', Georgia, serif" },
+    { key: "accessible", label: "Accessible", stack: "'Atkinson Hyperlegible', Arial, sans-serif" }
+  ];
+  function getReaderFont() {
+    try { return localStorage.getItem("wfn-app-reader-font") || "sans"; } catch (e) { return "sans"; }
+  }
+  function applyReaderFont(key) {
+    const f = READER_FONTS.find((x) => x.key === key) || READER_FONTS[0];
+    document.documentElement.style.setProperty("--verse-font-family", f.stack);
+    try { localStorage.setItem("wfn-app-reader-font", f.key); } catch (e) {}
+  }
+
+  // Reading background — photos behind the verse text, with a soft wash over them
+  // so the text stays readable regardless of the image. All ten are free-license
+  // (Unsplash License) photos; "Default" leaves the plain reading surface.
+  const READER_BACKGROUNDS = [
+    { key: "none", label: "Default" },
+    { key: "sea", label: "Golden Hour Sea", url: "https://images.unsplash.com/photo-1567875278694-887f235162eb" },
+    { key: "candle", label: "Candlelight", url: "https://images.unsplash.com/photo-1660985759158-76fc3fbc296f" },
+    { key: "scripture", label: "Open Scripture", url: "https://images.unsplash.com/photo-1710921156556-9e2ae23f0164" },
+    { key: "harvest", label: "Harvest Field", url: "https://images.unsplash.com/photo-1758573728869-d25eb4bafb67" },
+    { key: "bokeh", label: "Warm Bokeh", url: "https://images.unsplash.com/photo-1749631931307-eb896adfa1e2" },
+    { key: "glory", label: "Rays of Glory", url: "https://images.unsplash.com/photo-1780047053902-9bcf0f8af9fb" },
+    { key: "dawn", label: "Misty Dawn", url: "https://images.unsplash.com/photo-1768069853451-4f6ad57d6917" },
+    { key: "stars", label: "Starlit Sky", url: "https://images.unsplash.com/photo-1762474610289-baef9ce2f68e" },
+    { key: "sky", label: "Open Sky", url: "https://images.unsplash.com/photo-1768667521251-e1ac74d831cd" },
+    { key: "meadow", label: "Sunlit Meadow", url: "https://images.unsplash.com/photo-1480289873380-1797d1670768" }
+  ];
+  function getReaderBg() {
+    try { return localStorage.getItem("wfn-app-reader-bg") || "none"; } catch (e) { return "none"; }
+  }
+  function applyReaderBg(key) {
+    const b = READER_BACKGROUNDS.find((x) => x.key === key) || READER_BACKGROUNDS[0];
+    try { localStorage.setItem("wfn-app-reader-bg", b.key); } catch (e) {}
+    const el = document.getElementById("readerSurface");
+    if (!el) return;
+    if (!b.url) {
+      el.style.background = "";
+      el.removeAttribute("data-bg");
+      return;
+    }
+    el.style.background =
+      "linear-gradient(rgba(251,248,241,0.88), rgba(251,248,241,0.88)), url('" + b.url + "?w=1200&q=70&fm=jpg&auto=format&fit=crop') center/cover no-repeat";
+    el.setAttribute("data-bg", b.key);
+  }
+
   applyReaderSize(getReaderSizeIndex()); // apply immediately on app load, before any chapter renders
+  applyReaderFont(getReaderFont());
+
+  // Other Bible versions and translation are fetched live (all public-domain
+  // versions, free APIs) — the bundled KJV above is what keeps the app's core
+  // reading experience working fully offline.
+  const BIBLE_API = "https://bible-api.com/";
+  const DICTIONARY_API = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+  const TRANSLATE_API = "https://api.mymemory.translated.net/get";
+
+  const BIBLE_VERSIONS = [
+    { code: "kjv", name: "King James Version (offline)" },
+    { code: "web", name: "World English Bible" },
+    { code: "asv", name: "American Standard Version" },
+    { code: "bbe", name: "Bible in Basic English" },
+    { code: "darby", name: "Darby Translation" },
+    { code: "ylt", name: "Young's Literal Translation" },
+    { code: "dra", name: "Douay-Rheims" },
+    { code: "webbe", name: "World English Bible, British Edition" },
+    { code: "oeb-us", name: "Open English Bible, US" },
+    { code: "clementine", name: "Clementine Vulgate (Latin)" }
+  ];
+
+  const TRANSLATE_LANGS = [
+    { code: "es", name: "Español" },
+    { code: "fr", name: "Français" },
+    { code: "pt", name: "Português" },
+    { code: "yo", name: "Yorùbá" },
+    { code: "ig", name: "Igbo" },
+    { code: "ha", name: "Hausa" },
+    { code: "sw", name: "Kiswahili" },
+    { code: "de", name: "Deutsch" },
+    { code: "zh", name: "中文" },
+    { code: "ar", name: "العربية" }
+  ];
+
+  // Small fallback glossary for common KJV archaic forms a general dictionary
+  // won't have (checked before the live dictionary lookup).
+  const ARCHAIC_WORDS = {
+    thee: "you (object form, archaic)", thou: "you (subject form, archaic)",
+    thy: "your (archaic)", thine: "yours / your (archaic)", ye: "you (plural, archaic)",
+    hath: "has", doth: "does", shalt: "shall (archaic second person)",
+    wilt: "will (archaic second person)", art: "are (archaic second person singular)",
+    unto: "to", whosoever: "whoever", whomsoever: "whomever",
+    verily: "truly, certainly", behold: "look; pay attention",
+    saith: "says", cometh: "comes", goeth: "goes", knowest: "know (archaic second person)",
+    wherefore: "for what reason; so, therefore", giveth: "gives", maketh: "makes",
+    leadeth: "leads", restoreth: "restores", walketh: "walks", abideth: "remains, stays",
+    suffereth: "allows, endures", worketh: "works", loveth: "loves", liveth: "lives",
+    bringeth: "brings", seeketh: "seeks", findeth: "finds", asketh: "asks",
+    nigh: "near", betwixt: "between", peradventure: "perhaps", howbeit: "nevertheless",
+    forasmuch: "seeing that, since", henceforth: "from now on"
+  };
+
+  // Walks the rendered verse paragraphs and wraps each word in a tappable
+  // button (for the definition popover), leaving existing markup — red-letter
+  // spans, italics, verse numbers — untouched.
+  function wrapWordsForDefine(root) {
+    function walk(node) {
+      if (node.nodeType === 3) {
+        const text = node.nodeValue;
+        if (!/[A-Za-z]/.test(text)) return;
+        const frag = document.createDocumentFragment();
+        const re = /[A-Za-z']+/g;
+        let last = 0, m;
+        while ((m = re.exec(text))) {
+          if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "w";
+          btn.textContent = m[0];
+          frag.appendChild(btn);
+          last = re.lastIndex;
+        }
+        if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+        node.parentNode.replaceChild(frag, node);
+      } else if (node.nodeType === 1) {
+        if (node.classList && (node.classList.contains("vnum") || node.classList.contains("saved-dot") || node.classList.contains("w"))) return;
+        Array.from(node.childNodes).forEach(walk);
+      }
+    }
+    Array.from(root.querySelectorAll(".v")).forEach((p) => {
+      Array.from(p.childNodes).forEach(walk);
+    });
+  }
+
+  function showWordPopover(btn) {
+    const word = btn.textContent;
+    const clean = word.replace(/[^A-Za-z']/g, "");
+    const key = clean.toLowerCase();
+    let pop = document.getElementById("wordPop");
+    if (!pop) {
+      pop = document.createElement("div");
+      pop.id = "wordPop";
+      pop.className = "word-pop";
+      pop.setAttribute("role", "status");
+      document.body.appendChild(pop);
+    }
+    function place() {
+      const r = btn.getBoundingClientRect();
+      pop.style.left = Math.max(12, Math.min(window.innerWidth - 272, r.left)) + "px";
+      pop.style.top = r.bottom + 10 + "px";
+    }
+    const archaic = ARCHAIC_WORDS[key];
+    pop.innerHTML = `<b>${esc(clean)}</b>${archaic ? esc(archaic) : "Looking up…"}`;
+    place();
+    pop.classList.add("show");
+    if (archaic) return;
+    fetch(DICTIONARY_API + encodeURIComponent(key))
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((json) => {
+        const meaning = json[0] && json[0].meanings && json[0].meanings[0];
+        const def = meaning && meaning.definitions && meaning.definitions[0] && meaning.definitions[0].definition;
+        pop.innerHTML = `<b>${esc(clean)}</b>${def ? esc(def) : "No definition found for this word."}`;
+        place();
+      })
+      .catch(() => {
+        pop.innerHTML = `<b>${esc(clean)}</b>No definition found for this word.`;
+        place();
+      });
+  }
+
+  document.addEventListener("click", (e) => {
+    const wbtn = e.target.closest(".w");
+    if (wbtn) { showWordPopover(wbtn); return; }
+    const pop = document.getElementById("wordPop");
+    if (pop && !e.target.closest("#wordPop")) pop.classList.remove("show");
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      const pop = document.getElementById("wordPop");
+      if (pop) pop.classList.remove("show");
+    }
+  });
+
+  function openReaderSettingsSheet() {
+    const curFont = getReaderFont();
+    const curBg = getReaderBg();
+    const fontPills = READER_FONTS.map(
+      (f) => `<button class="font-pill" data-font="${f.key}" data-active="${f.key === curFont ? 1 : 0}" type="button">${esc(f.label)}</button>`
+    ).join("");
+    const bgSwatches = READER_BACKGROUNDS.map((b) => {
+      const style = b.url ? `background-image:url('${b.url}?w=200&q=40&fm=jpg&auto=format&fit=crop')` : "background:var(--surface-2)";
+      return `<div><button class="bg-swatch" data-bg="${b.key}" data-active="${b.key === curBg ? 1 : 0}" type="button" style="${style}" aria-label="${esc(b.label)}"></button><span class="bg-swatch-label">${esc(b.label)}</span></div>`;
+    }).join("");
+
+    openSheet(`
+      <h3>Reading Settings</h3>
+      <div class="settings-group" style="margin-top:18px;">
+        <div class="settings-label">Text Size</div>
+        <div class="settings-size-row">
+          <button class="text-size-btn" id="stSizeDown" aria-label="Smaller text">A</button>
+          <span class="settings-size-val" id="stSizeVal">${READER_SIZES[getReaderSizeIndex()]}px</span>
+          <button class="text-size-btn" id="stSizeUp" aria-label="Larger text">A</button>
+        </div>
+      </div>
+      <div class="settings-group">
+        <div class="settings-label">Font</div>
+        <div class="font-pills" id="stFontPills">${fontPills}</div>
+      </div>
+      <div class="settings-group">
+        <div class="settings-label">Background</div>
+        <div class="bg-swatch-grid" id="stBgGrid">${bgSwatches}</div>
+      </div>
+    `);
+
+    const sizeVal = document.getElementById("stSizeVal");
+    const refreshSize = () => { sizeVal.textContent = READER_SIZES[getReaderSizeIndex()] + "px"; };
+    document.getElementById("stSizeDown").addEventListener("click", () => { applyReaderSize(Math.max(0, getReaderSizeIndex() - 1)); refreshSize(); });
+    document.getElementById("stSizeUp").addEventListener("click", () => { applyReaderSize(Math.min(READER_SIZES.length - 1, getReaderSizeIndex() + 1)); refreshSize(); });
+
+    document.getElementById("stFontPills").addEventListener("click", (e) => {
+      const btn = e.target.closest(".font-pill");
+      if (!btn) return;
+      applyReaderFont(btn.dataset.font);
+      sheetBodyEl.querySelectorAll(".font-pill").forEach((p) => (p.dataset.active = p === btn ? 1 : 0));
+    });
+    document.getElementById("stBgGrid").addEventListener("click", (e) => {
+      const btn = e.target.closest(".bg-swatch");
+      if (!btn) return;
+      applyReaderBg(btn.dataset.bg);
+      sheetBodyEl.querySelectorAll(".bg-swatch").forEach((s) => (s.dataset.active = s === btn ? 1 : 0));
+    });
+  }
 
   // ---------------------------------------------------------------------
   // Views
@@ -243,22 +476,17 @@
     if (chapter < 1 || chapter > data.chapters.length) chapter = 1;
     saveBiblePosition(slug, data.name, chapter);
 
-    const verses = data.chapters[chapter - 1];
-    const marks = WFNStore.getMarks();
-    const markFor = (vi) => marks.find((m) => m.bookSlug === slug && m.chapter === chapter && m.verse === vi + 1);
-    const verseHtml = verses
-      .map((v, i) => {
-        const m = markFor(i);
-        const colorAttr = m && m.color ? ` data-color="${m.color}"` : "";
-        const savedDot = m && m.saved ? `<span class="saved-dot"></span>` : "";
-        return `<p class="v" data-verse="${i + 1}"${colorAttr}><span class="vnum">${i + 1}</span>${v}${savedDot}</p>`;
-      })
-      .join("");
+    const kjvVerses = data.chapters[chapter - 1];
+    let activePlainTexts = kjvVerses.map((v) => WFNBible.plain(v));
+    let activeVersionCode = "kjv";
 
     const prevDisabled = chapter <= 1 ? "disabled" : "";
     const nextDisabled = chapter >= data.chapters.length ? "disabled" : "";
     const prevHref = chapter > 1 ? `#/bible/${slug}/${chapter - 1}` : "#";
     const nextHref = chapter < data.chapters.length ? `#/bible/${slug}/${chapter + 1}` : "#";
+
+    const versionOptions = BIBLE_VERSIONS.map((v) => `<option value="${v.code}">${esc(v.name)}</option>`).join("");
+    const langOptions = `<option value="">Translate…</option>` + TRANSLATE_LANGS.map((l) => `<option value="${l.code}">${esc(l.name)}</option>`).join("");
 
     viewEl.innerHTML = `
       <div class="reader-nav">
@@ -270,15 +498,24 @@
           Next <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
         </button>
       </div>
-      <div class="text-size-row">
-        <span class="text-size-label">Text Size</span>
-        <button class="text-size-btn" id="textSizeDown" aria-label="Smaller text">A</button>
-        <button class="text-size-btn" id="textSizeUp" aria-label="Larger text">A</button>
+      <div class="reader-toolbar">
+        <select class="reader-select" id="versionSelect" aria-label="Bible version">${versionOptions}</select>
+        <select class="reader-select" id="translateSelect" aria-label="Translate this chapter">${langOptions}</select>
+        <button class="reader-settings-btn" id="readerSettingsBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h11M19 7h1M4 17h1M9 17h11M4 12h7M15 12h5"/><circle cx="18" cy="7" r="2.2"/><circle cx="7" cy="17" r="2.2"/><circle cx="11" cy="12" r="2.2"/></svg>
+          Settings
+        </button>
       </div>
-      <div class="verse-list" id="verseList">${verseHtml}</div>
+      <p class="hint-row" id="defineHint">Tap any word for its meaning.</p>
+      <div class="reader-surface" id="readerSurface">
+        <div class="verse-list" id="verseList"></div>
+      </div>
+      <p class="translate-note" id="translateNote" hidden></p>
     `;
     viewEl.scrollTo(0, 0);
     window.scrollTo(0, 0);
+    applyReaderBg(getReaderBg());
+
     ["prevCh", "nextCh"].forEach((id) => {
       const btn = document.getElementById(id);
       if (btn && !btn.disabled) {
@@ -286,24 +523,99 @@
       }
     });
 
-    const downBtn = document.getElementById("textSizeDown");
-    const upBtn = document.getElementById("textSizeUp");
-    const refreshSizeBtns = () => {
-      const idx = getReaderSizeIndex();
-      downBtn.disabled = idx <= 0;
-      upBtn.disabled = idx >= READER_SIZES.length - 1;
-    };
-    refreshSizeBtns();
-    downBtn.addEventListener("click", () => { applyReaderSize(Math.max(0, getReaderSizeIndex() - 1)); refreshSizeBtns(); });
-    upBtn.addEventListener("click", () => { applyReaderSize(Math.min(READER_SIZES.length - 1, getReaderSizeIndex() + 1)); refreshSizeBtns(); });
-
-    document.getElementById("verseList").addEventListener("click", (e) => {
+    const verseListEl = document.getElementById("verseList");
+    verseListEl.addEventListener("click", (e) => {
+      if (e.target.closest(".w")) return; // word tap is handled by the global popover listener
       const p = e.target.closest(".v");
       if (!p) return;
       const vi = parseInt(p.dataset.verse, 10);
-      openVerseSheet(slug, data.name, chapter, vi, WFNBible.plain(verses[vi - 1]));
+      openVerseSheet(slug, data.name, chapter, vi, activePlainTexts[vi - 1] || "");
     });
 
+    function renderKJV() {
+      const marks = WFNStore.getMarks();
+      const markFor = (vi) => marks.find((m) => m.bookSlug === slug && m.chapter === chapter && m.verse === vi + 1);
+      verseListEl.innerHTML = kjvVerses
+        .map((v, i) => {
+          const m = markFor(i);
+          const colorAttr = m && m.color ? ` data-color="${m.color}"` : "";
+          const savedDot = m && m.saved ? `<span class="saved-dot"></span>` : "";
+          return `<p class="v" data-verse="${i + 1}"${colorAttr}><span class="vnum">${i + 1}</span>${v}${savedDot}</p>`;
+        })
+        .join("");
+      activePlainTexts = kjvVerses.map((v) => WFNBible.plain(v));
+      activeVersionCode = "kjv";
+      wrapWordsForDefine(verseListEl);
+    }
+
+    async function loadVersion(code) {
+      if (code === "kjv") { renderKJV(); return; }
+      const versionName = (BIBLE_VERSIONS.find((v) => v.code === code) || {}).name || code;
+      verseListEl.innerHTML = `<div class="search-status">Loading ${esc(versionName)}…</div>`;
+      try {
+        const ref = encodeURIComponent(`${data.name} ${chapter}`).replace(/%20/g, "+");
+        const res = await fetch(`${BIBLE_API}${ref}?translation=${code}`);
+        if (!res.ok) throw new Error("bad response");
+        const json = await res.json();
+        if (!json.verses || !json.verses.length) throw new Error("no verses");
+        verseListEl.innerHTML = json.verses
+          .map((v) => `<p class="v" data-verse="${v.verse}"><span class="vnum">${v.verse}</span>${esc(v.text.trim())}</p>`)
+          .join("");
+        activePlainTexts = json.verses.map((v) => v.text.trim());
+        activeVersionCode = code;
+        wrapWordsForDefine(verseListEl);
+      } catch (err) {
+        verseListEl.innerHTML = `<div class="skeleton-note">Couldn't load ${esc(versionName)} right now &mdash; check your connection, or <button class="link-btn" id="backToKjv" type="button">switch back to KJV</button>.</div>`;
+        const b = document.getElementById("backToKjv");
+        if (b) b.addEventListener("click", () => { document.getElementById("versionSelect").value = "kjv"; renderKJV(); });
+      }
+    }
+
+    async function translateChapter(langCode) {
+      const texts = activePlainTexts.slice();
+      const note = document.getElementById("translateNote");
+      verseListEl.innerHTML = texts
+        .map((t, i) => `<p class="v" data-verse="${i + 1}"><span class="vnum">${i + 1}</span><span class="tword" data-i="${i}">Translating…</span></p>`)
+        .join("");
+      note.hidden = false;
+      note.textContent = "Machine translation, for a quick read in another language. Switch Translate back to “Translate…” to use word definitions and highlighting on the original text.";
+      let idx = 0;
+      async function worker() {
+        while (idx < texts.length) {
+          const i = idx++;
+          try {
+            const url = `${TRANSLATE_API}?q=${encodeURIComponent(texts[i])}&langpair=en|${langCode}`;
+            const res = await fetch(url);
+            const json = await res.json();
+            const translated = json && json.responseData && json.responseData.translatedText ? json.responseData.translatedText : texts[i];
+            const span = verseListEl.querySelector(`.tword[data-i="${i}"]`);
+            if (span) span.textContent = translated;
+          } catch (err) {
+            const span = verseListEl.querySelector(`.tword[data-i="${i}"]`);
+            if (span) span.textContent = texts[i];
+          }
+        }
+      }
+      await Promise.all(Array.from({ length: Math.min(4, texts.length) }, worker));
+    }
+
+    document.getElementById("versionSelect").addEventListener("change", (e) => {
+      document.getElementById("translateSelect").value = "";
+      document.getElementById("translateNote").hidden = true;
+      loadVersion(e.target.value);
+    });
+    document.getElementById("translateSelect").addEventListener("change", (e) => {
+      const v = e.target.value;
+      if (!v) {
+        document.getElementById("translateNote").hidden = true;
+        loadVersion(activeVersionCode);
+        return;
+      }
+      translateChapter(v);
+    });
+    document.getElementById("readerSettingsBtn").addEventListener("click", openReaderSettingsSheet);
+
+    renderKJV();
     showNoteFab(() => openNoteSheet("bible", `bible:${slug}:${chapter}`, `${data.name} ${chapter}`));
   }
 
@@ -479,6 +791,12 @@
 
       <div class="section-label">Pray This With Us</div>
       <div class="card" style="margin-bottom:20px;">${pointsHtml}</div>
+
+      <div class="section-label">Prayer &amp; Bible Study</div>
+      <div class="card stack" style="margin-bottom:20px;">
+        <p style="font-size:13.5px; color:var(--ink-2); line-height:1.6;">Join a daily WhatsApp group for prayer requests, Bible study, and encouragement with the WFN family.</p>
+        <a class="btn btn-block" href="https://chat.whatsapp.com/J0JkLpylQiVKTHKcJkaKEs?s=cl&amp;p=i&amp;mlu=4&amp;ilr=4&amp;iam=0" target="_blank" rel="noopener">Join on WhatsApp</a>
+      </div>
 
       <div class="section-label">The Prayer Circle</div>
       <div class="card stack" style="margin-bottom:16px;">

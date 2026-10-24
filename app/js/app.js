@@ -224,20 +224,26 @@
   document.documentElement.setAttribute("data-rotate", getRotatePref() ? "on" : "off");
   document.documentElement.setAttribute("data-motion", getMotionPref() ? "reduced" : "normal");
 
-  // Vibrant gradient "scenes" used behind the Verse of the Day and Today's
-  // Declaration cards — cross-fading in pure CSS (see .bg-scene), so there's
-  // nothing to tear down between views and nothing to fetch.
-  const BG_SCENES = [
-    "linear-gradient(155deg,#FDEBD3 0%,#FFB199 45%,#FF7E67 75%,#4A6FA5 100%)",
-    "linear-gradient(155deg,#BDEFFF 0%,#4FC3C9 45%,#1F7A8C 75%,#0B4F6C 100%)",
-    "linear-gradient(155deg,#FFF6B7 0%,#C9E265 45%,#6FAE4A 75%,#2E6E3E 100%)",
-    "linear-gradient(155deg,#FFE9B3 0%,#FFB84D 45%,#E8792B 75%,#7A3E1D 100%)",
-    "linear-gradient(155deg,#E6F4FF 0%,#9FD3FF 45%,#4FA3E3 75%,#1F5C99 100%)",
-    "linear-gradient(155deg,#FFE2F0 0%,#FFB3D9 45%,#B98BFF 75%,#5B4B9E 100%)"
+  // Calm, free-license (Unsplash License) nature photography used behind the
+  // Verse of the Day and Today's Declaration cards — cross-fading slowly in
+  // pure CSS (see .bg-scene), each one lingering for several minutes so the
+  // change is restful, not distracting. Nothing to tear down between views.
+  const SCENE_SECONDS = 240; // ~4 minutes per photo
+  const BG_PHOTOS = [
+    "https://images.unsplash.com/photo-1768069853451-4f6ad57d6917", // Misty Dawn
+    "https://images.unsplash.com/photo-1567875278694-887f235162eb", // Golden Hour Sea
+    "https://images.unsplash.com/photo-1758573728869-d25eb4bafb67", // Harvest Field
+    "https://images.unsplash.com/photo-1768667521251-e1ac74d831cd", // Open Sky
+    "https://images.unsplash.com/photo-1480289873380-1797d1670768", // Sunlit Meadow
+    "https://images.unsplash.com/photo-1780047053902-9bcf0f8af9fb"  // Rays of Glory
   ];
   function bgScenesHtml() {
-    const step = 24 / BG_SCENES.length;
-    return BG_SCENES.map((bg, i) => `<div class="bg-scene" style="background:${bg}; animation-delay:${(i * step).toFixed(2)}s;"></div>`).join("");
+    const cycle = BG_PHOTOS.length * SCENE_SECONDS;
+    return BG_PHOTOS.map((url, i) => {
+      const bg = `url('${url}?w=900&q=70&fm=jpg&auto=format&fit=crop') center/cover no-repeat`;
+      const delay = (i * SCENE_SECONDS).toFixed(1);
+      return `<div class="bg-scene" style="background:${bg}; animation:bgSceneCycle ${cycle}s infinite; animation-delay:${delay}s;"></div>`;
+    }).join("");
   }
 
   // Other Bible versions and translation are fetched live (all public-domain
@@ -467,8 +473,8 @@
         <div class="verse-of-day-overlay"></div>
         <div class="verse-of-day-content">
           <div class="verse-of-day-label">Verse of the Day</div>
-          <div class="verse-of-day-text">&ldquo;${esc(verse.text)}&rdquo;</div>
           <div class="verse-of-day-ref">${esc(verse.ref)} KJV</div>
+          <div class="verse-of-day-text">${esc(verse.text)}</div>
         </div>
       </div>
 

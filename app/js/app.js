@@ -1265,6 +1265,8 @@
     const highlights = marks.filter((m) => m.color);
     const savedVerses = marks.filter((m) => m.saved);
     const prayers = WFNStore.getPrayers();
+    const streak = WFNStore.getStreak();
+    const daysThisYear = WFNStore.getDaysActiveThisYear();
 
     viewEl.innerHTML = `
       <div class="profile-header">
@@ -1272,6 +1274,19 @@
         <div>
           <h2 class="profile-name">${esc(profile.name)}</h2>
           <a class="profile-edit-link" href="#/profile/edit">Edit Profile</a>
+        </div>
+      </div>
+
+      <div class="activity-card">
+        <div class="activity-stat">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C9A968" stroke-width="1.7"><path d="M12 2c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1-1-2-1-2 2 1 3 4 3 6a6 6 0 0 1-12 0c0-4 2-5 2-7 0-1.5-.5-2.5-1-4 1 .3 2.5 1 3 0z"/></svg></div>
+          <div class="activity-num">${streak}</div>
+          <div class="activity-label">Day${streak === 1 ? "" : "s"} Streak</div>
+        </div>
+        <div class="activity-stat">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C9A968" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg></div>
+          <div class="activity-num">${daysThisYear}</div>
+          <div class="activity-label">Days in ${new Date().getFullYear()}</div>
         </div>
       </div>
 
@@ -1500,6 +1515,7 @@
   });
 
   window.addEventListener("DOMContentLoaded", () => {
+    WFNStore.recordActivityToday();
     route();
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/app/sw.js").catch(() => {});

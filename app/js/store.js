@@ -121,10 +121,54 @@ window.WFNStore = (function () {
     write(PRAYERS_KEY, getPrayers().filter((p) => p.id !== id));
   }
 
+  // ---- Activity: which calendar days (on this device) the app was opened,
+  // used for the streak and "days this year" counters on the Profile page.
+  const ACTIVITY_KEY = "wfn-app-activity"; // { "YYYY-MM-DD": true, ... }
+
+  function dateKey(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  }
+  function getActivity() {
+    return read(ACTIVITY_KEY, {});
+  }
+  function recordActivityToday() {
+    const activity = getActivity();
+    const key = dateKey(new Date());
+    if (!activity[key]) {
+      activity[key] = true;
+      write(ACTIVITY_KEY, activity);
+    }
+    return activity;
+  }
+  function getStreak() {
+    const activity = getActivity();
+    let streak = 0;
+    const d = new Date();
+    // A streak counts back from today; if today hasn't been recorded yet
+    // (shouldn't normally happen — the app records on launch) it falls back
+    // to checking from yesterday, so a streak in progress isn't shown as 0
+    // before today's visit has been written.
+    if (!activity[dateKey(d)]) d.setDate(d.getDate() - 1);
+    while (activity[dateKey(d)]) {
+      streak++;
+      d.setDate(d.getDate() - 1);
+    }
+    return streak;
+  }
+  function getDaysActiveThisYear() {
+    const activity = getActivity();
+    const year = String(new Date().getFullYear()) + "-";
+    return Object.keys(activity).filter((k) => k.indexOf(year) === 0).length;
+  }
+
   return {
     getProfile, saveProfile,
     getNotes, addNote, deleteNote,
     getMarks, getMark, setHighlight, toggleSaved, deleteMark,
     getPrayers, addPrayer, togglePrayerAnswered, deletePrayer,
+    recordActivityToday, getStreak, getDaysActiveThisYear,
   };
 })();

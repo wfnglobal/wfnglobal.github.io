@@ -1,0 +1,154 @@
+<title>Trust in the Lord With All Thine Heart</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap">
+
+<style>
+:root{
+  --bg:#FBF8F1; --surface:#FFFFFF; --surface-2:#F4EEE0; --surface-3:#EEE5D2;
+  --ink:#231F18; --ink-2:#564E3E; --ink-3:#8C8370;
+  --gold:#9C7A34; --gold-light:#C9A968; --gold-wash:#E9D9AE; --blue:#5E7C94;
+  --border:rgba(35,31,24,0.11); --shadow:rgba(80,64,24,0.09);
+  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:'Inter', -apple-system, system-ui, sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box; margin:0;}
+html,body{background:var(--bg);}
+body{color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+img{max-width:100%;} [hidden]{display:none!important;} a{color:inherit;}
+h1,h2,h3{font-family:var(--font-display); text-wrap:balance; font-weight:600;}
+.gutter{padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px));}
+
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:101; background:rgba(251,248,241,0.92);}
+.site-header{position:sticky; top:env(safe-area-inset-top,0px); z-index:100; background:rgba(251,248,241,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--border);}
+.header-inner.gutter{max-width:760px; margin:0 auto; padding-block:14px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+.logo-mark{display:flex; align-items:center; gap:9px; min-width:0;}
+.logo-mark svg{width:24px; height:24px; flex-shrink:0;}
+.logo-text{font-family:var(--font-display); font-size:1rem; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.logo-text em{color:var(--gold); font-style:normal;}
+.back-link{font-size:13px; font-weight:600; color:var(--gold); text-decoration:none; display:flex; align-items:center; gap:6px; white-space:nowrap;}
+
+.article-wrap.gutter{max-width:680px; margin:0 auto; padding-block:48px 72px;}
+.kicker{font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; text-align:center;}
+.article-title{font-size:clamp(2rem,6vw,2.7rem); line-height:1.15; text-align:center; margin-bottom:18px;}
+.article-sub{font-size:16px; color:var(--ink-2); text-align:center; max-width:520px; margin:0 auto 28px; line-height:1.65;}
+.article-meta{display:flex; justify-content:center; gap:14px; font-size:12.5px; color:var(--ink-3); margin-bottom:36px; font-weight:500;}
+.article-meta span{display:flex; align-items:center; gap:5px;}
+
+.scripture{background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--gold); border-radius:0 10px 10px 0; padding:20px 24px; margin:0 0 40px; text-align:center;}
+.scripture-text{font-family:var(--font-display); font-size:1.2rem; font-style:italic; color:var(--ink); line-height:1.55; margin-bottom:8px;}
+.scripture-ref{font-size:11.5px; color:var(--gold); font-weight:700; letter-spacing:0.1em; text-transform:uppercase;}
+
+.article-body p{color:var(--ink-2); font-size:16.5px; line-height:1.85; margin-bottom:22px;}
+.article-body h2{font-size:1.6rem; color:var(--ink); margin:44px 0 18px; padding-top:28px; border-top:1px solid var(--border);}
+.article-body h2:first-of-type{border-top:none; padding-top:0; margin-top:8px;}
+.pull-verse{font-family:var(--font-display); font-style:italic; font-size:1.15rem; color:var(--ink); background:var(--surface-2); border-radius:10px; padding:18px 22px; margin:24px 0; line-height:1.55;}
+.pull-verse cite{display:block; font-family:var(--font-body); font-style:normal; font-size:11.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--gold); margin-top:10px;}
+
+.closing-card{background:var(--surface-3); border:1px solid var(--border); border-radius:14px; padding:30px 26px; text-align:center; margin-top:48px;}
+.closing-card h3{font-size:1.3rem; margin-bottom:12px;}
+.closing-card p{color:var(--ink-2); font-size:14.5px; margin-bottom:22px; line-height:1.65;}
+.btn{display:inline-flex; align-items:center; gap:7px; border-radius:100px; font-family:var(--font-body); font-size:13.5px; font-weight:600; padding:10px 22px; text-decoration:none; background:var(--gold); color:#FFFDF8;}
+
+.site-footer{padding-block:40px; border-top:1px solid var(--border);}
+.footer-inner.gutter{max-width:760px; margin:0 auto; text-align:center;}
+.footer-links{display:flex; justify-content:center; gap:20px; margin-bottom:18px; flex-wrap:wrap;}
+.footer-links a{font-size:12.5px; color:var(--ink-2); text-decoration:none; font-weight:500;}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{font-size:11.5px; color:var(--ink-3);}
+
+.fab-back-app{position:fixed; right:max(18px, env(safe-area-inset-right,0px)); bottom:max(18px, env(safe-area-inset-bottom,0px)); z-index:150; display:flex; align-items:center; gap:8px; background:var(--ink); color:#FFFDF8; text-decoration:none; font-family:var(--font-body); font-size:13px; font-weight:600; padding:12px 18px 12px 14px; border-radius:100px; box-shadow:0 10px 28px -8px rgba(0,0,0,0.4); border:1px solid rgba(255,253,248,0.12);}
+.fab-back-app svg{width:16px; height:16px; flex-shrink:0;}
+.fab-back-app:active{transform:scale(0.97);}
+@media (min-width:760px){ .fab-back-app{display:none;} }
+</style>
+
+<header class="site-header">
+  <div class="header-inner gutter">
+    <div class="logo-mark">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="navLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
+        </linearGradient></defs>
+        <circle cx="24" cy="24" r="21.5" fill="none" stroke="#9C7A34" stroke-width="0.9"/>
+        <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#navLogoGrad)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
+      </svg>
+      <span class="logo-text">Word <em>&amp;</em> Faith Network</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a class="back-link" href="/">&larr; Home</a>
+      <a class="back-link back-to-app" href="/app/#/sermons/list" style="display:flex; align-items:center; gap:6px; color:var(--blue);">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+        Back to App
+      </a>
+    </div>
+  </div>
+</header>
+<a class="fab-back-app" href="/app/#/sermons/list" aria-label="Back to the WFN app">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+  Back to App
+</a>
+
+
+<main class="article-wrap gutter">
+  <p class="kicker">Today's Sermon &middot; Daily Word</p>
+  <h1 class="article-title">Trust in the Lord With All Thine Heart</h1>
+  <p class="article-sub">Why surrendering your own understanding isn't a leap in the dark &mdash; it's the one condition guaranteed to make your path straight.</p>
+  <div class="article-meta">
+    <span>Word and Faith Network</span>
+    <span>&middot;</span>
+    <span>Proverbs 3:5&ndash;6</span>
+  </div>
+
+  <div class="scripture">
+    <div class="scripture-text">"Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths."</div>
+    <div class="scripture-ref">Proverbs 3:5&ndash;6</div>
+  </div>
+
+  <div class="article-body">
+    <p>These two verses are quoted often enough that it's easy to stop hearing them as instructions and start hearing them as decoration &mdash; something for a wall, a graduation card, a tattoo. But Solomon didn't write them to be admired. He wrote them as a father handing his son the one piece of wisdom that would matter more than any other: where you place your trust decides where your path leads. Not your effort. Not your intelligence. Your trust.</p>
+    <p>And notice the order. Trust comes first. Direction comes last. Everything in between &mdash; leaning not on your own understanding, acknowledging Him in all your ways &mdash; is the bridge between the two. Skip the bridge, and you don't get the promise.</p>
+
+    <h2>Trust With All Thine Heart &mdash; Not Half</h2>
+    <p>The verse doesn't say "trust in the Lord, mostly" or "trust in the Lord, for the big decisions." It says all thine heart. That phrase rules out the quiet arrangement many of us make without ever naming it &mdash; trusting God with our eternity while keeping our calendar, our finances, and our relationships under our own management. Solomon isn't describing a God who handles the spiritual department while you run operations. He's describing total surrender of trust, the kind that doesn't keep a backup plan running in parallel just in case God is slow.</p>
+    <p>Half-hearted trust is exhausting, because it requires you to keep track of two systems at once &mdash; what you've prayed about and what you've quietly decided to handle yourself. Whole-hearted trust is lighter, not because the circumstances get easier, but because you've stopped carrying what was never yours to carry alone.</p>
+
+    <h2>Lean Not Unto Thine Own Understanding</h2>
+    <p>This is the hardest half of the verse, because your own understanding usually isn't foolish &mdash; it's reasonable. It's informed by real experience, real pattern recognition, real caution earned the hard way. Solomon isn't telling you that your understanding is worthless. He's telling you it's insufficient. It was never built to see what God sees.</p>
+    <div class="pull-verse">"For my thoughts are not your thoughts, neither are your ways my ways, saith the LORD."<cite>Isaiah 55:8, KJV</cite></div>
+    <p>"Lean not" is a posture, not a one-time decision. It's the daily choice to stop bracing all your weight against your own conclusions when they conflict with what God has already said. You can still think, plan, and reason &mdash; Scripture never asks you to switch your mind off. It only asks that your understanding stop being the thing you lean your full weight on when it's time to actually move.</p>
+
+    <h2>In ALL Thy Ways Acknowledge Him</h2>
+    <p>Not some ways. Not the ways that feel spiritual. All thy ways &mdash; the career decision, the relationship, the budget, the diagnosis, the delay, the opportunity that looks too good to need prayer. Acknowledging Him in all your ways means bringing Him into the room before you decide, not informing Him afterward.</p>
+    <div class="pull-verse">"Commit thy works unto the LORD, and thy thoughts shall be established."<cite>Proverbs 16:3, KJV</cite></div>
+    <p>There's a difference between asking God to bless a decision you've already made and inviting Him into the decision itself. The first treats God as a signature at the bottom of the page. The second treats Him as the One directing the pen. Proverbs 3 is asking for the second.</p>
+
+    <h2>He Shall Direct Thy Paths</h2>
+    <p>Here is the promise, and it's worth reading exactly as written: He shall direct thy paths &mdash; not "He might," not "He will if you also figure it out yourself." The directing is His to do. Your part is trust, surrendered understanding, and constant acknowledgment. His part is the direction. You are not responsible for making your own path straight. You are responsible for staying surrendered long enough to let Him.</p>
+    <p>That doesn't mean the path will always make sense while you're walking it. Direction from God is not the same as clarity on demand. Sometimes the path is straight in hindsight and confusing in the moment &mdash; which is exactly why trust has to come before understanding, not after it. If you only moved once everything made sense, you would rarely need to trust at all.</p>
+
+    <h2>The Word for Today</h2>
+    <p>Wherever you are weighing a decision right now &mdash; wherever your own understanding has run out of good answers &mdash; this is the verse for that exact moment. Not because leaning on Him removes the weight of the decision, but because it puts the weight where it was always meant to rest. Trust Him with all your heart. Stop leaning on what you can see. Acknowledge Him in this, too. And let Him do what He said He would do: direct your path.</p>
+  </div>
+
+  <div class="closing-card">
+    <h3>Stand on This With Us</h3>
+    <p>Receive the Word, pray with us, and grow in faith &mdash; every day, on X.</p>
+    <a class="btn" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow @wfnglobal &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner gutter">
+    <div class="footer-links">
+      <a href="/#about">About</a>
+      <a href="/#word">The Word</a>
+      <a href="/#prayer">Prayer</a>
+      <a href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Word and Faith Network &middot; wfnglobal.org</div>
+  </div>
+</footer>

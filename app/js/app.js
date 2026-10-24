@@ -39,6 +39,7 @@
   // ---------------------------------------------------------------------
 
   const VERSES = [
+    { text: "The heavens declare the glory of God; and the firmament sheweth his handywork.", ref: "Psalm 19:1" },
     { text: "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary.", ref: "Isaiah 40:31" },
     { text: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", ref: "Psalm 23:1-2" },
     { text: "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.", ref: "Jeremiah 29:11" },
@@ -52,6 +53,7 @@
   ];
 
   const SERMONS = [
+    { slug: "trust-in-the-lord-with-all-thine-heart", title: "Trust in the Lord With All Thine Heart", ref: "Proverbs 3:5-6", date: "October 24, 2026", excerpt: "Why surrendering your own understanding isn't a leap in the dark — it's the one condition guaranteed to make your path straight." },
     { slug: "his-mercies-are-new-every-morning", title: "His Mercies Are New Every Morning", ref: "Lamentations 2 & 3", date: "October 23, 2026", excerpt: "The same prophet who wept over the ruins of Zion also wrote, \"Great is thy faithfulness\" — a study on how hope survives the worst chapter." },
     { slug: "when-you-pray-why-worry", title: "When You Pray, Why Do You Still Worry?", ref: "Philippians 4", date: "October 22, 2026", excerpt: "Prayer and anxiety can't occupy the same heart for long — one of them has to go." },
     { slug: "show-up-for-your-people", title: "Show Up for Your People", ref: "Ruth 1", date: "October 22, 2026", excerpt: "Ruth didn't just say the words. She stayed — a study on what it means to actually show up." },

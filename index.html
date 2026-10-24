@@ -438,14 +438,14 @@ body::before{
           <img src="assets/oladapo.jpg" alt="Oladapo, Word and Faith Network">
         </div>
         <div class="verse-card-label">Verse of the Day</div>
-        <div class="verse-card-text" id="verseText">"Commit thy works unto the LORD, and thy thoughts shall be established."</div>
-        <div class="verse-card-ref" id="verseRef">Proverbs 16:3 KJV</div>
+        <div class="verse-card-text" id="verseText">"The heavens declare the glory of God; and the firmament sheweth his handywork."</div>
+        <div class="verse-card-ref" id="verseRef">Psalm 19:1 KJV</div>
       </div>
       <div class="featured-article-card">
         <div class="word-kicker">Today's Sermon</div>
-        <h3>His Mercies Are New Every Morning</h3>
-        <p>The same prophet who wept over the ruins of Zion also wrote, "Great is thy faithfulness."</p>
-        <a class="btn btn-outline btn-sm" href="articles/his-mercies-are-new-every-morning.html" style="align-self:flex-start; margin-bottom:8px;">Read Today's Sermon →</a>
+        <h3>Trust in the Lord With All Thine Heart</h3>
+        <p>Why surrendering your own understanding isn't a leap in the dark — it's the one condition guaranteed to make your path straight.</p>
+        <a class="btn btn-outline btn-sm" href="articles/trust-in-the-lord-with-all-thine-heart.html" style="align-self:flex-start; margin-bottom:8px;">Read Today's Sermon →</a>
         <a href="articles/" style="font-size:12px; font-weight:600; color:var(--ink-3); align-self:flex-start;">Browse all sermons →</a>
       </div>
     </div>
@@ -508,8 +508,8 @@ body::before{
     </div>
     <div class="declaration-box">
       <div class="declaration-label">Today's Declaration</div>
-      <div class="declaration-text">"Father, I enter this Friday under an open heaven. What You have spoken over my life will not return empty. This day is covered, ordered, and aligned with Your purpose. I declare that Friday is a day of advancement. What was delayed is moving. What was blocked is opening. What was hidden is being revealed. I rise above every limitation assigned to this season. Mercy goes before me, and favor follows me. I speak life over my mind, my body, my household, and every assignment in my hands. Confusion is silenced. Fear has no voice. Delay is broken. The work of my hands is established, and I will not labor in vain. I receive grace for this day. I walk in peace, not pressure. I move with confidence, knowing heaven has already gone ahead of me. Let it be evident by evening that Your hand was upon me. In Jesus' name, amen."</div>
-      <div class="declaration-ref">Isaiah 55:11 · Psalm 90:17</div>
+      <div class="declaration-text">"Father, I enter this day under an open heaven. What You have spoken over my life will not return empty. This morning is ordered, covered, and aligned with Your will. I declare that mercy is new and favour is active. What was delayed is moving. What was broken is being restored. What was hidden is being revealed. I rise above every limitation assigned to this season. I speak life over my mind, my body, my household, and the work of my hands. Confusion is silenced. Fear has no voice. Striving is broken. I walk in grace, not pressure. Doors that were shut are opening by Your hand. I receive strength for today's assignment. I will not miss what You have prepared. I will not labour in vain. Let it be established by evening that heaven went ahead of me. In Jesus' name, amen."</div>
+      <div class="declaration-ref">Isaiah 55:11 · Psalm 118:24</div>
     </div>
     <div class="prayer-grid">
       <div class="prayer-card" data-accent="gold">
@@ -639,6 +639,11 @@ body::before{
 
   var verses = [
     {
+      text: '"The heavens declare the glory of God; and the firmament sheweth his handywork."',
+      ref: 'Psalm 19:1 KJV',
+      img: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?fm=jpg&q=70&w=1400&auto=format&fit=crop'
+    },
+    {
       text: '"But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary."',
       ref: 'Isaiah 40:31 KJV',
       img: 'https://images.unsplash.com/photo-1598810229859-a5a1d6f75088?fm=jpg&q=70&w=1400&auto=format&fit=crop'
@@ -685,8 +690,11 @@ body::before{
     }
   ];
 
-  var dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-  var pick = verses[dayOfYear % verses.length];
+  // verses[0] is always today's curated verse — update it (and the static
+  // fallback text above) each day when posting new content; this is set
+  // directly rather than auto-rotated so it always matches what's posted
+  // elsewhere on the site.
+  var pick = verses[0];
 
   var preload = new Image();
   preload.onload = function(){ card.style.backgroundImage = "url('" + pick.img + "')"; };

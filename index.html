@@ -66,35 +66,41 @@ body::before{
 .logo-mark svg{width:26px; height:26px; flex-shrink:0;}
 .logo-text{font-family:var(--font-display); font-size:1.05rem; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .logo-text em{color:var(--gold); font-style:normal;}
-.main-nav{display:flex; align-items:center; gap:22px;}
-.main-nav a{font-size:13px; font-weight:500; color:var(--ink-2); text-decoration:none; letter-spacing:0.01em; white-space:nowrap;}
-.main-nav a:hover{color:var(--gold);}
-@media (max-width:640px){ .main-nav .nav-links{display:none;} }
+.main-nav{display:flex; align-items:center; gap:10px; position:relative;}
 
-/* ── mobile nav toggle + drawer ──────────────────────────── */
-.nav-toggle{display:none; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px; border:1px solid var(--border); background:var(--surface); cursor:pointer; flex-shrink:0;}
-.nav-toggle svg{width:19px; height:19px; color:var(--ink);}
-@media (max-width:640px){ .nav-toggle{display:inline-flex;} }
-
-.nav-drawer{position:fixed; inset:0; z-index:200; visibility:hidden; opacity:0; transition:opacity .2s ease, visibility .2s;}
-.nav-drawer.is-open{visibility:visible; opacity:1;}
-.nav-drawer-scrim{position:absolute; inset:0; background:rgba(35,31,24,0.45);}
-.nav-drawer-panel{
-  position:absolute; top:0; right:0; left:0; max-width:420px; margin-left:auto;
-  background:var(--bg); height:100%; padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);
-  box-shadow:-8px 0 30px rgba(0,0,0,0.18); transform:translateX(12px); transition:transform .22s ease;
-  display:flex; flex-direction:column;
+/* ── nav menu: one box, drops down to select ───────────────── */
+.nav-menu{position:relative;}
+.nav-menu-trigger{
+  display:flex; align-items:center; gap:9px; background:var(--surface); border:1.5px solid var(--gold);
+  border-radius:10px; padding:9px 14px; font-family:var(--font-body); font-weight:700; font-size:13px;
+  color:var(--ink); letter-spacing:0.01em; cursor:pointer; white-space:nowrap;
 }
-.nav-drawer.is-open .nav-drawer-panel{transform:translateX(0);}
-.nav-drawer-top{display:flex; align-items:center; justify-content:space-between; padding:16px max(20px, env(safe-area-inset-right,0px)) 16px 20px; border-bottom:1px solid var(--border);}
-.nav-drawer-top .logo-mark svg{width:24px; height:24px;}
-.nav-drawer-close{width:36px; height:36px; border-radius:50%; border:1px solid var(--border); background:var(--surface); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;}
-.nav-drawer-close svg{width:16px; height:16px; color:var(--ink);}
-.nav-drawer-links{display:flex; flex-direction:column; padding:10px 20px; overflow-y:auto; flex:1;}
-.nav-drawer-links a{display:block; padding:16px 2px; font-family:var(--font-display); font-size:1.3rem; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--border);}
-.nav-drawer-links a:active{color:var(--gold);}
-.nav-drawer-cta{padding:16px 20px calc(20px + env(safe-area-inset-bottom,0px));}
-.nav-drawer-cta .btn{width:100%; justify-content:center;}
+.nav-menu-trigger:hover{background:var(--gold-wash);}
+.nav-menu-dots{display:grid; grid-template-columns:repeat(2,4px); grid-auto-rows:4px; gap:3px; flex-shrink:0;}
+.nav-menu-dots span{width:4px; height:4px; border-radius:1px; background:var(--gold);}
+.nav-menu-trigger svg{width:11px; height:11px; flex-shrink:0; transition:transform .18s ease;}
+.nav-menu.is-open .nav-menu-trigger svg{transform:rotate(180deg);}
+
+.nav-menu-panel{
+  position:absolute; top:calc(100% + 10px); right:0; width:min(360px, calc(100vw - 32px));
+  background:var(--surface); border:1px solid var(--border); border-radius:16px;
+  box-shadow:0 26px 54px -18px var(--shadow); padding:20px 20px 16px; overflow:hidden; z-index:5;
+  opacity:0; visibility:hidden; transform:translateY(-6px); transition:opacity .16s ease, transform .16s ease, visibility .16s;
+}
+.nav-menu.is-open .nav-menu-panel{opacity:1; visibility:visible; transform:translateY(0);}
+.nav-menu-watermark{position:absolute; right:-40px; bottom:-40px; width:170px; height:170px; opacity:0.08; pointer-events:none;}
+.nav-menu-kicker{position:relative; font-size:10.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:12px;}
+.nav-menu-grid{position:relative; display:grid; grid-template-columns:repeat(2,1fr); grid-auto-flow:column; grid-template-rows:repeat(4,auto); gap:3px 14px;}
+.nav-menu-grid a{display:flex; align-items:center; gap:9px; padding:9px 8px; border-radius:9px; font-size:13.5px; font-weight:600; color:var(--ink); text-decoration:none;}
+.nav-menu-grid a:hover{background:var(--gold-wash);}
+.nav-menu-grid a svg{width:16px; height:16px; flex-shrink:0; color:var(--gold);}
+.nav-menu-grid a.primary{color:#FFFDF8; background:var(--gold); margin-top:2px;}
+.nav-menu-grid a.primary:hover{background:#8A6A2C;}
+.nav-menu-grid a.primary svg{color:#FFFDF8;}
+@media (max-width:480px){
+  .nav-menu-panel{position:fixed; top:68px; left:16px; right:16px; width:auto;}
+  .nav-menu-grid{grid-auto-flow:row; grid-template-columns:repeat(2,1fr); grid-template-rows:none;}
+}
 .btn{
   display:inline-flex; align-items:center; gap:7px; border-radius:100px;
   font-family:var(--font-body); font-size:13.5px; font-weight:600; letter-spacing:0.01em;
@@ -181,8 +187,32 @@ body::before{
 .prayer-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:28px;}
 @media (max-width:980px){ .prayer-grid{grid-template-columns:repeat(2,1fr);} }
 @media (max-width:600px){ .prayer-grid{grid-template-columns:1fr;} }
-.prayer-card{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:26px 22px; min-width:0; display:flex; flex-direction:column; gap:12px;}
-.prayer-card-top{border-top:3px solid var(--gold); margin:-26px -22px 0; border-radius:14px 14px 0 0; height:3px;}
+.prayer-card{position:relative; overflow:hidden; border:1px solid var(--border); border-radius:16px; padding:26px 22px; min-width:0; display:flex; flex-direction:column; gap:12px;}
+.prayer-card-top{display:none;}
+.prayer-card-watermark{position:absolute; right:-34px; top:-34px; width:135px; height:135px; opacity:0.16; pointer-events:none;}
+.prayer-icon-badge{position:relative; width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.prayer-icon-badge svg{width:20px; height:20px; color:#FFFDF8;}
+.prayer-card[data-accent="gold"]{background:linear-gradient(165deg,#FBF3DF 0%,#F3E3BC 100%); border-color:rgba(156,122,52,0.28);}
+.prayer-card[data-accent="gold"] .prayer-card-watermark circle,.prayer-card[data-accent="gold"] .prayer-card-watermark line{stroke:#9C7A34;}
+.prayer-card[data-accent="gold"] .prayer-icon-badge{background:#9C7A34;}
+.prayer-card[data-accent="gold"] .prayer-badge{color:#7A5E24; background:rgba(255,255,255,0.55);}
+.prayer-card[data-accent="blue"]{background:linear-gradient(165deg,#E9F0F4 0%,#D3E1E9 100%); border-color:rgba(94,124,148,0.3);}
+.prayer-card[data-accent="blue"] .prayer-card-watermark circle,.prayer-card[data-accent="blue"] .prayer-card-watermark line{stroke:#5E7C94;}
+.prayer-card[data-accent="blue"] .prayer-icon-badge{background:#5E7C94;}
+.prayer-card[data-accent="blue"] .prayer-badge{color:#3E586D; background:rgba(255,255,255,0.55);}
+.prayer-card[data-accent="sage"]{background:linear-gradient(165deg,#EBF0E6 0%,#D9E4D1 100%); border-color:rgba(110,138,92,0.3);}
+.prayer-card[data-accent="sage"] .prayer-card-watermark circle,.prayer-card[data-accent="sage"] .prayer-card-watermark line{stroke:#6E8A5C;}
+.prayer-card[data-accent="sage"] .prayer-icon-badge{background:#6E8A5C;}
+.prayer-card[data-accent="sage"] .prayer-badge{color:#4C6340; background:rgba(255,255,255,0.55);}
+.prayer-card[data-accent="blush"]{background:linear-gradient(165deg,#F3E7E6 0%,#E8D2D0 100%); border-color:rgba(173,122,122,0.3);}
+.prayer-card[data-accent="blush"] .prayer-card-watermark circle,.prayer-card[data-accent="blush"] .prayer-card-watermark line{stroke:#AD7A7A;}
+.prayer-card[data-accent="blush"] .prayer-icon-badge{background:#AD7A7A;}
+.prayer-card[data-accent="blush"] .prayer-badge{color:#7A4F4F; background:rgba(255,255,255,0.55);}
+.prayer-card[data-accent="gold"] .btn-outline,.prayer-card[data-accent="blue"] .btn-outline,.prayer-card[data-accent="sage"] .btn-outline,.prayer-card[data-accent="blush"] .btn-outline{background:transparent; border:none; color:#FFFDF8; justify-content:center; display:flex;}
+.prayer-card[data-accent="gold"] .btn-outline{background:#9C7A34;}
+.prayer-card[data-accent="blue"] .btn-outline{background:#5E7C94;}
+.prayer-card[data-accent="sage"] .btn-outline{background:#6E8A5C;}
+.prayer-card[data-accent="blush"] .btn-outline{background:#AD7A7A;}
 .prayer-badge{align-self:flex-start; font-size:10px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--blue); background:rgba(94,124,148,0.12); padding:4px 10px; border-radius:100px;}
 .prayer-card-title{font-size:1.2rem; color:var(--ink);}
 .prayer-card-desc{font-size:14.5px; color:var(--ink-2); line-height:1.68; flex:1;}
@@ -254,56 +284,34 @@ body::before{
       <span class="logo-text">Word <em>&amp;</em> Faith Network</span>
     </a>
     <nav class="main-nav">
-      <span class="nav-links" style="display:flex; gap:22px;">
-        <a href="#about">About</a>
-        <a href="#word">The Word</a>
-        <a href="articles/">Sermons</a>
-        <a href="library/">Library</a>
-        <a href="#watch">Watch</a>
-        <a href="#prayer">Prayer</a>
-        <a href="app/">Get the App</a>
-      </span>
+      <div class="nav-menu" id="navMenu">
+        <button class="nav-menu-trigger" id="navMenuToggle" type="button" aria-haspopup="true" aria-expanded="false">
+          <span class="nav-menu-dots"><span></span><span></span><span></span><span></span></span>
+          Menu
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-menu-panel" id="navMenuPanel">
+          <svg class="nav-menu-watermark" viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="95" fill="none" stroke="#9C7A34" stroke-width="1"/>
+            <circle cx="100" cy="100" r="62" fill="none" stroke="#9C7A34" stroke-width="1"/>
+            <g stroke="#9C7A34" stroke-width="1"><line x1="100" y1="100" x2="100" y2="5"/><line x1="100" y1="100" x2="170" y2="30"/><line x1="100" y1="100" x2="195" y2="100"/><line x1="100" y1="100" x2="170" y2="170"/><line x1="100" y1="100" x2="100" y2="195"/><line x1="100" y1="100" x2="30" y2="170"/><line x1="100" y1="100" x2="5" y2="100"/><line x1="100" y1="100" x2="30" y2="30"/></g>
+          </svg>
+          <div class="nav-menu-kicker">Explore WFN</div>
+          <div class="nav-menu-grid">
+            <a href="#about" data-menu-link><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 11h1v6h1"/></svg>About</a>
+            <a href="#word" data-menu-link><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 6a5 5 0 0 0-5-3H3v15h4a5 5 0 0 1 5 3"/><path d="M12 6a5 5 0 0 1 5-3h4v15h-4a5 5 0 0 0-5 3"/></svg>The Word</a>
+            <a href="articles/" data-menu-link><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 4h11a1 1 0 0 1 1 1v13l-4-2-4 2-4-2V5a1 1 0 0 1 1-1z"/></svg>Sermons</a>
+            <a href="library/" data-menu-link><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 3v18M8 8h8M8 12h8"/></svg>Library</a>
+            <a href="#watch" data-menu-link><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5z" fill="currentColor" stroke="none"/></svg>Watch</a>
+            <a href="#prayer" data-menu-link><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg>Prayer</a>
+            <a href="app/" class="primary" data-menu-link><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>Get the App</a>
+          </div>
+        </div>
+      </div>
       <a class="btn btn-gold btn-sm" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
-      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </button>
     </nav>
   </div>
 </header>
-
-<div class="nav-drawer" id="navDrawer">
-  <div class="nav-drawer-scrim" id="navDrawerScrim"></div>
-  <div class="nav-drawer-panel">
-    <div class="nav-drawer-top">
-      <div class="logo-mark">
-        <svg viewBox="0 0 48 48" aria-hidden="true">
-          <defs><linearGradient id="navDrawerLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
-          </linearGradient></defs>
-          <circle cx="24" cy="24" r="21.5" fill="none" stroke="#9C7A34" stroke-width="0.9"/>
-          <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#navDrawerLogoGrad)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
-        </svg>
-      </div>
-      <button class="nav-drawer-close" id="navDrawerClose" type="button" aria-label="Close menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>
-      </button>
-    </div>
-    <nav class="nav-drawer-links">
-      <a href="#" data-drawer-link>Home</a>
-      <a href="#about" data-drawer-link>About</a>
-      <a href="#word" data-drawer-link>The Word</a>
-      <a href="articles/" data-drawer-link>Sermons</a>
-      <a href="library/" data-drawer-link>Library</a>
-      <a href="#watch" data-drawer-link>Watch</a>
-      <a href="#prayer" data-drawer-link>Prayer</a>
-      <a href="app/" data-drawer-link>Get the App</a>
-    </nav>
-    <div class="nav-drawer-cta">
-      <a class="btn btn-gold" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow @wfnglobal on X →</a>
-    </div>
-  </div>
-</div>
 
 <section class="hero">
   <div class="hero-illustration-wrap gutter">
@@ -504,8 +512,9 @@ body::before{
       <div class="declaration-ref">Isaiah 55:11 · Psalm 90:17</div>
     </div>
     <div class="prayer-grid">
-      <div class="prayer-card">
-        <div class="prayer-card-top"></div>
+      <div class="prayer-card" data-accent="gold">
+        <svg class="prayer-card-watermark" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="75" fill="none" stroke-width="1.4"/><circle cx="80" cy="80" r="50" fill="none" stroke-width="1.4"/></svg>
+        <div class="prayer-icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20l1.4-4.1A8 8 0 1 1 9 18.8L4 20Z"/><path d="M8.5 9.5c0 3.5 2.5 6 6 6"/></svg></div>
         <span class="prayer-badge">Daily</span>
         <h3 class="prayer-card-title">Prayer &amp; Bible Study — WhatsApp</h3>
         <p class="prayer-card-desc">Join a daily WhatsApp group for prayer requests, Bible study, and encouragement with the WFN family — wherever you are.</p>
@@ -515,8 +524,9 @@ body::before{
         </div>
         <a class="btn btn-outline btn-sm" href="https://chat.whatsapp.com/J0JkLpylQiVKTHKcJkaKEs?s=cl&amp;p=i&amp;mlu=4&amp;ilr=4&amp;iam=0" target="_blank" rel="noopener">Join on WhatsApp →</a>
       </div>
-      <div class="prayer-card">
-        <div class="prayer-card-top"></div>
+      <div class="prayer-card" data-accent="blue">
+        <svg class="prayer-card-watermark" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="75" fill="none" stroke-width="1.4"/><circle cx="80" cy="80" r="50" fill="none" stroke-width="1.4"/></svg>
+        <div class="prayer-icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
         <span class="prayer-badge">Weekly</span>
         <h3 class="prayer-card-title">The Prayer Circle</h3>
         <p class="prayer-card-desc">A live, corporate prayer call — built on scripture, led in declaration. Follow @wfnglobal on X and turn on notifications so you never miss the call.</p>
@@ -527,8 +537,9 @@ body::before{
         <p class="prayer-note">Lagos time shifts to 7:00–8:00 AM when Canada moves off Daylight Saving, in early November.</p>
         <a class="btn btn-outline btn-sm" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Join the Circle on X</a>
       </div>
-      <div class="prayer-card">
-        <div class="prayer-card-top"></div>
+      <div class="prayer-card" data-accent="sage">
+        <svg class="prayer-card-watermark" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="75" fill="none" stroke-width="1.4"/><circle cx="80" cy="80" r="50" fill="none" stroke-width="1.4"/></svg>
+        <div class="prayer-icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg></div>
         <span class="prayer-badge">Membership</span>
         <h3 class="prayer-card-title">Become Part of the Family</h3>
         <p class="prayer-card-desc">There's no paperwork to join WFN — just a decision. Follow on X, turn on notifications, and you're part of a global community standing on the Word together, daily.</p>
@@ -538,8 +549,9 @@ body::before{
         </div>
         <a class="btn btn-outline btn-sm" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow &amp; Join</a>
       </div>
-      <div class="prayer-card">
-        <div class="prayer-card-top"></div>
+      <div class="prayer-card" data-accent="blush">
+        <svg class="prayer-card-watermark" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="75" fill="none" stroke-width="1.4"/><circle cx="80" cy="80" r="50" fill="none" stroke-width="1.4"/></svg>
+        <div class="prayer-icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
         <span class="prayer-badge">Coming Soon</span>
         <h3 class="prayer-card-title">WFN Global Conference</h3>
         <p class="prayer-card-desc">A live gathering — online, and in person where possible — bringing the Word, Prayer, and Faith community together for a season of declaration and encounter.</p>
@@ -704,28 +716,28 @@ body::before{
 
 <script>
 (function(){
-  var toggle = document.getElementById('navToggle');
-  var drawer = document.getElementById('navDrawer');
-  if (!toggle || !drawer) return;
-  var closeBtn = document.getElementById('navDrawerClose');
-  var scrim = document.getElementById('navDrawerScrim');
-  var links = drawer.querySelectorAll('[data-drawer-link]');
+  var menu = document.getElementById('navMenu');
+  var toggle = document.getElementById('navMenuToggle');
+  if (!menu || !toggle) return;
+  var links = menu.querySelectorAll('[data-menu-link]');
 
   function open(){
-    drawer.classList.add('is-open');
+    menu.classList.add('is-open');
     toggle.setAttribute('aria-expanded', 'true');
-    document.documentElement.style.overflow = 'hidden';
   }
   function close(){
-    drawer.classList.remove('is-open');
+    menu.classList.remove('is-open');
     toggle.setAttribute('aria-expanded', 'false');
-    document.documentElement.style.overflow = '';
+  }
+  function toggleMenu(){
+    if (menu.classList.contains('is-open')) close(); else open();
   }
 
-  toggle.addEventListener('click', open);
-  closeBtn.addEventListener('click', close);
-  scrim.addEventListener('click', close);
+  toggle.addEventListener('click', function(e){ e.stopPropagation(); toggleMenu(); });
   links.forEach(function(a){ a.addEventListener('click', close); });
+  document.addEventListener('click', function(e){
+    if (!menu.contains(e.target)) close();
+  });
   document.addEventListener('keydown', function(e){
     if (e.key === 'Escape') close();
   });

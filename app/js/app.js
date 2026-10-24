@@ -427,41 +427,100 @@
     el.innerHTML = `<div class="install-hint">${msg}</div>`;
   }
 
-  function bibleIntroSkipped() {
-    try { return localStorage.getItem("wfn-app-bible-intro-skip") === "1"; } catch (e) { return false; }
+  // ---------------------------------------------------------------------
+  // Section gates: a closed cover that flips, unrolls, swings, or slides
+  // open — one per section (Bible, Sermons, Prayer, Library) — to make the
+  // same point in a different motion each time: reading, listening, and
+  // praying through a screen carries the same weight it always has.
+  // ---------------------------------------------------------------------
+
+  function gateSkipped(key) {
+    try { return localStorage.getItem("wfn-app-gate-skip-" + key) === "1"; } catch (e) { return false; }
   }
-  function setBibleIntroSkip(on) {
-    try { localStorage.setItem("wfn-app-bible-intro-skip", on ? "1" : "0"); } catch (e) {}
+  function setGateSkip(key, on) {
+    try { localStorage.setItem("wfn-app-gate-skip-" + key, on ? "1" : "0"); } catch (e) {}
+  }
+  function wireGate(skipKey) {
+    const stage = viewEl.querySelector(".gate-stage");
+    if (!stage) return;
+    function open() {
+      stage.classList.add("is-open");
+      stage.querySelectorAll("[data-gate-trigger]").forEach((el) => el.setAttribute("aria-expanded", "true"));
+    }
+    function close() {
+      stage.classList.remove("is-open");
+      stage.querySelectorAll("[data-gate-trigger]").forEach((el) => el.setAttribute("aria-expanded", "false"));
+    }
+    stage.querySelectorAll("[data-gate-trigger]").forEach((el) => {
+      el.addEventListener("click", open);
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+      });
+    });
+    const closeBtn = viewEl.querySelector("[data-gate-close]");
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    const skipChk = viewEl.querySelector("[data-gate-skip]");
+    if (skipChk) {
+      skipChk.checked = gateSkipped(skipKey);
+      skipChk.addEventListener("change", (e) => setGateSkip(skipKey, e.target.checked));
+    }
+  }
+  function gateEmblemRing(inner) {
+    return `<svg class="gate-front-emblem" viewBox="0 0 120 120" width="78" height="78" aria-hidden="true">
+      <circle cx="60" cy="60" r="56" fill="none" stroke="#F3EADA" stroke-width="1.3" opacity="0.8"/>
+      <circle cx="60" cy="60" r="44" fill="none" stroke="#F3EADA" stroke-width="1" opacity="0.5"/>
+      ${inner}
+    </svg>`;
   }
 
   function viewBibleIntro() {
     setHeader("The Bible", true);
     setActiveTab("bible");
-    const skip = bibleIntroSkipped();
+    const skip = gateSkipped("bible");
     viewEl.innerHTML = `
-      <div class="bible-intro-hero">
-        <svg class="bible-intro-sunburst" viewBox="0 0 200 200" aria-hidden="true">
-          <g stroke="#C9A968" stroke-width="0.8" opacity="0.6">
-            <line x1="100" y1="100" x2="100" y2="0"/><line x1="100" y1="100" x2="155" y2="20"/>
-            <line x1="100" y1="100" x2="190" y2="70"/><line x1="100" y1="100" x2="190" y2="130"/>
-            <line x1="100" y1="100" x2="155" y2="180"/><line x1="100" y1="100" x2="45" y2="180"/>
-            <line x1="100" y1="100" x2="10" y2="130"/><line x1="100" y1="100" x2="10" y2="70"/>
-            <line x1="100" y1="100" x2="45" y2="20"/>
-          </g>
-          <circle cx="100" cy="100" r="92" fill="none" stroke="#C9A968" stroke-width="0.8" opacity="0.4"/>
-        </svg>
-        <svg class="bible-intro-logo" viewBox="0 0 48 48" aria-hidden="true">
-          <defs><linearGradient id="introLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
-          </linearGradient></defs>
-          <circle cx="24" cy="24" r="21.5" fill="none" stroke="#C9A968" stroke-width="0.9"/>
-          <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#introLogoGrad)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
-        </svg>
-        <div class="bible-intro-word">Word <em>&amp;</em> Faith Network</div>
-        <div class="bible-intro-eyebrow">Before You Read</div>
-        <h1 class="bible-intro-headline">"Same Word. Same Weight.<br>Just a Different Page."</h1>
-        <p class="bible-intro-sub">This screen holds the very same Scripture that's been copied by candlelight, carried into battle, and wept over on paper for centuries. The page changed. The Word didn't.</p>
+      <div class="gate-stage">
+        <div class="gate-inner">
+          <div class="gate-back">
+            <div class="gate-back-top">
+              <button class="gate-back-close" data-gate-close type="button">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+                Close
+              </button>
+            </div>
+            <div class="gate-back-body">
+              <div class="gate-kicker" style="color:var(--gold);">You Are On Holy Ground</div>
+              <h2 class="gate-back-headline">The screen changes. His Word does not.</h2>
+              <p class="gate-back-text">Reading Scripture here is still reading Scripture — only the method has changed, not the weight it carries. Come with the same reverence, the same quiet heart, and the same prayer you'd bring to a printed page.</p>
+            </div>
+            <div class="gate-preview-card" style="background:linear-gradient(165deg,#FBF3DF 0%,#F3E3BC 100%); border:1px solid rgba(156,122,52,0.26);">
+              <svg class="gate-preview-watermark" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="75" fill="none" stroke="#9C7A34" stroke-width="1.4"/><circle cx="80" cy="80" r="50" fill="none" stroke="#9C7A34" stroke-width="1.4"/></svg>
+              <span class="gate-preview-badge" style="color:#7A5E24;">Today</span>
+              <h3 class="gate-preview-title">Genesis 1</h3>
+              <p class="gate-preview-text" style="color:#4C3F26; font-style:italic;">&ldquo;In the beginning God created the heaven and the earth.&rdquo;</p>
+              <a class="gate-preview-cta" style="background:#9C7A34;" href="#/bible/books">Continue Reading <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
+            </div>
+            <p class="gate-footnote">&ldquo;My doctrine shall drop as the rain.&rdquo; &mdash; Deuteronomy 32:2</p>
+          </div>
+
+          <div class="gate-front gate-front--flip" data-gate-trigger role="button" tabindex="0" aria-expanded="false" aria-label="Tap to open the Word" style="background:linear-gradient(155deg,#B88B3C 0%,#9C7A34 46%,#7A5E24 100%);">
+            <div class="gate-spine-l"></div><div class="gate-spine-r"></div>
+            ${gateEmblemRing(`
+              <path d="M34 78 V40 a4 4 0 0 1 4 -4 h18 a4 4 0 0 1 4 4 v38" fill="none" stroke="#FDFBF5" stroke-width="2.2" stroke-linejoin="round"/>
+              <path d="M86 78 V40 a4 4 0 0 0 -4 -4 H64 a4 4 0 0 0 -4 4 v38" fill="none" stroke="#FDFBF5" stroke-width="2.2" stroke-linejoin="round"/>
+              <line x1="60" y1="36" x2="60" y2="78" stroke="#FDFBF5" stroke-width="2"/>
+            `)}
+            <div class="gate-front-eyebrow">Holy Scripture — Electronic Edition</div>
+            <h1 class="gate-front-title">The Word</h1>
+            <div class="gate-front-rule"></div>
+            <p class="gate-front-text">A screen is simply a different way of meeting the same Word that has always been on paper. Approach it with the same caution and respect — a quiet heart, a praying spirit, and attention undivided.</p>
+            <p class="gate-front-text italic">Read with the Holy Spirit as your guide, not your own understanding alone.</p>
+            <p class="gate-front-verse">&ldquo;All scripture is given by inspiration of God, and is profitable for doctrine.&rdquo; &mdash; 2 Timothy 3:16</p>
+            <div class="gate-front-cta">
+              <span>Tap to Open the Word</span>
+              <svg class="gate-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M12 19l-6-6M12 19l6-6"/></svg>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="bible-intro-callout">
@@ -490,14 +549,12 @@
       </div>
 
       <a class="btn btn-block" id="bibleIntroEnter" href="#/bible/books">Enter the Word</a>
-      <label class="bible-intro-skip">
-        <input type="checkbox" id="bibleIntroSkipChk" ${skip ? "checked" : ""}>
+      <label class="gate-skip">
+        <input type="checkbox" data-gate-skip ${skip ? "checked" : ""}>
         Don't show this page again
       </label>
     `;
-    document.getElementById("bibleIntroSkipChk").addEventListener("change", (e) => {
-      setBibleIntroSkip(e.target.checked);
-    });
+    wireGate("bible");
   }
 
   async function viewBibleBooks() {
@@ -825,6 +882,76 @@
       .join("");
   }
 
+  function viewSermonsIntro() {
+    setHeader("Sermons", true);
+    setActiveTab("sermons");
+    const skip = gateSkipped("sermons");
+    const s = SERMONS[0];
+    viewEl.innerHTML = `
+      <div class="gate-stage">
+        <div class="gate-inner">
+          <div class="gate-back">
+            <div class="gate-back-top">
+              <button class="gate-back-close" data-gate-close type="button">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+                Close
+              </button>
+            </div>
+            <div class="gate-back-body">
+              <div class="gate-kicker" style="color:var(--blue);">You're About to Hear the Word Preached</div>
+              <h2 class="gate-back-headline">A recording still carries the voice.</h2>
+              <p class="gate-back-text">Listen the way you would in the room — attentive, unhurried, testing what you hear against Scripture. Let the Holy Spirit, not the speaker alone, be the One who settles it in your heart.</p>
+            </div>
+            <div class="gate-preview-card" style="background:linear-gradient(165deg,#E9F0F4 0%,#D3E1E9 100%); border:1px solid rgba(94,124,148,0.28);">
+              <svg class="gate-preview-watermark" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="75" fill="none" stroke="#5E7C94" stroke-width="1.4"/><circle cx="80" cy="80" r="50" fill="none" stroke="#5E7C94" stroke-width="1.4"/></svg>
+              <span class="gate-preview-badge" style="color:#3E586D;">${esc(s.ref)}</span>
+              <h3 class="gate-preview-title">${esc(s.title)}</h3>
+              <p class="gate-preview-text" style="color:#3E4A52;">${esc(s.excerpt)}</p>
+              <a class="gate-preview-cta" style="background:#5E7C94;" href="/articles/${s.slug}.html">Watch the Message <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
+            </div>
+            <p class="gate-footnote">&ldquo;Prove all things; hold fast that which is good.&rdquo; &mdash; 1 Thessalonians 5:21</p>
+          </div>
+
+          <div class="gate-front gate-front--unroll" data-gate-trigger role="button" tabindex="0" aria-expanded="false" aria-label="Tap to unroll the message" style="background:linear-gradient(155deg,#7E9BB0 0%,#5E7C94 46%,#45617A 100%);">
+            <div class="gate-spine-l" style="background:linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0)); left:0; right:0; top:0; bottom:auto; height:30px; width:auto;"></div>
+            ${gateEmblemRing(`
+              <rect x="51" y="34" width="18" height="30" rx="9" fill="none" stroke="#FDFBF5" stroke-width="2.2"/>
+              <path d="M42 58 a18 18 0 0 0 36 0" fill="none" stroke="#FDFBF5" stroke-width="2.2" stroke-linecap="round"/>
+              <line x1="60" y1="76" x2="60" y2="86" stroke="#FDFBF5" stroke-width="2.2" stroke-linecap="round"/>
+              <line x1="50" y1="86" x2="70" y2="86" stroke="#FDFBF5" stroke-width="2.2" stroke-linecap="round"/>
+            `)}
+            <div class="gate-front-eyebrow">Recorded Messages</div>
+            <h1 class="gate-front-title">Sermons</h1>
+            <div class="gate-front-rule"></div>
+            <p class="gate-front-text">A sermon on a screen is still a sermon preached. The same discernment, the same open Bible beside you, the same test of Scripture applies here as it would from a pew.</p>
+            <p class="gate-front-text italic">Ask the Holy Spirit to confirm every word before you carry it with you.</p>
+            <p class="gate-front-verse">&ldquo;Faith cometh by hearing, and hearing by the word of God.&rdquo; &mdash; Romans 10:17</p>
+            <div class="gate-front-cta">
+              <span>Tap to Unroll the Message</span>
+              <svg class="gate-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M12 19l-6-6M12 19l6-6"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bible-intro-callout">
+        <div class="ico" style="background:var(--blue);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6l-5 3.6 1.9-5.8L4 8.8h6.1z"/></svg></div>
+        <div>
+          <h3>A Recorded Message Is Still a Sermon</h3>
+          <p>Hearing a sermon through a speaker doesn't make it less preached. The anointing on a message isn't bound to a stage — it travels with the words, however they reach you.</p>
+          <p>Keep an open Bible beside you as you listen, and let what you hear send you back to Scripture rather than replace it.</p>
+        </div>
+      </div>
+
+      <a class="btn btn-block" id="sermonsIntroEnter" href="#/sermons/list">Listen to Sermons</a>
+      <label class="gate-skip">
+        <input type="checkbox" data-gate-skip ${skip ? "checked" : ""}>
+        Don't show this page again
+      </label>
+    `;
+    wireGate("sermons");
+  }
+
   function viewSermonsList() {
     setHeader("Sermons", true);
     setActiveTab("sermons");
@@ -856,6 +983,74 @@
         openNoteSheet("sermon", `sermon:${btn.dataset.slug}`, btn.dataset.title, viewSermonsList);
       });
     });
+  }
+
+  function viewPrayerIntro() {
+    setHeader("Prayer", true);
+    setActiveTab("prayer");
+    const skip = gateSkipped("prayer");
+    viewEl.innerHTML = `
+      <div class="gate-stage">
+        <div class="gate-inner">
+          <div class="gate-back">
+            <div class="gate-door-glow"></div>
+            <div class="gate-back-top">
+              <button class="gate-back-close" data-gate-close type="button">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+                Close
+              </button>
+            </div>
+            <div class="gate-back-body">
+              <div class="gate-kicker" style="color:#AD7A7A;">You Are In the Secret Place</div>
+              <h2 class="gate-back-headline">The door is shut. He sees you here.</h2>
+              <p class="gate-back-text">Wherever you are, let this be your closet — put away distraction, quiet your heart, and pray in secret to the Father who sees in secret. Let the Spirit pray through you where words run out.</p>
+            </div>
+            <div class="gate-preview-card" style="background:linear-gradient(165deg,#F3E7E6 0%,#E8D2D0 100%); border:1px solid rgba(173,122,122,0.28);">
+              <svg class="gate-preview-watermark" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="75" fill="none" stroke="#AD7A7A" stroke-width="1.4"/><circle cx="80" cy="80" r="50" fill="none" stroke="#AD7A7A" stroke-width="1.4"/></svg>
+              <span class="gate-preview-badge" style="color:#7A4F4F;">Today's Declaration</span>
+              <p class="gate-preview-text" style="color:#4C3330; font-style:italic;">&ldquo;Father, I enter this day under an open heaven. What You have spoken over my life will not return empty&hellip;&rdquo;</p>
+              <a class="gate-preview-cta" style="background:#AD7A7A;" href="#/prayer/list">Continue in Prayer <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
+            </div>
+            <p class="gate-footnote">&ldquo;When thou prayest, enter into thy closet, and when thou hast shut thy door, pray to thy Father.&rdquo; &mdash; Matthew 6:6</p>
+          </div>
+
+          <div class="gate-front gate-front--door" data-gate-trigger role="button" tabindex="0" aria-expanded="false" aria-label="Tap to enter the prayer closet" style="background:linear-gradient(155deg,#C79992 0%,#AD7A7A 46%,#875D5D 100%);">
+            <div class="gate-spine-l"></div><div class="gate-spine-r"></div>
+            <div class="gate-door-panel"></div>
+            <div class="gate-door-handle"></div>
+            ${gateEmblemRing(`
+              <path d="M60 84s-20-13-27-25a16 16 0 0 1 27-17 16 16 0 0 1 27 17c-7 12-27 25-27 25z" fill="none" stroke="#FDFBF5" stroke-width="2.2" stroke-linejoin="round"/>
+            `)}
+            <div class="gate-front-eyebrow">Enter the Secret Place</div>
+            <h1 class="gate-front-title">Prayer</h1>
+            <div class="gate-front-rule"></div>
+            <p class="gate-front-text">A prayer prayed through a screen is still a prayer prayed. Shut out the noise around you the way you would behind a closet door, and come with an undivided heart.</p>
+            <p class="gate-front-text italic">The Spirit Himself intercedes for us with groanings words cannot utter.</p>
+            <p class="gate-front-verse">&ldquo;The effectual fervent prayer of a righteous man availeth much.&rdquo; &mdash; James 5:16</p>
+            <div class="gate-front-cta">
+              <span>Tap to Enter</span>
+              <svg class="gate-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M12 19l-6-6M12 19l6-6"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bible-intro-callout">
+        <div class="ico" style="background:#AD7A7A;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6l-5 3.6 1.9-5.8L4 8.8h6.1z"/></svg></div>
+        <div>
+          <h3>Shut the Door, Even on a Screen</h3>
+          <p>Jesus didn't ask for a building — He asked for a shut door and an undivided heart. Wherever you tap "Enter," let that moment become your closet: phone on silent, heart unguarded before God.</p>
+          <p>Prayer here is not less real for being typed, read, or declared alone in a room. Heaven still hears it the same.</p>
+        </div>
+      </div>
+
+      <a class="btn btn-block" id="prayerIntroEnter" href="#/prayer/list">Enter Prayer</a>
+      <label class="gate-skip">
+        <input type="checkbox" data-gate-skip ${skip ? "checked" : ""}>
+        Don't show this page again
+      </label>
+    `;
+    wireGate("prayer");
   }
 
   function viewPrayer() {
@@ -914,6 +1109,81 @@
       desc: "Why some prayers move Heaven and others don't — eight chapters on boldness, honest motive, and faith that doesn't faint."
     }
   ];
+
+  function viewLibraryIntro() {
+    setHeader("Library", true);
+    setActiveTab("library");
+    const skip = gateSkipped("library");
+    const b = LIBRARY_BOOKS[0];
+    viewEl.innerHTML = `
+      <div class="gate-stage">
+        <div class="gate-inner">
+          <div class="gate-back">
+            <div class="gate-back-top">
+              <button class="gate-back-close" data-gate-close type="button">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+                Close
+              </button>
+            </div>
+            <div class="gate-back-body">
+              <div class="gate-kicker" style="color:#6E8A5C;">Welcome to the Archive</div>
+              <h2 class="gate-back-headline">A book on glass is still a book to study.</h2>
+              <p class="gate-back-text">Read here the way the Bereans read — searching the Scriptures daily, weighing every page against what God has already said, slow and unhurried, with the Spirit as your teacher.</p>
+            </div>
+            <div class="gate-preview-card" style="background:linear-gradient(165deg,#EBF0E6 0%,#D9E4D1 100%); border:1px solid rgba(110,138,92,0.28);">
+              <svg class="gate-preview-watermark" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="75" fill="none" stroke="#6E8A5C" stroke-width="1.4"/><circle cx="80" cy="80" r="50" fill="none" stroke="#6E8A5C" stroke-width="1.4"/></svg>
+              <span class="gate-preview-badge" style="color:#4C6340;">${esc(b.badge)}</span>
+              <h3 class="gate-preview-title">${esc(b.title)}</h3>
+              <p class="gate-preview-text" style="color:#394C30;">${esc(b.desc)}</p>
+              <a class="gate-preview-cta" style="background:#6E8A5C;" href="/library/${b.slug}.html">Open the Library <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
+            </div>
+            <p class="gate-footnote">&ldquo;They searched the scriptures daily, whether those things were so.&rdquo; &mdash; Acts 17:11</p>
+          </div>
+
+          <div class="gate-door-left" data-gate-trigger role="button" tabindex="0" aria-expanded="false" aria-label="Tap to unlock the archive" style="background:repeating-linear-gradient(180deg, #7F9A6E 0px, #7F9A6E 26px, #6E8A5C 26px, #6E8A5C 52px); box-shadow:0 22px 50px -20px rgba(0,0,0,0.4);">
+            <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(0,0,0,0.12), rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.3));"></div>
+          </div>
+          <div class="gate-door-right" data-gate-trigger role="button" tabindex="0" aria-hidden="true" style="background:repeating-linear-gradient(180deg, #7F9A6E 0px, #7F9A6E 26px, #6E8A5C 26px, #6E8A5C 52px); box-shadow:0 22px 50px -20px rgba(0,0,0,0.4);">
+            <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(0,0,0,0.3), rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.12));"></div>
+          </div>
+
+          <div class="gate-slide-copy" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; padding:30px 24px 24px; pointer-events:none; color:#FFFDF8; text-align:center;">
+            ${gateEmblemRing(`
+              <rect x="36" y="38" width="14" height="42" rx="1.5" fill="none" stroke="#FDFBF5" stroke-width="2"/>
+              <rect x="53" y="34" width="14" height="46" rx="1.5" fill="none" stroke="#FDFBF5" stroke-width="2"/>
+              <rect x="70" y="40" width="14" height="40" rx="1.5" fill="none" stroke="#FDFBF5" stroke-width="2"/>
+            `)}
+            <div class="gate-front-eyebrow">Full Books, Free to Read</div>
+            <h1 class="gate-front-title">Library</h1>
+            <div class="gate-front-rule"></div>
+            <p class="gate-front-text">These shelves hold whole books, not just verses. Give them the same unhurried study you'd give a printed volume — and the same reverence, knowing what you're reading is still His Word at work.</p>
+            <p class="gate-front-text italic">Let the Spirit, not curiosity alone, lead you through each page.</p>
+            <p class="gate-front-verse">&ldquo;Thy word is a lamp unto my feet, and a light unto my path.&rdquo; &mdash; Psalm 119:105</p>
+            <div class="gate-front-cta">
+              <span>Tap to Unlock the Archive</span>
+              <svg class="gate-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M12 19l-6-6M12 19l6-6"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bible-intro-callout">
+        <div class="ico" style="background:#6E8A5C;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6l-5 3.6 1.9-5.8L4 8.8h6.1z"/></svg></div>
+        <div>
+          <h3>Be a Berean With These Pages Too</h3>
+          <p>The Bereans were praised not for believing quickly but for checking carefully — searching the Scriptures to see if what they'd heard was so. Read every book here the same way.</p>
+          <p>Take your time. A chapter finished in a sitting isn't the goal; a truth settled in your spirit is.</p>
+        </div>
+      </div>
+
+      <a class="btn btn-block" id="libraryIntroEnter" href="#/library/list">Open the Library</a>
+      <label class="gate-skip">
+        <input type="checkbox" data-gate-skip ${skip ? "checked" : ""}>
+        Don't show this page again
+      </label>
+    `;
+    wireGate("library");
+  }
 
   function viewLibrary() {
     setHeader("Library", true);
@@ -1158,7 +1428,7 @@
     if (parts.length === 0 || parts[0] === "home") return viewHome();
     if (parts[0] === "bible") {
       if (parts.length === 1) {
-        if (bibleIntroSkipped()) { location.replace("#/bible/books"); return; }
+        if (gateSkipped("bible")) { location.replace("#/bible/books"); return; }
         return viewBibleIntro();
       }
       if (parts[1] === "books") return viewBibleBooks();
@@ -1168,14 +1438,24 @@
     }
     if (parts[0] === "sermons") {
       if (parts.length >= 2) {
+        if (parts[1] === "list") return viewSermonsList();
         // Deep link straight out to the full sermon page on the main site.
         location.href = "/articles/" + parts[1] + ".html";
         return;
       }
-      return viewSermonsList();
+      if (gateSkipped("sermons")) { location.replace("#/sermons/list"); return; }
+      return viewSermonsIntro();
     }
-    if (parts[0] === "prayer") return viewPrayer();
-    if (parts[0] === "library") return viewLibrary();
+    if (parts[0] === "prayer") {
+      if (parts.length >= 2 && parts[1] === "list") return viewPrayer();
+      if (gateSkipped("prayer")) { location.replace("#/prayer/list"); return; }
+      return viewPrayerIntro();
+    }
+    if (parts[0] === "library") {
+      if (parts.length >= 2 && parts[1] === "list") return viewLibrary();
+      if (gateSkipped("library")) { location.replace("#/library/list"); return; }
+      return viewLibraryIntro();
+    }
     if (parts[0] === "profile") {
       if (parts.length === 1) return viewProfile();
       if (parts[1] === "edit") return viewProfileEdit();

@@ -169,8 +169,14 @@
       el.removeAttribute("data-bg");
       return;
     }
+    // The wash has to match the current theme, or dark-mode text (now light)
+    // sits on a near-white wash and disappears — match it to --bg instead of
+    // a hardcoded cream value.
+    const dark = document.documentElement.getAttribute("data-theme") === "dark";
+    const wash = dark ? "21,18,12" : "251,248,241";
+    const washOpacity = dark ? 0.84 : 0.88;
     el.style.background =
-      "linear-gradient(rgba(251,248,241,0.88), rgba(251,248,241,0.88)), url('" + b.url + "?w=1200&q=70&fm=jpg&auto=format&fit=crop') center/cover no-repeat";
+      `linear-gradient(rgba(${wash},${washOpacity}), rgba(${wash},${washOpacity})), url('` + b.url + "?w=1200&q=70&fm=jpg&auto=format&fit=crop') center/cover no-repeat";
     el.setAttribute("data-bg", b.key);
   }
 
@@ -198,6 +204,7 @@
     document.documentElement.setAttribute("data-theme", resolved);
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", resolved === "dark" ? "#15120C" : "#1D1810");
+    if (document.getElementById("readerSurface")) applyReaderBg(getReaderBg());
   }
   try {
     window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {

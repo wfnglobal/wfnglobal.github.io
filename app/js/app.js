@@ -132,7 +132,7 @@
     { key: "accessible", label: "Accessible", stack: "'Atkinson Hyperlegible', Arial, sans-serif" }
   ];
   function getReaderFont() {
-    try { return localStorage.getItem("wfn-app-reader-font") || "sans"; } catch (e) { return "sans"; }
+    try { return localStorage.getItem("wfn-app-reader-font") || "serif"; } catch (e) { return "serif"; }
   }
   function applyReaderFont(key) {
     const f = READER_FONTS.find((x) => x.key === key) || READER_FONTS[0];
@@ -357,6 +357,24 @@
       if (!btn) return;
       applyReaderBg(btn.dataset.bg);
       sheetBodyEl.querySelectorAll(".bg-swatch").forEach((s) => (s.dataset.active = s === btn ? 1 : 0));
+    });
+  }
+
+  function openJumpToVerseSheet(bookName, chapter, verseCount, onPick) {
+    const nums = Array.from({ length: verseCount }, (_, i) => i + 1)
+      .map((n) => `<button class="jump-num" data-verse="${n}" type="button">${n}</button>`)
+      .join("");
+    openSheet(`
+      <h3>Jump to a Verse</h3>
+      <div class="sheet-ref">${esc(bookName)} ${chapter} &middot; ${verseCount} verses</div>
+      <div class="jump-grid">${nums}</div>
+    `);
+    sheetBodyEl.querySelector(".jump-grid").addEventListener("click", (e) => {
+      const btn = e.target.closest(".jump-num");
+      if (!btn) return;
+      const vi = parseInt(btn.dataset.verse, 10);
+      closeSheet();
+      setTimeout(() => onPick(vi), 210); // let the sheet finish closing before scrolling
     });
   }
 
@@ -632,6 +650,10 @@
       <div class="reader-toolbar">
         <select class="reader-select" id="versionSelect" aria-label="Bible version">${versionOptions}</select>
         <select class="reader-select" id="translateSelect" aria-label="Translate this chapter">${langOptions}</select>
+        <button class="reader-jump-btn" id="readerJumpBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 6h16M4 12h10M4 18h7"/></svg>
+          Jump
+        </button>
         <button class="reader-settings-btn" id="readerSettingsBtn" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h11M19 7h1M4 17h1M9 17h11M4 12h7M15 12h5"/><circle cx="18" cy="7" r="2.2"/><circle cx="7" cy="17" r="2.2"/><circle cx="11" cy="12" r="2.2"/></svg>
           Settings
@@ -753,6 +775,20 @@
       translateChapter(v);
     });
     document.getElementById("readerSettingsBtn").addEventListener("click", openReaderSettingsSheet);
+    document.getElementById("readerJumpBtn").addEventListener("click", () => {
+      openJumpToVerseSheet(data.name, chapter, kjvVerses.length, (vi) => jumpToVerse(vi));
+    });
+
+    function jumpToVerse(vi) {
+      const target = verseListEl.querySelector(`.v[data-verse="${vi}"]`);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+      target.classList.remove("flash");
+      // restart the animation even if the same verse is tapped twice in a row
+      void target.offsetWidth;
+      target.classList.add("flash");
+      setTimeout(() => target.classList.remove("flash"), 1700);
+    }
 
     renderKJV();
     showNoteFab(() => openNoteSheet("bible", `bible:${slug}:${chapter}`, `${data.name} ${chapter}`));

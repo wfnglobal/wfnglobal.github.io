@@ -198,6 +198,7 @@
   ];
 
   const TRANSLATE_LANGS = [
+    { code: "en", name: "English" },
     { code: "es", name: "Español" },
     { code: "fr", name: "Français" },
     { code: "pt", name: "Português" },
@@ -426,6 +427,79 @@
     el.innerHTML = `<div class="install-hint">${msg}</div>`;
   }
 
+  function bibleIntroSkipped() {
+    try { return localStorage.getItem("wfn-app-bible-intro-skip") === "1"; } catch (e) { return false; }
+  }
+  function setBibleIntroSkip(on) {
+    try { localStorage.setItem("wfn-app-bible-intro-skip", on ? "1" : "0"); } catch (e) {}
+  }
+
+  function viewBibleIntro() {
+    setHeader("The Bible", true);
+    setActiveTab("bible");
+    const skip = bibleIntroSkipped();
+    viewEl.innerHTML = `
+      <div class="bible-intro-hero">
+        <svg class="bible-intro-sunburst" viewBox="0 0 200 200" aria-hidden="true">
+          <g stroke="#C9A968" stroke-width="0.8" opacity="0.6">
+            <line x1="100" y1="100" x2="100" y2="0"/><line x1="100" y1="100" x2="155" y2="20"/>
+            <line x1="100" y1="100" x2="190" y2="70"/><line x1="100" y1="100" x2="190" y2="130"/>
+            <line x1="100" y1="100" x2="155" y2="180"/><line x1="100" y1="100" x2="45" y2="180"/>
+            <line x1="100" y1="100" x2="10" y2="130"/><line x1="100" y1="100" x2="10" y2="70"/>
+            <line x1="100" y1="100" x2="45" y2="20"/>
+          </g>
+          <circle cx="100" cy="100" r="92" fill="none" stroke="#C9A968" stroke-width="0.8" opacity="0.4"/>
+        </svg>
+        <svg class="bible-intro-logo" viewBox="0 0 48 48" aria-hidden="true">
+          <defs><linearGradient id="introLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
+          </linearGradient></defs>
+          <circle cx="24" cy="24" r="21.5" fill="none" stroke="#C9A968" stroke-width="0.9"/>
+          <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#introLogoGrad)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
+        </svg>
+        <div class="bible-intro-word">Word <em>&amp;</em> Faith Network</div>
+        <div class="bible-intro-eyebrow">Before You Read</div>
+        <h1 class="bible-intro-headline">"Same Word. Same Weight.<br>Just a Different Page."</h1>
+        <p class="bible-intro-sub">This screen holds the very same Scripture that's been copied by candlelight, carried into battle, and wept over on paper for centuries. The page changed. The Word didn't.</p>
+      </div>
+
+      <div class="bible-intro-callout">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6l-5 3.6 1.9-5.8L4 8.8h6.1z"/></svg></div>
+        <div>
+          <h3>An Electronic Bible Is Still the Bible</h3>
+          <p>A phone, tablet, or app is only the vessel — glass and light instead of leather and paper. What's carried in it is exactly the same: the living, inspired Word of God. It deserves the same reverence, the same attention, and the same freedom from distraction you'd give an open Bible on your lap.</p>
+          <p>Don't let the convenience of a screen make the reading casual. Approach it the way you would walk into a sanctuary — aware of Whose presence you're stepping into.</p>
+        </div>
+      </div>
+
+      <div class="bible-intro-rules">
+        <h3>How to Read It Well</h3>
+        <ol>
+          <li><span class="num">1</span><span class="txt"><strong>Pray before you tap.</strong> Ask the Holy Spirit to open your understanding before you open a chapter — Scripture is discerned by the Spirit, not decoded like a search result (1 Corinthians 2:10–14).</span></li>
+          <li><span class="num">2</span><span class="txt"><strong>Let it interrupt you.</strong> If a verse stops you, stay there. Don't scroll past conviction the way you'd scroll past an ad.</span></li>
+          <li><span class="num">3</span><span class="txt"><strong>Use the tools to understand, not to argue.</strong> Word meanings, other versions, and translations are here to deepen your grasp of the text — not to win a debate or justify a conclusion you already wanted.</span></li>
+          <li><span class="num">4</span><span class="txt"><strong>Return daily, not just in emergencies.</strong> The Word is bread for every day, not a reference book you reach for only in a crisis.</span></li>
+          <li><span class="num">5</span><span class="txt"><strong>Guard the moment.</strong> Silence notifications where you can. Give this the same quiet you'd give a closed room with an open Bible on the table.</span></li>
+        </ol>
+      </div>
+
+      <div class="bible-intro-verse">
+        <p>&ldquo;For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit... and is a discerner of the thoughts and intents of the heart.&rdquo;</p>
+        <span>Hebrews 4:12, KJV</span>
+      </div>
+
+      <a class="btn btn-block" id="bibleIntroEnter" href="#/bible/books">Enter the Word</a>
+      <label class="bible-intro-skip">
+        <input type="checkbox" id="bibleIntroSkipChk" ${skip ? "checked" : ""}>
+        Don't show this page again
+      </label>
+    `;
+    document.getElementById("bibleIntroSkipChk").addEventListener("change", (e) => {
+      setBibleIntroSkip(e.target.checked);
+    });
+  }
+
   async function viewBibleBooks() {
     setHeader("The Bible", true);
     setActiveTab("bible");
@@ -574,6 +648,14 @@
     async function translateChapter(langCode) {
       const texts = activePlainTexts.slice();
       const note = document.getElementById("translateNote");
+      if (langCode === "en") {
+        verseListEl.innerHTML = texts
+          .map((t, i) => `<p class="v" data-verse="${i + 1}"><span class="vnum">${i + 1}</span>${esc(t)}</p>`)
+          .join("");
+        note.hidden = false;
+        note.textContent = "Displaying the original English text. Switch Translate back to “Translate…” to use word definitions and highlighting.";
+        return;
+      }
       verseListEl.innerHTML = texts
         .map((t, i) => `<p class="v" data-verse="${i + 1}"><span class="vnum">${i + 1}</span><span class="tword" data-i="${i}">Translating…</span></p>`)
         .join("");
@@ -1075,7 +1157,11 @@
 
     if (parts.length === 0 || parts[0] === "home") return viewHome();
     if (parts[0] === "bible") {
-      if (parts.length === 1) return viewBibleBooks();
+      if (parts.length === 1) {
+        if (bibleIntroSkipped()) { location.replace("#/bible/books"); return; }
+        return viewBibleIntro();
+      }
+      if (parts[1] === "books") return viewBibleBooks();
       if (parts[1] === "search") return viewBibleSearch(parts[2]);
       if (parts.length === 2) return viewBibleChapters(parts[1]);
       if (parts.length >= 3) return viewBibleReader(parts[1], parts[2]);

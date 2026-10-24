@@ -299,3 +299,50 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
   display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px var(--shadow);
 }
 .note-fab svg{width:23px; height:23px;}
+
+/* ── Bible intro / reverence page ─────────────────────────────────── */
+.bible-intro-hero{
+  position:relative; overflow:hidden; border-radius:20px; padding:38px 24px 32px; margin-bottom:20px;
+  background:linear-gradient(160deg,#332B1C 0%,#1D1810 55%,#100C08 100%); color:#FFFDF8; text-align:center;
+}
+.bible-intro-hero::before{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(circle at 50% 18%, rgba(201,169,104,0.45), transparent 62%);
+}
+.bible-intro-sunburst{position:absolute; left:50%; top:-10px; width:260px; height:260px; transform:translateX(-50%); opacity:0.5; pointer-events:none;}
+.bible-intro-logo{position:relative; width:56px; height:56px; margin:0 auto 14px;}
+.bible-intro-word{position:relative; font-family:var(--font-display); font-weight:600; font-size:1.05rem; letter-spacing:0.01em; margin-bottom:22px;}
+.bible-intro-word em{color:var(--gold-light); font-style:normal;}
+.bible-intro-eyebrow{position:relative; font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold-light); margin-bottom:12px;}
+.bible-intro-headline{position:relative; font-family:var(--font-display); font-style:italic; font-weight:600; font-size:1.65rem; line-height:1.32; margin-bottom:16px; text-wrap:balance;}
+.bible-intro-sub{position:relative; font-size:14.5px; line-height:1.72; color:rgba(255,253,248,0.82); max-width:440px; margin:0 auto;}
+
+.bible-intro-callout{
+  position:relative; overflow:hidden; border-radius:16px; padding:22px 20px; margin-bottom:16px;
+  background:var(--surface); border:1.5px solid var(--gold); display:flex; gap:14px; align-items:flex-start;
+}
+.bible-intro-callout .ico{width:38px; height:38px; border-radius:10px; background:var(--gold); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.bible-intro-callout .ico svg{width:19px; height:19px; color:#FFFDF8;}
+.bible-intro-callout h3{font-size:1.05rem; margin-bottom:6px;}
+.bible-intro-callout p{font-size:14px; color:var(--ink-2); line-height:1.65;}
+.bible-intro-callout p + p{margin-top:8px;}
+
+.bible-intro-rules{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:22px 20px; margin-bottom:16px;}
+.bible-intro-rules h3{font-size:1.05rem; margin-bottom:14px;}
+.bible-intro-rules ol{list-style:none; display:flex; flex-direction:column; gap:14px;}
+.bible-intro-rules li{display:flex; gap:12px; align-items:flex-start;}
+.bible-intro-rules .num{
+  flex-shrink:0; width:24px; height:24px; border-radius:100px; background:var(--gold-wash); color:var(--gold);
+  font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:1px;
+}
+.bible-intro-rules .txt{font-size:14.5px; color:var(--ink-2); line-height:1.6;}
+.bible-intro-rules .txt strong{color:var(--ink);}
+
+.bible-intro-verse{
+  text-align:center; padding:22px 18px; margin-bottom:22px; border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+}
+.bible-intro-verse p{font-family:var(--font-display); font-style:italic; font-size:1.08rem; line-height:1.55; color:var(--ink); margin-bottom:8px;}
+.bible-intro-verse span{font-size:12.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold);}
+
+.bible-intro-skip{display:flex; align-items:center; justify-content:center; gap:8px; margin-top:14px; font-size:13px; color:var(--ink-3);}
+.bible-intro-skip input{accent-color:var(--gold);}

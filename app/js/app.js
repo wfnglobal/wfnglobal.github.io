@@ -874,6 +874,7 @@
 
     renderKJV();
     showNoteFab(() => openNoteSheet("bible", `bible:${slug}:${chapter}`, `${data.name} ${chapter}`));
+    showListenFab(() => [`${data.name}, chapter ${chapter}.`, ...activePlainTexts]);
   }
 
   function showNoteFab(onClick) {
@@ -890,6 +891,92 @@
   function hideNoteFab() {
     const fab = document.getElementById("noteFab");
     if (fab) fab.remove();
+  }
+
+  // ---------------------------------------------------------------------
+  // Listen: read Bible chapters, prayers, and anything else on screen
+  // aloud, with a choice of 5 voices. Built on window.WFNTTS, the shared
+  // text-to-speech engine (app/js/wfn-tts.js) also used on the website's
+  // sermon and library pages.
+  // ---------------------------------------------------------------------
+
+  function showListenFab(getItems) {
+    hideListenFab();
+    if (!window.WFNTTS || !window.WFNTTS.supported) return;
+    const fab = document.createElement("button");
+    fab.id = "listenFab";
+    fab.className = "listen-fab";
+    fab.setAttribute("aria-label", "Listen");
+    fab.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4h4l5 5V5L7 10H3z"/><path d="M16 8a5 5 0 0 1 0 8M19 5a9 9 0 0 1 0 14"/></svg>`;
+    fab.addEventListener("click", () => openListenSheet(getItems()));
+    document.getElementById("app").appendChild(fab);
+  }
+  function hideListenFab() {
+    const fab = document.getElementById("listenFab");
+    if (fab) fab.remove();
+  }
+
+  function openListenSheet(items) {
+    if (!window.WFNTTS || !window.WFNTTS.supported) {
+      openSheet(`<h3>Listen</h3><p style="font-size:14.5px; color:var(--ink-2); line-height:1.6;">Your browser doesn't support reading text aloud. Try the latest Chrome, Safari, or Edge.</p>`);
+      return;
+    }
+    openSheet(`
+      <h3>Listen</h3>
+      <p style="font-size:13.5px; color:var(--ink-3); margin-bottom:4px;">Have this read aloud, in your choice of voice.</p>
+      <div class="sheet-row" style="padding-bottom:6px;">
+        <div class="sheet-row-label" style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--gold); flex:none;">Voice</div>
+        <select class="reader-select" id="listenVoiceSelect" style="flex:1; max-width:none;"></select>
+      </div>
+      <div class="sheet-row" style="padding-top:6px;">
+        <div class="sheet-row-label" style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--gold); flex:none;">Speed</div>
+        <select class="reader-select" id="listenRateSelect" style="flex:1; max-width:none;"></select>
+      </div>
+      <div style="display:flex; gap:10px; margin-top:14px;">
+        <button class="btn btn-block" id="listenPlayBtn" type="button">Play</button>
+        <button class="btn btn-outline btn-block" id="listenStopBtn" type="button">Stop</button>
+      </div>
+    `);
+    const voiceSel = document.getElementById("listenVoiceSelect");
+    const rateSel = document.getElementById("listenRateSelect");
+    const playBtn = document.getElementById("listenPlayBtn");
+    const stopBtn = document.getElementById("listenStopBtn");
+
+    window.WFNTTS.getVoiceSlots((slots) => {
+      voiceSel.innerHTML = slots.length
+        ? slots.map((s) => `<option value="${s.index}">${esc(s.label)}</option>`).join("")
+        : `<option value="0">Default Voice</option>`;
+      voiceSel.value = String(window.WFNTTS.getPrefIndex());
+    });
+    window.WFNTTS.rateOptions.forEach((r) => {
+      const o = document.createElement("option");
+      o.value = r;
+      o.textContent = `${r}x${r === 1 ? " (Normal)" : ""}`;
+      rateSel.appendChild(o);
+    });
+    rateSel.value = String(window.WFNTTS.getRate());
+
+    voiceSel.addEventListener("change", () => {
+      window.WFNTTS.setPrefIndex(parseInt(voiceSel.value, 10) || 0);
+      if (window.WFNTTS.getState() !== "idle") window.WFNTTS.speak(items);
+    });
+    rateSel.addEventListener("change", () => {
+      window.WFNTTS.setRate(parseFloat(rateSel.value) || 1);
+      if (window.WFNTTS.getState() !== "idle") window.WFNTTS.speak(items);
+    });
+    playBtn.addEventListener("click", () => {
+      const st = window.WFNTTS.getState();
+      if (st === "playing") { window.WFNTTS.pause(); return; }
+      if (st === "paused") { window.WFNTTS.resume(); return; }
+      window.WFNTTS.speak(items);
+    });
+    stopBtn.addEventListener("click", () => window.WFNTTS.stop());
+
+    const unsubscribe = window.WFNTTS.onState((st) => {
+      playBtn.textContent = st === "playing" ? "Pause" : st === "paused" ? "Resume" : "Play";
+    });
+    playBtn.textContent = window.WFNTTS.getState() === "playing" ? "Pause" : window.WFNTTS.getState() === "paused" ? "Resume" : "Play";
+    sheetScrimEl.addEventListener("click", unsubscribe, { once: true });
   }
 
   function openVerseSheet(bookSlug, bookName, chapter, verse, text) {
@@ -1183,13 +1270,13 @@
         <div class="declaration-overlay"></div>
         <div class="declaration-content">
           <div class="declaration-label">Today's Declaration</div>
-          <div class="declaration-text">&ldquo;Father, I enter this Friday under an open heaven. What You have spoken over my life will not return empty. This day is covered, ordered, and aligned with Your purpose. I declare that Friday is a day of advancement. What was delayed is moving. What was blocked is opening. What was hidden is being revealed. I rise above every limitation assigned to this season. Mercy goes before me, and favor follows me. I speak life over my mind, my body, my household, and every assignment in my hands. Confusion is silenced. Fear has no voice. Delay is broken. The work of my hands is established, and I will not labor in vain. I receive grace for this day. I walk in peace, not pressure. I move with confidence, knowing heaven has already gone ahead of me. Let it be evident by evening that Your hand was upon me. In Jesus' name, amen.&rdquo;</div>
-          <div class="declaration-ref">Isaiah 55:11 &middot; Psalm 90:17</div>
+          <div class="declaration-text" id="declarationText">&ldquo;Father, I enter this day under an open heaven. What You have spoken over my life will not return empty. This morning is ordered, covered, and aligned with Your will. I declare that mercy is new and favour is active. What was delayed is moving. What was broken is being restored. What was hidden is being revealed. I rise above every limitation assigned to this season. I speak life over my mind, my body, my household, and the work of my hands. Confusion is silenced. Fear has no voice. Striving is broken. I walk in grace, not pressure. Doors that were shut are opening by Your hand. I receive strength for today's assignment. I will not miss what You have prepared. I will not labour in vain. Let it be established by evening that heaven went ahead of me. In Jesus' name, amen.&rdquo;</div>
+          <div class="declaration-ref">Isaiah 55:11 &middot; Psalm 118:24</div>
         </div>
       </div>
 
       <div class="section-label">Pray This With Us</div>
-      <div class="card" style="margin-bottom:20px;">${pointsHtml}</div>
+      <div class="card" style="margin-bottom:20px;" id="prayerPointsCard">${pointsHtml}</div>
 
       <div class="section-label">Prayer &amp; Bible Study</div>
       <div class="card stack" style="margin-bottom:20px;">
@@ -1203,6 +1290,12 @@
         <a class="btn btn-outline btn-block" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Join the Circle on X</a>
       </div>
     `;
+    showListenFab(() => [
+      "Today's Declaration.",
+      document.getElementById("declarationText").textContent,
+      "Pray this with us.",
+      ...PRAYER_POINTS
+    ]);
   }
 
   var LIBRARY_BOOKS = [
@@ -1631,6 +1724,8 @@
 
   function route() {
     hideNoteFab();
+    hideListenFab();
+    if (window.WFNTTS) window.WFNTTS.stop();
     const hash = location.hash.replace(/^#\/?/, "");
     const parts = hash.split("/").filter(Boolean);
 

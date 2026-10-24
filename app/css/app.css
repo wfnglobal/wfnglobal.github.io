@@ -359,6 +359,13 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 }
 .note-fab svg{width:23px; height:23px;}
 
+.listen-fab{
+  position:fixed; left:calc(18px + env(safe-area-inset-left,0px)); bottom:calc(96px + env(safe-area-inset-bottom,0px));
+  z-index:40; width:54px; height:54px; border-radius:100px; background:var(--ink); color:#FFFDF8; border:none;
+  display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px var(--shadow);
+}
+.listen-fab svg{width:22px; height:22px;}
+
 /* ── Bible intro / reverence page ─────────────────────────────────── */
 .bible-intro-hero{
   position:relative; overflow:hidden; border-radius:20px; padding:38px 24px 32px; margin-bottom:20px;

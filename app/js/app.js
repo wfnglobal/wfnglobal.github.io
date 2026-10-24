@@ -177,6 +177,69 @@
   applyReaderSize(getReaderSizeIndex()); // apply immediately on app load, before any chapter renders
   applyReaderFont(getReaderFont());
 
+  // ---- Appearance: Light / Dark / Auto theme, rotating card backgrounds,
+  // and a Reduce Motion switch — all on-device, remembered per device. ----
+  const THEME_KEY = "wfn-app-theme";
+  const ROTATE_KEY = "wfn-app-rotate-bg";
+  const MOTION_KEY = "wfn-app-reduce-motion";
+
+  function getThemePref() {
+    try { return localStorage.getItem(THEME_KEY) || "light"; } catch (e) { return "light"; }
+  }
+  function resolveTheme(pref) {
+    if (pref === "auto") {
+      try { return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } catch (e) { return "light"; }
+    }
+    return pref === "dark" ? "dark" : "light";
+  }
+  function applyTheme(pref) {
+    try { localStorage.setItem(THEME_KEY, pref); } catch (e) {}
+    const resolved = resolveTheme(pref);
+    document.documentElement.setAttribute("data-theme", resolved);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", resolved === "dark" ? "#15120C" : "#1D1810");
+  }
+  try {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+      if (getThemePref() === "auto") applyTheme("auto");
+    });
+  } catch (e) {}
+
+  function getRotatePref() {
+    try { return localStorage.getItem(ROTATE_KEY) !== "0"; } catch (e) { return true; }
+  }
+  function setRotatePref(on) {
+    try { localStorage.setItem(ROTATE_KEY, on ? "1" : "0"); } catch (e) {}
+    document.documentElement.setAttribute("data-rotate", on ? "on" : "off");
+  }
+  function getMotionPref() {
+    try { return localStorage.getItem(MOTION_KEY) === "1"; } catch (e) { return false; }
+  }
+  function setMotionPref(reduced) {
+    try { localStorage.setItem(MOTION_KEY, reduced ? "1" : "0"); } catch (e) {}
+    document.documentElement.setAttribute("data-motion", reduced ? "reduced" : "normal");
+  }
+
+  applyTheme(getThemePref());
+  document.documentElement.setAttribute("data-rotate", getRotatePref() ? "on" : "off");
+  document.documentElement.setAttribute("data-motion", getMotionPref() ? "reduced" : "normal");
+
+  // Vibrant gradient "scenes" used behind the Verse of the Day and Today's
+  // Declaration cards — cross-fading in pure CSS (see .bg-scene), so there's
+  // nothing to tear down between views and nothing to fetch.
+  const BG_SCENES = [
+    "linear-gradient(155deg,#FDEBD3 0%,#FFB199 45%,#FF7E67 75%,#4A6FA5 100%)",
+    "linear-gradient(155deg,#BDEFFF 0%,#4FC3C9 45%,#1F7A8C 75%,#0B4F6C 100%)",
+    "linear-gradient(155deg,#FFF6B7 0%,#C9E265 45%,#6FAE4A 75%,#2E6E3E 100%)",
+    "linear-gradient(155deg,#FFE9B3 0%,#FFB84D 45%,#E8792B 75%,#7A3E1D 100%)",
+    "linear-gradient(155deg,#E6F4FF 0%,#9FD3FF 45%,#4FA3E3 75%,#1F5C99 100%)",
+    "linear-gradient(155deg,#FFE2F0 0%,#FFB3D9 45%,#B98BFF 75%,#5B4B9E 100%)"
+  ];
+  function bgScenesHtml() {
+    const step = 24 / BG_SCENES.length;
+    return BG_SCENES.map((bg, i) => `<div class="bg-scene" style="background:${bg}; animation-delay:${(i * step).toFixed(2)}s;"></div>`).join("");
+  }
+
   // Other Bible versions and translation are fetched live (all public-domain
   // versions, free APIs) — the bundled KJV above is what keeps the app's core
   // reading experience working fully offline.
@@ -400,9 +463,13 @@
       </div>
 
       <div class="verse-of-day">
-        <div class="verse-of-day-label">Verse of the Day</div>
-        <div class="verse-of-day-text">&ldquo;${esc(verse.text)}&rdquo;</div>
-        <div class="verse-of-day-ref">${esc(verse.ref)} KJV</div>
+        ${bgScenesHtml()}
+        <div class="verse-of-day-overlay"></div>
+        <div class="verse-of-day-content">
+          <div class="verse-of-day-label">Verse of the Day</div>
+          <div class="verse-of-day-text">&ldquo;${esc(verse.text)}&rdquo;</div>
+          <div class="verse-of-day-ref">${esc(verse.ref)} KJV</div>
+        </div>
       </div>
 
       <div class="stack">
@@ -1097,9 +1164,13 @@
     ).join("");
     viewEl.innerHTML = `
       <div class="declaration-box">
-        <div class="declaration-label">Today's Declaration</div>
-        <div class="declaration-text">&ldquo;Father, I enter this Friday under an open heaven. What You have spoken over my life will not return empty. This day is covered, ordered, and aligned with Your purpose. I declare that Friday is a day of advancement. What was delayed is moving. What was blocked is opening. What was hidden is being revealed. I rise above every limitation assigned to this season. Mercy goes before me, and favor follows me. I speak life over my mind, my body, my household, and every assignment in my hands. Confusion is silenced. Fear has no voice. Delay is broken. The work of my hands is established, and I will not labor in vain. I receive grace for this day. I walk in peace, not pressure. I move with confidence, knowing heaven has already gone ahead of me. Let it be evident by evening that Your hand was upon me. In Jesus' name, amen.&rdquo;</div>
-        <div class="declaration-ref">Isaiah 55:11 &middot; Psalm 90:17</div>
+        ${bgScenesHtml()}
+        <div class="declaration-overlay"></div>
+        <div class="declaration-content">
+          <div class="declaration-label">Today's Declaration</div>
+          <div class="declaration-text">&ldquo;Father, I enter this Friday under an open heaven. What You have spoken over my life will not return empty. This day is covered, ordered, and aligned with Your purpose. I declare that Friday is a day of advancement. What was delayed is moving. What was blocked is opening. What was hidden is being revealed. I rise above every limitation assigned to this season. Mercy goes before me, and favor follows me. I speak life over my mind, my body, my household, and every assignment in my hands. Confusion is silenced. Fear has no voice. Delay is broken. The work of my hands is established, and I will not labor in vain. I receive grace for this day. I walk in peace, not pressure. I move with confidence, knowing heaven has already gone ahead of me. Let it be evident by evening that Your hand was upon me. In Jesus' name, amen.&rdquo;</div>
+          <div class="declaration-ref">Isaiah 55:11 &middot; Psalm 90:17</div>
+        </div>
       </div>
 
       <div class="section-label">Pray This With Us</div>
@@ -1350,7 +1421,79 @@
         <div class="count">${prayers.length}</div>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
       </a>
+      <a class="menu-row" href="#/profile/appearance">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg></div>
+        <div class="label">Appearance</div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
     `;
+  }
+
+  function viewProfileAppearance() {
+    setHeader("Appearance", true);
+    setActiveTab("profile");
+    const pref = getThemePref();
+    const rotate = getRotatePref();
+    const reduceMotion = getMotionPref();
+
+    const themeOpts = [
+      { mode: "light", label: "Light", icon: `<circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2 12h2M20 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>` },
+      { mode: "dark", label: "Dark", icon: `<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/>` },
+      { mode: "auto", label: "Auto", icon: `<path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/><circle cx="12" cy="12" r="9"/>` }
+    ].map((o) => `
+      <button class="theme-opt" data-mode="${o.mode}" data-active="${pref === o.mode ? 1 : 0}" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${o.icon}</svg>
+        ${o.label}
+      </button>
+    `).join("");
+
+    viewEl.innerHTML = `
+      <div class="section-label">Appearance</div>
+      <div class="card" style="margin-bottom:20px;">
+        <p style="font-size:13px; color:var(--ink-2); margin:0 0 14px; line-height:1.55;">Choose how Word &amp; Faith looks on this device.</p>
+        <div class="theme-row">${themeOpts}</div>
+      </div>
+
+      <div class="card" style="margin-bottom:20px; padding:0;">
+        <div style="display:flex; align-items:center; gap:14px; padding:17px 18px; border-bottom:1px solid var(--border);">
+          <div style="flex:1;">
+            <h3 style="font-size:14.5px; margin:0 0 3px;">Rotating Backgrounds</h3>
+            <p style="font-size:12.5px; color:var(--ink-2); line-height:1.5; margin:0;">The Verse of the Day and Today's Declaration cards cycle through vibrant color.</p>
+          </div>
+          <button class="sheet-toggle" id="rotateToggle" data-on="${rotate ? 1 : 0}" type="button" aria-label="Toggle rotating backgrounds"></button>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px; padding:17px 18px;">
+          <div style="flex:1;">
+            <h3 style="font-size:14.5px; margin:0 0 3px;">Reduce Motion</h3>
+            <p style="font-size:12.5px; color:var(--ink-2); line-height:1.5; margin:0;">Turn off background transitions and animation.</p>
+          </div>
+          <button class="sheet-toggle" id="motionToggle" data-on="${reduceMotion ? 1 : 0}" type="button" aria-label="Toggle reduce motion"></button>
+        </div>
+      </div>
+
+      <div class="section-label">Reading</div>
+      <button class="menu-row" id="appearanceReaderSettingsBtn" type="button" style="width:100%; text-align:left; border:1px solid var(--border);">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h11M19 7h1M4 17h1M9 17h11M4 12h7M15 12h5"/><circle cx="18" cy="7" r="2.2"/><circle cx="7" cy="17" r="2.2"/><circle cx="11" cy="12" r="2.2"/></svg></div>
+        <div class="label">Text Size &amp; Fonts</div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    `;
+
+    viewEl.querySelectorAll(".theme-opt").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        applyTheme(btn.dataset.mode);
+        viewProfileAppearance();
+      });
+    });
+    document.getElementById("rotateToggle").addEventListener("click", () => {
+      setRotatePref(!rotate);
+      viewProfileAppearance();
+    });
+    document.getElementById("motionToggle").addEventListener("click", () => {
+      setMotionPref(!reduceMotion);
+      viewProfileAppearance();
+    });
+    document.getElementById("appearanceReaderSettingsBtn").addEventListener("click", openReaderSettingsSheet);
   }
 
   function viewProfileEdit() {
@@ -1514,6 +1657,7 @@
       if (parts[1] === "highlights") return viewProfileHighlights();
       if (parts[1] === "verses") return viewProfileVerses();
       if (parts[1] === "prayer") return viewProfilePrayer();
+      if (parts[1] === "appearance") return viewProfileAppearance();
       return viewProfile();
     }
 

@@ -4,6 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Word and Faith Network</title>
+<script>
+// Set the theme before first paint, so there's no flash of the wrong
+// theme while app.js loads. app.js owns the real logic (incl. keeping
+// "Auto" in sync with OS changes) — this just mirrors it at startup.
+(function () {
+  try {
+    var pref = localStorage.getItem("wfn-app-theme") || "light";
+    var resolved = pref === "dark" ? "dark"
+      : pref === "auto" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark"
+      : "light";
+    document.documentElement.setAttribute("data-theme", resolved);
+    var rotate = localStorage.getItem("wfn-app-rotate-bg");
+    document.documentElement.setAttribute("data-rotate", rotate === "0" ? "off" : "on");
+    var motion = localStorage.getItem("wfn-app-reduce-motion");
+    document.documentElement.setAttribute("data-motion", motion === "1" ? "reduced" : "normal");
+  } catch (e) {}
+})();
+</script>
 <meta name="description" content="Daily scripture, sermons, and prayer from Word and Faith Network — with the full King James Bible, available offline.">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D1810">

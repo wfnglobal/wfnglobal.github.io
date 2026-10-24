@@ -281,13 +281,44 @@
     { code: "fr", name: "Français" },
     { code: "pt", name: "Português" },
     { code: "yo", name: "Yorùbá" },
+    { code: "pcm", name: "Pidgin" },
     { code: "ig", name: "Igbo" },
     { code: "ha", name: "Hausa" },
     { code: "sw", name: "Kiswahili" },
+    { code: "tw", name: "Twi" },
     { code: "de", name: "Deutsch" },
     { code: "zh", name: "中文" },
     { code: "ar", name: "العربية" }
   ];
+
+  // Shared helper: translate a batch of English texts into langCode and
+  // write each result into the matching DOM element's text. Reused by the
+  // Bible reader (per verse), the Home verse of the day, and the Prayer
+  // page (declaration + prayer points) so "Translate" behaves the same
+  // everywhere in the app.
+  async function translateInto(pairs, langCode) {
+    if (!langCode || langCode === "en") {
+      pairs.forEach((p) => { p.el.textContent = p.original; });
+      return;
+    }
+    pairs.forEach((p) => { p.el.textContent = "Translating…"; });
+    let idx = 0;
+    async function worker() {
+      while (idx < pairs.length) {
+        const i = idx++;
+        const p = pairs[i];
+        try {
+          const url = `${TRANSLATE_API}?q=${encodeURIComponent(p.original)}&langpair=en|${langCode}`;
+          const res = await fetch(url);
+          const json = await res.json();
+          p.el.textContent = (json && json.responseData && json.responseData.translatedText) || p.original;
+        } catch (err) {
+          p.el.textContent = p.original;
+        }
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(4, pairs.length) }, worker));
+  }
 
   // Small fallback glossary for common KJV archaic forms a general dictionary
   // won't have (checked before the live dictionary lookup).
@@ -483,7 +514,11 @@
         <div class="verse-of-day-content">
           <div class="verse-of-day-label">Verse of the Day</div>
           <div class="verse-of-day-ref">${esc(verse.ref)} KJV</div>
-          <div class="verse-of-day-text">${esc(verse.text)}</div>
+          <div class="verse-of-day-text" id="vodText">${esc(verse.text)}</div>
+          <select class="vod-translate" id="vodTranslate" aria-label="Translate the verse of the day">
+            <option value="">Translate…</option>
+            ${TRANSLATE_LANGS.filter((l) => l.code !== "en").map((l) => `<option value="${l.code}">${esc(l.name)}</option>`).join("")}
+          </select>
         </div>
       </div>
 
@@ -513,6 +548,9 @@
       <div id="installHint" style="margin-top:18px;"></div>
     `;
     renderInstallHint(document.getElementById("installHint"));
+    document.getElementById("vodTranslate").addEventListener("change", (e) => {
+      translateInto([{ el: document.getElementById("vodText"), original: verse.text }], e.target.value);
+    });
   }
 
   function renderInstallHint(el) {
@@ -743,6 +781,7 @@
       </div>
       <p class="hint-row" id="defineHint">Tap any word for its meaning.</p>
       <div class="reader-surface" id="readerSurface">
+        ${data.titles && data.titles[chapter - 1] ? `<p class="chapter-title-sup">${data.titles[chapter - 1]}</p>` : ""}
         <div class="verse-list" id="verseList"></div>
       </div>
       <p class="translate-note" id="translateNote" hidden></p>
@@ -874,7 +913,11 @@
 
     renderKJV();
     showNoteFab(() => openNoteSheet("bible", `bible:${slug}:${chapter}`, `${data.name} ${chapter}`));
-    setReadable(() => [`${data.name}, chapter ${chapter}.`, ...activePlainTexts]);
+    setReadable(() => [
+      `${data.name}, chapter ${chapter}.`,
+      ...(data.titles && data.titles[chapter - 1] ? [WFNBible.plain(data.titles[chapter - 1])] : []),
+      ...activePlainTexts
+    ]);
   }
 
   function showNoteFab(onClick) {
@@ -1512,8 +1555,9 @@
   function viewPrayer() {
     setHeader("Prayer", true);
     setActiveTab("prayer");
+    const declarationPlain = "Father, I enter this day under an open heaven. What You have spoken over my life will not return empty. This morning is ordered, covered, and aligned with Your will. I declare that mercy is new and favour is active. What was delayed is moving. What was broken is being restored. What was hidden is being revealed. I rise above every limitation assigned to this season. I speak life over my mind, my body, my household, and the work of my hands. Confusion is silenced. Fear has no voice. Striving is broken. I walk in grace, not pressure. Doors that were shut are opening by Your hand. I receive strength for today's assignment. I will not miss what You have prepared. I will not labour in vain. Let it be established by evening that heaven went ahead of me. In Jesus' name, amen.";
     const pointsHtml = PRAYER_POINTS.map(
-      (p, i) => `<div class="prayer-item"><div class="num">${i + 1}</div><p>${esc(p)}</p></div>`
+      (p, i) => `<div class="prayer-item"><div class="num">${i + 1}</div><p id="prayerPointText-${i}">${esc(p)}</p></div>`
     ).join("");
     viewEl.innerHTML = `
       <div class="declaration-box">
@@ -1521,8 +1565,12 @@
         <div class="declaration-overlay"></div>
         <div class="declaration-content">
           <div class="declaration-label">Today's Declaration</div>
-          <div class="declaration-text" id="declarationText">&ldquo;Father, I enter this day under an open heaven. What You have spoken over my life will not return empty. This morning is ordered, covered, and aligned with Your will. I declare that mercy is new and favour is active. What was delayed is moving. What was broken is being restored. What was hidden is being revealed. I rise above every limitation assigned to this season. I speak life over my mind, my body, my household, and the work of my hands. Confusion is silenced. Fear has no voice. Striving is broken. I walk in grace, not pressure. Doors that were shut are opening by Your hand. I receive strength for today's assignment. I will not miss what You have prepared. I will not labour in vain. Let it be established by evening that heaven went ahead of me. In Jesus' name, amen.&rdquo;</div>
+          <div class="declaration-text" id="declarationText">&ldquo;${esc(declarationPlain)}&rdquo;</div>
           <div class="declaration-ref">Isaiah 55:11 &middot; Psalm 118:24</div>
+          <select class="vod-translate" id="prayerTranslate" aria-label="Translate the declaration and prayer points">
+            <option value="">Translate…</option>
+            ${TRANSLATE_LANGS.filter((l) => l.code !== "en").map((l) => `<option value="${l.code}">${esc(l.name)}</option>`).join("")}
+          </select>
         </div>
       </div>
 
@@ -1547,6 +1595,13 @@
       "Pray this with us.",
       ...PRAYER_POINTS
     ]);
+    document.getElementById("prayerTranslate").addEventListener("change", (e) => {
+      const pairs = [{ el: document.getElementById("declarationText"), original: `“${declarationPlain}”` }];
+      PRAYER_POINTS.forEach((p, i) => {
+        pairs.push({ el: document.getElementById(`prayerPointText-${i}`), original: p });
+      });
+      translateInto(pairs, e.target.value);
+    });
   }
 
   var LIBRARY_BOOKS = [

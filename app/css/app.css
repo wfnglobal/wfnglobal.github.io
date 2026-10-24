@@ -5,6 +5,7 @@ html{font-size:112.5%;} /* 18px base — bumped up site-wide for readability */
   --gold:#9C7A34; --gold-light:#C9A968; --gold-wash:#E9D9AE;
   --ink-dark:#1D1810;
   --border:rgba(35,31,24,0.11); --shadow:rgba(80,64,24,0.09);
+  --surface-rgb:255,255,255;
   --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
   --font-body:'Inter', -apple-system, system-ui, sans-serif;
   --verse-font-size:21px;
@@ -16,6 +17,7 @@ html{font-size:112.5%;} /* 18px base — bumped up site-wide for readability */
   --gold:#D8B571; --gold-light:#E7CE94; --gold-wash:#4A3B1E;
   --ink-dark:#0C0A06;
   --border:rgba(255,253,248,0.12); --shadow:rgba(0,0,0,0.4);
+  --surface-rgb:32,26,16;
   color-scheme:dark;
 }
 /* Note: "Auto" is resolved to light/dark in JS (and kept in sync with the
@@ -359,12 +361,74 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 }
 .note-fab svg{width:23px; height:23px;}
 
-.listen-fab{
-  position:fixed; left:calc(18px + env(safe-area-inset-left,0px)); bottom:calc(96px + env(safe-area-inset-bottom,0px));
-  z-index:40; width:54px; height:54px; border-radius:100px; background:var(--ink); color:#FFFDF8; border:none;
-  display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px var(--shadow);
+/* ── Listen & Tolu — global voice controls ──────────────────────────
+   One persistent control, mounted once in the app shell (not per view),
+   so it's available everywhere there's something to read. Tucked away
+   behind a round tab by default so it never sits on top of the text;
+   the tab's waveform icon is the permanent cue that it's there, backed
+   by a one-time glow + label the very first time a reader sees it.
+   Stacked above .note-fab (same corner) so the two never collide. ── */
+.voice-stack{
+  position:fixed; right:calc(16px + env(safe-area-inset-right,0px)); bottom:calc(162px + env(safe-area-inset-bottom,0px));
+  z-index:45; display:flex; flex-direction:column; align-items:flex-end;
 }
-.listen-fab svg{width:22px; height:22px;}
+.voice-tray{
+  display:flex; flex-direction:column; gap:9px; padding:9px; margin-bottom:10px; border-radius:26px;
+  background:rgba(var(--surface-rgb),0.92); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
+  border:1px solid var(--border); box-shadow:0 16px 36px -12px var(--shadow);
+  max-height:220px; overflow:hidden; opacity:1; transform:scale(1); transform-origin:bottom right;
+  transition:max-height .22s ease, opacity .18s ease, transform .22s ease, margin .22s ease;
+}
+.voice-stack.collapsed .voice-tray{max-height:0; opacity:0; transform:scale(.82); margin-bottom:0; pointer-events:none; border-width:0;}
+.voice-btn{
+  display:flex; align-items:center; justify-content:center; gap:8px; border:none; border-radius:100px; cursor:pointer;
+  font-family:var(--font-body); font-weight:700; font-size:13px; width:148px; height:48px; box-sizing:border-box;
+  box-shadow:0 6px 14px -6px var(--shadow); transition:transform .15s ease;
+}
+.voice-btn:active{transform:scale(.96);}
+.voice-btn svg{width:18px; height:18px; flex-shrink:0;}
+.voice-btn-listen{background:var(--gold); color:#2A2008;}
+.voice-btn-tolu{background:var(--ink); color:#FFFDF8; outline:1.5px solid var(--gold-light); outline-offset:-1.5px;}
+.voice-btn-tolu.listening{animation:voicePulse 1.2s infinite;}
+.voice-toggle{
+  position:relative; display:flex; align-items:center; justify-content:center; width:50px; height:50px; border-radius:50%; border:none; cursor:pointer;
+  background:var(--ink); color:var(--gold-light); box-shadow:0 10px 24px -8px var(--shadow); transition:transform .15s ease;
+}
+.voice-toggle:active{transform:scale(.92);}
+.voice-toggle svg{width:20px; height:20px; position:absolute;}
+.voice-toggle .icon-expanded{display:none;}
+.voice-stack:not(.collapsed) .voice-toggle .icon-collapsed{display:none;}
+.voice-stack:not(.collapsed) .voice-toggle .icon-expanded{display:block;}
+.voice-toggle.hint-pulse{animation:voicePulse 1.3s ease-in-out 3;}
+.voice-hint{
+  position:absolute; right:60px; top:50%; transform:translateY(-50%); white-space:nowrap;
+  background:var(--ink); color:#FFFDF8; font-size:12.5px; font-weight:700; padding:8px 14px; border-radius:100px;
+  box-shadow:0 8px 20px -6px var(--shadow); opacity:0; pointer-events:none;
+  animation:voiceHintIn .3s ease .5s forwards, voiceHintOut .3s ease 3.8s forwards;
+}
+.voice-hint::after{content:""; position:absolute; right:-5px; top:50%; width:8px; height:8px; background:var(--ink); transform:translateY(-50%) rotate(45deg); border-radius:1px;}
+@keyframes voicePulse{0%,100%{box-shadow:0 10px 24px -8px var(--shadow), 0 0 0 0 rgba(201,169,104,.5);} 50%{box-shadow:0 10px 24px -8px var(--shadow), 0 0 0 8px rgba(201,169,104,0);}}
+@keyframes voiceHintIn{to{opacity:1;}}
+@keyframes voiceHintOut{to{opacity:0;}}
+
+.tolu-mic-wrap{display:flex; flex-direction:column; align-items:center; padding:4px 0 6px;}
+.tolu-mic{width:68px; height:68px; border-radius:50%; background:var(--ink); color:var(--gold-light); border:2px solid var(--gold-light); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .15s ease;}
+.tolu-mic:active{transform:scale(.95);}
+.tolu-mic svg{width:26px; height:26px;}
+.tolu-mic.listening{animation:voicePulse 1.1s infinite;}
+.tolu-status{margin-top:12px; font-size:13px; color:var(--ink-2); text-align:center; min-height:18px;}
+.tolu-transcript{margin-top:4px; font-family:var(--font-display); font-style:italic; font-size:14.5px; color:var(--ink); text-align:center; min-height:20px;}
+.tolu-fallback{display:flex; gap:8px; margin-top:10px;}
+.tolu-fallback input{flex:1; padding:10px 12px; border-radius:9px; border:1px solid var(--border); background:var(--surface-2); color:var(--ink); font-size:13.5px; font-family:inherit;}
+.tolu-fallback button{border:none; border-radius:9px; background:var(--gold); color:#2A2008; font-weight:700; padding:0 16px; cursor:pointer;}
+.tolu-examples{margin-top:14px;}
+.tolu-examples .label{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-3); margin-bottom:8px;}
+.tolu-chip-row{display:flex; flex-wrap:wrap; gap:7px;}
+.tolu-chip{background:var(--surface-2); border:1px solid var(--border); border-radius:100px; padding:7px 12px; font-size:12px; color:var(--ink-2); cursor:pointer; font-family:inherit;}
+.tolu-chip:active{background:var(--surface-3);}
+.tolu-reply{margin-top:12px; background:var(--surface-2); border-radius:10px; padding:11px 13px; font-size:13px; color:var(--ink-2); line-height:1.5; display:none;}
+.tolu-reply.show{display:block;}
+.tolu-reply strong{color:var(--gold); font-weight:700;}
 
 /* ── Bible intro / reverence page ─────────────────────────────────── */
 .bible-intro-hero{

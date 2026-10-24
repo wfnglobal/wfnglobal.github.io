@@ -874,7 +874,7 @@
 
     renderKJV();
     showNoteFab(() => openNoteSheet("bible", `bible:${slug}:${chapter}`, `${data.name} ${chapter}`));
-    showListenFab(() => [`${data.name}, chapter ${chapter}.`, ...activePlainTexts]);
+    setReadable(() => [`${data.name}, chapter ${chapter}.`, ...activePlainTexts]);
   }
 
   function showNoteFab(onClick) {
@@ -894,33 +894,118 @@
   }
 
   // ---------------------------------------------------------------------
-  // Listen: read Bible chapters, prayers, and anything else on screen
-  // aloud, with a choice of 5 voices. Built on window.WFNTTS, the shared
-  // text-to-speech engine (app/js/wfn-tts.js) also used on the website's
-  // sermon and library pages.
+  // Listen & Tolu: one persistent voice control, mounted once in the app
+  // shell so it's available on every screen, not just a couple of views.
+  // "Listen" reads whatever the current screen registers via
+  // setReadable(getItems); "Tolu" takes a spoken or typed request,
+  // navigates, and reads the result. Both run on window.WFNTTS, the
+  // shared text-to-speech engine (app/js/wfn-tts.js) also used on the
+  // website's sermon and library pages.
   // ---------------------------------------------------------------------
 
-  function showListenFab(getItems) {
-    hideListenFab();
-    if (!window.WFNTTS || !window.WFNTTS.supported) return;
-    const fab = document.createElement("button");
-    fab.id = "listenFab";
-    fab.className = "listen-fab";
-    fab.setAttribute("aria-label", "Listen");
-    fab.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4h4l5 5V5L7 10H3z"/><path d="M16 8a5 5 0 0 1 0 8M19 5a9 9 0 0 1 0 14"/></svg>`;
-    fab.addEventListener("click", () => openListenSheet(getItems()));
-    document.getElementById("app").appendChild(fab);
-  }
-  function hideListenFab() {
-    const fab = document.getElementById("listenFab");
-    if (fab) fab.remove();
+  let currentGetItems = null;
+  let pendingAutoRead = false;
+  let pendingAutoReadTimer = null;
+
+  function setReadable(getItems) {
+    currentGetItems = getItems || null;
+    if (pendingAutoRead && currentGetItems) {
+      pendingAutoRead = false;
+      if (pendingAutoReadTimer) { clearTimeout(pendingAutoReadTimer); pendingAutoReadTimer = null; }
+      startReading();
+    }
   }
 
-  function openListenSheet(items) {
+  function armPendingAutoRead() {
+    pendingAutoRead = true;
+    if (pendingAutoReadTimer) clearTimeout(pendingAutoReadTimer);
+    // Safety net: if nothing registers readable content shortly after a
+    // Tolu-triggered navigation, don't let a stale request fire later.
+    pendingAutoReadTimer = setTimeout(() => { pendingAutoRead = false; }, 4000);
+  }
+
+  function startReading() {
+    if (!window.WFNTTS || !window.WFNTTS.supported || !currentGetItems) return;
+    window.WFNTTS.speak(currentGetItems());
+  }
+
+  function mountVoiceControls() {
+    if (!window.WFNTTS || !window.WFNTTS.supported) return;
+    if (document.getElementById("voiceStack")) return;
+
+    const stack = document.createElement("div");
+    stack.className = "voice-stack";
+    stack.id = "voiceStack";
+    stack.innerHTML = `
+      <div class="voice-tray" id="voiceTray">
+        <button class="voice-btn voice-btn-tolu" id="voiceToluBtn" type="button" aria-label="Ask Tolu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path d="M19 11a7 7 0 0 1-14 0M12 19v3"/></svg>
+          Ask Tolu
+        </button>
+        <button class="voice-btn voice-btn-listen" id="voiceListenBtn" type="button" aria-label="Listen to this page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4h4l5 5V5L7 10H3z"/><path d="M16 8a5 5 0 0 1 0 8M19 5a9 9 0 0 1 0 14"/></svg>
+          Listen
+        </button>
+      </div>
+      <button class="voice-toggle" id="voiceToggle" type="button" aria-label="Show voice controls">
+        <svg class="icon-collapsed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10v4M10 6v12M14 9v6M18 7v10"/></svg>
+        <svg class="icon-expanded" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    `;
+    document.getElementById("app").appendChild(stack);
+
+    const toggle = document.getElementById("voiceToggle");
+    const COLLAPSE_KEY = "wfn-voice-fab-collapsed";
+    const HINT_KEY = "wfn-voice-hint-seen";
+
+    function setCollapsed(on) {
+      stack.classList.toggle("collapsed", on);
+      toggle.setAttribute("aria-label", on ? "Show voice controls" : "Hide voice controls");
+      try { localStorage.setItem(COLLAPSE_KEY, on ? "1" : "0"); } catch (e) {}
+    }
+    function dismissHint() {
+      const hintEl = toggle.querySelector(".voice-hint");
+      if (hintEl) hintEl.remove();
+      toggle.classList.remove("hint-pulse");
+      try { localStorage.setItem(HINT_KEY, "1"); } catch (e) {}
+    }
+
+    let storedCollapse = null, hintSeen = false;
+    try {
+      storedCollapse = localStorage.getItem(COLLAPSE_KEY);
+      hintSeen = localStorage.getItem(HINT_KEY) === "1";
+    } catch (e) {}
+    const startCollapsed = storedCollapse === null ? true : storedCollapse === "1";
+    setCollapsed(startCollapsed);
+
+    if (startCollapsed && !hintSeen) {
+      toggle.classList.add("hint-pulse");
+      const hintEl = document.createElement("span");
+      hintEl.className = "voice-hint";
+      hintEl.textContent = "Listen & Tolu";
+      toggle.appendChild(hintEl);
+      setTimeout(dismissHint, 4200);
+    }
+
+    toggle.addEventListener("click", () => {
+      dismissHint();
+      setCollapsed(!stack.classList.contains("collapsed"));
+    });
+
+    document.getElementById("voiceListenBtn").addEventListener("click", openListenSheet);
+    document.getElementById("voiceToluBtn").addEventListener("click", openToluSheet);
+  }
+
+  function openListenSheet() {
     if (!window.WFNTTS || !window.WFNTTS.supported) {
       openSheet(`<h3>Listen</h3><p style="font-size:14.5px; color:var(--ink-2); line-height:1.6;">Your browser doesn't support reading text aloud. Try the latest Chrome, Safari, or Edge.</p>`);
       return;
     }
+    if (!currentGetItems) {
+      openSheet(`<h3>Listen</h3><p style="font-size:14.5px; color:var(--ink-2); line-height:1.6;">There's nothing to read on this screen yet. Open a sermon, a Bible chapter, the library, or today's prayer, then tap Listen again.</p>`);
+      return;
+    }
+    const items = currentGetItems;
     openSheet(`
       <h3>Listen</h3>
       <p style="font-size:13.5px; color:var(--ink-3); margin-bottom:4px;">Have this read aloud, in your choice of voice.</p>
@@ -958,17 +1043,17 @@
 
     voiceSel.addEventListener("change", () => {
       window.WFNTTS.setPrefIndex(parseInt(voiceSel.value, 10) || 0);
-      if (window.WFNTTS.getState() !== "idle") window.WFNTTS.speak(items);
+      if (window.WFNTTS.getState() !== "idle") window.WFNTTS.speak(items());
     });
     rateSel.addEventListener("change", () => {
       window.WFNTTS.setRate(parseFloat(rateSel.value) || 1);
-      if (window.WFNTTS.getState() !== "idle") window.WFNTTS.speak(items);
+      if (window.WFNTTS.getState() !== "idle") window.WFNTTS.speak(items());
     });
     playBtn.addEventListener("click", () => {
       const st = window.WFNTTS.getState();
       if (st === "playing") { window.WFNTTS.pause(); return; }
       if (st === "paused") { window.WFNTTS.resume(); return; }
-      window.WFNTTS.speak(items);
+      window.WFNTTS.speak(items());
     });
     stopBtn.addEventListener("click", () => window.WFNTTS.stop());
 
@@ -977,6 +1062,172 @@
     });
     playBtn.textContent = window.WFNTTS.getState() === "playing" ? "Pause" : window.WFNTTS.getState() === "paused" ? "Resume" : "Play";
     sheetScrimEl.addEventListener("click", unsubscribe, { once: true });
+  }
+
+  // ---- Tolu: voice-command assistant ---------------------------------
+
+  const TOLU_EXAMPLES = [
+    "Open today's sermon and read it",
+    "Open the book of Luke chapter 2 verse 5",
+    "Open today's prayer",
+    "Stop reading"
+  ];
+
+  function openToluSheet() {
+    openSheet(`
+      <h3>Tolu</h3>
+      <p style="font-size:13.5px; color:var(--ink-3); margin-bottom:10px;">Say what you'd like to open or hear.</p>
+      <div class="tolu-mic-wrap">
+        <button class="tolu-mic" id="toluMicBtn" type="button" aria-label="Tap to speak">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path d="M19 11a7 7 0 0 1-14 0M12 19v3"/></svg>
+        </button>
+        <div class="tolu-status" id="toluStatus">Tap to speak to Tolu</div>
+        <div class="tolu-transcript" id="toluTranscript"></div>
+      </div>
+      <div class="tolu-fallback">
+        <input type="text" id="toluInput" placeholder="Or type a request…">
+        <button id="toluSendBtn" type="button">Send</button>
+      </div>
+      <div class="tolu-examples">
+        <div class="label">Try saying or typing</div>
+        <div class="tolu-chip-row">
+          ${TOLU_EXAMPLES.map((ex) => `<button class="tolu-chip" data-cmd="${esc(ex)}" type="button">"${esc(ex)}"</button>`).join("")}
+        </div>
+      </div>
+      <div class="tolu-reply" id="toluReply"></div>
+    `);
+
+    const micBtn = document.getElementById("toluMicBtn");
+    const statusEl = document.getElementById("toluStatus");
+    const transcriptEl = document.getElementById("toluTranscript");
+    const replyEl = document.getElementById("toluReply");
+    const input = document.getElementById("toluInput");
+
+    async function handle(text) {
+      transcriptEl.textContent = `“${text}”`;
+      statusEl.textContent = "Thinking…";
+      const reply = await runToluCommand(text);
+      replyEl.innerHTML = `<strong>Tolu:</strong> ${esc(reply)}`;
+      replyEl.classList.add("show");
+      statusEl.textContent = "Tap to speak to Tolu";
+    }
+
+    document.querySelectorAll(".tolu-chip").forEach((chip) => {
+      chip.addEventListener("click", () => handle(chip.dataset.cmd));
+    });
+    document.getElementById("toluSendBtn").addEventListener("click", () => {
+      if (!input.value.trim()) return;
+      handle(input.value.trim());
+      input.value = "";
+    });
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") document.getElementById("toluSendBtn").click();
+    });
+
+    const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (Recognition) {
+      const recog = new Recognition();
+      recog.lang = "en-US";
+      recog.interimResults = false;
+      recog.maxAlternatives = 1;
+      recog.onstart = () => { micBtn.classList.add("listening"); statusEl.textContent = "Listening…"; };
+      recog.onend = () => { micBtn.classList.remove("listening"); };
+      recog.onerror = () => { micBtn.classList.remove("listening"); statusEl.textContent = "Didn't catch that — try again or type below."; };
+      recog.onresult = (e) => handle(e.results[0][0].transcript);
+      micBtn.addEventListener("click", () => {
+        if (micBtn.classList.contains("listening")) { recog.stop(); return; }
+        try { recog.start(); } catch (e) {}
+      });
+      sheetScrimEl.addEventListener("click", () => { try { recog.stop(); } catch (e) {} }, { once: true });
+    } else {
+      statusEl.textContent = "Voice input isn't supported in this browser — type a request below.";
+      micBtn.disabled = true;
+      micBtn.style.opacity = "0.5";
+    }
+  }
+
+  let bibleIndexPromise = null;
+  function getBibleIndex() {
+    if (!bibleIndexPromise) bibleIndexPromise = window.WFNBible.getIndex();
+    return bibleIndexPromise;
+  }
+
+  const ORDINAL_WORDS = { first: "1", second: "2", third: "3", "1st": "1", "2nd": "2", "3rd": "3" };
+  function normalizeBookPhrase(s) {
+    s = s.trim().toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+    s = s.replace(/^(the\s+)?book\s+of\s+/, "");
+    s = s.replace(/^(first|second|third|1st|2nd|3rd)\s+/, (m, w) => (ORDINAL_WORDS[w] || w) + " ");
+    return s.trim();
+  }
+  function findBook(phraseRaw, index) {
+    const phrase = normalizeBookPhrase(phraseRaw);
+    if (!phrase) return null;
+    const slugGuess = phrase.replace(/\s+/g, "-");
+    return (
+      index.find((b) => b.slug === slugGuess) ||
+      index.find((b) => b.name.toLowerCase() === phrase) ||
+      index.find((b) => b.name.toLowerCase().startsWith(phrase)) ||
+      index.find((b) => phrase.startsWith(b.name.toLowerCase())) ||
+      null
+    );
+  }
+
+  async function runToluCommand(textRaw) {
+    const stripped = textRaw.replace(/^\s*(hey |ok |okay )?tolu[,:]?\s*/i, "").trim();
+    const body = (stripped || textRaw).toLowerCase().trim();
+    const wantsRead = /\b(read|listen|out loud|aloud)\b/.test(body);
+
+    if (/\bstop\b.*\b(reading|talking)\b/.test(body) || /^(stop|pause)\b/.test(body)) {
+      if (window.WFNTTS) window.WFNTTS.stop();
+      return "Stopped.";
+    }
+    if (/^resume\b/.test(body)) {
+      if (window.WFNTTS) window.WFNTTS.resume();
+      return "Resuming.";
+    }
+    if (/\bsermon\b/.test(body)) {
+      const s = SERMONS[0];
+      location.href = "/articles/" + s.slug + ".html" + (wantsRead !== false ? "#autoread" : "");
+      return `Opening today's sermon — ${s.title}. Reading it now.`;
+    }
+    if (/\bprayer\b/.test(body) && !/\bbook of\b/.test(body)) {
+      armPendingAutoRead();
+      location.hash = "#/prayer/list";
+      return "Opening today's prayer, and reading it now.";
+    }
+    if (/\blibrary\b/.test(body)) {
+      location.hash = "#/library/list";
+      return "Opening the library.";
+    }
+    if (/\bhome\b/.test(body)) {
+      location.hash = "#/home";
+      return "Opening home.";
+    }
+    if (/^(read|listen to)\s+(this|it|the page)\b/.test(body)) {
+      startReading();
+      return currentGetItems ? "Reading this page now." : "There's nothing to read on this screen yet.";
+    }
+
+    // Bible book / chapter / verse, e.g. "open the book of luke chapter 2 verse 5"
+    const bibleMatch = body.match(
+      /(?:open|go to|read|show me)?\s*(?:the\s+)?(?:book\s+of\s+)?([a-z]+(?:\s+[a-z]+)?|\d\s+[a-z]+(?:\s+[a-z]+)?)\s*(?:chapter\s*)?(\d+)?\s*(?:(?:verse|:)\s*(\d+))?/i
+    );
+    if (bibleMatch && bibleMatch[1] && bibleMatch[1].trim().length > 1) {
+      const bookPhrase = bibleMatch[1].trim();
+      const chapterNum = bibleMatch[2] ? parseInt(bibleMatch[2], 10) : 1;
+      const verseNum = bibleMatch[3] ? parseInt(bibleMatch[3], 10) : null;
+      const index = await getBibleIndex();
+      const book = findBook(bookPhrase, index);
+      if (!book) {
+        return `I couldn't find a Bible book called "${bookPhrase}". Try the exact name, like Luke or Genesis.`;
+      }
+      const safeChapter = Math.min(Math.max(chapterNum, 1), book.chapters);
+      armPendingAutoRead();
+      location.hash = `#/bible/${book.slug}/${safeChapter}`;
+      return `Opening ${book.name}, chapter ${safeChapter}${verseNum ? ", verse " + verseNum : ""}. Reading it now.`;
+    }
+
+    return "I didn't catch a command yet — try a sermon, a Bible book and chapter, the library, or today's prayer.";
   }
 
   function openVerseSheet(bookSlug, bookName, chapter, verse, text) {
@@ -1290,7 +1541,7 @@
         <a class="btn btn-outline btn-block" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Join the Circle on X</a>
       </div>
     `;
-    showListenFab(() => [
+    setReadable(() => [
       "Today's Declaration.",
       document.getElementById("declarationText").textContent,
       "Pray this with us.",
@@ -1724,7 +1975,7 @@
 
   function route() {
     hideNoteFab();
-    hideListenFab();
+    setReadable(null);
     if (window.WFNTTS) window.WFNTTS.stop();
     const hash = location.hash.replace(/^#\/?/, "");
     const parts = hash.split("/").filter(Boolean);
@@ -1806,6 +2057,7 @@
 
   window.addEventListener("DOMContentLoaded", () => {
     WFNStore.recordActivityToday();
+    mountVoiceControls();
     route();
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/app/sw.js").catch(() => {});

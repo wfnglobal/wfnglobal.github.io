@@ -138,6 +138,7 @@
   function speakNext() {
     if (queueIndex >= queue.length) {
       state = "idle";
+      clearKeepAlive();
       emit();
       return;
     }
@@ -160,15 +161,41 @@
     window.speechSynthesis.speak(u);
   }
 
+  // Chrome silently drops a speak() call made in the same tick as a
+  // preceding cancel() — give it a beat to actually clear first.
+  var SPEAK_HANDOFF_MS = 60;
+  var speakHandoffTimer = null;
+
+  // Chrome also auto-stops an utterance that runs past ~15s unless it's
+  // nudged; a pause/resume pulse while actively speaking keeps it alive
+  // without the listener noticing (resume() is a no-op once truly done).
+  var keepAliveTimer = null;
+  function clearKeepAlive() {
+    if (keepAliveTimer) { clearInterval(keepAliveTimer); keepAliveTimer = null; }
+  }
+  function startKeepAlive() {
+    clearKeepAlive();
+    keepAliveTimer = setInterval(function () {
+      if (state !== "playing") return;
+      window.speechSynthesis.pause();
+      window.speechSynthesis.resume();
+    }, 10000);
+  }
+
   function speak(items) {
     if (!SUPPORTED) return false;
+    if (speakHandoffTimer) { clearTimeout(speakHandoffTimer); speakHandoffTimer = null; }
     window.speechSynthesis.cancel();
     queue = buildQueue(items);
     queueIndex = 0;
     if (!queue.length) return false;
     state = "playing";
     emit();
-    speakNext();
+    startKeepAlive();
+    speakHandoffTimer = setTimeout(function () {
+      speakHandoffTimer = null;
+      speakNext();
+    }, SPEAK_HANDOFF_MS);
     return true;
   }
 
@@ -186,6 +213,8 @@
   }
   function stop() {
     if (!SUPPORTED) return;
+    if (speakHandoffTimer) { clearTimeout(speakHandoffTimer); speakHandoffTimer = null; }
+    clearKeepAlive();
     window.speechSynthesis.cancel();
     queue = [];
     queueIndex = 0;
@@ -256,35 +285,49 @@
 
     var style = document.createElement("style");
     style.textContent = [
-      "#wfnListenBtn{position:fixed;left:max(18px,env(safe-area-inset-left,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));z-index:150;display:flex;align-items:center;gap:8px;background:#231F18;color:#FFFDF8;border:1px solid rgba(255,253,248,0.12);border-radius:100px;padding:12px 18px 12px 14px;font-family:'Inter',-apple-system,system-ui,sans-serif;font-size:13px;font-weight:600;box-shadow:0 10px 28px -8px rgba(0,0,0,0.4);cursor:pointer;}",
-      "#wfnListenBtn:active{transform:scale(0.97);}",
-      "#wfnListenBtn svg{width:16px;height:16px;flex-shrink:0;}",
-      "#wfnListenPanel{position:fixed;left:max(18px,env(safe-area-inset-left,0px));bottom:max(82px,calc(env(safe-area-inset-bottom,0px) + 82px));z-index:150;width:min(300px,calc(100vw - 36px));background:#FFFFFF;border:1px solid rgba(35,31,24,0.11);border-radius:16px;padding:18px;box-shadow:0 16px 40px -12px rgba(0,0,0,0.25);font-family:'Inter',-apple-system,system-ui,sans-serif;}",
-      "#wfnListenPanel[hidden]{display:none;}",
+      /* Tucked away behind a round waveform tab by default — never sits
+         raw on top of the article text — with a frosted tray and a
+         one-time glow + label the first time a reader sees it. */
+      "#wfnVoiceStack{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));z-index:150;display:flex;flex-direction:column;align-items:flex-end;font-family:'Inter',-apple-system,system-ui,sans-serif;}",
+      "#wfnListenTray{display:flex;flex-direction:column;gap:9px;padding:9px;margin-bottom:10px;border-radius:26px;background:rgba(251,248,241,0.92);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(35,31,24,0.12);box-shadow:0 16px 36px -12px rgba(80,64,24,0.22);max-height:360px;overflow:hidden;opacity:1;transform:scale(1);transform-origin:bottom right;transition:max-height .22s ease,opacity .18s ease,transform .22s ease,margin .22s ease;}",
+      "#wfnVoiceStack.wfnl-collapsed #wfnListenTray{max-height:0;opacity:0;transform:scale(.82);margin-bottom:0;pointer-events:none;border-width:0;}",
+      "#wfnListenBtn{display:flex;align-items:center;justify-content:center;gap:8px;background:#9C7A34;color:#2A2008;border:none;border-radius:100px;width:148px;height:48px;box-sizing:border-box;font-size:13px;font-weight:700;box-shadow:0 6px 14px -6px rgba(80,64,24,0.22);cursor:pointer;}",
+      "#wfnListenBtn:active{transform:scale(0.96);}",
+      "#wfnListenBtn svg{width:18px;height:18px;flex-shrink:0;}",
+      "#wfnListenPanel{padding:14px 16px 4px;}",
+      "#wfnListenPanel.wfnl-panel-hidden{display:none;}",
       "#wfnListenPanel h4{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.05rem;color:#231F18;margin-bottom:2px;}",
       "#wfnListenPanel .wfnl-sub{font-size:12px;color:#8C8370;margin-bottom:10px;}",
       "#wfnListenPanel label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9C7A34;margin:12px 0 6px;}",
       "#wfnListenPanel select{width:100%;padding:9px 10px;border-radius:9px;border:1px solid rgba(35,31,24,0.16);font-size:13.5px;font-family:inherit;background:#FBF8F1;color:#231F18;}",
-      "#wfnListenControls{display:flex;gap:10px;margin-top:16px;}",
+      "#wfnListenControls{display:flex;gap:10px;margin:16px 0 14px;}",
       "#wfnListenControls button{flex:1;border:none;border-radius:100px;padding:10px 0;font-weight:600;font-size:13.5px;cursor:pointer;font-family:inherit;}",
       "#wfnListenPlay{background:#9C7A34;color:#FFFDF8;}",
-      "#wfnListenStop{background:#F4EEE0;color:#564E3E;}"
+      "#wfnListenStop{background:#F4EEE0;color:#564E3E;}",
+      "#wfnVoiceToggle{position:relative;display:flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:50%;border:none;cursor:pointer;background:#231F18;color:#E7CE94;box-shadow:0 10px 24px -8px rgba(80,64,24,0.3);}",
+      "#wfnVoiceToggle:active{transform:scale(0.92);}",
+      "#wfnVoiceToggle svg{width:20px;height:20px;position:absolute;}",
+      "#wfnVoiceToggle .wfnl-icon-expanded{display:none;}",
+      "#wfnVoiceStack:not(.wfnl-collapsed) #wfnVoiceToggle .wfnl-icon-collapsed{display:none;}",
+      "#wfnVoiceStack:not(.wfnl-collapsed) #wfnVoiceToggle .wfnl-icon-expanded{display:block;}",
+      "#wfnVoiceToggle.wfnl-hint-pulse{animation:wfnlPulse 1.3s ease-in-out 3;}",
+      ".wfnl-hint{position:absolute;right:60px;top:50%;transform:translateY(-50%);white-space:nowrap;background:#231F18;color:#FFFDF8;font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:100px;box-shadow:0 8px 20px -6px rgba(80,64,24,0.3);opacity:0;pointer-events:none;animation:wfnlHintIn .3s ease .5s forwards,wfnlHintOut .3s ease 3.8s forwards;}",
+      ".wfnl-hint::after{content:'';position:absolute;right:-5px;top:50%;width:8px;height:8px;background:#231F18;transform:translateY(-50%) rotate(45deg);border-radius:1px;}",
+      "@keyframes wfnlPulse{0%,100%{box-shadow:0 10px 24px -8px rgba(80,64,24,0.3),0 0 0 0 rgba(201,169,104,.5);}50%{box-shadow:0 10px 24px -8px rgba(80,64,24,0.3),0 0 0 8px rgba(201,169,104,0);}}",
+      "@keyframes wfnlHintIn{to{opacity:1;}}",
+      "@keyframes wfnlHintOut{to{opacity:0;}}"
     ].join("\n");
     document.head.appendChild(style);
 
-    var btn = document.createElement("button");
-    btn.id = "wfnListenBtn";
-    btn.type = "button";
-    btn.setAttribute("aria-label", "Listen to this page");
-    btn.innerHTML =
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4h4l5 5V5L7 10H3z"/><path d="M16 8a5 5 0 0 1 0 8M19 5a9 9 0 0 1 0 14"/></svg>' +
-      '<span id="wfnListenBtnLabel">Listen</span>';
-    document.body.appendChild(btn);
-
-    var panel = document.createElement("div");
-    panel.id = "wfnListenPanel";
-    panel.hidden = true;
-    panel.innerHTML =
+    var stack = document.createElement("div");
+    stack.id = "wfnVoiceStack";
+    stack.innerHTML =
+      '<div id="wfnListenTray">' +
+      '<button id="wfnListenBtn" type="button" aria-label="Listen to this page">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4h4l5 5V5L7 10H3z"/><path d="M16 8a5 5 0 0 1 0 8M19 5a9 9 0 0 1 0 14"/></svg>' +
+      '<span id="wfnListenBtnLabel">Listen</span>' +
+      "</button>" +
+      '<div id="wfnListenPanel" class="wfnl-panel-hidden">' +
       "<h4>Listen</h4>" +
       '<p class="wfnl-sub">Have this page read aloud.</p>' +
       '<label for="wfnVoiceSel">Voice</label>' +
@@ -294,14 +337,22 @@
       '<div id="wfnListenControls">' +
       '<button id="wfnListenPlay" type="button">Play</button>' +
       '<button id="wfnListenStop" type="button">Stop</button>' +
-      "</div>";
-    document.body.appendChild(panel);
+      "</div>" +
+      "</div>" +
+      "</div>" +
+      '<button id="wfnVoiceToggle" type="button" aria-label="Show the Listen button">' +
+      '<svg class="wfnl-icon-collapsed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10v4M10 6v12M14 9v6M18 7v10"/></svg>' +
+      '<svg class="wfnl-icon-expanded" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>' +
+      "</button>";
+    document.body.appendChild(stack);
 
-    var voiceSel = panel.querySelector("#wfnVoiceSel");
-    var rateSel = panel.querySelector("#wfnRateSel");
-    var playBtn = panel.querySelector("#wfnListenPlay");
-    var stopBtn = panel.querySelector("#wfnListenStop");
-    var btnLabel = btn.querySelector("#wfnListenBtnLabel");
+    var voiceSel = stack.querySelector("#wfnVoiceSel");
+    var rateSel = stack.querySelector("#wfnRateSel");
+    var playBtn = stack.querySelector("#wfnListenPlay");
+    var stopBtn = stack.querySelector("#wfnListenStop");
+    var btn = stack.querySelector("#wfnListenBtn");
+    var btnLabel = stack.querySelector("#wfnListenBtnLabel");
+    var toggle = stack.querySelector("#wfnVoiceToggle");
 
     window.WFNTTS.getVoiceSlots(function (slots) {
       voiceSel.innerHTML = slots.length
@@ -330,8 +381,9 @@
       if (window.WFNTTS.getState() !== "idle") window.WFNTTS.speak(items);
     });
 
+    var panelEl = stack.querySelector("#wfnListenPanel");
     btn.addEventListener("click", function () {
-      panel.hidden = !panel.hidden;
+      panelEl.classList.toggle("wfnl-panel-hidden");
     });
 
     playBtn.addEventListener("click", function () {
@@ -352,6 +404,56 @@
     window.addEventListener("pagehide", function () {
       window.WFNTTS.stop();
     });
+
+    // ---- hide / unhide the whole control, with a one-time discovery hint ----
+    var COLLAPSE_KEY = "wfn-voice-fab-collapsed";
+    var HINT_KEY = "wfn-voice-hint-seen";
+
+    function setCollapsed(on) {
+      stack.classList.toggle("wfnl-collapsed", on);
+      toggle.setAttribute("aria-label", on ? "Show the Listen button" : "Hide the Listen button");
+      try { localStorage.setItem(COLLAPSE_KEY, on ? "1" : "0"); } catch (e) {}
+    }
+    function dismissHint() {
+      var hintEl = toggle.querySelector(".wfnl-hint");
+      if (hintEl) hintEl.parentNode.removeChild(hintEl);
+      toggle.classList.remove("wfnl-hint-pulse");
+      try { localStorage.setItem(HINT_KEY, "1"); } catch (e) {}
+    }
+
+    var storedCollapse = null, hintSeen = false;
+    try {
+      storedCollapse = localStorage.getItem(COLLAPSE_KEY);
+      hintSeen = localStorage.getItem(HINT_KEY) === "1";
+    } catch (e) {}
+    var autoread = location.hash === "#autoread";
+    var startCollapsed = autoread ? false : (storedCollapse === null ? true : storedCollapse === "1");
+    setCollapsed(startCollapsed);
+
+    if (startCollapsed && !hintSeen) {
+      toggle.classList.add("wfnl-hint-pulse");
+      var hintEl = document.createElement("span");
+      hintEl.className = "wfnl-hint";
+      hintEl.textContent = "Tap to listen";
+      toggle.appendChild(hintEl);
+      setTimeout(dismissHint, 4200);
+    }
+
+    toggle.addEventListener("click", function () {
+      dismissHint();
+      setCollapsed(!stack.classList.contains("wfnl-collapsed"));
+    });
+
+    // Arrived here via a Tolu "...and read it" request from the app —
+    // start reading right away and clear the marker from the URL.
+    if (autoread) {
+      dismissHint();
+      panelEl.classList.remove("wfnl-panel-hidden");
+      if (history.replaceState) {
+        history.replaceState(null, "", location.pathname + location.search);
+      }
+      setTimeout(function () { window.WFNTTS.speak(items); }, 300);
+    }
   }
 
   if (document.readyState === "loading") {

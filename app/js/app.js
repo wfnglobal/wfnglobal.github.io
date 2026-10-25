@@ -260,7 +260,6 @@
   // reading experience working fully offline.
   const BIBLE_API = "https://bible-api.com/";
   const DICTIONARY_API = "https://api.dictionaryapi.dev/api/v2/entries/en/";
-  const TRANSLATE_API = "https://api.mymemory.translated.net/get";
 
   const BIBLE_VERSIONS = [
     { code: "kjv", name: "King James Version (offline)" },
@@ -274,51 +273,6 @@
     { code: "oeb-us", name: "Open English Bible, US" },
     { code: "clementine", name: "Clementine Vulgate (Latin)" }
   ];
-
-  const TRANSLATE_LANGS = [
-    { code: "en", name: "English" },
-    { code: "es", name: "Español" },
-    { code: "fr", name: "Français" },
-    { code: "pt", name: "Português" },
-    { code: "yo", name: "Yorùbá" },
-    { code: "pcm", name: "Pidgin" },
-    { code: "ig", name: "Igbo" },
-    { code: "ha", name: "Hausa" },
-    { code: "sw", name: "Kiswahili" },
-    { code: "tw", name: "Twi" },
-    { code: "de", name: "Deutsch" },
-    { code: "zh", name: "中文" },
-    { code: "ar", name: "العربية" }
-  ];
-
-  // Shared helper: translate a batch of English texts into langCode and
-  // write each result into the matching DOM element's text. Reused by the
-  // Bible reader (per verse), the Home verse of the day, and the Prayer
-  // page (declaration + prayer points) so "Translate" behaves the same
-  // everywhere in the app.
-  async function translateInto(pairs, langCode) {
-    if (!langCode || langCode === "en") {
-      pairs.forEach((p) => { p.el.textContent = p.original; });
-      return;
-    }
-    pairs.forEach((p) => { p.el.textContent = "Translating…"; });
-    let idx = 0;
-    async function worker() {
-      while (idx < pairs.length) {
-        const i = idx++;
-        const p = pairs[i];
-        try {
-          const url = `${TRANSLATE_API}?q=${encodeURIComponent(p.original)}&langpair=en|${langCode}`;
-          const res = await fetch(url);
-          const json = await res.json();
-          p.el.textContent = (json && json.responseData && json.responseData.translatedText) || p.original;
-        } catch (err) {
-          p.el.textContent = p.original;
-        }
-      }
-    }
-    await Promise.all(Array.from({ length: Math.min(4, pairs.length) }, worker));
-  }
 
   // Small fallback glossary for common KJV archaic forms a general dictionary
   // won't have (checked before the live dictionary lookup).
@@ -515,10 +469,6 @@
           <div class="verse-of-day-label">Verse of the Day</div>
           <div class="verse-of-day-ref">${esc(verse.ref)} KJV</div>
           <div class="verse-of-day-text" id="vodText">${esc(verse.text)}</div>
-          <select class="vod-translate" id="vodTranslate" aria-label="Translate the verse of the day">
-            <option value="">Translate…</option>
-            ${TRANSLATE_LANGS.filter((l) => l.code !== "en").map((l) => `<option value="${l.code}">${esc(l.name)}</option>`).join("")}
-          </select>
         </div>
       </div>
 
@@ -548,9 +498,6 @@
       <div id="installHint" style="margin-top:18px;"></div>
     `;
     renderInstallHint(document.getElementById("installHint"));
-    document.getElementById("vodTranslate").addEventListener("change", (e) => {
-      translateInto([{ el: document.getElementById("vodText"), original: verse.text }], e.target.value);
-    });
   }
 
   function renderInstallHint(el) {
@@ -755,7 +702,6 @@
     const nextHref = chapter < data.chapters.length ? `#/bible/${slug}/${chapter + 1}` : "#";
 
     const versionOptions = BIBLE_VERSIONS.map((v) => `<option value="${v.code}">${esc(v.name)}</option>`).join("");
-    const langOptions = `<option value="">Translate…</option>` + TRANSLATE_LANGS.map((l) => `<option value="${l.code}">${esc(l.name)}</option>`).join("");
 
     viewEl.innerHTML = `
       <div class="reader-nav">
@@ -769,7 +715,6 @@
       </div>
       <div class="reader-toolbar">
         <select class="reader-select" id="versionSelect" aria-label="Bible version">${versionOptions}</select>
-        <select class="reader-select" id="translateSelect" aria-label="Translate this chapter">${langOptions}</select>
         <button class="reader-jump-btn" id="readerJumpBtn" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 6h16M4 12h10M4 18h7"/></svg>
           Jump
@@ -784,7 +729,6 @@
         ${data.titles && data.titles[chapter - 1] ? `<p class="chapter-title-sup">${data.titles[chapter - 1]}</p>` : ""}
         <div class="verse-list" id="verseList"></div>
       </div>
-      <p class="translate-note" id="translateNote" hidden></p>
     `;
     viewEl.scrollTo(0, 0);
     window.scrollTo(0, 0);
@@ -845,55 +789,8 @@
       }
     }
 
-    async function translateChapter(langCode) {
-      const texts = activePlainTexts.slice();
-      const note = document.getElementById("translateNote");
-      if (langCode === "en") {
-        verseListEl.innerHTML = texts
-          .map((t, i) => `<p class="v" data-verse="${i + 1}"><span class="vnum">${i + 1}</span>${esc(t)}</p>`)
-          .join("");
-        note.hidden = false;
-        note.textContent = "Displaying the original English text. Switch Translate back to “Translate…” to use word definitions and highlighting.";
-        return;
-      }
-      verseListEl.innerHTML = texts
-        .map((t, i) => `<p class="v" data-verse="${i + 1}"><span class="vnum">${i + 1}</span><span class="tword" data-i="${i}">Translating…</span></p>`)
-        .join("");
-      note.hidden = false;
-      note.textContent = "Machine translation, for a quick read in another language. Switch Translate back to “Translate…” to use word definitions and highlighting on the original text.";
-      let idx = 0;
-      async function worker() {
-        while (idx < texts.length) {
-          const i = idx++;
-          try {
-            const url = `${TRANSLATE_API}?q=${encodeURIComponent(texts[i])}&langpair=en|${langCode}`;
-            const res = await fetch(url);
-            const json = await res.json();
-            const translated = json && json.responseData && json.responseData.translatedText ? json.responseData.translatedText : texts[i];
-            const span = verseListEl.querySelector(`.tword[data-i="${i}"]`);
-            if (span) span.textContent = translated;
-          } catch (err) {
-            const span = verseListEl.querySelector(`.tword[data-i="${i}"]`);
-            if (span) span.textContent = texts[i];
-          }
-        }
-      }
-      await Promise.all(Array.from({ length: Math.min(4, texts.length) }, worker));
-    }
-
     document.getElementById("versionSelect").addEventListener("change", (e) => {
-      document.getElementById("translateSelect").value = "";
-      document.getElementById("translateNote").hidden = true;
       loadVersion(e.target.value);
-    });
-    document.getElementById("translateSelect").addEventListener("change", (e) => {
-      const v = e.target.value;
-      if (!v) {
-        document.getElementById("translateNote").hidden = true;
-        loadVersion(activeVersionCode);
-        return;
-      }
-      translateChapter(v);
     });
     document.getElementById("readerSettingsBtn").addEventListener("click", openReaderSettingsSheet);
     document.getElementById("readerJumpBtn").addEventListener("click", () => {
@@ -1567,10 +1464,6 @@
           <div class="declaration-label">Today's Declaration</div>
           <div class="declaration-text" id="declarationText">&ldquo;${esc(declarationPlain)}&rdquo;</div>
           <div class="declaration-ref">Isaiah 55:11 &middot; Psalm 118:24</div>
-          <select class="vod-translate" id="prayerTranslate" aria-label="Translate the declaration and prayer points">
-            <option value="">Translate…</option>
-            ${TRANSLATE_LANGS.filter((l) => l.code !== "en").map((l) => `<option value="${l.code}">${esc(l.name)}</option>`).join("")}
-          </select>
         </div>
       </div>
 
@@ -1595,13 +1488,6 @@
       "Pray this with us.",
       ...PRAYER_POINTS
     ]);
-    document.getElementById("prayerTranslate").addEventListener("change", (e) => {
-      const pairs = [{ el: document.getElementById("declarationText"), original: `“${declarationPlain}”` }];
-      PRAYER_POINTS.forEach((p, i) => {
-        pairs.push({ el: document.getElementById(`prayerPointText-${i}`), original: p });
-      });
-      translateInto(pairs, e.target.value);
-    });
   }
 
   var LIBRARY_BOOKS = [

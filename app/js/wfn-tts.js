@@ -19,27 +19,18 @@
   var PREF_RATE_KEY = "wfn-tts-rate";
   var RATE_OPTIONS = [0.8, 1, 1.15, 1.3, 1.5];
 
-  // Ten named voices. The first five are English narrators (friendly first
-  // names, never the raw device voice name — a reader shouldn't have to
-  // know their phone's system voice is called "Samantha" or "Daniel").
-  // The last five are matched to a real on-device voice for that language
-  // where the browser/OS has one installed; most phones and desktops don't
-  // ship Jamaican Patois, Swahili, Twi, or Nigerian-accented voices, so
-  // when there's no native match we fall back to an English voice and mark
-  // the slot "(English voice)" rather than silently mis-labeling it.
+  // Named voices. Only real, distinct, unmodified device voices are ever
+  // offered — no pitch-shifted fakes standing in for a voice that doesn't
+  // exist, since a pitched duplicate is what sounded "terrible" to readers.
+  // If the browser/OS only has one good voice installed, readers get one
+  // option, not five. A French voice is offered when the device actually
+  // has one; Jamaican Patois, Swahili, Twi, and Arabic were removed — no
+  // mainstream browser ships a clear native voice for them, so every one of
+  // those slots was silently falling back to a mangled substitute anyway.
+  var ENGLISH_NAME_POOL = ["Bridget", "Declan", "Grace", "Marcus", "Naomi"];
   var VOICE_DEFS = [
-    { name: "Bridget" },
-    { name: "Declan" },
-    { name: "Grace" },
-    { name: "Marcus" },
-    { name: "Naomi" },
-    { name: "Amélie — French", langRe: /^fr/i },
-    { name: "Kingston — Jamaican Patois", langRe: /^(en-jm|jam)/i },
-    { name: "Zuri — Swahili", langRe: /^sw/i },
-    { name: "Kwame — Twi", langRe: /^(ak|tw)/i },
-    { name: "Yusuf — Arabic", langRe: /^ar/i }
+    { name: "Amélie — French", langRe: /^fr/i }
   ];
-  var VOICE_COUNT = VOICE_DEFS.length;
 
   var listeners = [];
   var state = "idle"; // idle | playing | paused
@@ -53,11 +44,11 @@
     });
   }
 
-  // Ten labeled slots mapped onto whatever voices the device/browser
-  // actually has. The first five cycle through distinct English voices
-  // (with a slight pitch variation when a device truly only has one or two
-  // installed); the last five look for a real voice in that language and
-  // fall back to an English voice, clearly marked, when none is installed.
+  // Labeled slots mapped onto whatever voices the device/browser actually
+  // has — never more than the number of genuinely distinct voices found,
+  // and never pitch-shifted to fake a voice that isn't really there. A
+  // language slot (French) is only included when a real native voice for
+  // it exists; otherwise it's left out rather than silently substituted.
   function buildSlots() {
     if (!SUPPORTED) return [];
     var all = window.speechSynthesis.getVoices() || [];
@@ -70,27 +61,27 @@
       seen[v.name] = 1;
       return true;
     });
-    var pitches = [1, 1, 1, 0.92, 1.08];
     var slots = [];
-    for (var i = 0; i < VOICE_COUNT; i++) {
-      var def = VOICE_DEFS[i];
-      var voice = null, native = true, pitch = 1;
-      if (def.langRe) {
-        voice = all.filter(function (v) { return def.langRe.test(v.lang); })[0] || null;
-        native = !!voice;
-        if (!voice) voice = enUniq.length ? enUniq[i % enUniq.length] : null;
-      } else {
-        voice = enUniq.length ? enUniq[i % enUniq.length] : null;
-        pitch = enUniq.length < 5 ? pitches[i] : 1;
-      }
+    var cap = Math.min(enUniq.length, ENGLISH_NAME_POOL.length);
+    for (var i = 0; i < cap; i++) {
       slots.push({
-        index: i,
-        label: def.name + (native ? "" : " (English voice)"),
-        voice: voice,
-        pitch: pitch,
-        native: native
+        index: slots.length,
+        label: ENGLISH_NAME_POOL[i],
+        voice: enUniq[i],
+        pitch: 1,
+        native: true
       });
     }
+    if (!slots.length && enUniq.length === 0 && all.length) {
+      // No voice tagged "en*" at all — still offer whatever the device has
+      // rather than show nothing.
+      slots.push({ index: 0, label: ENGLISH_NAME_POOL[0], voice: all[0], pitch: 1, native: true });
+    }
+    VOICE_DEFS.forEach(function (def) {
+      var voice = all.filter(function (v) { return def.langRe.test(v.lang); })[0] || null;
+      if (!voice) return; // no real voice for this language — don't fake it
+      slots.push({ index: slots.length, label: def.name, voice: voice, pitch: 1, native: true });
+    });
     return slots;
   }
 
@@ -117,7 +108,11 @@
   function getPrefIndex() {
     try {
       var v = parseInt(localStorage.getItem(PREF_VOICE_KEY), 10);
-      return isNaN(v) ? 0 : Math.min(VOICE_COUNT - 1, Math.max(0, v));
+      // Not clamped to a fixed count here — the real voice list varies by
+      // device and is only known once speechSynthesis reports it; speakNext()
+      // and the voice-select UI both fall back to slot 0 if this index turns
+      // out to be out of range for what's actually available.
+      return isNaN(v) ? 0 : Math.max(0, v);
     } catch (e) { return 0; }
   }
   function setPrefIndex(i) {
@@ -282,25 +277,6 @@
   // ---------------------------------------------------------------------
   if (window.WFN_TTS_MANUAL || !SUPPORTED) return;
 
-  // Free, no-key machine translation for reading a sermon or library
-  // chapter in another language — same engine and language list as the
-  // app's Bible "Translate" feature.
-  var TRANSLATE_API = "https://api.mymemory.translated.net/get";
-  var TRANSLATE_LANGS = [
-    { code: "es", name: "Español" },
-    { code: "fr", name: "Français" },
-    { code: "pt", name: "Português" },
-    { code: "yo", name: "Yorùbá" },
-    { code: "pcm", name: "Pidgin" },
-    { code: "ig", name: "Igbo" },
-    { code: "ha", name: "Hausa" },
-    { code: "sw", name: "Kiswahili" },
-    { code: "tw", name: "Twi" },
-    { code: "de", name: "Deutsch" },
-    { code: "zh", name: "中文" },
-    { code: "ar", name: "العربية" }
-  ];
-
   function collectReadable() {
     var body = document.querySelector(".article-body");
     if (body) {
@@ -325,66 +301,9 @@
     return null;
   }
 
-  // Same two page shapes as collectReadable(), but returns the actual
-  // elements (not just their text) so a translation can be written back
-  // into the page, with each element's original English text captured
-  // once up front so "Original" can restore it exactly.
-  function collectTranslatable() {
-    var body = document.querySelector(".article-body");
-    var els = [];
-    if (body) {
-      var titleEl = document.querySelector(".article-title");
-      if (titleEl) els.push(titleEl);
-      body.querySelectorAll("p, h2").forEach(function (el) { els.push(el); });
-    } else {
-      document.querySelectorAll("article.chapter").forEach(function (ch) {
-        var eyebrow = ch.querySelector(".chapter-eyebrow");
-        var title = ch.querySelector(".chapter-title");
-        if (eyebrow) els.push(eyebrow);
-        if (title) els.push(title);
-        ch.querySelectorAll("p").forEach(function (p) { els.push(p); });
-      });
-    }
-    if (!els.length) return null;
-    return els.map(function (el) { return { el: el, original: el.textContent }; });
-  }
-
-  function translatePairs(pairs, langCode) {
-    if (!langCode) {
-      pairs.forEach(function (p) { p.el.textContent = p.original; });
-      return;
-    }
-    pairs.forEach(function (p) { p.el.textContent = "Translating…"; });
-    var idx = 0;
-    function worker() {
-      return new Promise(function (resolve) {
-        function next() {
-          if (idx >= pairs.length) { resolve(); return; }
-          var p = pairs[idx++];
-          var url = TRANSLATE_API + "?q=" + encodeURIComponent(p.original) + "&langpair=en|" + langCode;
-          fetch(url)
-            .then(function (res) { return res.json(); })
-            .then(function (json) {
-              p.el.textContent = (json && json.responseData && json.responseData.translatedText) || p.original;
-              next();
-            })
-            .catch(function () {
-              p.el.textContent = p.original;
-              next();
-            });
-        }
-        next();
-      });
-    }
-    var workers = [];
-    for (var i = 0; i < Math.min(4, pairs.length); i++) workers.push(worker());
-    return Promise.all(workers);
-  }
-
   function mountWidget() {
     var items = collectReadable();
     if (!items || !items.length) return;
-    var translatable = collectTranslatable();
 
     var style = document.createElement("style");
     style.textContent = [
@@ -407,14 +326,6 @@
       "#wfnListenControls button{flex:1;border:none;border-radius:100px;padding:10px 0;font-weight:600;font-size:13.5px;cursor:pointer;font-family:inherit;}",
       "#wfnListenPlay{background:#9C7A34;color:#FFFDF8;}",
       "#wfnListenStop{background:#F4EEE0;color:#564E3E;}",
-      "#wfnTranslateBtn{display:flex;align-items:center;justify-content:center;gap:8px;background:#231F18;color:#E7CE94;border:1.5px solid rgba(231,206,148,0.4);border-radius:100px;width:148px;height:48px;box-sizing:border-box;font-size:13px;font-weight:700;cursor:pointer;}",
-      "#wfnTranslateBtn:active{transform:scale(0.96);}",
-      "#wfnTranslateBtn svg{width:17px;height:17px;flex-shrink:0;}",
-      "#wfnTranslatePanel{padding:14px 16px 16px;}",
-      "#wfnTranslatePanel.wfnl-panel-hidden{display:none;}",
-      "#wfnTranslatePanel h4{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.05rem;color:#231F18;margin-bottom:2px;}",
-      "#wfnTranslatePanel .wfnl-sub{font-size:12px;color:#8C8370;margin-bottom:10px;}",
-      "#wfnTranslatePanel select{width:100%;padding:9px 10px;border-radius:9px;border:1px solid rgba(35,31,24,0.16);font-size:13.5px;font-family:inherit;background:#FBF8F1;color:#231F18;}",
       "#wfnVoiceToggle{position:relative;display:flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:50%;border:none;cursor:pointer;background:#231F18;color:#E7CE94;box-shadow:0 10px 24px -8px rgba(80,64,24,0.3);}",
       "#wfnVoiceToggle:active{transform:scale(0.92);}",
       "#wfnVoiceToggle svg{width:20px;height:20px;position:absolute;}",
@@ -449,20 +360,6 @@
       '<button id="wfnListenPlay" type="button">Play</button>' +
       '<button id="wfnListenStop" type="button">Stop</button>' +
       "</div>" +
-      "</div>" +
-      (translatable
-        ? '<button id="wfnTranslateBtn" type="button" aria-label="Translate this page">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7M7 3v2M4 10a9 9 0 0 0 7-5M7 10a9 9 0 0 0 7 5"/><path d="M14 21l4-9 4 9M15.3 18h5.4"/></svg>' +
-          "<span>Translate</span>" +
-          "</button>" +
-          '<div id="wfnTranslatePanel" class="wfnl-panel-hidden">' +
-          "<h4>Translate</h4>" +
-          '<p class="wfnl-sub">Read this page in another language (machine translation).</p>' +
-          '<select id="wfnTranslateSel"><option value="">Original (English)</option>' +
-          TRANSLATE_LANGS.map(function (l) { return '<option value="' + l.code + '">' + l.name + "</option>"; }).join("") +
-          "</select>" +
-          "</div>"
-        : "") +
       "</div>" +
       '<button id="wfnVoiceToggle" type="button" aria-label="Show the Listen button">' +
       '<svg class="wfnl-icon-collapsed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10v4M10 6v12M14 9v6M18 7v10"/></svg>' +
@@ -507,10 +404,7 @@
 
     var panelEl = stack.querySelector("#wfnListenPanel");
     btn.addEventListener("click", function () {
-      var opening = panelEl.classList.contains("wfnl-panel-hidden");
       panelEl.classList.toggle("wfnl-panel-hidden");
-      var tp = stack.querySelector("#wfnTranslatePanel");
-      if (opening && tp) tp.classList.add("wfnl-panel-hidden");
     });
 
     playBtn.addEventListener("click", function () {
@@ -522,20 +416,6 @@
     stopBtn.addEventListener("click", function () {
       window.WFNTTS.stop();
     });
-
-    if (translatable) {
-      var translateBtn = stack.querySelector("#wfnTranslateBtn");
-      var translatePanelEl = stack.querySelector("#wfnTranslatePanel");
-      var translateSel = stack.querySelector("#wfnTranslateSel");
-      translateBtn.addEventListener("click", function () {
-        var opening = translatePanelEl.classList.contains("wfnl-panel-hidden");
-        translatePanelEl.classList.toggle("wfnl-panel-hidden");
-        if (opening) panelEl.classList.add("wfnl-panel-hidden");
-      });
-      translateSel.addEventListener("change", function () {
-        translatePairs(translatable, translateSel.value);
-      });
-    }
 
     window.WFNTTS.onState(function (st) {
       playBtn.textContent = st === "playing" ? "Pause" : st === "paused" ? "Resume" : "Play";

@@ -87,12 +87,6 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 .verse-of-day-label{font-size:11.5px; font-weight:600; letter-spacing:0.05em; color:rgba(255,253,248,0.82); margin-bottom:4px;}
 .verse-of-day-ref{font-family:var(--font-body); font-size:14.5px; font-weight:700; color:#FFFDF8; margin-bottom:12px;}
 .verse-of-day-text{font-family:var(--font-display); font-weight:500; font-size:1.5rem; line-height:1.38; color:#FFFDF8;}
-.vod-translate{
-  margin-top:14px; padding:6px 10px; border-radius:100px; border:1px solid rgba(255,253,248,0.3);
-  background:rgba(21,18,12,0.5); color:#FFFDF8; font-family:var(--font-body); font-size:12px; font-weight:600;
-  -webkit-appearance:none; appearance:none;
-}
-.vod-translate option{color:#231F18;}
 
 /* ---- Slow-rotating nature photography (Verse of the Day, Today's Declaration) ----
    Each photo lingers for several minutes before a gentle crossfade to the
@@ -177,7 +171,7 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 @keyframes versePulse{0%{background-color:var(--gold-wash);} 100%{background-color:transparent;}}
 .verse-list .v.flash{animation:versePulse 1.7s ease;}
 
-/* ---- Reader toolbar: version, translate, settings ---- */
+/* ---- Reader toolbar: version, settings ---- */
 .reader-toolbar{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:12px;}
 .reader-select{
   font-family:var(--font-body); font-size:12.5px; font-weight:700; color:var(--ink);
@@ -196,7 +190,6 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 .jump-num:active{background:var(--gold); border-color:var(--gold); color:#fff;}
 .skeleton-note{font-size:14.5px; color:var(--ink-2); line-height:1.6; padding:18px; border:1px dashed var(--border); border-radius:12px;}
 .link-btn{font-family:var(--font-body); font-weight:700; font-size:13px; background:none; border:1px solid var(--gold); color:var(--gold); padding:7px 13px; border-radius:100px;}
-.translate-note{font-size:12px; color:var(--ink-3); font-style:italic; margin-top:12px; line-height:1.5;}
 
 /* tap-to-define words */
 .verse-list .w{background:none; border:none; padding:0; margin:0; font:inherit; color:inherit; cursor:pointer; border-radius:3px;}
@@ -246,7 +239,6 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 .declaration-label{font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-light); margin-bottom:10px;}
 .declaration-text{font-family:var(--font-display); font-style:italic; font-size:1.15rem; line-height:1.6; margin-bottom:10px;}
 .declaration-ref{font-size:12.5px; color:var(--gold-wash); font-weight:600;}
-.declaration-content .vod-translate{margin-top:14px;}
 
 .prayer-item{display:flex; gap:12px; align-items:flex-start; padding:14px 0; border-bottom:1px solid var(--border);}
 .prayer-item:last-child{border-bottom:none;}

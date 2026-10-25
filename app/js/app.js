@@ -1080,19 +1080,35 @@
     });
     rateSel.value = String(window.WFNTTS.getRate());
 
+    // "Pidgin (translated)" isn't a real device voice — no mainstream engine
+    // has one — so it reads this screen's text after running it through the
+    // same Pidgin translation used on the website, falling back sentence by
+    // sentence to English where no Pidgin translation exists.
+    async function speakSelected() {
+      const idx = parseInt(voiceSel.value, 10) || 0;
+      if (!window.WFNTTS.isPidginIndex(idx)) {
+        window.WFNTTS.speak(items());
+        return;
+      }
+      playBtn.textContent = "Translating…";
+      const source = items();
+      const pidginItems = await Promise.all(source.map(async (t) => (await translateOne(t, "pcm")) || t));
+      window.WFNTTS.speak(pidginItems);
+    }
+
     voiceSel.addEventListener("change", () => {
       window.WFNTTS.setPrefIndex(parseInt(voiceSel.value, 10) || 0);
-      if (window.WFNTTS.getState() !== "idle") window.WFNTTS.speak(items());
+      if (window.WFNTTS.getState() !== "idle") speakSelected();
     });
     rateSel.addEventListener("change", () => {
       window.WFNTTS.setRate(parseFloat(rateSel.value) || 1);
-      if (window.WFNTTS.getState() !== "idle") window.WFNTTS.speak(items());
+      if (window.WFNTTS.getState() !== "idle") speakSelected();
     });
     playBtn.addEventListener("click", () => {
       const st = window.WFNTTS.getState();
       if (st === "playing") { window.WFNTTS.pause(); return; }
       if (st === "paused") { window.WFNTTS.resume(); return; }
-      window.WFNTTS.speak(items());
+      speakSelected();
     });
     stopBtn.addEventListener("click", () => window.WFNTTS.stop());
 

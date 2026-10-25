@@ -32,6 +32,27 @@
     { name: "Amélie — French", langRe: /^fr/i }
   ];
 
+  // iOS/macOS tags its "fun" sound-effect voices (Whisper, Bubbles, Zarvox,
+  // Trinoids, Organ, Bells, Boing, Cellos, Jester, Wobble, Albert, Bahh,
+  // "Bad News", "Good News", Superstar, plus the old robotic "Fred") with a
+  // plain en-US language code, exactly like the real speaking voices — so
+  // the "just take the first 5 en* voices" approach from the last pass was
+  // quietly handing readers a mix of real voices and these joke ones, which
+  // is exactly what sounded "muffled and terrible." They're blocked here by
+  // name so only genuine reading voices ever fill a slot.
+  var NOVELTY_VOICE_NAMES = /^(albert|bad news|bahh|bells|boing|bubbles|cellos|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|fred|rocko|sandy|shelley|junior|kathy|princess|ralph|hysterical)$/i;
+
+  function isNovelty(v) {
+    return NOVELTY_VOICE_NAMES.test((v.name || "").trim());
+  }
+
+  // When both a plain and an "Enhanced"/"Premium" copy of the same voice are
+  // installed (iOS offers higher-quality downloads for several voices), the
+  // better-sounding one wins rather than whichever happened to sort first.
+  function qualityRank(v) {
+    return /enhanced|premium|neural|natural/i.test(v.name || "") ? 0 : 1;
+  }
+
   var listeners = [];
   var state = "idle"; // idle | playing | paused
   var queue = [];
@@ -53,14 +74,19 @@
     if (!SUPPORTED) return [];
     var all = window.speechSynthesis.getVoices() || [];
     if (!all.length) return [];
-    var en = all.filter(function (v) { return /^en/i.test(v.lang); });
-    var enPool = en.length ? en : all;
-    var seen = {};
-    var enUniq = enPool.filter(function (v) {
-      if (seen[v.name]) return false;
-      seen[v.name] = 1;
-      return true;
+    var real = all.filter(function (v) { return !isNovelty(v); });
+    if (!real.length) real = all; // if everything got filtered, don't show nothing
+    var en = real.filter(function (v) { return /^en/i.test(v.lang); });
+    var enPool = en.length ? en : real;
+    // Dedupe by base name (stripping an " (Enhanced)"/" (Premium)" suffix),
+    // keeping the best-quality copy when more than one is installed.
+    var byBase = {};
+    enPool.forEach(function (v) {
+      var base = (v.name || "").replace(/\s*\((enhanced|premium|neural|natural)\)\s*$/i, "").trim().toLowerCase();
+      var existing = byBase[base];
+      if (!existing || qualityRank(v) < qualityRank(existing)) byBase[base] = v;
     });
+    var enUniq = Object.keys(byBase).map(function (k) { return byBase[k]; });
     var slots = [];
     var cap = Math.min(enUniq.length, ENGLISH_NAME_POOL.length);
     for (var i = 0; i < cap; i++) {
@@ -72,16 +98,31 @@
         native: true
       });
     }
-    if (!slots.length && enUniq.length === 0 && all.length) {
+    if (!slots.length && enUniq.length === 0 && real.length) {
       // No voice tagged "en*" at all — still offer whatever the device has
       // rather than show nothing.
-      slots.push({ index: 0, label: ENGLISH_NAME_POOL[0], voice: all[0], pitch: 1, native: true });
+      slots.push({ index: 0, label: ENGLISH_NAME_POOL[0], voice: real[0], pitch: 1, native: true });
     }
     VOICE_DEFS.forEach(function (def) {
-      var voice = all.filter(function (v) { return def.langRe.test(v.lang); })[0] || null;
+      var voice = real.filter(function (v) { return def.langRe.test(v.lang); })[0] || null;
       if (!voice) return; // no real voice for this language — don't fake it
       slots.push({ index: slots.length, label: def.name, voice: voice, pitch: 1, native: true });
     });
+    // "Pidgin" isn't a voice any engine actually has — it reads the page's
+    // text after it's been run through the same Pidgin translation used
+    // elsewhere on the site, using the best voice above, rather than a
+    // pitched fake standing in for an accent (which is what made the other
+    // slots sound bad in the first place).
+    if (slots.length) {
+      slots.push({
+        index: slots.length,
+        label: "Pidgin (translated)",
+        voice: slots[0].voice,
+        pitch: 1,
+        native: true,
+        pidgin: true
+      });
+    }
     return slots;
   }
 
@@ -167,7 +208,11 @@
     var slots = cachedSlots || buildSlots();
     var slot = (slots && slots[getPrefIndex()]) || (slots && slots[0]);
     var u = new SpeechSynthesisUtterance(queue[queueIndex]);
-    if (slot && slot.voice) u.voice = slot.voice;
+    // Defensive: an unusable voice object should never silently kill the
+    // whole reading queue — fall back to the engine's default voice instead.
+    if (slot && slot.voice) {
+      try { u.voice = slot.voice; } catch (e) {}
+    }
     u.pitch = slot ? slot.pitch : 1;
     u.rate = getRate();
     u.onend = function () {
@@ -180,7 +225,12 @@
       queueIndex++;
       speakNext();
     };
-    window.speechSynthesis.speak(u);
+    try {
+      window.speechSynthesis.speak(u);
+    } catch (e) {
+      queueIndex++;
+      speakNext();
+    }
   }
 
   // Chrome silently drops a speak() call made in the same tick as a
@@ -263,7 +313,12 @@
     resume: resume,
     stop: stop,
     onState: onState,
-    getState: function () { return state; }
+    getState: function () { return state; },
+    isPidginIndex: function (i) {
+      var slots = cachedSlots || buildSlots();
+      var s = slots && slots[i];
+      return !!(s && s.pidgin);
+    }
   };
 
   if (SUPPORTED) {
@@ -540,13 +595,31 @@
     });
     rateSel.value = String(window.WFNTTS.getRate());
 
+    // When "Pidgin (translated)" is chosen, run the items through the same
+    // Pidgin translation the Translate panel uses before reading them —
+    // falling back line-by-line to the English original if a given
+    // sentence has no Pidgin translation available, rather than stalling.
+    function speakSelected() {
+      var idx = parseInt(voiceSel.value, 10) || 0;
+      if (!window.WFNTTS.isPidginIndex(idx)) {
+        window.WFNTTS.speak(items);
+        return;
+      }
+      btnLabel.textContent = "Translating…";
+      Promise.all(items.map(function (t) {
+        return translateOne(t, "pcm").then(function (r) { return r || t; });
+      })).then(function (pidginItems) {
+        window.WFNTTS.speak(pidginItems);
+      });
+    }
+
     voiceSel.addEventListener("change", function () {
       window.WFNTTS.setPrefIndex(parseInt(voiceSel.value, 10) || 0);
-      if (window.WFNTTS.getState() !== "idle") window.WFNTTS.speak(items);
+      if (window.WFNTTS.getState() !== "idle") speakSelected();
     });
     rateSel.addEventListener("change", function () {
       window.WFNTTS.setRate(parseFloat(rateSel.value) || 1);
-      if (window.WFNTTS.getState() !== "idle") window.WFNTTS.speak(items);
+      if (window.WFNTTS.getState() !== "idle") speakSelected();
     });
 
     var panelEl = stack.querySelector("#wfnListenPanel");
@@ -559,7 +632,7 @@
       var st = window.WFNTTS.getState();
       if (st === "playing") { window.WFNTTS.pause(); return; }
       if (st === "paused") { window.WFNTTS.resume(); return; }
-      window.WFNTTS.speak(items);
+      speakSelected();
     });
     stopBtn.addEventListener("click", function () {
       window.WFNTTS.stop();

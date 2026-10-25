@@ -40,7 +40,7 @@
 
   const VERSES = [
     { text: "The heavens declare the glory of God; and the firmament sheweth his handywork.", ref: "Psalm 19:1" },
-    { text: "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary.", ref: "Isaiah 40:31" },
+    { text: "Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves.", ref: "Philippians 2:3" },
     { text: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", ref: "Psalm 23:1-2" },
     { text: "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.", ref: "Jeremiah 29:11" },
     { text: "Pray without ceasing. Continue earnestly in prayer, being vigilant in it with thanksgiving.", ref: "1 Thessalonians 5:17; Colossians 4:2" },
@@ -53,6 +53,7 @@
   ];
 
   const SERMONS = [
+    { slug: "consider-the-work-of-god", title: "Consider the Work of God", ref: "Ecclesiastes 7:11-14", date: "October 25, 2026", excerpt: "Wisdom is a defence on a good day. But what do you do on a crooked one? Solomon's answer isn't to fix it — it's to consider it." },
     { slug: "trust-in-the-lord-with-all-thine-heart", title: "Trust in the Lord With All Thine Heart", ref: "Proverbs 3:5-6", date: "October 24, 2026", excerpt: "Why surrendering your own understanding isn't a leap in the dark — it's the one condition guaranteed to make your path straight." },
     { slug: "his-mercies-are-new-every-morning", title: "His Mercies Are New Every Morning", ref: "Lamentations 2 & 3", date: "October 23, 2026", excerpt: "The same prophet who wept over the ruins of Zion also wrote, \"Great is thy faithfulness\" — a study on how hope survives the worst chapter." },
     { slug: "when-you-pray-why-worry", title: "When You Pray, Why Do You Still Worry?", ref: "Philippians 4", date: "October 22, 2026", excerpt: "Prayer and anxiety can't occupy the same heart for long — one of them has to go." },
@@ -109,8 +110,8 @@
   const PIDGIN_STATIC = {
     "The heavens declare the glory of God; and the firmament sheweth his handywork.":
       "Di heaven dey show God glory; and di sky dey show di work wey im hand do.",
-    "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary.":
-      "But those wey dey wait for The LORD go renew their strength; dem go fly up like eagle; dem go run, and dem no go tire.",
+    "Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves.":
+      "No let anything happen through quarrel or empty pride; but make una dey humble well-well, make everyone see others pass themselves.",
     "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.":
       "The LORD na my shepherd; I no go want for anything. E dey make me lie down for green pasture: e dey lead me go beside still water.",
     "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.":
@@ -129,8 +130,8 @@
       "For the Son of man no come to destroy people life, but to save dem.",
     "Commit thy works unto the LORD, and thy thoughts shall be established.":
       "Hand over your works to The LORD, and your thoughts go stand strong.",
-    "Father, I enter this day under an open heaven. What You have spoken over my life will not return empty. This morning is ordered, covered, and aligned with Your will. I declare that mercy is new and favour is active. What was delayed is moving. What was broken is being restored. What was hidden is being revealed. I rise above every limitation assigned to this season. I speak life over my mind, my body, my household, and the work of my hands. Confusion is silenced. Fear has no voice. Striving is broken. I walk in grace, not pressure. Doors that were shut are opening by Your hand. I receive strength for today's assignment. I will not miss what You have prepared. I will not labour in vain. Let it be established by evening that heaven went ahead of me. In Jesus' name, amen.":
-      "Father, I dey enter dis day under open heaven. Wetin You don talk over my life no go return empty. Dis morning don arrange well, e dey cover, e dey match wit Your will. I dey declare say mercy dey fresh and favour dey active. Wetin don delay dey move. Wetin don break dey repair. Wetin don hide dey show. I dey rise above every limitation wey dis season set for me. I dey speak life ontop my mind, my body, my house, and di work of my hand. Confusion no fit talk. Fear no get voice. Struggle don break. I dey waka for grace, no be pressure. Doors wey don close dey open now by Your hand. I dey receive strength for today assignment. I no go miss wetin You don prepare. I no go work for nothing. Make e clear by evening say heaven don waka before me. For Jesus name, amen.",
+    "Father, today is Your Sabbath, and I enter it in rest, not in striving. I lay down every work of my own hands and trust the work of Yours. Where my path has been crooked, I will not fight to straighten it myself — I consider it, and I trust the Hand that bent it to also be the Hand that restores it. In this day of whatever kind You have assigned me — prosperity or adversity — I receive it from You, and I will not find fault with You after it. Where I am tempted to strive, to compare, or to think more highly of myself than I ought, I choose lowliness of mind; I esteem others better than myself, as Your Word commands. Let me rest in who You are today, not in what I can produce. Restore my soul the way only a true Sabbath can. Let wisdom, not anxiety, be my defence, and let it give life to everything I set my hand to this week. In Jesus' name, amen.":
+      "Father, today na Your Sabbath, and I dey enter am for rest, no be for struggle. I drop every work wey my hand dey do and I trust the work wey na Your hand dey do. Where my road don crooked, I no go fight to straighten am myself — I go consider am, and I trust say the Hand wey bend am na im go also straighten am. For dis day, whatever kind You don assign me — prosperity or adversity — I dey receive am from You, and I no go find fault with You after am. Where I wan strive, compare myself, or think say I pass pass, I dey choose to dey humble; I go see others pass myself, as Your Word talk. Make I rest for who You be today, no be for wetin I fit produce. Restore my soul the way only real Sabbath fit do. Make wisdom, no be worry, be my defence, and make e give life to everything my hand go touch dis week. For Jesus name, amen.",
     "Thank God for His faithfulness over your life, your family, and this new day.":
       "Thank God for how E dey faithful over your life, your family, and dis new day.",
     "Declare Romans 10:17 over your faith — that it is rising as you hear the Word.":
@@ -1595,7 +1596,7 @@
             <div class="gate-preview-card" style="background:linear-gradient(165deg,#F3E7E6 0%,#E8D2D0 100%); border:1px solid rgba(173,122,122,0.28);">
               <svg class="gate-preview-watermark" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="75" fill="none" stroke="#AD7A7A" stroke-width="1.4"/><circle cx="80" cy="80" r="50" fill="none" stroke="#AD7A7A" stroke-width="1.4"/></svg>
               <span class="gate-preview-badge" style="color:#7A4F4F;">Today's Declaration</span>
-              <p class="gate-preview-text" style="color:#4C3330; font-style:italic;">&ldquo;Father, I enter this day under an open heaven. What You have spoken over my life will not return empty&hellip;&rdquo;</p>
+              <p class="gate-preview-text" style="color:#4C3330; font-style:italic;">&ldquo;Father, today is Your Sabbath, and I enter it in rest, not in striving&hellip;&rdquo;</p>
               <a class="gate-preview-cta" style="background:#AD7A7A;" href="#/prayer/list">Continue in Prayer <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
             </div>
             <p class="gate-footnote">&ldquo;When thou prayest, enter into thy closet, and when thou hast shut thy door, pray to thy Father.&rdquo; &mdash; Matthew 6:6</p>
@@ -1643,7 +1644,7 @@
   function viewPrayer() {
     setHeader("Prayer", true);
     setActiveTab("prayer");
-    const declarationPlain = "Father, I enter this day under an open heaven. What You have spoken over my life will not return empty. This morning is ordered, covered, and aligned with Your will. I declare that mercy is new and favour is active. What was delayed is moving. What was broken is being restored. What was hidden is being revealed. I rise above every limitation assigned to this season. I speak life over my mind, my body, my household, and the work of my hands. Confusion is silenced. Fear has no voice. Striving is broken. I walk in grace, not pressure. Doors that were shut are opening by Your hand. I receive strength for today's assignment. I will not miss what You have prepared. I will not labour in vain. Let it be established by evening that heaven went ahead of me. In Jesus' name, amen.";
+    const declarationPlain = "Father, today is Your Sabbath, and I enter it in rest, not in striving. I lay down every work of my own hands and trust the work of Yours. Where my path has been crooked, I will not fight to straighten it myself — I consider it, and I trust the Hand that bent it to also be the Hand that restores it. In this day of whatever kind You have assigned me — prosperity or adversity — I receive it from You, and I will not find fault with You after it. Where I am tempted to strive, to compare, or to think more highly of myself than I ought, I choose lowliness of mind; I esteem others better than myself, as Your Word commands. Let me rest in who You are today, not in what I can produce. Restore my soul the way only a true Sabbath can. Let wisdom, not anxiety, be my defence, and let it give life to everything I set my hand to this week. In Jesus' name, amen.";
     const pointsHtml = PRAYER_POINTS.map(
       (p, i) => `<div class="prayer-item"><div class="num">${i + 1}</div><p id="prayerPointText-${i}">${esc(p)}</p></div>`
     ).join("");
@@ -1654,7 +1655,7 @@
         <div class="declaration-content">
           <div class="declaration-label">Today's Declaration</div>
           <div class="declaration-text" id="declarationText">&ldquo;${esc(declarationPlain)}&rdquo;</div>
-          <div class="declaration-ref">Isaiah 55:11 &middot; Psalm 118:24</div>
+          <div class="declaration-ref">Exodus 20:8-10 &middot; Ecclesiastes 7:13 &middot; Philippians 2:3</div>
           <select class="vod-translate" id="prayerTranslate" aria-label="Translate the declaration and prayer points">${translateLangOptions()}</select>
         </div>
       </div>

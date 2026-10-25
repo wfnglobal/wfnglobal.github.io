@@ -63,6 +63,11 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .toc-list{list-style:none; display:flex; flex-direction:column; gap:2px;}
 .toc-list a{display:flex; align-items:baseline; gap:12px; padding:9px 2px; text-decoration:none; color:var(--ink); font-size:14.5px; font-weight:500; border-bottom:1px solid var(--border);}
 .toc-list li:last-child a{border-bottom:none;}
+
+.translate-bar{display:flex; align-items:center; gap:12px; flex-wrap:wrap; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px 18px; margin:36px auto 0; max-width:680px;}
+.translate-label{font-size:13px; font-weight:600; color:var(--ink-2); white-space:nowrap;}
+.translate-select{font-family:var(--font-body); font-size:13.5px; font-weight:600; color:var(--ink); background:var(--surface-2); border:1px solid var(--border); border-radius:100px; padding:9px 16px; cursor:pointer;}
+.translate-note{max-width:680px; margin:10px auto 0; font-size:12px; color:var(--ink-3); font-style:italic; line-height:1.5; text-align:center;}
 .toc-num{font-family:var(--font-display); font-style:italic; color:var(--gold); font-size:14px; flex-shrink:0; width:18px;}
 
 .legal-block{max-width:520px; margin:0 auto 48px; text-align:center;}
@@ -220,6 +225,12 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
     <p>This is not a formula. God is not a vending machine, and faith is not a technique for extracting outcomes from a reluctant deity. But scripture is not silent on this either. James tells us plainly that some prayers go unanswered for reasons we can actually examine. Hebrews tells us just as plainly that the door to the throne of grace is already open. Both are true at once, and learning to hold them together is what this book is about.</p>
     <p>Eight chapters, each built on one passage, each one answering a different piece of the question. Read a chapter a day, or read it in one sitting &mdash; either way, come ready to examine your own praying, not just your own believing. This is Book One in the Library &mdash; a new title from Word and Faith Network every two weeks.</p>
   </div>
+
+  <div class="translate-bar gutter" id="chapterTranslateBar">
+    <span class="translate-label">Read this book in:</span>
+    <select class="translate-select" id="chapterTranslate" aria-label="Translate this book"></select>
+  </div>
+  <p class="translate-note" id="chapterTranslateNote" hidden></p>
 
   <nav class="toc-card" id="toc">
     <p class="toc-title">Contents</p>
@@ -464,4 +475,15 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 })();
 </script>
 
+<script src="/assets/js/wfn-translate.js"></script>
+<script>
+  if (window.WFNTranslate) {
+    window.WFNTranslate.mount(
+      document.getElementById('chapterTranslate'),
+      document.getElementById('chapterTranslateNote'),
+      document.querySelector('main'),
+      '.chapter-eyebrow, .chapter-title, .scripture-text, .book-section p, article.chapter > p'
+    );
+  }
+</script>
 <script src="/app/js/wfn-tts.js"></script>

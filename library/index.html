@@ -33,7 +33,12 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .wrap.gutter{max-width:720px; margin:0 auto; padding-block:48px 72px;}
 .kicker{font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; text-align:center;}
 .page-title{font-size:clamp(2rem,6vw,2.6rem); line-height:1.15; text-align:center; margin-bottom:14px;}
-.page-sub{font-size:16px; color:var(--ink-2); text-align:center; max-width:520px; margin:0 auto 48px; line-height:1.65;}
+.page-sub{font-size:16px; color:var(--ink-2); text-align:center; max-width:520px; margin:0 auto 24px; line-height:1.65;}
+
+.translate-bar{display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; margin:0 auto 40px;}
+.translate-label{font-size:13px; font-weight:600; color:var(--ink-2); white-space:nowrap;}
+.translate-select{font-family:var(--font-body); font-size:13.5px; font-weight:600; color:var(--ink); background:var(--surface); border:1px solid var(--border); border-radius:100px; padding:9px 16px; cursor:pointer;}
+.translate-note{max-width:520px; margin:-24px auto 32px; font-size:12px; color:var(--ink-3); font-style:italic; line-height:1.5; text-align:center;}
 
 .book-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px;}
 .book-card{display:block; text-decoration:none; color:inherit; background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:border-color .15s, transform .15s;}
@@ -94,6 +99,12 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
   <p class="kicker">The Library</p>
   <h1 class="page-title">Books From Word &amp; Faith Network</h1>
   <p class="page-sub">Scripture-grounded books built from our daily teaching — a new title every two weeks, free to read here.</p>
+
+  <div class="translate-bar" id="chapterTranslateBar">
+    <span class="translate-label">Read in:</span>
+    <select class="translate-select" id="chapterTranslate" aria-label="Translate this page"></select>
+  </div>
+  <p class="translate-note" id="chapterTranslateNote" hidden></p>
 
   <div class="book-grid">
     <a class="book-card" href="ask-boldly.html">
@@ -293,3 +304,15 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
     <div class="footer-copy">&copy; 2026 Word and Faith Network &middot; wfnglobal.org</div>
   </div>
 </footer>
+
+<script src="/assets/js/wfn-translate.js"></script>
+<script>
+  if (window.WFNTranslate) {
+    window.WFNTranslate.mount(
+      document.getElementById('chapterTranslate'),
+      document.getElementById('chapterTranslateNote'),
+      document.querySelector('main'),
+      '.page-title, .book-card-title, .book-card-desc'
+    );
+  }
+</script>

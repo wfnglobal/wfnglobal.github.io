@@ -77,16 +77,20 @@
   // ---------------------------------------------------------------------
   // Translate: free, no-key machine translation for the Verse of the Day
   // and today's Prayer declaration/points. Yorùbá, Igbo, and Hausa route
-  // through Google's public translation endpoint (the same engine behind
-  // translate.google.com, which has supported all three for years and
-  // isn't limited by the tiny shared daily quota that made the previous
-  // provider unreliable). Pidgin has no mainstream machine-translation
-  // engine behind it at all — Google, Microsoft, and the rest simply
-  // don't carry it — so it's attempted on a best-effort community
-  // translation memory and, when that comes back empty, shown with an
-  // honest note rather than a spinner that never resolves.
+  // through Google's public translation endpoint. Pidgin has no
+  // mainstream machine-translation engine behind it at all — Google,
+  // Microsoft, and the rest simply don't carry it — so the fixed verses,
+  // declaration, and prayer points below are translated once by hand and
+  // shipped with the app: no network call, never fails, works offline.
+  // Anything not in that hand list (longer or future content) still
+  // tries a community translation-memory lookup as a best effort.
+  // Every successful live translation is cached on-device so the same
+  // sentence is never fetched twice, and every live call gets one retry
+  // before giving up — both aimed at the "worked once, then failed"
+  // pattern free translation endpoints are prone to.
   // ---------------------------------------------------------------------
   const TRANSLATE_LANGS = [
+    { code: "en", name: "English" },
     { code: "yo", name: "Yorùbá" },
     { code: "ig", name: "Igbo" },
     { code: "ha", name: "Hausa" },
@@ -98,34 +102,106 @@
   const TRANSLATE_TIMEOUT_MS = 7000;
   const NO_MT_LANGS = { pcm: true }; // languages with no mainstream MT engine
 
+  // Hand-translated Nigerian Pidgin for the fixed Home/Prayer content —
+  // keyed by the exact English source text. This is the content shown on
+  // the Home screen's Verse of the Day and the Prayer page every day, so
+  // it is worth shipping as real text instead of a live API call.
+  const PIDGIN_STATIC = {
+    "The heavens declare the glory of God; and the firmament sheweth his handywork.":
+      "Di heaven dey show God glory; and di sky dey show di work wey im hand do.",
+    "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary.":
+      "But those wey dey wait for The LORD go renew their strength; dem go fly up like eagle; dem go run, and dem no go tire.",
+    "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.":
+      "The LORD na my shepherd; I no go want for anything. E dey make me lie down for green pasture: e dey lead me go beside still water.",
+    "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.":
+      "For I sabi the thoughts wey I dey think about you, na so The LORD talk, thoughts of peace, no be evil, to give you the future wey you dey expect.",
+    "Pray without ceasing. Continue earnestly in prayer, being vigilant in it with thanksgiving.":
+      "Dey pray without stop. Continue well-well for prayer, dey alert for am with thanksgiving.",
+    "Blessed be the Lord, who daily loadeth us with benefits, even the God of our salvation.":
+      "Blessed be The Lord, wey dey load us with benefit everyday, even the God wey save us.",
+    "For the word of God is living and powerful, and sharper than any two-edged sword, piercing even to the division of soul and spirit, and of joints and marrow, and is a discerner of the thoughts and intents of the heart.":
+      "For the word of God dey alive and e get power, e sharp pass any sword wey get two edge, e dey pierce reach where soul and spirit dey separate, and joint and marrow, and e sabi the thoughts and intention wey dey inside heart.",
+    "For God is not unrighteous to forget your work and labour of love, which ye have shewed toward his name, in that ye have ministered to the saints, and do minister.":
+      "God no be person wey go forget your work and the labour of love wey you don show for im name, as you don serve the saints, and you still dey serve dem.",
+    "If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him.":
+      "If wisdom dey lack for any one of una, make e ask God, wey dey give everybody well-well without insult; and dem go give am.",
+    "For the Son of man is not come to destroy men's lives, but to save them.":
+      "For the Son of man no come to destroy people life, but to save dem.",
+    "Commit thy works unto the LORD, and thy thoughts shall be established.":
+      "Hand over your works to The LORD, and your thoughts go stand strong.",
+    "Father, I enter this day under an open heaven. What You have spoken over my life will not return empty. This morning is ordered, covered, and aligned with Your will. I declare that mercy is new and favour is active. What was delayed is moving. What was broken is being restored. What was hidden is being revealed. I rise above every limitation assigned to this season. I speak life over my mind, my body, my household, and the work of my hands. Confusion is silenced. Fear has no voice. Striving is broken. I walk in grace, not pressure. Doors that were shut are opening by Your hand. I receive strength for today's assignment. I will not miss what You have prepared. I will not labour in vain. Let it be established by evening that heaven went ahead of me. In Jesus' name, amen.":
+      "Father, I dey enter dis day under open heaven. Wetin You don talk over my life no go return empty. Dis morning don arrange well, e dey cover, e dey match wit Your will. I dey declare say mercy dey fresh and favour dey active. Wetin don delay dey move. Wetin don break dey repair. Wetin don hide dey show. I dey rise above every limitation wey dis season set for me. I dey speak life ontop my mind, my body, my house, and di work of my hand. Confusion no fit talk. Fear no get voice. Struggle don break. I dey waka for grace, no be pressure. Doors wey don close dey open now by Your hand. I dey receive strength for today assignment. I no go miss wetin You don prepare. I no go work for nothing. Make e clear by evening say heaven don waka before me. For Jesus name, amen.",
+    "Thank God for His faithfulness over your life, your family, and this new day.":
+      "Thank God for how E dey faithful over your life, your family, and dis new day.",
+    "Declare Romans 10:17 over your faith — that it is rising as you hear the Word.":
+      "Declare Romans 10:17 over your faith — say e dey rise as you dey hear the Word.",
+    "Bring the specific need weighing on you right now to God in prayer, by name.":
+      "Carry the exact need wey dey worry you right now go God for prayer, call am by name.",
+    "Pray for someone else today — a family member, a friend, a need you know of.":
+      "Pray for another person today — your family member, your friend, or any need wey you sabi.",
+    "Ask for wisdom for every decision in front of you this week (James 1:5).":
+      "Ask for wisdom for every decision wey dey front you dis week (James 1:5).",
+    "Thank God in advance for the answer, believing it is already done (Mark 11:24).":
+      "Thank God before the time for the answer, believe say e don already happen (Mark 11:24)."
+  };
+
   function fetchWithTimeout(url, ms) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), ms);
     return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
   }
 
+  // On-device cache for live-translated text, so the same sentence is
+  // never fetched twice from the free endpoint and still works offline
+  // once seen.
+  function cacheKey(text, langCode) {
+    let h = 0;
+    for (let i = 0; i < text.length; i++) { h = (h * 31 + text.charCodeAt(i)) | 0; }
+    return `wfn-translate-cache:${langCode}:${h}`;
+  }
+  function getCached(text, langCode) {
+    try { return localStorage.getItem(cacheKey(text, langCode)); } catch (e) { return null; }
+  }
+  function setCached(text, langCode, translated) {
+    try { localStorage.setItem(cacheKey(text, langCode), translated); } catch (e) {}
+  }
+
+  async function fetchGoogleTranslate(text, langCode) {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${langCode}&dt=t&q=${encodeURIComponent(text)}`;
+    const res = await fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS);
+    const json = await res.json();
+    const out = (json && json[0] ? json[0].map((seg) => seg[0]).join("") : "") || "";
+    return out.trim() || null;
+  }
+
   async function translateOne(text, langCode) {
+    if (langCode === "en") return text;
+    if (langCode === "pcm" && PIDGIN_STATIC[text]) return PIDGIN_STATIC[text];
+
+    const cached = getCached(text, langCode);
+    if (cached) return cached;
+
     if (!NO_MT_LANGS[langCode]) {
-      try {
-        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${langCode}&dt=t&q=${encodeURIComponent(text)}`;
-        const res = await fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS);
-        const json = await res.json();
-        const out = (json && json[0] ? json[0].map((seg) => seg[0]).join("") : "") || "";
-        if (out.trim()) return out;
-      } catch (err) { /* fall through to the note below */ }
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const out = await fetchGoogleTranslate(text, langCode);
+          if (out) { setCached(text, langCode, out); return out; }
+        } catch (err) { /* retry, then fall through to the note below */ }
+      }
       return null;
     }
-    // Pidgin: no real MT engine exists for it. Try a community translation-
-    // memory lookup (real submitted translations, not machine output) —
-    // it will often have nothing for a sentence it hasn't seen before,
-    // which is fine as long as we say so instead of hanging.
+    // Pidgin, no hand translation on file for this text: no real MT engine
+    // exists for it. Try a community translation-memory lookup (real
+    // submitted translations, not machine output) — it will often have
+    // nothing for a sentence it hasn't seen before, which is fine as long
+    // as we say so instead of hanging.
     try {
       const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|pcm`;
       const res = await fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS);
       const json = await res.json();
       const out = json && json.responseData && json.responseData.translatedText;
       const looksReal = out && out.trim() && out.trim().toLowerCase() !== text.trim().toLowerCase() && !/^MYMEMORY WARNING/i.test(out);
-      if (looksReal) return out;
+      if (looksReal) { setCached(text, langCode, out); return out; }
     } catch (err) { /* fall through */ }
     return null;
   }
@@ -138,7 +214,7 @@
   // couldn't be produced — never a "Translating…" label stuck forever.
   async function translateInto(pairs, langCode, noteEl) {
     if (noteEl) noteEl.hidden = true;
-    if (!langCode) {
+    if (!langCode || langCode === "en") {
       pairs.forEach((p) => { p.el.textContent = p.original; });
       return;
     }

@@ -63,6 +63,11 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .toc-list{list-style:none; display:flex; flex-direction:column; gap:2px;}
 .toc-list a{display:flex; align-items:baseline; gap:12px; padding:9px 2px; text-decoration:none; color:var(--ink); font-size:14.5px; font-weight:500; border-bottom:1px solid var(--border);}
 .toc-list li:last-child a{border-bottom:none;}
+
+.translate-bar{display:flex; align-items:center; gap:12px; flex-wrap:wrap; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px 18px; margin:36px auto 0; max-width:680px;}
+.translate-label{font-size:13px; font-weight:600; color:var(--ink-2); white-space:nowrap;}
+.translate-select{font-family:var(--font-body); font-size:13.5px; font-weight:600; color:var(--ink); background:var(--surface-2); border:1px solid var(--border); border-radius:100px; padding:9px 16px; cursor:pointer;}
+.translate-note{max-width:680px; margin:10px auto 0; font-size:12px; color:var(--ink-3); font-style:italic; line-height:1.5; text-align:center;}
 .toc-num{font-family:var(--font-display); font-style:italic; color:var(--gold); font-size:14px; flex-shrink:0; width:18px;}
 
 .legal-block{max-width:520px; margin:0 auto 48px; text-align:center;}
@@ -221,6 +226,12 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
     <p>This book follows that one sentence through scripture, in two movements. The first four chapters look back &mdash; at Israel's wilderness, at David's inventory of mercies, at the danger of looking back for the wrong reasons, and at the stone Samuel set down to remember help already given. The last four chapters look forward &mdash; releasing what's behind, trusting a future we cannot see, walking with courage into it, and discovering that both postures were never two different postures at all.</p>
     <p>Eight chapters, each built on one passage. This is Book Two in the Library &mdash; a new title from Word and Faith Network every two weeks.</p>
   </div>
+
+  <div class="translate-bar gutter" id="chapterTranslateBar">
+    <span class="translate-label">Read this book in:</span>
+    <select class="translate-select" id="chapterTranslate" aria-label="Translate this book"></select>
+  </div>
+  <p class="translate-note" id="chapterTranslateNote" hidden></p>
 
   <nav class="toc-card" id="toc">
     <p class="toc-title">Contents</p>
@@ -441,4 +452,15 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 })();
 </script>
 
+<script src="/assets/js/wfn-translate.js"></script>
+<script>
+  if (window.WFNTranslate) {
+    window.WFNTranslate.mount(
+      document.getElementById('chapterTranslate'),
+      document.getElementById('chapterTranslateNote'),
+      document.querySelector('main'),
+      '.chapter-eyebrow, .chapter-title, .scripture-text, .book-section p, article.chapter > p'
+    );
+  }
+</script>
 <script src="/app/js/wfn-tts.js"></script>

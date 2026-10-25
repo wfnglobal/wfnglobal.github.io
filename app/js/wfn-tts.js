@@ -389,6 +389,7 @@
   // when that comes back empty, the page says so plainly instead of
   // leaving "Translating…" on screen forever.
   var TRANSLATE_LANGS = [
+    { code: "en", name: "English" },
     { code: "yo", name: "Yorùbá" },
     { code: "ig", name: "Igbo" },
     { code: "ha", name: "Hausa" },
@@ -409,16 +410,50 @@
     );
   }
 
+  // On-device cache so the same sentence on this page is never fetched
+  // twice from the free endpoint, and still works offline once seen.
+  function cacheKey(text, langCode) {
+    var h = 0;
+    for (var i = 0; i < text.length; i++) { h = (h * 31 + text.charCodeAt(i)) | 0; }
+    return "wfn-translate-cache:" + langCode + ":" + h;
+  }
+  function getCached(text, langCode) {
+    try { return localStorage.getItem(cacheKey(text, langCode)); } catch (e) { return null; }
+  }
+  function setCached(text, langCode, translated) {
+    try { localStorage.setItem(cacheKey(text, langCode), translated); } catch (e) {}
+  }
+
+  function fetchGoogleTranslate(text, langCode) {
+    var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=" + langCode + "&dt=t&q=" + encodeURIComponent(text);
+    return fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS)
+      .then(function (res) { return res.json(); })
+      .then(function (json) {
+        var out = (json && json[0]) ? json[0].map(function (seg) { return seg[0]; }).join("") : "";
+        return out && out.trim() ? out : null;
+      });
+  }
+
   function translateOne(text, langCode) {
+    if (langCode === "en") return Promise.resolve(text);
+
+    var cached = getCached(text, langCode);
+    if (cached) return Promise.resolve(cached);
+
     if (!NO_MT_LANGS[langCode]) {
-      var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=" + langCode + "&dt=t&q=" + encodeURIComponent(text);
-      return fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS)
-        .then(function (res) { return res.json(); })
-        .then(function (json) {
-          var out = (json && json[0]) ? json[0].map(function (seg) { return seg[0]; }).join("") : "";
-          return out && out.trim() ? out : null;
-        })
-        .catch(function () { return null; });
+      // One retry before giving up — free endpoints that worked a moment
+      // ago sometimes drop a single request rather than being truly down.
+      return fetchGoogleTranslate(text, langCode)
+        .catch(function () { return null; })
+        .then(function (out) {
+          if (out) { setCached(text, langCode, out); return out; }
+          return fetchGoogleTranslate(text, langCode)
+            .catch(function () { return null; })
+            .then(function (out2) {
+              if (out2) setCached(text, langCode, out2);
+              return out2;
+            });
+        });
     }
     var murl = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text) + "&langpair=en|pcm";
     return fetchWithTimeout(murl, TRANSLATE_TIMEOUT_MS)
@@ -426,6 +461,7 @@
       .then(function (json) {
         var out = json && json.responseData && json.responseData.translatedText;
         var looksReal = out && out.trim() && out.trim().toLowerCase() !== text.trim().toLowerCase() && !/^MYMEMORY WARNING/i.test(out);
+        if (looksReal) setCached(text, langCode, out);
         return looksReal ? out : null;
       })
       .catch(function () { return null; });
@@ -433,7 +469,7 @@
 
   function translatePairs(pairs, langCode, noteEl) {
     if (noteEl) noteEl.hidden = true;
-    if (!langCode) {
+    if (!langCode || langCode === "en") {
       pairs.forEach(function (p) { p.el.textContent = p.original; });
       return Promise.resolve();
     }

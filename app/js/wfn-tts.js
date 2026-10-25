@@ -301,50 +301,173 @@
     return null;
   }
 
+  // Same two page shapes as collectReadable(), but returns the actual
+  // elements (not just their text) so a translation can be written back
+  // into the page, with each element's original English text captured
+  // once up front so "Original" can restore it exactly.
+  function collectTranslatable() {
+    var body = document.querySelector(".article-body");
+    var els = [];
+    if (body) {
+      var titleEl = document.querySelector(".article-title");
+      if (titleEl) els.push(titleEl);
+      body.querySelectorAll("p, h2").forEach(function (el) { els.push(el); });
+    } else {
+      document.querySelectorAll("article.chapter").forEach(function (ch) {
+        var eyebrow = ch.querySelector(".chapter-eyebrow");
+        var title = ch.querySelector(".chapter-title");
+        if (eyebrow) els.push(eyebrow);
+        if (title) els.push(title);
+        ch.querySelectorAll("p").forEach(function (p) { els.push(p); });
+      });
+    }
+    if (!els.length) return null;
+    return els.map(function (el) { return { el: el, original: el.textContent }; });
+  }
+
+  // Translate: Yorùbá, Igbo, and Hausa route through Google's public
+  // translation endpoint — the engine behind translate.google.com, which
+  // has carried all three for years without the tiny shared daily quota
+  // that made the previous free provider unreliable. Nigerian Pidgin has
+  // no mainstream MT engine behind it at all (not Google, not Microsoft),
+  // so it's attempted on a best-effort community translation memory and,
+  // when that comes back empty, the page says so plainly instead of
+  // leaving "Translating…" on screen forever.
+  var TRANSLATE_LANGS = [
+    { code: "yo", name: "Yorùbá" },
+    { code: "ig", name: "Igbo" },
+    { code: "ha", name: "Hausa" },
+    { code: "pcm", name: "Pidgin" },
+    { code: "es", name: "Español" },
+    { code: "fr", name: "Français" },
+    { code: "pt", name: "Português" }
+  ];
+  var TRANSLATE_TIMEOUT_MS = 7000;
+  var NO_MT_LANGS = { pcm: true };
+
+  function fetchWithTimeout(url, ms) {
+    var controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, ms);
+    return fetch(url, { signal: controller.signal }).then(
+      function (res) { clearTimeout(timer); return res; },
+      function (err) { clearTimeout(timer); throw err; }
+    );
+  }
+
+  function translateOne(text, langCode) {
+    if (!NO_MT_LANGS[langCode]) {
+      var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=" + langCode + "&dt=t&q=" + encodeURIComponent(text);
+      return fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS)
+        .then(function (res) { return res.json(); })
+        .then(function (json) {
+          var out = (json && json[0]) ? json[0].map(function (seg) { return seg[0]; }).join("") : "";
+          return out && out.trim() ? out : null;
+        })
+        .catch(function () { return null; });
+    }
+    var murl = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text) + "&langpair=en|pcm";
+    return fetchWithTimeout(murl, TRANSLATE_TIMEOUT_MS)
+      .then(function (res) { return res.json(); })
+      .then(function (json) {
+        var out = json && json.responseData && json.responseData.translatedText;
+        var looksReal = out && out.trim() && out.trim().toLowerCase() !== text.trim().toLowerCase() && !/^MYMEMORY WARNING/i.test(out);
+        return looksReal ? out : null;
+      })
+      .catch(function () { return null; });
+  }
+
+  function translatePairs(pairs, langCode, noteEl) {
+    if (noteEl) noteEl.hidden = true;
+    if (!langCode) {
+      pairs.forEach(function (p) { p.el.textContent = p.original; });
+      return Promise.resolve();
+    }
+    pairs.forEach(function (p) { p.el.textContent = "Translating…"; });
+    var anyFailed = false;
+    return Promise.all(pairs.map(function (p) {
+      return translateOne(p.original, langCode).then(function (translated) {
+        if (translated) {
+          p.el.textContent = translated;
+        } else {
+          p.el.textContent = p.original;
+          anyFailed = true;
+        }
+      });
+    })).then(function () {
+      if (!noteEl) return;
+      if (anyFailed && NO_MT_LANGS[langCode]) {
+        noteEl.hidden = false;
+        noteEl.textContent = "Pidgin translation isn't available for this page yet — no major translation engine fully supports it, so this is shown in English for now.";
+      } else if (anyFailed) {
+        noteEl.hidden = false;
+        noteEl.textContent = "Translation is temporarily unavailable — showing the original English.";
+      }
+    });
+  }
+
   function mountWidget() {
     var items = collectReadable();
     if (!items || !items.length) return;
+    var translatable = collectTranslatable();
 
     var style = document.createElement("style");
     style.textContent = [
-      /* Tucked away behind a round waveform tab by default — never sits
-         raw on top of the article text — with a frosted tray and a
-         one-time glow + label the first time a reader sees it. */
-      "#wfnVoiceStack{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));z-index:150;display:flex;flex-direction:column;align-items:flex-end;font-family:'Inter',-apple-system,system-ui,sans-serif;}",
-      "#wfnListenTray{display:flex;flex-direction:column;gap:9px;padding:9px;margin-bottom:10px;border-radius:26px;background:rgba(251,248,241,0.92);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(35,31,24,0.12);box-shadow:0 16px 36px -12px rgba(80,64,24,0.22);max-height:360px;overflow:hidden;opacity:1;transform:scale(1);transform-origin:bottom right;transition:max-height .22s ease,opacity .18s ease,transform .22s ease,margin .22s ease;}",
-      "#wfnVoiceStack.wfnl-collapsed #wfnListenTray{max-height:0;opacity:0;transform:scale(.82);margin-bottom:0;pointer-events:none;border-width:0;}",
-      "#wfnListenBtn{display:flex;align-items:center;justify-content:center;gap:8px;background:#9C7A34;color:#2A2008;border:none;border-radius:100px;width:148px;height:48px;box-sizing:border-box;font-size:13px;font-weight:700;box-shadow:0 6px 14px -6px rgba(80,64,24,0.22);cursor:pointer;}",
-      "#wfnListenBtn:active{transform:scale(0.96);}",
-      "#wfnListenBtn svg{width:18px;height:18px;flex-shrink:0;}",
-      "#wfnListenPanel{padding:14px 16px 4px;}",
-      "#wfnListenPanel.wfnl-panel-hidden{display:none;}",
-      "#wfnListenPanel h4{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.05rem;color:#231F18;margin-bottom:2px;}",
-      "#wfnListenPanel .wfnl-sub{font-size:12px;color:#8C8370;margin-bottom:10px;}",
-      "#wfnListenPanel label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9C7A34;margin:12px 0 6px;}",
-      "#wfnListenPanel select{width:100%;padding:9px 10px;border-radius:9px;border:1px solid rgba(35,31,24,0.16);font-size:13.5px;font-family:inherit;background:#FBF8F1;color:#231F18;}",
+      /* Docked to the LEFT edge, vertically centered — its own corner,
+         clear of the "Back to App" pill at bottom-right. Collapsed by
+         default to a slim ear-tab mostly tucked off the edge of the
+         viewport, so almost none of it sits over the article; the
+         exposed sliver carries a waveform icon as the permanent cue
+         that it's there, backed by a one-time glow + label the first
+         time a reader sees it. */
+      "#wfnVoiceStack{position:fixed;left:0;top:58%;transform:translateY(-50%);z-index:150;display:flex;flex-direction:row-reverse;align-items:center;font-family:'Inter',-apple-system,system-ui,sans-serif;}",
+      "#wfnListenTray{display:flex;flex-direction:column;gap:9px;padding:9px;margin-left:8px;border-radius:22px;background:rgba(251,248,241,0.94);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(35,31,24,0.12);box-shadow:0 16px 36px -12px rgba(80,64,24,0.22);max-width:168px;overflow:hidden;opacity:1;transform:scale(1) translateX(0);transform-origin:left center;transition:max-width .22s ease,opacity .18s ease,transform .22s ease,margin .22s ease,padding .22s ease;}",
+      "#wfnVoiceStack.wfnl-collapsed #wfnListenTray{max-width:0;opacity:0;transform:scale(.85) translateX(-10px);margin-left:0;padding:0;pointer-events:none;border-width:0;}",
+      "#wfnListenBtn,#wfnTranslateBtn{display:flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:100px;width:148px;height:48px;box-sizing:border-box;font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0;}",
+      "#wfnListenBtn{background:#9C7A34;color:#2A2008;box-shadow:0 6px 14px -6px rgba(80,64,24,0.22);}",
+      "#wfnTranslateBtn{background:#231F18;color:#E7CE94;outline:1.5px solid #C9A968;outline-offset:-1.5px;}",
+      "#wfnListenBtn:active,#wfnTranslateBtn:active{transform:scale(0.96);}",
+      "#wfnListenBtn svg,#wfnTranslateBtn svg{width:18px;height:18px;flex-shrink:0;}",
+      "#wfnListenPanel,#wfnTranslatePanel{padding:14px 16px 4px;}",
+      "#wfnListenPanel.wfnl-panel-hidden,#wfnTranslatePanel.wfnl-panel-hidden{display:none;}",
+      "#wfnListenPanel h4,#wfnTranslatePanel h4{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.05rem;color:#231F18;margin-bottom:2px;}",
+      "#wfnListenPanel .wfnl-sub,#wfnTranslatePanel .wfnl-sub{font-size:12px;color:#8C8370;margin-bottom:10px;}",
+      "#wfnListenPanel label,#wfnTranslatePanel label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#9C7A34;margin:12px 0 6px;}",
+      "#wfnListenPanel select,#wfnTranslatePanel select{width:100%;padding:9px 10px;border-radius:9px;border:1px solid rgba(35,31,24,0.16);font-size:13.5px;font-family:inherit;background:#FBF8F1;color:#231F18;}",
       "#wfnListenControls{display:flex;gap:10px;margin:16px 0 14px;}",
       "#wfnListenControls button{flex:1;border:none;border-radius:100px;padding:10px 0;font-weight:600;font-size:13.5px;cursor:pointer;font-family:inherit;}",
       "#wfnListenPlay{background:#9C7A34;color:#FFFDF8;}",
       "#wfnListenStop{background:#F4EEE0;color:#564E3E;}",
-      "#wfnVoiceToggle{position:relative;display:flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:50%;border:none;cursor:pointer;background:#231F18;color:#E7CE94;box-shadow:0 10px 24px -8px rgba(80,64,24,0.3);}",
-      "#wfnVoiceToggle:active{transform:scale(0.92);}",
-      "#wfnVoiceToggle svg{width:20px;height:20px;position:absolute;}",
+      "#wfnTranslateNote{font-size:12px;color:#8C8370;font-style:italic;line-height:1.5;margin:4px 0 14px;}",
+      "#wfnVoiceToggle{position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:42px;height:68px;border-radius:0 18px 18px 0;border:none;cursor:pointer;background:#231F18;color:#E7CE94;box-shadow:4px 0 18px -6px rgba(80,64,24,0.3);margin-left:-16px;transition:margin-left .22s ease;}",
+      "#wfnVoiceStack:not(.wfnl-collapsed) #wfnVoiceToggle{margin-left:0;}",
+      "#wfnVoiceToggle:active{transform:scale(0.94);}",
+      "#wfnVoiceToggle svg{width:19px;height:19px;position:absolute;}",
       "#wfnVoiceToggle .wfnl-icon-expanded{display:none;}",
       "#wfnVoiceStack:not(.wfnl-collapsed) #wfnVoiceToggle .wfnl-icon-collapsed{display:none;}",
       "#wfnVoiceStack:not(.wfnl-collapsed) #wfnVoiceToggle .wfnl-icon-expanded{display:block;}",
       "#wfnVoiceToggle.wfnl-hint-pulse{animation:wfnlPulse 1.3s ease-in-out 3;}",
-      ".wfnl-hint{position:absolute;right:60px;top:50%;transform:translateY(-50%);white-space:nowrap;background:#231F18;color:#FFFDF8;font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:100px;box-shadow:0 8px 20px -6px rgba(80,64,24,0.3);opacity:0;pointer-events:none;animation:wfnlHintIn .3s ease .5s forwards,wfnlHintOut .3s ease 3.8s forwards;}",
-      ".wfnl-hint::after{content:'';position:absolute;right:-5px;top:50%;width:8px;height:8px;background:#231F18;transform:translateY(-50%) rotate(45deg);border-radius:1px;}",
-      "@keyframes wfnlPulse{0%,100%{box-shadow:0 10px 24px -8px rgba(80,64,24,0.3),0 0 0 0 rgba(201,169,104,.5);}50%{box-shadow:0 10px 24px -8px rgba(80,64,24,0.3),0 0 0 8px rgba(201,169,104,0);}}",
+      ".wfnl-hint{position:absolute;left:52px;top:50%;transform:translateY(-50%);white-space:nowrap;background:#231F18;color:#FFFDF8;font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:100px;box-shadow:0 8px 20px -6px rgba(80,64,24,0.3);opacity:0;pointer-events:none;animation:wfnlHintIn .3s ease .5s forwards,wfnlHintOut .3s ease 3.8s forwards;}",
+      ".wfnl-hint::before{content:'';position:absolute;left:-5px;top:50%;width:8px;height:8px;background:#231F18;transform:translateY(-50%) rotate(45deg);border-radius:1px;}",
+      "@keyframes wfnlPulse{0%,100%{box-shadow:4px 0 18px -6px rgba(80,64,24,0.3),0 0 0 0 rgba(201,169,104,.5);}50%{box-shadow:4px 0 18px -6px rgba(80,64,24,0.3),0 0 0 8px rgba(201,169,104,0);}}",
       "@keyframes wfnlHintIn{to{opacity:1;}}",
       "@keyframes wfnlHintOut{to{opacity:0;}}"
     ].join("\n");
     document.head.appendChild(style);
 
+    var translateOptionsHtml = '<option value="">Translate…</option>' + TRANSLATE_LANGS.map(function (l) {
+      return '<option value="' + l.code + '">' + l.name.replace(/</g, "&lt;") + "</option>";
+    }).join("");
+
     var stack = document.createElement("div");
     stack.id = "wfnVoiceStack";
     stack.innerHTML =
       '<div id="wfnListenTray">' +
+      (translatable
+        ? '<button id="wfnTranslateBtn" type="button" aria-label="Translate this page">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h8M9 5v3M11 8c-1 3-3 5-6 6M8 8c1.3 3.6 3.4 6 7 7.5"/><path d="M14 21l4-9 4 9M15.5 18h5"/></svg>' +
+          "Translate" +
+          "</button>"
+        : "") +
       '<button id="wfnListenBtn" type="button" aria-label="Listen to this page">' +
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4h4l5 5V5L7 10H3z"/><path d="M16 8a5 5 0 0 1 0 8M19 5a9 9 0 0 1 0 14"/></svg>' +
       '<span id="wfnListenBtnLabel">Listen</span>' +
@@ -361,6 +484,15 @@
       '<button id="wfnListenStop" type="button">Stop</button>' +
       "</div>" +
       "</div>" +
+      (translatable
+        ? '<div id="wfnTranslatePanel" class="wfnl-panel-hidden">' +
+          "<h4>Translate</h4>" +
+          '<p class="wfnl-sub">Read this page in another language.</p>' +
+          '<select id="wfnTranslateSel">' + translateOptionsHtml + "</select>" +
+          '<p id="wfnTranslateNote" hidden></p>' +
+          "</div>"
+        : "") +
+      "</div>" +
       '<button id="wfnVoiceToggle" type="button" aria-label="Show the Listen button">' +
       '<svg class="wfnl-icon-collapsed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10v4M10 6v12M14 9v6M18 7v10"/></svg>' +
       '<svg class="wfnl-icon-expanded" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>' +
@@ -374,6 +506,21 @@
     var btn = stack.querySelector("#wfnListenBtn");
     var btnLabel = stack.querySelector("#wfnListenBtnLabel");
     var toggle = stack.querySelector("#wfnVoiceToggle");
+    var translateBtn = stack.querySelector("#wfnTranslateBtn");
+    var listenPanelEl = stack.querySelector("#wfnListenPanel");
+    var translatePanelEl = stack.querySelector("#wfnTranslatePanel");
+    var translateSel = stack.querySelector("#wfnTranslateSel");
+    var translateNoteEl = stack.querySelector("#wfnTranslateNote");
+
+    if (translateBtn) {
+      translateBtn.addEventListener("click", function () {
+        listenPanelEl.classList.add("wfnl-panel-hidden");
+        translatePanelEl.classList.toggle("wfnl-panel-hidden");
+      });
+      translateSel.addEventListener("change", function () {
+        translatePairs(translatable, translateSel.value, translateNoteEl);
+      });
+    }
 
     window.WFNTTS.getVoiceSlots(function (slots) {
       voiceSel.innerHTML = slots.length
@@ -404,6 +551,7 @@
 
     var panelEl = stack.querySelector("#wfnListenPanel");
     btn.addEventListener("click", function () {
+      if (translatePanelEl) translatePanelEl.classList.add("wfnl-panel-hidden");
       panelEl.classList.toggle("wfnl-panel-hidden");
     });
 

@@ -74,6 +74,100 @@
     "Thank God in advance for the answer, believing it is already done (Mark 11:24)."
   ];
 
+  // ---------------------------------------------------------------------
+  // Translate: free, no-key machine translation for the Verse of the Day
+  // and today's Prayer declaration/points. Yorùbá, Igbo, and Hausa route
+  // through Google's public translation endpoint (the same engine behind
+  // translate.google.com, which has supported all three for years and
+  // isn't limited by the tiny shared daily quota that made the previous
+  // provider unreliable). Pidgin has no mainstream machine-translation
+  // engine behind it at all — Google, Microsoft, and the rest simply
+  // don't carry it — so it's attempted on a best-effort community
+  // translation memory and, when that comes back empty, shown with an
+  // honest note rather than a spinner that never resolves.
+  // ---------------------------------------------------------------------
+  const TRANSLATE_LANGS = [
+    { code: "yo", name: "Yorùbá" },
+    { code: "ig", name: "Igbo" },
+    { code: "ha", name: "Hausa" },
+    { code: "pcm", name: "Pidgin" },
+    { code: "es", name: "Español" },
+    { code: "fr", name: "Français" },
+    { code: "pt", name: "Português" }
+  ];
+  const TRANSLATE_TIMEOUT_MS = 7000;
+  const NO_MT_LANGS = { pcm: true }; // languages with no mainstream MT engine
+
+  function fetchWithTimeout(url, ms) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), ms);
+    return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
+  }
+
+  async function translateOne(text, langCode) {
+    if (!NO_MT_LANGS[langCode]) {
+      try {
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${langCode}&dt=t&q=${encodeURIComponent(text)}`;
+        const res = await fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS);
+        const json = await res.json();
+        const out = (json && json[0] ? json[0].map((seg) => seg[0]).join("") : "") || "";
+        if (out.trim()) return out;
+      } catch (err) { /* fall through to the note below */ }
+      return null;
+    }
+    // Pidgin: no real MT engine exists for it. Try a community translation-
+    // memory lookup (real submitted translations, not machine output) —
+    // it will often have nothing for a sentence it hasn't seen before,
+    // which is fine as long as we say so instead of hanging.
+    try {
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|pcm`;
+      const res = await fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS);
+      const json = await res.json();
+      const out = json && json.responseData && json.responseData.translatedText;
+      const looksReal = out && out.trim() && out.trim().toLowerCase() !== text.trim().toLowerCase() && !/^MYMEMORY WARNING/i.test(out);
+      if (looksReal) return out;
+    } catch (err) { /* fall through */ }
+    return null;
+  }
+
+  // Shared helper: translate a batch of English texts into langCode and
+  // write each result into the matching DOM element's text. Reused by the
+  // Home verse of the day and the Prayer page (declaration + prayer
+  // points). Every element always ends up with real text in it — the
+  // original English with a small italic note when a translation
+  // couldn't be produced — never a "Translating…" label stuck forever.
+  async function translateInto(pairs, langCode, noteEl) {
+    if (noteEl) noteEl.hidden = true;
+    if (!langCode) {
+      pairs.forEach((p) => { p.el.textContent = p.original; });
+      return;
+    }
+    pairs.forEach((p) => { p.el.textContent = "Translating…"; });
+    let anyFailed = false;
+    await Promise.all(pairs.map(async (p) => {
+      const translated = await translateOne(p.original, langCode);
+      if (translated) {
+        p.el.textContent = translated;
+      } else {
+        p.el.textContent = p.original;
+        anyFailed = true;
+      }
+    }));
+    if (noteEl) {
+      if (anyFailed && NO_MT_LANGS[langCode]) {
+        noteEl.hidden = false;
+        noteEl.textContent = "Pidgin translation isn't available for this text yet — no major translation engine fully supports it, so this is shown in English for now.";
+      } else if (anyFailed) {
+        noteEl.hidden = false;
+        noteEl.textContent = "Translation is temporarily unavailable — showing the original English.";
+      }
+    }
+  }
+
+  function translateLangOptions() {
+    return `<option value="">Translate…</option>` + TRANSLATE_LANGS.map((l) => `<option value="${l.code}">${esc(l.name)}</option>`).join("");
+  }
+
   function dayIndex(len) {
     const doy = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
     return doy % len;
@@ -469,8 +563,10 @@
           <div class="verse-of-day-label">Verse of the Day</div>
           <div class="verse-of-day-ref">${esc(verse.ref)} KJV</div>
           <div class="verse-of-day-text" id="vodText">${esc(verse.text)}</div>
+          <select class="vod-translate" id="vodTranslate" aria-label="Translate the verse of the day">${translateLangOptions()}</select>
         </div>
       </div>
+      <p class="translate-note" id="vodTranslateNote" hidden></p>
 
       <div class="stack">
         <a class="home-row" href="#/sermons/${sermon.slug}">
@@ -498,6 +594,9 @@
       <div id="installHint" style="margin-top:18px;"></div>
     `;
     renderInstallHint(document.getElementById("installHint"));
+    document.getElementById("vodTranslate").addEventListener("change", (e) => {
+      translateInto([{ el: document.getElementById("vodText"), original: verse.text }], e.target.value, document.getElementById("vodTranslateNote"));
+    });
   }
 
   function renderInstallHint(el) {
@@ -1464,8 +1563,10 @@
           <div class="declaration-label">Today's Declaration</div>
           <div class="declaration-text" id="declarationText">&ldquo;${esc(declarationPlain)}&rdquo;</div>
           <div class="declaration-ref">Isaiah 55:11 &middot; Psalm 118:24</div>
+          <select class="vod-translate" id="prayerTranslate" aria-label="Translate the declaration and prayer points">${translateLangOptions()}</select>
         </div>
       </div>
+      <p class="translate-note" id="prayerTranslateNote" hidden></p>
 
       <div class="section-label">Pray This With Us</div>
       <div class="card" style="margin-bottom:20px;" id="prayerPointsCard">${pointsHtml}</div>
@@ -1488,6 +1589,13 @@
       "Pray this with us.",
       ...PRAYER_POINTS
     ]);
+    document.getElementById("prayerTranslate").addEventListener("change", (e) => {
+      const pairs = [{ el: document.getElementById("declarationText"), original: `“${declarationPlain}”` }];
+      PRAYER_POINTS.forEach((p, i) => {
+        pairs.push({ el: document.getElementById(`prayerPointText-${i}`), original: p });
+      });
+      translateInto(pairs, e.target.value, document.getElementById("prayerTranslateNote"));
+    });
   }
 
   var LIBRARY_BOOKS = [

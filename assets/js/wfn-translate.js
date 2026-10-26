@@ -59,8 +59,8 @@
       });
   }
 
-  function fetchMyMemoryPidgin(text) {
-    var url = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text) + "&langpair=en|pcm";
+  function fetchMyMemory(text, langCode) {
+    var url = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text) + "&langpair=en|" + langCode;
     return fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS)
       .then(function (res) { return res.json(); })
       .then(function (json) {
@@ -70,30 +70,37 @@
       });
   }
 
+  function sleep(ms) { return new Promise(function (resolve) { setTimeout(resolve, ms); }); }
+
+  // Two independent free engines, tried in sequence with short backoffs —
+  // neither has an SLA and both occasionally throttle or drop a request
+  // without warning, worse during peak hours on a shared IP. Trying Google
+  // twice then MyMemory twice before giving up is what makes this reliable.
   function translateOne(text, langCode) {
     if (!langCode || langCode === "en") return Promise.resolve(text);
 
     var cached = getCached(text, langCode);
     if (cached) return Promise.resolve(cached);
 
+    var attempts = [];
     if (!NO_MT_LANGS[langCode]) {
-      // One retry before giving up — these free endpoints sometimes drop
-      // a single request rather than being truly down.
-      return fetchGoogleTranslate(text, langCode).catch(function () { return null; })
-        .then(function (out) {
-          if (out) { setCached(text, langCode, out); return out; }
-          return fetchGoogleTranslate(text, langCode).catch(function () { return null; })
-            .then(function (out2) {
-              if (out2) setCached(text, langCode, out2);
-              return out2;
-            });
-        });
+      attempts.push(function () { return fetchGoogleTranslate(text, langCode); });
+      attempts.push(function () { return fetchGoogleTranslate(text, langCode); });
     }
-    return fetchMyMemoryPidgin(text).catch(function () { return null; })
-      .then(function (out) {
-        if (out) setCached(text, langCode, out);
-        return out;
+    attempts.push(function () { return fetchMyMemory(text, langCode); });
+    attempts.push(function () { return fetchMyMemory(text, langCode); });
+
+    var i = 0;
+    function tryNext() {
+      if (i >= attempts.length) return Promise.resolve(null);
+      var attempt = attempts[i++];
+      return attempt().catch(function () { return null; }).then(function (out) {
+        if (out) { setCached(text, langCode, out); return out; }
+        if (i >= attempts.length) return null;
+        return sleep(350 + i * 250).then(tryNext);
       });
+    }
+    return tryNext();
   }
 
   // Runs translateOne over every pair with at most MAX_CONCURRENT in

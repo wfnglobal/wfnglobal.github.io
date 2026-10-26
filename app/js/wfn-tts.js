@@ -424,6 +424,8 @@
     try { localStorage.setItem(cacheKey(text, langCode), translated); } catch (e) {}
   }
 
+  function sleep(ms) { return new Promise(function (resolve) { setTimeout(resolve, ms); }); }
+
   function fetchGoogleTranslate(text, langCode) {
     var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=" + langCode + "&dt=t&q=" + encodeURIComponent(text);
     return fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS)
@@ -434,37 +436,66 @@
       });
   }
 
+  function fetchMyMemory(text, langCode) {
+    var url = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text) + "&langpair=en|" + langCode;
+    return fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS)
+      .then(function (res) { return res.json(); })
+      .then(function (json) {
+        var out = json && json.responseData && json.responseData.translatedText;
+        var looksReal = out && out.trim() && out.trim().toLowerCase() !== text.trim().toLowerCase() && !/^MYMEMORY WARNING/i.test(out);
+        return looksReal ? out : null;
+      });
+  }
+
+  // Two independent free engines, tried in sequence with short backoffs —
+  // neither has an SLA and both occasionally throttle or drop a request
+  // without warning, worse during peak hours on a shared IP. Trying Google
+  // twice then MyMemory twice before giving up is what made this reliable.
   function translateOne(text, langCode) {
     if (langCode === "en") return Promise.resolve(text);
 
     var cached = getCached(text, langCode);
     if (cached) return Promise.resolve(cached);
 
+    var attempts = [];
     if (!NO_MT_LANGS[langCode]) {
-      // One retry before giving up — free endpoints that worked a moment
-      // ago sometimes drop a single request rather than being truly down.
-      return fetchGoogleTranslate(text, langCode)
-        .catch(function () { return null; })
-        .then(function (out) {
-          if (out) { setCached(text, langCode, out); return out; }
-          return fetchGoogleTranslate(text, langCode)
-            .catch(function () { return null; })
-            .then(function (out2) {
-              if (out2) setCached(text, langCode, out2);
-              return out2;
-            });
-        });
+      attempts.push(function () { return fetchGoogleTranslate(text, langCode); });
+      attempts.push(function () { return fetchGoogleTranslate(text, langCode); });
     }
-    var murl = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text) + "&langpair=en|pcm";
-    return fetchWithTimeout(murl, TRANSLATE_TIMEOUT_MS)
-      .then(function (res) { return res.json(); })
-      .then(function (json) {
-        var out = json && json.responseData && json.responseData.translatedText;
-        var looksReal = out && out.trim() && out.trim().toLowerCase() !== text.trim().toLowerCase() && !/^MYMEMORY WARNING/i.test(out);
-        if (looksReal) setCached(text, langCode, out);
-        return looksReal ? out : null;
-      })
-      .catch(function () { return null; });
+    attempts.push(function () { return fetchMyMemory(text, langCode); });
+    attempts.push(function () { return fetchMyMemory(text, langCode); });
+
+    var i = 0;
+    function tryNext() {
+      if (i >= attempts.length) return Promise.resolve(null);
+      var attempt = attempts[i++];
+      return attempt().catch(function () { return null; }).then(function (out) {
+        if (out) { setCached(text, langCode, out); return out; }
+        if (i >= attempts.length) return null;
+        return sleep(350 + i * 250).then(tryNext);
+      });
+    }
+    return tryNext();
+  }
+
+  // Runs translateOne over a list with at most a few requests in flight at
+  // once, instead of firing every request in the same instant — a burst of
+  // simultaneous unauthenticated requests is what a free endpoint throttles
+  // or drops first.
+  function translateTextsLimited(texts, langCode) {
+    var results = new Array(texts.length);
+    var next = 0;
+    function worker() {
+      var i = next++;
+      if (i >= texts.length) return Promise.resolve();
+      return translateOne(texts[i], langCode).then(function (out) {
+        results[i] = out;
+        return worker();
+      });
+    }
+    var workers = [];
+    for (var w = 0; w < Math.min(4, texts.length); w++) workers.push(worker());
+    return Promise.all(workers).then(function () { return results; });
   }
 
   function translatePairs(pairs, langCode, noteEl) {
@@ -475,16 +506,16 @@
     }
     pairs.forEach(function (p) { p.el.textContent = "Translating…"; });
     var anyFailed = false;
-    return Promise.all(pairs.map(function (p) {
-      return translateOne(p.original, langCode).then(function (translated) {
-        if (translated) {
-          p.el.textContent = translated;
+    return translateTextsLimited(pairs.map(function (p) { return p.original; }), langCode).then(function (outs) {
+      pairs.forEach(function (p, i) {
+        if (outs[i]) {
+          p.el.textContent = outs[i];
         } else {
           p.el.textContent = p.original;
           anyFailed = true;
         }
       });
-    })).then(function () {
+    }).then(function () {
       if (!noteEl) return;
       if (anyFailed && NO_MT_LANGS[langCode]) {
         noteEl.hidden = false;
@@ -642,9 +673,8 @@
         return;
       }
       btnLabel.textContent = "Translating…";
-      Promise.all(items.map(function (t) {
-        return translateOne(t, "pcm").then(function (r) { return r || t; });
-      })).then(function (pidginItems) {
+      translateTextsLimited(items, "pcm").then(function (outs) {
+        var pidginItems = outs.map(function (r, i) { return r || items[i]; });
         window.WFNTTS.speak(pidginItems);
       });
     }

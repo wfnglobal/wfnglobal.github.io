@@ -38,7 +38,12 @@
   // the app works fully offline; update alongside the website).
   // ---------------------------------------------------------------------
 
+  // VERSES[0] is always TODAY's verse, shown as the Home screen's "Verse of
+  // the Day" — update it (and DECLARATION below) whenever the day's content
+  // changes, the same way SERMONS[0] is kept current. The rest of the array
+  // is an evergreen backup pool, kept for continuity.
   const VERSES = [
+    { text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", ref: "Isaiah 41:10" },
     { text: "The heavens declare the glory of God; and the firmament sheweth his handywork.", ref: "Psalm 19:1" },
     { text: "Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves.", ref: "Philippians 2:3" },
     { text: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", ref: "Psalm 23:1-2" },
@@ -51,6 +56,13 @@
     { text: "For the Son of man is not come to destroy men's lives, but to save them.", ref: "Luke 9:56" },
     { text: "Commit thy works unto the LORD, and thy thoughts shall be established.", ref: "Proverbs 16:3" }
   ];
+
+  // Today's Declaration, shown on the Prayer page — kept current the same
+  // way as VERSES[0] and SERMONS[0].
+  const DECLARATION = {
+    text: "Father, today I silence every fear that has been trying to speak louder than Your Word. You said, 'Fear not,' and so I will not. You said, 'Be not dismayed,' and so I refuse to be shaken by what I see, what I hear, or what has not yet changed. I declare that You are my God — not a distant idea, not a theory I quote in hard seasons, but the living God who is with me in this one. Where I have felt alone, I receive Your presence as fact, not feeling. Where I have felt weak, I receive Your strength as a gift already given, not a reward I have to earn. You said You would help me, so I lay down the full weight of what I cannot carry and let You carry it instead. You said You would uphold me with the right hand of Your righteousness — not my own effort, not my own performance, but Your righteousness holding me steady when my strength runs out. So I declare over this day: no fear has the final word, no dismay has a home in me, and no assignment ahead of me is bigger than the hand that is already holding me up. In Jesus' name, amen.",
+    ref: "Isaiah 41:10"
+  };
 
   const SERMONS = [
     { slug: "wise-as-serpents-harmless-as-doves", title: "Wise as Serpents, Harmless as Doves", ref: "Matthew 10:16", date: "October 26, 2026", excerpt: "Jesus never promised you a safe world. He promised you a sharp mind, a soft heart, and a Sender who goes into the room first." },
@@ -109,6 +121,10 @@
   // the Home screen's Verse of the Day and the Prayer page every day, so
   // it is worth shipping as real text instead of a live API call.
   const PIDGIN_STATIC = {
+    "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.":
+      "No fear; because I dey with you: no let your mind cut; because na your God be dis: I go strengthen you; yes, I go help you; yes, I go hold you up with the right hand wey dey show say I dey do wetin correct.",
+    "Father, today I silence every fear that has been trying to speak louder than Your Word. You said, 'Fear not,' and so I will not. You said, 'Be not dismayed,' and so I refuse to be shaken by what I see, what I hear, or what has not yet changed. I declare that You are my God — not a distant idea, not a theory I quote in hard seasons, but the living God who is with me in this one. Where I have felt alone, I receive Your presence as fact, not feeling. Where I have felt weak, I receive Your strength as a gift already given, not a reward I have to earn. You said You would help me, so I lay down the full weight of what I cannot carry and let You carry it instead. You said You would uphold me with the right hand of Your righteousness — not my own effort, not my own performance, but Your righteousness holding me steady when my strength runs out. So I declare over this day: no fear has the final word, no dismay has a home in me, and no assignment ahead of me is bigger than the hand that is already holding me up. In Jesus' name, amen.":
+      "Father, today I silence every fear wey dey try talk pass Your Word. You talk say, 'No fear,' so I no go fear. You talk say, 'No let your mind cut,' so I refuse make wetin I see, wetin I hear, or wetin never change shake me. I dey declare say You na my God — no be far-away idea, no be theory wey I dey quote anytime hard season reach, but the living God wey dey with me for dis one. Where I don feel lonely, I dey receive Your presence as fact, no be feeling. Where I don feel weak, I dey receive Your strength as gift wey You don already give, no be reward wey I must work for. You talk say You go help me, so I drop the full weight wey I no fit carry, make You carry am instead. You talk say You go hold me up with the right hand of Your righteousness — no be my own effort, no be my own performance, but Your righteousness dey hold me steady when my strength don finish. So I dey declare over dis day: no fear get the final word, no confusion get house for me, and no assignment wey dey my front big pass the hand wey already dey hold me up. For Jesus name, amen.",
     "The heavens declare the glory of God; and the firmament sheweth his handywork.":
       "Di heaven dey show God glory; and di sky dey show di work wey im hand do.",
     "Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves.":
@@ -168,6 +184,8 @@
     try { localStorage.setItem(cacheKey(text, langCode), translated); } catch (e) {}
   }
 
+  function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+
   async function fetchGoogleTranslate(text, langCode) {
     const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${langCode}&dt=t&q=${encodeURIComponent(text)}`;
     const res = await fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS);
@@ -176,6 +194,22 @@
     return out.trim() || null;
   }
 
+  async function fetchMyMemory(text, langCode) {
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${langCode}`;
+    const res = await fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS);
+    const json = await res.json();
+    const out = json && json.responseData && json.responseData.translatedText;
+    const looksReal = out && out.trim() && out.trim().toLowerCase() !== text.trim().toLowerCase() && !/^MYMEMORY WARNING/i.test(out);
+    return looksReal ? out.trim() : null;
+  }
+
+  // Two independent free engines, tried in sequence with short backoffs
+  // between attempts. Neither one has an SLA, and both occasionally throttle
+  // or drop a request without warning (worse during peak hours on a shared
+  // IP), so relying on a single attempt against a single engine is why
+  // translation used to work inconsistently. Trying Google twice, then
+  // MyMemory twice, before giving up gives each request four real chances
+  // across two different providers.
   async function translateOne(text, langCode) {
     if (langCode === "en") return text;
     if (langCode === "pcm" && PIDGIN_STATIC[text]) return PIDGIN_STATIC[text];
@@ -183,29 +217,43 @@
     const cached = getCached(text, langCode);
     if (cached) return cached;
 
+    const attempts = [];
     if (!NO_MT_LANGS[langCode]) {
-      for (let attempt = 0; attempt < 2; attempt++) {
-        try {
-          const out = await fetchGoogleTranslate(text, langCode);
-          if (out) { setCached(text, langCode, out); return out; }
-        } catch (err) { /* retry, then fall through to the note below */ }
-      }
-      return null;
+      attempts.push(() => fetchGoogleTranslate(text, langCode));
+      attempts.push(() => fetchGoogleTranslate(text, langCode));
     }
-    // Pidgin, no hand translation on file for this text: no real MT engine
-    // exists for it. Try a community translation-memory lookup (real
-    // submitted translations, not machine output) — it will often have
-    // nothing for a sentence it hasn't seen before, which is fine as long
-    // as we say so instead of hanging.
-    try {
-      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|pcm`;
-      const res = await fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS);
-      const json = await res.json();
-      const out = json && json.responseData && json.responseData.translatedText;
-      const looksReal = out && out.trim() && out.trim().toLowerCase() !== text.trim().toLowerCase() && !/^MYMEMORY WARNING/i.test(out);
-      if (looksReal) { setCached(text, langCode, out); return out; }
-    } catch (err) { /* fall through */ }
+    attempts.push(() => fetchMyMemory(text, langCode));
+    attempts.push(() => fetchMyMemory(text, langCode));
+
+    for (let i = 0; i < attempts.length; i++) {
+      try {
+        const out = await attempts[i]();
+        if (out) { setCached(text, langCode, out); return out; }
+      } catch (err) { /* try the next engine/attempt */ }
+      if (i < attempts.length - 1) await sleep(350 + i * 250);
+    }
     return null;
+  }
+
+  // Runs translateOne over a list of texts with at most a few requests in
+  // flight at once. Firing every request in a page at the same instant
+  // (Promise.all with no limit) is what made translation flaky — a burst of
+  // simultaneous requests gets a free, unauthenticated endpoint to silently
+  // drop or throttle some of them, which looked like "only works
+  // sometimes." A small, steady concurrency limit avoids that burst.
+  async function translateTextsLimited(texts, langCode) {
+    const results = new Array(texts.length);
+    let next = 0;
+    async function worker() {
+      while (next < texts.length) {
+        const i = next++;
+        results[i] = await translateOne(texts[i], langCode);
+      }
+    }
+    const workers = [];
+    for (let w = 0; w < Math.min(4, texts.length); w++) workers.push(worker());
+    await Promise.all(workers);
+    return results;
   }
 
   // Shared helper: translate a batch of English texts into langCode and
@@ -221,16 +269,16 @@
       return;
     }
     pairs.forEach((p) => { p.el.textContent = "Translating…"; });
+    const outs = await translateTextsLimited(pairs.map((p) => p.original), langCode);
     let anyFailed = false;
-    await Promise.all(pairs.map(async (p) => {
-      const translated = await translateOne(p.original, langCode);
-      if (translated) {
-        p.el.textContent = translated;
+    pairs.forEach((p, i) => {
+      if (outs[i]) {
+        p.el.textContent = outs[i];
       } else {
         p.el.textContent = p.original;
         anyFailed = true;
       }
-    }));
+    });
     if (noteEl) {
       if (anyFailed && NO_MT_LANGS[langCode]) {
         noteEl.hidden = false;
@@ -443,7 +491,18 @@
     { code: "dra", name: "Douay-Rheims" },
     { code: "webbe", name: "World English Bible, British Edition" },
     { code: "oeb-us", name: "Open English Bible, US" },
-    { code: "clementine", name: "Clementine Vulgate (Latin)" }
+    { code: "clementine", name: "Clementine Vulgate (Latin)" },
+    // There is no public-domain, professionally published Yorùbá, Igbo, or
+    // Hausa Bible available through a free API — every modern translation
+    // in these languages is still in copyright with the Bible societies
+    // that produced it. So these three run the KJV text for the current
+    // chapter through the app's own translate engine (the same one behind
+    // "Translate…" elsewhere) instead of fetching a published version —
+    // labelled plainly as machine-translated, not a substitute for a real
+    // published Yorùbá/Igbo/Hausa Bible.
+    { code: "yo-mt", name: "Yorùbá (machine-translated)", mt: true, mtLang: "yo" },
+    { code: "ig-mt", name: "Igbo (machine-translated)", mt: true, mtLang: "ig" },
+    { code: "ha-mt", name: "Hausa (machine-translated)", mt: true, mtLang: "ha" }
   ];
 
   // Small fallback glossary for common KJV archaic forms a general dictionary
@@ -639,7 +698,7 @@
   function viewHome() {
     setHeader("Word & Faith Network", false);
     setActiveTab("home");
-    const verse = VERSES[dayIndex(VERSES.length)];
+    const verse = VERSES[0];
     const sermon = SERMONS[0];
     const last = lastBiblePosition();
     const bibleRowBody = last
@@ -966,9 +1025,24 @@
       wrapWordsForDefine(verseListEl);
     }
 
+    async function loadMachineTranslatedVersion(version) {
+      const plainVerses = kjvVerses.map((v) => WFNBible.plain(v));
+      verseListEl.innerHTML = `<div class="search-status">Translating ${esc(data.name)} ${chapter} into ${esc(version.name.replace(" (machine-translated)", ""))}…</div>`;
+      const outs = await translateTextsLimited(plainVerses, version.mtLang);
+      const anyFailed = outs.some((o) => !o);
+      verseListEl.innerHTML =
+        `<div class="skeleton-note" style="margin-bottom:14px;">Machine-translated from the KJV text, not an official published ${esc(version.name.replace(" (machine-translated)", ""))} Bible — meaning helps, but it isn't a substitute for a professional translation.${anyFailed ? " A few verses couldn't be translated right now and are shown in English." : ""}</div>` +
+        outs.map((o, i) => `<p class="v" data-verse="${i + 1}"><span class="vnum">${i + 1}</span>${esc(o || plainVerses[i])}</p>`).join("");
+      activePlainTexts = outs.map((o, i) => o || plainVerses[i]);
+      activeVersionCode = version.code;
+      wrapWordsForDefine(verseListEl);
+    }
+
     async function loadVersion(code) {
       if (code === "kjv") { renderKJV(); return; }
-      const versionName = (BIBLE_VERSIONS.find((v) => v.code === code) || {}).name || code;
+      const version = BIBLE_VERSIONS.find((v) => v.code === code);
+      const versionName = (version || {}).name || code;
+      if (version && version.mt) { await loadMachineTranslatedVersion(version); return; }
       verseListEl.innerHTML = `<div class="search-status">Loading ${esc(versionName)}…</div>`;
       try {
         const ref = encodeURIComponent(`${data.name} ${chapter}`).replace(/%20/g, "+");
@@ -1773,7 +1847,7 @@
   function viewPrayer() {
     setHeader("Prayer", true);
     setActiveTab("prayer");
-    const declarationPlain = "Father, today is Your Sabbath, and I enter it in rest, not in striving. I lay down every work of my own hands and trust the work of Yours. Where my path has been crooked, I will not fight to straighten it myself — I consider it, and I trust the Hand that bent it to also be the Hand that restores it. In this day of whatever kind You have assigned me — prosperity or adversity — I receive it from You, and I will not find fault with You after it. Where I am tempted to strive, to compare, or to think more highly of myself than I ought, I choose lowliness of mind; I esteem others better than myself, as Your Word commands. Let me rest in who You are today, not in what I can produce. Restore my soul the way only a true Sabbath can. Let wisdom, not anxiety, be my defence, and let it give life to everything I set my hand to this week. In Jesus' name, amen.";
+    const declarationPlain = DECLARATION.text;
     const pointsHtml = PRAYER_POINTS.map(
       (p, i) => `<div class="prayer-item"><div class="num">${i + 1}</div><p id="prayerPointText-${i}">${esc(p)}</p></div>`
     ).join("");
@@ -1784,7 +1858,7 @@
         <div class="declaration-content">
           <div class="declaration-label">Today's Declaration</div>
           <div class="declaration-text" id="declarationText">&ldquo;${esc(declarationPlain)}&rdquo;</div>
-          <div class="declaration-ref">Exodus 20:8-10 &middot; Ecclesiastes 7:13 &middot; Philippians 2:3</div>
+          <div class="declaration-ref">${esc(DECLARATION.ref)}</div>
           <select class="vod-translate" id="prayerTranslate" aria-label="Translate the declaration and prayer points">${translateLangOptions()}</select>
         </div>
       </div>

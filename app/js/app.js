@@ -1239,6 +1239,9 @@
   let currentGetItems = null;
   let pendingAutoRead = false;
   let pendingAutoReadTimer = null;
+  // Last ambiguous search Tolu ran, so a quick follow-up ("open the
+  // sermon", "open that verse") can resolve without repeating the query.
+  let lastSearch = null;
 
   function setReadable(getItems) {
     currentGetItems = getItems || null;
@@ -1258,8 +1261,36 @@
   }
 
   function startReading() {
-    if (!window.WFNTTS || !window.WFNTTS.supported || !currentGetItems) return;
-    window.WFNTTS.speak(currentGetItems());
+    if (!window.WFNTTS || !window.WFNTTS.supported) return;
+    const items = (currentGetItems || genericReadable)();
+    if (items.length) window.WFNTTS.speak(items);
+  }
+
+  // Generic "read anywhere" fallback: most screens register their own
+  // getItems() via setReadable() so Listen can read a clean, speech-shaped
+  // version of what's there (e.g. the Bible reader reads its actual verse
+  // text, not UI chrome). For every screen that doesn't — Home, the Bible
+  // search results, the sermons/library landing and list pages, the
+  // profile pages — Listen still has something to read: it scrapes the
+  // currently-rendered screen's own headings and paragraphs, skipping the
+  // voice control itself and any form controls, so "Listen" works on any
+  // screen in the app without every view needing its own wiring.
+  function genericReadable() {
+    if (!viewEl) return [];
+    const nodes = viewEl.querySelectorAll(
+      "h1, h2, h3, h4, p, li, .result-ref, .result-text, .gate-back-headline, .gate-back-text, .gate-preview-title, .gate-preview-text"
+    );
+    const seen = new Set();
+    const out = [];
+    nodes.forEach((el) => {
+      if (el.closest("#voiceStack, select, button")) return;
+      const t = el.textContent.replace(/\s+/g, " ").trim();
+      if (t.length > 1 && !seen.has(t)) {
+        seen.add(t);
+        out.push(t);
+      }
+    });
+    return out;
   }
 
   function mountVoiceControls() {
@@ -1334,11 +1365,11 @@
       openSheet(`<h3>Listen</h3><p style="font-size:14.5px; color:var(--ink-2); line-height:1.6;">Your browser doesn't support reading text aloud. Try the latest Chrome, Safari, or Edge.</p>`);
       return;
     }
-    if (!currentGetItems) {
-      openSheet(`<h3>Listen</h3><p style="font-size:14.5px; color:var(--ink-2); line-height:1.6;">There's nothing to read on this screen yet. Open a sermon, a Bible chapter, the library, or today's prayer, then tap Listen again.</p>`);
+    const items = currentGetItems || genericReadable;
+    if (!items().length) {
+      openSheet(`<h3>Listen</h3><p style="font-size:14.5px; color:var(--ink-2); line-height:1.6;">There's nothing to read on this screen yet.</p>`);
       return;
     }
-    const items = currentGetItems;
     openSheet(`
       <h3>Listen</h3>
       <p style="font-size:13.5px; color:var(--ink-3); margin-bottom:4px;">Have this read aloud, in your choice of voice.</p>
@@ -1417,7 +1448,7 @@
 
   const TOLU_EXAMPLES = [
     "Hi Tolu",
-    "Open today's sermon and read it",
+    "Search for faith",
     "Open the book of Luke chapter 2 verse 5",
     "Open today's prayer",
     "Stop reading"
@@ -1426,7 +1457,7 @@
   function openToluSheet() {
     openSheet(`
       <h3>Tolu</h3>
-      <p style="font-size:13.5px; color:var(--ink-3); margin-bottom:10px;">Tap the mic once, then just talk — say "Hi Tolu" any time, followed by what you'd like to open or hear. No need to tap again between requests.</p>
+      <p style="font-size:13.5px; color:var(--ink-3); margin-bottom:10px;">Tap the mic once, then just talk — say "Hi Tolu" any time, followed by what you'd like to open or hear. Ask for a sermon, a Bible verse, the library, today's prayer, or say "search for" any word or topic and Tolu will search all of it. No need to tap again between requests.</p>
       <div class="tolu-mic-wrap">
         <button class="tolu-mic" id="toluMicBtn" type="button" aria-label="Tap to speak">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path d="M19 11a7 7 0 0 1-14 0M12 19v3"/></svg>
@@ -1616,6 +1647,86 @@
     );
   }
 
+  // ---- Search: look across every sermon, library book, today's prayer,
+  // and the whole Bible for a word or phrase. This is what lets Tolu
+  // answer "search for X" / "find X" / "do you have anything on X" —
+  // not just fixed, pre-named commands.
+  function searchSermons(q) {
+    const ql = q.toLowerCase();
+    return SERMONS.filter(
+      (s) => s.title.toLowerCase().includes(ql) || s.ref.toLowerCase().includes(ql) || s.excerpt.toLowerCase().includes(ql)
+    );
+  }
+  function searchLibrary(q) {
+    const ql = q.toLowerCase();
+    return LIBRARY_BOOKS.filter((b) => b.title.toLowerCase().includes(ql) || b.desc.toLowerCase().includes(ql));
+  }
+  function searchPrayerContent(q) {
+    const ql = q.toLowerCase();
+    const hits = [];
+    if (DECLARATION.ref.toLowerCase().includes(ql) || DECLARATION.lines.join(" ").toLowerCase().includes(ql)) {
+      hits.push("declaration");
+    }
+    if (PRAYER_POINTS.some((p) => p.toLowerCase().includes(ql))) hits.push("points");
+    return hits;
+  }
+
+  async function runSearchAcrossApp(qRaw) {
+    const q = qRaw.trim();
+    if (q.length < 2) return "Tell me a word or phrase to search for.";
+
+    const sermonHits = searchSermons(q);
+    const libraryHits = searchLibrary(q);
+    const prayerHits = searchPrayerContent(q);
+    let bibleHits = [];
+    try { bibleHits = await WFNBible.search(q, 5); } catch (e) {}
+
+    const total = sermonHits.length + libraryHits.length + prayerHits.length + bibleHits.length;
+    if (!total) {
+      lastSearch = null;
+      return `I searched sermons, the library, today's prayer, and the whole Bible for "${qRaw}" and came up empty. Try a different word.`;
+    }
+
+    // A single, unambiguous hit: just open it and read it.
+    if (sermonHits.length === 1 && !libraryHits.length && !bibleHits.length && !prayerHits.length) {
+      lastSearch = null;
+      const s = sermonHits[0];
+      location.href = "/articles/" + s.slug + ".html#autoread";
+      return `Found it — the sermon "${s.title}" on ${s.ref}. Opening and reading it now.`;
+    }
+    if (libraryHits.length === 1 && !sermonHits.length && !bibleHits.length && !prayerHits.length) {
+      lastSearch = null;
+      const b = libraryHits[0];
+      location.href = "/library/" + b.slug + ".html#autoread";
+      return `Found it — "${b.title}" in the library. Opening it now.`;
+    }
+    if (bibleHits.length && !sermonHits.length && !libraryHits.length && !prayerHits.length) {
+      lastSearch = null;
+      const r = bibleHits[0];
+      armPendingAutoRead();
+      location.hash = `#/bible/${r.slug}/${r.chapter}`;
+      const more = bibleHits.length > 1 ? ` I found ${bibleHits.length} matching verses — starting with this one.` : "";
+      return `Found "${qRaw}" in ${r.book} ${r.chapter}:${r.verse}.${more} Opening and reading that chapter now.`;
+    }
+    if (prayerHits.length && !sermonHits.length && !libraryHits.length && !bibleHits.length) {
+      lastSearch = null;
+      armPendingAutoRead();
+      location.hash = "#/prayer/list";
+      return "Found it in today's prayer. Opening and reading it now.";
+    }
+
+    // Several different kinds of matches — list what's there and let a
+    // short follow-up ("open the sermon", "open that verse") pick one,
+    // rather than guessing.
+    lastSearch = { sermonHits, libraryHits, bibleHits, prayerHits, query: qRaw };
+    const parts = [];
+    if (sermonHits.length) parts.push(`${sermonHits.length} sermon${sermonHits.length > 1 ? "s" : ""} — including "${sermonHits[0].title}"`);
+    if (bibleHits.length) parts.push(`${bibleHits.length} Bible verse${bibleHits.length > 1 ? "s" : ""} — starting with ${bibleHits[0].book} ${bibleHits[0].chapter}:${bibleHits[0].verse}`);
+    if (libraryHits.length) parts.push(`${libraryHits.length} library book${libraryHits.length > 1 ? "s" : ""} — including "${libraryHits[0].title}"`);
+    if (prayerHits.length) parts.push(`today's prayer`);
+    return `For "${qRaw}" I found ${parts.join(", and ")}. Say "open the sermon", "open that verse", "open the library", or "open the prayer" to go there.`;
+  }
+
   async function runToluCommand(textRaw) {
     const stripped = textRaw.replace(/^\s*(hi|hey|hello|ok|okay)?\s*tolu[,:]?\s*/i, "").trim();
     const body = (stripped || textRaw).toLowerCase().trim();
@@ -1625,7 +1736,7 @@
     // nothing else said yet. Greet back instead of treating silence as a
     // failed command, the way Siri answers "I'm here" to its own name.
     if (!stripped && /\btolu\b/i.test(textRaw)) {
-      return "Hi! I'm listening — try a sermon, a Bible verse, today's prayer, or the library.";
+      return "Hi! I'm listening — try a sermon, a Bible verse, today's prayer, the library, or say \"search for\" anything in the app.";
     }
 
     if (/\bstop\b.*\b(reading|talking)\b/.test(body) || /^(stop|pause)\b/.test(body) || /^stop listening\b/.test(body)) {
@@ -1636,6 +1747,47 @@
       if (window.WFNTTS) window.WFNTTS.resume();
       return "Resuming.";
     }
+
+    // A short follow-up to an ambiguous search a moment ago — "open the
+    // sermon", "play that verse", "open the library one". Checked before
+    // the plain always-open-today's-sermon/prayer/library intents below,
+    // which would otherwise swallow it and open the wrong thing.
+    if (lastSearch && body.length < 40) {
+      if (/\bsermon\b/.test(body) && lastSearch.sermonHits.length) {
+        const s = lastSearch.sermonHits[0];
+        lastSearch = null;
+        location.href = "/articles/" + s.slug + ".html#autoread";
+        return `Opening the sermon "${s.title}". Reading it now.`;
+      }
+      if (/\b(verse|scripture|bible)\b/.test(body) && lastSearch.bibleHits.length) {
+        const r = lastSearch.bibleHits[0];
+        lastSearch = null;
+        armPendingAutoRead();
+        location.hash = `#/bible/${r.slug}/${r.chapter}`;
+        return `Opening ${r.book} ${r.chapter}. Reading it now.`;
+      }
+      if (/\blibrary\b/.test(body) && lastSearch.libraryHits.length) {
+        const b = lastSearch.libraryHits[0];
+        lastSearch = null;
+        location.href = "/library/" + b.slug + ".html#autoread";
+        return `Opening "${b.title}" from the library.`;
+      }
+      if (/\bprayer\b/.test(body) && lastSearch.prayerHits.length) {
+        lastSearch = null;
+        armPendingAutoRead();
+        location.hash = "#/prayer/list";
+        return "Opening today's prayer. Reading it now.";
+      }
+    }
+
+    // Explicit search — "search for X", "find X", "look up X" — checked
+    // before the fixed intents below so "find the sermon about trust"
+    // searches by keyword instead of just opening today's sermon.
+    const searchMatch = body.match(/^(?:search(?: for)?|find|look up|look for|do you have (?:anything|something) (?:on|about))\s+(.+)$/);
+    if (searchMatch) {
+      return await runSearchAcrossApp(searchMatch[1].trim());
+    }
+
     if (/\bsermon\b/.test(body)) {
       const s = SERMONS[0];
       location.href = "/articles/" + s.slug + ".html" + (wantsRead !== false ? "#autoread" : "");
@@ -1655,8 +1807,9 @@
       return "Opening home.";
     }
     if (/^(read|listen to)\s+(this|it|the page)\b/.test(body)) {
+      const hasContent = (currentGetItems || genericReadable)().length > 0;
       startReading();
-      return currentGetItems ? "Reading this page now." : "There's nothing to read on this screen yet.";
+      return hasContent ? "Reading this page now." : "There's nothing to read on this screen yet.";
     }
 
     // Bible book / chapter / verse, e.g. "open the book of luke chapter 2 verse 5"
@@ -1669,16 +1822,19 @@
       const verseNum = bibleMatch[3] ? parseInt(bibleMatch[3], 10) : null;
       const index = await getBibleIndex();
       const book = findBook(bookPhrase, index);
-      if (!book) {
-        return `I couldn't find a Bible book called "${bookPhrase}". Try the exact name, like Luke or Genesis.`;
+      if (book) {
+        const safeChapter = Math.min(Math.max(chapterNum, 1), book.chapters);
+        armPendingAutoRead();
+        location.hash = `#/bible/${book.slug}/${safeChapter}`;
+        return `Opening ${book.name}, chapter ${safeChapter}${verseNum ? ", verse " + verseNum : ""}. Reading it now.`;
       }
-      const safeChapter = Math.min(Math.max(chapterNum, 1), book.chapters);
-      armPendingAutoRead();
-      location.hash = `#/bible/${book.slug}/${safeChapter}`;
-      return `Opening ${book.name}, chapter ${safeChapter}${verseNum ? ", verse " + verseNum : ""}. Reading it now.`;
+      // Not a recognizable book name — fall through to a general search
+      // instead of a dead end, in case it's a topic rather than a book.
     }
 
-    return "I didn't catch a command yet — try a sermon, a Bible book and chapter, the library, or today's prayer.";
+    // Nothing above matched — treat whatever was said as a search across
+    // the whole app instead of giving up.
+    return await runSearchAcrossApp(stripped || textRaw);
   }
 
   function openVerseSheet(bookSlug, bookName, chapter, verse, text) {

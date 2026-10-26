@@ -353,7 +353,30 @@
       });
       return out;
     }
-    return null;
+    return collectReadableGeneric();
+  }
+
+  // Generic fallback so "Listen" works on any page — the homepage, the
+  // sermon archive list, a library landing page, about/contact — not just
+  // a sermon article or a library chapter. Scrapes the visible headings,
+  // paragraphs, and list/entry text from the page's main content, skipping
+  // the header, footer, nav, and this widget itself.
+  function collectReadableGeneric() {
+    var scope = document.querySelector("main") || document.body;
+    var out = [];
+    var seen = {};
+    var nodes = scope.querySelectorAll(
+      "h1, h2, h3, p, li, .entry-title, .entry-excerpt, .page-title, .page-sub, .kicker"
+    );
+    nodes.forEach(function (el) {
+      if (el.closest("#wfnVoiceStack, header, footer, nav, .site-header, .site-footer, script, style")) return;
+      var t = el.textContent.replace(/\s+/g, " ").trim();
+      if (t.length > 1 && !seen[t]) {
+        seen[t] = true;
+        out.push(t);
+      }
+    });
+    return out.length ? out : null;
   }
 
   // Same two page shapes as collectReadable(), but returns the actual

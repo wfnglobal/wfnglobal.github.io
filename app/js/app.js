@@ -1199,6 +1199,7 @@
   // ---- Tolu: voice-command assistant ---------------------------------
 
   const TOLU_EXAMPLES = [
+    "Hi Tolu",
     "Open today's sermon and read it",
     "Open the book of Luke chapter 2 verse 5",
     "Open today's prayer",
@@ -1208,7 +1209,7 @@
   function openToluSheet() {
     openSheet(`
       <h3>Tolu</h3>
-      <p style="font-size:13.5px; color:var(--ink-3); margin-bottom:10px;">Say what you'd like to open or hear.</p>
+      <p style="font-size:13.5px; color:var(--ink-3); margin-bottom:10px;">Tap the mic once, then just talk — say "Hi Tolu" any time, followed by what you'd like to open or hear. No need to tap again between requests.</p>
       <div class="tolu-mic-wrap">
         <button class="tolu-mic" id="toluMicBtn" type="button" aria-label="Tap to speak">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path d="M19 11a7 7 0 0 1-14 0M12 19v3"/></svg>
@@ -1235,13 +1236,36 @@
     const replyEl = document.getElementById("toluReply");
     const input = document.getElementById("toluInput");
 
+    let busy = false;
     async function handle(text) {
+      if (busy) return;
+      busy = true;
       transcriptEl.textContent = `“${text}”`;
       statusEl.textContent = "Thinking…";
-      const reply = await runToluCommand(text);
+      let reply;
+      try {
+        reply = await runToluCommand(text);
+      } catch (e) {
+        reply = "Something went wrong on my end — try that again.";
+      }
       replyEl.innerHTML = `<strong>Tolu:</strong> ${esc(reply)}`;
       replyEl.classList.add("show");
-      statusEl.textContent = "Tap to speak to Tolu";
+      // Stop listening the instant Tolu (or the page it's about to read)
+      // starts talking, so the mic can't hear that speech and mistake it
+      // for the next command. startRecogCycle() won't resume until
+      // speechSynthesis is quiet again.
+      if (currentRecog) { try { currentRecog.stop(); } catch (e) {} }
+      // Speak the reply aloud, Siri-style — unless real content is about
+      // to start reading itself a moment later (that would talk over it).
+      if (window.WFNTTS && !/reading it now/i.test(reply)) {
+        try { window.WFNTTS.speak([reply]); } catch (e) {}
+      }
+      if (/^stop listening\b/i.test(text.trim()) && typeof stopListening === "function") {
+        stopListening();
+        return;
+      }
+      statusEl.textContent = listeningActive ? "Listening — say “Hi Tolu” or a command" : "Tap to speak to Tolu";
+      busy = false;
     }
 
     document.querySelectorAll(".tolu-chip").forEach((chip) => {
@@ -1256,21 +1280,76 @@
       if (e.key === "Enter") document.getElementById("toluSendBtn").click();
     });
 
+    // Voice recognition: always listens once started, instead of a single
+    // one-shot capture. A fresh Recognition object is created every cycle
+    // — reusing one instance across repeated start() calls is what made
+    // Tolu answer the first time and then go quiet on Chrome. While
+    // listeningActive is true, onend restarts it automatically, so a
+    // pause in speech (or the browser's own ~60s session limit) doesn't
+    // end the conversation — just say "Hi Tolu" again any time.
     const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (Recognition) {
+    let listeningActive = false;
+    let currentRecog = null;
+    let restartTimer = null;
+
+    function stopListening() {
+      listeningActive = false;
+      if (restartTimer) { clearTimeout(restartTimer); restartTimer = null; }
+      if (currentRecog) { try { currentRecog.stop(); } catch (e) {} }
+      micBtn.classList.remove("listening");
+      statusEl.textContent = "Tap to speak to Tolu";
+    }
+
+    function startRecogCycle() {
+      if (!listeningActive) return;
+      // Don't let the mic listen while Tolu (or a page being read aloud)
+      // is talking — otherwise it can hear its own voice and mistake it
+      // for a new command. Re-check shortly instead.
+      if (window.speechSynthesis && window.speechSynthesis.speaking) {
+        restartTimer = setTimeout(startRecogCycle, 300);
+        return;
+      }
       const recog = new Recognition();
+      currentRecog = recog;
       recog.lang = "en-US";
       recog.interimResults = false;
+      recog.continuous = true;
       recog.maxAlternatives = 1;
-      recog.onstart = () => { micBtn.classList.add("listening"); statusEl.textContent = "Listening…"; };
-      recog.onend = () => { micBtn.classList.remove("listening"); };
-      recog.onerror = () => { micBtn.classList.remove("listening"); statusEl.textContent = "Didn't catch that — try again or type below."; };
-      recog.onresult = (e) => handle(e.results[0][0].transcript);
+      recog.onstart = () => {
+        micBtn.classList.add("listening");
+        statusEl.textContent = "Listening — say “Hi Tolu” or a command";
+      };
+      recog.onresult = (e) => {
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          if (e.results[i].isFinal) handle(e.results[i][0].transcript);
+        }
+      };
+      recog.onerror = (e) => {
+        if (e.error === "no-speech" || e.error === "aborted") return; // expected in a long-running session
+        if (e.error === "not-allowed" || e.error === "service-not-allowed") {
+          stopListening();
+          statusEl.textContent = "Microphone access is blocked — allow it in your browser, or type below.";
+        }
+      };
+      recog.onend = () => {
+        micBtn.classList.remove("listening");
+        currentRecog = null;
+        if (listeningActive) {
+          // Brief handoff so the browser's mic resource is fully released
+          // before the next session claims it.
+          restartTimer = setTimeout(startRecogCycle, 250);
+        }
+      };
+      try { recog.start(); } catch (e) { /* a start-while-starting race; onend will retry */ }
+    }
+
+    if (Recognition) {
       micBtn.addEventListener("click", () => {
-        if (micBtn.classList.contains("listening")) { recog.stop(); return; }
-        try { recog.start(); } catch (e) {}
+        if (listeningActive) { stopListening(); return; }
+        listeningActive = true;
+        startRecogCycle();
       });
-      sheetScrimEl.addEventListener("click", () => { try { recog.stop(); } catch (e) {} }, { once: true });
+      sheetScrimEl.addEventListener("click", stopListening, { once: true });
     } else {
       statusEl.textContent = "Voice input isn't supported in this browser — type a request below.";
       micBtn.disabled = true;
@@ -1305,11 +1384,18 @@
   }
 
   async function runToluCommand(textRaw) {
-    const stripped = textRaw.replace(/^\s*(hey |ok |okay )?tolu[,:]?\s*/i, "").trim();
+    const stripped = textRaw.replace(/^\s*(hi|hey|hello|ok|okay)?\s*tolu[,:]?\s*/i, "").trim();
     const body = (stripped || textRaw).toLowerCase().trim();
     const wantsRead = /\b(read|listen|out loud|aloud)\b/.test(body);
 
-    if (/\bstop\b.*\b(reading|talking)\b/.test(body) || /^(stop|pause)\b/.test(body)) {
+    // A bare wake phrase — "Hi Tolu", "Hey Tolu", just "Tolu" — with
+    // nothing else said yet. Greet back instead of treating silence as a
+    // failed command, the way Siri answers "I'm here" to its own name.
+    if (!stripped && /\btolu\b/i.test(textRaw)) {
+      return "Hi! I'm listening — try a sermon, a Bible verse, today's prayer, or the library.";
+    }
+
+    if (/\bstop\b.*\b(reading|talking)\b/.test(body) || /^(stop|pause)\b/.test(body) || /^stop listening\b/.test(body)) {
       if (window.WFNTTS) window.WFNTTS.stop();
       return "Stopped.";
     }

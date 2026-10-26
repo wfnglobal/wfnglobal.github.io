@@ -194,12 +194,30 @@
     return out.trim() || null;
   }
 
+  // MyMemory's free endpoint returns its error messages as ordinary
+  // "translatedText" — e.g. "QUERY LENGTH LIMIT EXCEEDED. MAX ALLOWED
+  // QUERY: 500 CHARS" for anything over 500 characters, or an "AMBIGUOUS"/
+  // "INVALID SOURCE LANGUAGE" notice — with nothing in the response marking
+  // it as an error. Left unfiltered, that error text gets treated as a
+  // real translation and shown to readers as today's declaration. Catch
+  // the common error shapes (short, all-caps, English, admin-sounding)
+  // before accepting anything from this engine.
+  function looksLikeMtError(out) {
+    if (!out) return true;
+    const t = out.trim();
+    if (/query length limit|invalid (source|target)|is not supported|please select|no translations? found|mymemory warning|ambiguous/i.test(t)) return true;
+    // A short, all-caps, non-accented response for a long/mixed-case
+    // request is almost certainly a system message, not a translation.
+    if (t.length < 80 && t === t.toUpperCase() && /^[A-Z0-9 .:,'"-]+$/.test(t)) return true;
+    return false;
+  }
+
   async function fetchMyMemory(text, langCode) {
     const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${langCode}`;
     const res = await fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS);
     const json = await res.json();
     const out = json && json.responseData && json.responseData.translatedText;
-    const looksReal = out && out.trim() && out.trim().toLowerCase() !== text.trim().toLowerCase() && !/^MYMEMORY WARNING/i.test(out);
+    const looksReal = out && out.trim() && out.trim().toLowerCase() !== text.trim().toLowerCase() && !looksLikeMtError(out);
     return looksReal ? out.trim() : null;
   }
 
@@ -214,16 +232,30 @@
     if (langCode === "en") return text;
     if (langCode === "pcm" && PIDGIN_STATIC[text]) return PIDGIN_STATIC[text];
 
+    // Self-heals devices that already cached one of MyMemory's error
+    // messages as if it were a real translation (see looksLikeMtError) —
+    // ignore a bad cached value instead of returning it forever.
     const cached = getCached(text, langCode);
-    if (cached) return cached;
+    if (cached && !looksLikeMtError(cached)) return cached;
+
+    // MyMemory's free tier hard-rejects anything over ~500 characters with
+    // an error message (see looksLikeMtError), so for longer passages
+    // (the daily declaration, prayer points combined, library chapters)
+    // it would never succeed — skip straight to Google, with extra
+    // retries in its place, rather than wasting an attempt on a request
+    // that's guaranteed to fail.
+    const myMemoryUsable = text.length <= 480;
 
     const attempts = [];
     if (!NO_MT_LANGS[langCode]) {
       attempts.push(() => fetchGoogleTranslate(text, langCode));
       attempts.push(() => fetchGoogleTranslate(text, langCode));
+      if (!myMemoryUsable) attempts.push(() => fetchGoogleTranslate(text, langCode));
     }
-    attempts.push(() => fetchMyMemory(text, langCode));
-    attempts.push(() => fetchMyMemory(text, langCode));
+    if (myMemoryUsable) {
+      attempts.push(() => fetchMyMemory(text, langCode));
+      attempts.push(() => fetchMyMemory(text, langCode));
+    }
 
     for (let i = 0; i < attempts.length; i++) {
       try {

@@ -436,13 +436,26 @@
       });
   }
 
+  // MyMemory's free endpoint returns its error messages as ordinary
+  // "translatedText" — e.g. "QUERY LENGTH LIMIT EXCEEDED. MAX ALLOWED
+  // QUERY: 500 CHARS" for anything over 500 characters — with nothing in
+  // the response marking it as an error. Left unfiltered, that error text
+  // gets treated as a real translation and read aloud to listeners.
+  function looksLikeMtError(out) {
+    if (!out) return true;
+    var t = out.trim();
+    if (/query length limit|invalid (source|target)|is not supported|please select|no translations? found|mymemory warning|ambiguous/i.test(t)) return true;
+    if (t.length < 80 && t === t.toUpperCase() && /^[A-Z0-9 .:,'"-]+$/.test(t)) return true;
+    return false;
+  }
+
   function fetchMyMemory(text, langCode) {
     var url = "https://api.mymemory.translated.net/get?q=" + encodeURIComponent(text) + "&langpair=en|" + langCode;
     return fetchWithTimeout(url, TRANSLATE_TIMEOUT_MS)
       .then(function (res) { return res.json(); })
       .then(function (json) {
         var out = json && json.responseData && json.responseData.translatedText;
-        var looksReal = out && out.trim() && out.trim().toLowerCase() !== text.trim().toLowerCase() && !/^MYMEMORY WARNING/i.test(out);
+        var looksReal = out && out.trim() && out.trim().toLowerCase() !== text.trim().toLowerCase() && !looksLikeMtError(out);
         return looksReal ? out : null;
       });
   }
@@ -455,15 +468,23 @@
     if (langCode === "en") return Promise.resolve(text);
 
     var cached = getCached(text, langCode);
-    if (cached) return Promise.resolve(cached);
+    if (cached && !looksLikeMtError(cached)) return Promise.resolve(cached);
+
+    // MyMemory hard-rejects anything over ~500 characters with an error
+    // message (see looksLikeMtError), so for longer passages it would
+    // never succeed — skip it and give Google the extra attempt instead.
+    var myMemoryUsable = text.length <= 480;
 
     var attempts = [];
     if (!NO_MT_LANGS[langCode]) {
       attempts.push(function () { return fetchGoogleTranslate(text, langCode); });
       attempts.push(function () { return fetchGoogleTranslate(text, langCode); });
+      if (!myMemoryUsable) attempts.push(function () { return fetchGoogleTranslate(text, langCode); });
     }
-    attempts.push(function () { return fetchMyMemory(text, langCode); });
-    attempts.push(function () { return fetchMyMemory(text, langCode); });
+    if (myMemoryUsable) {
+      attempts.push(function () { return fetchMyMemory(text, langCode); });
+      attempts.push(function () { return fetchMyMemory(text, langCode); });
+    }
 
     var i = 0;
     function tryNext() {

@@ -613,6 +613,25 @@
     });
   }
 
+  // Plain-English "what did I just read" summary for the current chapter —
+  // for readers who read the Bible but don't always follow what it means.
+  function openChapterSummarySheet(slug, bookName, chapter) {
+    openSheet(`
+      <h3>Chapter Summary</h3>
+      <div class="sheet-ref">${esc(bookName)} ${chapter}</div>
+      <div class="summary-body" id="summaryBody"><p class="skeleton-note">Loading summary…</p></div>
+    `);
+    WFNBible.getChapterSummary(slug, chapter).then((text) => {
+      const body = sheetBodyEl.querySelector("#summaryBody");
+      if (!body) return; // sheet was closed before this resolved
+      if (text) {
+        body.innerHTML = `<p>${esc(text)}</p>`;
+      } else {
+        body.innerHTML = `<p class="skeleton-note">A plain-English summary for ${esc(bookName)} ${chapter} isn't available yet — we're adding them chapter by chapter across the whole Bible.</p>`;
+      }
+    });
+  }
+
   // ---------------------------------------------------------------------
   // Views
   // ---------------------------------------------------------------------
@@ -896,6 +915,10 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 6h16M4 12h10M4 18h7"/></svg>
           Jump
         </button>
+        <button class="reader-summarize-btn" id="readerSummarizeBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.4.3.6.8.6 1.3V16h5.8v-.8c0-.5.2-1 .6-1.3A6 6 0 0 0 12 3z"/></svg>
+          Summarize
+        </button>
         <button class="reader-settings-btn" id="readerSettingsBtn" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h11M19 7h1M4 17h1M9 17h11M4 12h7M15 12h5"/><circle cx="18" cy="7" r="2.2"/><circle cx="7" cy="17" r="2.2"/><circle cx="11" cy="12" r="2.2"/></svg>
           Settings
@@ -972,6 +995,9 @@
     document.getElementById("readerSettingsBtn").addEventListener("click", openReaderSettingsSheet);
     document.getElementById("readerJumpBtn").addEventListener("click", () => {
       openJumpToVerseSheet(data.name, chapter, kjvVerses.length, (vi) => jumpToVerse(vi));
+    });
+    document.getElementById("readerSummarizeBtn").addEventListener("click", () => {
+      openChapterSummarySheet(slug, data.name, chapter);
     });
 
     function jumpToVerse(vi) {

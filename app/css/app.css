@@ -191,6 +191,9 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 .reader-settings-btn svg{width:14px; height:14px;}
 .reader-jump-btn{display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; color:#6B4F12; background:var(--surface-2); border:1px solid var(--gold-light); border-radius:10px; padding:8px 12px;}
 .reader-jump-btn svg{width:13px; height:13px;}
+.reader-summarize-btn{display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; color:#FFFDF8; background:var(--ink); border:1px solid var(--ink); border-radius:10px; padding:8px 12px;}
+.reader-summarize-btn svg{width:14px; height:14px;}
+.summary-body p{font-size:15px; color:var(--ink-2); line-height:1.75;}
 .hint-row{font-size:12.5px; color:var(--ink-3); margin-bottom:10px;}
 .jump-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:9px; margin-top:16px;}
 .jump-num{aspect-ratio:1; display:flex; align-items:center; justify-content:center; border-radius:11px; background:var(--surface-2); border:1px solid var(--border); font-family:var(--font-body); font-weight:700; font-size:14.5px; color:var(--ink);}

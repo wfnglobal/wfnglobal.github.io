@@ -62,8 +62,9 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-  // Bible data: cache-first, so a book read once is available offline forever.
-  if (url.pathname.startsWith("/app/data/bible/")) {
+  // Bible data + chapter summaries: cache-first, so a book (or a summary)
+  // read once is available offline forever.
+  if (url.pathname.startsWith("/app/data/bible/") || url.pathname.startsWith("/app/data/summaries/")) {
     event.respondWith(
       (async () => {
         const cache = await caches.open(BIBLE_CACHE);

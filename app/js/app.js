@@ -1250,11 +1250,10 @@
       }
       replyEl.innerHTML = `<strong>Tolu:</strong> ${esc(reply)}`;
       replyEl.classList.add("show");
-      // Stop listening the instant Tolu (or the page it's about to read)
-      // starts talking, so the mic can't hear that speech and mistake it
-      // for the next command. startRecogCycle() won't resume until
-      // speechSynthesis is quiet again.
-      if (currentRecog) { try { currentRecog.stop(); } catch (e) {} }
+      // Note: the mic itself is left running here — see the recognition
+      // setup below for why it's never stopped/restarted between turns.
+      // Tolu's own voice is kept from being picked up as a new command by
+      // ignoring results (suppressResults), not by tearing the session down.
       // Speak the reply aloud, Siri-style — unless real content is about
       // to start reading itself a moment later (that would talk over it).
       if (window.WFNTTS && !/reading it now/i.test(reply)) {
@@ -1280,66 +1279,76 @@
       if (e.key === "Enter") document.getElementById("toluSendBtn").click();
     });
 
-    // Voice recognition: always listens once started, instead of a single
-    // one-shot capture. A fresh Recognition object is created every cycle
-    // — reusing one instance across repeated start() calls is what made
-    // Tolu answer the first time and then go quiet on Chrome. While
-    // listeningActive is true, onend restarts it automatically, so a
-    // pause in speech (or the browser's own ~60s session limit) doesn't
-    // end the conversation — just say "Hi Tolu" again any time.
+    // Voice recognition: one long-lived session for as long as listening
+    // is active, instead of destroying and recreating the Recognition
+    // object between every turn. That per-turn recreate was the actual
+    // bug behind "Tolu answers once, then 'Hi Tolu' does nothing" —
+    // restarting speech recognition from a setTimeout callback (not a
+    // direct tap) is silently refused on some mobile browsers, most
+    // notably iOS Safari, which only grants the microphone again inside a
+    // real user gesture. So now the same session just keeps running:
+    // while Tolu is thinking or talking, incoming results are ignored
+    // (suppressResults) rather than the mic being stopped and restarted,
+    // so Tolu's own voice is never mistaken for a new command but the
+    // session itself never has to be re-granted. Recreation only happens
+    // if the browser ends the session on its own (an inactivity timeout),
+    // which is the one case it can't be avoided — and even that restart
+    // can be refused on iOS, in which case the status text below goes
+    // stale and a fresh tap is needed, same as any browser limitation.
     const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let listeningActive = false;
-    let currentRecog = null;
+    let suppressResults = false;
+    let recog = null;
     let restartTimer = null;
+    let unsubscribeTTS = null;
 
     function stopListening() {
       listeningActive = false;
       if (restartTimer) { clearTimeout(restartTimer); restartTimer = null; }
-      if (currentRecog) { try { currentRecog.stop(); } catch (e) {} }
+      if (unsubscribeTTS) { unsubscribeTTS(); unsubscribeTTS = null; }
+      if (recog) { try { recog.onend = null; recog.stop(); } catch (e) {} recog = null; }
       micBtn.classList.remove("listening");
       statusEl.textContent = "Tap to speak to Tolu";
     }
 
-    function startRecogCycle() {
-      if (!listeningActive) return;
-      // Don't let the mic listen while Tolu (or a page being read aloud)
-      // is talking — otherwise it can hear its own voice and mistake it
-      // for a new command. Re-check shortly instead.
-      if (window.speechSynthesis && window.speechSynthesis.speaking) {
-        restartTimer = setTimeout(startRecogCycle, 300);
-        return;
-      }
-      const recog = new Recognition();
-      currentRecog = recog;
-      recog.lang = "en-US";
-      recog.interimResults = false;
-      recog.continuous = true;
-      recog.maxAlternatives = 1;
-      recog.onstart = () => {
+    function createRecog() {
+      const r = new Recognition();
+      r.lang = "en-US";
+      r.interimResults = false;
+      r.continuous = true;
+      r.maxAlternatives = 1;
+      r.onstart = () => {
         micBtn.classList.add("listening");
         statusEl.textContent = "Listening — say “Hi Tolu” or a command";
       };
-      recog.onresult = (e) => {
+      r.onresult = (e) => {
+        if (suppressResults) return; // Tolu is thinking/talking — ignore, don't stop
         for (let i = e.resultIndex; i < e.results.length; i++) {
           if (e.results[i].isFinal) handle(e.results[i][0].transcript);
         }
       };
-      recog.onerror = (e) => {
+      r.onerror = (e) => {
         if (e.error === "no-speech" || e.error === "aborted") return; // expected in a long-running session
         if (e.error === "not-allowed" || e.error === "service-not-allowed") {
           stopListening();
           statusEl.textContent = "Microphone access is blocked — allow it in your browser, or type below.";
         }
       };
-      recog.onend = () => {
+      r.onend = () => {
         micBtn.classList.remove("listening");
-        currentRecog = null;
+        recog = null;
         if (listeningActive) {
-          // Brief handoff so the browser's mic resource is fully released
-          // before the next session claims it.
-          restartTimer = setTimeout(startRecogCycle, 250);
+          restartTimer = setTimeout(() => {
+            try { startListening(); } catch (e) { stopListening(); }
+          }, 250);
         }
       };
+      return r;
+    }
+
+    function startListening() {
+      if (!listeningActive) return;
+      recog = createRecog();
       try { recog.start(); } catch (e) { /* a start-while-starting race; onend will retry */ }
     }
 
@@ -1347,7 +1356,14 @@
       micBtn.addEventListener("click", () => {
         if (listeningActive) { stopListening(); return; }
         listeningActive = true;
-        startRecogCycle();
+        // Mic stays "live" the whole session; only ignore what it hears
+        // while Tolu itself is speaking, tracked via the TTS engine's own
+        // state rather than polling window.speechSynthesis directly.
+        suppressResults = window.WFNTTS ? window.WFNTTS.getState() === "playing" : false;
+        unsubscribeTTS = window.WFNTTS
+          ? window.WFNTTS.onState((st) => { suppressResults = st === "playing"; })
+          : null;
+        startListening();
       });
       sheetScrimEl.addEventListener("click", stopListening, { once: true });
     } else {

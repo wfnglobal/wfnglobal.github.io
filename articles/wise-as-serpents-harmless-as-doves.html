@@ -1,0 +1,156 @@
+<title>Wise as Serpents, Harmless as Doves</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap">
+
+<style>
+:root{
+  --bg:#FBF8F1; --surface:#FFFFFF; --surface-2:#F4EEE0; --surface-3:#EEE5D2;
+  --ink:#231F18; --ink-2:#564E3E; --ink-3:#8C8370;
+  --gold:#9C7A34; --gold-light:#C9A968; --gold-wash:#E9D9AE; --blue:#5E7C94;
+  --border:rgba(35,31,24,0.11); --shadow:rgba(80,64,24,0.09);
+  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:'Inter', -apple-system, system-ui, sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box; margin:0;}
+html,body{background:var(--bg);}
+body{color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+img{max-width:100%;} [hidden]{display:none!important;} a{color:inherit;}
+h1,h2,h3{font-family:var(--font-display); text-wrap:balance; font-weight:600;}
+.gutter{padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px));}
+
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:101; background:rgba(251,248,241,0.92);}
+.site-header{position:sticky; top:env(safe-area-inset-top,0px); z-index:100; background:rgba(251,248,241,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--border);}
+.header-inner.gutter{max-width:760px; margin:0 auto; padding-block:14px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+.logo-mark{display:flex; align-items:center; gap:9px; min-width:0;}
+.logo-mark svg{width:24px; height:24px; flex-shrink:0;}
+.logo-text{font-family:var(--font-display); font-size:1rem; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.logo-text em{color:var(--gold); font-style:normal;}
+.back-link{font-size:13px; font-weight:600; color:var(--gold); text-decoration:none; display:flex; align-items:center; gap:6px; white-space:nowrap;}
+
+.article-wrap.gutter{max-width:680px; margin:0 auto; padding-block:48px 72px;}
+.kicker{font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; text-align:center;}
+.article-title{font-size:clamp(2rem,6vw,2.7rem); line-height:1.15; text-align:center; margin-bottom:18px;}
+.article-sub{font-size:16px; color:var(--ink-2); text-align:center; max-width:520px; margin:0 auto 28px; line-height:1.65;}
+.article-meta{display:flex; justify-content:center; gap:14px; font-size:12.5px; color:var(--ink-3); margin-bottom:36px; font-weight:500;}
+.article-meta span{display:flex; align-items:center; gap:5px;}
+
+.scripture{background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--gold); border-radius:0 10px 10px 0; padding:20px 24px; margin:0 0 40px; text-align:center;}
+.scripture-text{font-family:var(--font-display); font-size:1.2rem; font-style:italic; color:var(--ink); line-height:1.55; margin-bottom:8px;}
+.scripture-ref{font-size:11.5px; color:var(--gold); font-weight:700; letter-spacing:0.1em; text-transform:uppercase;}
+
+.article-body p{color:var(--ink-2); font-size:16.5px; line-height:1.85; margin-bottom:22px;}
+.article-body h2{font-size:1.6rem; color:var(--ink); margin:44px 0 18px; padding-top:28px; border-top:1px solid var(--border);}
+.article-body h2:first-of-type{border-top:none; padding-top:0; margin-top:8px;}
+.pull-verse{font-family:var(--font-display); font-style:italic; font-size:1.15rem; color:var(--ink); background:var(--surface-2); border-radius:10px; padding:18px 22px; margin:24px 0; line-height:1.55;}
+.pull-verse cite{display:block; font-family:var(--font-body); font-style:normal; font-size:11.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--gold); margin-top:10px;}
+
+.closing-card{background:var(--surface-3); border:1px solid var(--border); border-radius:14px; padding:30px 26px; text-align:center; margin-top:48px;}
+.closing-card h3{font-size:1.3rem; margin-bottom:12px;}
+.closing-card p{color:var(--ink-2); font-size:14.5px; margin-bottom:22px; line-height:1.65;}
+.btn{display:inline-flex; align-items:center; gap:7px; border-radius:100px; font-family:var(--font-body); font-size:13.5px; font-weight:600; padding:10px 22px; text-decoration:none; background:var(--gold); color:#FFFDF8;}
+
+.site-footer{padding-block:40px; border-top:1px solid var(--border);}
+.footer-inner.gutter{max-width:760px; margin:0 auto; text-align:center;}
+.footer-links{display:flex; justify-content:center; gap:20px; margin-bottom:18px; flex-wrap:wrap;}
+.footer-links a{font-size:12.5px; color:var(--ink-2); text-decoration:none; font-weight:500;}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{font-size:11.5px; color:var(--ink-3);}
+
+.fab-back-app{position:fixed; right:max(18px, env(safe-area-inset-right,0px)); bottom:max(18px, env(safe-area-inset-bottom,0px)); z-index:150; display:flex; align-items:center; gap:8px; background:var(--ink); color:#FFFDF8; text-decoration:none; font-family:var(--font-body); font-size:13px; font-weight:600; padding:12px 18px 12px 14px; border-radius:100px; box-shadow:0 10px 28px -8px rgba(0,0,0,0.4); border:1px solid rgba(255,253,248,0.12);}
+.fab-back-app svg{width:16px; height:16px; flex-shrink:0;}
+.fab-back-app:active{transform:scale(0.97);}
+@media (min-width:760px){ .fab-back-app{display:none;} }
+</style>
+
+<header class="site-header">
+  <div class="header-inner gutter">
+    <div class="logo-mark">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="navLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
+        </linearGradient></defs>
+        <circle cx="24" cy="24" r="21.5" fill="none" stroke="#9C7A34" stroke-width="0.9"/>
+        <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#navLogoGrad)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
+      </svg>
+      <span class="logo-text">Word <em>&amp;</em> Faith Network</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a class="back-link" href="/">&larr; Home</a>
+      <a class="back-link back-to-app" href="/app/#/sermons/list" style="display:flex; align-items:center; gap:6px; color:var(--blue);">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+        Back to App
+      </a>
+    </div>
+  </div>
+</header>
+<a class="fab-back-app" href="/app/#/sermons/list" aria-label="Back to the WFN app">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+  Back to App
+</a>
+
+
+<main class="article-wrap gutter">
+  <p class="kicker">Today's Sermon &middot; Daily Word</p>
+  <h1 class="article-title">Wise as Serpents, Harmless as Doves</h1>
+  <p class="article-sub">Jesus never promised you a safe world. He promised you a sharp mind, a soft heart, and a Sender who does not change His mind about you.</p>
+  <div class="article-meta">
+    <span>Word and Faith Network</span>
+    <span>&middot;</span>
+    <span>Matthew 10:16</span>
+  </div>
+
+  <div class="scripture">
+    <div class="scripture-text">"Behold, I send you out as sheep in the midst of wolves. Therefore be wise as serpents and harmless as doves."</div>
+    <div class="scripture-ref">Matthew 10:16, NKJV</div>
+  </div>
+
+  <div class="article-body">
+    <p>Let's be honest about something before we go any further. Jesus did not open this verse with good news. He opened it with a warning. <em>Behold</em> &mdash; look, pay attention, don't miss this &mdash; <em>I send you out as sheep in the midst of wolves.</em> Not sheep in a pasture. Not sheep behind a fence. Sheep, surrounded. That is how the Son of God describes the assignment He is handing you. He does not soften it. He does not spin it. He tells you exactly what you are walking into, and then He tells you exactly how to walk into it.</p>
+    <p>That is the kind of leader worth following. Not one who promises you an easy road and lies to you about the wolves. One who looks you dead in the eye, names the danger out loud, and then hands you the wisdom to survive it and the character to survive it well. That is not a warning to make you afraid. That is a warning to make you ready.</p>
+
+    <h2>He Sends You Into It &mdash; He Doesn't Spare You From It</h2>
+    <p>Notice what Jesus does not say. He does not say, "I send you out, and I will remove every wolf from your path." He does not say, "Stay home until it's safe." He says, <em>I send you.</em> Into the room where they don't agree with you. Into the family that doesn't understand you. Into the workplace that tests your integrity every single week. Into a culture that will mock what you believe before lunchtime and expect you to apologize for it by dinner.</p>
+    <p>Here is the first thing you need to settle in your spirit today: the presence of wolves is not proof that you took a wrong turn. Sometimes the wolves are proof you are exactly where you were sent.</p>
+
+    <h2>Wise as Serpents &mdash; Sharp Is Not the Same as Shady</h2>
+    <p>Some of you were raised to believe that spiritual people are supposed to be simple people &mdash; that discernment is somehow unspiritual, that if you really trusted God you wouldn't need to think two moves ahead. Jesus disagrees with you. He says be <em>wise</em> as serpents. Read the room. Know who you're talking to. Don't hand your pearls to people who came to trample them. Wisdom is not the absence of faith. Wisdom is faith that has learned to pay attention.</p>
+    <div class="pull-verse">"For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end."<cite>Jeremiah 29:11, KJV</cite></div>
+    <p>God is not asking you to be naive. He is not asking you to be the last one in the room to notice what's happening. He is asking you to see clearly, think carefully, and move strategically &mdash; because a sheep that refuses to be wise is not a sheep with great faith. It's a sheep that gets eaten with great faith.</p>
+
+    <h2>Harmless as Doves &mdash; Sharp Doesn't Get to Become Cruel</h2>
+    <p>And here is where the verse turns on you, in the best possible way. Jesus does not stop at "wise as serpents." He pairs it, in the same breath, with "harmless as doves." Because wisdom without gentleness doesn't produce a believer. It produces a wolf in sheep's clothing &mdash; somebody who learned to read the room so well they forgot what it means to walk in love while they're in it.</p>
+    <p>You are allowed to be sharp. You are not allowed to be cruel. You are allowed to be strategic. You are not allowed to be cold. The same hands that know how to navigate a hostile room are supposed to be the same hands that still know how to bless the people in it. That is not weakness. That is discipline. Any wolf can bite. It takes a child of God to stay gentle in a den full of teeth.</p>
+
+    <h2>The Sender Does Not Abandon What He Sends</h2>
+    <p>Here is what I need you to carry out of this message today. The same Jesus who said "I send you out as sheep among wolves" is the same Jesus who, a few chapters later, said something else entirely: "Lo, I am with you always, even unto the end of the world." He never sends you anywhere He does not go with you. He never assigns a room He has not already walked into first.</p>
+    <div class="pull-verse">"Fear not, for I am with you; be not dismayed, for I am your God. I will strengthen you, yes, I will help you."<cite>Isaiah 41:10, NKJV</cite></div>
+    <p>So when the room gets hostile, you are not alone in it. When the conversation turns, you are not without wisdom for it. When they come at you with teeth bared, you are not without a Shepherd who already knows how this ends. You were never sent to survive the wolves by yourself. You were sent wise, you were sent gentle, and you were sent <em>with</em> Him.</p>
+
+    <h2>The Word for Today</h2>
+    <p>You are going to walk into a room this week where somebody does not have your best interest at heart. Go in wise. Read it clearly. Don't be the last one to see what's happening in the room. And when you've seen it &mdash; go in gentle anyway. Don't let the wolves turn you into one. Because the goal was never to come out of that room unscathed. The goal was to come out of that room still looking like the One who sent you. Wise as a serpent. Harmless as a dove. Sent, not stranded. That's the Word for today. Carry it like you mean it.</p>
+  </div>
+
+  <div class="closing-card">
+    <h3>Stand on This With Us</h3>
+    <p>Receive the Word, pray with us, and grow in faith &mdash; every day, on X.</p>
+    <a class="btn" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow @wfnglobal &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner gutter">
+    <div class="footer-links">
+      <a href="/#about">About</a>
+      <a href="/#word">The Word</a>
+      <a href="/#prayer">Prayer</a>
+      <a href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Word and Faith Network &middot; wfnglobal.org</div>
+  </div>
+</footer>
+
+<script src="/app/js/wfn-tts.js"></script>

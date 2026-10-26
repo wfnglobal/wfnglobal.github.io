@@ -53,6 +53,7 @@
   ];
 
   const SERMONS = [
+    { slug: "wise-as-serpents-harmless-as-doves", title: "Wise as Serpents, Harmless as Doves", ref: "Matthew 10:16", date: "October 26, 2026", excerpt: "Jesus never promised you a safe world. He promised you a sharp mind, a soft heart, and a Sender who goes into the room first." },
     { slug: "consider-the-work-of-god", title: "Consider the Work of God", ref: "Ecclesiastes 7:11-14", date: "October 25, 2026", excerpt: "Wisdom is a defence on a good day. But what do you do on a crooked one? Solomon's answer isn't to fix it — it's to consider it." },
     { slug: "trust-in-the-lord-with-all-thine-heart", title: "Trust in the Lord With All Thine Heart", ref: "Proverbs 3:5-6", date: "October 24, 2026", excerpt: "Why surrendering your own understanding isn't a leap in the dark — it's the one condition guaranteed to make your path straight." },
     { slug: "his-mercies-are-new-every-morning", title: "His Mercies Are New Every Morning", ref: "Lamentations 2 & 3", date: "October 23, 2026", excerpt: "The same prophet who wept over the ruins of Zion also wrote, \"Great is thy faithfulness\" — a study on how hope survives the worst chapter." },

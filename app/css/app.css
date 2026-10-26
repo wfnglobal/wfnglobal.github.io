@@ -247,8 +247,23 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 .declaration-box{position:relative; overflow:hidden; background:#1D1810; border-radius:16px; padding:22px; color:#fff; margin-bottom:20px;}
 .declaration-overlay{position:absolute; inset:0; z-index:1; background:linear-gradient(165deg, rgba(20,14,8,0.58) 0%, rgba(20,14,8,0.4) 55%, rgba(20,14,8,0.62) 100%);}
 .declaration-content{position:relative; z-index:2;}
+.declaration-header{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+.declaration-avatar{
+  width:42px; height:42px; border-radius:50%; object-fit:cover; flex-shrink:0;
+  border:2px solid rgba(251,248,241,0.85);
+}
+.declaration-name{
+  font-family:var(--font-body); font-weight:700; font-size:14.5px; color:#fff;
+  display:flex; align-items:center; gap:5px;
+}
+.declaration-name .verified-badge{flex-shrink:0; transform:translateY(0.5px);}
 .declaration-label{font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-light); margin-bottom:10px;}
-.declaration-text{font-family:var(--font-display); font-style:italic; font-size:1.15rem; line-height:1.6; margin-bottom:10px;}
+.declaration-text{margin-bottom:10px;}
+.decl-line{
+  font-family:var(--font-display); font-weight:600; font-size:1.08rem; line-height:1.55;
+  margin:0 0 6px;
+}
+.decl-break{height:12px;}
 .declaration-ref{font-size:12.5px; color:var(--gold-wash); font-weight:600;}
 
 .prayer-item{display:flex; gap:12px; align-items:flex-start; padding:14px 0; border-bottom:1px solid var(--border);}

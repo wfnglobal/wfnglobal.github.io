@@ -59,8 +59,23 @@
 
   // Today's Declaration, shown on the Prayer page — kept current the same
   // way as VERSES[0] and SERMONS[0].
+  // Short, punchy declaration lines — written to be read aloud, shared, and
+  // saved to a phone, not read as one long paragraph. An empty string is a
+  // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
-    text: "Father, today I silence every fear that has been trying to speak louder than Your Word. You said, 'Fear not,' and so I will not. You said, 'Be not dismayed,' and so I refuse to be shaken by what I see, what I hear, or what has not yet changed. I declare that You are my God — not a distant idea, not a theory I quote in hard seasons, but the living God who is with me in this one. Where I have felt alone, I receive Your presence as fact, not feeling. Where I have felt weak, I receive Your strength as a gift already given, not a reward I have to earn. You said You would help me, so I lay down the full weight of what I cannot carry and let You carry it instead. You said You would uphold me with the right hand of Your righteousness — not my own effort, not my own performance, but Your righteousness holding me steady when my strength runs out. So I declare over this day: no fear has the final word, no dismay has a home in me, and no assignment ahead of me is bigger than the hand that is already holding me up. In Jesus' name, amen.",
+    lines: [
+      "Father, I receive Your word over today: fear has no final say — You do!",
+      "You said, ‘Fear not, for I am with you’ — so I will not be shaken by what I see or hear!",
+      "You said, ‘Be not dismayed, for I am your God’ — so my heart will not sink, no matter the news!",
+      "",
+      "I will not fight today's battles in my own strength — You said You would strengthen me!",
+      "I will not wait for help that never comes — You said You would help me!",
+      "I will not hold myself together by my own hands — Your righteous right hand is holding me up!",
+      "",
+      "So I declare: this day is covered, this burden is not mine alone, and fear has no home in me!",
+      "If you're reading this and your heart is heavy — God is saying the same word to you right now: I am with you!",
+      "Save this. Share it with someone carrying a heavy load today. Pray it out loud. In Jesus' name, amen!"
+    ],
     ref: "Isaiah 41:10"
   };
 
@@ -123,8 +138,24 @@
   const PIDGIN_STATIC = {
     "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.":
       "No fear; because I dey with you: no let your mind cut; because na your God be dis: I go strengthen you; yes, I go help you; yes, I go hold you up with the right hand wey dey show say I dey do wetin correct.",
-    "Father, today I silence every fear that has been trying to speak louder than Your Word. You said, 'Fear not,' and so I will not. You said, 'Be not dismayed,' and so I refuse to be shaken by what I see, what I hear, or what has not yet changed. I declare that You are my God — not a distant idea, not a theory I quote in hard seasons, but the living God who is with me in this one. Where I have felt alone, I receive Your presence as fact, not feeling. Where I have felt weak, I receive Your strength as a gift already given, not a reward I have to earn. You said You would help me, so I lay down the full weight of what I cannot carry and let You carry it instead. You said You would uphold me with the right hand of Your righteousness — not my own effort, not my own performance, but Your righteousness holding me steady when my strength runs out. So I declare over this day: no fear has the final word, no dismay has a home in me, and no assignment ahead of me is bigger than the hand that is already holding me up. In Jesus' name, amen.":
-      "Father, today I silence every fear wey dey try talk pass Your Word. You talk say, 'No fear,' so I no go fear. You talk say, 'No let your mind cut,' so I refuse make wetin I see, wetin I hear, or wetin never change shake me. I dey declare say You na my God — no be far-away idea, no be theory wey I dey quote anytime hard season reach, but the living God wey dey with me for dis one. Where I don feel lonely, I dey receive Your presence as fact, no be feeling. Where I don feel weak, I dey receive Your strength as gift wey You don already give, no be reward wey I must work for. You talk say You go help me, so I drop the full weight wey I no fit carry, make You carry am instead. You talk say You go hold me up with the right hand of Your righteousness — no be my own effort, no be my own performance, but Your righteousness dey hold me steady when my strength don finish. So I dey declare over dis day: no fear get the final word, no confusion get house for me, and no assignment wey dey my front big pass the hand wey already dey hold me up. For Jesus name, amen.",
+    "Father, I receive Your word over today: fear has no final say — You do!":
+      "Father, I receive Your word over today: fear no get final say — na You get am!",
+    "You said, ‘Fear not, for I am with you’ — so I will not be shaken by what I see or hear!":
+      "You talk say, ‘No fear, because I dey with you’ — so wetin I see or hear no go shake me!",
+    "You said, ‘Be not dismayed, for I am your God’ — so my heart will not sink, no matter the news!":
+      "You talk say, ‘No let your heart cast down, because na your God I be’ — so my heart no go sink, whatever news I hear!",
+    "I will not fight today's battles in my own strength — You said You would strengthen me!":
+      "I no go fight today battle with my own strength — You talk say You go strengthen me!",
+    "I will not wait for help that never comes — You said You would help me!":
+      "I no go wait for help wey no dey come — You talk say You go helep me!",
+    "I will not hold myself together by my own hands — Your righteous right hand is holding me up!":
+      "I no go hold myself together with my own hand — Your righteous right hand dey hold me up!",
+    "So I declare: this day is covered, this burden is not mine alone, and fear has no home in me!":
+      "So I dey declare: dis day don cover, dis load no be mine alone, and fear no get house for inside me!",
+    "If you're reading this and your heart is heavy — God is saying the same word to you right now: I am with you!":
+      "If na you dey read dis one and your heart heavy — na di same word God dey talk to you right now: I dey with you!",
+    "Save this. Share it with someone carrying a heavy load today. Pray it out loud. In Jesus' name, amen!":
+      "Save dis one. Share am give person wey carry heavy load today. Pray am out loud. For Jesus name, amen!",
     "The heavens declare the glory of God; and the firmament sheweth his handywork.":
       "Di heaven dey show God glory; and di sky dey show di work wey im hand do.",
     "Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves.":
@@ -337,6 +368,15 @@
 
   function esc(s) {
     return (s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  // Small verified/checkmark badge, shown beside the author name on the
+  // Prayer card header — same visual language as social-app verified badges.
+  function verifiedBadgeSvg() {
+    return '<svg class="verified-badge" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">' +
+      '<circle cx="12" cy="12" r="11" fill="#3897F0"></circle>' +
+      '<path d="M8 12.3l2.6 2.6L16.2 9" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"></path>' +
+      '</svg>';
   }
 
   function setHeader(title, showBack) {
@@ -1923,7 +1963,10 @@
   function viewPrayer() {
     setHeader("Prayer", true);
     setActiveTab("prayer");
-    const declarationPlain = DECLARATION.text;
+    const declarationPlain = DECLARATION.lines.filter((l) => l).join(" ");
+    const declarationLinesHtml = DECLARATION.lines
+      .map((l, i) => (l ? `<p class="decl-line" id="declarationLine-${i}">${esc(l)}</p>` : `<div class="decl-break"></div>`))
+      .join("");
     const pointsHtml = PRAYER_POINTS.map(
       (p, i) => `<div class="prayer-item"><div class="num">${i + 1}</div><p id="prayerPointText-${i}">${esc(p)}</p></div>`
     ).join("");
@@ -1932,8 +1975,12 @@
         ${bgScenesHtml()}
         <div class="declaration-overlay"></div>
         <div class="declaration-content">
+          <div class="declaration-header">
+            <img class="declaration-avatar" src="/assets/oladapo-portrait.jpg" alt="Oladapo Olaleye">
+            <span class="declaration-name">Oladapo Olaleye ${verifiedBadgeSvg()}</span>
+          </div>
           <div class="declaration-label">Today's Declaration</div>
-          <div class="declaration-text" id="declarationText">&ldquo;${esc(declarationPlain)}&rdquo;</div>
+          <div class="declaration-text" id="declarationText">${declarationLinesHtml}</div>
           <div class="declaration-ref">${esc(DECLARATION.ref)}</div>
           <select class="vod-translate" id="prayerTranslate" aria-label="Translate the declaration and prayer points">${translateLangOptions()}</select>
         </div>
@@ -1957,12 +2004,17 @@
     `;
     setReadable(() => [
       "Today's Declaration.",
-      document.getElementById("declarationText").textContent,
+      declarationPlain,
       "Pray this with us.",
       ...PRAYER_POINTS
     ]);
     document.getElementById("prayerTranslate").addEventListener("change", (e) => {
-      const pairs = [{ el: document.getElementById("declarationText"), original: `“${declarationPlain}”` }];
+      const pairs = [];
+      DECLARATION.lines.forEach((l, i) => {
+        if (!l) return;
+        const el = document.getElementById(`declarationLine-${i}`);
+        if (el) pairs.push({ el, original: l });
+      });
       PRAYER_POINTS.forEach((p, i) => {
         pairs.push({ el: document.getElementById(`prayerPointText-${i}`), original: p });
       });

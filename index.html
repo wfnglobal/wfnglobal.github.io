@@ -220,9 +220,15 @@ body::before{
 .prayer-meta svg{width:14px; height:14px; flex-shrink:0; margin-top:2px;}
 .prayer-note{font-size:11px; color:var(--ink-3); font-style:italic; line-height:1.4;}
 
-.declaration-box{background:var(--surface-3); border:1px solid var(--border); border-radius:14px; padding:28px 26px; text-align:center; margin-bottom:28px;}
+.declaration-box{background:var(--surface-3); border:1px solid var(--border); border-radius:14px; padding:28px 26px; text-align:left; margin-bottom:28px; max-width:620px; margin-left:auto; margin-right:auto;}
+.declaration-header{display:flex; align-items:center; gap:12px; margin-bottom:16px;}
+.declaration-avatar{width:48px; height:48px; border-radius:50%; object-fit:cover; flex-shrink:0; border:2px solid var(--border);}
+.declaration-name{font-weight:700; font-size:15px; color:var(--ink); display:flex; align-items:center; gap:5px;}
+.declaration-name .verified-badge{flex-shrink:0; transform:translateY(0.5px);}
 .declaration-label{font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:14px;}
-.declaration-text{font-family:var(--font-display); font-style:italic; font-size:1.15rem; color:var(--ink); line-height:1.6; max-width:560px; margin:0 auto 10px;}
+.declaration-text{margin:0 0 10px;}
+.decl-line{font-family:var(--font-display); font-weight:600; font-size:1.1rem; color:var(--ink); line-height:1.55; margin:0 0 8px;}
+.decl-break{height:14px;}
 .declaration-ref{font-size:12px; font-weight:600; color:var(--ink-3);}
 
 .contact-strip{
@@ -507,8 +513,24 @@ body::before{
       <p class="section-sub">You were never meant to pray alone. Join believers from every nation declaring the Word together — live, every week.</p>
     </div>
     <div class="declaration-box">
+      <div class="declaration-header">
+        <img class="declaration-avatar" src="assets/oladapo-portrait.jpg" alt="Oladapo Olaleye">
+        <span class="declaration-name">Oladapo Olaleye <svg class="verified-badge" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#3897F0"></circle><path d="M8 12.3l2.6 2.6L16.2 9" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+      </div>
       <div class="declaration-label">Today's Declaration</div>
-      <div class="declaration-text">"Father, today I silence every fear that has been trying to speak louder than Your Word. You said, 'Fear not,' and so I will not. You said, 'Be not dismayed,' and so I refuse to be shaken by what I see, what I hear, or what has not yet changed. I declare that You are my God — not a distant idea, not a theory I quote in hard seasons, but the living God who is with me in this one. Where I have felt alone, I receive Your presence as fact, not feeling. Where I have felt weak, I receive Your strength as a gift already given, not a reward I have to earn. You said You would help me, so I lay down the full weight of what I cannot carry and let You carry it instead. You said You would uphold me with the right hand of Your righteousness — not my own effort, not my own performance, but Your righteousness holding me steady when my strength runs out. So I declare over this day: no fear has the final word, no dismay has a home in me, and no assignment ahead of me is bigger than the hand that is already holding me up. In Jesus' name, amen."</div>
+      <div class="declaration-text">
+        <p class="decl-line">Father, I receive Your word over today: fear has no final say — You do!</p>
+        <p class="decl-line">You said, &lsquo;Fear not, for I am with you&rsquo; — so I will not be shaken by what I see or hear!</p>
+        <p class="decl-line">You said, &lsquo;Be not dismayed, for I am your God&rsquo; — so my heart will not sink, no matter the news!</p>
+        <div class="decl-break"></div>
+        <p class="decl-line">I will not fight today's battles in my own strength — You said You would strengthen me!</p>
+        <p class="decl-line">I will not wait for help that never comes — You said You would help me!</p>
+        <p class="decl-line">I will not hold myself together by my own hands — Your righteous right hand is holding me up!</p>
+        <div class="decl-break"></div>
+        <p class="decl-line">So I declare: this day is covered, this burden is not mine alone, and fear has no home in me!</p>
+        <p class="decl-line">If you're reading this and your heart is heavy — God is saying the same word to you right now: I am with you!</p>
+        <p class="decl-line">Save this. Share it with someone carrying a heavy load today. Pray it out loud. In Jesus' name, amen!</p>
+      </div>
       <div class="declaration-ref">Isaiah 41:10</div>
     </div>
     <div class="prayer-grid">

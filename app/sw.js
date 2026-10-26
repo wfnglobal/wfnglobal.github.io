@@ -1,7 +1,7 @@
 // Word and Faith Network — service worker
 // Caches the app shell for installability, and the full KJV Bible for offline reading.
 
-const CACHE_VERSION = "wfn-app-v29";
+const CACHE_VERSION = "wfn-app-v30";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const BIBLE_CACHE = `${CACHE_VERSION}-bible`;
 
@@ -62,9 +62,9 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-  // Bible data + chapter summaries: cache-first, so a book (or a summary)
-  // read once is available offline forever.
-  if (url.pathname.startsWith("/app/data/bible/") || url.pathname.startsWith("/app/data/summaries/")) {
+  // Bible data, chapter summaries, and the names/terms dictionary:
+  // cache-first, so anything read once is available offline forever.
+  if (url.pathname.startsWith("/app/data/")) {
     event.respondWith(
       (async () => {
         const cache = await caches.open(BIBLE_CACHE);

@@ -587,6 +587,34 @@
     });
   }
 
+  // Bible names/terms dictionary — ~5,970 entries compiled from Easton's
+  // Bible Dictionary (1897) and Smith's Bible Dictionary (1863), both
+  // public domain. This is what actually covers the Hebrew/Greek-derived
+  // proper names, places, tribes, and theological terms the KJV is full
+  // of — a general English dictionary never has these, since they aren't
+  // English words. Loaded once, lazily, on first word tap.
+  let bibleDictPromise = null;
+  function getBibleDict() {
+    if (!bibleDictPromise) {
+      bibleDictPromise = fetch("/app/data/bible-dictionary.json")
+        .then((r) => (r.ok ? r.json() : null))
+        .then((json) => (json && json.entries) || {})
+        .catch(() => ({}));
+    }
+    return bibleDictPromise;
+  }
+
+  // A tapped word may be inflected (plural, possessive) in a way the
+  // dictionary's base form isn't. Try the exact key first, then a couple
+  // of cheap, safe fallbacks before giving up.
+  function lookupBibleDict(dict, key) {
+    if (dict[key]) return dict[key];
+    if (key.endsWith("'s") && dict[key.slice(0, -2)]) return dict[key.slice(0, -2)];
+    if (key.endsWith("s") && dict[key.slice(0, -1)]) return dict[key.slice(0, -1)];
+    if (key.endsWith("es") && dict[key.slice(0, -2)]) return dict[key.slice(0, -2)];
+    return null;
+  }
+
   function showWordPopover(btn) {
     const word = btn.textContent;
     const clean = word.replace(/[^A-Za-z']/g, "");
@@ -609,18 +637,34 @@
     place();
     pop.classList.add("show");
     if (archaic) return;
-    fetch(DICTIONARY_API + encodeURIComponent(key))
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((json) => {
-        const meaning = json[0] && json[0].meanings && json[0].meanings[0];
-        const def = meaning && meaning.definitions && meaning.definitions[0] && meaning.definitions[0].definition;
-        pop.innerHTML = `<b>${esc(clean)}</b>${def ? esc(def) : "No definition found for this word."}`;
+
+    getBibleDict().then((dict) => {
+      // The popover may have moved on to a different word (or closed) by
+      // the time this resolves — only act if it's still showing this one.
+      if (!pop.classList.contains("show") || pop.dataset.word !== key) return;
+      const hit = lookupBibleDict(dict, key);
+      if (hit) {
+        pop.innerHTML = `<b>${esc(clean)}</b>${esc(hit)}`;
         place();
-      })
-      .catch(() => {
-        pop.innerHTML = `<b>${esc(clean)}</b>No definition found for this word.`;
-        place();
-      });
+        return;
+      }
+      // Not a biblical name/term — try it as an ordinary English word.
+      fetch(DICTIONARY_API + encodeURIComponent(key))
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((json) => {
+          const meaning = json[0] && json[0].meanings && json[0].meanings[0];
+          const def = meaning && meaning.definitions && meaning.definitions[0] && meaning.definitions[0].definition;
+          if (!pop.classList.contains("show") || pop.dataset.word !== key) return;
+          pop.innerHTML = `<b>${esc(clean)}</b>${def ? esc(def) : "No definition found for this word."}`;
+          place();
+        })
+        .catch(() => {
+          if (!pop.classList.contains("show") || pop.dataset.word !== key) return;
+          pop.innerHTML = `<b>${esc(clean)}</b>No definition found for this word.`;
+          place();
+        });
+    });
+    pop.dataset.word = key;
   }
 
   document.addEventListener("click", (e) => {
@@ -2162,6 +2206,26 @@
         <div class="label">Appearance</div>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
       </a>
+      <a class="menu-row" href="#/profile/about">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg></div>
+        <div class="label">About &amp; Credits</div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+    `;
+  }
+
+  function viewProfileAbout() {
+    setHeader("About & Credits", true);
+    setActiveTab("profile");
+    viewEl.innerHTML = `
+      <div class="card" style="padding:22px 20px;">
+        <h3 style="font-family:var(--font-display); font-size:1.15rem; margin-bottom:10px;">Scripture Text</h3>
+        <p style="color:var(--ink-2); font-size:14.5px; line-height:1.7; margin-bottom:20px;">The Bible reader's default text is the King James Version (KJV), public domain. Other versions available in the version picker are fetched from their own free, public-domain or openly licensed sources.</p>
+        <h3 style="font-family:var(--font-display); font-size:1.15rem; margin-bottom:10px;">Word &amp; Chapter Definitions</h3>
+        <p style="color:var(--ink-2); font-size:14.5px; line-height:1.7; margin-bottom:20px;">Tap-a-word definitions for Biblical names, places, and terms are compiled from <em>Easton's Bible Dictionary</em> (M.G. Easton, 1897) and <em>Smith's Bible Dictionary</em> (William Smith, 1863), both public domain, via the open <strong>bible-dictionary-dataset</strong> project (CC BY 4.0). Ordinary modern English words are looked up from a free public dictionary API. Chapter summaries are original content written for Word &amp; Faith Network.</p>
+        <h3 style="font-family:var(--font-display); font-size:1.15rem; margin-bottom:10px;">Word &amp; Faith Network</h3>
+        <p style="color:var(--ink-2); font-size:14.5px; line-height:1.7;">Daily prayer, sermons, Bible studies, and this reader are published by Word &amp; Faith Network at <a href="https://wfnglobal.org" style="color:var(--gold);">wfnglobal.org</a>.</p>
+      </div>
     `;
   }
 
@@ -2396,6 +2460,7 @@
       if (parts[1] === "verses") return viewProfileVerses();
       if (parts[1] === "prayer") return viewProfilePrayer();
       if (parts[1] === "appearance") return viewProfileAppearance();
+      if (parts[1] === "about") return viewProfileAbout();
       return viewProfile();
     }
 

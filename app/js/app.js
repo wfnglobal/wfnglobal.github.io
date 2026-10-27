@@ -563,16 +563,18 @@
   // motif — people connected to the Word at the center), each in its own
   // color from the palette, always upright regardless of its position
   // around the circle.
+  // The figure is drawn so its *base* (not its mid-body) is the anchor
+  // point — the ray's line always ends exactly at (cx,cy), and the figure
+  // stands upright on top of that point, the same way for every ray
+  // regardless of the angle it approaches from. The body outline is also
+  // closed (Z) so there's no gap for the line to show through.
   function vodPersonIconSvg(cx, cy, color) {
-    const x = cx.toFixed(1), y = cy.toFixed(1);
+    const x = cx.toFixed(1), y = (cy - 8.9).toFixed(1);
     return (
       `<g transform="translate(${x},${y})" opacity="0.97">` +
-      // Solid joint where the ray meets the figure — the body below is an
-      // open outline (no fill), so without this the line can read as
-      // piercing through a gap instead of actually connecting to anyone.
-      `<circle cx="0" cy="0" r="2.6" fill="${color}" opacity="0.95"/>` +
+      `<circle cx="0" cy="8.9" r="2.3" fill="${color}" opacity="0.95"/>` +
       `<circle cx="0" cy="-7" r="4.4" fill="none" stroke="${color}" stroke-width="1.9"/>` +
-      `<path d="M -7.3 8.9 Q -7.3 -1.6 0 -1.6 Q 7.3 -1.6 7.3 8.9" fill="none" stroke="${color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>` +
+      `<path d="M -7.3 8.9 Q -7.3 -1.6 0 -1.6 Q 7.3 -1.6 7.3 8.9 Z" fill="none" stroke="${color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>` +
       `</g>`
     );
   }
@@ -596,7 +598,7 @@
   // Sized to be the card's defining visual, not a small decorative touch.
   function vodCoverRaysHtml() {
     const n = VOD_RAY_COLORS.length;
-    const innerR = 26, outerR = 116;
+    const innerR = 26, outerR = 108;
     const rays = VOD_RAY_COLORS.map((color, i) => {
       const angle = (i / n) * Math.PI * 2;
       const cos = Math.cos(angle), sin = Math.sin(angle);

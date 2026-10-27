@@ -567,6 +567,10 @@
     const x = cx.toFixed(1), y = cy.toFixed(1);
     return (
       `<g transform="translate(${x},${y})" opacity="0.97">` +
+      // Solid joint where the ray meets the figure — the body below is an
+      // open outline (no fill), so without this the line can read as
+      // piercing through a gap instead of actually connecting to anyone.
+      `<circle cx="0" cy="0" r="2.6" fill="${color}" opacity="0.95"/>` +
       `<circle cx="0" cy="-7" r="4.4" fill="none" stroke="${color}" stroke-width="1.9"/>` +
       `<path d="M -7.3 8.9 Q -7.3 -1.6 0 -1.6 Q 7.3 -1.6 7.3 8.9" fill="none" stroke="${color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>` +
       `</g>`

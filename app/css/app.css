@@ -99,24 +99,24 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
    badge carries its own soft pulse so the card reads as inviting to tap,
    not just decorative. ---- */
 .vod-cover{
-  position:absolute; inset:0; z-index:3; width:100%; border:none; padding:28px 20px; margin:0; cursor:pointer;
+  position:absolute; inset:0; z-index:3; width:100%; border:none; padding:28px 20px; margin:0; cursor:pointer; overflow:hidden;
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; text-align:center;
   background:
-    radial-gradient(circle at 25% 15%, rgba(216,140,115,0.68), transparent 50%),
-    radial-gradient(circle at 80% 12%, rgba(142,146,214,0.62), transparent 50%),
-    radial-gradient(circle at 84% 88%, rgba(111,191,168,0.58), transparent 55%),
-    radial-gradient(circle at 16% 86%, rgba(231,206,148,0.58), transparent 55%),
-    radial-gradient(circle at 50% 46%, rgba(231,206,148,0.3), transparent 62%),
-    linear-gradient(160deg, #2E2410 0%, #15110A 100%);
-  background-size:150% 150%, 150% 150%, 150% 150%, 150% 150%, 100% 100%, 100% 100%;
-  animation:vodBgDrift 16s ease-in-out infinite alternate;
+    radial-gradient(circle at 12% 88%, rgba(111,191,168,0.2), transparent 44%),
+    radial-gradient(circle at 90% 10%, rgba(142,146,214,0.22), transparent 44%),
+    linear-gradient(165deg, #2B2042 0%, #1A1430 48%, #0C0916 100%);
   transition:opacity .4s ease, transform .4s ease;
 }
-:root[data-motion="reduced"] .vod-cover{animation:none;}
-@keyframes vodBgDrift{
-  0%{background-position:0% 0%, 100% 0%, 100% 100%, 0% 100%, 50% 46%, 0 0;}
-  100%{background-position:12% 14%, 88% 10%, 90% 92%, 10% 88%, 50% 46%, 0 0;}
+/* A single warm core breathes gently behind the badge — a real light
+   source for the colored rays to pop against, instead of several
+   overlapping tinted blobs fighting for attention. */
+.vod-cover::before{
+  content:""; position:absolute; inset:-12%; pointer-events:none;
+  background:radial-gradient(circle at 50% 50%, rgba(231,206,148,0.75) 0%, rgba(216,140,115,0.34) 20%, rgba(216,140,115,0) 46%);
+  animation:vodCoreGlow 6s ease-in-out infinite;
 }
+:root[data-motion="reduced"] .vod-cover::before{animation:none;}
+@keyframes vodCoreGlow{0%,100%{opacity:0.72; transform:scale(0.95);} 50%{opacity:1; transform:scale(1.06);}}
 .verse-of-day.revealed .vod-cover{opacity:0; transform:scale(1.04); pointer-events:none;}
 /* The rays, rings and badge float together as one group, drifting gently
    so the whole "constellation" reads as alive rather than a static graphic. */

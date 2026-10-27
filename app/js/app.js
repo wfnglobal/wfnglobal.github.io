@@ -549,6 +549,23 @@
     }).join("");
   }
 
+  // Verse of the Day "cover": a vibrant, multi-color radiating illustration
+  // (not a photo) that stands in front of the actual verse until the reader
+  // taps it — a small moment of discovery instead of the text just sitting
+  // there. Rays cycle through the app's warm palette plus a few extra hues
+  // so it reads as colorful rather than the single-tone gold used elsewhere.
+  const VOD_RAY_COLORS = ["#E7CE94", "#D98C73", "#8E92D6", "#6FBFA8", "#E7CE94", "#D98C73", "#8E92D6", "#6FBFA8"];
+  function vodCoverRaysHtml() {
+    const n = VOD_RAY_COLORS.length;
+    const rays = VOD_RAY_COLORS.map((color, i) => {
+      const angle = (i / n) * Math.PI * 2;
+      const x = 150 + Math.cos(angle) * 108;
+      const y = 95 + Math.sin(angle) * 108;
+      return `<line x1="150" y1="95" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${color}" stroke-width="1.2" opacity="0.55"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5" fill="${color}" opacity="0.85"/>`;
+    }).join("");
+    return `<svg class="vod-rays" viewBox="0 0 300 190" aria-hidden="true"><g>${rays}</g></svg>`;
+  }
+
   // Other Bible versions and translation are fetched live (all public-domain
   // versions, free APIs) — the bundled KJV above is what keeps the app's core
   // reading experience working fully offline.
@@ -830,8 +847,16 @@
         <p>Your daily Word, sermon, and prayer — all in one place.</p>
       </div>
 
-      <div class="verse-of-day">
-        ${bgScenesHtml()}
+      <div class="verse-of-day" id="vodCard">
+        <button class="vod-cover" id="vodCover" type="button" aria-label="Tap to reveal today's Bible verse">
+          ${vodCoverRaysHtml()}
+          <span class="vod-reveal-badge">
+            <span class="vod-reveal-glow"></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V7a3 3 0 0 1 3-3h4.5v16H7a3 3 0 0 0-3 3" fill="rgba(255,253,248,0.18)" stroke="#FFFDF8" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 20V7a3 3 0 0 0-3-3h-4.5v16H17a3 3 0 0 1 3 3" fill="rgba(255,253,248,0.18)" stroke="#FFFDF8" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 5.5c0-1.8.6-3 1.3-3.8-.1 1.2.3 1.9.9 2.6.6.7 1 1.5 1 2.4a2.2 2.2 0 0 1-2.2 2.2A2.2 2.2 0 0 1 10.8 6.9c0-.9.5-1.6 1.2-2.3" fill="#E7CE94" stroke="#E7CE94" stroke-width="0.6"/></svg>
+          </span>
+          <div class="vod-cover-label">Verse of the Day</div>
+          <div class="vod-cover-sub">Tap to reveal today's Word</div>
+        </button>
         <div class="verse-of-day-overlay"></div>
         <div class="verse-of-day-content">
           <div class="verse-of-day-label">Verse of the Day</div>
@@ -875,6 +900,9 @@
     renderInstallHint(document.getElementById("installHint"));
     document.getElementById("vodTranslate").addEventListener("change", (e) => {
       translateInto([{ el: document.getElementById("vodText"), original: verse.text }], e.target.value, document.getElementById("vodTranslateNote"));
+    });
+    document.getElementById("vodCover").addEventListener("click", () => {
+      document.getElementById("vodCard").classList.add("revealed");
     });
   }
 
@@ -2826,14 +2854,23 @@
   // not per-view, since every screen shares the same tab bar.
   function setupTabbarAutoHide() {
     const tabbar = document.querySelector(".app-tabbar");
-    if (!tabbar) return;
     let lastY = window.scrollY;
     let idleTimer = null;
     const IDLE_MS = 1200;
     const THRESHOLD = 6;
     const TOP_ZONE = 40;
-    function show() { tabbar.classList.remove("tabbar-hidden"); }
-    function hide() { tabbar.classList.add("tabbar-hidden"); }
+    // The chapter prev/next fabs are re-rendered per view (only present in
+    // the Bible reader), so they're looked up fresh each time rather than
+    // cached once — they fade and slide out of the way together with the
+    // tab bar, instead of sitting frozen on screen while someone reads.
+    function show() {
+      if (tabbar) tabbar.classList.remove("tabbar-hidden");
+      document.querySelectorAll(".reader-chapter-fab-prev, .reader-chapter-fab-next").forEach((el) => el.classList.remove("rcf-hidden"));
+    }
+    function hide() {
+      if (tabbar) tabbar.classList.add("tabbar-hidden");
+      document.querySelectorAll(".reader-chapter-fab-prev, .reader-chapter-fab-next").forEach((el) => el.classList.add("rcf-hidden"));
+    }
     function scheduleIdleShow() {
       clearTimeout(idleTimer);
       idleTimer = setTimeout(show, IDLE_MS);

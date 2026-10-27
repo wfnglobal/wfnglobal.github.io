@@ -88,10 +88,37 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
   background:#1D1810; display:flex; flex-direction:column; justify-content:flex-end;
 }
 .verse-of-day-overlay{position:absolute; inset:0; z-index:1; background:linear-gradient(0deg, rgba(10,9,6,0.78) 0%, rgba(10,9,6,0.32) 44%, rgba(10,9,6,0) 64%);}
-.verse-of-day-content{position:relative; z-index:2; padding:22px;}
+.verse-of-day-content{position:relative; z-index:2; padding:22px; opacity:0; transition:opacity .4s ease .12s;}
+.verse-of-day.revealed .verse-of-day-content{opacity:1;}
 .verse-of-day-label{font-size:11.5px; font-weight:600; letter-spacing:0.05em; color:rgba(255,253,248,0.82); margin-bottom:4px;}
 .verse-of-day-ref{font-family:var(--font-body); font-size:14.5px; font-weight:700; color:#FFFDF8; margin-bottom:12px;}
 .verse-of-day-text{font-family:var(--font-display); font-weight:500; font-size:1.5rem; line-height:1.38; color:#FFFDF8;}
+
+/* ---- The cover: vibrant, multi-hue, sits over the verse until tapped.
+   Rays drift in a slow orbit (paused under reduced-motion) and the center
+   badge carries its own soft pulse so the card reads as inviting to tap,
+   not just decorative. ---- */
+.vod-cover{
+  position:absolute; inset:0; z-index:3; width:100%; border:none; padding:28px 20px; margin:0; cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; text-align:center;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(216,140,115,0.55), transparent 55%),
+    radial-gradient(circle at 75% 15%, rgba(142,146,214,0.5), transparent 55%),
+    radial-gradient(circle at 70% 85%, rgba(111,191,168,0.45), transparent 60%),
+    linear-gradient(160deg, #3A2E12 0%, #1D1810 100%);
+  transition:opacity .4s ease, transform .4s ease;
+}
+.verse-of-day.revealed .vod-cover{opacity:0; transform:scale(1.04); pointer-events:none;}
+.vod-rays{position:absolute; inset:0; width:100%; height:100%; animation:vodRaysSpin 60s linear infinite; transform-origin:50% 42%;}
+:root[data-motion="reduced"] .vod-rays{animation:none;}
+@keyframes vodRaysSpin{from{transform:rotate(0deg);} to{transform:rotate(360deg);}}
+.vod-reveal-badge{position:relative; width:60px; height:60px; display:flex; align-items:center; justify-content:center; margin-bottom:8px;}
+.vod-reveal-badge svg{width:30px; height:30px; position:relative; z-index:2;}
+.vod-reveal-glow{position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle, rgba(231,206,148,0.55) 0%, rgba(231,206,148,0) 70%); animation:vodGlowPulse 2.6s ease-in-out infinite;}
+:root[data-motion="reduced"] .vod-reveal-glow{animation:none;}
+@keyframes vodGlowPulse{0%,100%{transform:scale(0.85); opacity:0.7;}50%{transform:scale(1.25); opacity:1;}}
+.vod-cover-label{position:relative; z-index:2; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#FFFDF8;}
+.vod-cover-sub{position:relative; z-index:2; font-size:12.5px; color:#E7CE94; font-weight:500;}
 .vod-translate{
   margin-top:14px; padding:6px 10px; border-radius:100px; border:1px solid rgba(255,253,248,0.3);
   background:rgba(21,18,12,0.5); color:#FFFDF8; font-family:var(--font-body); font-size:12px; font-weight:600;
@@ -179,9 +206,17 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
    .note-fab (bottom-right, above the tab bar). */
 .reader-chapter-fab-prev, .reader-chapter-fab-next{
   position:fixed; top:30%; transform:translateY(-50%); z-index:50;
+  transition:opacity .3s ease, transform .3s ease;
 }
 .reader-chapter-fab-prev{left:calc(12px + env(safe-area-inset-left,0px));}
 .reader-chapter-fab-next{right:calc(12px + env(safe-area-inset-right,0px));}
+/* Flow out of the way while scrolling through a chapter (paired with the
+   tab bar's own auto-hide, see setupTabbarAutoHide in app.js) and drift
+   back in — sliding toward their own edge rather than just vanishing —
+   on scrolling up or a short pause, so they're never permanently in the
+   way of the text but are never more than a moment from reach. */
+.reader-chapter-fab-prev.rcf-hidden{opacity:0; transform:translateY(-50%) translateX(-60px); pointer-events:none;}
+.reader-chapter-fab-next.rcf-hidden{opacity:0; transform:translateY(-50%) translateX(60px); pointer-events:none;}
 .rcf-btn{
   width:46px; height:46px; border-radius:100px; border:1px solid var(--border);
   background:rgba(var(--surface-rgb),0.92); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);

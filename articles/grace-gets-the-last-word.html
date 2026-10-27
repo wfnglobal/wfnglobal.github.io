@@ -1,0 +1,154 @@
+<title>Grace Gets the Last Word</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap">
+
+<style>
+:root{
+  --bg:#FBF8F1; --surface:#FFFFFF; --surface-2:#F4EEE0; --surface-3:#EEE5D2;
+  --ink:#231F18; --ink-2:#564E3E; --ink-3:#8C8370;
+  --gold:#9C7A34; --gold-light:#C9A968; --gold-wash:#E9D9AE; --blue:#5E7C94;
+  --border:rgba(35,31,24,0.11); --shadow:rgba(80,64,24,0.09);
+  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:'Inter', -apple-system, system-ui, sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box; margin:0;}
+html,body{background:var(--bg);}
+body{color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+img{max-width:100%;} [hidden]{display:none!important;} a{color:inherit;}
+h1,h2,h3{font-family:var(--font-display); text-wrap:balance; font-weight:600;}
+.gutter{padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px));}
+
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:101; background:rgba(251,248,241,0.92);}
+.site-header{position:sticky; top:env(safe-area-inset-top,0px); z-index:100; background:rgba(251,248,241,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--border);}
+.header-inner.gutter{max-width:760px; margin:0 auto; padding-block:14px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+.logo-mark{display:flex; align-items:center; gap:9px; min-width:0;}
+.logo-mark svg{width:24px; height:24px; flex-shrink:0;}
+.logo-text{font-family:var(--font-display); font-size:1rem; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.logo-text em{color:var(--gold); font-style:normal;}
+.back-link{font-size:13px; font-weight:600; color:var(--gold); text-decoration:none; display:flex; align-items:center; gap:6px; white-space:nowrap;}
+
+.article-wrap.gutter{max-width:680px; margin:0 auto; padding-block:48px 72px;}
+.kicker{font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; text-align:center;}
+.article-title{font-size:clamp(2rem,6vw,2.7rem); line-height:1.15; text-align:center; margin-bottom:18px;}
+.article-sub{font-size:16px; color:var(--ink-2); text-align:center; max-width:520px; margin:0 auto 28px; line-height:1.65;}
+.article-meta{display:flex; justify-content:center; gap:14px; font-size:12.5px; color:var(--ink-3); margin-bottom:36px; font-weight:500;}
+.article-meta span{display:flex; align-items:center; gap:5px;}
+
+.scripture{background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--gold); border-radius:0 10px 10px 0; padding:20px 24px; margin:0 0 40px; text-align:center;}
+.scripture-text{font-family:var(--font-display); font-size:1.2rem; font-style:italic; color:var(--ink); line-height:1.55; margin-bottom:8px;}
+.scripture-ref{font-size:11.5px; color:var(--gold); font-weight:700; letter-spacing:0.1em; text-transform:uppercase;}
+
+.article-body p{color:var(--ink-2); font-size:16.5px; line-height:1.85; margin-bottom:22px;}
+.article-body h2{font-size:1.6rem; color:var(--ink); margin:44px 0 18px; padding-top:28px; border-top:1px solid var(--border);}
+.article-body h2:first-of-type{border-top:none; padding-top:0; margin-top:8px;}
+.pull-verse{font-family:var(--font-display); font-style:italic; font-size:1.15rem; color:var(--ink); background:var(--surface-2); border-radius:10px; padding:18px 22px; margin:24px 0; line-height:1.55;}
+.pull-verse cite{display:block; font-family:var(--font-body); font-style:normal; font-size:11.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--gold); margin-top:10px;}
+
+.closing-card{background:var(--surface-3); border:1px solid var(--border); border-radius:14px; padding:30px 26px; text-align:center; margin-top:48px;}
+.closing-card h3{font-size:1.3rem; margin-bottom:12px;}
+.closing-card p{color:var(--ink-2); font-size:14.5px; margin-bottom:22px; line-height:1.65;}
+.btn{display:inline-flex; align-items:center; gap:7px; border-radius:100px; font-family:var(--font-body); font-size:13.5px; font-weight:600; padding:10px 22px; text-decoration:none; background:var(--gold); color:#FFFDF8;}
+
+.site-footer{padding-block:40px; border-top:1px solid var(--border);}
+.footer-inner.gutter{max-width:760px; margin:0 auto; text-align:center;}
+.footer-links{display:flex; justify-content:center; gap:20px; margin-bottom:18px; flex-wrap:wrap;}
+.footer-links a{font-size:12.5px; color:var(--ink-2); text-decoration:none; font-weight:500;}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{font-size:11.5px; color:var(--ink-3);}
+
+.fab-back-app{position:fixed; right:max(18px, env(safe-area-inset-right,0px)); bottom:max(18px, env(safe-area-inset-bottom,0px)); z-index:150; display:flex; align-items:center; gap:8px; background:var(--ink); color:#FFFDF8; text-decoration:none; font-family:var(--font-body); font-size:13px; font-weight:600; padding:12px 18px 12px 14px; border-radius:100px; box-shadow:0 10px 28px -8px rgba(0,0,0,0.4); border:1px solid rgba(255,253,248,0.12);}
+.fab-back-app svg{width:16px; height:16px; flex-shrink:0;}
+.fab-back-app:active{transform:scale(0.97);}
+@media (min-width:760px){ .fab-back-app{display:none;} }
+</style>
+
+<header class="site-header">
+  <div class="header-inner gutter">
+    <div class="logo-mark">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="navLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
+        </linearGradient></defs>
+        <circle cx="24" cy="24" r="21.5" fill="none" stroke="#9C7A34" stroke-width="0.9"/>
+        <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#navLogoGrad)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
+      </svg>
+      <span class="logo-text">Word <em>&amp;</em> Faith Network</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a class="back-link" href="/">&larr; Home</a>
+      <a class="back-link back-to-app" href="/app/#/sermons/list" style="display:flex; align-items:center; gap:6px; color:var(--blue);">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+        Back to App
+      </a>
+    </div>
+  </div>
+</header>
+<a class="fab-back-app" href="/app/#/sermons/list" aria-label="Back to the WFN app">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+  Back to App
+</a>
+
+
+<main class="article-wrap gutter">
+  <p class="kicker">Today's Sermon &middot; Daily Word</p>
+  <h1 class="article-title">Grace Gets the Last Word</h1>
+  <p class="article-sub">One man's fall wrote sin into the human story in permanent ink. One Man's obedience picked up the same pen — and wrote something stronger over it.</p>
+  <div class="article-meta">
+    <span>Word and Faith Network</span>
+    <span>&middot;</span>
+    <span>Romans 5:19-21</span>
+  </div>
+
+  <div class="scripture">
+    <div class="scripture-text">"For as by one man's disobedience many were made sinners, so by the obedience of one shall many be made righteous. Moreover the law entered, that the offence might abound. But where sin abounded, grace did much more abound: that as sin hath reigned unto death, even so might grace reign through righteousness unto eternal life by Jesus Christ our Lord."</div>
+    <div class="scripture-ref">Romans 5:19-21, KJV</div>
+  </div>
+
+  <div class="article-body">
+    <p>Somebody needs to hear this plainly, so let me say it plainly: you did not get to choose the mess you were born into, but you do not have to stay standing in it. One man's disobedience put the whole human race in a hole nobody dug for themselves. That is the hard half of this passage, and I am not going to rush past it, because you cannot appreciate the rescue if you never admit you needed one. But hear me — that is only the setup. God did not write Romans 5 to leave you in verse 19 with Adam. He wrote it to walk you into the second half of that same verse, where another Man, through one act of obedience, undoes what the first man did with one act of disobedience.</p>
+    <p>That is the whole gospel in one sentence, if you have ears to catch it: a debt you did not create, cancelled by a payment you did not make. Somebody say "that's grace."</p>
+
+    <h2>One Man Broke It. One Man Fixed It.</h2>
+    <p>Paul is not interested in a long list of who sinned worse than who. He collapses the entire human story down to two men and two acts. Adam disobeyed once, and sin spread to everyone standing behind him — that's all of us. Christ obeyed once, all the way to a cross He did not deserve to climb, and righteousness became available to everyone standing behind Him — and that can be you. Read that again: it only took one act of disobedience to break the whole thing. It only took one act of obedience to fix it. That tells you something about the kind of obedience Jesus walked in. It was not partial. It was not negotiated. It was complete enough to outweigh everything Adam broke — and everything you have broken since.</p>
+
+    <h2>The Law Came to Show You the Problem, Not to Be Your Savior</h2>
+    <p>Then Paul says something that trips a lot of people up: "the law entered, that the offence might abound." God did not hand down the Ten Commandments to give humanity a scoreboard to feel good about. He gave the law to turn the lights on in a room people had been sinning in comfortably in the dark. The law was never the cure. The law was the diagnosis. It told you exactly how sick the condition was — and a true diagnosis, even a hard one, is a mercy, because you cannot be healed of a disease you've convinced yourself you don't have.</p>
+
+    <h2>Where Sin Abounded, Grace Abounded Much More</h2>
+    <p>Here is the verse I need you to put somewhere you'll see it again: "where sin abounded, grace did much more abound." Not grace kept pace with sin. Not grace barely covered sin. Grace <em>outran</em> it. Whatever got worse in you, grace got stronger for you. Whatever multiplied against you, grace multiplied harder on your behalf. This is not a close contest where mercy barely wins on a technicality. This is a landslide. Sin had a head start on the whole human race — and grace still lapped it.</p>
+    <div class="pull-verse">"And of his fulness have all we received, and grace for grace."<cite>John 1:16, KJV</cite></div>
+    <p>So if you came here today carrying a list — the thing you did, the thing you keep doing, the thing you promised God you'd stop and haven't — I need you to hear Romans 5 over the sound of that list: whatever abounded against you, grace abounded harder for you. Grace is not impressed by the size of your failure. Grace was built for exactly that size.</p>
+
+    <h2>Grace Doesn't Just Forgive — It Reigns</h2>
+    <p>Watch the verb in verse 21. Paul does not say sin used to reign and now grace merely visits. He says grace <em>reigns</em> — same word used for sin's old rule, now transferred to a new King. Sin reigned unto death. Grace reigns through righteousness unto eternal life. That is not a truce between two equal powers. That is a changing of the throne. Sin is not your landlord anymore. Grace moved in, and grace does not share the lease.</p>
+    <div class="pull-verse">"For the wages of sin is death; but the gift of God is eternal life through Jesus Christ our Lord."<cite>Romans 6:23, KJV</cite></div>
+    <p>If grace reigns, then you are not meant to live like a prisoner begging sin for parole. You are meant to live like a citizen of a kingdom that already won. Stop negotiating with a ruler who's already been dethroned.</p>
+
+    <h2>The Word for Today</h2>
+    <p>Somebody in this moment needed to hear that your past does not get the final vote. One man's disobedience put you in the hole. One Man's obedience already pulled you out of it. Where sin abounded in your life, grace did much more abound. Not equal. More. So stand up out of whatever you were carrying into today, because it was never built to out-run what Jesus already did. Sin reigned once. Grace reigns now — through righteousness, unto life eternal, by Jesus Christ our Lord. That's the Word for today. Carry it like you mean it.</p>
+  </div>
+
+  <div class="closing-card">
+    <h3>Stand on This With Us</h3>
+    <p>Receive the Word, pray with us, and grow in faith &mdash; every day, on X.</p>
+    <a class="btn" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow @wfnglobal &rarr;</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner gutter">
+    <div class="footer-links">
+      <a href="/#about">About</a>
+      <a href="/#word">The Word</a>
+      <a href="/#prayer">Prayer</a>
+      <a href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Word and Faith Network &middot; wfnglobal.org</div>
+  </div>
+</footer>
+
+<script src="/app/js/wfn-tts.js"></script>

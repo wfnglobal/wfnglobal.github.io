@@ -558,10 +558,23 @@
   // Each ray now starts a short distance out from the center — not at the
   // exact center point — and carries a small arrowhead at that inner end,
   // pointing in toward the Bible badge, so the rays visibly flow into it
-  // rather than just converging somewhere behind it.
+  // rather than just converging somewhere behind it. The outer end of each
+  // ray carries a small standing-figure icon (the "church without walls"
+  // motif — people connected to the Word at the center), each in its own
+  // color from the palette, always upright regardless of its position
+  // around the circle.
+  function vodPersonIconSvg(cx, cy, color) {
+    const x = cx.toFixed(1), y = cy.toFixed(1);
+    return (
+      `<g transform="translate(${x},${y})" opacity="0.92">` +
+      `<circle cx="0" cy="-5.2" r="3.3" fill="none" stroke="${color}" stroke-width="1.4"/>` +
+      `<path d="M -5.4 6.6 Q -5.4 -1.2 0 -1.2 Q 5.4 -1.2 5.4 6.6" fill="none" stroke="${color}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>` +
+      `</g>`
+    );
+  }
   function vodCoverRaysHtml() {
     const n = VOD_RAY_COLORS.length;
-    const innerR = 26, outerR = 108;
+    const innerR = 26, outerR = 100;
     const rays = VOD_RAY_COLORS.map((color, i) => {
       const angle = (i / n) * Math.PI * 2;
       const cos = Math.cos(angle), sin = Math.sin(angle);
@@ -570,9 +583,9 @@
       const tipX = 150 + cos * (innerR - 7), tipY = 95 + sin * (innerR - 7);
       const perpX = -sin * 4, perpY = cos * 4;
       return (
-        `<line x1="${ix.toFixed(1)}" y1="${iy.toFixed(1)}" x2="${ox.toFixed(1)}" y2="${oy.toFixed(1)}" stroke="${color}" stroke-width="1.2" opacity="0.55"/>` +
-        `<circle cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="5" fill="${color}" opacity="0.85"/>` +
-        `<polygon points="${tipX.toFixed(1)},${tipY.toFixed(1)} ${(ix + perpX).toFixed(1)},${(iy + perpY).toFixed(1)} ${(ix - perpX).toFixed(1)},${(iy - perpY).toFixed(1)}" fill="${color}" opacity="0.9"/>`
+        `<line x1="${ix.toFixed(1)}" y1="${iy.toFixed(1)}" x2="${ox.toFixed(1)}" y2="${oy.toFixed(1)}" stroke="${color}" stroke-width="1.1" opacity="0.5"/>` +
+        `<polygon points="${tipX.toFixed(1)},${tipY.toFixed(1)} ${(ix + perpX).toFixed(1)},${(iy + perpY).toFixed(1)} ${(ix - perpX).toFixed(1)},${(iy - perpY).toFixed(1)}" fill="${color}" opacity="0.9"/>` +
+        vodPersonIconSvg(ox, oy, color)
       );
     }).join("");
     return `<svg class="vod-rays" viewBox="0 0 300 190" aria-hidden="true"><g>${rays}</g></svg>`;

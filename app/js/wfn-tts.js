@@ -382,22 +382,108 @@
       });
     }
   }
-  window.WFNShare = { copy: wfnCopyText, share: wfnShareText, toast: wfnToast };
+  // window.WFNShare is assigned once pray() is defined, further below.
 
   // ---------------------------------------------------------------------
-  // Copy & Share toolbar: select any word or passage — a Bible verse, a
-  // line of a prayer, a sentence from a sermon — and a small toolbar
-  // appears over the selection with Copy and Share. Runs on every page
-  // that loads this file, website or app, so it's placed above the
-  // WFN_TTS_MANUAL check below (which only gates the website's
-  // self-mounting Listen widget).
+  // Turn a passage into an editable prayer. One shared modal — used by the
+  // tap-to-act bar below, by the app's Bible verse sheet, and by anything
+  // else that calls window.WFNShare.pray(text, ref) — so there's one
+  // implementation on both the website and the app.
   // ---------------------------------------------------------------------
-  (function setupSelectionShare() {
+  var prayEl = null;
+  function buildPrayerFromPassage(text, ref) {
+    var clean = (text || "").replace(/\s+/g, " ").trim();
+    return (
+      "Father, thank You for Your word" + (ref ? " in " + ref : "") + ":\n" +
+      '"' + clean + '"\n\n' +
+      "Let this truth take root in me today — not just something I read, but something I live. " +
+      "Where it calls me to trust, help me trust. Where it calls me to change, change me. " +
+      "Where it calls me to rest, let me rest in it, right now.\n\n" +
+      "Make this word alive in my heart, the way You promise it always is.\n\n" +
+      "In Jesus' name, amen."
+    );
+  }
+  function ensurePraySheet() {
+    if (prayEl) return prayEl;
+    prayEl = document.createElement("div");
+    prayEl.id = "wfnPraySheet";
+    prayEl.innerHTML =
+      '<div class="wfnps-scrim"></div>' +
+      '<div class="wfnps-panel">' +
+      '<div class="wfnps-head"><h3>Turn This Into a Prayer</h3><button type="button" class="wfnps-close" aria-label="Close">&times;</button></div>' +
+      '<p class="wfnps-ref" id="wfnpsRef"></p>' +
+      '<textarea id="wfnpsText" class="wfnps-textarea" rows="9"></textarea>' +
+      '<div class="wfnps-actions">' +
+      '<button type="button" class="wfnps-btn wfnps-btn-outline" data-action="regen">Start Over</button>' +
+      '<button type="button" class="wfnps-btn wfnps-btn-outline" data-action="copy">Copy</button>' +
+      '<button type="button" class="wfnps-btn wfnps-btn-gold" data-action="share">Share</button>' +
+      "</div>" +
+      "</div>";
+    document.body.appendChild(prayEl);
+    var style = document.createElement("style");
+    style.textContent = [
+      "#wfnPraySheet{position:fixed; inset:0; z-index:410; display:none; align-items:flex-end; justify-content:center;}",
+      "#wfnPraySheet.show{display:flex;}",
+      "#wfnPraySheet .wfnps-scrim{position:absolute; inset:0; background:rgba(20,16,8,0.45);}",
+      "#wfnPraySheet .wfnps-panel{position:relative; width:100%; max-width:560px; background:#FFFDF8; border-radius:22px 22px 0 0; padding:20px 20px calc(22px + env(safe-area-inset-bottom,0px)); box-shadow:0 -18px 44px -14px rgba(0,0,0,0.3); font-family:'Inter',-apple-system,system-ui,sans-serif; max-height:86vh; overflow:auto;}",
+      "@media (min-width:640px){#wfnPraySheet{align-items:center;} #wfnPraySheet .wfnps-panel{border-radius:22px; margin-bottom:0;}}",
+      "#wfnPraySheet .wfnps-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;}",
+      "#wfnPraySheet .wfnps-head h3{font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:1.25rem; color:#231F18; margin:0;}",
+      "#wfnPraySheet .wfnps-close{background:none; border:none; font-size:22px; line-height:1; color:#8C8370; cursor:pointer; padding:4px;}",
+      "#wfnPraySheet .wfnps-ref{font-size:12.5px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#9C7A34; margin:0 0 14px;}",
+      "#wfnPraySheet .wfnps-textarea{width:100%; min-height:190px; border-radius:14px; border:1px solid rgba(35,31,24,0.14); background:#FBF8F1; color:#231F18; font-size:15px; line-height:1.65; font-family:inherit; padding:14px; box-sizing:border-box; resize:vertical;}",
+      "#wfnPraySheet .wfnps-actions{display:flex; gap:10px; margin-top:14px;}",
+      "#wfnPraySheet .wfnps-btn{flex:1; border:none; border-radius:100px; padding:12px 0; font-weight:700; font-size:13.5px; cursor:pointer; font-family:inherit;}",
+      "#wfnPraySheet .wfnps-btn-outline{background:#F4EEE0; color:#564E3E;}",
+      "#wfnPraySheet .wfnps-btn-gold{background:#9C7A34; color:#FFFDF8;}"
+    ].join("\n");
+    document.head.appendChild(style);
+    prayEl.querySelector(".wfnps-scrim").addEventListener("click", closePraySheet);
+    prayEl.querySelector(".wfnps-close").addEventListener("click", closePraySheet);
+    prayEl.querySelector('[data-action="regen"]').addEventListener("click", function () {
+      document.getElementById("wfnpsText").value = buildPrayerFromPassage(prayEl._sourceText, prayEl._sourceRef);
+    });
+    prayEl.querySelector('[data-action="copy"]').addEventListener("click", function () {
+      wfnCopyText(document.getElementById("wfnpsText").value);
+    });
+    prayEl.querySelector('[data-action="share"]').addEventListener("click", function () {
+      wfnShareText(document.getElementById("wfnpsText").value);
+    });
+    return prayEl;
+  }
+  function closePraySheet() {
+    if (prayEl) prayEl.classList.remove("show");
+  }
+  function openPraySheet(text, ref) {
+    var el = ensurePraySheet();
+    el._sourceText = text;
+    el._sourceRef = ref || "";
+    document.getElementById("wfnpsRef").textContent = ref || "";
+    document.getElementById("wfnpsText").value = buildPrayerFromPassage(text, ref);
+    el.classList.add("show");
+  }
+  window.WFNShare = { copy: wfnCopyText, share: wfnShareText, toast: wfnToast, pray: openPraySheet };
+
+  // ---------------------------------------------------------------------
+  // Copy, Share & Pray — on a single tap, not a hard-press-to-highlight.
+  // Tapping any paragraph, verse, or line shows a small action bar for
+  // that whole passage. A normal mouse/trackpad drag-selection (picking
+  // out just a few words) still works and takes priority when one is
+  // active. Runs on every page that loads this file, website or app, so
+  // it's placed above the WFN_TTS_MANUAL check below (which only gates
+  // the website's self-mounting Listen widget).
+  // ---------------------------------------------------------------------
+  (function setupTapShare() {
     if (typeof document === "undefined") return;
     var EXCLUDE_SELECTOR =
       "header, footer, nav, .site-header, .site-footer, .app-header, .app-tabbar, " +
-      "#wfnVoiceStack, #voiceStack, #wfnShareBar, #wfnShareToast, .sheet, " +
-      "button, select, input, textarea, .reader-nav, .reader-toolbar";
+      "#wfnVoiceStack, #voiceStack, #wfnShareBar, #wfnShareToast, #wfnPraySheet, .sheet, " +
+      "button, select, input, textarea, a, .reader-nav, .reader-toolbar, .v, " +
+      ".reader-chapter-fab-prev, .reader-chapter-fab-next";
+    // The Bible reader's own verses (.v) already open a richer sheet on
+    // tap (highlight, save, note, and now Copy/Share/Pray there too) —
+    // excluded above so this generic bar doesn't also fire on top of it.
+    var TAP_SELECTOR = "p, li, h2, h3, blockquote, .declaration-line";
     var bar = null;
     var currentText = "";
     var selTimer = null;
@@ -411,12 +497,17 @@
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy</button>' +
         '<span class="wfnsb-sep"></span>' +
         '<button type="button" data-action="share">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.7l7.4-4.4M8.3 13.3l7.4 4.4"/></svg>Share</button>';
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.7l7.4-4.4M8.3 13.3l7.4 4.4"/></svg>Share</button>' +
+        '<span class="wfnsb-sep"></span>' +
+        '<button type="button" data-action="pray">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg>Pray</button>';
       document.body.appendChild(bar);
       bar.querySelector('[data-action="copy"]').addEventListener("mousedown", function (e) { e.preventDefault(); doCopy(); });
       bar.querySelector('[data-action="share"]').addEventListener("mousedown", function (e) { e.preventDefault(); doShare(); });
+      bar.querySelector('[data-action="pray"]').addEventListener("mousedown", function (e) { e.preventDefault(); doPray(); });
       bar.querySelector('[data-action="copy"]').addEventListener("touchend", function (e) { e.preventDefault(); doCopy(); });
       bar.querySelector('[data-action="share"]').addEventListener("touchend", function (e) { e.preventDefault(); doShare(); });
+      bar.querySelector('[data-action="pray"]').addEventListener("touchend", function (e) { e.preventDefault(); doPray(); });
       var style = document.createElement("style");
       style.textContent = [
         "#wfnShareBar{position:fixed; z-index:400; display:none; align-items:center; gap:2px; background:#231F18; color:#FFFDF8; border-radius:100px; padding:6px; box-shadow:0 10px 26px -10px rgba(0,0,0,0.4); font-family:'Inter',-apple-system,system-ui,sans-serif;}",
@@ -430,27 +521,19 @@
       return bar;
     }
 
-    function getSelected() {
-      var sel = window.getSelection();
-      if (!sel || sel.isCollapsed || !sel.rangeCount) return null;
-      var text = sel.toString().trim();
-      if (!text) return null;
-      var node = sel.anchorNode;
-      var el = node && (node.nodeType === 1 ? node : node.parentElement);
-      if (!el || el.closest(EXCLUDE_SELECTOR)) return null;
-      return { text: text, range: sel.getRangeAt(0) };
+    function pageRef() {
+      var titleEl = document.querySelector(".article-title, .chapter-title, h1");
+      return titleEl ? titleEl.textContent.replace(/\s+/g, " ").trim() : (document.title || "");
     }
 
-    function positionBar(range) {
-      var rect = range.getBoundingClientRect();
-      if (!rect || (!rect.width && !rect.height)) return;
+    function positionBarAt(rect) {
       var el = ensureBar();
       el.classList.add("show");
       var top = rect.top - 50;
       if (top < 8) top = rect.bottom + 10;
       var left = rect.left + rect.width / 2;
       el.style.top = top + "px";
-      el.style.left = Math.min(Math.max(left, 80), window.innerWidth - 80) + "px";
+      el.style.left = Math.min(Math.max(left, 100), window.innerWidth - 100) + "px";
       el.style.transform = "translateX(-50%)";
     }
 
@@ -458,26 +541,42 @@
       if (bar) bar.classList.remove("show");
     }
 
-    function doCopy() {
-      wfnCopyText(currentText, hideBar);
-    }
-    function doShare() {
-      wfnShareText(currentText, hideBar);
+    function doCopy() { wfnCopyText(currentText, hideBar); }
+    function doShare() { wfnShareText(currentText, hideBar); }
+    function doPray() { hideBar(); openPraySheet(currentText, pageRef()); }
+
+    // A real drag-selection (picking out a few specific words) still works
+    // and takes priority — this only handles a plain tap/click.
+    function activeSelectionText() {
+      var sel = window.getSelection();
+      if (!sel || sel.isCollapsed || !sel.rangeCount) return "";
+      return sel.toString().trim();
     }
 
     document.addEventListener("selectionchange", function () {
       clearTimeout(selTimer);
       selTimer = setTimeout(function () {
-        var sel = getSelected();
-        if (!sel) {
-          currentText = "";
-          hideBar();
-          return;
-        }
-        currentText = sel.text;
-        positionBar(sel.range);
+        var text = activeSelectionText();
+        if (!text) return;
+        var sel = window.getSelection();
+        var node = sel.anchorNode;
+        var el = node && (node.nodeType === 1 ? node : node.parentElement);
+        if (!el || el.closest(EXCLUDE_SELECTOR)) return;
+        currentText = text;
+        positionBarAt(sel.getRangeAt(0).getBoundingClientRect());
       }, 60);
     });
+
+    document.addEventListener("click", function (e) {
+      if (activeSelectionText()) return; // a drag-selection already has its own bar
+      var el = e.target.closest(TAP_SELECTOR);
+      if (!el || el.closest(EXCLUDE_SELECTOR)) { hideBar(); return; }
+      var text = el.textContent.replace(/\s+/g, " ").trim();
+      if (!text) { hideBar(); return; }
+      currentText = text;
+      positionBarAt(el.getBoundingClientRect());
+    });
+
     document.addEventListener("scroll", hideBar, true);
     window.addEventListener("resize", hideBar);
   })();

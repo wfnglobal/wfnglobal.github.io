@@ -1107,8 +1107,11 @@
       </div>
       <p class="hint-row" id="defineHint">Tap any word for its meaning.</p>
       <div class="reader-surface" id="readerSurface">
+        <div class="version-label" id="versionLabel"></div>
         ${data.titles && data.titles[chapter - 1] ? `<p class="chapter-title-sup">${data.titles[chapter - 1]}</p>` : ""}
         <div class="verse-list" id="verseList"></div>
+        <div class="compare-versions" id="compareVersions"></div>
+        <button class="btn btn-outline btn-block add-version-btn" id="addVersionBtn" type="button">+ Add Version to Compare</button>
       </div>
     `;
     viewEl.scrollTo(0, 0);
@@ -1131,6 +1134,42 @@
       openVerseSheet(slug, data.name, chapter, vi, activePlainTexts[vi - 1] || "");
     });
 
+    const versionLabelEl = document.getElementById("versionLabel");
+    const compareContainerEl = document.getElementById("compareVersions");
+    const comparisonCodes = new Set();
+
+    function versionDisplayName(code) {
+      if (code === "kjv") return "King James Version (offline)";
+      const v = BIBLE_VERSIONS.find((v) => v.code === code);
+      return (v || {}).name || code;
+    }
+
+    // Fetches a version's verses for this chapter without touching the
+    // main reading surface — shared by the top version switcher and by
+    // each "Add Version to Compare" block below it.
+    async function fetchVersionTexts(code) {
+      if (code === "kjv") {
+        return { name: versionDisplayName("kjv"), texts: kjvVerses.map((v, i) => ({ verse: i + 1, text: WFNBible.plain(v) })) };
+      }
+      const version = BIBLE_VERSIONS.find((v) => v.code === code);
+      const versionName = (version || {}).name || code;
+      if (version && version.mt) {
+        const plainVerses = kjvVerses.map((v) => WFNBible.plain(v));
+        const outs = await translateTextsLimited(plainVerses, version.mtLang);
+        return {
+          name: versionName,
+          texts: outs.map((o, i) => ({ verse: i + 1, text: o || plainVerses[i] })),
+          note: `Machine-translated from the KJV text, not an official published ${versionName.replace(" (machine-translated)", "")} Bible — meaning helps, but it isn't a substitute for a professional translation.${outs.some((o) => !o) ? " A few verses couldn't be translated right now and are shown in English." : ""}`
+        };
+      }
+      const ref = encodeURIComponent(`${data.name} ${chapter}`).replace(/%20/g, "+");
+      const res = await fetch(`${BIBLE_API}${ref}?translation=${code}`);
+      if (!res.ok) throw new Error("bad response");
+      const json = await res.json();
+      if (!json.verses || !json.verses.length) throw new Error("no verses");
+      return { name: versionName, texts: json.verses.map((v) => ({ verse: v.verse, text: v.text.trim() })) };
+    }
+
     function renderKJV() {
       const marks = WFNStore.getMarks();
       const markFor = (vi) => marks.find((m) => m.bookSlug === slug && m.chapter === chapter && m.verse === vi + 1);
@@ -1144,39 +1183,22 @@
         .join("");
       activePlainTexts = kjvVerses.map((v) => WFNBible.plain(v));
       activeVersionCode = "kjv";
-      wrapWordsForDefine(verseListEl);
-    }
-
-    async function loadMachineTranslatedVersion(version) {
-      const plainVerses = kjvVerses.map((v) => WFNBible.plain(v));
-      verseListEl.innerHTML = `<div class="search-status">Translating ${esc(data.name)} ${chapter} into ${esc(version.name.replace(" (machine-translated)", ""))}…</div>`;
-      const outs = await translateTextsLimited(plainVerses, version.mtLang);
-      const anyFailed = outs.some((o) => !o);
-      verseListEl.innerHTML =
-        `<div class="skeleton-note" style="margin-bottom:14px;">Machine-translated from the KJV text, not an official published ${esc(version.name.replace(" (machine-translated)", ""))} Bible — meaning helps, but it isn't a substitute for a professional translation.${anyFailed ? " A few verses couldn't be translated right now and are shown in English." : ""}</div>` +
-        outs.map((o, i) => `<p class="v" data-verse="${i + 1}"><span class="vnum">${i + 1}</span>${esc(o || plainVerses[i])}</p>`).join("");
-      activePlainTexts = outs.map((o, i) => o || plainVerses[i]);
-      activeVersionCode = version.code;
+      if (versionLabelEl) versionLabelEl.textContent = versionDisplayName("kjv");
       wrapWordsForDefine(verseListEl);
     }
 
     async function loadVersion(code) {
       if (code === "kjv") { renderKJV(); return; }
-      const version = BIBLE_VERSIONS.find((v) => v.code === code);
-      const versionName = (version || {}).name || code;
-      if (version && version.mt) { await loadMachineTranslatedVersion(version); return; }
+      const versionName = versionDisplayName(code);
       verseListEl.innerHTML = `<div class="search-status">Loading ${esc(versionName)}…</div>`;
       try {
-        const ref = encodeURIComponent(`${data.name} ${chapter}`).replace(/%20/g, "+");
-        const res = await fetch(`${BIBLE_API}${ref}?translation=${code}`);
-        if (!res.ok) throw new Error("bad response");
-        const json = await res.json();
-        if (!json.verses || !json.verses.length) throw new Error("no verses");
-        verseListEl.innerHTML = json.verses
-          .map((v) => `<p class="v" data-verse="${v.verse}"><span class="vnum">${v.verse}</span>${esc(v.text.trim())}</p>`)
-          .join("");
-        activePlainTexts = json.verses.map((v) => v.text.trim());
+        const result = await fetchVersionTexts(code);
+        verseListEl.innerHTML =
+          (result.note ? `<div class="skeleton-note" style="margin-bottom:14px;">${esc(result.note)}</div>` : "") +
+          result.texts.map((t) => `<p class="v" data-verse="${t.verse}"><span class="vnum">${t.verse}</span>${esc(t.text)}</p>`).join("");
+        activePlainTexts = result.texts.map((t) => t.text);
         activeVersionCode = code;
+        if (versionLabelEl) versionLabelEl.textContent = result.name;
         wrapWordsForDefine(verseListEl);
       } catch (err) {
         verseListEl.innerHTML = `<div class="skeleton-note">Couldn't load ${esc(versionName)} right now &mdash; check your connection, or <button class="link-btn" id="backToKjv" type="button">switch back to KJV</button>.</div>`;
@@ -1185,9 +1207,63 @@
       }
     }
 
+    // ---- Compare: add another version alongside the one at the top,
+    // instead of replacing it. Each added block fetches independently and
+    // can be removed on its own. ----
+    async function addComparisonVersion(code) {
+      if (code === activeVersionCode || comparisonCodes.has(code)) return;
+      comparisonCodes.add(code);
+      const block = document.createElement("div");
+      block.className = "compare-block";
+      block.innerHTML = `
+        <div class="compare-head">
+          <span class="compare-name">Loading…</span>
+          <button type="button" class="compare-remove" aria-label="Remove this version">&times;</button>
+        </div>
+        <div class="compare-verses"></div>
+      `;
+      compareContainerEl.appendChild(block);
+      block.querySelector(".compare-remove").addEventListener("click", () => {
+        comparisonCodes.delete(code);
+        block.remove();
+      });
+      try {
+        const result = await fetchVersionTexts(code);
+        block.querySelector(".compare-name").textContent = result.name;
+        block.querySelector(".compare-verses").innerHTML =
+          (result.note ? `<div class="skeleton-note" style="margin-bottom:12px;">${esc(result.note)}</div>` : "") +
+          result.texts.map((t) => `<p class="v cv" data-verse="${t.verse}"><span class="vnum">${t.verse}</span>${esc(t.text)}</p>`).join("");
+      } catch (err) {
+        block.querySelector(".compare-name").textContent = versionDisplayName(code);
+        block.querySelector(".compare-verses").innerHTML = `<div class="skeleton-note">Couldn't load this version right now.</div>`;
+      }
+    }
+
+    function openAddVersionSheet() {
+      const available = BIBLE_VERSIONS.filter((v) => v.code !== activeVersionCode && !comparisonCodes.has(v.code));
+      if (!available.length) {
+        openSheet(`<h3>Add a Version</h3><p style="font-size:14px; color:var(--ink-2);">Every available version is already shown.</p>`);
+        return;
+      }
+      openSheet(`
+        <h3>Add a Version to Compare</h3>
+        <p style="font-size:13.5px; color:var(--ink-3); margin-bottom:12px;">Shown alongside ${esc(versionDisplayName(activeVersionCode))}, not in place of it.</p>
+        <div class="stack">
+          ${available.map((v) => `<button class="btn btn-outline btn-block add-version-opt" data-code="${v.code}" type="button" style="margin-bottom:8px; text-align:left;">${esc(v.name)}</button>`).join("")}
+        </div>
+      `);
+      sheetBodyEl.querySelectorAll(".add-version-opt").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          closeSheet();
+          addComparisonVersion(btn.dataset.code);
+        });
+      });
+    }
+
     document.getElementById("versionSelect").addEventListener("change", (e) => {
       loadVersion(e.target.value);
     });
+    document.getElementById("addVersionBtn").addEventListener("click", openAddVersionSheet);
     document.getElementById("readerSettingsBtn").addEventListener("click", openReaderSettingsSheet);
     document.getElementById("readerJumpBtn").addEventListener("click", () => {
       openJumpToVerseSheet(data.name, chapter, kjvVerses.length, (vi) => jumpToVerse(vi));
@@ -1863,15 +1939,21 @@
       <div style="display:flex; gap:10px; margin-top:10px;">
         <button class="btn btn-outline btn-block" id="copyVerseBtn" type="button">Copy</button>
         <button class="btn btn-outline btn-block" id="shareVerseBtn" type="button">Share</button>
+        <button class="btn btn-outline btn-block" id="prayVerseBtn" type="button">Pray</button>
       </div>
       <a class="btn btn-outline btn-block" style="margin-top:10px;" id="addVerseNoteBtn">Add a Note on This Verse</a>
     `);
-    const verseShareText = `"${text}" — ${bookName} ${chapter}:${verse}`;
+    const verseRef = `${bookName} ${chapter}:${verse}`;
+    const verseShareText = `"${text}" — ${verseRef}`;
     document.getElementById("copyVerseBtn").addEventListener("click", () => {
       if (window.WFNShare) window.WFNShare.copy(verseShareText);
     });
     document.getElementById("shareVerseBtn").addEventListener("click", () => {
       if (window.WFNShare) window.WFNShare.share(verseShareText);
+    });
+    document.getElementById("prayVerseBtn").addEventListener("click", () => {
+      closeSheet();
+      if (window.WFNShare) window.WFNShare.pray(text, verseRef);
     });
     sheetBodyEl.querySelectorAll(".swatch").forEach((sw) => {
       sw.addEventListener("click", () => {

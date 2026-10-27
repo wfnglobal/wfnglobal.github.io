@@ -84,7 +84,7 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 .hello p{color:var(--ink-2); font-size:15.5px;}
 
 .verse-of-day{
-  border-radius:16px; min-height:220px; color:#fff; position:relative; overflow:hidden; margin-bottom:18px;
+  border-radius:16px; min-height:290px; color:#fff; position:relative; overflow:hidden; margin-bottom:18px;
   background:#1D1810; display:flex; flex-direction:column; justify-content:flex-end;
 }
 .verse-of-day-overlay{position:absolute; inset:0; z-index:1; background:linear-gradient(0deg, rgba(10,9,6,0.78) 0%, rgba(10,9,6,0.32) 44%, rgba(10,9,6,0) 64%);}
@@ -126,13 +126,13 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 .vod-rays{position:absolute; inset:0; width:100%; height:100%; animation:vodRaysSpin 70s linear infinite; transform-origin:50% 50%;}
 :root[data-motion="reduced"] .vod-rays{animation:none;}
 @keyframes vodRaysSpin{from{transform:rotate(0deg);} to{transform:rotate(360deg);}}
-.vod-reveal-badge{position:relative; width:60px; height:60px; display:flex; align-items:center; justify-content:center;}
-.vod-reveal-badge svg{width:30px; height:30px; position:relative; z-index:2;}
+.vod-reveal-badge{position:relative; width:80px; height:80px; display:flex; align-items:center; justify-content:center;}
+.vod-reveal-badge svg{width:40px; height:40px; position:relative; z-index:2;}
 .vod-reveal-glow{position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle, rgba(231,206,148,0.55) 0%, rgba(231,206,148,0) 70%); animation:vodGlowPulse 2.6s ease-in-out infinite;}
 :root[data-motion="reduced"] .vod-reveal-glow{animation:none;}
 @keyframes vodGlowPulse{0%,100%{transform:scale(0.85); opacity:0.7;}50%{transform:scale(1.25); opacity:1;}}
-.vod-cover-label{position:relative; z-index:2; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#FFFDF8;}
-.vod-cover-sub{position:relative; z-index:2; font-size:12.5px; color:#E7CE94; font-weight:500;}
+.vod-cover-label{position:relative; z-index:2; font-size:13.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#FFFDF8;}
+.vod-cover-sub{position:relative; z-index:2; font-size:13.5px; color:#E7CE94; font-weight:500;}
 .vod-translate{
   margin-top:14px; padding:6px 10px; border-radius:100px; border:1px solid rgba(255,253,248,0.3);
   background:rgba(21,18,12,0.5); color:#FFFDF8; font-family:var(--font-body); font-size:12px; font-weight:600;

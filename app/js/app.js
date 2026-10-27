@@ -566,42 +566,44 @@
   function vodPersonIconSvg(cx, cy, color) {
     const x = cx.toFixed(1), y = cy.toFixed(1);
     return (
-      `<g transform="translate(${x},${y})" opacity="0.95">` +
-      `<circle cx="0" cy="-5.2" r="3.3" fill="none" stroke="${color}" stroke-width="1.4"/>` +
-      `<path d="M -5.4 6.6 Q -5.4 -1.2 0 -1.2 Q 5.4 -1.2 5.4 6.6" fill="none" stroke="${color}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>` +
+      `<g transform="translate(${x},${y})" opacity="0.97">` +
+      `<circle cx="0" cy="-7" r="4.4" fill="none" stroke="${color}" stroke-width="1.9"/>` +
+      `<path d="M -7.3 8.9 Q -7.3 -1.6 0 -1.6 Q 7.3 -1.6 7.3 8.9" fill="none" stroke="${color}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>` +
       `</g>`
     );
   }
   // Three soft concentric rings sit behind the Bible badge at the exact
   // center — the "church without walls" halo — in a blend of the same
   // palette the rays use, instead of one flat tone.
+  const VOD_CX = 160, VOD_CY = 130;
   function vodRingsHtml() {
     const rings = [
-      { r: 68, color: "#8E92D6", opacity: 0.16 },
-      { r: 50, color: "#D98C73", opacity: 0.22 },
-      { r: 33, color: "#E7CE94", opacity: 0.3 },
+      { r: 86, color: "#8E92D6", opacity: 0.2 },
+      { r: 62, color: "#D98C73", opacity: 0.27 },
+      { r: 40, color: "#E7CE94", opacity: 0.36 },
     ];
     return rings
-      .map((r) => `<circle cx="150" cy="95" r="${r.r}" fill="none" stroke="${r.color}" stroke-width="1" opacity="${r.opacity}"/>`)
+      .map((r) => `<circle cx="${VOD_CX}" cy="${VOD_CY}" r="${r.r}" fill="none" stroke="${r.color}" stroke-width="1.4" opacity="${r.opacity}"/>`)
       .join("");
   }
   // Every ray runs straight from the center rings out to a small standing
   // figure — each a different color from the palette — so the whole shape
   // reads as people connected to the Word at the center, flowing together.
+  // Sized to be the card's defining visual, not a small decorative touch.
   function vodCoverRaysHtml() {
     const n = VOD_RAY_COLORS.length;
-    const innerR = 18, outerR = 104;
+    const innerR = 26, outerR = 116;
     const rays = VOD_RAY_COLORS.map((color, i) => {
       const angle = (i / n) * Math.PI * 2;
       const cos = Math.cos(angle), sin = Math.sin(angle);
-      const ix = 150 + cos * innerR, iy = 95 + sin * innerR;
-      const ox = 150 + cos * outerR, oy = 95 + sin * outerR;
+      const ix = VOD_CX + cos * innerR, iy = VOD_CY + sin * innerR;
+      const ox = VOD_CX + cos * outerR, oy = VOD_CY + sin * outerR;
       return (
-        `<line x1="${ix.toFixed(1)}" y1="${iy.toFixed(1)}" x2="${ox.toFixed(1)}" y2="${oy.toFixed(1)}" stroke="${color}" stroke-width="1.2" opacity="0.6"/>` +
+        `<line x1="${ix.toFixed(1)}" y1="${iy.toFixed(1)}" x2="${ox.toFixed(1)}" y2="${oy.toFixed(1)}" stroke="${color}" stroke-width="1.7" opacity="0.68"/>` +
         vodPersonIconSvg(ox, oy, color)
       );
     }).join("");
-    return `<svg class="vod-rays" viewBox="0 0 300 190" aria-hidden="true"><g>${vodRingsHtml()}${rays}</g></svg>`;
+    return `<svg class="vod-rays" viewBox="0 0 320 260" aria-hidden="true"><g>${vodRingsHtml()}${rays}</g></svg>`;
   }
 
   // Other Bible versions and translation are fetched live (all public-domain

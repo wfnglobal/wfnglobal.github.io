@@ -1,0 +1,243 @@
+<title>The Story of Jesus</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap">
+
+<style>
+:root{
+  --bg:#FBF8F1; --surface:#FFFFFF; --surface-2:#F4EEE0; --surface-3:#EEE5D2;
+  --ink:#231F18; --ink-2:#564E3E; --ink-3:#8C8370;
+  --gold:#9C7A34; --gold-light:#C9A968; --gold-wash:#E9D9AE; --blue:#5E7C94;
+  --border:rgba(35,31,24,0.11); --shadow:rgba(80,64,24,0.09);
+  /* Each chapter of the story gets its own accent — prophecy (indigo),
+     birth (gold), ministry (green), the cross (deep maroon), the
+     resurrection (radiant amber) — so the page reads as one journey
+     through color, not five identical sections. */
+  --c-prophecy:#4A4E8C; --c-prophecy-wash:#E4E3F2;
+  --c-birth:#9C7A34; --c-birth-wash:#F2E8CC;
+  --c-ministry:#3F6B3C; --c-ministry-wash:#E4EEE0;
+  --c-cross:#7A2222; --c-cross-wash:#F2E0E0;
+  --c-rise:#B8860B; --c-rise-wash:#FBF0D6;
+  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:'Inter', -apple-system, system-ui, sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box; margin:0;}
+html,body{background:var(--bg);}
+body{color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+img{max-width:100%;} [hidden]{display:none!important;} a{color:inherit;}
+h1,h2,h3{font-family:var(--font-display); text-wrap:balance; font-weight:600;}
+.gutter{padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px));}
+
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:101; background:rgba(251,248,241,0.92);}
+.site-header{position:sticky; top:env(safe-area-inset-top,0px); z-index:100; background:rgba(251,248,241,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--border);}
+.header-inner.gutter{max-width:760px; margin:0 auto; padding-block:14px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+.logo-mark{display:flex; align-items:center; gap:9px; min-width:0;}
+.logo-mark svg{width:24px; height:24px; flex-shrink:0;}
+.logo-text{font-family:var(--font-display); font-size:1rem; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.logo-text em{color:var(--gold); font-style:normal;}
+.back-link{font-size:13px; font-weight:600; color:var(--gold); text-decoration:none; display:flex; align-items:center; gap:6px; white-space:nowrap;}
+
+/* ---- Hero: a radiant sunburst-and-cross band, not a photo of a face —
+   the page leads with light and color instead of a likeness. ---- */
+.hero{position:relative; overflow:hidden; background:linear-gradient(165deg,#2A2008 0%,#4A3410 46%,#8A6A2C 100%); padding-block:56px 46px; text-align:center; color:#FFFDF8;}
+.hero-rays{position:absolute; inset:0; opacity:0.5;}
+.hero-inner{position:relative; z-index:2; max-width:640px; margin:0 auto;}
+.hero-badge{width:88px; height:88px; margin:0 auto 20px;}
+.hero .kicker{color:#E7CE94;}
+.hero h1{font-size:clamp(2.4rem,7vw,3.4rem); color:#FFFDF8; margin-bottom:14px;}
+.hero p.lede{color:#E7CE94; font-size:16.5px; max-width:480px; margin:0 auto; line-height:1.65;}
+
+.article-wrap.gutter{max-width:680px; margin:0 auto; padding-block:48px 72px;}
+.kicker{font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; text-align:center;}
+
+/* ---- Chapter sections: a colored eyebrow + icon badge per era of the
+   story, so the reader always knows which chapter they're in. ---- */
+.chapter{margin-top:56px;}
+.chapter:first-of-type{margin-top:8px;}
+.chapter-head{display:flex; align-items:center; gap:12px; margin-bottom:18px;}
+.chapter-badge{width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.chapter-badge svg{width:22px; height:22px;}
+.chapter-eyebrow{font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;}
+.chapter h2{font-size:1.7rem; margin-top:2px;}
+.chapter p{color:var(--ink-2); font-size:16.5px; line-height:1.85; margin-bottom:20px;}
+
+.chapter[data-c="prophecy"] .chapter-badge{background:var(--c-prophecy-wash); color:var(--c-prophecy);}
+.chapter[data-c="prophecy"] .chapter-eyebrow{color:var(--c-prophecy);}
+.chapter[data-c="birth"] .chapter-badge{background:var(--c-birth-wash); color:var(--c-birth);}
+.chapter[data-c="birth"] .chapter-eyebrow{color:var(--c-birth);}
+.chapter[data-c="ministry"] .chapter-badge{background:var(--c-ministry-wash); color:var(--c-ministry);}
+.chapter[data-c="ministry"] .chapter-eyebrow{color:var(--c-ministry);}
+.chapter[data-c="cross"] .chapter-badge{background:var(--c-cross-wash); color:var(--c-cross);}
+.chapter[data-c="cross"] .chapter-eyebrow{color:var(--c-cross);}
+.chapter[data-c="rise"] .chapter-badge{background:var(--c-rise-wash); color:var(--c-rise);}
+.chapter[data-c="rise"] .chapter-eyebrow{color:var(--c-rise);}
+
+.pull-verse{font-family:var(--font-display); font-style:italic; font-size:1.15rem; color:var(--ink); background:var(--surface-2); border-radius:10px; padding:18px 22px; margin:24px 0; line-height:1.55;}
+.pull-verse cite{display:block; font-family:var(--font-body); font-style:normal; font-size:11.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--gold); margin-top:10px;}
+.chapter[data-c="prophecy"] .pull-verse{border-left:4px solid var(--c-prophecy);}
+.chapter[data-c="birth"] .pull-verse{border-left:4px solid var(--c-birth);}
+.chapter[data-c="ministry"] .pull-verse{border-left:4px solid var(--c-ministry);}
+.chapter[data-c="cross"] .pull-verse{border-left:4px solid var(--c-cross);}
+.chapter[data-c="rise"] .pull-verse{border-left:4px solid var(--c-rise);}
+
+/* A colored scene panel per chapter — an original illustrated motif
+   (star, manger, loaves, cross, sunrise) standing in for a photograph. */
+.scene{border-radius:16px; padding:28px 20px; margin:20px 0 28px; text-align:center;}
+.scene svg{width:72px; height:72px;}
+.chapter[data-c="prophecy"] .scene{background:linear-gradient(160deg,#E4E3F2,#F3F1FA);}
+.chapter[data-c="birth"] .scene{background:linear-gradient(160deg,#F2E8CC,#FBF4E4);}
+.chapter[data-c="ministry"] .scene{background:linear-gradient(160deg,#E4EEE0,#F1F7EE);}
+.chapter[data-c="cross"] .scene{background:linear-gradient(160deg,#2A1414,#4A1F1F); }
+.chapter[data-c="cross"] .scene svg{filter:drop-shadow(0 2px 6px rgba(0,0,0,0.3));}
+.chapter[data-c="rise"] .scene{background:linear-gradient(160deg,#FBF0D6,#2A2008 120%);}
+
+.closing-card{background:linear-gradient(160deg,#2A2008,#4A3410); color:#FFFDF8; border-radius:14px; padding:34px 26px; text-align:center; margin-top:48px;}
+.closing-card h3{font-size:1.4rem; margin-bottom:12px; color:#FFFDF8;}
+.closing-card p{color:#E7CE94; font-size:14.5px; margin-bottom:22px; line-height:1.65;}
+.btn{display:inline-flex; align-items:center; gap:7px; border-radius:100px; font-family:var(--font-body); font-size:13.5px; font-weight:700; padding:12px 24px; text-decoration:none; background:var(--gold-light); color:#2A2008;}
+.btn-outline{background:transparent; border:1.5px solid rgba(255,253,248,0.4); color:#FFFDF8; margin-left:10px;}
+
+.site-footer{padding-block:40px; border-top:1px solid var(--border);}
+.footer-inner.gutter{max-width:760px; margin:0 auto; text-align:center;}
+.footer-links{display:flex; justify-content:center; gap:20px; margin-bottom:18px; flex-wrap:wrap;}
+.footer-links a{font-size:12.5px; color:var(--ink-2); text-decoration:none; font-weight:500;}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{font-size:11.5px; color:var(--ink-3);}
+
+.fab-back-app{position:fixed; right:max(18px, env(safe-area-inset-right,0px)); bottom:max(18px, env(safe-area-inset-bottom,0px)); z-index:150; display:flex; align-items:center; gap:8px; background:var(--ink); color:#FFFDF8; text-decoration:none; font-family:var(--font-body); font-size:13px; font-weight:600; padding:12px 18px 12px 14px; border-radius:100px; box-shadow:0 10px 28px -8px rgba(0,0,0,0.4); border:1px solid rgba(255,253,248,0.12);}
+.fab-back-app svg{width:16px; height:16px; flex-shrink:0;}
+.fab-back-app:active{transform:scale(0.97);}
+@media (min-width:760px){ .fab-back-app{display:none;} }
+</style>
+
+<header class="site-header">
+  <div class="header-inner gutter">
+    <div class="logo-mark">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="navLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
+        </linearGradient></defs>
+        <circle cx="24" cy="24" r="21.5" fill="none" stroke="#9C7A34" stroke-width="0.9"/>
+        <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#navLogoGrad)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
+      </svg>
+      <span class="logo-text">Word <em>&amp;</em> Faith Network</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a class="back-link" href="/">&larr; Home</a>
+      <a class="back-link back-to-app" href="/app/#/home" style="display:flex; align-items:center; gap:6px; color:var(--blue);">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+        Back to App
+      </a>
+    </div>
+  </div>
+</header>
+<a class="fab-back-app" href="/app/#/home" aria-label="Back to the WFN app">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+  Back to App
+</a>
+
+<div class="hero">
+  <svg class="hero-rays" viewBox="0 0 400 220" preserveAspectRatio="none" aria-hidden="true">
+    <g stroke="#E7CE94" stroke-width="1" opacity="0.5">
+      <path d="M200 110 L40 -20"/><path d="M200 110 L140 -30"/><path d="M200 110 L200 -34"/>
+      <path d="M200 110 L260 -30"/><path d="M200 110 L360 -20"/><path d="M200 110 L10 60"/>
+      <path d="M200 110 L390 60"/>
+    </g>
+  </svg>
+  <div class="hero-inner gutter">
+    <svg class="hero-badge" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#C9A968" stroke-width="1.2" opacity="0.6"/>
+      <path d="M50 18v64M26 42h48" stroke="#FFFDF8" stroke-width="5" stroke-linecap="round"/>
+      <path d="M50 18v64M26 42h48" stroke="#E7CE94" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <p class="kicker">The Story That Changes Everything</p>
+    <h1>Jesus</h1>
+    <p class="lede">Promised thousands of years before He arrived. Born in the last place anyone was looking. Killed in public, and raised in a way no one could explain away. This is His story — before He came, while He walked among us, and after the grave couldn't keep Him.</p>
+  </div>
+</div>
+
+<main class="article-wrap gutter">
+
+  <section class="chapter" data-c="prophecy">
+    <div class="chapter-head">
+      <div class="chapter-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.6L22 9.3l-5.3 4.9L18 21l-6-3.6L6 21l1.3-6.8L2 9.3l7.1-.7z"/></svg></div>
+      <div><p class="chapter-eyebrow" style="margin-bottom:0;">Chapter One &middot; Before He Came</p><h2>Written Centuries Before He Was Born</h2></div>
+    </div>
+    <p>Here's what separates Jesus from every other famous name in history: His arrival was announced in writing, in detail, hundreds of years before He showed up. Not a vague feeling. Specifics. The prophet Micah named the town — Bethlehem — seven centuries before a baby was ever laid there. Isaiah said a virgin would conceive. Isaiah said He'd be called "Wonderful, Counselor, The Mighty God, The Everlasting Father, The Prince of Peace" — titles no ordinary child gets handed at birth.</p>
+    <div class="scene"><svg viewBox="0 0 24 24" fill="none" stroke="#4A4E8C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.6L22 9.3l-5.3 4.9L18 21l-6-3.6L6 21l1.3-6.8L2 9.3l7.1-.7z"/></svg></div>
+    <div class="pull-verse">"Therefore the Lord Himself will give you a sign: Behold, the virgin shall conceive and bear a Son, and shall call His name Immanuel."<cite>Isaiah 7:14, NKJV</cite></div>
+    <p>Go back further and it gets bigger. The very first pages of the Bible — Genesis, right after humanity's first failure — already carry a promise that someone would come to undo the damage. The whole Old Testament isn't a random collection of ancient stories. Read right, it's one long trail of breadcrumbs, all pointing to one Person, dropped by a God who was never improvising. He didn't send Jesus as a plan B. He announced Him as plan A, from the very beginning.</p>
+  </section>
+
+  <section class="chapter" data-c="birth">
+    <div class="chapter-head">
+      <div class="chapter-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V12a8 8 0 0 1 16 0v9"/><path d="M4 21h16M9 21v-5a3 3 0 0 1 6 0v5"/></svg></div>
+      <div><p class="chapter-eyebrow" style="margin-bottom:0;">Chapter Two &middot; The Arrival</p><h2>The Baby Who Was Already King</h2></div>
+    </div>
+    <p>If you were writing a legend to impress people, you would not write it this way. The Creator of the universe arrives — not in a palace, not with armies, not with any fanfare the world would recognize — but in a feeding trough, in a small town, to a teenage mother and a working-class father, because there was no room anywhere better. That's not how you invent a king. That's how it actually happened.</p>
+    <p>The sky did the announcing instead. Shepherds — the overlooked, blue-collar night-shift workers of their day — were the first people on earth to hear the news, from an angel, with a choir of heaven lighting up the dark over their heads. Not the religious elite. Not the powerful. Shepherds. God has always had a habit of showing up first for the people everyone else overlooks.</p>
+    <div class="scene"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7A34" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M8 6l1.5 2M16 6l-1.5 2"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg></div>
+    <div class="pull-verse">"For unto you is born this day in the city of David a Saviour, which is Christ the Lord."<cite>Luke 2:11, KJV</cite></div>
+    <p>Later, foreign scholars — the Magi — crossed hundreds of miles following a star, carrying gold, frankincense, and myrrh: gifts for a king, a priest, and, unknowingly, gifts fit for a burial. Even the gifts at His birth were pointing toward His death. Nothing about this story was accidental. Every detail was placed on purpose, by Someone who already knew how the whole thing would end — and started it anyway, for you.</p>
+  </section>
+
+  <section class="chapter" data-c="ministry">
+    <div class="chapter-head">
+      <div class="chapter-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/></svg></div>
+      <div><p class="chapter-eyebrow" style="margin-bottom:0;">Chapter Three &middot; His Life</p><h2>Thirty Quiet Years, Then Three Loud Ones</h2></div>
+    </div>
+    <p>For three decades, nothing. A carpenter's son in a nothing town, learning a trade, living an ordinary life so unremarkable that when He finally stood up to teach, His own neighbors asked, "Isn't this the carpenter?" Then, at thirty, He was baptized, the Spirit of God visibly came down on Him like a dove, and a voice from heaven said, "This is My beloved Son." Everything changed from that day forward.</p>
+    <p>He healed people nobody else would touch — lepers, the blind, the paralyzed, a woman bleeding for twelve years who nobody would go near. He forgave people the religious crowd had already written off. He fed five thousand people from one boy's lunch. He walked on water in a storm that terrified seasoned fishermen. He raised the dead — not metaphorically, actually dead people, actually walking again. And He taught with an authority nobody had heard before, saying things like "I am the way, the truth, and the life" — not as a suggestion, but as a fact He expected people to build their whole lives on.</p>
+    <div class="scene"><svg viewBox="0 0 24 24" fill="none" stroke="#3F6B3C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3C7 3 4 7 4 11c0 5 8 10 8 10s8-5 8-10c0-4-3-8-8-8z"/><path d="M12 7v8M9 10h6"/></svg></div>
+    <div class="pull-verse">"The Spirit of the Lord is upon Me... to preach the gospel to the poor... to heal the brokenhearted, to preach deliverance to the captives."<cite>Luke 4:18, KJV</cite></div>
+    <p>He never once used His power to make His own life easier — He used it to make other people's lives whole. That's the detail that should stop you. A man with the power to heal the sick never once used it to spare Himself a single bit of pain. That tells you exactly what kind of King you're dealing with.</p>
+  </section>
+
+  <section class="chapter" data-c="cross">
+    <div class="chapter-head">
+      <div class="chapter-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M6 8h12"/></svg></div>
+      <div><p class="chapter-eyebrow" style="margin-bottom:0;">Chapter Four &middot; The Cross</p><h2>Betrayed, Beaten, and Nailed to a Tree &mdash; on Purpose</h2></div>
+    </div>
+    <p>A friend sold Him out for thirty pieces of silver. A crowd that had just called Him a king days earlier screamed for His execution by Friday. A Roman governor who found no real crime in Him handed Him over anyway, because it was easier than standing up for the truth. He was whipped, mocked, crowned with thorns as a joke, and nailed to a Roman cross between two criminals — the most humiliating, most public, most agonizing death the empire had on offer.</p>
+    <p>And here is the part that changes everything: He didn't lose control of the situation. He said it Himself, years before it happened — that He would lay down His life, that no one takes it from Him, that He lays it down on His own authority. The cross wasn't Jesus losing. The cross was Jesus paying a debt that was never His, so that the debt attached to your name and mine could be marked "paid in full."</p>
+    <div class="scene"><svg viewBox="0 0 24 24" fill="none" stroke="#E7CE94" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M6 8h12"/></svg></div>
+    <div class="pull-verse">"But He was wounded for our transgressions, He was bruised for our iniquities... and with His stripes we are healed."<cite>Isaiah 53:5, NKJV</cite></div>
+    <p>Even dying, He forgave the men killing Him. Even dying, He made sure His mother would be cared for. Even dying, He told a thief next to Him, "Today you will be with Me in paradise." Right up to His last breath — "It is finished" — He was still thinking about everyone except Himself. That is not what losing looks like. That is what love paying a bill in full looks like.</p>
+  </section>
+
+  <section class="chapter" data-c="rise">
+    <div class="chapter-head">
+      <div class="chapter-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></div>
+      <div><p class="chapter-eyebrow" style="margin-bottom:0;">Chapter Five &middot; The Resurrection</p><h2>The Grave Couldn't Hold What It Took In</h2></div>
+    </div>
+    <p>They sealed the tomb with a stone that took several men to move. They posted Roman guards — trained soldiers who could be executed for falling asleep on duty — around it. By every human measure, that was the end of the story. Three days later, the stone was rolled away from the inside, the tomb was empty, the burial cloths were folded, and the guards had nothing believable to say about what happened.</p>
+    <p>Then He started showing up. Not to one person who might have imagined it — to Mary at the tomb, to two travelers on a road, to His disciples hiding in fear, to over five hundred people at once, in broad daylight, over a period of forty days. People who were terrified and scattered on Friday were transformed by Sunday into people willing to die rather than deny what they had personally seen. That kind of change doesn't come from a rumor. It comes from an encounter.</p>
+    <div class="scene"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></div>
+    <div class="pull-verse">"He is not here: for He is risen, as He said. Come, see the place where the Lord lay."<cite>Matthew 28:6, KJV</cite></div>
+    <p>This is the hinge the entire faith swings on. If the tomb stayed full, Christianity is a nice story about a good teacher who died too young. Because the tomb is empty, it's something else entirely: proof that death, sin, and the grave do not get the final word over anyone who belongs to Him. He didn't just survive death. He walked out the other side of it, and He's holding the door open for everyone who will come to Him.</p>
+  </section>
+
+  <div class="closing-card">
+    <h3>Why This Still Matters Today</h3>
+    <p>Everything Jesus did — the prophecy, the manger, the miracles, the cross, the empty tomb — was aimed at one thing: making a way back to God for you, personally, right now, wherever you are reading this. Not someday. Today.</p>
+    <a class="btn" href="/#prayer">Pray With Us Today</a>
+    <a class="btn btn-outline" href="/app/#/home">Open the App</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner gutter">
+    <div class="footer-links">
+      <a href="/#about">About</a>
+      <a href="/#word">The Word</a>
+      <a href="/#prayer">Prayer</a>
+      <a href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Word and Faith Network &middot; wfnglobal.org</div>
+  </div>
+</footer>
+
+<script src="/app/js/wfn-tts.js"></script>

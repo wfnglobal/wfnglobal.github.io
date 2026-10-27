@@ -1078,12 +1078,14 @@
 
     viewEl.innerHTML = `
       <div class="reader-nav">
-        <button class="reader-nav-btn" id="prevCh" ${prevDisabled} data-href="${prevHref}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> Prev
-        </button>
         <a class="reader-title" href="#/bible/${slug}">${esc(data.name)} ${chapter}</a>
-        <button class="reader-nav-btn" id="nextCh" ${nextDisabled} data-href="${nextHref}">
-          Next <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </div>
+      <div class="reader-chapter-fabs" id="readerChapterFabs">
+        <button class="rcf-btn" id="prevCh" ${prevDisabled} data-href="${prevHref}" aria-label="Previous chapter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="rcf-btn" id="nextCh" ${nextDisabled} data-href="${nextHref}" aria-label="Next chapter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
         </button>
       </div>
       <div class="reader-toolbar">
@@ -1856,8 +1858,19 @@
         <div class="sheet-row-label">Save to My Verses</div>
         <button class="sheet-toggle" id="savedToggle" data-on="${mark.saved ? 1 : 0}"></button>
       </div>
+      <div style="display:flex; gap:10px; margin-top:10px;">
+        <button class="btn btn-outline btn-block" id="copyVerseBtn" type="button">Copy</button>
+        <button class="btn btn-outline btn-block" id="shareVerseBtn" type="button">Share</button>
+      </div>
       <a class="btn btn-outline btn-block" style="margin-top:10px;" id="addVerseNoteBtn">Add a Note on This Verse</a>
     `);
+    const verseShareText = `"${text}" — ${bookName} ${chapter}:${verse}`;
+    document.getElementById("copyVerseBtn").addEventListener("click", () => {
+      if (window.WFNShare) window.WFNShare.copy(verseShareText);
+    });
+    document.getElementById("shareVerseBtn").addEventListener("click", () => {
+      if (window.WFNShare) window.WFNShare.share(verseShareText);
+    });
     sheetBodyEl.querySelectorAll(".swatch").forEach((sw) => {
       sw.addEventListener("click", () => {
         const current = sw.dataset.active === "1";
@@ -2140,7 +2153,10 @@
           <div class="declaration-label">Today's Declaration</div>
           <div class="declaration-text" id="declarationText">${declarationLinesHtml}</div>
           <div class="declaration-ref">${esc(DECLARATION.ref)}</div>
-          <select class="vod-translate" id="prayerTranslate" aria-label="Translate the declaration and prayer points">${translateLangOptions()}</select>
+          <div style="display:flex; gap:10px; margin-top:14px;">
+            <select class="vod-translate" id="prayerTranslate" aria-label="Translate the declaration and prayer points">${translateLangOptions()}</select>
+            <button class="vod-translate" id="shareDeclarationBtn" type="button" style="font-weight:700;">Share</button>
+          </div>
         </div>
       </div>
       <p class="translate-note" id="prayerTranslateNote" hidden></p>
@@ -2177,6 +2193,9 @@
         pairs.push({ el: document.getElementById(`prayerPointText-${i}`), original: p });
       });
       translateInto(pairs, e.target.value, document.getElementById("prayerTranslateNote"));
+    });
+    document.getElementById("shareDeclarationBtn").addEventListener("click", () => {
+      if (window.WFNShare) window.WFNShare.share(`${declarationPlain} — ${DECLARATION.ref}`);
     });
   }
 
@@ -2707,9 +2726,44 @@
     route();
   });
 
+  // Bottom tab bar auto-hide: fades out of the way while reading (the
+  // page scrolling down) and comes back on its own — immediately on
+  // scrolling up, or after a short pause even if the page never scrolls
+  // back up, so it's never more than a moment away. One global listener,
+  // not per-view, since every screen shares the same tab bar.
+  function setupTabbarAutoHide() {
+    const tabbar = document.querySelector(".app-tabbar");
+    if (!tabbar) return;
+    let lastY = window.scrollY;
+    let idleTimer = null;
+    const IDLE_MS = 1200;
+    const THRESHOLD = 6;
+    const TOP_ZONE = 40;
+    function show() { tabbar.classList.remove("tabbar-hidden"); }
+    function hide() { tabbar.classList.add("tabbar-hidden"); }
+    function scheduleIdleShow() {
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(show, IDLE_MS);
+    }
+    window.addEventListener(
+      "scroll",
+      () => {
+        const y = window.scrollY;
+        const delta = y - lastY;
+        if (y < TOP_ZONE) show();
+        else if (delta > THRESHOLD) hide();
+        else if (delta < -THRESHOLD) show();
+        lastY = y;
+        scheduleIdleShow();
+      },
+      { passive: true }
+    );
+  }
+
   window.addEventListener("DOMContentLoaded", () => {
     WFNStore.recordActivityToday();
     mountVoiceControls();
+    setupTabbarAutoHide();
     route();
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/app/sw.js").catch(() => {});

@@ -327,6 +327,162 @@
   }
 
   // ---------------------------------------------------------------------
+  // Copy & Share, shared: window.WFNShare.copy(text) / .share(text) /
+  // .toast(msg) — used by the selection toolbar just below, and callable
+  // from the app's own UI too (e.g. a verse sheet's explicit Copy/Share
+  // buttons) so there's one clipboard/share/toast implementation, not two.
+  // ---------------------------------------------------------------------
+  var shareToastEl = null;
+  function wfnToast(msg) {
+    if (typeof document === "undefined") return;
+    if (!shareToastEl) {
+      shareToastEl = document.createElement("div");
+      shareToastEl.id = "wfnShareToast";
+      document.body.appendChild(shareToastEl);
+      var style = document.createElement("style");
+      style.textContent =
+        "#wfnShareToast{position:fixed; left:50%; bottom:calc(28px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%) translateY(12px); z-index:401; background:#231F18; color:#FFFDF8; font-size:13.5px; font-weight:600; padding:10px 18px; border-radius:100px; opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease; box-shadow:0 10px 26px -10px rgba(0,0,0,0.4); font-family:'Inter',-apple-system,system-ui,sans-serif;}" +
+        "#wfnShareToast.show{opacity:1; transform:translateX(-50%) translateY(0);}";
+      document.head.appendChild(style);
+    }
+    shareToastEl.textContent = msg;
+    shareToastEl.classList.add("show");
+    clearTimeout(shareToastEl._t);
+    shareToastEl._t = setTimeout(function () { shareToastEl.classList.remove("show"); }, 2200);
+  }
+  function wfnCopyText(text, cb) {
+    if (!text) return;
+    var done = function () { wfnToast("Copied"); if (cb) cb(); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, done);
+    } else {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      } catch (e) {}
+      done();
+    }
+  }
+  function wfnShareText(text, cb) {
+    if (!text) return;
+    var payload = { text: text, title: "Word and Faith Network", url: (typeof location !== "undefined" ? location.href : "") };
+    if (navigator.share) {
+      navigator.share(payload).catch(function () {});
+      if (cb) cb();
+    } else {
+      wfnCopyText(text, function () {
+        wfnToast("Copied — share it anywhere");
+        if (cb) cb();
+      });
+    }
+  }
+  window.WFNShare = { copy: wfnCopyText, share: wfnShareText, toast: wfnToast };
+
+  // ---------------------------------------------------------------------
+  // Copy & Share toolbar: select any word or passage — a Bible verse, a
+  // line of a prayer, a sentence from a sermon — and a small toolbar
+  // appears over the selection with Copy and Share. Runs on every page
+  // that loads this file, website or app, so it's placed above the
+  // WFN_TTS_MANUAL check below (which only gates the website's
+  // self-mounting Listen widget).
+  // ---------------------------------------------------------------------
+  (function setupSelectionShare() {
+    if (typeof document === "undefined") return;
+    var EXCLUDE_SELECTOR =
+      "header, footer, nav, .site-header, .site-footer, .app-header, .app-tabbar, " +
+      "#wfnVoiceStack, #voiceStack, #wfnShareBar, #wfnShareToast, .sheet, " +
+      "button, select, input, textarea, .reader-nav, .reader-toolbar";
+    var bar = null;
+    var currentText = "";
+    var selTimer = null;
+
+    function ensureBar() {
+      if (bar) return bar;
+      bar = document.createElement("div");
+      bar.id = "wfnShareBar";
+      bar.innerHTML =
+        '<button type="button" data-action="copy">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy</button>' +
+        '<span class="wfnsb-sep"></span>' +
+        '<button type="button" data-action="share">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.7l7.4-4.4M8.3 13.3l7.4 4.4"/></svg>Share</button>';
+      document.body.appendChild(bar);
+      bar.querySelector('[data-action="copy"]').addEventListener("mousedown", function (e) { e.preventDefault(); doCopy(); });
+      bar.querySelector('[data-action="share"]').addEventListener("mousedown", function (e) { e.preventDefault(); doShare(); });
+      bar.querySelector('[data-action="copy"]').addEventListener("touchend", function (e) { e.preventDefault(); doCopy(); });
+      bar.querySelector('[data-action="share"]').addEventListener("touchend", function (e) { e.preventDefault(); doShare(); });
+      var style = document.createElement("style");
+      style.textContent = [
+        "#wfnShareBar{position:fixed; z-index:400; display:none; align-items:center; gap:2px; background:#231F18; color:#FFFDF8; border-radius:100px; padding:6px; box-shadow:0 10px 26px -10px rgba(0,0,0,0.4); font-family:'Inter',-apple-system,system-ui,sans-serif;}",
+        "#wfnShareBar.show{display:flex;}",
+        "#wfnShareBar button{display:flex; align-items:center; gap:6px; border:none; background:none; color:#FFFDF8; font-size:13px; font-weight:700; padding:7px 12px; border-radius:100px; cursor:pointer;}",
+        "#wfnShareBar button:active{background:rgba(255,255,255,0.14);}",
+        "#wfnShareBar button svg{width:15px; height:15px; flex-shrink:0;}",
+        "#wfnShareBar .wfnsb-sep{width:1px; height:18px; background:rgba(255,255,255,0.22);}"
+      ].join("\n");
+      document.head.appendChild(style);
+      return bar;
+    }
+
+    function getSelected() {
+      var sel = window.getSelection();
+      if (!sel || sel.isCollapsed || !sel.rangeCount) return null;
+      var text = sel.toString().trim();
+      if (!text) return null;
+      var node = sel.anchorNode;
+      var el = node && (node.nodeType === 1 ? node : node.parentElement);
+      if (!el || el.closest(EXCLUDE_SELECTOR)) return null;
+      return { text: text, range: sel.getRangeAt(0) };
+    }
+
+    function positionBar(range) {
+      var rect = range.getBoundingClientRect();
+      if (!rect || (!rect.width && !rect.height)) return;
+      var el = ensureBar();
+      el.classList.add("show");
+      var top = rect.top - 50;
+      if (top < 8) top = rect.bottom + 10;
+      var left = rect.left + rect.width / 2;
+      el.style.top = top + "px";
+      el.style.left = Math.min(Math.max(left, 80), window.innerWidth - 80) + "px";
+      el.style.transform = "translateX(-50%)";
+    }
+
+    function hideBar() {
+      if (bar) bar.classList.remove("show");
+    }
+
+    function doCopy() {
+      wfnCopyText(currentText, hideBar);
+    }
+    function doShare() {
+      wfnShareText(currentText, hideBar);
+    }
+
+    document.addEventListener("selectionchange", function () {
+      clearTimeout(selTimer);
+      selTimer = setTimeout(function () {
+        var sel = getSelected();
+        if (!sel) {
+          currentText = "";
+          hideBar();
+          return;
+        }
+        currentText = sel.text;
+        positionBar(sel.range);
+      }, 60);
+    });
+    document.addEventListener("scroll", hideBar, true);
+    window.addEventListener("resize", hideBar);
+  })();
+
+  // ---------------------------------------------------------------------
   // Self-mounting floating widget for plain website pages. The app sets
   // window.WFN_TTS_MANUAL = true and skips all of this.
   // ---------------------------------------------------------------------

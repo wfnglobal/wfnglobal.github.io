@@ -58,7 +58,12 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
   background:rgba(251,248,241,0.96); backdrop-filter:blur(10px);
   border-top:1px solid var(--border);
   padding-bottom:env(safe-area-inset-bottom,0px);
+  transition:transform .28s ease, opacity .22s ease;
 }
+/* Fades out of the way while reading (scrolling down a screen's worth of
+   content) and comes back on its own — on scrolling up, or a moment
+   after scrolling stops, so it's never more than a beat away. */
+.app-tabbar.tabbar-hidden{transform:translateY(115%); opacity:0; pointer-events:none;}
 :root[data-theme="dark"] .app-tabbar{background:rgba(21,18,12,0.92);}
 .app-tabbar-inner{max-width:640px; margin:0 auto; display:flex;}
 .tab-btn{
@@ -146,11 +151,27 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 }
 .chapter-btn:active{background:var(--gold-wash);}
 
-.reader-nav{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; gap:8px;}
-.reader-nav-btn{display:flex; align-items:center; gap:5px; font-size:14.5px; font-weight:600; color:var(--gold); background:none; border:none; padding:8px 4px;}
-.reader-nav-btn svg{width:17px; height:17px;}
-.reader-nav-btn[disabled]{opacity:0.3;}
+.reader-nav{display:flex; align-items:center; justify-content:center; margin-bottom:10px; gap:8px;}
 .reader-title{font-family:var(--font-display); font-size:1.15rem; font-weight:600; text-align:center;}
+
+/* Chapter prev/next — docked to the right edge, vertically centered, so
+   they're reachable with a thumb without scrolling back up to a header
+   bar. Icon-only (no "Prev"/"Next" words); each fades to a ghost when
+   there's no chapter that way. Clear of .voice-stack (left edge) and
+   .note-fab (bottom-right, above the tab bar). */
+.reader-chapter-fabs{
+  position:fixed; right:calc(12px + env(safe-area-inset-right,0px)); top:50%; transform:translateY(-50%);
+  z-index:50; display:flex; flex-direction:column; gap:12px;
+}
+.rcf-btn{
+  width:46px; height:46px; border-radius:100px; border:1px solid var(--border);
+  background:rgba(var(--surface-rgb),0.92); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  color:var(--gold); display:flex; align-items:center; justify-content:center;
+  box-shadow:0 8px 20px var(--shadow); transition:opacity .15s ease, transform .15s ease;
+}
+.rcf-btn svg{width:19px; height:19px;}
+.rcf-btn:active{transform:scale(0.92);}
+.rcf-btn[disabled]{opacity:0.25; pointer-events:none;}
 
 .text-size-row{display:flex; align-items:center; justify-content:center; gap:4px; margin-bottom:18px; padding-bottom:16px; border-bottom:1px solid var(--border);}
 .text-size-label{font-size:12.5px; color:var(--ink-3); font-weight:600; margin-right:8px;}

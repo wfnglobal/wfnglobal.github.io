@@ -592,20 +592,26 @@
       .map((r) => `<circle cx="${VOD_CX}" cy="${VOD_CY}" r="${r.r}" fill="none" stroke="${r.color}" stroke-width="1.4" opacity="${r.opacity}"/>`)
       .join("");
   }
-  // Every ray runs straight from the center rings out to a small standing
-  // figure — each a different color from the palette — so the whole shape
-  // reads as people connected to the Word at the center, flowing together.
-  // Sized to be the card's defining visual, not a small decorative touch.
+  // Every ray runs from the center rings out to a small standing figure —
+  // each a different color from the palette — so the whole shape reads as
+  // people connected to the Word at the center, flowing together. The
+  // figure never rotates to match its ray's angle, so a ray that arrives
+  // on the diagonal used to meet the body at an awkward slanted "kink"
+  // right where they joined — the 4 cardinal rays (straight up/down/left/
+  // right) looked fine, the 4 diagonals didn't. Every ray now bends into
+  // a short straight-up stub for its last stretch, so every figure, at
+  // every angle, is always met by a clean vertical approach into its feet.
   function vodCoverRaysHtml() {
     const n = VOD_RAY_COLORS.length;
-    const innerR = 26, outerR = 108;
+    const innerR = 26, outerR = 108, stub = 16;
     const rays = VOD_RAY_COLORS.map((color, i) => {
       const angle = (i / n) * Math.PI * 2;
       const cos = Math.cos(angle), sin = Math.sin(angle);
       const ix = VOD_CX + cos * innerR, iy = VOD_CY + sin * innerR;
       const ox = VOD_CX + cos * outerR, oy = VOD_CY + sin * outerR;
+      const elbowY = oy - stub;
       return (
-        `<line x1="${ix.toFixed(1)}" y1="${iy.toFixed(1)}" x2="${ox.toFixed(1)}" y2="${oy.toFixed(1)}" stroke="${color}" stroke-width="1.7" opacity="0.68"/>` +
+        `<path d="M ${ix.toFixed(1)} ${iy.toFixed(1)} L ${ox.toFixed(1)} ${elbowY.toFixed(1)} L ${ox.toFixed(1)} ${oy.toFixed(1)}" fill="none" stroke="${color}" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" opacity="0.68"/>` +
         vodPersonIconSvg(ox, oy, color)
       );
     }).join("");

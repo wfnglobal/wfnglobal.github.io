@@ -102,17 +102,31 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
   position:absolute; inset:0; z-index:3; width:100%; border:none; padding:28px 20px; margin:0; cursor:pointer;
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; text-align:center;
   background:
-    radial-gradient(circle at 30% 20%, rgba(216,140,115,0.55), transparent 55%),
-    radial-gradient(circle at 75% 15%, rgba(142,146,214,0.5), transparent 55%),
-    radial-gradient(circle at 70% 85%, rgba(111,191,168,0.45), transparent 60%),
-    linear-gradient(160deg, #3A2E12 0%, #1D1810 100%);
+    radial-gradient(circle at 25% 15%, rgba(216,140,115,0.68), transparent 50%),
+    radial-gradient(circle at 80% 12%, rgba(142,146,214,0.62), transparent 50%),
+    radial-gradient(circle at 84% 88%, rgba(111,191,168,0.58), transparent 55%),
+    radial-gradient(circle at 16% 86%, rgba(231,206,148,0.58), transparent 55%),
+    radial-gradient(circle at 50% 46%, rgba(231,206,148,0.3), transparent 62%),
+    linear-gradient(160deg, #2E2410 0%, #15110A 100%);
+  background-size:150% 150%, 150% 150%, 150% 150%, 150% 150%, 100% 100%, 100% 100%;
+  animation:vodBgDrift 16s ease-in-out infinite alternate;
   transition:opacity .4s ease, transform .4s ease;
 }
+:root[data-motion="reduced"] .vod-cover{animation:none;}
+@keyframes vodBgDrift{
+  0%{background-position:0% 0%, 100% 0%, 100% 100%, 0% 100%, 50% 46%, 0 0;}
+  100%{background-position:12% 14%, 88% 10%, 90% 92%, 10% 88%, 50% 46%, 0 0;}
+}
 .verse-of-day.revealed .vod-cover{opacity:0; transform:scale(1.04); pointer-events:none;}
-.vod-rays{position:absolute; inset:0; width:100%; height:100%; animation:vodRaysSpin 60s linear infinite; transform-origin:50% 42%;}
+/* The rays, rings and badge float together as one group, drifting gently
+   so the whole "constellation" reads as alive rather than a static graphic. */
+.vod-constellation{position:relative; flex:1; width:100%; display:flex; align-items:center; justify-content:center; animation:vodFloat 5.5s ease-in-out infinite; will-change:transform;}
+:root[data-motion="reduced"] .vod-constellation{animation:none;}
+@keyframes vodFloat{0%,100%{transform:translateY(0);} 50%{transform:translateY(-7px);}}
+.vod-rays{position:absolute; inset:0; width:100%; height:100%; animation:vodRaysSpin 70s linear infinite; transform-origin:50% 50%;}
 :root[data-motion="reduced"] .vod-rays{animation:none;}
 @keyframes vodRaysSpin{from{transform:rotate(0deg);} to{transform:rotate(360deg);}}
-.vod-reveal-badge{position:relative; width:60px; height:60px; display:flex; align-items:center; justify-content:center; margin-bottom:8px;}
+.vod-reveal-badge{position:relative; width:60px; height:60px; display:flex; align-items:center; justify-content:center;}
 .vod-reveal-badge svg{width:30px; height:30px; position:relative; z-index:2;}
 .vod-reveal-glow{position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle, rgba(231,206,148,0.55) 0%, rgba(231,206,148,0) 70%); animation:vodGlowPulse 2.6s ease-in-out infinite;}
 :root[data-motion="reduced"] .vod-reveal-glow{animation:none;}

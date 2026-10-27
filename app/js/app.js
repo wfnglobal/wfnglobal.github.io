@@ -566,29 +566,42 @@
   function vodPersonIconSvg(cx, cy, color) {
     const x = cx.toFixed(1), y = cy.toFixed(1);
     return (
-      `<g transform="translate(${x},${y})" opacity="0.92">` +
+      `<g transform="translate(${x},${y})" opacity="0.95">` +
       `<circle cx="0" cy="-5.2" r="3.3" fill="none" stroke="${color}" stroke-width="1.4"/>` +
       `<path d="M -5.4 6.6 Q -5.4 -1.2 0 -1.2 Q 5.4 -1.2 5.4 6.6" fill="none" stroke="${color}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>` +
       `</g>`
     );
   }
+  // Three soft concentric rings sit behind the Bible badge at the exact
+  // center — the "church without walls" halo — in a blend of the same
+  // palette the rays use, instead of one flat tone.
+  function vodRingsHtml() {
+    const rings = [
+      { r: 68, color: "#8E92D6", opacity: 0.16 },
+      { r: 50, color: "#D98C73", opacity: 0.22 },
+      { r: 33, color: "#E7CE94", opacity: 0.3 },
+    ];
+    return rings
+      .map((r) => `<circle cx="150" cy="95" r="${r.r}" fill="none" stroke="${r.color}" stroke-width="1" opacity="${r.opacity}"/>`)
+      .join("");
+  }
+  // Every ray runs straight from the center rings out to a small standing
+  // figure — each a different color from the palette — so the whole shape
+  // reads as people connected to the Word at the center, flowing together.
   function vodCoverRaysHtml() {
     const n = VOD_RAY_COLORS.length;
-    const innerR = 26, outerR = 100;
+    const innerR = 18, outerR = 104;
     const rays = VOD_RAY_COLORS.map((color, i) => {
       const angle = (i / n) * Math.PI * 2;
       const cos = Math.cos(angle), sin = Math.sin(angle);
       const ix = 150 + cos * innerR, iy = 95 + sin * innerR;
       const ox = 150 + cos * outerR, oy = 95 + sin * outerR;
-      const tipX = 150 + cos * (innerR - 7), tipY = 95 + sin * (innerR - 7);
-      const perpX = -sin * 4, perpY = cos * 4;
       return (
-        `<line x1="${ix.toFixed(1)}" y1="${iy.toFixed(1)}" x2="${ox.toFixed(1)}" y2="${oy.toFixed(1)}" stroke="${color}" stroke-width="1.1" opacity="0.5"/>` +
-        `<polygon points="${tipX.toFixed(1)},${tipY.toFixed(1)} ${(ix + perpX).toFixed(1)},${(iy + perpY).toFixed(1)} ${(ix - perpX).toFixed(1)},${(iy - perpY).toFixed(1)}" fill="${color}" opacity="0.9"/>` +
+        `<line x1="${ix.toFixed(1)}" y1="${iy.toFixed(1)}" x2="${ox.toFixed(1)}" y2="${oy.toFixed(1)}" stroke="${color}" stroke-width="1.2" opacity="0.6"/>` +
         vodPersonIconSvg(ox, oy, color)
       );
     }).join("");
-    return `<svg class="vod-rays" viewBox="0 0 300 190" aria-hidden="true"><g>${rays}</g></svg>`;
+    return `<svg class="vod-rays" viewBox="0 0 300 190" aria-hidden="true"><g>${vodRingsHtml()}${rays}</g></svg>`;
   }
 
   // Other Bible versions and translation are fetched live (all public-domain
@@ -874,11 +887,13 @@
 
       <div class="verse-of-day" id="vodCard">
         <button class="vod-cover" id="vodCover" type="button" aria-label="Tap to reveal today's Bible verse">
-          ${vodCoverRaysHtml()}
-          <span class="vod-reveal-badge">
-            <span class="vod-reveal-glow"></span>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.6" fill="rgba(255,253,248,0.16)" stroke="#FFFDF8" stroke-width="1.6"/><line x1="12" y1="3.4" x2="12" y2="20.6" stroke="#FFFDF8" stroke-width="1" opacity="0.45"/><path d="M12 8.2v7M8.7 11.7h6.6" stroke="#E7CE94" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </span>
+          <div class="vod-constellation">
+            ${vodCoverRaysHtml()}
+            <span class="vod-reveal-badge">
+              <span class="vod-reveal-glow"></span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.6" fill="rgba(255,253,248,0.16)" stroke="#FFFDF8" stroke-width="1.6"/><line x1="12" y1="3.4" x2="12" y2="20.6" stroke="#FFFDF8" stroke-width="1" opacity="0.45"/><path d="M12 8.2v7M8.7 11.7h6.6" stroke="#E7CE94" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+          </div>
           <div class="vod-cover-label">Verse of the Day</div>
           <div class="vod-cover-sub">Tap to reveal today's Word</div>
         </button>

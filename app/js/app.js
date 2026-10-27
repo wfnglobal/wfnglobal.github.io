@@ -1080,10 +1080,12 @@
       <div class="reader-nav">
         <a class="reader-title" href="#/bible/${slug}">${esc(data.name)} ${chapter}</a>
       </div>
-      <div class="reader-chapter-fabs" id="readerChapterFabs">
+      <div class="reader-chapter-fab-prev">
         <button class="rcf-btn" id="prevCh" ${prevDisabled} data-href="${prevHref}" aria-label="Previous chapter">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
+      </div>
+      <div class="reader-chapter-fab-next">
         <button class="rcf-btn" id="nextCh" ${nextDisabled} data-href="${nextHref}" aria-label="Next chapter">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
         </button>

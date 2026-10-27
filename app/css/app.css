@@ -154,15 +154,18 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 .reader-nav{display:flex; align-items:center; justify-content:center; margin-bottom:10px; gap:8px;}
 .reader-title{font-family:var(--font-display); font-size:1.15rem; font-weight:600; text-align:center;}
 
-/* Chapter prev/next — docked to the right edge, vertically centered, so
-   they're reachable with a thumb without scrolling back up to a header
-   bar. Icon-only (no "Prev"/"Next" words); each fades to a ghost when
-   there's no chapter that way. Clear of .voice-stack (left edge) and
+/* Chapter prev/next — one on each edge, matching the direction it moves:
+   Previous on the left, Next on the right, each reachable with a thumb
+   without scrolling back up to a header bar. Icon-only (no "Prev"/"Next"
+   words); each fades to a ghost when there's no chapter that way.
+   Previous sits higher than .voice-stack (left edge, centered ~60%) so
+   the two never overlap; Next has the right edge to itself, clear of
    .note-fab (bottom-right, above the tab bar). */
-.reader-chapter-fabs{
-  position:fixed; right:calc(12px + env(safe-area-inset-right,0px)); top:50%; transform:translateY(-50%);
-  z-index:50; display:flex; flex-direction:column; gap:12px;
+.reader-chapter-fab-prev, .reader-chapter-fab-next{
+  position:fixed; top:30%; transform:translateY(-50%); z-index:50;
 }
+.reader-chapter-fab-prev{left:calc(12px + env(safe-area-inset-left,0px));}
+.reader-chapter-fab-next{right:calc(12px + env(safe-area-inset-right,0px));}
 .rcf-btn{
   width:46px; height:46px; border-radius:100px; border:1px solid var(--border);
   background:rgba(var(--surface-rgb),0.92); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);

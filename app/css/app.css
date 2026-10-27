@@ -132,23 +132,11 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 .home-row .ico-prayer svg{color:#8C3A3A;}
 .home-row .ico-library{background:#E4EEE0; color:#3F6B3C;}
 .home-row .ico-library svg{color:#3F6B3C;}
-
-/* ---- The Jesus card: a small radiant "hero" moment on the home screen,
-   distinct from the plain list rows below it, since this is the one
-   button meant to feel like its own occasion rather than a utility. ---- */
-.jesus-card{
-  position:relative; overflow:hidden; display:flex; align-items:center; gap:16px;
-  background:linear-gradient(145deg,#2A2008 0%,#4A3410 55%,#8A6A2C 100%);
-  border-radius:16px; padding:18px 18px; margin-bottom:18px; text-decoration:none; color:#FFFDF8;
-}
-.jesus-card-rays{position:absolute; inset:0 0 auto; height:100%; width:100%; opacity:0.6; pointer-events:none;}
-.jesus-card-badge{position:relative; z-index:2; width:52px; height:52px; flex-shrink:0; border-radius:14px; background:rgba(255,253,248,0.08); display:flex; align-items:center; justify-content:center;}
-.jesus-card-badge svg{width:34px; height:34px;}
-.jesus-card-body{position:relative; z-index:2; flex:1; min-width:0;}
-.jesus-card-kicker{font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#C9A968; margin-bottom:3px;}
-.jesus-card-body h3{font-family:var(--font-display); font-size:1.12rem; font-weight:600; color:#FFFDF8; margin-bottom:3px;}
-.jesus-card-body p{font-size:13px; color:#E7CE94; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-.jesus-card .chev{position:relative; z-index:2; color:#C9A968; flex-shrink:0;}
+/* Jesus row: a warm gold-on-dark badge (a cross, not a face), set apart
+   from the other icons' pastel washes so it still reads as the special
+   one even as a plain row. */
+.home-row .ico-jesus{background:linear-gradient(155deg,#4A3410,#8A6A2C); color:#FFFDF8;}
+.home-row .ico-jesus svg{color:#FFFDF8;}
 .home-row .chev svg{width:17px; height:17px;}
 
 .install-hint{background:var(--surface-2); border:1px dashed var(--border); border-radius:14px; padding:16px 18px; font-size:14.5px; color:var(--ink-2); line-height:1.65;}

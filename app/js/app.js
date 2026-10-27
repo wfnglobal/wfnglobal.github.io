@@ -842,29 +842,12 @@
       </div>
       <p class="translate-note" id="vodTranslateNote" hidden></p>
 
-      <a class="jesus-card" href="/jesus.html">
-        <svg class="jesus-card-rays" viewBox="0 0 400 140" preserveAspectRatio="none" aria-hidden="true">
-          <g stroke="#E7CE94" stroke-width="1" opacity="0.5">
-            <path d="M200 70 L40 -40"/><path d="M200 70 L140 -46"/><path d="M200 70 L200 -50"/>
-            <path d="M200 70 L260 -46"/><path d="M200 70 L360 -40"/>
-          </g>
-        </svg>
-        <div class="jesus-card-badge">
-          <svg viewBox="0 0 100 100" aria-hidden="true">
-            <circle cx="50" cy="50" r="46" fill="none" stroke="#C9A968" stroke-width="1.4" opacity="0.7"/>
-            <path d="M50 20v60M28 44h44" stroke="#FFFDF8" stroke-width="6" stroke-linecap="round"/>
-            <path d="M50 20v60M28 44h44" stroke="#E7CE94" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="jesus-card-body">
-          <div class="jesus-card-kicker">Jesus</div>
-          <h3>His whole story, start to finish</h3>
-          <p>Prophesied. Born. Teaching, miracles, the cross, and the empty tomb.</p>
-        </div>
-        <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
-      </a>
-
       <div class="stack">
+        <a class="home-row" href="/jesus.html">
+          <div class="ico ico-jesus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 8h12"/></svg></div>
+          <div class="body"><h3>Jesus</h3><p>His whole story, start to finish</p></div>
+          <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+        </a>
         <a class="home-row" href="#/sermons/${sermon.slug}">
           <div class="ico ico-sermon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h11a1 1 0 0 1 1 1v13l-4-2-4 2-4-2V5a1 1 0 0 1 1-1z"/></svg></div>
           <div class="body"><h3>Today's Sermon</h3><p>${esc(sermon.title)}</p></div>

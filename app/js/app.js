@@ -555,13 +555,25 @@
   // there. Rays cycle through the app's warm palette plus a few extra hues
   // so it reads as colorful rather than the single-tone gold used elsewhere.
   const VOD_RAY_COLORS = ["#E7CE94", "#D98C73", "#8E92D6", "#6FBFA8", "#E7CE94", "#D98C73", "#8E92D6", "#6FBFA8"];
+  // Each ray now starts a short distance out from the center — not at the
+  // exact center point — and carries a small arrowhead at that inner end,
+  // pointing in toward the Bible badge, so the rays visibly flow into it
+  // rather than just converging somewhere behind it.
   function vodCoverRaysHtml() {
     const n = VOD_RAY_COLORS.length;
+    const innerR = 26, outerR = 108;
     const rays = VOD_RAY_COLORS.map((color, i) => {
       const angle = (i / n) * Math.PI * 2;
-      const x = 150 + Math.cos(angle) * 108;
-      const y = 95 + Math.sin(angle) * 108;
-      return `<line x1="150" y1="95" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${color}" stroke-width="1.2" opacity="0.55"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5" fill="${color}" opacity="0.85"/>`;
+      const cos = Math.cos(angle), sin = Math.sin(angle);
+      const ix = 150 + cos * innerR, iy = 95 + sin * innerR;
+      const ox = 150 + cos * outerR, oy = 95 + sin * outerR;
+      const tipX = 150 + cos * (innerR - 7), tipY = 95 + sin * (innerR - 7);
+      const perpX = -sin * 4, perpY = cos * 4;
+      return (
+        `<line x1="${ix.toFixed(1)}" y1="${iy.toFixed(1)}" x2="${ox.toFixed(1)}" y2="${oy.toFixed(1)}" stroke="${color}" stroke-width="1.2" opacity="0.55"/>` +
+        `<circle cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="5" fill="${color}" opacity="0.85"/>` +
+        `<polygon points="${tipX.toFixed(1)},${tipY.toFixed(1)} ${(ix + perpX).toFixed(1)},${(iy + perpY).toFixed(1)} ${(ix - perpX).toFixed(1)},${(iy - perpY).toFixed(1)}" fill="${color}" opacity="0.9"/>`
+      );
     }).join("");
     return `<svg class="vod-rays" viewBox="0 0 300 190" aria-hidden="true"><g>${rays}</g></svg>`;
   }
@@ -852,7 +864,7 @@
           ${vodCoverRaysHtml()}
           <span class="vod-reveal-badge">
             <span class="vod-reveal-glow"></span>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V7a3 3 0 0 1 3-3h4.5v16H7a3 3 0 0 0-3 3" fill="rgba(255,253,248,0.18)" stroke="#FFFDF8" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 20V7a3 3 0 0 0-3-3h-4.5v16H17a3 3 0 0 1 3 3" fill="rgba(255,253,248,0.18)" stroke="#FFFDF8" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 5.5c0-1.8.6-3 1.3-3.8-.1 1.2.3 1.9.9 2.6.6.7 1 1.5 1 2.4a2.2 2.2 0 0 1-2.2 2.2A2.2 2.2 0 0 1 10.8 6.9c0-.9.5-1.6 1.2-2.3" fill="#E7CE94" stroke="#E7CE94" stroke-width="0.6"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.6" fill="rgba(255,253,248,0.16)" stroke="#FFFDF8" stroke-width="1.6"/><line x1="12" y1="3.4" x2="12" y2="20.6" stroke="#FFFDF8" stroke-width="1" opacity="0.45"/><path d="M12 8.2v7M8.7 11.7h6.6" stroke="#E7CE94" stroke-width="1.8" stroke-linecap="round"/></svg>
           </span>
           <div class="vod-cover-label">Verse of the Day</div>
           <div class="vod-cover-sub">Tap to reveal today's Word</div>
@@ -1157,6 +1169,7 @@
         btn.addEventListener("click", () => { location.hash = btn.dataset.href; });
       }
     });
+    updateChapterFabPosition();
 
     const verseListEl = document.getElementById("verseList");
     verseListEl.addEventListener("click", (e) => {
@@ -2847,6 +2860,24 @@
     route();
   });
 
+  // Chapter prev/next fabs: float at a vertical position that tracks how
+  // far down the chapter the reader has scrolled (near the top of the
+  // screen early in a chapter, drifting down toward the middle of the
+  // screen as they approach the end) instead of sitting frozen at one
+  // spot — so they feel anchored to where you're actually reading.
+  // Harmless no-op on any view that doesn't have them.
+  const RCF_TOP_MIN = 20, RCF_TOP_MAX = 72;
+  function updateChapterFabPosition() {
+    const prev = document.querySelector(".reader-chapter-fab-prev");
+    const next = document.querySelector(".reader-chapter-fab-next");
+    if (!prev && !next) return;
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+    const top = (RCF_TOP_MIN + progress * (RCF_TOP_MAX - RCF_TOP_MIN)).toFixed(1) + "%";
+    if (prev) prev.style.top = top;
+    if (next) next.style.top = top;
+  }
+
   // Bottom tab bar auto-hide: fades out of the way while reading (the
   // page scrolling down) and comes back on its own — immediately on
   // scrolling up, or after a short pause even if the page never scrolls
@@ -2885,6 +2916,7 @@
         else if (delta < -THRESHOLD) show();
         lastY = y;
         scheduleIdleShow();
+        updateChapterFabPosition();
       },
       { passive: true }
     );

@@ -201,12 +201,15 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
    Previous on the left, Next on the right, each reachable with a thumb
    without scrolling back up to a header bar. Icon-only (no "Prev"/"Next"
    words); each fades to a ghost when there's no chapter that way.
-   Previous sits higher than .voice-stack (left edge, centered ~60%) so
-   the two never overlap; Next has the right edge to itself, clear of
-   .note-fab (bottom-right, above the tab bar). */
+   `top` is set inline by updateChapterFabPosition() in app.js and tracks
+   scroll progress through the chapter (20% near the start, drifting to
+   72% near the end) — the transition here is what makes that drift read
+   as a smooth float rather than a jump. Starts clear of .voice-stack
+   (left edge, centered ~60%); Next has the right edge to itself, clear
+   of .note-fab (bottom-right, above the tab bar). */
 .reader-chapter-fab-prev, .reader-chapter-fab-next{
-  position:fixed; top:30%; transform:translateY(-50%); z-index:50;
-  transition:opacity .3s ease, transform .3s ease;
+  position:fixed; top:20%; transform:translateY(-50%); z-index:50;
+  transition:opacity .3s ease, transform .3s ease, top .5s cubic-bezier(.22,.8,.3,1);
 }
 .reader-chapter-fab-prev{left:calc(12px + env(safe-area-inset-left,0px));}
 .reader-chapter-fab-next{right:calc(12px + env(safe-area-inset-right,0px));}

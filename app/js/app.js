@@ -43,6 +43,7 @@
   // changes, the same way SERMONS[0] is kept current. The rest of the array
   // is an evergreen backup pool, kept for continuity.
   const VERSES = [
+    { text: "Praying always with all prayer and supplication in the Spirit, and watching thereunto with all perseverance and supplication for all saints;", ref: "Ephesians 6:18 KJV" },
     { text: "Blessed is the man who endures temptation; for when he has been approved, he will receive the crown of life which the Lord has promised to those who love Him.", ref: "James 1:12 NKJV" },
     { text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", ref: "Isaiah 41:10" },
     { text: "The heavens declare the glory of God; and the firmament sheweth his handywork.", ref: "Psalm 19:1" },
@@ -65,22 +66,23 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I receive Your word over this morning: the test I'm walking through is not the end of my story — it's the making of it!",
-      "You said, ‘Blessed is the man who endures temptation’ — so I will not quit in the middle of my proving!",
-      "You didn't say blessed is the one who avoids every trial — You said blessed is the one who endures it, so endurance is my portion today!",
+      "Father, I will not pray once today and call it done — I declare I am praying ALWAYS, because my covering never goes off duty!",
+      "I will not just pray for myself — I'm watching, interceding, and standing in the gap for the saints around me!",
+      "Every prayer I pray in the Spirit today is a weapon my flesh could never manufacture — so I will not trade it for my own strength!",
       "",
-      "I will not run from what You're using to approve me — I will stand in it, because You are standing in it with me!",
-      "Whatever is testing my patience, my faith, or my character this morning, I declare it will not outlast my endurance!",
-      "I am not approved by how I feel right now — I am approved by what I refuse to let go of: my trust in You!",
+      "I declare perseverance over every prayer that feels unanswered — I am watching thereunto, not walking away from it!",
+      "My supplication is not weak talk — it is strategic warfare, and I will not stop firing because the answer is taking its time!",
+      "Somebody connected to me is under attack right now, and my prayer today is covering them whether they know it or not!",
       "",
-      "So I declare: there is a crown of life waiting on the other side of this test, and I will not forfeit it by giving up too soon!",
-      "If you're reading this and you're in the middle of your own test right now — hold on, because the Lord Himself promised this crown to those who love Him!",
-      "Save this. Speak it over your morning. Endure today like a crown is waiting — because it is. In Jesus' name, amen!"
+      "So I declare: I am alert, I am praying, and I am not standing down — in the Spirit, with all perseverance, for every saint God puts on my heart!",
+      "If you're reading this — someone is praying for you right now, whether you knew it or not. Join your faith to ours!",
+      "Save this. Pray it before your feet hit the ground today. Watch like a soldier, pray like it already worked. In Jesus' name, amen!"
     ],
-    ref: "James 1:12"
+    ref: "Ephesians 6:18"
   };
 
   const SERMONS = [
+    { slug: "the-crown-on-the-other-side", title: "The Crown on the Other Side", ref: "James 1:12", date: "October 28, 2026", excerpt: "Endurance isn't what you survive before the blessing — it's what qualifies you for it. The crown of life was never promised to the untested." },
     { slug: "grace-gets-the-last-word", title: "Grace Gets the Last Word", ref: "Romans 5:19-21", date: "October 27, 2026", excerpt: "One man's fall wrote sin into the human story in permanent ink. One Man's obedience picked up the same pen — and wrote something stronger over it." },
     { slug: "wise-as-serpents-harmless-as-doves", title: "Wise as Serpents, Harmless as Doves", ref: "Matthew 10:16", date: "October 26, 2026", excerpt: "Jesus never promised you a safe world. He promised you a sharp mind, a soft heart, and a Sender who goes into the room first." },
     { slug: "consider-the-work-of-god", title: "Consider the Work of God", ref: "Ecclesiastes 7:11-14", date: "October 25, 2026", excerpt: "Wisdom is a defence on a good day. But what do you do on a crooked one? Solomon's answer isn't to fix it — it's to consider it." },

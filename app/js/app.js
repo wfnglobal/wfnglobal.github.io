@@ -82,6 +82,7 @@
   };
 
   const SERMONS = [
+    { slug: "potential-in-the-holy-ghost", title: "Potential in the Holy Ghost", ref: "Acts 1:8", date: "October 28, 2026", excerpt: "You are not waiting on power. Power moved in the day you got saved and has been waiting on you to act like it." },
     { slug: "the-crown-on-the-other-side", title: "The Crown on the Other Side", ref: "James 1:12", date: "October 28, 2026", excerpt: "Endurance isn't what you survive before the blessing — it's what qualifies you for it. The crown of life was never promised to the untested." },
     { slug: "grace-gets-the-last-word", title: "Grace Gets the Last Word", ref: "Romans 5:19-21", date: "October 27, 2026", excerpt: "One man's fall wrote sin into the human story in permanent ink. One Man's obedience picked up the same pen — and wrote something stronger over it." },
     { slug: "wise-as-serpents-harmless-as-doves", title: "Wise as Serpents, Harmless as Doves", ref: "Matthew 10:16", date: "October 26, 2026", excerpt: "Jesus never promised you a safe world. He promised you a sharp mind, a soft heart, and a Sender who goes into the room first." },

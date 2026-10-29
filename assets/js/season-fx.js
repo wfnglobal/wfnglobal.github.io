@@ -30,12 +30,13 @@
     winter: { colors: ["#FFFFFF", "#EAF3FA", "#D7E9F7", "#F5FBFF"], count: 26 }
   };
 
-  // A simple maple-leaf silhouette, drawn once and reused for every particle.
+  // A maple-leaf silhouette — five pointed lobes around a stem, scalloped
+  // edges, centered on (0,0) so it rotates in place as it falls.
   function leafPath() {
     return new Path2D(
-      "M12 1.6c.8 2.7 3 4.2 5.4 4-1 1.7-1.1 3.6.3 5 .3.3.3.5-.1.6-1.9.4-3.1 1.6-3.4 3.4-.1.5-.3.6-.6.2" +
-      "-1-1.2-2.4-1.7-4-1.4-.3 0-.5-.1-.4-.4.6-1.7.1-3.2-1.4-4.2-.3-.2-.3-.4.1-.6 1.8-.8 2.8-2.3 2.8-4.3" +
-      "-1.4 1-3 1-4.5.1 1.6-1.3 2.5-3 2.3-5.1-.1-.7.2-1 .8-.6 1.2.8 2.5.7 3.5-.3.5-.5 1-.9 1.3-.4z"
+      "M0,-11 Q2.94,-6.02 7.33,-5.73 Q6.28,-1.56 10.14,1.79 Q5.23,3.4 4.81,7.13 Q2.09,4.92 1.58,7.43" +
+      " L0,12.5 L-1.58,7.43 Q-2.09,4.92 -4.81,7.13 Q-5.23,3.4 -10.14,1.79 Q-6.28,-1.56 -7.33,-5.73" +
+      " Q-2.94,-6.02 0,-11 Z"
     );
   }
 

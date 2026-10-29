@@ -279,14 +279,15 @@
           '<p class="wc-scroll-poem" data-el="scrollPoem">—</p>' +
           '<p class="wc-scroll-word" data-el="scrollWord">—</p>' +
         '</div>' +
-        '<div class="wc-cert-wrap" data-el="certWrap">' +
-          '<canvas class="wc-cert-canvas" data-el="certCanvas" width="1080" height="1350"></canvas>' +
+        '<div class="wc-cert-block" data-el="certBlock" hidden>' +
+          '<p class="wc-eyebrow">Your Certificate of Completion</p>' +
+          '<div class="wc-cert-wrap"><canvas class="wc-cert-canvas" data-el="certCanvas" width="1080" height="1350"></canvas></div>' +
+          '<div class="wc-cert-actions">' +
+            '<a class="wc-btn wc-btn-gold wc-btn-sm" data-action="downloadCert" data-el="downloadCertBtn" download="the-word-climb-certificate.png">Download</a>' +
+            '<button class="wc-btn wc-btn-ghost wc-btn-sm" data-action="shareCert" data-el="shareCertBtn" hidden>Share</button>' +
+          '</div>' +
         '</div>' +
-        '<div class="wc-cert-actions">' +
-          '<a class="wc-btn wc-btn-gold" data-action="downloadCert" data-el="downloadCertBtn" download="the-word-climb-certificate.png">Download Certificate</a>' +
-          '<button class="wc-btn wc-btn-ghost" data-action="shareCert" data-el="shareCertBtn" hidden>Share</button>' +
-        '</div>' +
-        '<button class="wc-btn wc-btn-ghost" data-action="reset">Play Again</button>' +
+        '<button class="wc-btn wc-btn-ghost wc-btn-sm" data-action="reset">Play Again</button>' +
       '</div>' +
     '</div>' +
 
@@ -434,16 +435,21 @@
     });
   }
 
-  function showScrollFor(idx) { Sound.scroll(); fillScroll(SCROLLS[idx]); show("scroll"); }
-  function showFinalScroll() { Sound.scroll(); fillScroll(SCROLLS[SCROLLS.length - 1]); show("scroll"); }
-  function fillScroll(s) {
+  // A certificate is only ever earned by completing all five levels —
+  // stopping or missing a question early still gives a scroll, but not
+  // the award image, so the certificate stays meaningful.
+  function showScrollFor(idx) { Sound.scroll(); fillScroll(SCROLLS[idx], false); show("scroll"); }
+  function showFinalScroll() { Sound.scroll(); fillScroll(SCROLLS[SCROLLS.length - 1], true); show("scroll"); }
+  function fillScroll(s, isComplete) {
     el("scrollRank").textContent = s.rank;
     el("scrollName").textContent = s.name;
     el("scrollVerse").textContent = s.verse;
     el("scrollRef").textContent = s.ref;
     el("scrollPoem").textContent = s.poem;
     el("scrollWord").textContent = s.word;
-    renderCertificate(s);
+    var certBlock = el("certBlock");
+    if (certBlock) certBlock.hidden = !isComplete;
+    if (isComplete) renderCertificate(s);
   }
 
   // -----------------------------------------------------------------
@@ -462,64 +468,159 @@
     return lines;
   }
 
+  // A laurel branch of simple leaf shapes along an arc, mirrored left/right
+  // of the medallion — the one unmistakably "award" cue borrowed for a
+  // scripture achievement, not a trophy.
+  function drawLaurel(ctx, cx, cy, dir) {
+    var count = 9, r0 = 88, r1 = 160;
+    for (var i = 0; i < count; i++) {
+      var t = i / (count - 1);
+      var angle = Math.PI * 0.08 + t * Math.PI * 0.62; // sweeps from near-horizontal down past vertical
+      var r = r0 + t * (r1 - r0);
+      var x = cx + dir * Math.cos(angle) * r;
+      var y = cy + Math.sin(angle) * r * 0.86 + 18;
+      var leafAngle = dir * (angle + Math.PI / 2 * 0.55);
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(leafAngle);
+      ctx.fillStyle = "rgba(201,169,104," + (0.45 + 0.4 * t).toFixed(2) + ")";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 9 + t * 4, 15 + t * 7, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+    // stem
+    ctx.strokeStyle = "rgba(201,169,104,0.55)"; ctx.lineWidth = 2.5; ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(cx + dir * Math.cos(Math.PI * 0.08) * r0, cy + Math.sin(Math.PI * 0.08) * r0 * 0.86 + 18);
+    ctx.quadraticCurveTo(
+      cx + dir * Math.cos(Math.PI * 0.4) * (r0 + r1) / 2, cy + Math.sin(Math.PI * 0.4) * (r0 + r1) / 2 * 0.86 + 18,
+      cx + dir * Math.cos(Math.PI * 0.7) * r1, cy + Math.sin(Math.PI * 0.7) * r1 * 0.86 + 18
+    );
+    ctx.stroke();
+  }
+
+  function drawCornerOrnament(ctx, x, y, rot) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rot);
+    ctx.strokeStyle = "rgba(217,181,107,0.7)"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(26, 0); ctx.moveTo(0, 0); ctx.lineTo(0, 26); ctx.stroke();
+    ctx.fillStyle = "#D9B56B";
+    ctx.beginPath(); ctx.ellipse(13, 13, 5, 5, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
+  function drawSeal(ctx, cx, cy) {
+    var grad = ctx.createLinearGradient(cx - 46, cy - 46, cx + 46, cy + 46);
+    grad.addColorStop(0, "#F6E8BE"); grad.addColorStop(1, "#A9824F");
+    ctx.save();
+    ctx.beginPath(); ctx.arc(cx, cy, 46, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy, 46, 0, Math.PI * 2); ctx.strokeStyle = "#5E4A1E"; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, 36, 0, Math.PI * 2); ctx.strokeStyle = "rgba(94,74,30,0.5)"; ctx.lineWidth = 1; ctx.stroke();
+    ctx.fillStyle = "#3A2E13"; ctx.textAlign = "center"; ctx.font = "700 15px Inter, sans-serif";
+    ctx.fillText("WFN", cx, cy + 6);
+    // ribbon tails
+    ctx.fillStyle = "#8C4A3A";
+    ctx.beginPath(); ctx.moveTo(cx - 30, cy + 34); ctx.lineTo(cx - 14, cy + 34); ctx.lineTo(cx - 20, cy + 76); ctx.lineTo(cx - 40, cy + 62); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(cx + 30, cy + 34); ctx.lineTo(cx + 14, cy + 34); ctx.lineTo(cx + 20, cy + 76); ctx.lineTo(cx + 40, cy + 62); ctx.closePath(); ctx.fill();
+    ctx.restore();
+  }
+
   function drawCertificate(s) {
     var canvas = el("certCanvas");
     if (!canvas || !canvas.getContext) return;
     var ctx = canvas.getContext("2d");
     var W = canvas.width, H = canvas.height, cx = W / 2;
+    var profile = (window.WFNStore && window.WFNStore.getProfile && window.WFNStore.getProfile()) || null;
+    var awardee = (profile && profile.name) ? profile.name : "A Faithful Climber";
+    var certId = "WC-" + new Date().toISOString().slice(0, 10).replace(/-/g, "") + "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
 
-    var bg = ctx.createLinearGradient(0, 0, 0, H);
-    bg.addColorStop(0, "#2A2113"); bg.addColorStop(0.5, "#17130D"); bg.addColorStop(1, "#0B0805");
+    // background: deep vignette, warmer at the center
+    var bg = ctx.createRadialGradient(cx, H * 0.38, 120, cx, H * 0.5, H * 0.85);
+    bg.addColorStop(0, "#241B10"); bg.addColorStop(0.55, "#17130D"); bg.addColorStop(1, "#0A0804");
     ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
 
-    ctx.strokeStyle = "rgba(217,181,107,0.55)"; ctx.lineWidth = 3; ctx.strokeRect(34, 34, W - 68, H - 68);
-    ctx.strokeStyle = "rgba(217,181,107,0.25)"; ctx.lineWidth = 1; ctx.strokeRect(56, 56, W - 112, H - 112);
+    // frame
+    ctx.strokeStyle = "rgba(217,181,107,0.6)"; ctx.lineWidth = 3; ctx.strokeRect(34, 34, W - 68, H - 68);
+    ctx.strokeStyle = "rgba(217,181,107,0.28)"; ctx.lineWidth = 1; ctx.strokeRect(54, 54, W - 108, H - 108);
+    drawCornerOrnament(ctx, 54, 54, 0);
+    drawCornerOrnament(ctx, W - 54, 54, Math.PI / 2);
+    drawCornerOrnament(ctx, W - 54, H - 54, Math.PI);
+    drawCornerOrnament(ctx, 54, H - 54, -Math.PI / 2);
 
-    // climb icon (ring + ladder + flame), same mark used across the app
-    var iy = 215;
-    ctx.beginPath(); ctx.arc(cx, iy, 86, 0, Math.PI * 2); ctx.strokeStyle = "#9C7A34"; ctx.lineWidth = 3; ctx.stroke();
-    function pt(x, y) { var k = 2.05; return [cx + (x - 24) * k, iy + (y - 24) * k]; }
-    ctx.strokeStyle = "#D9B56B"; ctx.lineWidth = 7; ctx.lineCap = "round";
+    // medallion: ring + ladder + flame (the app's own mark), laurel either side
+    var iy = 232;
+    drawLaurel(ctx, cx, iy, -1);
+    drawLaurel(ctx, cx, iy, 1);
+    ctx.beginPath(); ctx.arc(cx, iy, 72, 0, Math.PI * 2); ctx.strokeStyle = "#9C7A34"; ctx.lineWidth = 3; ctx.stroke();
+    function pt(x, y) { var k = 1.7; return [cx + (x - 24) * k, iy + (y - 24) * k]; }
+    ctx.strokeStyle = "#D9B56B"; ctx.lineWidth = 6; ctx.lineCap = "round";
     [[14, 35, 24, 12], [34, 35, 24, 12], [16.3, 29.5, 31.7, 29.5], [18.6, 24, 29.4, 24], [20.9, 18.5, 27.1, 18.5]].forEach(function (r) {
       var a = pt(r[0], r[1]), b = pt(r[2], r[3]);
       ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
     });
     var f = pt(24, 12);
-    ctx.fillStyle = "#F6E8BE"; ctx.beginPath(); ctx.ellipse(f[0], f[1] - 24, 14, 22, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#F6E8BE"; ctx.beginPath(); ctx.ellipse(f[0], f[1] - 20, 12, 19, 0, 0, Math.PI * 2); ctx.fill();
 
     ctx.textAlign = "center";
-    ctx.fillStyle = "#D9B56B"; ctx.font = "700 27px Inter, sans-serif";
-    ctx.fillText("WORD & FAITH NETWORK", cx, 362);
+    var y = 418;
+    ctx.fillStyle = "#D9B56B"; ctx.font = "700 24px Inter, sans-serif";
+    ctx.fillText("WORD  &  FAITH  NETWORK", cx, y);
 
-    ctx.fillStyle = "#F2EEE6"; ctx.font = "600 58px Fraunces, Georgia, serif";
-    ctx.fillText("Certificate of the Climb", cx, 436);
+    y += 56;
+    ctx.fillStyle = "#FBF6E9"; ctx.font = "600 50px Fraunces, Georgia, serif";
+    ctx.fillText("Certificate of Completion", cx, y);
 
-    ctx.fillStyle = "#B8B2A6"; ctx.font = "400 28px Inter, sans-serif";
-    ctx.fillText("This certifies a believer has completed", cx, 492);
-    ctx.fillText("The Word Climb through:", cx, 528);
+    y += 38;
+    ctx.fillStyle = "#C9A968"; ctx.font = "700 18px Inter, sans-serif";
+    ctx.fillText("T H E   W O R D   C L I M B", cx, y);
 
-    ctx.fillStyle = "#D9B56B"; ctx.font = "600 46px Fraunces, Georgia, serif";
-    ctx.fillText(String(s.rank).replace("·", "—"), cx, 600);
+    y += 44;
+    ctx.strokeStyle = "rgba(217,181,107,0.55)"; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(cx - 46, y); ctx.lineTo(cx + 46, y); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, y, 3, 0, Math.PI * 2); ctx.fillStyle = "#D9B56B"; ctx.fill();
 
-    ctx.fillStyle = "#F2EEE6"; ctx.font = "italic 500 33px Fraunces, Georgia, serif";
-    var verseLines = wrapLines(ctx, s.verse, 800);
-    var vy = 690;
-    verseLines.forEach(function (l, i) { ctx.fillText(l, cx, vy + i * 44); });
+    y += 48;
+    ctx.fillStyle = "#B8B2A6"; ctx.font = "400 20px Inter, sans-serif";
+    ctx.fillText("AWARDED TO", cx, y);
 
-    ctx.fillStyle = "#A9824F"; ctx.font = "700 24px Inter, sans-serif";
-    ctx.fillText(s.ref, cx, vy + verseLines.length * 44 + 30);
+    y += 58;
+    ctx.fillStyle = "#F6E8BE"; ctx.font = "italic 600 50px Fraunces, Georgia, serif";
+    ctx.fillText(awardee, cx, y);
+    ctx.strokeStyle = "rgba(246,232,190,0.35)"; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx - 140, y + 18); ctx.lineTo(cx + 140, y + 18); ctx.stroke();
 
-    var dividerY = vy + verseLines.length * 44 + 80;
-    ctx.strokeStyle = "rgba(242,238,230,0.15)"; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(cx - 210, dividerY); ctx.lineTo(cx + 210, dividerY); ctx.stroke();
+    y += 58;
+    ctx.fillStyle = "#B8B2A6"; ctx.font = "400 23px Inter, sans-serif";
+    ctx.fillText("for completing all five levels of The Word Climb —", cx, y);
+    y += 32;
+    ctx.fillText("Genesis Steps to Revelation Summit.", cx, y);
 
-    ctx.fillStyle = "#F2EEE6"; ctx.font = "600 29px Inter, sans-serif";
-    ctx.fillText("Play The Word Climb", cx, dividerY + 56);
-    ctx.fillStyle = "#B8B2A6"; ctx.font = "400 25px Inter, sans-serif";
-    ctx.fillText("wfnglobal.org/app", cx, dividerY + 92);
+    y += 56;
+    ctx.fillStyle = "#F2EEE6"; ctx.font = "italic 500 31px Fraunces, Georgia, serif";
+    var verseLines = wrapLines(ctx, s.verse, 760);
+    verseLines.forEach(function (l, i) { ctx.fillText(l, cx, y + i * 42); });
+    y += (verseLines.length - 1) * 42 + 38;
 
-    ctx.fillStyle = "#6E6A5C"; ctx.font = "400 21px Inter, sans-serif";
-    ctx.fillText(new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }), cx, H - 70);
+    ctx.fillStyle = "#A9824F"; ctx.font = "700 22px Inter, sans-serif";
+    ctx.fillText(s.ref, cx, y);
+
+    y += 56;
+    drawSeal(ctx, cx, y + 36);
+
+    y += 118;
+    ctx.fillStyle = "#F2EEE6"; ctx.font = "600 27px Inter, sans-serif";
+    ctx.fillText("Play The Word Climb", cx, y);
+    y += 32;
+    ctx.fillStyle = "#B8B2A6"; ctx.font = "400 23px Inter, sans-serif";
+    ctx.fillText("wfnglobal.org/app", cx, y);
+
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#6E6A5C"; ctx.font = "400 18px Inter, sans-serif";
+    ctx.fillText(new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }), 76, H - 72);
+    ctx.textAlign = "right";
+    ctx.fillText("No. " + certId, W - 76, H - 72);
 
     try {
       var dataUrl = canvas.toDataURL("image/png");

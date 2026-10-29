@@ -50,7 +50,7 @@
 .wc-rules b{color:var(--wc-paper);}
 
 /* ladder */
-[data-screen="ladder"]{gap:20px; padding:4px 2px;}
+[data-screen="ladder"]{gap:20px; padding:44px 2px 4px;}
 .wc-ladder-title{text-align:center; font-size:1.3rem; font-weight:600; margin:0;}
 .wc-ladder{display:flex; flex-direction:column-reverse; gap:8px; margin:4px 0;}
 .wc-rung{display:flex; align-items:center; justify-content:space-between; padding:13px 16px; border-radius:12px; border:1px solid var(--wc-line); background:var(--wc-ink-2); font-size:13px; font-weight:600; color:var(--wc-paper-dim); transition:all .25s;}
@@ -61,7 +61,7 @@
 .wc-rung.wc-done .wc-rn{color:var(--wc-sage);}
 
 /* question */
-[data-screen="question"]{gap:14px;}
+[data-screen="question"]{gap:14px; padding-top:44px;}
 .wc-q-head{display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--wc-paper-dim); font-weight:600;}
 .wc-timer-bar{height:5px; border-radius:4px; background:var(--wc-ink-2); overflow:hidden;}
 .wc-timer-fill{height:100%; background:linear-gradient(90deg,var(--wc-bronze),var(--wc-sage)); width:100%; transition:width 1s linear;}
@@ -96,7 +96,7 @@
 .wc-modal-row .wc-btn{min-width:188px;}
 
 /* final scroll */
-[data-screen="scroll"]{align-items:center; justify-content:center; text-align:center; gap:14px; padding:4px;}
+[data-screen="scroll"]{align-items:center; justify-content:center; text-align:center; gap:14px; padding:44px 4px 4px;}
 .wc-scroll-card{background:linear-gradient(165deg, var(--wc-ink-2), var(--wc-ink)); border:1px solid var(--wc-bronze); border-radius:20px; padding:30px 24px; max-width:380px; position:relative; overflow:hidden; box-shadow:0 0 50px var(--wc-bronze-glow);}
 .wc-scroll-card::before{content:""; position:absolute; inset:0; background:radial-gradient(circle at 50% 0%, var(--wc-bronze-glow), transparent 60%); opacity:.6;}
 .wc-scroll-rank{position:relative; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--wc-bronze);}

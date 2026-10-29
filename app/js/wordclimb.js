@@ -6,9 +6,9 @@
   "use strict";
 
   // -----------------------------------------------------------------
-  // Question bank — 100 questions, 20 per level, easy to hard.
-  // Each playthrough draws a random handful per level (see PER_LEVEL)
-  // so the bank stays large without making one climb feel endless.
+  // Question bank — 100 questions, 20 per level, easy to hard. A full
+  // climb puts all 100 in play (PER_LEVEL below), shuffled fresh each
+  // time so the order never repeats even though the set is fixed.
   // -----------------------------------------------------------------
   var LEVELS = [
     { name: "Genesis Steps", tier: "Easy", questions: [
@@ -123,7 +123,7 @@
     ]},
   ];
 
-  var PER_LEVEL = 4; // questions asked per level, drawn at random from each pool of 20
+  var PER_LEVEL = 20; // every question in each level's pool — all 100 are in play across a full climb
   var TIME_LIMIT = 20;
 
   // Rotating verse strip, standalone beneath the game card — scripture
@@ -244,7 +244,7 @@
         '<div class="wc-logo-ring">' + CLIMB_ICON + '</div>' +
         '<p class="wc-eyebrow">Word &amp; Faith Network</p>' +
         '<h1 class="wc-title-xl">The Word<br><span>Climb</span></h1>' +
-        '<p class="wc-subtitle">Five levels. One hundred questions in the bank. Climb from Genesis to Revelation — and unlock a sealed scroll at the top.</p>' +
+        '<p class="wc-subtitle">Five levels. All one hundred questions, start to finish. Climb from Genesis to Revelation — and unlock a sealed scroll at the top.</p>' +
         '<div class="wc-rules">' +
           '<b>How it plays:</b> Answer correctly to climb. Miss one, and your climb ends — but you keep a scroll for the highest level you reached. Two lifelines per game: <b>50:50</b> and <b>Ask the Elder</b>. Sound can be switched off any time with the toggle in the top corner.' +
         '</div>' +

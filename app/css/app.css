@@ -178,6 +178,10 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
    one even as a plain row. */
 .home-row .ico-jesus{background:linear-gradient(155deg,#4A3410,#8A6A2C); color:#FFFDF8;}
 .home-row .ico-jesus svg{color:#FFFDF8;}
+/* Word Climb: its own bronze-on-amber badge — a climbing line, not the
+   ministry's flame-glyph, so the game reads as its own thing on Home. */
+.home-row .ico-climb{background:#EFE2C7; color:#93702E;}
+.home-row .ico-climb svg{color:#93702E;}
 .home-row .chev svg{width:17px; height:17px;}
 
 .install-hint{background:var(--surface-2); border:1px dashed var(--border); border-radius:14px; padding:16px 18px; font-size:14.5px; color:var(--ink-2); line-height:1.65;}

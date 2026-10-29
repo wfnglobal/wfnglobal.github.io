@@ -950,6 +950,11 @@
           <div class="body"><h3>The Library</h3><p>Ask Boldly — Book One</p></div>
           <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
         </a>
+        <a class="home-row" href="#/game">
+          <div class="ico ico-climb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20L12 4"/><path d="M17 20L12 4"/><path d="M8.6 15h6.8M9.8 10.5h4.4"/></svg></div>
+          <div class="body"><h3>The Word Climb</h3><p>Play the Scripture quiz — five levels to the Sealed Scroll</p></div>
+          <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+        </a>
       </div>
 
       <div id="installHint" style="margin-top:18px;"></div>
@@ -961,6 +966,13 @@
     document.getElementById("vodCover").addEventListener("click", () => {
       document.getElementById("vodCard").classList.add("revealed");
     });
+  }
+
+  function viewGame() {
+    setHeader("The Word Climb", true);
+    setActiveTab("home");
+    viewEl.innerHTML = '<div id="wcRoot"></div>';
+    if (window.WFNGame) window.WFNGame.mount(document.getElementById("wcRoot"));
   }
 
   function renderInstallHint(el) {
@@ -2829,7 +2841,10 @@
     const hash = location.hash.replace(/^#\/?/, "");
     const parts = hash.split("/").filter(Boolean);
 
+    if (parts[0] !== "game" && window.WFNGame) window.WFNGame.unmount();
+
     if (parts.length === 0 || parts[0] === "home") return viewHome();
+    if (parts[0] === "game") return viewGame();
     if (parts[0] === "bible") {
       if (parts.length === 1) {
         if (gateSkipped("bible")) { location.replace("#/bible/books"); return; }

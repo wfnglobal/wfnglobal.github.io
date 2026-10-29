@@ -1,7 +1,7 @@
 // Word and Faith Network — service worker
 // Caches the app shell for installability, and the full KJV Bible for offline reading.
 
-const CACHE_VERSION = "wfn-app-v47";
+const CACHE_VERSION = "wfn-app-v48";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const BIBLE_CACHE = `${CACHE_VERSION}-bible`;
 
@@ -10,10 +10,12 @@ const SHELL_ASSETS = [
   "/app/index.html",
   "/app/manifest.webmanifest",
   "/app/css/app.css",
+  "/app/css/wordclimb.css",
   "/app/js/app.js",
   "/app/js/bible.js",
   "/app/js/store.js",
   "/app/js/wfn-tts.js",
+  "/app/js/wordclimb.js",
   "/app/icons/icon-192.png",
   "/app/icons/icon-512.png",
 ];

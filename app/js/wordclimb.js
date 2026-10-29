@@ -217,7 +217,7 @@
   var TEMPLATE =
     '<div class="wc-stage">' +
       '<button class="wc-sound-toggle wc-mute-float" aria-label="Turn game sound on or off" aria-pressed="true">' +
-        '<span class="wc-st-icon">🔊</span><span class="wc-st-switch"><span class="wc-st-thumb"></span></span>' +
+        '<span class="wc-st-icon">🔊</span><span class="wc-st-label">Sound</span><span class="wc-st-switch"><span class="wc-st-thumb"></span></span>' +
       '</button>' +
 
       '<div class="wc-screen wc-show" data-screen="start">' +
@@ -226,11 +226,7 @@
         '<h1 class="wc-title-xl">The Word<br><span>Climb</span></h1>' +
         '<p class="wc-subtitle">Five levels. One hundred questions in the bank. Climb from Genesis to Revelation — and unlock a sealed scroll at the top.</p>' +
         '<div class="wc-rules">' +
-          '<b>How it plays:</b> Answer correctly to climb. Miss one, and your climb ends — but you keep a scroll for the highest level you reached. Two lifelines per game: <b>50:50</b> and <b>Ask the Elder</b>.' +
-          '<button class="wc-sound-toggle wc-sound-row" aria-label="Turn game sound on or off" aria-pressed="true">' +
-            '<span style="display:flex; align-items:center; gap:9px;"><span class="wc-st-icon">🔊</span><span class="wc-st-label">Sound On</span></span>' +
-            '<span class="wc-st-switch"><span class="wc-st-thumb"></span></span>' +
-          '</button>' +
+          '<b>How it plays:</b> Answer correctly to climb. Miss one, and your climb ends — but you keep a scroll for the highest level you reached. Two lifelines per game: <b>50:50</b> and <b>Ask the Elder</b>. Sound can be switched off any time with the toggle in the top corner.' +
         '</div>' +
         '<button class="wc-btn wc-btn-gold" data-action="begin">Begin the Climb</button>' +
       '</div>' +
@@ -262,6 +258,13 @@
           '<p class="wc-scroll-ref" data-el="scrollRef">—</p>' +
           '<p class="wc-scroll-poem" data-el="scrollPoem">—</p>' +
           '<p class="wc-scroll-word" data-el="scrollWord">—</p>' +
+        '</div>' +
+        '<div class="wc-cert-wrap" data-el="certWrap">' +
+          '<canvas class="wc-cert-canvas" data-el="certCanvas" width="1080" height="1350"></canvas>' +
+        '</div>' +
+        '<div class="wc-cert-actions">' +
+          '<a class="wc-btn wc-btn-gold" data-action="downloadCert" data-el="downloadCertBtn" download="the-word-climb-certificate.png">Download Certificate</a>' +
+          '<button class="wc-btn wc-btn-ghost" data-action="shareCert" data-el="shareCertBtn" hidden>Share</button>' +
         '</div>' +
         '<button class="wc-btn wc-btn-ghost" data-action="reset">Play Again</button>' +
       '</div>' +
@@ -408,6 +411,118 @@
     el("scrollRef").textContent = s.ref;
     el("scrollPoem").textContent = s.poem;
     el("scrollWord").textContent = s.word;
+    renderCertificate(s);
+  }
+
+  // -----------------------------------------------------------------
+  // Shareable certificate — drawn on a <canvas>, downloadable and, where
+  // supported, shareable straight to social apps. Doubles as a plug for
+  // the app: the image itself carries "wfnglobal.org/app".
+  // -----------------------------------------------------------------
+  function wrapLines(ctx, text, maxWidth) {
+    var words = text.split(" "), line = "", lines = [];
+    for (var i = 0; i < words.length; i++) {
+      var test = (line + words[i] + " ");
+      if (ctx.measureText(test).width > maxWidth && line) { lines.push(line.trim()); line = words[i] + " "; }
+      else { line = test; }
+    }
+    if (line) lines.push(line.trim());
+    return lines;
+  }
+
+  function drawCertificate(s) {
+    var canvas = el("certCanvas");
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+    var W = canvas.width, H = canvas.height, cx = W / 2;
+
+    var bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, "#2A2113"); bg.addColorStop(0.5, "#17130D"); bg.addColorStop(1, "#0B0805");
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+    ctx.strokeStyle = "rgba(217,181,107,0.55)"; ctx.lineWidth = 3; ctx.strokeRect(34, 34, W - 68, H - 68);
+    ctx.strokeStyle = "rgba(217,181,107,0.25)"; ctx.lineWidth = 1; ctx.strokeRect(56, 56, W - 112, H - 112);
+
+    // climb icon (ring + ladder + flame), same mark used across the app
+    var iy = 215;
+    ctx.beginPath(); ctx.arc(cx, iy, 86, 0, Math.PI * 2); ctx.strokeStyle = "#9C7A34"; ctx.lineWidth = 3; ctx.stroke();
+    function pt(x, y) { var k = 2.05; return [cx + (x - 24) * k, iy + (y - 24) * k]; }
+    ctx.strokeStyle = "#D9B56B"; ctx.lineWidth = 7; ctx.lineCap = "round";
+    [[14, 35, 24, 12], [34, 35, 24, 12], [16.3, 29.5, 31.7, 29.5], [18.6, 24, 29.4, 24], [20.9, 18.5, 27.1, 18.5]].forEach(function (r) {
+      var a = pt(r[0], r[1]), b = pt(r[2], r[3]);
+      ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+    });
+    var f = pt(24, 12);
+    ctx.fillStyle = "#F6E8BE"; ctx.beginPath(); ctx.ellipse(f[0], f[1] - 24, 14, 22, 0, 0, Math.PI * 2); ctx.fill();
+
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#D9B56B"; ctx.font = "700 27px Inter, sans-serif";
+    ctx.fillText("WORD & FAITH NETWORK", cx, 362);
+
+    ctx.fillStyle = "#F2EEE6"; ctx.font = "600 58px Fraunces, Georgia, serif";
+    ctx.fillText("Certificate of the Climb", cx, 436);
+
+    ctx.fillStyle = "#B8B2A6"; ctx.font = "400 28px Inter, sans-serif";
+    ctx.fillText("This certifies a believer has completed", cx, 492);
+    ctx.fillText("The Word Climb through:", cx, 528);
+
+    ctx.fillStyle = "#D9B56B"; ctx.font = "600 46px Fraunces, Georgia, serif";
+    ctx.fillText(String(s.rank).replace("·", "—"), cx, 600);
+
+    ctx.fillStyle = "#F2EEE6"; ctx.font = "italic 500 33px Fraunces, Georgia, serif";
+    var verseLines = wrapLines(ctx, s.verse, 800);
+    var vy = 690;
+    verseLines.forEach(function (l, i) { ctx.fillText(l, cx, vy + i * 44); });
+
+    ctx.fillStyle = "#A9824F"; ctx.font = "700 24px Inter, sans-serif";
+    ctx.fillText(s.ref, cx, vy + verseLines.length * 44 + 30);
+
+    var dividerY = vy + verseLines.length * 44 + 80;
+    ctx.strokeStyle = "rgba(242,238,230,0.15)"; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx - 210, dividerY); ctx.lineTo(cx + 210, dividerY); ctx.stroke();
+
+    ctx.fillStyle = "#F2EEE6"; ctx.font = "600 29px Inter, sans-serif";
+    ctx.fillText("Play The Word Climb", cx, dividerY + 56);
+    ctx.fillStyle = "#B8B2A6"; ctx.font = "400 25px Inter, sans-serif";
+    ctx.fillText("wfnglobal.org/app", cx, dividerY + 92);
+
+    ctx.fillStyle = "#6E6A5C"; ctx.font = "400 21px Inter, sans-serif";
+    ctx.fillText(new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }), cx, H - 70);
+
+    try {
+      var dataUrl = canvas.toDataURL("image/png");
+      var dlBtn = el("downloadCertBtn");
+      if (dlBtn) dlBtn.href = dataUrl;
+    } catch (e) {}
+
+    var shareBtn = el("shareCertBtn");
+    if (shareBtn) shareBtn.hidden = !(navigator.share && navigator.canShare && window.File);
+  }
+
+  function renderCertificate(s) {
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { drawCertificate(s); }).catch(function () { drawCertificate(s); });
+    } else {
+      drawCertificate(s);
+    }
+  }
+
+  function shareCertificate() {
+    var canvas = el("certCanvas");
+    if (!canvas) return;
+    canvas.toBlob(function (blob) {
+      if (!blob) return;
+      try {
+        var file = new File([blob], "the-word-climb-certificate.png", { type: "image/png" });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          navigator.share({
+            files: [file],
+            title: "The Word Climb",
+            text: "I just climbed The Word Climb on the Word and Faith Network app — come play: wfnglobal.org/app",
+          }).catch(function () {});
+        }
+      } catch (e) {}
+    }, "image/png");
   }
 
   function openModal(opts) {
@@ -467,6 +582,7 @@
       else if (action === "fifty") useFifty();
       else if (action === "elder") useElder();
       else if (action === "reset") resetGame();
+      else if (action === "shareCert") shareCertificate();
     });
   }
 

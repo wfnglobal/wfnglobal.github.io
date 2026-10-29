@@ -102,3 +102,19 @@
 .wc-cert-canvas{width:100%; height:auto; display:block; border-radius:14px; border:1px solid var(--wc-line); box-shadow:0 10px 30px rgba(0,0,0,.4);}
 .wc-cert-actions{display:flex; gap:10px; width:100%; max-width:300px;}
 .wc-cert-actions .wc-btn{flex:1; text-align:center; text-decoration:none; display:inline-block;}
+
+/* rotating verse strip, pinned to the bottom edge of the game card */
+.wc-verse-ticker{
+  margin-top:26px; margin-left:-18px; margin-right:-18px; margin-bottom:-34px;
+  padding:14px 26px calc(14px + env(safe-area-inset-bottom,0px));
+  text-align:center; border-top:1px solid rgba(255,255,255,0.1);
+  background:linear-gradient(135deg,#3E5C4D,#223228);
+  transition:background 1.1s ease;
+}
+.wc-verse-ticker-text{
+  font-family:"Fraunces",Georgia,serif; font-style:italic; font-size:13px; line-height:1.5;
+  color:#FDFBF5; margin:0; max-width:420px; margin-inline:auto;
+  opacity:1; transition:opacity .4s ease; text-shadow:0 1px 3px rgba(0,0,0,.3);
+}
+.wc-verse-ticker-text.wc-fade{opacity:0;}
+.wc-verse-ticker-ref{display:block; font-family:"Inter",sans-serif; font-style:normal; font-weight:700; font-size:10px; letter-spacing:.09em; text-transform:uppercase; margin-top:5px; color:rgba(253,251,245,0.82);}

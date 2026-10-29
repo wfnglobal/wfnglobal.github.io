@@ -971,6 +971,7 @@
   function viewGame() {
     setHeader("The Word Climb", true);
     setActiveTab("home");
+    setGameFullscreen(true);
     viewEl.innerHTML = '<div id="wcRoot"></div>';
     if (window.WFNGame) window.WFNGame.mount(document.getElementById("wcRoot"));
   }
@@ -2841,7 +2842,10 @@
     const hash = location.hash.replace(/^#\/?/, "");
     const parts = hash.split("/").filter(Boolean);
 
-    if (parts[0] !== "game" && window.WFNGame) window.WFNGame.unmount();
+    if (parts[0] !== "game") {
+      if (window.WFNGame) window.WFNGame.unmount();
+      setGameFullscreen(false);
+    }
 
     if (parts.length === 0 || parts[0] === "home") return viewHome();
     if (parts[0] === "game") return viewGame();
@@ -2943,6 +2947,19 @@
   // scrolling up, or after a short pause even if the page never scrolls
   // back up, so it's never more than a moment away. One global listener,
   // not per-view, since every screen shares the same tab bar.
+  // While The Word Climb is open, the bottom tab bar (Home/Bible/Sermons/
+  // Prayer/Library/Profile) stays fully hidden rather than just auto-hiding
+  // on scroll, so the game reads as its own full-screen experience. The
+  // header's back arrow is still how you leave it.
+  let gameFullscreen = false;
+  function setGameFullscreen(on) {
+    gameFullscreen = on;
+    const tabbar = document.querySelector(".app-tabbar");
+    if (tabbar) tabbar.classList.toggle("tabbar-hidden", on);
+    const appEl = document.getElementById("app");
+    if (appEl) appEl.classList.toggle("game-fullscreen", on);
+  }
+
   function setupTabbarAutoHide() {
     const tabbar = document.querySelector(".app-tabbar");
     let lastY = window.scrollY;
@@ -2955,6 +2972,7 @@
     // cached once — they fade and slide out of the way together with the
     // tab bar, instead of sitting frozen on screen while someone reads.
     function show() {
+      if (gameFullscreen) return;
       if (tabbar) tabbar.classList.remove("tabbar-hidden");
       document.querySelectorAll(".reader-chapter-fab-prev, .reader-chapter-fab-next").forEach((el) => el.classList.remove("rcf-hidden"));
     }

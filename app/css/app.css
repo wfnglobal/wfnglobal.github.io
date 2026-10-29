@@ -52,6 +52,9 @@ h1,h2,h3{font-family:var(--font-display); text-wrap:balance; font-weight:600;}
 .app-back svg{width:22px; height:22px;}
 
 main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 16px calc(96px + env(safe-area-inset-bottom,0px));}
+/* The Word Climb reads as its own full-screen experience: no reserved
+   gap at the bottom once the tab bar is hidden for it. */
+#app.game-fullscreen main.app-main{padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));}
 
 .app-tabbar{
   position:fixed; left:0; right:0; bottom:0; z-index:60;

@@ -43,6 +43,7 @@
   // changes, the same way SERMONS[0] is kept current. The rest of the array
   // is an evergreen backup pool, kept for continuity.
   const VERSES = [
+    { text: "He has delivered us from the power of darkness and conveyed us into the kingdom of the Son of His love,", ref: "Colossians 1:13 NKJV" },
     { text: "Praying always with all prayer and supplication in the Spirit, and watching thereunto with all perseverance and supplication for all saints;", ref: "Ephesians 6:18 KJV" },
     { text: "Blessed is the man who endures temptation; for when he has been approved, he will receive the crown of life which the Lord has promised to those who love Him.", ref: "James 1:12 NKJV" },
     { text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", ref: "Isaiah 41:10" },
@@ -66,22 +67,23 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I will not pray once today and call it done — I declare I am praying ALWAYS, because my covering never goes off duty!",
-      "I will not just pray for myself — I'm watching, interceding, and standing in the gap for the saints around me!",
-      "Every prayer I pray in the Spirit today is a weapon my flesh could never manufacture — so I will not trade it for my own strength!",
+      "Father, You did not leave me in darkness to fight my way out — You delivered me! Past tense. Finished business. Already done!",
+      "I was not upgraded. I was relocated — out of the kingdom of darkness and into the Kingdom of the Son of Your love!",
+      "So today, darkness has no claim on my mind, no vote in my decisions, and no lease on my future!",
       "",
-      "I declare perseverance over every prayer that feels unanswered — I am watching thereunto, not walking away from it!",
-      "My supplication is not weak talk — it is strategic warfare, and I will not stop firing because the answer is taking its time!",
-      "Somebody connected to me is under attack right now, and my prayer today is covering them whether they know it or not!",
+      "I declare: the power that used to own me does not get to boss me around anymore — I changed addresses, and I am not going back!",
+      "Every fear that tries to talk to me like I still live in the old kingdom has the wrong house — I don't live there anymore!",
+      "I am not fighting for deliverance today. I am walking in one that is already paid for, signed, and sealed by the Son of His love!",
       "",
-      "So I declare: I am alert, I am praying, and I am not standing down — in the Spirit, with all perseverance, for every saint God puts on my heart!",
-      "If you're reading this — someone is praying for you right now, whether you knew it or not. Join your faith to ours!",
-      "Save this. Pray it before your feet hit the ground today. Watch like a soldier, pray like it already worked. In Jesus' name, amen!"
+      "So I will not carry today like a captive — I will carry it like royalty, because that is what citizens of this Kingdom are!",
+      "If darkness is pressing on you right now — hear this: Somebody already came and got you out. You just have to walk like it's true!",
+      "Save this. Say it before the day convinces you otherwise. You were delivered. You were conveyed. You belong to the Kingdom of the Son of His love. In Jesus' name, amen!"
     ],
-    ref: "Ephesians 6:18"
+    ref: "Colossians 1:13"
   };
 
   const SERMONS = [
+    { slug: "not-that-kind-of-fire", title: "Not That Kind of Fire", ref: "Luke 9:51-55", date: "October 29, 2026", excerpt: "James and John wanted lightning for a village that said no. Jesus wanted mercy. What you ask God to burn down says more about your spirit than theirs." },
     { slug: "potential-in-the-holy-ghost", title: "Potential in the Holy Ghost", ref: "Acts 1:8", date: "October 28, 2026", excerpt: "You are not waiting on power. Power moved in the day you got saved and has been waiting on you to act like it." },
     { slug: "the-crown-on-the-other-side", title: "The Crown on the Other Side", ref: "James 1:12", date: "October 28, 2026", excerpt: "Endurance isn't what you survive before the blessing — it's what qualifies you for it. The crown of life was never promised to the untested." },
     { slug: "grace-gets-the-last-word", title: "Grace Gets the Last Word", ref: "Romans 5:19-21", date: "October 27, 2026", excerpt: "One man's fall wrote sin into the human story in permanent ink. One Man's obedience picked up the same pen — and wrote something stronger over it." },
@@ -2278,7 +2280,7 @@
             <div class="gate-preview-card" style="background:linear-gradient(165deg,#F3E7E6 0%,#E8D2D0 100%); border:1px solid rgba(173,122,122,0.28);">
               <svg class="gate-preview-watermark" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="75" fill="none" stroke="#AD7A7A" stroke-width="1.4"/><circle cx="80" cy="80" r="50" fill="none" stroke="#AD7A7A" stroke-width="1.4"/></svg>
               <span class="gate-preview-badge" style="color:#7A4F4F;">Today's Declaration</span>
-              <p class="gate-preview-text" style="color:#4C3330; font-style:italic;">&ldquo;Father, today is Your Sabbath, and I enter it in rest, not in striving&hellip;&rdquo;</p>
+              <p class="gate-preview-text" style="color:#4C3330; font-style:italic;">&ldquo;Father, You did not leave me in darkness to fight my way out — You delivered me&hellip;&rdquo;</p>
               <a class="gate-preview-cta" style="background:#AD7A7A;" href="#/prayer/list">Continue in Prayer <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>
             </div>
             <p class="gate-footnote">&ldquo;When thou prayest, enter into thy closet, and when thou hast shut thy door, pray to thy Father.&rdquo; &mdash; Matthew 6:6</p>

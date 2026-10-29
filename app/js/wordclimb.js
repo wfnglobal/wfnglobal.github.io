@@ -126,24 +126,24 @@
   var PER_LEVEL = 4; // questions asked per level, drawn at random from each pool of 20
   var TIME_LIMIT = 20;
 
-  // Rotating verse strip along the bottom of the game, cycling through a
-  // colored background with each verse — scripture still in view between
-  // questions, not just during them.
+  // Rotating verse strip, standalone beneath the game card — scripture
+  // still in view between questions. Text-only (no color block): each
+  // verse carries a tint used only on its small reference label.
   var TICKER_VERSES = [
-    { text: "“The Lord is my shepherd; I shall not want.”", ref: "Psalm 23:1", bg: "linear-gradient(135deg,#3E5C4D,#223228)" },
-    { text: "“I can do all things through Christ which strengtheneth me.”", ref: "Philippians 4:13", bg: "linear-gradient(135deg,#8A6A2C,#4E3C19)" },
-    { text: "“For God so loved the world, that he gave his only begotten Son.”", ref: "John 3:16", bg: "linear-gradient(135deg,#4A4E8C,#2B2D54)" },
-    { text: "“Trust in the Lord with all thine heart.”", ref: "Proverbs 3:5", bg: "linear-gradient(135deg,#8C4A3A,#542C22)" },
-    { text: "“Be strong and of a good courage; be not afraid.”", ref: "Joshua 1:9", bg: "linear-gradient(135deg,#2E6B66,#1A3E3B)" },
-    { text: "“The joy of the Lord is your strength.”", ref: "Nehemiah 8:10", bg: "linear-gradient(135deg,#6B3F63,#3C2338)" },
-    { text: "“In the beginning God created the heaven and the earth.”", ref: "Genesis 1:1", bg: "linear-gradient(135deg,#355A7A,#1E3348)" },
-    { text: "“Faith cometh by hearing, and hearing by the word of God.”", ref: "Romans 10:17", bg: "linear-gradient(135deg,#A9824F,#5E4A1E)" },
-    { text: "“This is the day which the Lord hath made; we will rejoice.”", ref: "Psalm 118:24", bg: "linear-gradient(135deg,#3E5C4D,#223228)" },
-    { text: "“Thy word is a lamp unto my feet, and a light unto my path.”", ref: "Psalm 119:105", bg: "linear-gradient(135deg,#8A6A2C,#4E3C19)" },
-    { text: "“Let all that you do be done in love.”", ref: "1 Corinthians 16:14", bg: "linear-gradient(135deg,#8C4A3A,#542C22)" },
-    { text: "“He giveth power to the faint; to them that have no might he increaseth strength.”", ref: "Isaiah 40:29", bg: "linear-gradient(135deg,#4A4E8C,#2B2D54)" },
-    { text: "“Casting all your care upon him; for he careth for you.”", ref: "1 Peter 5:7", bg: "linear-gradient(135deg,#6B3F63,#3C2338)" },
-    { text: "“Call unto me, and I will answer thee.”", ref: "Jeremiah 33:3", bg: "linear-gradient(135deg,#2E6B66,#1A3E3B)" },
+    { text: "“The Lord is my shepherd; I shall not want.”", ref: "Psalm 23:1", color: "#4F7A68" },
+    { text: "“I can do all things through Christ which strengtheneth me.”", ref: "Philippians 4:13", color: "#9C7A34" },
+    { text: "“For God so loved the world, that he gave his only begotten Son.”", ref: "John 3:16", color: "#4A4E8C" },
+    { text: "“Trust in the Lord with all thine heart.”", ref: "Proverbs 3:5", color: "#9C5240" },
+    { text: "“Be strong and of a good courage; be not afraid.”", ref: "Joshua 1:9", color: "#2E7A73" },
+    { text: "“The joy of the Lord is your strength.”", ref: "Nehemiah 8:10", color: "#7A4A70" },
+    { text: "“In the beginning God created the heaven and the earth.”", ref: "Genesis 1:1", color: "#3E6286" },
+    { text: "“Faith cometh by hearing, and hearing by the word of God.”", ref: "Romans 10:17", color: "#A9824F" },
+    { text: "“This is the day which the Lord hath made; we will rejoice.”", ref: "Psalm 118:24", color: "#4F7A68" },
+    { text: "“Thy word is a lamp unto my feet, and a light unto my path.”", ref: "Psalm 119:105", color: "#9C7A34" },
+    { text: "“Let all that you do be done in love.”", ref: "1 Corinthians 16:14", color: "#9C5240" },
+    { text: "“He giveth power to the faint; to them that have no might he increaseth strength.”", ref: "Isaiah 40:29", color: "#4A4E8C" },
+    { text: "“Casting all your care upon him; for he careth for you.”", ref: "1 Peter 5:7", color: "#7A4A70" },
+    { text: "“Call unto me, and I will answer thee.”", ref: "Jeremiah 33:3", color: "#2E7A73" },
   ];
 
   var SCROLLS = [
@@ -288,9 +288,17 @@
         '</div>' +
         '<button class="wc-btn wc-btn-ghost" data-action="reset">Play Again</button>' +
       '</div>' +
+    '</div>' +
 
-      '<div class="wc-verse-ticker" data-el="verseTicker">' +
-        '<p class="wc-verse-ticker-text" data-el="verseTickerText">—<span class="wc-verse-ticker-ref" data-el="verseTickerRef"></span></p>' +
+    '<div class="wc-verse-strip" data-el="verseStrip">' +
+      '<p class="wc-verse-strip-kicker">A Word While You Climb</p>' +
+      '<div class="wc-verse-strip-stage">' +
+        '<div class="wc-verse-strip-inner" data-el="verseStripInner">' +
+          '<span class="wc-verse-strip-sparkle wc-sp1" aria-hidden="true">✦</span>' +
+          '<p class="wc-verse-strip-text" data-el="verseStripText">—</p>' +
+          '<p class="wc-verse-strip-ref" data-el="verseStripRef"></p>' +
+          '<span class="wc-verse-strip-sparkle wc-sp2" aria-hidden="true">✦</span>' +
+        '</div>' +
       '</div>' +
     '</div>' +
 
@@ -611,28 +619,31 @@
   }
 
   // -----------------------------------------------------------------
-  // Verse ticker: rotates through TICKER_VERSES with a crossfade and a
-  // changing background color, independent of whatever screen is showing.
+  // Verse strip: each verse enters from the right and, a few seconds
+  // later, exits back out the same side — never crossing left — with a
+  // soft twinkle riding along for a touch of showmanship.
   // -----------------------------------------------------------------
   var tickerTimer = null, tickerIdx = -1;
   function stepTicker() {
-    var wrap = el("verseTicker"), textEl = el("verseTickerText"), refEl = el("verseTickerRef");
-    if (!wrap || !textEl) return;
-    textEl.classList.add("wc-fade");
+    var inner = el("verseStripInner"), textEl = el("verseStripText"), refEl = el("verseStripRef");
+    if (!inner || !textEl) return;
+    inner.classList.add("wc-exit"); // glide out through the right
     setTimeout(function () {
       tickerIdx = (tickerIdx + 1) % TICKER_VERSES.length;
       var v = TICKER_VERSES[tickerIdx];
-      textEl.firstChild ? (textEl.firstChild.textContent = v.text) : (textEl.textContent = v.text);
-      if (refEl) refEl.textContent = v.ref;
-      wrap.style.background = v.bg;
-      textEl.classList.remove("wc-fade");
-    }, 420);
+      textEl.textContent = v.text;
+      if (refEl) { refEl.textContent = v.ref; refEl.style.color = v.color; }
+      inner.classList.remove("wc-exit");
+      inner.classList.add("wc-enter-start"); // snap to the right, no transition
+      void inner.offsetWidth; // force reflow so the next class change animates
+      inner.classList.remove("wc-enter-start"); // glide back in from the right
+    }, 430);
   }
   function startTicker() {
     stopTicker();
     tickerIdx = -1;
     stepTicker();
-    tickerTimer = setInterval(stepTicker, 5000);
+    tickerTimer = setInterval(stepTicker, 5500);
   }
   function stopTicker() {
     if (tickerTimer) clearInterval(tickerTimer);

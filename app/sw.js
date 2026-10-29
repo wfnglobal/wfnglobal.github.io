@@ -1,7 +1,7 @@
 // Word and Faith Network — service worker
 // Caches the app shell for installability, and the full KJV Bible for offline reading.
 
-const CACHE_VERSION = "wfn-app-v53";
+const CACHE_VERSION = "wfn-app-v54";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const BIBLE_CACHE = `${CACHE_VERSION}-bible`;
 

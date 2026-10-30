@@ -1118,6 +1118,11 @@
           <div class="body"><h3>The Library</h3><p>Ask Boldly — Book One</p></div>
           <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
         </a>
+        <a class="home-row" href="#/plan">
+          <div class="ico ico-library" style="background:#E4EEE0; color:#3F6B3C;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <div class="body"><h3>Reading Plans</h3><p>A 7-day guided devotional</p></div>
+          <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+        </a>
         <a class="home-row" href="#/game">
           <div class="ico ico-climb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20L12 4"/><path d="M17 20L12 4"/><path d="M8.6 15h6.8M9.8 10.5h4.4"/></svg></div>
           <div class="body"><h3>The Word Climb</h3><p>Play the Scripture quiz — five levels to the Sealed Scroll</p></div>
@@ -2654,6 +2659,200 @@
     }
   ];
 
+  // ---------------------------------------------------------------------
+  // Guided reading plans: short, day-by-day devotional series. Progress
+  // (which days are marked complete) is tracked per-device via WFNStore —
+  // see getPlanProgress/markPlanDayComplete in store.js. To add a new plan,
+  // add another entry here with a unique slug and a `days` array; nothing
+  // else needs to change — the list/detail/day views below are generic.
+  // ---------------------------------------------------------------------
+  var READING_PLANS = [
+    {
+      slug: "who-you-are-in-christ",
+      title: "Who You Are in Christ",
+      subtitle: "A 7-day walk through what God actually says about you once you're in Him.",
+      color: "#6E8A5C",
+      days: [
+        {
+          title: "You Are a New Creation",
+          ref: "2 Corinthians 5:17",
+          verse: "Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.",
+          devotional: "Somebody has been trying to reform the old version of themselves — manage it, improve it, keep it presentable. But Paul doesn't say you were upgraded. He says you're a new creature. The old you didn't get patched; it passed away. That means the failures, the labels, the \"that's just how I am\" — none of it is the final word on your identity anymore. In Christ, you're not the same person with better behavior. You're a different creation entirely, and the proof isn't how you feel today. It's what happened at the cross.",
+          prayer: "Lord, thank You that I am not who I used to be. Help me live today out of who You say I am now, not out of old habits that have already passed away. Amen."
+        },
+        {
+          title: "You Are a Child of God",
+          ref: "1 John 3:1",
+          verse: "Behold, what manner of love the Father hath bestowed upon us, that we should be called the sons of God: therefore the world knoweth not us.",
+          devotional: "\"Behold\" means stop and actually look at this. John isn't describing a title you earned — he's describing a love so extravagant it bought you a place in God's own family. Not a servant who hopes to please Him. Not a distant admirer. A son, a daughter, with a Father who calls you His own in front of a watching world. That changes how you walk into today: not performing for approval, but already approved, already loved, already His — and free to live like it.",
+          prayer: "Father, thank You for calling me Your own. Let me walk today as Your child — secure, loved, and unashamed of whose family I belong to. Amen."
+        },
+        {
+          title: "You Are Free From Condemnation",
+          ref: "Romans 8:1",
+          verse: "There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit.",
+          devotional: "Condemnation is a voice that keeps bringing up what's already been paid for. It doesn't correct you — it just makes you carry a debt Christ already settled. Paul says there is now no condemnation. Not reduced. Not eventually. Now. If you are in Christ, the accusing voice replaying your worst moments is not the Holy Spirit's voice — conviction leads you to repentance and life; condemnation just leaves you stuck. Learn today to tell the difference, and refuse to carry what the cross already carried for you.",
+          prayer: "Lord, thank You that there is no condemnation for me in Christ. Help me silence every accusing voice that doesn't come from You, and walk today in the freedom You already purchased. Amen."
+        },
+        {
+          title: "You Are More Than a Conqueror",
+          ref: "Romans 8:37",
+          verse: "Nay, in all these things we are more than conquerors through him that loved us.",
+          devotional: "Read the verse before this one and you'll find a list most people would call reasons to give up: tribulation, distress, persecution, famine, danger. Paul doesn't deny the list is real. He says that in the middle of it — not after it's over — you are more than a conqueror. Not barely surviving. Not eventually winning. More than a conqueror, right now, through Him that loved us. Whatever today's version of that list looks like for you, it was never strong enough to out-love the One who's holding you through it.",
+          prayer: "Lord, whatever I'm facing today, thank You that it doesn't get the final say over me. I am more than a conqueror through Your love — help me walk today like I believe it. Amen."
+        },
+        {
+          title: "You Are Seated With Christ",
+          ref: "Ephesians 2:6",
+          verse: "And hath raised us up together, and made us sit together in heavenly places in Christ Jesus.",
+          devotional: "Notice the tense: hath raised, hath made to sit. Not will, someday, if you're good enough. Already. Your position in Christ isn't something you're working toward from the bottom up — it's something you already have, right now, seated with Him far above every circumstance trying to convince you otherwise. A seated posture is a position of rest, not striving. You don't fight for a place you already occupy. You stand from it.",
+          prayer: "Father, thank You that I am already seated with Christ, above every circumstance I'm facing. Teach me to rest in that place today instead of striving for it. Amen."
+        },
+        {
+          title: "You Are the Righteousness of God",
+          ref: "2 Corinthians 5:21",
+          verse: "For he hath made him to be sin for us, who knew no sin; that we might be made the righteousness of God in him.",
+          devotional: "This is the trade at the center of everything: He who knew no sin became sin, so that we — who knew nothing but sin — could become the righteousness of God in Him. Not good behavior counted as righteousness. The righteousness of God Himself, given to you as a gift because of what Christ carried in your place. You didn't earn this standing and you can't lose it by having a bad day. It was settled at the cross, and it's still settled now.",
+          prayer: "Lord Jesus, thank You for becoming sin so I could become Your righteousness. Let that truth settle my heart today, whatever I feel I deserve. Amen."
+        },
+        {
+          title: "You Are Complete in Him",
+          ref: "Colossians 2:10",
+          verse: "And ye are complete in him, which is the head of all principality and power.",
+          devotional: "Complete — not almost there, not complete once you fix a few more things. The moment you came to Christ, you were joined to the One who is head over every power that could ever stand against you, and in Him you lack nothing that matters. That doesn't mean you'll never grow. It means your worth and your standing before God were never waiting on your growth in the first place. Close this week carrying that: you are not a project in progress toward acceptance. You are complete in Him, today, already.",
+          prayer: "Father, thank You that I am complete in Christ — not because of what I've done, but because of who He is. Let me walk the rest of my life resting in that completeness. Amen."
+        }
+      ]
+    }
+  ];
+
+  function planBySlug(slug) {
+    return READING_PLANS.find((p) => p.slug === slug) || null;
+  }
+
+  function viewPlansList() {
+    setHeader("Reading Plans", true);
+    setActiveTab("library");
+    viewEl.innerHTML = `
+      <div class="section-label">Guided Devotionals</div>
+      ${READING_PLANS.map((p) => {
+        const progress = WFNStore.getPlanProgress(p.slug);
+        const done = progress.completedDays.length;
+        const total = p.days.length;
+        const pct = total ? Math.round((done / total) * 100) : 0;
+        return `
+        <a class="home-row plan-row" href="#/plan/${esc(p.slug)}">
+          <div class="ico ico-library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 3v18M8 8h8M8 12h8"/></svg></div>
+          <div class="body">
+            <h3>${esc(p.title)}</h3>
+            <p>${esc(p.subtitle)}</p>
+            ${done > 0 ? `
+            <div class="plan-progress-track"><div class="plan-progress-fill" style="width:${pct}%; background:${p.color};"></div></div>
+            <p class="plan-progress-label">${done} of ${total} days complete</p>
+            ` : `<p class="plan-progress-label">${total} days &middot; Not started</p>`}
+          </div>
+          <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+        </a>
+        `;
+      }).join("")}
+    `;
+  }
+
+  function viewPlanDetail(slug) {
+    const plan = planBySlug(slug);
+    if (!plan) return viewPlansList();
+    setHeader(plan.title, true);
+    setActiveTab("library");
+    const progress = WFNStore.getPlanProgress(slug);
+    const done = progress.completedDays.length;
+    const total = plan.days.length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    const nextDay = (() => {
+      for (let i = 1; i <= total; i++) if (!progress.completedDays.includes(i)) return i;
+      return 1;
+    })();
+
+    viewEl.innerHTML = `
+      <div class="card plan-hero" style="border-top:4px solid ${plan.color};">
+        <div class="section-label">Guided Devotional &middot; ${total} Days</div>
+        <h2 style="font-family:var(--font-display); font-size:1.4rem; margin-bottom:8px;">${esc(plan.title)}</h2>
+        <p style="color:var(--ink-2); font-size:14.5px; line-height:1.6; margin-bottom:16px;">${esc(plan.subtitle)}</p>
+        <div class="plan-progress-track"><div class="plan-progress-fill" style="width:${pct}%; background:${plan.color};"></div></div>
+        <p class="plan-progress-label" style="margin-bottom:16px;">${done} of ${total} days complete</p>
+        <a class="btn btn-block" href="#/plan/${esc(slug)}/${nextDay}" style="background:${plan.color};">${done === 0 ? "Start Day 1" : done >= total ? "Review Any Day" : `Continue &middot; Day ${nextDay}`}</a>
+      </div>
+
+      <div class="section-label" style="margin-top:22px;">Days</div>
+      <div class="stack">
+        ${plan.days.map((d, i) => {
+          const day = i + 1;
+          const isDone = progress.completedDays.includes(day);
+          return `
+          <a class="home-row plan-day-row" href="#/plan/${esc(slug)}/${day}">
+            <div class="plan-day-num ${isDone ? "is-done" : ""}" style="${isDone ? `background:${plan.color}; border-color:${plan.color};` : ""}">
+              ${isDone ? `<svg viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M20 6L9 17l-5-5"/></svg>` : day}
+            </div>
+            <div class="body"><h3>${esc(d.title)}</h3><p>${esc(d.ref)}</p></div>
+            <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+          </a>
+          `;
+        }).join("")}
+      </div>
+    `;
+  }
+
+  function viewPlanDay(slug, dayStr) {
+    const plan = planBySlug(slug);
+    const day = parseInt(dayStr, 10);
+    if (!plan || !day || day < 1 || day > plan.days.length) return viewPlanDetail(slug);
+    const d = plan.days[day - 1];
+    const total = plan.days.length;
+    setHeader(`Day ${day} of ${total}`, true);
+    setActiveTab("library");
+    const progress = WFNStore.getPlanProgress(slug);
+    const isDone = progress.completedDays.includes(day);
+    const nextDay = day < total ? day + 1 : null;
+
+    viewEl.innerHTML = `
+      <div class="section-label" style="color:${plan.color};">${esc(plan.title)} &middot; Day ${day} of ${total}</div>
+      <h2 style="font-family:var(--font-display); font-size:1.6rem; margin-bottom:18px;">${esc(d.title)}</h2>
+
+      <div class="card plan-scripture" style="border-left:4px solid ${plan.color};">
+        <p style="font-family:var(--font-display); font-style:italic; font-size:1.05rem; line-height:1.6; margin-bottom:8px;">&ldquo;${esc(d.verse)}&rdquo;</p>
+        <p style="font-size:11.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:${plan.color};">${esc(d.ref)}, KJV</p>
+      </div>
+
+      <div class="plan-devotional">
+        <p>${esc(d.devotional)}</p>
+      </div>
+
+      <div class="card plan-prayer-card">
+        <div class="section-label">Today's Prayer</div>
+        <p style="font-style:italic; color:var(--ink-2); line-height:1.65;">${esc(d.prayer)}</p>
+      </div>
+
+      <button type="button" class="btn btn-block plan-complete-btn" id="planCompleteBtn" style="${isDone ? "" : `background:${plan.color};`}">
+        ${isDone ? "&#10003; Day Complete" : "Mark Day Complete"}
+      </button>
+      ${nextDay ? `<a class="btn btn-outline btn-block" style="margin-top:10px;" href="#/plan/${esc(slug)}/${nextDay}">Next: Day ${nextDay} &rarr;</a>` : `<a class="btn btn-outline btn-block" style="margin-top:10px;" href="#/plan/${esc(slug)}">Back to Plan Overview</a>`}
+    `;
+
+    const completeBtn = document.getElementById("planCompleteBtn");
+    if (isDone) completeBtn.classList.add("btn-outline");
+    completeBtn.addEventListener("click", () => {
+      const nowDone = completeBtn.classList.toggle("btn-outline");
+      if (nowDone) {
+        WFNStore.markPlanDayComplete(slug, day);
+        completeBtn.innerHTML = "&#10003; Day Complete";
+        completeBtn.style.background = "";
+      } else {
+        WFNStore.markPlanDayIncomplete(slug, day);
+        completeBtn.innerHTML = "Mark Day Complete";
+        completeBtn.style.background = plan.color;
+      }
+    });
+  }
+
   function viewLibraryIntro() {
     setHeader("Library", true);
     setActiveTab("library");
@@ -3197,6 +3396,11 @@
       if (parts.length >= 2 && parts[1] === "list") return viewLibrary();
       if (gateSkipped("library")) { location.replace("#/library/list"); return; }
       return viewLibraryIntro();
+    }
+    if (parts[0] === "plan") {
+      if (parts.length >= 3) return viewPlanDay(parts[1], parts[2]);
+      if (parts.length === 2) return viewPlanDetail(parts[1]);
+      return viewPlansList();
     }
     if (parts[0] === "profile") {
       if (parts.length === 1) return viewProfile();

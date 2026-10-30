@@ -26,6 +26,7 @@ window.WFNStore = (function () {
   const NOTES_KEY = "wfn-app-notes";
   const MARKS_KEY = "wfn-app-marks"; // highlights + saved verses, one entry per verse
   const PRAYERS_KEY = "wfn-app-prayers";
+  const PLANS_KEY = "wfn-app-plans"; // { "<planSlug>": { completedDays: [1,2,...], startedAt, lastDayAt } }
 
   // ---- Profile ----
   function getProfile() {
@@ -164,11 +165,44 @@ window.WFNStore = (function () {
     return Object.keys(activity).filter((k) => k.indexOf(year) === 0).length;
   }
 
+  // ---- Reading plan progress (per-device; one record per plan slug) ----
+  function getAllPlanProgress() {
+    return read(PLANS_KEY, {});
+  }
+  function getPlanProgress(slug) {
+    const all = getAllPlanProgress();
+    return all[slug] || { completedDays: [], startedAt: null, lastDayAt: null };
+  }
+  function markPlanDayComplete(slug, day) {
+    const all = getAllPlanProgress();
+    const p = all[slug] || { completedDays: [], startedAt: Date.now(), lastDayAt: null };
+    if (!p.startedAt) p.startedAt = Date.now();
+    if (!p.completedDays.includes(day)) p.completedDays.push(day);
+    p.lastDayAt = Date.now();
+    all[slug] = p;
+    write(PLANS_KEY, all);
+    return p;
+  }
+  function markPlanDayIncomplete(slug, day) {
+    const all = getAllPlanProgress();
+    const p = all[slug] || { completedDays: [], startedAt: null, lastDayAt: null };
+    p.completedDays = p.completedDays.filter((d) => d !== day);
+    all[slug] = p;
+    write(PLANS_KEY, all);
+    return p;
+  }
+  function resetPlan(slug) {
+    const all = getAllPlanProgress();
+    delete all[slug];
+    write(PLANS_KEY, all);
+  }
+
   return {
     getProfile, saveProfile,
     getNotes, addNote, deleteNote,
     getMarks, getMark, setHighlight, toggleSaved, deleteMark,
     getPrayers, addPrayer, togglePrayerAnswered, deletePrayer,
     recordActivityToday, getStreak, getDaysActiveThisYear,
+    getPlanProgress, markPlanDayComplete, markPlanDayIncomplete, resetPlan,
   };
 })();

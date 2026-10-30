@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Wise as Serpents, Harmless as Doves</title>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CWM8XH3FTC"></script>
@@ -69,6 +70,12 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .pull-verse{font-family:var(--font-display); font-style:italic; font-size:1.15rem; color:var(--ink); background:var(--surface-2); border-radius:10px; padding:18px 22px; margin:24px 0; line-height:1.55;}
 .pull-verse cite{display:block; font-family:var(--font-body); font-style:normal; font-size:11.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--gold); margin-top:10px;}
 
+.amen-card{display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:40px; padding-top:32px; border-top:1px solid var(--border);}
+.amen-btn{display:inline-flex; align-items:center; gap:9px; border-radius:100px; border:1.5px solid var(--gold-light); background:var(--surface); color:var(--gold); font-family:var(--font-body); font-size:14.5px; font-weight:600; padding:11px 26px; cursor:pointer; transition:transform 0.15s ease, background 0.15s ease, color 0.15s ease;}
+.amen-btn svg{width:18px; height:18px; flex-shrink:0;}
+.amen-btn:active{transform:scale(0.96);}
+.amen-btn[aria-pressed="true"]{background:var(--gold); color:#FFFDF8; border-color:var(--gold);}
+.amen-note{font-size:12.5px; color:var(--ink-3); text-align:center;}
 .closing-card{background:var(--surface-3); border:1px solid var(--border); border-radius:14px; padding:30px 26px; text-align:center; margin-top:48px;}
 .closing-card h3{font-size:1.3rem; margin-bottom:12px;}
 .closing-card p{color:var(--ink-2); font-size:14.5px; margin-bottom:22px; line-height:1.65;}
@@ -156,6 +163,14 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
     <p>You are going to walk into a room this week where somebody does not have your best interest at heart. Go in wise. Read it clearly. Don't be the last one to see what's happening in the room. And when you've seen it &mdash; go in gentle anyway. Don't let the wolves turn you into one. Because the goal was never to come out of that room unscathed. The goal was to come out of that room still looking like the One who sent you. Wise as a serpent. Harmless as a dove. Sent, not stranded. That's the Word for today. Carry it like you mean it.</p>
   </div>
 
+  <div class="amen-card">
+    <button type="button" class="amen-btn" id="amenBtn" aria-pressed="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V7a3 3 0 0 1 6 0v1"/><path d="M13 8a2 2 0 0 1 4 0v2"/><path d="M17 9a2 2 0 0 1 4 0v4a7 7 0 0 1-7 7h-1a7 7 0 0 1-6.3-4L5 12.5A1.7 1.7 0 0 1 7.8 10.3L9 12"/></svg>
+      <span id="amenLabel">Amen</span>
+    </button>
+    <p class="amen-note" id="amenNote">Tap if this word met you today.</p>
+  </div>
+
   <div class="closing-card">
     <h3>Stand on This With Us</h3>
     <p>Receive the Word, pray with us, and grow in faith &mdash; every day, on X.</p>
@@ -178,4 +193,28 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
   </div>
 </footer>
 
+<script>
+(function () {
+  var btn = document.getElementById("amenBtn");
+  if (!btn) return;
+  var label = document.getElementById("amenLabel");
+  var note = document.getElementById("amenNote");
+  var key = "wfn-amen:" + location.pathname;
+  var said = false;
+  try { said = localStorage.getItem(key) === "1"; } catch (e) {}
+
+  function render() {
+    btn.setAttribute("aria-pressed", said ? "true" : "false");
+    label.textContent = said ? "Amen'd" : "Amen";
+    note.textContent = said ? "You said Amen to this word." : "Tap if this word met you today.";
+  }
+  render();
+
+  btn.addEventListener("click", function () {
+    said = !said;
+    try { localStorage.setItem(key, said ? "1" : "0"); } catch (e) {}
+    render();
+  });
+})();
+</script>
 <script src="/app/js/wfn-tts.js"></script>

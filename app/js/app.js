@@ -82,6 +82,14 @@
     ref: "Colossians 1:13"
   };
 
+  // Night Prayer, shown on Home stacked behind the Verse of the Day card —
+  // kept current every day (by 8pm) the same way as VERSES[0], SERMONS[0],
+  // and DECLARATION above.
+  const NIGHT_PRAYER = {
+    text: "Father, thank You for the mercy that carried me through this day. Forgive what I got wrong, and settle what I'm still carrying. Watch over my home while I sleep, and wake me in peace to serve You again tomorrow.",
+    amen: "In Jesus' name, amen."
+  };
+
   const SERMONS = [
     { slug: "not-that-kind-of-fire", title: "Not That Kind of Fire", ref: "Luke 9:51-55", date: "October 29, 2026", excerpt: "James and John wanted lightning for a village that said no. Jesus wanted mercy. What you ask God to burn down says more about your spirit than theirs." },
     { slug: "potential-in-the-holy-ghost", title: "Potential in the Holy Ghost", ref: "Acts 1:8", date: "October 28, 2026", excerpt: "You are not waiting on power. Power moved in the day you got saved and has been waiting on you to act like it." },
@@ -887,6 +895,106 @@
   // Views
   // ---------------------------------------------------------------------
 
+  // Time-based greeting shown in place of "Welcome" on Home.
+  function greetingLabel() {
+    const h = new Date().getHours();
+    if (h < 5) return "Good night";
+    if (h < 12) return "Good morning";
+    if (h < 17) return "Good afternoon";
+    if (h < 21) return "Good evening";
+    return "Good night";
+  }
+  function greetingIconSvg() {
+    const h = new Date().getHours();
+    return (h >= 5 && h < 19)
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.4 14.7A8.5 8.5 0 0 1 9.3 3.6a.75.75 0 0 0-.9-1 10 10 0 1 0 12.9 12.9.75.75 0 0 0-.9-.8z"/></svg>';
+  }
+
+  // Card-stack behavior shared by the Verse of the Day / Night Prayer pair:
+  // a labeled pill above the stack swaps them with one tap, and the front
+  // card can also be dragged down to reveal the one behind it. The back
+  // card's height is clipped to the front card's own measured height so
+  // only a sliver of it peeks out, however long either one's content runs.
+  function wireVodStack() {
+    const stack = document.getElementById("vodStack");
+    const peek = document.getElementById("vodPeek");
+    const peekLabel = document.getElementById("vodPeekLabel");
+    const vod = document.getElementById("vodCard");
+    const night = document.getElementById("nightCard");
+    if (!stack || !vod || !night || !peek) return { syncHeights() {} };
+
+    let frontIsVerse = true;
+    const frontEl = () => (frontIsVerse ? vod : night);
+    const backEl = () => (frontIsVerse ? night : vod);
+
+    function syncHeights() {
+      const f = frontEl(), b = backEl();
+      requestAnimationFrame(() => {
+        b.style.maxHeight = f.getBoundingClientRect().height + "px";
+      });
+    }
+    function layout() {
+      vod.classList.toggle("front-face", frontIsVerse);
+      vod.classList.toggle("back-face", !frontIsVerse);
+      night.classList.toggle("front-face", !frontIsVerse);
+      night.classList.toggle("back-face", frontIsVerse);
+      const f = frontEl();
+      f.style.transform = ""; f.style.maxHeight = ""; f.style.overflow = "";
+      peekLabel.textContent = frontIsVerse ? "Tonight's Prayer" : "Back to the Verse of the Day";
+      syncHeights();
+    }
+    function swap() {
+      frontIsVerse = !frontIsVerse;
+      layout();
+    }
+    peek.addEventListener("click", swap);
+
+    let dragging = false, startY = 0, dy = 0;
+    function ignoreTarget(t) {
+      return t.closest("#vodCover") || t.closest("#vodTranslate") || t.closest("#nightTranslate") || t.closest(".vod-peek");
+    }
+    function onDown(e) {
+      if (ignoreTarget(e.target)) return;
+      dragging = true; dy = 0; startY = e.clientY;
+      frontEl().classList.add("dragging");
+    }
+    function onMove(e) {
+      if (!dragging) return;
+      dy = Math.max(0, e.clientY - startY);
+      frontEl().style.transform = `translateY(${dy}px) scale(${1 - Math.min(dy, 160) / 3200})`;
+    }
+    function onUp() {
+      if (!dragging) return;
+      dragging = false;
+      frontEl().classList.remove("dragging");
+      if (dy > 90) {
+        swap();
+      } else {
+        frontEl().style.transform = "";
+      }
+      dy = 0;
+    }
+    stack.addEventListener("pointerdown", onDown);
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("resize", syncHeights);
+
+    layout();
+    return { syncHeights };
+  }
+
+  function scatterNightStars(el) {
+    if (!el) return;
+    for (let i = 0; i < 18; i++) {
+      const s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 70) + "%";
+      s.style.animationDelay = (Math.random() * 3.4).toFixed(2) + "s";
+      el.appendChild(s);
+    }
+  }
+
   function viewHome() {
     setHeader("Word & Faith Network", false);
     setActiveTab("home");
@@ -897,34 +1005,84 @@
       ? `<p>Continue in ${esc(last.name)} ${last.chapter}</p>`
       : `<p>Start with Genesis, or any book you choose</p>`;
     const bibleRowHref = last ? `#/bible/${last.slug}/${last.chapter}` : `#/bible`;
+    const profile = WFNStore.getProfile();
+    const greet = greetingLabel();
+    const todayLabel = new Date().toLocaleDateString(undefined, { month: "long", day: "numeric" });
 
     viewEl.innerHTML = `
       <div class="hello">
-        <h1>Welcome</h1>
+        <div class="eyebrow">${greetingIconSvg()}<span id="greetTime">${greet}</span></div>
+        <h1 id="greetName">${greet}${profile ? `, <span class="name">${esc(profile.name)}</span>` : ""}</h1>
         <p>Your daily Word, sermon, and prayer — all in one place.</p>
       </div>
 
-      <div class="verse-of-day" id="vodCard">
-        <button class="vod-cover" id="vodCover" type="button" aria-label="Tap to reveal today's Bible verse">
-          <div class="vod-constellation">
-            ${vodCoverRaysHtml()}
-            <span class="vod-reveal-badge">
-              <span class="vod-reveal-glow"></span>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.6" fill="rgba(255,253,248,0.16)" stroke="#FFFDF8" stroke-width="1.6"/><line x1="12" y1="3.4" x2="12" y2="20.6" stroke="#FFFDF8" stroke-width="1" opacity="0.45"/><path d="M12 8.2v7M8.7 11.7h6.6" stroke="#E7CE94" stroke-width="1.8" stroke-linecap="round"/></svg>
-            </span>
-          </div>
-          <div class="vod-cover-label">Verse of the Day</div>
-          <div class="vod-cover-sub">Tap to reveal today's Word</div>
+      <div class="vod-stack" id="vodStack">
+        <button class="vod-peek" id="vodPeek" type="button">
+          <span id="vodPeekLabel">Tonight's Prayer</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <div class="verse-of-day-overlay"></div>
-        <div class="verse-of-day-content">
-          <div class="verse-of-day-label">Verse of the Day</div>
-          <div class="verse-of-day-ref">${esc(verse.ref)} KJV</div>
-          <div class="verse-of-day-text" id="vodText">${esc(verse.text)}</div>
-          <select class="vod-translate" id="vodTranslate" aria-label="Translate the verse of the day">${translateLangOptions()}</select>
+
+        <div class="vod-cards" id="vodCards">
+        <div class="card-face back-face night-face" id="nightCard">
+          <div class="night-stars" id="nightStars"></div>
+          <svg class="night-moon" viewBox="0 0 48 48" aria-hidden="true">
+            <mask id="nightMoonMask"><rect width="48" height="48" fill="#fff"/><circle cx="29" cy="15" r="13" fill="#000"/></mask>
+            <circle cx="24" cy="24" r="18" fill="#F3EADA" mask="url(#nightMoonMask)"/>
+          </svg>
+          <div class="card-grain"></div>
+          <div class="card-top">
+            <div class="card-eyebrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg>
+              Night Prayer
+            </div>
+            <div class="card-date">8:00 PM</div>
+          </div>
+          <div class="night-badge-row">
+            <div class="night-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v7M12 10c-2 2-4 6-4 9M12 10c2 2 4 6 4 9M9 3.6c0 2-1 3.2-1 3.2M15 3.6c0 2 1 3.2 1 3.2"/></svg>
+            </div>
+          </div>
+          <h3 class="night-title">A Prayer to Close the Day</h3>
+          <p class="night-text" id="nightText">${esc(NIGHT_PRAYER.text)}</p>
+          <p class="night-amen">${esc(NIGHT_PRAYER.amen)}</p>
+          <div class="card-rule"></div>
+          <select class="vod-translate" id="nightTranslate" aria-label="Translate tonight's prayer">${translateLangOptions()}</select>
+        </div>
+
+        <div class="verse-of-day card-face front-face" id="vodCard">
+          <button class="vod-cover" id="vodCover" type="button" aria-label="Tap to reveal today's Bible verse">
+            <div class="vod-constellation">
+              ${vodCoverRaysHtml()}
+              <span class="vod-reveal-badge">
+                <span class="vod-reveal-glow"></span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.6" fill="rgba(255,253,248,0.16)" stroke="#FFFDF8" stroke-width="1.6"/><line x1="12" y1="3.4" x2="12" y2="20.6" stroke="#FFFDF8" stroke-width="1" opacity="0.45"/><path d="M12 8.2v7M8.7 11.7h6.6" stroke="#E7CE94" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <div class="vod-cover-label">Verse of the Day</div>
+            <div class="vod-cover-sub">Tap to reveal today's Word</div>
+          </button>
+          <div class="card-grain"></div>
+          <div class="verse-of-day-content">
+            <div class="card-top">
+              <div class="card-eyebrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.2H22l-6 4.4 2.3 7.1L12 16.3l-6.3 4.4 2.3-7.1-6-4.4h7.6z"/></svg>
+                Verse of the Day
+              </div>
+              <div class="card-date">${esc(todayLabel)}</div>
+            </div>
+            <div class="vod-ref-row"><span class="vod-ref">${esc(verse.ref)}</span></div>
+            <div class="vod-quote-wrap">
+              <span class="vod-quote-mark" aria-hidden="true">&ldquo;</span>
+              <p class="verse-of-day-text" id="vodText">${esc(verse.text)}</p>
+            </div>
+            <div class="card-rule"></div>
+            <select class="vod-translate" id="vodTranslate" aria-label="Translate the verse of the day">${translateLangOptions()}</select>
+          </div>
+        </div>
         </div>
       </div>
       <p class="translate-note" id="vodTranslateNote" hidden></p>
+      <p class="translate-note" id="nightTranslateNote" hidden></p>
 
       <div class="stack">
         <a class="home-row" href="/jesus.html">
@@ -959,14 +1117,74 @@
         </a>
       </div>
 
+      ${shareCardDismissed() ? "" : `
+      <div class="share-card" id="shareCard">
+        <button class="share-dismiss" id="shareDismiss" aria-label="Dismiss" type="button">&times;</button>
+        <div class="share-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 2l2.4 7.2H22l-6 4.4 2.3 7.1L12 16.3l-6.3 4.4 2.3-7.1-6-4.4h7.6z"/></svg>
+        </div>
+        <div class="share-eyebrow">Share the Word</div>
+        <h3 class="share-title">Share Word &amp; Faith Network</h3>
+        <p class="share-body">Invite someone to read the Bible, pray, and grow in the Word with you — right from their phone.</p>
+        <div class="share-actions">
+          <button class="share-btn" id="shareBtn" type="button">Share the App</button>
+          <button class="share-skip" id="shareSkip" type="button">Not now</button>
+        </div>
+      </div>
+      `}
+
       <div id="installHint" style="margin-top:18px;"></div>
     `;
     renderInstallHint(document.getElementById("installHint"));
     document.getElementById("vodTranslate").addEventListener("change", (e) => {
       translateInto([{ el: document.getElementById("vodText"), original: verse.text }], e.target.value, document.getElementById("vodTranslateNote"));
     });
+    document.getElementById("nightTranslate").addEventListener("change", (e) => {
+      translateInto([{ el: document.getElementById("nightText"), original: NIGHT_PRAYER.text }], e.target.value, document.getElementById("nightTranslateNote"));
+    });
+    const stackHandles = wireVodStack();
     document.getElementById("vodCover").addEventListener("click", () => {
       document.getElementById("vodCard").classList.add("revealed");
+      requestAnimationFrame(() => requestAnimationFrame(() => stackHandles.syncHeights()));
+    });
+    scatterNightStars(document.getElementById("nightStars"));
+    wireShareCard();
+  }
+
+  function shareCardDismissed() {
+    try { return localStorage.getItem("wfn-app-share-dismissed") === "1"; } catch (e) { return false; }
+  }
+  function setShareCardDismissed() {
+    try { localStorage.setItem("wfn-app-share-dismissed", "1"); } catch (e) {}
+  }
+  function wireShareCard() {
+    const card = document.getElementById("shareCard");
+    if (!card) return;
+    const dismiss = (card2) => {
+      card2.style.transition = "opacity .25s ease, transform .25s ease";
+      card2.style.opacity = "0";
+      card2.style.transform = "translateY(6px)";
+      setTimeout(() => { card2.hidden = true; }, 250);
+      setShareCardDismissed();
+    };
+    document.getElementById("shareDismiss").addEventListener("click", () => dismiss(card));
+    document.getElementById("shareSkip").addEventListener("click", () => dismiss(card));
+    document.getElementById("shareBtn").addEventListener("click", () => {
+      const shareData = {
+        title: "Word & Faith Network",
+        text: "Daily Bible verses, sermons, and prayer — right from your phone. Join me on Word & Faith Network.",
+        url: "https://wfnglobal.org",
+      };
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(shareData.url).then(() => {
+          const btn = document.getElementById("shareBtn");
+          const original = btn.textContent;
+          btn.textContent = "Link Copied ✓";
+          setTimeout(() => { btn.textContent = original; }, 1800);
+        }).catch(() => {});
+      }
     });
   }
 

@@ -51,7 +51,13 @@ h1,h2,h3{font-family:var(--font-display); text-wrap:balance; font-weight:600;}
 .app-back{display:flex; align-items:center; justify-content:center; width:36px; height:36px; margin:-4px 0 -4px -6px; color:var(--gold); flex-shrink:0;}
 .app-back svg{width:22px; height:22px;}
 
-main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 16px calc(96px + env(safe-area-inset-bottom,0px));}
+main.app-main{
+  flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 16px calc(96px + env(safe-area-inset-bottom,0px));
+  background:radial-gradient(70% 30% at 50% 0%, rgba(156,122,52,0.08), transparent 65%), var(--bg);
+}
+:root[data-theme="dark"] main.app-main{
+  background:radial-gradient(70% 30% at 50% 0%, rgba(216,181,113,0.1), transparent 65%), var(--bg);
+}
 /* The Word Climb reads as its own full-screen experience: no reserved
    gap at the bottom once the tab bar is hidden for it. */
 #app.game-fullscreen main.app-main{padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));}
@@ -82,20 +88,124 @@ main.app-main{flex:1; max-width:640px; margin:0 auto; width:100%; padding:20px 1
 .stack{display:flex; flex-direction:column; gap:14px;}
 
 /* ---- Home ---- */
-.hello{margin-bottom:22px;}
-.hello h1{font-size:1.7rem; margin-bottom:4px;}
+.hello{margin-bottom:20px;}
+.hello .eyebrow{display:flex; align-items:center; gap:7px; font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:6px;}
+.hello .eyebrow svg{width:13px; height:13px;}
+.hello h1{font-size:1.7rem; font-weight:600; margin-bottom:5px; letter-spacing:-0.01em;}
+.hello h1 .name{color:var(--gold);}
 .hello p{color:var(--ink-2); font-size:15.5px;}
 
-.verse-of-day{
-  border-radius:16px; min-height:290px; color:#fff; position:relative; overflow:hidden; margin-bottom:18px;
-  background:#1D1810; display:flex; flex-direction:column; justify-content:flex-end;
+/* ---- Verse of the Day / Night Prayer: a draggable two-card stack.
+   The visible card is the "front-face"; the other sits behind it,
+   clipped to the front card's own height (see wireVodStack in app.js)
+   so only a sliver peeks out. A labeled pill above the stack gives a
+   discoverable, no-gesture-required way to swap them too. ---- */
+.vod-stack{margin-bottom:18px;}
+.vod-peek{
+  display:flex; align-items:center; justify-content:center; gap:6px; width:100%;
+  background:none; border:none; padding:0 0 10px; margin:0;
+  font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:0.05em;
+  color:var(--ink-3); cursor:pointer;
 }
-.verse-of-day-overlay{position:absolute; inset:0; z-index:1; background:linear-gradient(0deg, rgba(10,9,6,0.78) 0%, rgba(10,9,6,0.32) 44%, rgba(10,9,6,0) 64%);}
+.vod-peek svg{width:12px; height:12px;}
+.vod-cards{position:relative;}
+.vod-cards .card-face{border-radius:16px; min-height:290px; position:relative; overflow:hidden;}
+.vod-cards .back-face{
+  position:absolute; top:0; left:6px; right:6px; z-index:1;
+  transform:scale(0.96); transform-origin:50% 0%; cursor:pointer;
+  transition:transform .42s cubic-bezier(.2,.8,.2,1), box-shadow .42s ease;
+  box-shadow:0 14px 30px -18px var(--shadow);
+}
+.vod-cards .front-face{position:relative; z-index:2; touch-action:pan-y;}
+.vod-cards .front-face:not(.dragging){transition:transform .42s cubic-bezier(.2,.8,.2,1);}
+
+.card-grain{
+  position:absolute; inset:0; z-index:0; opacity:0.5; pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size:14px 14px;
+}
+.card-top{position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+.card-eyebrow{display:flex; align-items:center; gap:7px; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;}
+.card-eyebrow svg{width:13px; height:13px; flex-shrink:0;}
+.card-date{font-size:11.5px; font-weight:500;}
+.card-rule{position:relative; z-index:2; height:1px; margin:16px 0; background:linear-gradient(90deg, rgba(216,181,113,0.5), rgba(216,181,113,0.05));}
+
+.verse-of-day{
+  color:#fff;
+  background:
+    radial-gradient(120% 90% at 85% -10%, rgba(216,181,113,0.2), transparent 55%),
+    radial-gradient(90% 70% at 0% 110%, rgba(156,122,52,0.16), transparent 60%),
+    linear-gradient(170deg, #332715 0%, #20170B 55%, #150F07 100%);
+  box-shadow:0 20px 44px -22px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(216,181,113,0.16);
+  display:flex; flex-direction:column; justify-content:flex-end;
+}
 .verse-of-day-content{position:relative; z-index:2; padding:22px; opacity:0; transition:opacity .4s ease .12s;}
 .verse-of-day.revealed .verse-of-day-content{opacity:1;}
-.verse-of-day-label{font-size:11.5px; font-weight:600; letter-spacing:0.05em; color:rgba(255,253,248,0.82); margin-bottom:4px;}
-.verse-of-day-ref{font-family:var(--font-body); font-size:14.5px; font-weight:700; color:#FFFDF8; margin-bottom:12px;}
-.verse-of-day-text{font-family:var(--font-display); font-weight:500; font-size:1.5rem; line-height:1.38; color:#FFFDF8;}
+.verse-of-day .card-eyebrow{color:#E7CE94;}
+.verse-of-day .card-date{color:rgba(243,234,218,0.55);}
+.vod-ref-row{position:relative; z-index:2; margin-bottom:4px;}
+.vod-ref{font-family:var(--font-display); font-size:14.5px; font-weight:600; color:#FBF3E0;}
+.vod-quote-wrap{position:relative; z-index:2; margin:10px 0 2px;}
+.vod-quote-mark{
+  position:absolute; top:-26px; left:-4px; font-family:var(--font-display); font-size:64px; line-height:1;
+  color:rgba(231,206,148,0.18); font-style:italic; user-select:none; pointer-events:none;
+}
+.verse-of-day-text{position:relative; font-family:var(--font-display); font-style:italic; font-weight:500; font-size:1.4rem; line-height:1.38; color:#F6EAD2;}
+.verse-of-day .card-rule{background:linear-gradient(90deg, rgba(216,181,113,0.5), rgba(216,181,113,0.05));}
+
+/* ---- Night Prayer: cool navy sky, distinct from the Verse card's warm bronze ---- */
+.night-face{
+  background:
+    radial-gradient(60% 50% at 82% 8%, rgba(217,211,235,0.22), transparent 60%),
+    radial-gradient(90% 70% at 0% 110%, rgba(40,52,94,0.4), transparent 60%),
+    linear-gradient(175deg, #1C2037 0%, #121528 55%, #0A0C18 100%);
+  color:#fff; padding:22px;
+}
+.night-stars{position:absolute; inset:0; z-index:1; pointer-events:none;}
+.night-stars span{
+  position:absolute; width:2px; height:2px; border-radius:50%; background:#fff; opacity:0;
+  animation:nightTwinkle 3.4s ease-in-out infinite;
+}
+:root[data-motion="reduced"] .night-stars span{animation:none; opacity:0.6;}
+@keyframes nightTwinkle{0%,100%{opacity:0;} 50%{opacity:0.85;}}
+.night-moon{position:absolute; top:14px; right:18px; z-index:1; width:34px; height:34px; opacity:0.85;}
+.night-face .card-top{padding-right:46px;}
+.night-face .card-eyebrow{color:#D9D4F2;}
+.night-face .card-date{color:rgba(217,211,235,0.5);}
+.night-badge-row{position:relative; z-index:2; display:flex; justify-content:center; margin:2px 0 14px;}
+.night-badge{
+  width:60px; height:60px; border-radius:50%; background:#F3EADA; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 22px -8px rgba(0,0,0,0.5);
+}
+.night-badge svg{width:28px; height:28px; color:#1C2037;}
+.night-title{position:relative; z-index:2; font-family:var(--font-display); font-weight:600; font-size:1.25rem; color:#FFFDF8; text-align:center; margin-bottom:10px;}
+.night-text{position:relative; z-index:2; font-family:var(--font-display); font-style:italic; font-weight:500; font-size:1.02rem; line-height:1.55; color:#E7E5F5; text-align:center;}
+.night-amen{position:relative; z-index:2; margin-top:10px; text-align:center; font-family:var(--font-display); font-size:0.92rem; color:#B9B4D9;}
+.night-face .card-rule{background:linear-gradient(90deg, rgba(217,211,235,0.4), rgba(217,211,235,0.04));}
+.night-face .vod-translate{position:relative; z-index:2; display:block; margin:14px auto 0;}
+
+/* ---- Share the App ---- */
+.share-card{
+  position:relative; overflow:hidden; border-radius:18px; padding:22px;
+  background:linear-gradient(155deg, var(--gold-wash) 0%, var(--surface) 58%);
+  border:1px solid var(--border); margin-top:18px;
+}
+:root[data-theme="dark"] .share-card{background:linear-gradient(155deg, var(--gold-wash) 0%, var(--surface) 62%);}
+.share-mark{position:absolute; top:-18px; right:-18px; width:120px; height:120px; opacity:0.16; color:var(--gold); pointer-events:none;}
+.share-mark svg{width:100%; height:100%;}
+.share-dismiss{
+  position:absolute; top:12px; right:14px; width:26px; height:26px; border-radius:50%; border:none;
+  background:rgba(0,0,0,0.06); color:var(--ink-2); font-size:16px; line-height:1; cursor:pointer;
+}
+.share-eyebrow{position:relative; font-size:11px; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:var(--gold); margin-bottom:7px;}
+.share-title{position:relative; font-size:1.2rem; font-weight:600; margin-bottom:7px; max-width:85%;}
+.share-body{position:relative; font-size:14px; color:var(--ink-2); line-height:1.55; margin-bottom:18px; max-width:88%;}
+.share-actions{position:relative; display:flex; align-items:center; gap:18px;}
+.share-btn{
+  background:var(--gold); color:#FFFDF8; border:none; border-radius:100px; padding:11px 22px;
+  font-family:var(--font-body); font-weight:600; font-size:14.5px; cursor:pointer;
+}
+.share-skip{appearance:none; background:none; border:none; cursor:pointer; font-family:var(--font-body); font-weight:600; font-size:13.5px; color:var(--ink-3); padding:8px 2px;}
 
 /* ---- The cover: vibrant, multi-hue, sits over the verse until tapped.
    Rays drift in a slow orbit (paused under reduced-motion) and the center

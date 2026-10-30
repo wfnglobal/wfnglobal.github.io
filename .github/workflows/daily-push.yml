@@ -1,0 +1,61 @@
+name: Send daily reminder push
+
+# Fires automatically whenever app/data/today.json changes on main — i.e.
+# right when the day's verse/sermon/declaration gets updated and pushed.
+# Also runnable by hand from the Actions tab for a one-off resend.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/data/today.json"
+  workflow_dispatch: {}
+
+jobs:
+  send-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Send today's reminder via OneSignal
+        env:
+          ONESIGNAL_REST_API_KEY: ${{ secrets.ONESIGNAL_REST_API_KEY }}
+          ONESIGNAL_APP_ID: "6ccc4864-1c8e-49e1-b077-bee07e7acdde"
+        run: |
+          set -euo pipefail
+
+          if [ -z "${ONESIGNAL_REST_API_KEY:-}" ]; then
+            echo "::error::ONESIGNAL_REST_API_KEY repo secret is not set — see README/Settings > Secrets > Actions. Skipping send."
+            exit 1
+          fi
+
+          VERSE_TEXT=$(jq -r '.verse.text' app/data/today.json)
+          VERSE_REF=$(jq -r '.verse.ref' app/data/today.json)
+          CONTENT="\"${VERSE_TEXT}\" — ${VERSE_REF}"
+
+          PAYLOAD=$(jq -n \
+            --arg appId "$ONESIGNAL_APP_ID" \
+            --arg heading "Today's Word" \
+            --arg content "$CONTENT" \
+            --arg url "https://wfnglobal.org/app/#/home" \
+            '{
+              app_id: $appId,
+              included_segments: ["Subscribed Users"],
+              headings: { en: $heading },
+              contents: { en: $content },
+              url: $url
+            }')
+
+          HTTP_CODE=$(curl -s -o /tmp/onesignal_response.json -w "%{http_code}" \
+            -X POST "https://onesignal.com/api/v1/notifications" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -H "Authorization: Basic ${ONESIGNAL_REST_API_KEY}" \
+            -d "$PAYLOAD")
+
+          echo "OneSignal response ($HTTP_CODE):"
+          cat /tmp/onesignal_response.json
+
+          if [ "$HTTP_CODE" -ge 300 ]; then
+            echo "::error::OneSignal returned HTTP $HTTP_CODE"
+            exit 1
+          fi

@@ -2863,6 +2863,11 @@
         <div class="label">Appearance</div>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
       </a>
+      <a class="menu-row" href="#/profile/notifications">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+        <div class="label">Daily Reminders</div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
       <a class="menu-row" href="#/profile/about">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg></div>
         <div class="label">About &amp; Credits</div>
@@ -2951,6 +2956,84 @@
       viewProfileAppearance();
     });
     document.getElementById("appearanceReaderSettingsBtn").addEventListener("click", openReaderSettingsSheet);
+  }
+
+  // Daily Reminders: a notification opt-in backed by OneSignal (loaded in
+  // app/index.html, sharing this app's own service worker — see sw.js).
+  // The SDK initializes async via window.OneSignalDeferred, so reads and
+  // writes here are pushed onto that queue rather than called directly.
+  function viewProfileNotifications() {
+    setHeader("Daily Reminders", true);
+    setActiveTab("profile");
+
+    viewEl.innerHTML = `
+      <div class="card" style="margin-bottom:20px; padding:0;">
+        <div style="display:flex; align-items:center; gap:14px; padding:17px 18px;">
+          <div style="flex:1;">
+            <h3 style="font-size:14.5px; margin:0 0 3px;">Daily Reminders</h3>
+            <p style="font-size:12.5px; color:var(--ink-2); line-height:1.5; margin:0;">A short notification with today's verse or prayer, so the Word finds you even on days you forget to open the app.</p>
+          </div>
+          <button class="sheet-toggle" id="remindersToggle" data-on="0" data-loading="1" type="button" aria-label="Toggle daily reminders" disabled></button>
+        </div>
+      </div>
+      <p id="remindersStatus" style="font-size:12.5px; color:var(--ink-3); text-align:center; line-height:1.6;">Checking notification status…</p>
+    `;
+
+    const toggle = document.getElementById("remindersToggle");
+    const status = document.getElementById("remindersStatus");
+
+    function setToggleState(on) {
+      toggle.dataset.on = on ? 1 : 0;
+      toggle.dataset.loading = "0";
+      toggle.disabled = false;
+      status.textContent = on
+        ? "Reminders are on for this device."
+        : "Turn this on to get a daily notification with today's verse or prayer.";
+    }
+
+    if (!window.OneSignalDeferred) {
+      status.textContent = "Notifications aren't available in this browser right now.";
+      toggle.disabled = true;
+      return;
+    }
+
+    window.OneSignalDeferred.push(async (OneSignal) => {
+      try {
+        const subscribed = !!(OneSignal.Notifications.permission && OneSignal.User.PushSubscription.optedIn);
+        setToggleState(subscribed);
+      } catch (e) {
+        status.textContent = "Couldn't check notification status.";
+        toggle.disabled = true;
+      }
+    });
+
+    toggle.addEventListener("click", () => {
+      if (toggle.dataset.loading === "1") return;
+      const turningOn = toggle.dataset.on !== "1";
+      toggle.dataset.loading = "1";
+      toggle.disabled = true;
+      status.textContent = turningOn ? "Turning on…" : "Turning off…";
+      window.OneSignalDeferred.push(async (OneSignal) => {
+        try {
+          if (turningOn) {
+            const granted = await OneSignal.Notifications.requestPermission();
+            if (granted === false) {
+              setToggleState(false);
+              status.textContent = "Notifications are blocked for this site in your browser settings — enable them there, then try again.";
+              return;
+            }
+            await OneSignal.User.PushSubscription.optIn();
+            setToggleState(true);
+          } else {
+            await OneSignal.User.PushSubscription.optOut();
+            setToggleState(false);
+          }
+        } catch (e) {
+          status.textContent = "Something went wrong — please try again.";
+          setToggleState(toggle.dataset.on === "1");
+        }
+      });
+    });
   }
 
   function viewProfileEdit() {
@@ -3123,6 +3206,7 @@
       if (parts[1] === "verses") return viewProfileVerses();
       if (parts[1] === "prayer") return viewProfilePrayer();
       if (parts[1] === "appearance") return viewProfileAppearance();
+      if (parts[1] === "notifications") return viewProfileNotifications();
       if (parts[1] === "about") return viewProfileAbout();
       return viewProfile();
     }

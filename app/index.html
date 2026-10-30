@@ -31,6 +31,22 @@
 })();
 </script>
 <meta name="description" content="Daily scripture, sermons, and prayer from Word and Faith Network — with the full King James Bible, available offline.">
+
+<!-- OneSignal (daily reminder push notifications). Uses the app's own
+     service worker (sw.js, scope /app/) instead of registering a second
+     one — see the matching importScripts line at the top of sw.js. -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function (OneSignal) {
+    await OneSignal.init({
+      appId: "6ccc4864-1c8e-49e1-b077-bee07e7acdde",
+      serviceWorkerParam: { scope: "/app/" },
+      serviceWorkerPath: "sw.js",
+    });
+  });
+</script>
+
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1D1810">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">

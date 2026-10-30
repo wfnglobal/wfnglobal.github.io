@@ -2613,6 +2613,14 @@
 
   var LIBRARY_BOOKS = [
     {
+      badge: "Book Four", slug: "another-jesus",
+      top: "ANOTHER", bottom: "JESUS",
+      bg0: "#241B4A", bg1: "#140F30", bg2: "#070512",
+      gold0: "#F6E8BE", gold1: "#C9A968",
+      title: "Another Jesus",
+      desc: "So many claim He spoke to them. Not every voice is His — eight chapters on testing the claims and finally knowing the real Jesus for yourself."
+    },
+    {
       badge: "Book Three", slug: "not-consumed",
       top: "NOT", bottom: "CONSUMED",
       bg0: "#3B1740", bg1: "#1D0C22", bg2: "#0A0509",

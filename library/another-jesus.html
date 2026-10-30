@@ -1,0 +1,485 @@
+<title>Another Jesus — The Library</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap">
+
+<style>
+:root{
+  --bg:#FBF8F1; --surface:#FFFFFF; --surface-2:#F4EEE0; --surface-3:#EEE5D2;
+  --ink:#231F18; --ink-2:#564E3E; --ink-3:#8C8370;
+  --gold:#9C7A34; --gold-light:#C9A968; --gold-wash:#E9D9AE; --blue:#5E7C94;
+  --border:rgba(35,31,24,0.11); --shadow:rgba(80,64,24,0.09);
+  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:'Inter', -apple-system, system-ui, sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box; margin:0;}
+html,body{background:var(--bg);}
+body{color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;}
+img,svg{max-width:100%;} [hidden]{display:none!important;} a{color:inherit;}
+h1,h2,h3{font-family:var(--font-display); text-wrap:balance; font-weight:600;}
+.gutter{padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px));}
+
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:101; background:rgba(251,248,241,0.92);}
+.site-header{position:sticky; top:env(safe-area-inset-top,0px); z-index:100; background:rgba(251,248,241,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--border);}
+.read-progress-track{position:sticky; top:calc(env(safe-area-inset-top,0px) + 53px); z-index:99; height:3px; background:var(--border);}
+.read-progress-bar{height:100%; width:0%; background:linear-gradient(90deg, var(--gold-light), var(--gold)); transition:width .08s linear;}
+.header-inner.gutter{max-width:760px; margin:0 auto; padding-block:14px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+.logo-mark{display:flex; align-items:center; gap:9px; min-width:0;}
+.logo-mark svg{width:24px; height:24px; flex-shrink:0;}
+.logo-text{font-family:var(--font-display); font-size:1rem; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.logo-text em{color:var(--gold); font-style:normal;}
+.back-link{font-size:13px; font-weight:600; color:var(--gold); text-decoration:none; display:flex; align-items:center; gap:6px; white-space:nowrap;}
+
+/* ── cover / hero ─────────────────────────────── */
+.book-hero{padding-block:48px 40px;}
+.book-hero.gutter{max-width:760px; margin:0 auto;}
+.cover-wrap{max-width:240px; margin:0 auto 32px; border-radius:10px; overflow:hidden; box-shadow:0 18px 40px var(--shadow), 0 2px 8px var(--shadow);}
+.cover-wrap svg{display:block; width:100%; height:auto;}
+.kicker{font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; text-align:center;}
+.book-title{font-size:clamp(2.1rem,7vw,3rem); line-height:1.1; text-align:center; margin-bottom:14px;}
+.book-sub{font-family:var(--font-display); font-style:italic; font-size:1.15rem; color:var(--ink-2); text-align:center; max-width:480px; margin:0 auto 22px; line-height:1.5;}
+.book-meta{display:flex; justify-content:center; gap:14px; font-size:12.5px; color:var(--ink-3); margin-bottom:30px; font-weight:500; flex-wrap:wrap;}
+.hero-cta{display:flex; justify-content:center; gap:12px; flex-wrap:wrap;}
+.copyright-line{margin-top:18px; text-align:center; font-size:11.5px; color:var(--ink-3);}
+.btn{display:inline-flex; align-items:center; gap:7px; border-radius:100px; font-family:var(--font-body); font-size:13.5px; font-weight:600; padding:11px 24px; text-decoration:none; background:var(--gold); color:#FFFDF8; border:1px solid transparent;}
+.btn-outline{background:transparent; color:var(--gold); border-color:var(--gold);}
+
+/* ── resume banner ────────────────────────────── */
+.resume-banner{display:none; align-items:center; justify-content:space-between; gap:14px; max-width:680px; margin:24px auto 0; padding:14px 18px; background:var(--surface-3); border:1px solid var(--border); border-radius:12px; flex-wrap:wrap;}
+.resume-banner.is-visible{display:flex;}
+.resume-text{font-size:13.5px; color:var(--ink-2); line-height:1.5;}
+.resume-text strong{color:var(--ink); font-weight:600;}
+.resume-actions{display:flex; align-items:center; gap:14px; flex-shrink:0;}
+.resume-btn{font-size:12.5px; font-weight:700; color:var(--gold); text-decoration:none; white-space:nowrap;}
+.resume-dismiss{background:none; border:none; color:var(--ink-3); font-size:12px; cursor:pointer; padding:4px; line-height:1;}
+
+/* ── intro / toc ──────────────────────────────── */
+.book-section{max-width:680px; margin:0 auto; padding-block:8px 40px;}
+.book-section p{color:var(--ink-2); font-size:16.5px; line-height:1.85; margin-bottom:20px;}
+.toc-card{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:26px 28px; margin:36px auto; max-width:680px;}
+.toc-title{font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:16px;}
+.toc-list{list-style:none; display:flex; flex-direction:column; gap:2px;}
+.toc-list a{display:flex; align-items:baseline; gap:12px; padding:9px 2px; text-decoration:none; color:var(--ink); font-size:14.5px; font-weight:500; border-bottom:1px solid var(--border);}
+.toc-list li:last-child a{border-bottom:none;}
+
+.translate-bar{display:flex; align-items:center; gap:12px; flex-wrap:wrap; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px 18px; margin:36px auto 0; max-width:680px;}
+.translate-label{font-size:13px; font-weight:600; color:var(--ink-2); white-space:nowrap;}
+.translate-select{font-family:var(--font-body); font-size:13.5px; font-weight:600; color:var(--ink); background:var(--surface-2); border:1px solid var(--border); border-radius:100px; padding:9px 16px; cursor:pointer;}
+.translate-note{max-width:680px; margin:10px auto 0; font-size:12px; color:var(--ink-3); font-style:italic; line-height:1.5; text-align:center;}
+.toc-num{font-family:var(--font-display); font-style:italic; color:var(--gold); font-size:14px; flex-shrink:0; width:18px;}
+
+.legal-block{max-width:520px; margin:0 auto 48px; text-align:center;}
+.legal-block p{font-size:11.5px; color:var(--ink-3); line-height:1.7; margin-bottom:8px;}
+
+/* ── chapters ─────────────────────────────────── */
+.chapter{max-width:680px; margin:0 auto; padding:56px 0; border-top:1px solid var(--border);}
+.chapter-eyebrow{font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:10px;}
+.chapter-title{font-size:clamp(1.6rem,5vw,2.1rem); margin-bottom:22px; line-height:1.2;}
+.scripture{background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--gold); border-radius:0 10px 10px 0; padding:18px 22px; margin:0 0 28px;}
+.scripture-text{font-family:var(--font-display); font-size:1.08rem; font-style:italic; color:var(--ink); line-height:1.55; margin-bottom:8px;}
+.scripture-ref{font-size:11.5px; color:var(--gold); font-weight:700; letter-spacing:0.1em; text-transform:uppercase;}
+.chapter p{color:var(--ink-2); font-size:16.5px; line-height:1.85; margin-bottom:22px;}
+.pull-verse{font-family:var(--font-display); font-style:italic; font-size:1.1rem; color:var(--ink); background:var(--surface-2); border-radius:10px; padding:18px 22px; margin:24px 0; line-height:1.55;}
+.pull-verse cite{display:block; font-family:var(--font-body); font-style:normal; font-size:11.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--gold); margin-top:10px;}
+
+/* ── closing ──────────────────────────────────── */
+.closing-card{background:var(--surface-3); border:1px solid var(--border); border-radius:14px; padding:34px 28px; text-align:center; margin:16px auto 64px; max-width:680px;}
+.closing-card h3{font-size:1.4rem; margin-bottom:12px;}
+.closing-card p{color:var(--ink-2); font-size:14.5px; margin-bottom:22px; line-height:1.65; max-width:460px; margin-inline:auto;}
+.closing-actions{display:flex; justify-content:center; gap:10px; flex-wrap:wrap;}
+
+.site-footer{padding-block:40px; border-top:1px solid var(--border);}
+.footer-inner.gutter{max-width:760px; margin:0 auto; text-align:center;}
+.footer-links{display:flex; justify-content:center; gap:20px; margin-bottom:18px; flex-wrap:wrap;}
+.footer-links a{font-size:12.5px; color:var(--ink-2); text-decoration:none; font-weight:500;}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{font-size:11.5px; color:var(--ink-3);}
+
+.fab-back-app{position:fixed; right:max(18px, env(safe-area-inset-right,0px)); bottom:max(18px, env(safe-area-inset-bottom,0px)); z-index:150; display:flex; align-items:center; gap:8px; background:var(--ink); color:#FFFDF8; text-decoration:none; font-family:var(--font-body); font-size:13px; font-weight:600; padding:12px 18px 12px 14px; border-radius:100px; box-shadow:0 10px 28px -8px rgba(0,0,0,0.4); border:1px solid rgba(255,253,248,0.12);}
+.fab-back-app svg{width:16px; height:16px; flex-shrink:0;}
+.fab-back-app:active{transform:scale(0.97);}
+@media (min-width:760px){ .fab-back-app{display:none;} }
+
+@media print{
+  .site-header, .fab-back-app, .read-progress-track, .resume-banner, .translate-bar, .translate-note, .hero-cta,
+  #wfnVoiceStack, #voiceStack, #wfnShareBar, #wfnShareToast, #wfnPraySheet{display:none!important;}
+  .book-hero{padding-top:24px;}
+  .chapter{border-top:none; page-break-before:always; padding-top:12px;}
+  .chapter:first-of-type{page-break-before:auto;}
+  .closing-card{page-break-before:always;}
+  body{font-size:12.5px;}
+}
+</style>
+
+<header class="site-header">
+  <div class="header-inner gutter">
+    <a href="/" class="logo-mark" style="text-decoration:none;">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="navLogoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
+        </linearGradient></defs>
+        <circle cx="24" cy="24" r="21.5" fill="none" stroke="#9C7A34" stroke-width="0.9"/>
+        <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#navLogoGrad)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
+      </svg>
+      <span class="logo-text">Word <em>&amp;</em> Faith Network</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a class="back-link" href="/library/">&larr; The Library</a>
+      <a class="back-link back-to-app" href="/app/#/library/list" style="display:flex; align-items:center; gap:6px; color:var(--blue);">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+        Back to App
+      </a>
+    </div>
+  </div>
+</header>
+<a class="fab-back-app" href="/app/#/library/list" aria-label="Back to the WFN app">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+  Back to App
+</a>
+
+<div class="read-progress-track"><div class="read-progress-bar" id="readProgressBar"></div></div>
+
+<main>
+  <div class="resume-banner gutter" id="resumeBanner">
+    <p class="resume-text">You left off at <strong id="resumeLabel"></strong></p>
+    <div class="resume-actions">
+      <a href="#" class="resume-btn" id="resumeBtn">Continue reading →</a>
+      <button class="resume-dismiss" id="resumeDismiss" type="button" aria-label="Dismiss">✕</button>
+    </div>
+  </div>
+  <div class="book-hero gutter">
+    <div class="cover-wrap">
+      <svg viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="covTitle covDesc">
+        <title id="covTitle">Another Jesus — Word and Faith Network, by Oladapo Olaleye</title>
+        <desc id="covDesc">Book cover: deep indigo-to-midnight gradient background with two overlapping crosses inside a circle — one faint and ghosted, one solid gold and sharp — the bold title Another Jesus, a tagline, and the author's name.</desc>
+        <defs>
+          <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#241B4A"/>
+            <stop offset="55%" stop-color="#140F30"/>
+            <stop offset="100%" stop-color="#070512"/>
+          </linearGradient>
+          <radialGradient id="glow" cx="50%" cy="24%" r="60%">
+            <stop offset="0%" stop-color="#E8A33D" stop-opacity="0.38"/>
+            <stop offset="55%" stop-color="#E8A33D" stop-opacity="0.09"/>
+            <stop offset="100%" stop-color="#E8A33D" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FBE3B8"/>
+            <stop offset="100%" stop-color="#E8A33D"/>
+          </linearGradient>
+          <linearGradient id="crossGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F2C97A"/>
+            <stop offset="100%" stop-color="#C9344A"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="900" fill="url(#bgGrad)"/>
+        <rect width="600" height="900" fill="url(#glow)"/>
+        <g fill="#E8A33D">
+          <circle cx="68" cy="100" r="3" opacity="0.4"/>
+          <circle cx="524" cy="88" r="3.5" opacity="0.35"/>
+          <circle cx="50" cy="210" r="2.2" opacity="0.25"/>
+          <circle cx="548" cy="225" r="2.6" opacity="0.25"/>
+        </g>
+        <rect x="28" y="28" width="544" height="844" fill="none" stroke="#E8A33D" stroke-width="1" opacity="0.5"/>
+        <rect x="38" y="38" width="524" height="824" fill="none" stroke="#E8A33D" stroke-width="0.5" opacity="0.25"/>
+        <g transform="translate(300,165)">
+          <circle cx="0" cy="0" r="52" fill="none" stroke="#9C87D9" stroke-width="1.4" opacity="0.75"/>
+          <g transform="translate(-10,-6)" opacity="0.45">
+            <line x1="0" y1="-38" x2="0" y2="38" stroke="#C9B6F0" stroke-width="5" stroke-linecap="round"/>
+            <line x1="-18" y1="-14" x2="18" y2="-14" stroke="#C9B6F0" stroke-width="5" stroke-linecap="round"/>
+          </g>
+          <g transform="translate(6,4)">
+            <line x1="0" y1="-40" x2="0" y2="40" stroke="url(#crossGrad)" stroke-width="7" stroke-linecap="round"/>
+            <line x1="-19" y1="-14" x2="19" y2="-14" stroke="url(#crossGrad)" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="0" cy="-14" r="3.4" fill="#FBE3B8"/>
+          </g>
+        </g>
+        <text x="300" y="330" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13" font-weight="700" letter-spacing="5" fill="#E8A33D">WORD &amp; FAITH NETWORK</text>
+        <line x1="255" y1="352" x2="345" y2="352" stroke="#E8A33D" stroke-width="1" opacity="0.6"/>
+        <text x="300" y="460" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="92" font-weight="900" fill="url(#goldText)" letter-spacing="1">ANOTHER</text>
+        <text x="300" y="558" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="92" font-weight="900" fill="url(#goldText)" letter-spacing="1">JESUS</text>
+        <line x1="200" y1="590" x2="400" y2="590" stroke="#E8A33D" stroke-width="1" opacity="0.7"/>
+        <text x="300" y="622" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="21" fill="#D9C9F0">Learning to Recognize the Real One</text>
+        <text x="300" y="652" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="21" fill="#F4D9A9">in an Age of Prophets, Visions, and Claims</text>
+        <text x="300" y="700" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13" font-weight="600" letter-spacing="1.2" fill="#A996C9" font-style="italic">Not everyone who says "Lord, Lord" is speaking to the One who saves.</text>
+        <text x="300" y="800" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#F4E3C4">OLADAPO OLALEYE</text>
+        <text x="300" y="822" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="10.5" letter-spacing="2" fill="#8C7AB3">BOOK FOUR &#183; THE LIBRARY</text>
+      </svg>
+    </div>
+    <p class="kicker">Book Four &middot; The Library</p>
+    <h1 class="book-title">Another Jesus</h1>
+    <p class="book-sub">Learning to Recognize the Real One in an Age of Prophets, Visions, and Claims</p>
+    <div class="book-meta">
+      <span>By Oladapo Olaleye</span>
+      <span>&middot;</span>
+      <span>Word and Faith Network</span>
+      <span>&middot;</span>
+      <span>8 Chapters</span>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="#toc">Begin Reading →</a>
+      <a class="btn btn-outline" href="../assets/library/another-jesus.pdf" download>Download PDF</a>
+      <a class="btn btn-outline" href="/library/">All Books</a>
+    </div>
+    <p class="copyright-line">&copy; 2026 Oladapo Olaleye &amp; Word and Faith Network. All rights reserved.</p>
+  </div>
+
+  <div class="legal-block gutter">
+    <p><strong style="color:var(--ink-2);">Another Jesus: Learning to Recognize the Real One in an Age of Prophets, Visions, and Claims</strong></p>
+    <p>Copyright &copy; 2026 by Oladapo Olaleye. Published by Word and Faith Network.</p>
+    <p>All rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form or by any means &mdash; including photocopying, recording, or other electronic or mechanical methods &mdash; without prior written permission from the publisher, except for brief quotations in reviews and other noncommercial uses permitted by copyright law.</p>
+    <p>Unless otherwise noted, scripture quotations are taken from the King James Version (KJV), public domain.</p>
+  </div>
+
+  <div class="book-section gutter">
+    <p>Somewhere right now, someone is telling a room full of believers that Jesus visited them last night. Someone else is describing an angel that appeared at the foot of their bed with a message for the church. A third is standing on a platform, Bible in hand, prophesying in Jesus' name with a confidence that silences every question in the room. Most of this is said sincerely. Some of it may even be true. But Paul warned a church exactly like ours about exactly this: that it is possible to preach a Jesus, use His name, claim His authority &mdash; and still not be talking about Him at all.</p>
+    <p>"For if he that cometh preacheth another Jesus, whom we have not preached," Paul wrote to Corinth, "ye might well bear with him" (2 Corinthians 11:4). Read that sentence again. He is not describing a church fooled by an obvious liar. He is describing a church that welcomed a counterfeit so smoothly dressed, it never thought to ask for its credentials. That is the danger this book is written for &mdash; not the cartoonish heresy nobody believes, but the plausible one, delivered with a straight face, a prophetic vocabulary, and sometimes real spiritual experience behind it.</p>
+    <p>This book did not start as an argument against anyone. It started as a question every serious believer eventually has to ask: how do I know the Jesus I'm being told about is the Jesus of Scripture, and not a poster, a performance, or a borrowed name on someone else's encounter? Eight chapters, each built on one passage, walk through what the Bible actually says about testing a claim, recognizing the real Christ, and &mdash; more than anything else &mdash; coming to know Him for yourself, directly, so that no one else's testimony has to carry the weight your own relationship with Him was always meant to carry.</p>
+    <p>Read slowly. Some of what follows will feel like it is testing claims other people have made in your hearing. Let it. But let it test something closer too &mdash; your own picture of who Jesus is, where it came from, and whether you have ever actually met Him, or only ever heard about Him.</p>
+  </div>
+
+  <div class="translate-bar gutter" id="chapterTranslateBar">
+    <span class="translate-label">Read this book in:</span>
+    <select class="translate-select" id="chapterTranslate" aria-label="Translate this book"></select>
+  </div>
+  <p class="translate-note" id="chapterTranslateNote" hidden></p>
+
+  <nav class="toc-card" id="toc">
+    <p class="toc-title">Contents</p>
+    <ol class="toc-list">
+      <li><a href="#ch1"><span class="toc-num">I</span> Another Jesus</a></li>
+      <li><a href="#ch2"><span class="toc-num">II</span> Not Every Spirit</a></li>
+      <li><a href="#ch3"><span class="toc-num">III</span> Though an Angel From Heaven</a></li>
+      <li><a href="#ch4"><span class="toc-num">IV</span> More Than a Poster</a></li>
+      <li><a href="#ch5"><span class="toc-num">V</span> Lord, Lord</a></li>
+      <li><a href="#ch6"><span class="toc-num">VI</span> Whom Do You Say That I Am?</a></li>
+      <li><a href="#ch7"><span class="toc-num">VII</span> The Spirit of Truth</a></li>
+      <li><a href="#ch8"><span class="toc-num">VIII</span> The Jesus Who Knows You Back</a></li>
+    </ol>
+  </nav>
+
+  <article class="chapter" id="ch1">
+    <p class="chapter-eyebrow">Chapter One</p>
+    <h2 class="chapter-title">Another Jesus</h2>
+    <div class="scripture">
+      <div class="scripture-text">"But I fear, lest by any means, as the serpent beguiled Eve through his subtilty, so your minds should be corrupted from the simplicity that is in Christ. For if he that cometh preacheth another Jesus, whom we have not preached... ye might well bear with him."</div>
+      <div class="scripture-ref">2 Corinthians 11:3-4 &mdash; KJV</div>
+    </div>
+    <p>Notice what Paul does not say. He does not warn Corinth about a church full of people denying God, rejecting the Bible, or walking away from faith altogether. He warns them about something far harder to spot: someone arriving with the name "Jesus" on his lips, and a different Jesus underneath it. Not atheism at the door. A substitute, wearing the right clothes.</p>
+    <p>The comparison Paul reaches for is deliberate. Eve was not deceived by a creature offering her something that looked evil. She was deceived by a conversation that sounded reasonable, that quoted God accurately in places, that only bent the truth where it mattered most &mdash; "Yea, hath God said?" (Genesis 3:1). The serpent did not say God doesn't exist. He adjusted what God actually said, just enough, and let Eve draw her own conclusion from there. That is the pattern Paul says the church in Corinth was vulnerable to. Not an obvious lie. A persuasive adjustment.</p>
+    <p>This is why "ye might well bear with him" should unsettle you more than any dramatic heresy could. Paul is not describing a congregation shouting a false teacher out of the building. He is describing one that listened, nodded, and made room &mdash; because the substitute sounded close enough to the original that nobody thought to check. That is still the danger today, and if anything, it is sharper now. A prophetic word delivered with confidence, an encounter described in vivid detail, a teaching that uses all the right verses in slightly the wrong order &mdash; none of it announces itself as "another Jesus." It announces itself as revival, as a fresh move, as something new God is doing. Discernment has never been mainly about rejecting the obviously false. It has always been about not bearing with the plausible one.</p>
+    <div class="pull-verse">"And no marvel; for Satan himself is transformed into an angel of light."<cite>2 Corinthians 11:14, KJV</cite></div>
+    <p>So what actually makes a "Jesus" another Jesus? Not the name used &mdash; the substitute in Corinth was almost certainly still called Jesus. Not the sincerity of the one presenting him &mdash; sincerity has never been proof of accuracy. What marks a counterfeit is content: does the Jesus being described actually match the Jesus Scripture reveals &mdash; fully God, fully man, crucified for sin, bodily risen, the only way to the Father (John 14:6), reigning now, returning visibly? Or has something been quietly substituted &mdash; His deity softened into a wise teacher, His exclusivity widened into one path among many, His holiness traded for a Jesus who mostly just wants you comfortable? A substitute Jesus rarely announces the substitution. He simply leaves something out, and waits to see if anyone notices.</p>
+    <p>This book exists because of how many people are introduced to Jesus secondhand &mdash; through someone else's prophecy, someone else's vision, someone else's confident description of what He said and wants &mdash; without ever being equipped to test any of it against what has already been revealed. Paul's warning was not written to make Corinth suspicious of everyone. It was written to make them discerning about anyone &mdash; including, eventually, himself (2 Corinthians 11:5). No messenger, however credentialed, however sincere, however dramatic the encounter they describe, is above the test. The question that opens this book is the only one that matters before any other chapter can help you: when someone tells you about Jesus, which Jesus are they actually describing?</p>
+    <p>That question will not resolve in one chapter. It will take the rest of this book &mdash; testing spirits, testing even angels, testing the quiet reduction of Christ to decoration, testing religious performance against relationship, and finally testing whether you have ever met Him yourself, rather than only heard reports. Start here, though, with the discomfort Paul wanted Corinth to feel: it is possible to sit under real teaching, hear the name of Jesus used constantly, and still, somehow, be hearing about someone else.</p>
+  </article>
+
+  <article class="chapter" id="ch2">
+    <p class="chapter-eyebrow">Chapter Two</p>
+    <h2 class="chapter-title">Not Every Spirit</h2>
+    <div class="scripture">
+      <div class="scripture-text">"Beloved, believe not every spirit, but try the spirits whether they are of God: because many false prophets are gone out into the world... Every spirit that confesseth that Jesus Christ is come in the flesh is of God: And every spirit that confesseth not that Jesus Christ is come in the flesh is not of God."</div>
+      <div class="scripture-ref">1 John 4:1-3 &mdash; KJV</div>
+    </div>
+    <p>So many prophets claim Jesus spoke to them. So many believers describe experiences &mdash; a voice, a dream, a presence &mdash; and attach His name to it without hesitation. John does not respond to this reality with blanket suspicion of every claimed encounter, nor with blanket acceptance of every one. He gives something far more useful: a test. "Try the spirits." Not "dismiss every spirit." Not "trust every spirit." Try them &mdash; examine them, the way you would examine a coin before accepting it as currency.</p>
+    <p>And the test John gives is not about how dramatic the experience was, how much weeping accompanied it, or how specific the details felt. It is entirely about content: does this spirit, this prophet, this claimed encounter, confess that Jesus Christ is come in the flesh? That single phrase carries enormous theological weight. It affirms His full deity &mdash; Christ, the Anointed One, God Himself &mdash; and His full humanity &mdash; come in the flesh, not a vision, not a spirit-appearance only, but genuinely incarnate, genuinely crucified, genuinely risen bodily. A spirit, a teaching, or a prophet that quietly erodes either half of that confession &mdash; making Him less than fully God, or His coming less than fully physical and historical &mdash; fails John's test, however spiritual the encounter felt.</p>
+    <p>This is why the drama of an experience can never be the test by itself. Many false prophets, John says plainly, are already gone out into the world &mdash; not might appear someday, already active, already speaking, already being believed. Some of them would have described visions. Some would have reported visitations. The issue John raises was never whether something supernatural happened to them. It was whether what they came back describing lines up with who Jesus Christ actually is.</p>
+    <div class="pull-verse">"Try all things; hold fast that which is good."<cite>1 Thessalonians 5:21, KJV</cite></div>
+    <p>Think about what this means practically, the next time you hear someone say "the Lord told me" or "Jesus appeared to me and said." The first question is not "was this person lying" &mdash; most are not. The first question is: what, specifically, did they say Jesus told them about Himself, about salvation, about sin, about the way to the Father? If what follows diminishes Christ &mdash; makes Him one way among several, makes His sacrifice optional, makes obedience to His Word negotiable &mdash; the content has already failed John's test, regardless of how real the experience felt to the one reporting it. A genuinely false spirit can produce a genuinely real experience. That combination is exactly what makes this dangerous, and exactly why content, not sensation, has to be the measure.</p>
+    <p>There is comfort hidden inside this instruction too, and it is easy to miss under the warning. John does not tell a nervous, uncertain church that testing is impossible, that they are simply at the mercy of whoever sounds most convincing. He tells them the opposite: this is testable. There is a fixed confession to measure every spirit against, and "greater is he that is in you, than he that is in the world" (1 John 4:4) &mdash; meaning the believer who knows what Christ actually teaches is not defenseless against deception, however confidently it is delivered. You are not required to simply hope you aren't being fooled. You are equipped to check.</p>
+    <p>So the next time a claim reaches you &mdash; a prophecy, a vision, a message delivered with total certainty &mdash; resist the urge to evaluate it by how it felt, or by how sure the person delivering it seemed. Ask instead what it actually says about who Jesus Christ is. Scripture has already told you what the true confession sounds like. Everything else is not automatically evil &mdash; but it is not automatically from God either, and John never asked you to assume that it was.</p>
+  </article>
+
+  <article class="chapter" id="ch3">
+    <p class="chapter-eyebrow">Chapter Three</p>
+    <h2 class="chapter-title">Though an Angel From Heaven</h2>
+    <div class="scripture">
+      <div class="scripture-text">"I marvel that ye are so soon removed from him that called you into the grace of Christ unto another gospel... But though we, or an angel from heaven, preach any other gospel unto you than that which we have preached unto you, let him be accursed."</div>
+      <div class="scripture-ref">Galatians 1:6,8 &mdash; KJV</div>
+    </div>
+    <p>Angel visits carry a weight nothing else does. A prophet can be wrong. A teacher can be mistaken. But an angel &mdash; a literal messenger from heaven, standing in a room, speaking with apparent authority &mdash; feels, to most believers, like the end of the conversation. Surely nothing trumps that. Paul's letter to the Galatians says otherwise, and says it about as strongly as anything in the New Testament gets said: even an angel from heaven preaching a different gospel is to be rejected, not received.</p>
+    <p>Sit with how radical that is. Paul does not say "test the angel first, and if it checks out, believe it." He places the angel, hypothetically, in the same category as a corrupted human messenger &mdash; subject to the same standard, carrying no automatic authority simply because of its origin. The appearance itself proves nothing. What proves something is whether the message matches what has already been delivered: "the gospel which was preached of me... I neither received it of man, neither was I taught it, but by the revelation of Jesus Christ" (Galatians 1:11-12). The gospel was not up for revision, not even by a being more impressive than any human prophet could ever claim to be.</p>
+    <p>This matters enormously for anyone who has heard &mdash; or told &mdash; a story about an angelic visitation. Scripture does not deny that angels appear; they appear throughout the Bible, to Abraham, to Daniel, to Mary, to the shepherds. The issue was never whether angelic appearances happen. The issue is what Paul makes explicit elsewhere: "Satan himself is transformed into an angel of light" (2 Corinthians 11:14). A being's appearance &mdash; however radiant, however awe-inducing &mdash; was never designed by Scripture to be self-authenticating. What authenticates a message is its conformity to what God has already, finally, and sufficiently revealed.</p>
+    <div class="pull-verse">"Beloved, when I gave all diligence to write unto you of the common salvation, it was needful for me to write unto you, and exhort you that ye should earnestly contend for the faith which was once delivered unto the saints."<cite>Jude 3, KJV</cite></div>
+    <p>"Once delivered" is the phrase worth underlining. Not continually being revised. Not awaiting a new installment from the next dramatic visitor. Delivered, finished, and now the fixed measuring line against which every later claim &mdash; however spectacular its packaging &mdash; must be checked. This is not a dismissal of the supernatural. It is the opposite: it takes the supernatural seriously enough to insist that it, too, answer to the Word rather than the other way around. A genuine angel of God, sent with a true message, will never contradict what Scripture has already settled &mdash; because the God who sent the angel is the same God who gave the Book.</p>
+    <p>This gives you something concrete to do with the next extraordinary claim you hear, whatever form it takes &mdash; a visitation, a vision, a voice in the night. Do not ask first whether it felt real, or whether the messenger seemed trustworthy, or whether the experience left you shaken. Ask what it said, set that claim next to Scripture already delivered, and let Scripture render the verdict &mdash; not the brightness of the light, not the authority in the voice, not your own fear of getting it wrong by questioning something that felt so sacred in the moment.</p>
+    <p>Paul's words here are some of the sternest in his letters &mdash; "let him be accursed," said twice for emphasis (Galatians 1:8-9) &mdash; and he says them knowing exactly how uncomfortable it will be to apply that standard even to an angel. But that discomfort is the point. If the gospel can be altered by anyone impressive enough to deliver the alteration, it was never actually fixed at all. It was only ever as stable as the last convincing visitor. Galatians insists otherwise: the gospel does not wait on every new messenger's approval. Every new messenger waits on the gospel's.</p>
+  </article>
+
+  <article class="chapter" id="ch4">
+    <p class="chapter-eyebrow">Chapter Four</p>
+    <h2 class="chapter-title">More Than a Poster</h2>
+    <div class="scripture">
+      <div class="scripture-text">"Who is the image of the invisible God, the firstborn of every creature: For by him were all things created... and he is before all things, and by him all things consist."</div>
+      <div class="scripture-ref">Colossians 1:15-17 &mdash; KJV</div>
+    </div>
+    <p>Somewhere along the way, for many people, Jesus became decoration. A picture on a wall, soft-eyed and gentle. A quote underneath a sunset. A name invoked mostly for comfort, rarely for authority. Ask plainly, as the opening of this book does: is Jesus the same common poster &mdash; a familiar, safe, mostly decorative figure &mdash; or is He something your life has to actually answer to? Colossians answers in the most forceful terms the New Testament offers.</p>
+    <p>"The image of the invisible God" is not a devotional compliment. It means that to look at Christ, truly, is to see God Himself made visible &mdash; not a reflection, not a representative, but the exact image (Hebrews 1:3 uses "the express image of his person"). "The firstborn of every creature" does not mean created first; in context it means rank and supremacy over all creation, the same way "firstborn" marked status and inheritance in that world, not birth order. Paul removes any ambiguity two phrases later: "for by him were all things created" &mdash; the One some have reduced to a poster is the One who made everything that exists, including the wall the poster hangs on.</p>
+    <p>Then comes the phrase that should unsettle anyone who has quietly filed Jesus away as a historical figure, admired but inactive: "by him all things consist." Consist &mdash; hold together, cohere, continue to exist from one moment to the next. Not "by him all things were made, and now run on their own." By Him, right now, all things continue holding together. Hebrews 1:3 says it even more directly: He is "upholding all things by the word of his power" &mdash; present tense, ongoing, active. A poster cannot hold anything together. It hangs there, static, doing nothing while you walk past it. The Jesus Colossians describes is, at this exact moment, sustaining the very atoms of whatever you are holding, worrying about, or standing on.</p>
+    <div class="pull-verse">"For in him dwelleth all the fulness of the Godhead bodily."<cite>Colossians 2:9, KJV</cite></div>
+    <p>This chapter's question &mdash; is He religious, or is He God &mdash; gets its answer in the same passage. Colossians does not present Jesus as the founder of a religion, one respected figure among many who pointed toward the divine. It presents Him as "the head of the body, the church... that in all things he might have the preeminence" (1:18) &mdash; first place, full stop, not first among equals. Religion is something people build around a figure after the fact: rituals, institutions, systems. What Colossians describes is not a religion built around Jesus. It is Jesus Himself, prior to and sustaining everything, including whatever gets built in His name afterward &mdash; and plenty has been built that no longer resembles Him at all.</p>
+    <p>There is real danger in letting Jesus shrink to decoration, because a decorative Jesus asks nothing of you. A poster does not call you to repentance. A poster does not hold you accountable for how you spent today. A poster does not reign, does not return, does not judge, does not reconcile "all things unto himself... whether they be things in earth, or things in heaven" (1:20) through His actual blood, shed on an actual cross. The real cost of a shrunken Jesus is never theological alone &mdash; it is personal. A Jesus small enough to hang on a wall is also small enough to ignore Monday through Saturday, and that is precisely the Jesus many people have unknowingly settled for.</p>
+    <p>So test your own picture, honestly. When you picture Jesus, is He merely familiar, or is He fearsome and near at the same time &mdash; the One holding the universe together and also, somehow, counting the hairs on your head (Matthew 10:30)? Colossians will not let you keep Him as wallpaper. It hands you, in four verses, a Christ too large to decorate anything with and too present to ignore.</p>
+  </article>
+
+  <article class="chapter" id="ch5">
+    <p class="chapter-eyebrow">Chapter Five</p>
+    <h2 class="chapter-title">Lord, Lord</h2>
+    <div class="scripture">
+      <div class="scripture-text">"Not every one that saith unto me, Lord, Lord, shall enter into the kingdom of heaven... Many will say to me in that day, Lord, Lord, have we not prophesied in thy name?... And then will I profess unto them, I never knew you: depart from me."</div>
+      <div class="scripture-ref">Matthew 7:21-23 &mdash; KJV</div>
+    </div>
+    <p>If chapter four asked whether Jesus has shrunk into decoration, this chapter asks the opposite danger: whether He has been reduced to religious performance &mdash; impressive, active, spiritual-sounding, and still, somehow, entirely hollow at the center. Matthew 7:21-23 is one of the most sobering passages Jesus ever spoke, precisely because the people in it are not frauds in their own eyes. They are confident. They have a résumé. "Have we not prophesied in thy name? and in thy name have cast out devils? and in thy name done many wonderful works?" And His answer is not "you're lying about the miracles." His answer is worse: "I never knew you."</p>
+    <p>Notice exactly what is missing from their defense. They do not say "we knew you." They say "we did things in your name." Prophecy, exorcism, wonders &mdash; all performed under His authority, all invoking His name correctly, all, apparently, genuinely supernatural. And none of it, Jesus says, amounted to being known by Him. This is the heart of what this book has been building toward from chapter one: activity done in Jesus' name, however dramatic, is simply not the same thing as relationship with Him. Religion can mimic intimacy perfectly on the outside while remaining a complete stranger on the inside.</p>
+    <p>Luke records Jesus asking the question even more plainly: "why call ye me, Lord, Lord, and do not the things which I say?" (6:46). Lordship spoken is cheap; Lordship obeyed is costly, and it is the obedience, not the title, that Jesus treats as evidence. "Not every one that saith unto me, Lord, Lord... but he that doeth the will of my Father" (Matthew 7:21). This is not a works-based salvation being smuggled in &mdash; the rest of the New Testament is too clear on grace through faith for that reading to stand. It is a warning about counterfeit faith: a confession of His Lordship with no actual submission to it, maintained alongside, not instead of, impressive spiritual activity.</p>
+    <div class="pull-verse">"If a man love me, he will keep my words: and my Father will love him, and we will come unto him, and make our abode with him."<cite>John 14:23, KJV</cite></div>
+    <p>This is deeply relevant to a book about prophets claiming encounters with Jesus. A person can prophesy accurately, even powerfully, and still not be known by Him &mdash; Matthew 7 says so in plain language, describing exactly that scenario. Spiritual gifting was never designed by Scripture to certify relationship. Balaam prophesied true words from God while walking in open rebellion against Him (Numbers 22-24). Saul prophesied among the prophets while actively hunting David to kill him (1 Samuel 19:23-24). The gift operating is not proof the heart is right, and it was never meant to be read that way.</p>
+    <p>So the question this chapter leaves you with is not "how impressive is my spiritual activity," but something closer to home: does Jesus actually know me, the way you know someone you are in relationship with &mdash; their voice, their habits, the texture of an ongoing conversation &mdash; or do I only know how to invoke His name correctly? Religious performance can be loud, visible, and entirely real in its outward form, and Matthew 7 still calls it a counterfeit if it never produced the one thing that actually mattered: "he that doeth the will of my Father which is in heaven." Not the words "Lord, Lord." The life that answers to them.</p>
+  </article>
+
+  <article class="chapter" id="ch6">
+    <p class="chapter-eyebrow">Chapter Six</p>
+    <h2 class="chapter-title">Whom Do You Say That I Am?</h2>
+    <div class="scripture">
+      <div class="scripture-text">"Whom do men say that I the Son of man am?... But whom say ye that I am? And Simon Peter answered and said, Thou art the Christ, the Son of the living God. And Jesus answered and said unto him, Blessed art thou, Simon Bar-jona: for flesh and blood hath not revealed it unto thee, but my Father which is in heaven."</div>
+      <div class="scripture-ref">Matthew 16:13-17 &mdash; KJV</div>
+    </div>
+    <p>Here is the tension this whole book has been circling: my Jesus, your Jesus &mdash; whose Jesus is the real one? Jesus Himself asks a version of this question at Caesarea Philippi, and the way He asks it is worth paying close attention to, because it moves in a very specific direction. First He asks the general question: "whom do men say that I the Son of man am?" The disciples list the popular theories &mdash; John the Baptist, Elijah, Jeremiah, one of the prophets. Secondhand reports. Popular guesses. Other people's conclusions, circulating as common knowledge.</p>
+    <p>Then comes the pivot that matters more than anything else in this chapter: "But whom say ye that I am?" Not "what is everyone saying." Not "what's the consensus." You. Jesus moves the question from the crowd's report to Peter's own answer, and that move is the entire point of this book distilled into one sentence. It is possible to know every popular theory about Jesus &mdash; what the prophets claim, what the preachers say, what the latest vision described &mdash; and still have never actually answered, for yourself, the only question He actually asked.</p>
+    <p>Peter answers: "Thou art the Christ, the Son of the living God." And Jesus' response reveals something crucial about where real knowledge of Him comes from: "flesh and blood hath not revealed it unto thee, but my Father which is in heaven." Peter's confession did not come from the crowd's rumors, however widely circulated. It did not come from secondhand report. It came from direct revelation &mdash; the Father Himself making it known to Peter, personally. This is the difference between "a Jesus" assembled out of what other people have claimed about Him, and the Jesus the Father Himself reveals to a person who actually seeks Him.</p>
+    <div class="pull-verse">"Ye shall seek me, and find me, when ye shall search for me with all your heart."<cite>Jeremiah 29:13, KJV</cite></div>
+    <p>This does not mean other people's testimony is worthless &mdash; Scripture itself is testimony, Spirit-breathed and sufficient (2 Timothy 3:16), and this book has leaned on it constantly. The danger is not testimony itself. The danger is stopping at testimony &mdash; collecting everyone else's reports about Jesus, repeating everyone else's prophetic words about Him, and never personally answering the question He actually asks each person individually. "My Jesus" and "your Jesus" cannot both be the real Jesus if they contradict each other on who He actually is. But there is only one way to know, with real confidence, which description is accurate: not by comparing whose report sounds more convincing, but by seeking the same revelation Peter received &mdash; asking the Father, directly, to reveal His Son to you, the way He revealed Him to a fisherman two thousand years ago.</p>
+    <p>Notice, too, what immediately follows Peter's confession: Jesus begins building His church on the reality that confession points to (Matthew 16:18) &mdash; not on the crowd's guesses, not on popular theory, but on personally revealed truth, confessed personally. That has not changed. Every generation since has faced the same two questions Jesus asked at Caesarea Philippi: what is everyone saying, and what do you say. The first question can be answered by listening to enough people. The second cannot. It requires the same thing Peter received before he could answer it &mdash; not flesh and blood, but the Father.</p>
+  </article>
+
+  <article class="chapter" id="ch7">
+    <p class="chapter-eyebrow">Chapter Seven</p>
+    <h2 class="chapter-title">The Spirit of Truth</h2>
+    <div class="scripture">
+      <div class="scripture-text">"Howbeit when he, the Spirit of truth, is come, he will guide you into all truth... he shall not speak of himself; but whatsoever he shall hear, that shall he speak... He shall glorify me."</div>
+      <div class="scripture-ref">John 16:13-14 &mdash; KJV</div>
+    </div>
+    <p>Every previous chapter has mostly asked you to test &mdash; test the spirit, test even the angel, test the shrunken image, test the hollow performance, test your own secondhand picture of Christ. This chapter gives you something to test with, a positive signature to watch for, because discernment cannot be only negative forever. Jesus describes exactly what the true Spirit of God does when He is at work: He does not speak of Himself. He glorifies Christ.</p>
+    <p>Read that again, because it is the single clearest test this book can offer for any spiritual experience, prophecy, vision, or claimed encounter. Where does the attention land, by the end of it? If a spirit, a prophet, or an experience consistently draws attention and allegiance toward itself &mdash; toward the messenger's authority, the movement's uniqueness, the experience's drama &mdash; it has already failed the test John 16 sets, no matter how much it invokes the name of Jesus along the way. The Spirit of Truth has one unmistakable fingerprint: everything He does points away from Himself and toward the Son.</p>
+    <p>This is not a minor detail; it is how Jesus Himself defined the Spirit's entire mission in that upper room. Not "he will build a following." Not "he will establish a new revelation to supersede what I taught." "He shall glorify me: for he shall receive of mine, and shall shew it unto you" (v.14). The Spirit's work, from the beginning, was never to introduce something beyond Christ. It was to illuminate Christ more fully &mdash; the same Christ already delivered once for all (Jude 3), not a sequel to Him.</p>
+    <div class="pull-verse">"And we know that the Son of God is come, and hath given us an understanding, that we may know him that is true, and we are in him that is true... This is the true God, and eternal life."<cite>1 John 5:20, KJV</cite></div>
+    <p>John's first letter adds something crucial that should encourage anyone who has read this far and started to wonder if certainty is even possible: "hath given us an understanding, that we may know him that is true." Not "may eventually, after enough searching, maybe glimpse something true." Given us an understanding &mdash; present reality, a gift already granted to those who are in Christ. The pursuit this book has been describing is not a hopeless chase after a truth perpetually out of reach. It is a pursuit with a destination God Himself has made reachable, through the Spirit who testifies, and the Word the Spirit never contradicts.</p>
+    <p>This is also where every earlier chapter meets. The confession that Jesus Christ is come in the flesh (chapter two), the refusal to accept even an angel's revision of the gospel already delivered (chapter three), the recognition of Christ as sustaining Lord rather than decoration (chapter four), the difference between performing in His name and being known by Him (chapter five), the personal revelation Peter received rather than secondhand report (chapter six) &mdash; all of it is the Spirit's ordinary, consistent work, always pointing toward the same Christ, never introducing a different one. A spirit that agrees with all of this, and still somehow asks for your ultimate allegiance rather than Christ's, has not passed the test. It has simply gotten good at quoting it.</p>
+    <p>So test what you have received, one last way: has it made Jesus bigger in your eyes, or has it made the messenger bigger? Has it sent you back to Scripture with new hunger, or away from it toward something newer and shinier? The Spirit of Truth has never once, in two thousand years, changed His method. He still only ever points one direction &mdash; toward the Son, the same Son, the one this entire book has been trying to help you actually see.</p>
+  </article>
+
+  <article class="chapter" id="ch8">
+    <p class="chapter-eyebrow">Chapter Eight</p>
+    <h2 class="chapter-title">The Jesus Who Knows You Back</h2>
+    <div class="scripture">
+      <div class="scripture-text">"I am the good shepherd, and know my sheep, and am known of mine... Behold, I stand at the door, and knock: if any man hear my voice, and open the door, I will come in to him, and will sup with him, and he with me."</div>
+      <div class="scripture-ref">John 10:14; Revelation 3:20 &mdash; KJV</div>
+    </div>
+    <p>Seven chapters have been spent mostly testing: testing claims, testing spirits, testing even angels, testing the quiet erosion of Christ into decoration or performance. It would be easy to close a book like this with suspicion as the final word &mdash; trust nothing, question everyone, hold every encounter at arm's length forever. That is not where John 10 or Revelation 3 lands, and it is not where this book means to leave you either. The real Jesus was never trying only to be correctly identified. He was trying to be known.</p>
+    <p>"I know my sheep, and am known of mine" &mdash; the knowledge runs both directions, and Jesus places His own knowledge of you first. Before you ever worked out a correct doctrine of who He is, before you ever learned to test a spirit or weigh a prophecy, He already knew you, the way a shepherd knows each sheep individually, by more than appearance (v.3: "he calleth his own sheep by name"). Everything this book has walked through &mdash; testing, discerning, refusing the counterfeit &mdash; was never meant to end in caution alone. It was meant to clear away everything false so that what remains is a relationship, not just a correct answer on a test.</p>
+    <p>Paul, after a lifetime of ministry, theology, and suffering, reduced his deepest ambition to one phrase: "that I may know him" (Philippians 3:10) &mdash; not know about him, not know doctrines concerning him, know him, the way you know a person you have spent years with. This is the destination every earlier chapter was pointing toward. Testing another Jesus (ch.1), trying the spirits (ch.2), refusing even an angel's revision (ch.3), rejecting the poster version (ch.4), distinguishing performance from relationship (ch.5), seeking personal revelation rather than secondhand report (ch.6), watching for the Spirit's Christ-glorifying signature (ch.7) &mdash; every one of those was clearing debris off the same path, and the path leads here: to actually knowing Him.</p>
+    <div class="pull-verse">"For God, who commanded the light to shine out of darkness, hath shined in our hearts, to give the light of the knowledge of the glory of God in the face of Jesus Christ."<cite>2 Corinthians 4:6, KJV</cite></div>
+    <p>And this is available to you right now, not as a reward for finishing eight chapters correctly, but as a standing invitation that has never once been withdrawn: "Behold, I stand at the door, and knock." Notice who is doing the knocking. Not you, trying to get His attention through enough spiritual effort. Him, already at the door of your life, waiting on one thing only &mdash; whether you will open it. "If any man hear my voice, and open the door, I will come in to him, and will sup with him, and he with me." Not a distant transaction. A shared meal. Ongoing company. The most intimate picture Scripture offers of what knowing Him actually means.</p>
+    <p>If this book has done its work, it has made you more careful about whose report of Jesus you accept secondhand &mdash; and more hungry to stop needing a secondhand report at all. You do not need someone else's prophecy, someone else's angelic encounter, someone else's confident description, to know who Jesus is. You need what Peter had: the Father revealing the Son directly to you, through the Word He has already given, confirmed by the Spirit who only ever glorifies Christ, received the moment you actually open the door you have perhaps kept only partly open until now.</p>
+    <p>So close this book with the one question none of the seven chapters before could answer for you: has He been, until now, mostly something you have heard about &mdash; from a prophet, a preacher, a poster, a performance &mdash; or is He someone you actually know? The door has been open this whole time. He is not waiting for a better argument from you, a cleaner résumé, or a more dramatic encounter to report. He is waiting for you to hear His voice, and open. "Behold, now is the accepted time; behold, now is the day of salvation" (2 Corinthians 6:2). Not someday. Now.</p>
+  </article>
+
+  <div class="closing-card">
+    <h3>Carry This With You</h3>
+    <p>Follow Word and Faith Network for the next book in the Library, plus daily scripture and sermons as they're published.</p>
+    <div class="closing-actions">
+      <a class="btn" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow @wfnglobal &rarr;</a>
+      <a class="btn btn-outline" href="/library/">Back to the Library</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner gutter">
+    <div class="footer-links">
+      <a href="/#about">About</a>
+      <a href="/#word">The Word</a>
+      <a href="/articles/">Sermons</a>
+      <a href="/library/">Library</a>
+      <a href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Word and Faith Network &middot; wfnglobal.org</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  try{
+    var STORE_KEY = 'wfn-library-another-jesus-progress';
+    var chapters = Array.prototype.slice.call(document.querySelectorAll('.chapter'));
+    var titles = {};
+    chapters.forEach(function(ch){
+      var h = ch.querySelector('.chapter-title');
+      var eyebrow = ch.querySelector('.chapter-eyebrow');
+      titles[ch.id] = (eyebrow ? eyebrow.textContent + ': ' : '') + (h ? h.textContent : ch.id);
+    });
+
+    var bar = document.getElementById('readProgressBar');
+    var banner = document.getElementById('resumeBanner');
+    var label = document.getElementById('resumeLabel');
+    var btn = document.getElementById('resumeBtn');
+    var dismiss = document.getElementById('resumeDismiss');
+
+    var saved = null;
+    try{ saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); }catch(e){}
+    if (saved && saved.chapterId && titles[saved.chapterId] && window.scrollY < 400) {
+      label.textContent = titles[saved.chapterId];
+      btn.href = '#' + saved.chapterId;
+      banner.classList.add('is-visible');
+    }
+    function hideBanner(){ banner.classList.remove('is-visible'); }
+    if (dismiss) dismiss.addEventListener('click', hideBanner);
+    if (btn) btn.addEventListener('click', hideBanner);
+
+    var content = document.querySelector('main');
+    var currentChapter = null;
+    var ticking = false;
+
+    function update(){
+      ticking = false;
+      var total = content.scrollHeight - window.innerHeight;
+      var scrolled = Math.min(Math.max(window.scrollY - content.offsetTop, 0), total);
+      var pct = total > 0 ? (scrolled / total) * 100 : 0;
+      if (bar) bar.style.width = pct.toFixed(1) + '%';
+
+      var viewLine = window.scrollY + 140;
+      var active = null;
+      chapters.forEach(function(ch){
+        if (ch.offsetTop <= viewLine) active = ch;
+      });
+      if (active && active.id !== currentChapter) {
+        currentChapter = active.id;
+        try{
+          localStorage.setItem(STORE_KEY, JSON.stringify({ chapterId: currentChapter, savedAt: Date.now() }));
+        }catch(e){}
+      }
+    }
+    function onScroll(){
+      if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    update();
+  }catch(e){ /* progress tracking is a nicety, never block the page */ }
+})();
+</script>
+
+<script src="/assets/js/wfn-translate.js"></script>
+<script>
+  if (window.WFNTranslate) {
+    window.WFNTranslate.mount(
+      document.getElementById('chapterTranslate'),
+      document.getElementById('chapterTranslateNote'),
+      document.querySelector('main'),
+      '.chapter-eyebrow, .chapter-title, .scripture-text, .book-section p, article.chapter > p'
+    );
+  }
+</script>
+<script src="/app/js/wfn-tts.js"></script>

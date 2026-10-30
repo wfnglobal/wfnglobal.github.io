@@ -43,6 +43,7 @@
   // changes, the same way SERMONS[0] is kept current. The rest of the array
   // is an evergreen backup pool, kept for continuity.
   const VERSES = [
+    { text: "Search me, O God, and know my heart: try me, and know my thoughts:", ref: "Psalm 139:23" },
     { text: "He has delivered us from the power of darkness and conveyed us into the kingdom of the Son of His love,", ref: "Colossians 1:13 NKJV" },
     { text: "Praying always with all prayer and supplication in the Spirit, and watching thereunto with all perseverance and supplication for all saints;", ref: "Ephesians 6:18 KJV" },
     { text: "Blessed is the man who endures temptation; for when he has been approved, he will receive the crown of life which the Lord has promised to those who love Him.", ref: "James 1:12 NKJV" },
@@ -67,19 +68,19 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, You did not leave me in darkness to fight my way out — You delivered me! Past tense. Finished business. Already done!",
-      "I was not upgraded. I was relocated — out of the kingdom of darkness and into the Kingdom of the Son of Your love!",
-      "So today, darkness has no claim on my mind, no vote in my decisions, and no lease on my future!",
+      "Father, before I ask You for one more thing this morning, I invite You in — search me, and know my heart! Try me, and know my thoughts! Nothing hidden, nothing held back!",
+      "I will not perform a prayer today. I will not dress up my words and call it faith. I come as I am, and I let You look as deep as You want to look!",
+      "So I command every wicked way in me to come to the surface now — in Jesus' name — where grace can reach it and mercy can deal with it!",
       "",
-      "I declare: the power that used to own me does not get to boss me around anymore — I changed addresses, and I am not going back!",
-      "Every fear that tries to talk to me like I still live in the old kingdom has the wrong house — I don't live there anymore!",
-      "I am not fighting for deliverance today. I am walking in one that is already paid for, signed, and sealed by the Son of His love!",
+      "I declare: I am not afraid of what Your light exposes, because Your light is not here to condemn me — it is here to lead me! Lead me, O God, in the way everlasting!",
+      "Every motive I haven't questioned, every habit I've excused, every attitude I've defended — I command it into the open right now, in Jesus' name!",
+      "I will not carry hidden things into a new day and call it victory. What I hide, I cannot heal. What I surrender, God can transform!",
       "",
-      "So I will not carry today like a captive — I will carry it like royalty, because that is what citizens of this Kingdom are!",
-      "If darkness is pressing on you right now — hear this: Somebody already came and got you out. You just have to walk like it's true!",
-      "Save this. Say it before the day convinces you otherwise. You were delivered. You were conveyed. You belong to the Kingdom of the Son of His love. In Jesus' name, amen!"
+      "So this morning I command my heart to be honest, my spirit to be teachable, and my day to be built on truth — not image, not appearance, truth!",
+      "If something in you has been avoiding this kind of prayer — hear this: God already sees it. The only thing hiding does is keep you from the help!",
+      "Say it before the day gives you a reason to perform instead of surrender. Search me, O God. Know my heart. Try me, and know my thoughts. Lead me in the way everlasting. In Jesus' name, amen!"
     ],
-    ref: "Colossians 1:13"
+    ref: "Psalm 139:23-24"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -91,6 +92,7 @@
   };
 
   const SERMONS = [
+    { slug: "nobody-lives-to-himself", title: "Nobody Lives to Himself", ref: "Romans 14:7-9", date: "October 30, 2026", excerpt: "You didn't just get saved from something. You got bought by Someone. Your life, your death, your Monday morning — none of it is yours to run anymore." },
     { slug: "not-that-kind-of-fire", title: "Not That Kind of Fire", ref: "Luke 9:51-55", date: "October 29, 2026", excerpt: "James and John wanted lightning for a village that said no. Jesus wanted mercy. What you ask God to burn down says more about your spirit than theirs." },
     { slug: "potential-in-the-holy-ghost", title: "Potential in the Holy Ghost", ref: "Acts 1:8", date: "October 28, 2026", excerpt: "You are not waiting on power. Power moved in the day you got saved and has been waiting on you to act like it." },
     { slug: "the-crown-on-the-other-side", title: "The Crown on the Other Side", ref: "James 1:12", date: "October 28, 2026", excerpt: "Endurance isn't what you survive before the blessing — it's what qualifies you for it. The crown of life was never promised to the untested." },

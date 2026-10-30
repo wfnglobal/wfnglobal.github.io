@@ -1,5 +1,28 @@
 <meta charset="utf-8">
 <title>Word and Faith Network</title>
+<!-- Google tag (gtag.js) — TODO: replace G-XXXXXXXXXX with your real GA4
+     Measurement ID from Google Analytics > Admin > Data Streams -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+<meta name="description" content="Daily scripture, sermons, and prayer for Christians worldwide — a church without walls, reaching every corner. Install the free app with the full King James Bible, offline.">
+<link rel="canonical" href="https://wfnglobal.org/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Word and Faith Network">
+<meta property="og:title" content="Word and Faith Network">
+<meta property="og:description" content="Daily scripture, sermons, and prayer for Christians worldwide — a church without walls, reaching every corner. Install the free app with the full King James Bible, offline.">
+<meta property="og:url" content="https://wfnglobal.org/">
+<meta property="og:image" content="https://wfnglobal.org/assets/og/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Word and Faith Network">
+<meta name="twitter:description" content="Daily scripture, sermons, and prayer for Christians worldwide — a church without walls, reaching every corner. Install the free app with the full King James Bible, offline.">
+<meta name="twitter:image" content="https://wfnglobal.org/assets/og/og-default.png">
+<link rel="icon" href="/app/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/app/icons/apple-touch-icon.png">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,6 +76,16 @@ body::before{
   content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px);
   z-index:101; background:rgba(251,248,241,0.92);
 }
+.skip-link{position:absolute; left:-9999px; top:0; z-index:200; background:var(--ink); color:#FFFDF8; padding:12px 18px; border-radius:0 0 10px 0; font-family:var(--font-body); font-size:13px; font-weight:600; text-decoration:none;}
+.skip-link:focus{left:0;}
+.sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;}
+.newsletter-box{max-width:620px; margin:0 auto; text-align:center; background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:40px 32px;}
+.newsletter-copy h2{font-size:1.5rem; margin-bottom:10px;}
+.newsletter-copy p{font-size:14.5px; color:var(--ink-2); line-height:1.65; max-width:460px; margin:0 auto 26px;}
+.newsletter-form{display:flex; gap:10px; max-width:420px; margin:0 auto; flex-wrap:wrap;}
+.newsletter-form input{flex:1; min-width:180px; border:1px solid var(--border); border-radius:100px; padding:12px 18px; font-family:var(--font-body); font-size:14.5px; background:var(--bg); color:var(--ink);}
+.newsletter-form input:focus{outline:2px solid var(--gold); outline-offset:1px;}
+.newsletter-note{margin-top:16px; font-size:13px; color:var(--ink-3); max-width:420px; margin-left:auto; margin-right:auto;}
 .site-header{
   position:sticky; top:env(safe-area-inset-top,0px); z-index:100;
   background:rgba(251,248,241,0.92); backdrop-filter:blur(6px);
@@ -323,6 +356,7 @@ body::before{
 .back-to-top svg{width:19px; height:19px;}
 </style>
 
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <div class="header-inner gutter">
     <a href="/" class="logo-mark" style="text-decoration:none;">
@@ -366,7 +400,7 @@ body::before{
   </div>
 </header>
 
-<section class="hero">
+<section class="hero" id="main-content">
   <div class="hero-illustration-wrap gutter">
     <svg class="hero-illustration" viewBox="0 0 600 380" aria-hidden="true">
       <circle cx="300" cy="190" r="95" fill="#E9D9AE" opacity="0.16"/>
@@ -655,6 +689,23 @@ body::before{
   </div>
 </section>
 
+<section class="section" id="newsletter">
+  <div class="section-inner gutter">
+    <div class="newsletter-box">
+      <div class="newsletter-copy">
+        <h2>Get the Word in Your Inbox</h2>
+        <p>One email, whenever there's something worth sending — a new library book, a milestone, a word for the season. No spam, unsubscribe any time.</p>
+      </div>
+      <form class="newsletter-form" id="newsletterForm">
+        <label class="sr-only" for="newsletterEmail">Email address</label>
+        <input type="email" id="newsletterEmail" placeholder="you@example.com" required autocomplete="email">
+        <button class="btn btn-gold" type="submit">Join the List</button>
+      </form>
+      <p class="newsletter-note" id="newsletterNote" hidden>Thank you — we'll be in touch. (Signup isn't fully wired up yet — for now, email us directly at <a href="mailto:wordandfaithnetwork@gmail.com">wordandfaithnetwork@gmail.com</a>.)</p>
+    </div>
+  </div>
+</section>
+
 <div class="closing">
   <div class="closing-inner gutter">
     <h2>Your Daily Word Is Waiting</h2>
@@ -680,6 +731,9 @@ body::before{
       <a href="#prayer">Prayer</a>
       <a href="app/">Get the App</a>
       <a href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+      <a href="whats-new.html">What's New</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
       <a href="https://www.youtube.com/@WordandFaithNetwork-l2x" target="_blank" rel="noopener">YouTube</a>
     </div>
     <div class="footer-copy">&copy; 2026 Word and Faith Network · wfnglobal.org</div>
@@ -852,3 +906,76 @@ body::before{
 </script>
 
 <script src="assets/js/season-fx.js"></script>
+
+<script>
+// Newsletter box: visual only for now — not wired to Mailchimp yet.
+// When the user picks a free embed provider, replace this with that
+// provider's real form action and remove preventDefault below.
+(function () {
+  var form = document.getElementById("newsletterForm");
+  var note = document.getElementById("newsletterNote");
+  if (!form || !note) return;
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    note.hidden = false;
+    form.reset();
+  });
+})();
+</script>
+
+<script>
+// Pull today's verse, sermon, and declaration from the single shared source
+// (app/data/today.json) so this homepage can never drift from the app the
+// way it briefly did — the hand-written text above stays only as an
+// offline/no-JS fallback.
+(function () {
+  fetch("/app/data/today.json", { cache: "no-store" })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      if (!data) return;
+
+      if (data.verse) {
+        var vt = document.getElementById("verseText");
+        var vr = document.getElementById("verseRef");
+        if (vt) vt.textContent = '"' + data.verse.text + '"';
+        if (vr) vr.textContent = data.verse.ref;
+      }
+
+      if (data.sermon) {
+        var card = document.querySelector(".featured-article-card");
+        if (card) {
+          var h3 = card.querySelector("h3");
+          var p = card.querySelector("p");
+          var a = card.querySelector("a.btn-outline");
+          if (h3) h3.textContent = data.sermon.title;
+          if (p) p.textContent = data.sermon.excerpt;
+          if (a) a.setAttribute("href", "articles/" + data.sermon.slug + ".html");
+        }
+      }
+
+      if (data.declaration && Array.isArray(data.declaration.lines)) {
+        var textEl = document.querySelector(".declaration-text");
+        var refEl = document.querySelector(".declaration-ref");
+        if (textEl) {
+          textEl.innerHTML = data.declaration.lines
+            .map(function (line) {
+              return line === "" ? '<div class="decl-break"></div>' : '<p class="decl-line"></p>';
+            })
+            .join("");
+          var lineEls = textEl.querySelectorAll(".decl-line");
+          var i = 0;
+          data.declaration.lines.forEach(function (line) {
+            if (line !== "") {
+              lineEls[i].textContent = line;
+              i++;
+            }
+          });
+        }
+        if (refEl) refEl.textContent = data.declaration.ref;
+      }
+    })
+    .catch(function () {
+      // Offline or blocked — the hand-written fallback above stays as-is.
+    });
+})();
+</script>

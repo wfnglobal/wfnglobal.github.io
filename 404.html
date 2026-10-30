@@ -1,0 +1,53 @@
+<title>Page Not Found</title>
+<!-- Google tag (gtag.js) — TODO: replace G-XXXXXXXXXX with your real GA4
+     Measurement ID from Google Analytics > Admin > Data Streams -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+<link rel="icon" href="/app/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/app/icons/apple-touch-icon.png">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#FBF8F1; --surface:#FFFFFF; --ink:#231F18; --ink-2:#564E3E; --ink-3:#8C8370;
+  --gold:#9C7A34; --gold-light:#C9A968; --border:rgba(35,31,24,0.11);
+  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:'Inter', -apple-system, system-ui, sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box; margin:0;}
+html,body{background:var(--bg); min-height:100vh;}
+body{
+  color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.7;
+  -webkit-font-smoothing:antialiased; min-height:100vh;
+  display:flex; align-items:center; justify-content:center; padding:24px;
+}
+.wrap{max-width:420px; text-align:center;}
+.mark{width:52px; height:52px; margin:0 auto 24px;}
+.kicker{font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:14px;}
+h1{font-family:var(--font-display); font-weight:600; font-size:2rem; margin-bottom:14px; text-wrap:balance;}
+p{color:var(--ink-2); font-size:15px; line-height:1.7; margin-bottom:28px;}
+.btn{display:inline-flex; align-items:center; gap:7px; border-radius:100px; font-family:var(--font-body); font-size:14px; font-weight:600; padding:12px 24px; text-decoration:none; background:var(--gold); color:#FFFDF8;}
+</style>
+
+<div class="wrap">
+  <svg class="mark" viewBox="0 0 48 48" aria-hidden="true">
+    <defs><linearGradient id="g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C9A968"/><stop offset="100%" stop-color="#8A6A2C"/>
+    </linearGradient></defs>
+    <circle cx="24" cy="24" r="21.5" fill="none" stroke="#9C7A34" stroke-width="0.9"/>
+    <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#g)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
+  </svg>
+  <p class="kicker">Word &amp; Faith Network</p>
+  <h1>This page wandered off.</h1>
+  <p>The page you're looking for doesn't exist anymore, or the link was mistyped. Let's get you back to the Word.</p>
+  <a class="btn" href="/">&larr; Back Home</a>
+</div>

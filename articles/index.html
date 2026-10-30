@@ -1,4 +1,27 @@
 <title>Sermons &amp; Teaching</title>
+<!-- Google tag (gtag.js) — TODO: replace G-XXXXXXXXXX with your real GA4
+     Measurement ID from Google Analytics > Admin > Data Streams -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+<meta name="description" content="Every Bible study and sermon published by Word and Faith Network, saved here permanently — nothing is ever taken down.">
+<link rel="canonical" href="https://wfnglobal.org/articles/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Word and Faith Network">
+<meta property="og:title" content="Sermons & Teaching — Word and Faith Network">
+<meta property="og:description" content="Every Bible study and sermon published by Word and Faith Network, saved here permanently — nothing is ever taken down.">
+<meta property="og:url" content="https://wfnglobal.org/articles/">
+<meta property="og:image" content="https://wfnglobal.org/assets/og/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sermons & Teaching — Word and Faith Network">
+<meta name="twitter:description" content="Every Bible study and sermon published by Word and Faith Network, saved here permanently — nothing is ever taken down.">
+<meta name="twitter:image" content="https://wfnglobal.org/assets/og/og-default.png">
+<link rel="icon" href="/app/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/app/icons/apple-touch-icon.png">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +59,10 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .page-sub{font-size:16px; color:var(--ink-2); text-align:center; max-width:500px; margin:0 auto 48px; line-height:1.65;}
 
 .entry-list{display:flex; flex-direction:column; gap:16px;}
+.site-search-bar{display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--border); border-radius:100px; padding:12px 18px; margin-bottom:28px;}
+.site-search-bar svg{width:17px; height:17px; color:var(--ink-3); flex-shrink:0;}
+.site-search-bar input{flex:1; border:none; background:none; outline:none; font-family:var(--font-body); font-size:14.5px; color:var(--ink);}
+.site-search-empty{text-align:center; color:var(--ink-3); font-size:14px; padding:24px 0;}
 .entry{display:block; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px 26px; text-decoration:none; color:inherit; transition:border-color .15s, transform .15s;}
 .entry:hover{border-color:var(--gold); transform:translateY(-1px);}
 .entry-top{display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap;}
@@ -91,7 +118,13 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
   <h1 class="page-title">Sermons &amp; Teaching</h1>
   <p class="page-sub">Every Bible study and sermon we've published, saved here permanently — nothing is ever taken down.</p>
 
-  <div class="entry-list">
+  <div class="site-search-bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input type="search" id="sermonSearch" placeholder="Search sermons by title or topic…" aria-label="Search sermons">
+  </div>
+  <p class="site-search-empty" id="sermonSearchEmpty" hidden>No sermons match that search.</p>
+
+  <div class="entry-list" id="sermonEntryList">
     <a class="entry" href="nobody-lives-to-himself.html">
       <div class="entry-top">
         <span class="entry-badge">Romans 14:7-9</span>
@@ -255,7 +288,31 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
       <a href="/#word">The Word</a>
       <a href="/#prayer">Prayer</a>
       <a href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+      <a href="/whats-new.html">What's New</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
     </div>
     <div class="footer-copy">Word and Faith Network &middot; wfnglobal.org</div>
   </div>
 </footer>
+
+<script>
+(function () {
+  var input = document.getElementById("sermonSearch");
+  var list = document.getElementById("sermonEntryList");
+  var empty = document.getElementById("sermonSearchEmpty");
+  if (!input || !list) return;
+  var entries = Array.prototype.slice.call(list.querySelectorAll(".entry"));
+  input.addEventListener("input", function () {
+    var q = input.value.trim().toLowerCase();
+    var visible = 0;
+    entries.forEach(function (el) {
+      var text = el.textContent.toLowerCase();
+      var match = q === "" || text.indexOf(q) !== -1;
+      el.hidden = !match;
+      if (match) visible++;
+    });
+    empty.hidden = visible !== 0;
+  });
+})();
+</script>

@@ -42,6 +42,12 @@
   // the Day" — update it (and DECLARATION below) whenever the day's content
   // changes, the same way SERMONS[0] is kept current. The rest of the array
   // is an evergreen backup pool, kept for continuity.
+  //
+  // IMPORTANT: the public website (index.html) no longer hand-copies this
+  // text — it fetches /app/data/today.json instead, so it can't silently
+  // drift the way it once did. Whenever VERSES[0], SERMONS[0]/a new sermon,
+  // or DECLARATION changes here, copy the same values into
+  // app/data/today.json too (same strings — just mirrored, not reworded).
   const VERSES = [
     { text: "Search me, O God, and know my heart: try me, and know my thoughts:", ref: "Psalm 139:23" },
     { text: "He has delivered us from the power of darkness and conveyed us into the kingdom of the Son of His love,", ref: "Colossians 1:13 NKJV" },

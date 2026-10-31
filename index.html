@@ -231,13 +231,12 @@ body::before{
 .app-checklist div{display:flex; gap:10px; align-items:flex-start;}
 .app-checklist span.tick{color:var(--sage); font-weight:700;}
 .app-checklist span.feat{font-size:15px; color:var(--ink-2);}
-.app-arrow-row{display:flex; align-items:flex-end; gap:12px; margin-top:22px;}
-.app-arrow-row span{font-family:var(--font-display); font-style:italic; font-weight:500; font-size:16px; color:var(--gold); padding-bottom:14px;}
-.app-arrow-flow{animation:appArrowFlow 1.4s linear infinite;}
-.app-arrow-head{animation:appArrowHeadPulse 1.4s ease-in-out infinite;}
-@media (prefers-reduced-motion: reduce){ .app-arrow-flow{animation:none; stroke-dasharray:none; opacity:0;} .app-arrow-head{animation:none;} }
-@keyframes appArrowFlow{to{stroke-dashoffset:-108;}}
-@keyframes appArrowHeadPulse{0%,100%{opacity:0.75;} 50%{opacity:1;}}
+.see-action-cue{display:inline-flex; align-items:center; gap:10px; margin-top:26px; padding:10px 20px 10px 22px; border-radius:100px; background:var(--surface); border:1px solid var(--gold-wash); box-shadow:0 10px 28px -16px rgba(156,122,52,0.45);}
+.see-action-cue span{font-family:var(--font-display); font-style:italic; font-weight:500; font-size:15.5px; color:var(--gold);}
+.see-action-chevron{display:flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:50%; background:var(--gold-wash); color:#8A6A2C; flex-shrink:0; animation:seeActionBounce 1.8s ease-in-out infinite;}
+.see-action-chevron svg{width:14px; height:14px;}
+@media (prefers-reduced-motion: reduce){ .see-action-chevron{animation:none;} }
+@keyframes seeActionBounce{0%,100%{transform:translateY(0);} 50%{transform:translateY(4px);}}
 .app-phone{flex:1 1 280px; min-width:240px; max-width:300px; background:var(--ink); border-radius:40px; padding:14px; box-shadow:0 30px 60px -24px rgba(38,36,32,0.35);}
 .app-phone-screen{background:var(--bg); border-radius:28px; overflow:hidden; display:flex; flex-direction:column; aspect-ratio:9/19.5;}
 .app-phone-status{padding:16px 18px 6px; display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:600; color:var(--ink);}
@@ -302,6 +301,11 @@ body::before{
 .decl-line{font-family:var(--font-display); font-weight:500; font-size:1.1rem; color:var(--ink); line-height:1.55; margin:0 0 8px;}
 .decl-break{height:14px;}
 .declaration-ref{font-size:12px; font-weight:600; color:var(--ink-3);}
+.scripture{background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--gold); border-radius:0 10px 10px 0; padding:20px 24px; text-align:center;}
+.scripture-text{font-family:var(--font-display); font-size:1.15rem; font-style:italic; color:var(--ink); line-height:1.55; margin-bottom:8px;}
+.scripture-ref{font-size:11.5px; color:var(--gold); font-weight:700; letter-spacing:0.1em; text-transform:uppercase;}
+.verse-summary-label{font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:10px;}
+.verse-summary-text{font-size:15.5px; line-height:1.75; color:var(--ink-2);}
 
 .prayer-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px;}
 @media (max-width:980px){ .prayer-grid{grid-template-columns:repeat(2,1fr);} }
@@ -634,6 +638,7 @@ body::before{
         <span class="eyebrow">Verse of the Day</span>
         <p class="verse-plain-text" id="verseText">&ldquo;All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness: that the man of God may be perfect, throughly furnished unto all good works.&rdquo;</p>
         <span class="verse-plain-ref" id="verseRef">2 TIMOTHY 3:16-17</span>
+        <a href="#" class="decl-teaser-link" id="verseTeaserLink">Read today's reflection &rarr;</a>
       </div>
       <div class="wfn-card decl-teaser-card">
         <span class="decl-teaser-eyebrow">Today's Declaration</span>
@@ -802,13 +807,11 @@ body::before{
         <div><span class="tick">&#10003;</span><span class="feat">Guided reading plans, highlights, notes, and a permanent sermon archive</span></div>
       </div>
       <a class="btn btn-gold" href="app/" id="installAppBtn">Install the Free App</a>
-      <div class="app-arrow-row">
-        <svg class="app-arrow-svg" width="80" height="96" viewBox="0 0 80 96" aria-hidden="true" style="display:block; flex-shrink:0;">
-          <path class="app-arrow-base" d="M10 6 C 6 42, 22 72, 48 88" fill="none" stroke="#A9824F" stroke-width="2.2" stroke-linecap="round" opacity="0.4"/>
-          <path class="app-arrow-flow" d="M10 6 C 6 42, 22 72, 48 88" fill="none" stroke="#A9824F" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="18 90"/>
-          <path class="app-arrow-head" d="M32 78 L 50 90 L 55 70" fill="none" stroke="#A9824F" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+      <div class="see-action-cue">
         <span>See it in action</span>
+        <span class="see-action-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
       </div>
     </div>
     <div class="app-phone">
@@ -832,8 +835,7 @@ body::before{
         </div>
         <div class="app-phone-body">
           <div class="app-card-1">
-            <span>Tap for Good News</span>
-            <p>Jesus has something to say to you today. Put the Bible on your home screen and never miss a word.</p>
+            <p style="margin-top:0;">Jesus has something to say to you today. Put the Bible on your home screen and never miss a word.</p>
           </div>
           <div class="app-card-2">
             <div style="width:26px; height:26px; border-radius:8px; background:#6F8C7D; flex-shrink:0;"></div>
@@ -982,6 +984,28 @@ body::before{
           <p class="decl-line">Save this. Speak it over every situation that is tempting you to rush or rage. Patient in spirit. Slow to anger. Trusting the end more than I fear the beginning. In Jesus' name, amen!</p>
         </div>
         <div class="declaration-ref">Ecclesiastes 7:7-9</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="decl-modal" id="verseModal" aria-hidden="true">
+  <div class="decl-modal-backdrop" id="verseModalBackdrop"></div>
+  <div class="decl-modal-sheet" role="dialog" aria-modal="true" aria-label="Verse of the Day">
+    <div class="decl-modal-bar">
+      <button class="decl-modal-close" id="verseModalClose" type="button" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="decl-modal-body">
+      <div class="declaration-box">
+        <div class="declaration-label">Verse of the Day</div>
+        <div class="scripture" style="margin:0 0 24px;">
+          <div class="scripture-text" id="verseModalText">"All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness: that the man of God may be perfect, throughly furnished unto all good works."</div>
+          <div class="scripture-ref" id="verseModalRef">2 Timothy 3:16-17, KJV</div>
+        </div>
+        <p class="verse-summary-label">What This Means</p>
+        <p class="verse-summary-text" id="verseModalSummary">Paul isn't offering a vague endorsement of "the Bible" here — he's describing Scripture as actively useful for four distinct things: teaching you what's true (doctrine), showing you where you've drifted from it (reproof), showing you the way back (correction), and training you to keep walking in it (instruction in righteousness). The goal isn't information. It's formation — a man or woman of God who is "throughly furnished," fully equipped, with nothing missing for the good works God has already planned. Scripture isn't a reference shelf you consult occasionally. It's the whole toolkit.</p>
       </div>
     </div>
   </div>
@@ -1239,6 +1263,37 @@ body::before{
 
 <script>
 (function(){
+  var link = document.getElementById('verseTeaserLink');
+  var modal = document.getElementById('verseModal');
+  var backdrop = document.getElementById('verseModalBackdrop');
+  var closeBtn = document.getElementById('verseModalClose');
+  if (!link || !modal) return;
+
+  function open(){
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function close(){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  link.addEventListener('click', function(e){
+    e.preventDefault();
+    open();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  if (backdrop) backdrop.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+  });
+})();
+</script>
+
+<script>
+(function(){
   var trigger = document.getElementById('installAppBtn');
   var modal = document.getElementById('installModal');
   var backdrop = document.getElementById('installModalBackdrop');
@@ -1356,6 +1411,13 @@ body::before{
         var vr = document.getElementById("verseRef");
         if (vt) vt.textContent = '"' + data.verse.text + '"';
         if (vr) vr.textContent = data.verse.ref;
+
+        var vmt = document.getElementById("verseModalText");
+        var vmr = document.getElementById("verseModalRef");
+        var vms = document.getElementById("verseModalSummary");
+        if (vmt) vmt.textContent = '"' + data.verse.text + '"';
+        if (vmr) vmr.textContent = data.verse.ref + ", KJV";
+        if (vms && data.verse.summary) vms.textContent = data.verse.summary;
       }
 
       if (data.sermon) {

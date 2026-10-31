@@ -98,7 +98,8 @@
   };
 
   const SERMONS = [
-    { slug: "thoughts-of-peace-not-evil", title: "Thoughts of Peace, Not Evil", ref: "Jeremiah 29:11", date: "October 31, 2026", excerpt: "Judah heard seventy years before they heard home — and God still called the plan peace. If He can call that peace, He can call whatever you're walking through right now by its true name too." },
+    { slug: "patient-in-spirit-not-proud", title: "Patient in Spirit, Not Proud in Spirit", ref: "Ecclesiastes 7:7-9", date: "October 31, 2026", excerpt: "Oppression can make a wise man act like a fool, and a bribe can quietly undo a good heart. Ecclesiastes names a steadier way to stand — patient in spirit, slow to anger, and willing to wait for the end before judging the beginning." },
+    { slug: "thoughts-of-peace-not-evil", title: "Thoughts of Peace, Not Evil", ref: "Jeremiah 29:11", date: "October 30, 2026", excerpt: "Judah heard seventy years before they heard home — and God still called the plan peace. If He can call that peace, He can call whatever you're walking through right now by its true name too." },
     { slug: "nobody-lives-to-himself", title: "Nobody Lives to Himself", ref: "Romans 14:7-9", date: "October 30, 2026", excerpt: "You didn't just get saved from something. You got bought by Someone. Your life, your death, your Monday morning — none of it is yours to run anymore." },
     { slug: "not-that-kind-of-fire", title: "Not That Kind of Fire", ref: "Luke 9:51-55", date: "October 29, 2026", excerpt: "James and John wanted lightning for a village that said no. Jesus wanted mercy. What you ask God to burn down says more about your spirit than theirs." },
     { slug: "potential-in-the-holy-ghost", title: "Potential in the Holy Ghost", ref: "Acts 1:8", date: "October 28, 2026", excerpt: "You are not waiting on power. Power moved in the day you got saved and has been waiting on you to act like it." },

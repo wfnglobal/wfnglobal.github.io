@@ -269,6 +269,29 @@ body::before{
 .decl-modal-close:hover{border-color:var(--gold); color:var(--gold);}
 .decl-modal-close svg{width:17px; height:17px;}
 .decl-modal-body{padding:0 max(28px, env(safe-area-inset-right,0px)) 64px max(28px, env(safe-area-inset-left,0px)); max-width:560px; margin:0 auto;}
+
+/* ── install guide: step-by-step "Add to Home Screen" instructions,
+   opened from "Install the Free App" so people land on the actual
+   app instead of just a website shortcut ── */
+.install-head{margin-bottom:28px;}
+.install-head h2{font-size:1.6rem; margin-bottom:10px;}
+.install-head p{color:var(--ink-2); font-size:15px; line-height:1.6;}
+.install-tabs{display:flex; gap:8px; margin-bottom:28px; border-bottom:1px solid var(--border); padding-bottom:0;}
+.install-tab{flex:1; display:flex; align-items:center; justify-content:center; gap:7px; padding:11px 8px; font-family:var(--font-body); font-size:13.5px; font-weight:600; color:var(--ink-3); background:none; border:none; border-bottom:2px solid transparent; cursor:pointer; margin-bottom:-1px;}
+.install-tab svg{width:17px; height:17px; flex-shrink:0;}
+.install-tab.is-active{color:var(--gold); border-bottom-color:var(--gold);}
+.install-panel{display:none;}
+.install-panel.is-active{display:block;}
+.install-steps{display:flex; flex-direction:column; gap:18px; margin-bottom:28px;}
+.install-step{display:flex; align-items:flex-start; gap:16px;}
+.install-step-num{flex-shrink:0; width:30px; height:30px; border-radius:50%; background:var(--gold-wash); color:var(--gold); font-weight:700; font-size:13.5px; display:flex; align-items:center; justify-content:center;}
+.install-step-text{padding-top:4px;}
+.install-step-text strong{display:block; font-size:15px; color:var(--ink); margin-bottom:3px; font-weight:600;}
+.install-step-text span{font-size:14px; color:var(--ink-2); line-height:1.55;}
+.install-step-text svg.inline-icon{width:15px; height:15px; vertical-align:-3px; margin:0 1px;}
+.install-cta-row{display:flex; flex-direction:column; align-items:center; gap:12px; padding-top:20px; border-top:1px solid var(--border);}
+.install-cta-row .btn{width:100%; justify-content:center;}
+.install-note{font-size:12.5px; color:var(--ink-3); text-align:center;}
 .declaration-box{background:var(--surface-3); border:1px solid var(--border); border-radius:14px; padding:28px 26px; text-align:left;}
 .declaration-header{display:flex; align-items:center; gap:12px; margin-bottom:16px;}
 .declaration-avatar{width:48px; height:48px; border-radius:50%; object-fit:cover; flex-shrink:0; border:2px solid var(--border);}
@@ -778,7 +801,7 @@ body::before{
         <div><span class="tick">&#10003;</span><span class="feat">A new daily Word, sermon, and prayer declaration every morning</span></div>
         <div><span class="tick">&#10003;</span><span class="feat">Guided reading plans, highlights, notes, and a permanent sermon archive</span></div>
       </div>
-      <a class="btn btn-gold" href="app/">Install the Free App</a>
+      <a class="btn btn-gold" href="app/" id="installAppBtn">Install the Free App</a>
       <div class="app-arrow-row">
         <svg class="app-arrow-svg" width="80" height="96" viewBox="0 0 80 96" aria-hidden="true" style="display:block; flex-shrink:0;">
           <path class="app-arrow-flow" d="M10 6 C 6 42, 22 72, 48 88" fill="none" stroke="#A9824F" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="2 11"/>
@@ -863,7 +886,7 @@ body::before{
           <span>Tuesdays · 1:00–2:00 AM ET (Toronto)<br>6:00–7:00 AM WAT (Lagos) · via X Spaces</span>
         </div>
         <p class="prayer-note">Lagos time shifts to 7:00–8:00 AM when Canada moves off Daylight Saving, in early November.</p>
-        <a class="btn btn-outline btn-sm" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Join the Circle on X</a>
+        <a class="btn btn-outline btn-sm" href="https://x.com/wfnglobal" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true" style="flex-shrink:0;"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>Join the Circle on X</a>
       </div>
       <div class="prayer-card" data-accent="terracotta">
         <div class="prayer-card-glow" aria-hidden="true"></div>
@@ -875,7 +898,7 @@ body::before{
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg>
           <span>Open to every believer, everywhere</span>
         </div>
-        <a class="btn btn-outline btn-sm" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow &amp; Join</a>
+        <a class="btn btn-outline btn-sm" href="https://x.com/wfnglobal" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true" style="flex-shrink:0;"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>Follow &amp; Join</a>
       </div>
       <div class="prayer-card" data-accent="blush">
         <div class="prayer-card-glow" aria-hidden="true"></div>
@@ -887,7 +910,7 @@ body::before{
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
           <span>Date to be announced</span>
         </div>
-        <a class="btn btn-outline btn-sm" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Get Notified on X</a>
+        <a class="btn btn-outline btn-sm" href="https://x.com/wfnglobal" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true" style="flex-shrink:0;"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>Get Notified on X</a>
       </div>
     </div>
     <div class="contact-strip">
@@ -922,7 +945,7 @@ body::before{
   <div class="closing-inner gutter">
     <h2>Your Daily Word Is Waiting</h2>
     <p>No forms. No fees. Just the Word, prayer, and a community of faith — three times a day, every day, on X.</p>
-    <a class="btn btn-gold" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow @wfnglobal on X &rarr;</a>
+    <a class="btn btn-gold" href="https://x.com/wfnglobal" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true" style="flex-shrink:0;"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>Follow @wfnglobal on X &rarr;</a>
     <div class="closing-verse">"For where two or three are gathered together in my name, there am I in the midst of them." — Matthew 18:20</div>
   </div>
 </div>
@@ -963,6 +986,107 @@ body::before{
   </div>
 </div>
 
+<!-- ===== Install guide — opened from "Install the Free App" so people
+     land the app on their home screen instead of a plain bookmark.
+     Auto-selects the matching tab (iPhone/Android/Desktop) by device,
+     switchable by hand; closes via the same top-right bar pattern as
+     the declaration modal ===== -->
+<div class="decl-modal" id="installModal" aria-hidden="true">
+  <div class="decl-modal-backdrop" id="installModalBackdrop"></div>
+  <div class="decl-modal-sheet" role="dialog" aria-modal="true" aria-label="Install the WFN App">
+    <div class="decl-modal-bar">
+      <button class="decl-modal-close" id="installModalClose" type="button" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="decl-modal-body">
+      <div class="install-head">
+        <h2>Install the WFN App</h2>
+        <p>No app store, no download size, nothing to buy — just add it to your home screen and open it like any other app.</p>
+      </div>
+
+      <div class="install-tabs" role="tablist">
+        <button class="install-tab" id="installTabIos" type="button" role="tab" data-panel="installPanelIos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg>
+          iPhone &amp; iPad
+        </button>
+        <button class="install-tab" id="installTabAndroid" type="button" role="tab" data-panel="installPanelAndroid">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/><path d="M9 2l1.5 2M15 2l-1.5 2"/></svg>
+          Android
+        </button>
+        <button class="install-tab" id="installTabDesktop" type="button" role="tab" data-panel="installPanelDesktop">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>
+          Computer
+        </button>
+      </div>
+
+      <div class="install-panel" id="installPanelIos">
+        <div class="install-steps">
+          <div class="install-step">
+            <div class="install-step-num">1</div>
+            <div class="install-step-text"><strong>Open wfnglobal.org in Safari</strong><span>The install option only shows up in Safari — not Chrome or another browser on iPhone.</span></div>
+          </div>
+          <div class="install-step">
+            <div class="install-step-num">2</div>
+            <div class="install-step-text"><strong>Tap the Share icon</strong><span>It's the square with an arrow pointing up <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>, in the toolbar at the bottom of the screen (or the top, on iPad).</span></div>
+          </div>
+          <div class="install-step">
+            <div class="install-step-num">3</div>
+            <div class="install-step-text"><strong>Scroll down and tap "Add to Home Screen"</strong><span>It's a little further down the share menu — keep scrolling if you don't see it right away.</span></div>
+          </div>
+          <div class="install-step">
+            <div class="install-step-num">4</div>
+            <div class="install-step-text"><strong>Tap "Add" in the top right</strong><span>The WFN icon will appear on your home screen — tap it any time to open the app, full-screen, no browser bar.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="install-panel" id="installPanelAndroid">
+        <div class="install-steps">
+          <div class="install-step">
+            <div class="install-step-num">1</div>
+            <div class="install-step-text"><strong>Open wfnglobal.org in Chrome</strong><span>Most Android phones use Chrome by default — this works the same way in most other Android browsers too.</span></div>
+          </div>
+          <div class="install-step">
+            <div class="install-step-num">2</div>
+            <div class="install-step-text"><strong>Tap the menu icon</strong><span>It's the three dots <svg class="inline-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg> in the top right corner of Chrome.</span></div>
+          </div>
+          <div class="install-step">
+            <div class="install-step-num">3</div>
+            <div class="install-step-text"><strong>Tap "Install app"</strong><span>Some phones label it "Add to Home screen" instead — either one does the same thing.</span></div>
+          </div>
+          <div class="install-step">
+            <div class="install-step-num">4</div>
+            <div class="install-step-text"><strong>Tap "Install" to confirm</strong><span>The WFN icon will appear on your home screen — tap it any time to open the app, full-screen, no browser bar.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="install-panel" id="installPanelDesktop">
+        <div class="install-steps">
+          <div class="install-step">
+            <div class="install-step-num">1</div>
+            <div class="install-step-text"><strong>Open wfnglobal.org in Chrome or Edge</strong><span>Desktop install works in most Chromium-based browsers.</span></div>
+          </div>
+          <div class="install-step">
+            <div class="install-step-num">2</div>
+            <div class="install-step-text"><strong>Look for the install icon in the address bar</strong><span>A small icon with a plus or a screen, on the right side of the address bar. No icon? Use the browser's &#8942; menu instead.</span></div>
+          </div>
+          <div class="install-step">
+            <div class="install-step-num">3</div>
+            <div class="install-step-text"><strong>Click "Install"</strong><span>The app opens in its own window and gets added to your applications, just like any other program.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="install-cta-row">
+        <a class="btn btn-gold" href="app/" id="installContinueBtn">Open the App Now &rarr;</a>
+        <p class="install-note">Already added it? Tap the WFN icon on your home screen instead of opening it here.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
@@ -988,7 +1112,7 @@ body::before{
         <a href="library/">Library</a>
         <a href="#watch">Watch</a>
         <a href="app/">Get the App</a>
-        <a href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+        <a href="https://x.com/wfnglobal" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:5px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" aria-hidden="true" style="flex-shrink:0;"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>Follow on X</a>
         <a href="whats-new.html">What's New</a>
         <a href="privacy.html">Privacy</a>
         <a href="terms.html">Terms</a>
@@ -1101,6 +1225,64 @@ body::before{
   }
 
   link.addEventListener('click', function(e){
+    e.preventDefault();
+    open();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  if (backdrop) backdrop.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var trigger = document.getElementById('installAppBtn');
+  var modal = document.getElementById('installModal');
+  var backdrop = document.getElementById('installModalBackdrop');
+  var closeBtn = document.getElementById('installModalClose');
+  if (!trigger || !modal) return;
+
+  var tabs = {
+    ios: { tab: document.getElementById('installTabIos'), panel: document.getElementById('installPanelIos') },
+    android: { tab: document.getElementById('installTabAndroid'), panel: document.getElementById('installPanelAndroid') },
+    desktop: { tab: document.getElementById('installTabDesktop'), panel: document.getElementById('installPanelDesktop') }
+  };
+
+  function detectPlatform(){
+    var ua = navigator.userAgent || '';
+    if (/iPhone|iPad|iPod/.test(ua)) return 'ios';
+    if (/Android/.test(ua)) return 'android';
+    return 'desktop';
+  }
+
+  function selectTab(key){
+    Object.keys(tabs).forEach(function(k){
+      var active = k === key;
+      tabs[k].tab.classList.toggle('is-active', active);
+      tabs[k].panel.classList.toggle('is-active', active);
+      tabs[k].tab.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+  }
+
+  Object.keys(tabs).forEach(function(k){
+    tabs[k].tab.addEventListener('click', function(){ selectTab(k); });
+  });
+
+  function open(){
+    selectTab(detectPlatform());
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function close(){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  trigger.addEventListener('click', function(e){
     e.preventDefault();
     open();
   });

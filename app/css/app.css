@@ -623,6 +623,17 @@ main.app-main{
 .list-item.answered{opacity:0.55;}
 .list-item.answered .list-item-text{text-decoration:line-through;}
 
+.scroll-top-fab{
+  position:fixed; left:calc(18px + env(safe-area-inset-left,0px)); bottom:calc(96px + env(safe-area-inset-bottom,0px));
+  z-index:39; width:46px; height:46px; border-radius:100px; background:var(--ink); color:#FFFDF8; border:1px solid rgba(255,253,248,0.12);
+  display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px var(--shadow); cursor:pointer;
+  opacity:0; pointer-events:none; transform:translateY(8px);
+  transition:opacity .2s ease, transform .2s ease;
+}
+.scroll-top-fab.visible{opacity:1; pointer-events:auto; transform:translateY(0);}
+.scroll-top-fab svg{width:20px; height:20px; flex-shrink:0;}
+#app.game-fullscreen .scroll-top-fab{display:none;}
+
 .note-fab{
   position:fixed; right:calc(18px + env(safe-area-inset-right,0px)); bottom:calc(96px + env(safe-area-inset-bottom,0px));
   z-index:40; width:54px; height:54px; border-radius:100px; background:var(--gold); color:#FFFDF8; border:none;

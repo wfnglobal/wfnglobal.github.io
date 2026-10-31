@@ -3358,6 +3358,9 @@
     hideNoteFab();
     setReadable(null);
     if (window.WFNTTS) window.WFNTTS.stop();
+    window.scrollTo(0, 0);
+    const scrollTopBtn = document.getElementById("scrollTopFab");
+    if (scrollTopBtn) scrollTopBtn.classList.remove("visible");
     const hash = location.hash.replace(/^#\/?/, "");
     const parts = hash.split("/").filter(Boolean);
 
@@ -3525,10 +3528,32 @@
     );
   }
 
+  // Back-to-top: shows once the page has scrolled a bit, on any view that
+  // runs long (Bible chapters, sermon-style content pulled in from the
+  // site, library reading, long lists) — one global listener + button,
+  // docked to the left so it never collides with the note FAB or the
+  // Listen & Tolu control on the right/edge.
+  function setupScrollTopFab() {
+    const btn = document.getElementById("scrollTopFab");
+    if (!btn) return;
+    const THRESHOLD = 420;
+    window.addEventListener(
+      "scroll",
+      () => {
+        btn.classList.toggle("visible", window.scrollY > THRESHOLD);
+      },
+      { passive: true }
+    );
+    btn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
   window.addEventListener("DOMContentLoaded", () => {
     WFNStore.recordActivityToday();
     mountVoiceControls();
     setupTabbarAutoHide();
+    setupScrollTopFab();
     route();
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/app/sw.js").catch(() => {});

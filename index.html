@@ -231,25 +231,77 @@ body::before{
 .app-checklist div{display:flex; gap:10px; align-items:flex-start;}
 .app-checklist span.tick{color:var(--sage); font-weight:700;}
 .app-checklist span.feat{font-size:15px; color:var(--ink-2);}
-.see-action-cue{display:inline-flex; align-items:center; gap:10px; margin-top:26px; padding:10px 20px 10px 22px; border-radius:100px; background:var(--surface); border:1px solid var(--gold-wash); box-shadow:0 10px 28px -16px rgba(156,122,52,0.45);}
-.see-action-cue span{font-family:var(--font-display); font-style:italic; font-weight:500; font-size:15.5px; color:var(--gold);}
-.see-action-chevron{display:flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:50%; background:var(--gold-wash); color:#8A6A2C; flex-shrink:0; animation:seeActionBounce 1.8s ease-in-out infinite;}
-.see-action-chevron svg{width:14px; height:14px;}
-@media (prefers-reduced-motion: reduce){ .see-action-chevron{animation:none;} }
-@keyframes seeActionBounce{0%,100%{transform:translateY(0);} 50%{transform:translateY(4px);}}
 .app-phone{flex:1 1 280px; min-width:240px; max-width:300px; background:var(--ink); border-radius:40px; padding:14px; box-shadow:0 30px 60px -24px rgba(38,36,32,0.35);}
 .app-phone-screen{background:var(--bg); border-radius:28px; overflow:hidden; display:flex; flex-direction:column; aspect-ratio:9/19.5;}
 .app-phone-status{padding:16px 18px 6px; display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:600; color:var(--ink);}
 .app-phone-head{padding:10px 18px 14px; display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border);}
 .app-phone-head span{font-family:var(--font-display); font-weight:500; font-size:14px; color:var(--ink);}
-.app-phone-body{padding:16px; display:flex; flex-direction:column; gap:10px; flex:1;}
-.app-card-1{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px;}
-.app-card-1 span{font-size:9.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold);}
-.app-card-1 p{margin:8px 0 0; font-size:12px; line-height:18px; color:var(--ink-2);}
+.app-phone-body{padding:16px; display:flex; flex-direction:column; gap:16px; flex:1;}
+
+/* ── demo greeting, matching the real app's Home-screen "hello" ──── */
+.demo-hello{margin-bottom:2px;}
+.demo-hello-eyebrow{display:flex; align-items:center; gap:6px; font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:3px;}
+.demo-hello-eyebrow svg{width:11px; height:11px; flex-shrink:0;}
+.demo-hello-title{font-family:var(--font-display); font-size:1.08rem; font-weight:600; color:var(--ink); margin:0;}
+.demo-hello-title span{color:var(--gold);}
+
+/* ── demo Verse-of-the-Day "constellation" cover, matching the real
+   app's tap-to-reveal card: a radiating network of warm-toned figures
+   around a glowing center badge — the "global reach" visual replacing
+   the old floating arrow, reused here instead of invented from scratch
+   so the homepage demo matches what's actually in the app. ──── */
+.demo-vod{position:relative; border-radius:16px; overflow:hidden; min-height:188px;
+  background:
+    radial-gradient(120% 90% at 85% -10%, rgba(216,181,113,0.2), transparent 55%),
+    radial-gradient(90% 70% at 0% 110%, rgba(156,122,52,0.16), transparent 60%),
+    linear-gradient(170deg, #332715 0%, #20170B 55%, #150F07 100%);
+}
+.demo-vod-content{padding:18px; opacity:0; transition:opacity .4s ease .12s;}
+.demo-vod.is-revealed .demo-vod-content{opacity:1;}
+.demo-vod-content p{margin:0; font-size:12.5px; line-height:19px; color:#F6EAD2;}
+.demo-vod-cover{
+  position:absolute; inset:0; z-index:3; width:100%; border:none; padding:16px 14px; margin:0; cursor:pointer; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; text-align:center;
+  background:
+    radial-gradient(circle at 12% 88%, rgba(111,191,168,0.2), transparent 44%),
+    radial-gradient(circle at 90% 10%, rgba(142,146,214,0.22), transparent 44%),
+    linear-gradient(165deg, #2B2042 0%, #1A1430 48%, #0C0916 100%);
+  transition:opacity .4s ease, transform .4s ease; -webkit-tap-highlight-color:transparent;
+}
+.demo-vod-cover::before{
+  content:""; position:absolute; inset:-12%; pointer-events:none;
+  background:radial-gradient(circle at 50% 50%, rgba(231,206,148,0.75) 0%, rgba(216,140,115,0.34) 20%, rgba(216,140,115,0) 46%);
+  animation:demoVodCoreGlow 6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce){ .demo-vod-cover::before{animation:none;} }
+@keyframes demoVodCoreGlow{0%,100%{opacity:0.72; transform:scale(0.95);} 50%{opacity:1; transform:scale(1.06);}}
+.demo-vod.is-revealed .demo-vod-cover{opacity:0; transform:scale(1.04); pointer-events:none;}
+.demo-vod.is-revealed{min-height:0;}
+.demo-vod-constellation{position:relative; width:100%; height:94px; display:flex; align-items:center; justify-content:center; animation:demoVodFloat 5.5s ease-in-out infinite;}
+@media (prefers-reduced-motion: reduce){ .demo-vod-constellation{animation:none;} }
+@keyframes demoVodFloat{0%,100%{transform:translateY(0);} 50%{transform:translateY(-4px);}}
+.demo-vod-rays{position:absolute; inset:0; width:100%; height:100%; animation:demoVodRaysSpin 70s linear infinite; transform-origin:50% 50%;}
+@media (prefers-reduced-motion: reduce){ .demo-vod-rays{animation:none;} }
+@keyframes demoVodRaysSpin{from{transform:rotate(0deg);} to{transform:rotate(360deg);}}
+.demo-vod-badge{position:relative; width:44px; height:44px; display:flex; align-items:center; justify-content:center;}
+.demo-vod-badge svg{width:22px; height:22px; position:relative; z-index:2;}
+.demo-vod-glow{position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle, rgba(231,206,148,0.55) 0%, rgba(231,206,148,0) 70%); animation:demoVodGlowPulse 2.6s ease-in-out infinite;}
+@media (prefers-reduced-motion: reduce){ .demo-vod-glow{animation:none;} }
+@keyframes demoVodGlowPulse{0%,100%{transform:scale(0.85); opacity:0.7;}50%{transform:scale(1.25); opacity:1;}}
+.demo-vod-label{position:relative; z-index:2; font-size:10px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:#FFFDF8;}
+.demo-vod-sub{position:relative; z-index:2; font-size:10.5px; color:#E7CE94; font-weight:500;}
+
 .app-card-2{background:var(--sage-wash); border-radius:14px; padding:14px 16px; display:flex; align-items:center; gap:10px;}
 .app-card-2-title{font-size:11.5px; font-weight:600; color:var(--ink);}
 .app-card-2-sub{font-size:10px; color:var(--ink-3);}
 .app-card-3{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px 16px; display:flex; align-items:center; gap:10px; font-size:11.5px; font-weight:600; color:var(--ink);}
+.app-row-ico{display:flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:8px; flex-shrink:0;}
+.app-row-ico svg{width:14px; height:14px;}
+.app-row-chev{margin-left:auto; color:var(--ink-3); flex-shrink:0;}
+.app-row-chev svg{width:13px; height:13px;}
+.app-phone-next{opacity:0; transform:translateY(10px); transition:opacity .4s ease, transform .4s ease;}
+.app-phone-next.is-visible{opacity:1; transform:translateY(0);}
+@media (prefers-reduced-motion: reduce){ .app-phone-next{opacity:1; transform:none; transition:none;} }
 .app-phone-tabs{display:flex; justify-content:space-around; padding:12px 8px 16px; border-top:1px solid var(--border);}
 .app-phone-tab{display:flex; flex-direction:column; align-items:center; gap:3px;}
 .app-phone-tab span{font-size:8px; color:var(--ink-3); font-weight:600;}
@@ -807,12 +859,6 @@ body::before{
         <div><span class="tick">&#10003;</span><span class="feat">Guided reading plans, highlights, notes, and a permanent sermon archive</span></div>
       </div>
       <a class="btn btn-gold" href="app/" id="installAppBtn">Install the Free App</a>
-      <div class="see-action-cue">
-        <span>See it in action</span>
-        <span class="see-action-chevron" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </span>
-      </div>
     </div>
     <div class="app-phone">
       <div class="app-phone-screen">
@@ -834,16 +880,58 @@ body::before{
           <span>Word &amp; Faith Network</span>
         </div>
         <div class="app-phone-body">
-          <div class="app-card-1">
-            <p style="margin-top:0;">Jesus has something to say to you today. Put the Bible on your home screen and never miss a word.</p>
+          <div class="demo-hello">
+            <div class="demo-hello-eyebrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+              <span>Good morning</span>
+            </div>
+            <h3 class="demo-hello-title">Good morning, <span>Tolu</span></h3>
           </div>
-          <div class="app-card-2">
-            <div style="width:26px; height:26px; border-radius:8px; background:#6F8C7D; flex-shrink:0;"></div>
+
+          <div class="demo-vod" id="demoVodCard">
+            <button class="demo-vod-cover" id="appTapReveal" type="button" aria-label="Tap to reveal today's Word">
+              <div class="demo-vod-constellation">
+                <svg class="demo-vod-rays" viewBox="0 0 320 260" aria-hidden="true"><g><circle cx="160" cy="130" r="86" fill="none" stroke="#8E92D6" stroke-width="1.4" opacity="0.2"/><circle cx="160" cy="130" r="62" fill="none" stroke="#D98C73" stroke-width="1.4" opacity="0.27"/><circle cx="160" cy="130" r="40" fill="none" stroke="#E7CE94" stroke-width="1.4" opacity="0.36"/><path d="M 186.0 130.0 L 268.0 114.0 L 268.0 130.0" fill="none" stroke="#E7CE94" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" opacity="0.68"/><g transform="translate(268.0,121.1)" opacity="0.97"><circle cx="0" cy="8.9" r="2.3" fill="#E7CE94" opacity="0.95"/><circle cx="0" cy="-7" r="4.4" fill="none" stroke="#E7CE94" stroke-width="1.9"/><path d="M -7.3 8.9 Q -7.3 -1.6 0 -1.6 Q 7.3 -1.6 7.3 8.9 Z" fill="none" stroke="#E7CE94" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M 178.4 148.4 L 236.4 190.4 L 236.4 206.4" fill="none" stroke="#D98C73" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" opacity="0.68"/><g transform="translate(236.4,197.5)" opacity="0.97"><circle cx="0" cy="8.9" r="2.3" fill="#D98C73" opacity="0.95"/><circle cx="0" cy="-7" r="4.4" fill="none" stroke="#D98C73" stroke-width="1.9"/><path d="M -7.3 8.9 Q -7.3 -1.6 0 -1.6 Q 7.3 -1.6 7.3 8.9 Z" fill="none" stroke="#D98C73" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M 160.0 156.0 L 160.0 222.0 L 160.0 238.0" fill="none" stroke="#8E92D6" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" opacity="0.68"/><g transform="translate(160.0,229.1)" opacity="0.97"><circle cx="0" cy="8.9" r="2.3" fill="#8E92D6" opacity="0.95"/><circle cx="0" cy="-7" r="4.4" fill="none" stroke="#8E92D6" stroke-width="1.9"/><path d="M -7.3 8.9 Q -7.3 -1.6 0 -1.6 Q 7.3 -1.6 7.3 8.9 Z" fill="none" stroke="#8E92D6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M 141.6 148.4 L 83.6 190.4 L 83.6 206.4" fill="none" stroke="#6FBFA8" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" opacity="0.68"/><g transform="translate(83.6,197.5)" opacity="0.97"><circle cx="0" cy="8.9" r="2.3" fill="#6FBFA8" opacity="0.95"/><circle cx="0" cy="-7" r="4.4" fill="none" stroke="#6FBFA8" stroke-width="1.9"/><path d="M -7.3 8.9 Q -7.3 -1.6 0 -1.6 Q 7.3 -1.6 7.3 8.9 Z" fill="none" stroke="#6FBFA8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M 134.0 130.0 L 52.0 114.0 L 52.0 130.0" fill="none" stroke="#E7CE94" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" opacity="0.68"/><g transform="translate(52.0,121.1)" opacity="0.97"><circle cx="0" cy="8.9" r="2.3" fill="#E7CE94" opacity="0.95"/><circle cx="0" cy="-7" r="4.4" fill="none" stroke="#E7CE94" stroke-width="1.9"/><path d="M -7.3 8.9 Q -7.3 -1.6 0 -1.6 Q 7.3 -1.6 7.3 8.9 Z" fill="none" stroke="#E7CE94" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M 141.6 111.6 L 83.6 37.6 L 83.6 53.6" fill="none" stroke="#D98C73" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" opacity="0.68"/><g transform="translate(83.6,44.7)" opacity="0.97"><circle cx="0" cy="8.9" r="2.3" fill="#D98C73" opacity="0.95"/><circle cx="0" cy="-7" r="4.4" fill="none" stroke="#D98C73" stroke-width="1.9"/><path d="M -7.3 8.9 Q -7.3 -1.6 0 -1.6 Q 7.3 -1.6 7.3 8.9 Z" fill="none" stroke="#D98C73" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M 160.0 104.0 L 160.0 6.0 L 160.0 22.0" fill="none" stroke="#8E92D6" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" opacity="0.68"/><g transform="translate(160.0,13.1)" opacity="0.97"><circle cx="0" cy="8.9" r="2.3" fill="#8E92D6" opacity="0.95"/><circle cx="0" cy="-7" r="4.4" fill="none" stroke="#8E92D6" stroke-width="1.9"/><path d="M -7.3 8.9 Q -7.3 -1.6 0 -1.6 Q 7.3 -1.6 7.3 8.9 Z" fill="none" stroke="#8E92D6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M 178.4 111.6 L 236.4 37.6 L 236.4 53.6" fill="none" stroke="#6FBFA8" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" opacity="0.68"/><g transform="translate(236.4,44.7)" opacity="0.97"><circle cx="0" cy="8.9" r="2.3" fill="#6FBFA8" opacity="0.95"/><circle cx="0" cy="-7" r="4.4" fill="none" stroke="#6FBFA8" stroke-width="1.9"/><path d="M -7.3 8.9 Q -7.3 -1.6 0 -1.6 Q 7.3 -1.6 7.3 8.9 Z" fill="none" stroke="#6FBFA8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g></g></svg>
+                <span class="demo-vod-badge">
+                  <span class="demo-vod-glow"></span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.6" fill="rgba(255,253,248,0.16)" stroke="#FFFDF8" stroke-width="1.6"/><line x1="12" y1="3.4" x2="12" y2="20.6" stroke="#FFFDF8" stroke-width="1" opacity="0.45"/><path d="M12 8.2v7M8.7 11.7h6.6" stroke="#E7CE94" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+              <div class="demo-vod-label">Verse of the Day</div>
+              <div class="demo-vod-sub">Tap to reveal today's Word</div>
+            </button>
+            <div class="demo-vod-content">
+              <p>Jesus has something to say to you today. Put the Bible on your home screen and never miss a word.</p>
+            </div>
+          </div>
+
+          <div class="app-card-2 app-phone-next" id="appPhoneCard2">
+            <div class="app-row-ico" style="background:#6F8C7D;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#FFFDF8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h11a1 1 0 0 1 1 1v13l-4-2-4 2-4-2V5a1 1 0 0 1 1-1z"/></svg>
+            </div>
             <div><div class="app-card-2-title">Today's Sermon</div><div class="app-card-2-sub">Nobody Lives to Himself</div></div>
+            <span class="app-row-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span>
           </div>
-          <div class="app-card-3">
-            <div style="width:26px; height:26px; border-radius:8px; background:#F1E7D5; flex-shrink:0;"></div>
+          <div class="app-card-3 app-phone-next" id="appPhoneCard3">
+            <div class="app-row-ico" style="background:#F1E7D5;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#6B5A33" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6a5 5 0 0 0-5-3H3v15h4a5 5 0 0 1 5 3"/><path d="M12 6a5 5 0 0 1 5-3h4v15h-4a5 5 0 0 0-5 3"/></svg>
+            </div>
             <div>Read the Bible</div>
+            <span class="app-row-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span>
+          </div>
+          <div class="app-card-3 app-phone-next" id="appPhoneCard4">
+            <div class="app-row-ico" style="background:#F4DADD;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#9B4A55" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg>
+            </div>
+            <div>Today's Declaration</div>
+            <span class="app-row-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span>
+          </div>
+          <div class="app-card-3 app-phone-next" id="appPhoneCard5">
+            <div class="app-row-ico" style="background:#E4EEE0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#3F6B3C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 3v18M8 8h8M8 12h8"/></svg>
+            </div>
+            <div>The Library</div>
+            <span class="app-row-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span>
           </div>
         </div>
         <div class="app-phone-tabs">
@@ -1292,6 +1380,61 @@ body::before{
 })();
 </script>
 
+<!-- ===== Phone-demo tap-to-reveal: mirrors the real app's home-screen
+     interaction (tap the verse card to reveal today's Word, then the
+     rest of the home feed appears) so the mockup demonstrates itself
+     instead of needing a pointer arrow next to it. Plays once when the
+     phone scrolls into view, and can also be tapped by hand. ===== -->
+<script>
+(function(){
+  var trigger = document.getElementById('appTapReveal');
+  var card = document.getElementById('demoVodCard');
+  var nextCards = [
+    document.getElementById('appPhoneCard2'),
+    document.getElementById('appPhoneCard3'),
+    document.getElementById('appPhoneCard4'),
+    document.getElementById('appPhoneCard5')
+  ];
+  if (!trigger || !card) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var played = false;
+
+  function showNext(){
+    nextCards.forEach(function(el, i){
+      if (!el) return;
+      if (reduced) el.classList.add('is-visible');
+      else setTimeout(function(){ el.classList.add('is-visible'); }, i * 260);
+    });
+  }
+  function reveal(){
+    played = true;
+    card.classList.add('is-revealed');
+    if (reduced) showNext();
+    else setTimeout(showNext, 350);
+  }
+
+  trigger.addEventListener('click', function(){
+    if (card.classList.contains('is-revealed')) return;
+    reveal();
+  });
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting && !played) {
+          io.disconnect();
+          if (reduced) reveal();
+          else setTimeout(reveal, 900);
+        }
+      });
+    }, { threshold: 0.45 });
+    io.observe(card);
+  } else if (!played) {
+    reveal();
+  }
+})();
+</script>
+
 <script>
 (function(){
   var trigger = document.getElementById('installAppBtn');
@@ -1382,6 +1525,7 @@ body::before{
 </script>
 
 <script src="assets/js/season-fx.js"></script>
+<script src="/app/js/wfn-lookup.js"></script>
 
 <script>
 // Newsletter box: visual only for now — not wired to Mailchimp yet.

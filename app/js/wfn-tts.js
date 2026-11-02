@@ -477,7 +477,7 @@
     if (typeof document === "undefined") return;
     var EXCLUDE_SELECTOR =
       "header, footer, nav, .site-header, .site-footer, .app-header, .app-tabbar, " +
-      "#wfnVoiceStack, #voiceStack, #wfnShareBar, #wfnShareToast, #wfnPraySheet, .sheet, " +
+      "#wfnVoiceStack, #voiceStack, #wfnShareBar, #wfnShareBarPop, #wfnShareToast, #wfnPraySheet, .sheet, " +
       "button, select, input, textarea, a, .reader-nav, .reader-toolbar, .v, " +
       ".reader-chapter-fab-prev, .reader-chapter-fab-next";
     // The Bible reader's own verses (.v) already open a richer sheet on
@@ -485,8 +485,15 @@
     // excluded above so this generic bar doesn't also fire on top of it.
     var TAP_SELECTOR = "p, li, h2, h3, blockquote, .declaration-line";
     var bar = null;
+    var pop = null;
     var currentText = "";
     var selTimer = null;
+
+    function esc(s) {
+      return (s || "").replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
 
     function ensureBar() {
       if (bar) return bar;
@@ -495,30 +502,99 @@
       bar.innerHTML =
         '<button type="button" data-action="copy">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy</button>' +
-        '<span class="wfnsb-sep"></span>' +
         '<button type="button" data-action="share">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.7l7.4-4.4M8.3 13.3l7.4 4.4"/></svg>Share</button>' +
-        '<span class="wfnsb-sep"></span>' +
         '<button type="button" data-action="pray">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg>Pray</button>';
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg>Pray</button>' +
+        '<button type="button" data-action="lookup">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Lookup</button>' +
+        '<button type="button" data-action="translate">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h8M9 5v3M11 8c-1 3-3 5-6 6M8 8c1.3 3.6 3.4 6 7 7.5"/><path d="M14 21l4-9 4 9M15.5 18h5"/></svg>Translate</button>';
       document.body.appendChild(bar);
       bar.querySelector('[data-action="copy"]').addEventListener("mousedown", function (e) { e.preventDefault(); doCopy(); });
       bar.querySelector('[data-action="share"]').addEventListener("mousedown", function (e) { e.preventDefault(); doShare(); });
       bar.querySelector('[data-action="pray"]').addEventListener("mousedown", function (e) { e.preventDefault(); doPray(); });
+      bar.querySelector('[data-action="lookup"]').addEventListener("mousedown", function (e) { e.preventDefault(); doLookup(); });
+      bar.querySelector('[data-action="translate"]').addEventListener("mousedown", function (e) { e.preventDefault(); doTranslate(); });
       bar.querySelector('[data-action="copy"]').addEventListener("touchend", function (e) { e.preventDefault(); doCopy(); });
       bar.querySelector('[data-action="share"]').addEventListener("touchend", function (e) { e.preventDefault(); doShare(); });
       bar.querySelector('[data-action="pray"]').addEventListener("touchend", function (e) { e.preventDefault(); doPray(); });
+      bar.querySelector('[data-action="lookup"]').addEventListener("touchend", function (e) { e.preventDefault(); doLookup(); });
+      bar.querySelector('[data-action="translate"]').addEventListener("touchend", function (e) { e.preventDefault(); doTranslate(); });
       var style = document.createElement("style");
       style.textContent = [
-        "#wfnShareBar{position:fixed; z-index:400; display:none; align-items:center; gap:2px; background:#231F18; color:#FFFDF8; border-radius:100px; padding:6px; box-shadow:0 10px 26px -10px rgba(0,0,0,0.4); font-family:'Inter',-apple-system,system-ui,sans-serif;}",
+        "#wfnShareBar{position:fixed; z-index:400; display:none; align-items:center; justify-content:center; flex-wrap:wrap; gap:2px; background:#231F18; color:#FFFDF8; border-radius:20px; padding:6px; box-shadow:0 10px 26px -10px rgba(0,0,0,0.4); font-family:'Inter',-apple-system,system-ui,sans-serif; max-width:min(320px, calc(100vw - 20px));}",
         "#wfnShareBar.show{display:flex;}",
-        "#wfnShareBar button{display:flex; align-items:center; gap:6px; border:none; background:none; color:#FFFDF8; font-size:13px; font-weight:700; padding:7px 12px; border-radius:100px; cursor:pointer;}",
+        "#wfnShareBar button{display:flex; align-items:center; gap:6px; border:none; background:none; color:#FFFDF8; font-size:13px; font-weight:700; padding:7px 11px; border-radius:100px; cursor:pointer; flex-shrink:0;}",
         "#wfnShareBar button:active{background:rgba(255,255,255,0.14);}",
         "#wfnShareBar button svg{width:15px; height:15px; flex-shrink:0;}",
-        "#wfnShareBar .wfnsb-sep{width:1px; height:18px; background:rgba(255,255,255,0.22);}"
+        "#wfnShareBarPop{position:fixed; z-index:401; max-width:280px; min-width:220px; background:#FFFDF8; color:#231F18; border-radius:13px; padding:14px 16px; font-size:13.5px; line-height:1.55; box-shadow:0 18px 44px -16px rgba(0,0,0,0.42); border:1px solid rgba(35,31,24,0.1); display:none; font-family:'Inter',-apple-system,system-ui,sans-serif;}",
+        "#wfnShareBarPop.show{display:block;}",
+        "#wfnShareBarPop b{display:block; margin-bottom:5px; color:#9C7A34; text-transform:capitalize; font-size:13px;}",
+        "#wfnShareBarPop select{margin-top:9px; width:100%; font-size:12.5px; padding:8px 10px; border-radius:8px; border:1px solid rgba(35,31,24,0.15); font-family:inherit; background:#fff; color:#231F18;}",
+        "#wfnShareBarPop .wfnsbp-note{margin-top:8px; font-size:11.5px; color:#8C8370;}"
       ].join("\n");
       document.head.appendChild(style);
       return bar;
+    }
+
+    function ensurePop() {
+      if (pop) return pop;
+      pop = document.createElement("div");
+      pop.id = "wfnShareBarPop";
+      document.body.appendChild(pop);
+      return pop;
+    }
+
+    function positionPopNearBar() {
+      var el = ensurePop();
+      var r = bar.getBoundingClientRect();
+      var w = el.offsetWidth || 220, h = el.offsetHeight || 60;
+      var left = Math.max(10, Math.min(window.innerWidth - w - 10, r.left + r.width / 2 - w / 2));
+      var top = r.bottom + 8;
+      if (top + h > window.innerHeight - 10) top = Math.max(10, r.top - h - 8);
+      el.style.left = left + "px";
+      el.style.top = top + "px";
+    }
+
+    function hidePop() { if (pop) pop.classList.remove("show"); }
+
+    async function doLookup() {
+      if (!window.WFNLookup) return;
+      var el = ensurePop();
+      var firstWord = (currentText.match(/[A-Za-z']+/) || [currentText])[0] || currentText;
+      var multiWord = /\s/.test(currentText.trim());
+      el.innerHTML = "<b>" + esc(firstWord) + "</b>Looking up&hellip;";
+      el.classList.add("show");
+      positionPopNearBar();
+      var result = await window.WFNLookup.defineWord(firstWord);
+      var defText = result && result.def ? esc(result.def) : "No definition found for this word.";
+      var note = multiWord
+        ? '<div class="wfnsbp-note">Showing the first word of your selection &mdash; select just one word for a precise definition.</div>'
+        : "";
+      el.innerHTML = "<b>" + esc((result && result.word) || firstWord) + "</b>" + defText + note;
+      positionPopNearBar();
+    }
+
+    function doTranslate() {
+      if (!window.WFNLookup) return;
+      var el = ensurePop();
+      var langs = window.WFNLookup.TRANSLATE_LANGS.filter(function (l) { return l.code !== "en"; });
+      var opts = langs.map(function (l) { return '<option value="' + l.code + '">' + esc(l.name) + "</option>"; }).join("");
+      el.innerHTML = '<b>Translate</b><select><option value="">Choose a language&hellip;</option>' + opts + "</select>";
+      el.classList.add("show");
+      positionPopNearBar();
+      el.querySelector("select").addEventListener("change", async function (e) {
+        var lang = e.target.value;
+        if (!lang) return;
+        var langName = (langs.filter(function (l) { return l.code === lang; })[0] || {}).name || lang;
+        el.innerHTML = "<b>" + esc(langName) + "</b>Translating&hellip;";
+        positionPopNearBar();
+        var out = await window.WFNLookup.translateText(currentText, lang);
+        var note = out ? "" : '<div class="wfnsbp-note">Translation is temporarily unavailable &mdash; showing the original English.</div>';
+        el.innerHTML = "<b>" + esc(langName) + "</b>" + esc(out || currentText) + note;
+        positionPopNearBar();
+      });
     }
 
     function pageRef() {
@@ -529,7 +605,9 @@
     function positionBarAt(rect) {
       var el = ensureBar();
       el.classList.add("show");
-      var top = rect.top - 50;
+      hidePop();
+      var barH = el.offsetHeight || 46;
+      var top = rect.top - barH - 10;
       if (top < 8) top = rect.bottom + 10;
       var left = rect.left + rect.width / 2;
       el.style.top = top + "px";
@@ -539,6 +617,7 @@
 
     function hideBar() {
       if (bar) bar.classList.remove("show");
+      hidePop();
     }
 
     function doCopy() { wfnCopyText(currentText, hideBar); }

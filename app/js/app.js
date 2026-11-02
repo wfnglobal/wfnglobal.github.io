@@ -2279,11 +2279,14 @@
         <div class="sheet-row-label">Save to My Verses</div>
         <button class="sheet-toggle" id="savedToggle" data-on="${mark.saved ? 1 : 0}"></button>
       </div>
-      <div style="display:flex; gap:10px; margin-top:10px;">
-        <button class="btn btn-outline btn-block" id="copyVerseBtn" type="button">Copy</button>
-        <button class="btn btn-outline btn-block" id="shareVerseBtn" type="button">Share</button>
-        <button class="btn btn-outline btn-block" id="prayVerseBtn" type="button">Pray</button>
+      <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">
+        <button class="btn btn-outline btn-block" id="copyVerseBtn" type="button" style="flex:1 1 29%;">Copy</button>
+        <button class="btn btn-outline btn-block" id="shareVerseBtn" type="button" style="flex:1 1 29%;">Share</button>
+        <button class="btn btn-outline btn-block" id="prayVerseBtn" type="button" style="flex:1 1 29%;">Pray</button>
+        <button class="btn btn-outline btn-block" id="lookupVerseBtn" type="button" style="flex:1 1 47%;">Lookup</button>
+        <button class="btn btn-outline btn-block" id="translateVerseBtn" type="button" style="flex:1 1 47%;">Translate</button>
       </div>
+      <div id="verseLookupResult"></div>
       <a class="btn btn-outline btn-block" style="margin-top:10px;" id="addVerseNoteBtn">Add a Note on This Verse</a>
     `);
     const verseRef = `${bookName} ${chapter}:${verse}`;
@@ -2297,6 +2300,54 @@
     document.getElementById("prayVerseBtn").addEventListener("click", () => {
       closeSheet();
       if (window.WFNShare) window.WFNShare.pray(text, verseRef);
+    });
+    // Lookup: define any word of this verse in place — same dictionary
+    // pipeline as the Bible reader's own tap-a-word popovers (Bible
+    // names/terms first, then a plain English dictionary), just reached
+    // from this sheet instead of a per-word tap. Does not touch the
+    // reader's own word-tap feature.
+    document.getElementById("lookupVerseBtn").addEventListener("click", () => {
+      const resultEl = document.getElementById("verseLookupResult");
+      if (!window.WFNLookup) { resultEl.innerHTML = `<p class="sheet-row-label" style="margin-top:10px;">Lookup isn't available right now.</p>`; return; }
+      const words = Array.from(new Set((text.match(/[A-Za-z']+/g) || [])));
+      resultEl.innerHTML = `
+        <div class="sheet-row-label" style="margin-top:12px;">Tap a word to look it up</div>
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin:8px 0;">
+          ${words.map((w) => `<button type="button" class="btn-outline" data-lookup-word="${esc(w)}" style="border-radius:100px; padding:6px 12px; font-size:12.5px;">${esc(w)}</button>`).join("")}
+        </div>
+        <div id="verseLookupDef" style="font-size:13.5px; color:var(--ink-2); line-height:1.6;"></div>
+      `;
+      resultEl.querySelectorAll("[data-lookup-word]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const defEl = document.getElementById("verseLookupDef");
+          defEl.innerHTML = `<b>${esc(btn.dataset.lookupWord)}</b> — Looking up…`;
+          const result = await window.WFNLookup.defineWord(btn.dataset.lookupWord);
+          defEl.innerHTML = `<b>${esc((result && result.word) || btn.dataset.lookupWord)}</b> — ${result && result.def ? esc(result.def) : "No definition found for this word."}`;
+        });
+      });
+    });
+    // Translate: the whole verse, into any language already added to the
+    // app — same pipeline as the Verse of the Day / Declaration translate.
+    document.getElementById("translateVerseBtn").addEventListener("click", () => {
+      const resultEl = document.getElementById("verseLookupResult");
+      if (!window.WFNLookup) { resultEl.innerHTML = `<p class="sheet-row-label" style="margin-top:10px;">Translate isn't available right now.</p>`; return; }
+      const opts = window.WFNLookup.TRANSLATE_LANGS.filter((l) => l.code !== "en")
+        .map((l) => `<option value="${l.code}">${esc(l.name)}</option>`).join("");
+      resultEl.innerHTML = `
+        <select class="vod-translate" id="verseTranslateSelect" style="margin-top:12px;" aria-label="Translate this verse"><option value="">Translate this verse…</option>${opts}</select>
+        <div id="verseTranslateOut" style="font-size:14.5px; font-style:italic; color:var(--ink); line-height:1.6; margin-top:8px;"></div>
+      `;
+      document.getElementById("verseTranslateSelect").addEventListener("change", async (e) => {
+        const lang = e.target.value;
+        const outEl = document.getElementById("verseTranslateOut");
+        if (!lang) { outEl.textContent = ""; return; }
+        outEl.textContent = "Translating…";
+        const out = await window.WFNLookup.translateText(text, lang);
+        outEl.textContent = out || text;
+        if (!out) {
+          outEl.insertAdjacentHTML("afterend", `<div class="sheet-row-label" style="margin-top:4px;">Translation is temporarily unavailable — showing the original English.</div>`);
+        }
+      });
     });
     sheetBodyEl.querySelectorAll(".swatch").forEach((sw) => {
       sw.addEventListener("click", () => {
@@ -2580,10 +2631,13 @@
           <div class="declaration-label">Today's Declaration</div>
           <div class="declaration-text" id="declarationText">${declarationLinesHtml}</div>
           <div class="declaration-ref">${esc(DECLARATION.ref)}</div>
-          <div style="display:flex; gap:10px; margin-top:14px;">
-            <select class="vod-translate" id="prayerTranslate" aria-label="Translate the declaration and prayer points">${translateLangOptions()}</select>
-            <button class="vod-translate" id="shareDeclarationBtn" type="button" style="font-weight:700;">Share</button>
+          <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+            <button class="vod-translate" id="copyDeclarationBtn" type="button" style="flex:1 1 29%; font-weight:700;">Copy</button>
+            <button class="vod-translate" id="shareDeclarationBtn" type="button" style="flex:1 1 29%; font-weight:700;">Share</button>
+            <button class="vod-translate" id="lookupDeclarationBtn" type="button" style="flex:1 1 29%; font-weight:700;">Lookup</button>
+            <select class="vod-translate" id="prayerTranslate" aria-label="Translate the declaration and prayer points" style="flex:1 1 100%;">${translateLangOptions()}</select>
           </div>
+          <div id="declarationLookupResult"></div>
         </div>
       </div>
       <p class="translate-note" id="prayerTranslateNote" hidden></p>
@@ -2621,8 +2675,42 @@
       });
       translateInto(pairs, e.target.value, document.getElementById("prayerTranslateNote"));
     });
+    document.getElementById("copyDeclarationBtn").addEventListener("click", () => {
+      if (window.WFNShare) window.WFNShare.copy(`${declarationPlain} — ${DECLARATION.ref}`);
+    });
     document.getElementById("shareDeclarationBtn").addEventListener("click", () => {
       if (window.WFNShare) window.WFNShare.share(`${declarationPlain} — ${DECLARATION.ref}`);
+    });
+    // Lookup: define any word from today's declaration — same dictionary
+    // pipeline as the Bible verse sheet's Lookup button (Bible names/terms
+    // first, then a plain English dictionary). The declaration runs much
+    // longer than a single verse, so instead of listing every word as a
+    // button (unwieldy at this length), this opens a small "type a word"
+    // field — selecting a word in the text above also works, via the
+    // same site-wide selection toolbar every page already has. The Bible
+    // tab's own per-word tap definitions are untouched either way.
+    document.getElementById("lookupDeclarationBtn").addEventListener("click", () => {
+      const resultEl = document.getElementById("declarationLookupResult");
+      if (!window.WFNLookup) { resultEl.innerHTML = `<p class="sheet-row-label" style="margin-top:10px;">Lookup isn't available right now.</p>`; return; }
+      resultEl.innerHTML = `
+        <div style="display:flex; gap:6px; margin-top:12px;">
+          <input type="text" id="declarationLookupInput" placeholder="Type a word to look up" style="flex:1; min-width:0; padding:9px 12px; border-radius:100px; border:1px solid rgba(255,253,248,0.25); background:rgba(255,253,248,0.08); color:#F6EAD2; font-size:13.5px;">
+          <button type="button" class="vod-translate" id="declarationLookupGo" style="font-weight:700;">Go</button>
+        </div>
+        <div id="declarationLookupDef" style="font-size:13.5px; color:var(--ink-2); line-height:1.6; margin-top:8px;"></div>
+      `;
+      const input = document.getElementById("declarationLookupInput");
+      const defEl = document.getElementById("declarationLookupDef");
+      input.focus();
+      async function go() {
+        const w = (input.value || "").trim();
+        if (!w) return;
+        defEl.innerHTML = `<b>${esc(w)}</b> — Looking up…`;
+        const result = await window.WFNLookup.defineWord(w);
+        defEl.innerHTML = `<b>${esc((result && result.word) || w)}</b> — ${result && result.def ? esc(result.def) : "No definition found for this word."}`;
+      }
+      document.getElementById("declarationLookupGo").addEventListener("click", go);
+      input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });
     });
   }
 

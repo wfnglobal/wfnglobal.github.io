@@ -49,12 +49,12 @@
   // or DECLARATION changes here, copy the same values into
   // app/data/today.json too (same strings — just mirrored, not reworded).
   const VERSES = [
-    { text: "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.", ref: "Jeremiah 29:11" },
+    { text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", ref: "Isaiah 41:10" },
     { text: "Search me, O God, and know my heart: try me, and know my thoughts:", ref: "Psalm 139:23" },
     { text: "He has delivered us from the power of darkness and conveyed us into the kingdom of the Son of His love,", ref: "Colossians 1:13 NKJV" },
     { text: "Praying always with all prayer and supplication in the Spirit, and watching thereunto with all perseverance and supplication for all saints;", ref: "Ephesians 6:18 KJV" },
     { text: "Blessed is the man who endures temptation; for when he has been approved, he will receive the crown of life which the Lord has promised to those who love Him.", ref: "James 1:12 NKJV" },
-    { text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", ref: "Isaiah 41:10" },
+    { text: "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.", ref: "Jeremiah 29:11" },
     { text: "The heavens declare the glory of God; and the firmament sheweth his handywork.", ref: "Psalm 19:1" },
     { text: "Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves.", ref: "Philippians 2:3" },
     { text: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", ref: "Psalm 23:1-2" },
@@ -74,26 +74,26 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, over this day I receive the thought You have toward me — not evil, not punishment, not abandonment, but peace! That is Your plan over me, and I will not argue You out of it!",
-      "I refuse to let what I see outweigh what You said. My future was never going to be decided by today's headlines — it was already decided by Your Word!",
-      "So I command every voice assigned to write disaster over my name to go silent, in Jesus' name — the pen in this story belongs to God, not to fear!",
+      "Father, today I receive the word You spoke over me, not as a suggestion but as a command I can stand on — fear not, for You are with me, and that settles what I am facing!",
+      "I am not dismayed by what I cannot yet explain, because the God who made me has not stepped back from this situation for one single second!",
+      "So I command every trembling thought, every what-if, every fear that has been renting space in my mind to leave now, in Jesus' name — there is no room for it where God Himself stands guard!",
       "",
-      "I declare: my expected end is not a guess, it is a promise! God did not think of me by accident — every thought toward me was on purpose, and every one of them is good!",
-      "Every delay I have called a denial, I now call by its right name — timing — because the One who holds the plan has never once lost track of the date!",
-      "I will not let a hard season convince me the plan changed. The plan was peace before the trouble came, and the plan is still peace now!",
+      "I declare: I am being strengthened right now, even in the waiting, even in the hard parts — not by my own effort, but by the hand of the One who never grows tired of holding me up!",
+      "Every time I have felt alone in this, I was wrong — help was already on the way, because He said He would help me, and His word does not come back empty!",
+      "I will not measure this by my own strength. My strength was never the point — it is His right hand of righteousness that is upholding me, and that hand does not slip!",
       "",
-      "So today I lay down anxiety for tomorrow and I pick up the thoughts God already has toward me — peace, and not evil; a future, and an expected end!",
-      "If you have been bracing for the worst — hear this: God already wrote something better than what you are afraid of. You just have not arrived at it yet!",
-      "Save this. Speak it over whatever still looks unfinished. He knows the thoughts He thinks toward you — thoughts of peace, to give you an expected end. In Jesus' name, amen!"
+      "So today I lay down dismay and I pick up what God actually said over me — do not fear, I am with you; do not be discouraged, I am your God; I will strengthen, help, and uphold you!",
+      "If you have been bracing yourself alone — hear this: you were never meant to carry it alone. The same hand that upholds the universe is the hand under you right now.",
+      "Save this. Speak it over every fear that tries to rent space in you today. Fear not — I am with you. Be not dismayed — I am your God. He will strengthen, help, and uphold you with His own right hand. In Jesus' name, amen!"
     ],
-    ref: "Jeremiah 29:11"
+    ref: "Isaiah 41:10"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
   // kept current every day (by 8pm) the same way as VERSES[0], SERMONS[0],
   // and DECLARATION above.
   const NIGHT_PRAYER = {
-    text: "Father, thank You for carrying me safely through today — through the moments I handled well and the ones only Your grace covered. I release every worry, every unfinished thing, and every hurt into Your hands before I close my eyes. Guard this house while I sleep, and meet me again in the morning with fresh mercy.",
+    text: "Father, I lay tonight down at Your feet just as it was — the parts I am proud of and the parts I would rather forget. Thank You for staying patient with me when I was not patient with myself, and for mercy that never waited for me to deserve it. Quiet my mind, keep this house safe through the night, and let me wake up ready for whatever You have for tomorrow.",
     amen: "In Jesus' name, amen."
   };
 

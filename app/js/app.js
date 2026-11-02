@@ -49,6 +49,7 @@
   // or DECLARATION changes here, copy the same values into
   // app/data/today.json too (same strings — just mirrored, not reworded).
   const VERSES = [
+    { text: "For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart.", ref: "Hebrews 4:12" },
     { text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", ref: "Isaiah 41:10" },
     { text: "Search me, O God, and know my heart: try me, and know my thoughts:", ref: "Psalm 139:23" },
     { text: "He has delivered us from the power of darkness and conveyed us into the kingdom of the Son of His love,", ref: "Colossians 1:13 NKJV" },
@@ -74,19 +75,19 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, today I receive the word You spoke over me, not as a suggestion but as a command I can stand on — fear not, for You are with me, and that settles what I am facing!",
-      "I am not dismayed by what I cannot yet explain, because the God who made me has not stepped back from this situation for one single second!",
-      "So I command every trembling thought, every what-if, every fear that has been renting space in my mind to leave now, in Jesus' name — there is no room for it where God Himself stands guard!",
+      "Father, I receive Your Word today not as information but as a living weapon — the same Word that made the mountains, the same Word that divides soul and spirit, is at work in me right now!",
+      "I declare that no situation I am walking through can hide from the Word of God, because it is quick and powerful, sharper than any two-edged sword, and it is cutting through every lie right now!",
+      "You are a discerner of the thoughts and intents of my heart, Father, and I welcome that discernment — expose what needs to be exposed in me, and heal what needs to be healed!",
       "",
-      "I declare: I am being strengthened right now, even in the waiting, even in the hard parts — not by my own effort, but by the hand of the One who never grows tired of holding me up!",
-      "Every time I have felt alone in this, I was wrong — help was already on the way, because He said He would help me, and His word does not come back empty!",
-      "I will not measure this by my own strength. My strength was never the point — it is His right hand of righteousness that is upholding me, and that hand does not slip!",
+      "I declare that I am not a product of darkness — I was made by the same Word that was in the beginning with God, and that Word is still forming and holding my life together today!",
+      "Every shadow trying to close in around me will not succeed, because the light that shines in darkness has never once been overcome, and it will not start with me!",
+      "I will not be moved by what I cannot explain, because the Word that holds the universe together is more than able to hold my life together too!",
       "",
-      "So today I lay down dismay and I pick up what God actually said over me — do not fear, I am with you; do not be discouraged, I am your God; I will strengthen, help, and uphold you!",
-      "If you have been bracing yourself alone — hear this: you were never meant to carry it alone. The same hand that upholds the universe is the hand under you right now.",
-      "Save this. Speak it over every fear that tries to rent space in you today. Fear not — I am with you. Be not dismayed — I am your God. He will strengthen, help, and uphold you with His own right hand. In Jesus' name, amen!"
+      "So today I lay down every doubt about whether God's Word still works, and I pick up the truth that it is alive right now — piercing, discerning, and dividing the real from the fake in my life!",
+      "If you have felt like your situation is too dark or too far gone — hear this: the Word was there before the beginning, and no darkness it has ever met has outlasted it.",
+      "Save this. Speak it over anything in your life that feels hidden, stuck, or too dark to fix. The Word of God is quick and powerful. In Jesus' name, amen!"
     ],
-    ref: "Isaiah 41:10"
+    ref: "Hebrews 4:12"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -98,6 +99,7 @@
   };
 
   const SERMONS = [
+    { slug: "in-the-beginning-was-the-word", title: "In the Beginning Was the Word", ref: "John 1:1-3, 5", date: "November 2, 2026", excerpt: "Before anything was made, the Word already was — with God, and was God. Everything that exists came through Him, and no darkness that has ever risen has been able to put His light out." },
     { slug: "patient-in-spirit-not-proud", title: "Patient in Spirit, Not Proud in Spirit", ref: "Ecclesiastes 7:7-9", date: "October 31, 2026", excerpt: "Oppression can make a wise man act like a fool, and a bribe can quietly undo a good heart. Ecclesiastes names a steadier way to stand — patient in spirit, slow to anger, and willing to wait for the end before judging the beginning." },
     { slug: "thoughts-of-peace-not-evil", title: "Thoughts of Peace, Not Evil", ref: "Jeremiah 29:11", date: "October 30, 2026", excerpt: "Judah heard seventy years before they heard home — and God still called the plan peace. If He can call that peace, He can call whatever you're walking through right now by its true name too." },
     { slug: "nobody-lives-to-himself", title: "Nobody Lives to Himself", ref: "Romans 14:7-9", date: "October 30, 2026", excerpt: "You didn't just get saved from something. You got bought by Someone. Your life, your death, your Monday morning — none of it is yours to run anymore." },

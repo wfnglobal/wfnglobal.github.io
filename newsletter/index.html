@@ -58,17 +58,35 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 h1{font-size:clamp(1.9rem,6vw,2.4rem); margin-bottom:10px; text-align:center;}
 .page-sub{font-size:15.5px; color:var(--ink-2); text-align:center; max-width:460px; margin:0 auto 44px;}
 
-.issue{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:36px 32px; margin-bottom:28px;}
-.issue-date{font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); margin-bottom:10px;}
-.issue h2{font-size:1.5rem; margin-bottom:18px;}
-.issue h3{font-size:1.05rem; margin:28px 0 10px;}
-.issue p{font-size:15px; color:var(--ink-2); line-height:1.8; margin-bottom:16px;}
-.issue p:last-child{margin-bottom:0;}
+.issue{background:var(--surface); border:1px solid var(--border); border-radius:18px; overflow:hidden; margin-bottom:28px; box-shadow:0 18px 40px -22px var(--shadow);}
+.issue-masthead{position:relative; padding:34px 32px 30px; text-align:center; background:linear-gradient(165deg,#2A2113 0%, #1C160D 65%, #141009 100%); color:#F6EAD2;}
+.issue-masthead::before{content:""; position:absolute; inset:0; background:radial-gradient(circle at 50% 0%, rgba(201,169,104,0.28), transparent 65%); pointer-events:none;}
+.issue-masthead-inner{position:relative;}
+.issue-masthead .issue-kicker{font-size:11px; font-weight:800; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold-light); margin-bottom:10px;}
+.issue-masthead h2{font-size:clamp(1.6rem,5vw,2.1rem); color:#FBF4E4; margin-bottom:8px;}
+.issue-masthead .issue-tag{font-size:13.5px; color:#D9CBA6; max-width:420px; margin:0 auto;}
+.issue-body{padding:34px 32px 36px;}
+.issue-body h3{font-size:1.05rem; margin:28px 0 10px;}
+.issue-body > p{font-size:15px; color:var(--ink-2); line-height:1.8; margin-bottom:16px;}
+.issue-body > p:last-child{margin-bottom:0;}
 .issue .scripture{font-family:var(--font-display); font-style:italic; color:var(--ink); background:var(--surface-2); border-radius:10px; padding:16px 20px; margin:18px 0;}
 .issue .scripture cite{display:block; font-family:var(--font-body); font-style:normal; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); margin-top:8px;}
 .issue .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:24px;}
 .btn{display:inline-flex; align-items:center; gap:7px; border-radius:100px; font-family:var(--font-body); font-size:13.5px; font-weight:600; padding:10px 22px; text-decoration:none; background:var(--gold); color:#FFFDF8;}
 .btn-outline{background:transparent; color:var(--gold); border:1.5px solid var(--gold-light);}
+
+.founder-feature{display:flex; gap:24px; align-items:center; background:var(--surface-2); border-radius:14px; padding:20px; margin:4px 0 30px;}
+.founder-feature img{width:150px; height:auto; aspect-ratio:640/893; object-fit:cover; border-radius:10px; box-shadow:0 14px 30px -14px var(--shadow); flex-shrink:0;}
+.founder-feature-text p{font-size:14.5px; color:var(--ink-2); line-height:1.7; margin-bottom:0;}
+.founder-feature-text .founder-kicker{font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; display:block;}
+@media (max-width:540px){
+  .founder-feature{flex-direction:column; align-items:flex-start;}
+  .founder-feature img{width:120px; margin:0 auto;}
+}
+.signoff{margin-top:32px; padding-top:24px; border-top:1px solid var(--border); display:flex; align-items:center; gap:14px;}
+.signoff img{width:46px; height:46px; border-radius:100px; object-fit:cover; flex-shrink:0;}
+.signoff-text{font-size:14px; color:var(--ink-2); line-height:1.5;}
+.signoff-text strong{display:block; color:var(--ink); font-family:var(--font-display); font-size:15px;}
 
 .site-footer{padding-block:40px; border-top:1px solid var(--border);}
 .footer-inner.gutter{max-width:760px; margin:0 auto; text-align:center;}
@@ -101,28 +119,47 @@ h1{font-size:clamp(1.9rem,6vw,2.4rem); margin-bottom:10px; text-align:center;}
   <p class="page-sub">Past issues of the WFN newsletter, sent straight to subscribers' inboxes — a word, an update, a reason to keep going.</p>
 
   <article class="issue">
-    <div class="issue-date">Issue 1 &middot; November 2, 2026</div>
-    <h2>Welcome to Word &amp; Faith Network</h2>
-
-    <p>If you're reading this, you just joined a family of believers who refuse to go a day without the Word. We're glad you're here.</p>
-    <p>Word and Faith Network exists for one reason: to win souls and to help them with their burdens — through prayer, Bible verses, sermons, and books. Every single day, we publish a fresh Verse of the Day, a full sermon, and a Declaration you can speak over your life out loud. No subscription, no paywall, no fine print. Just the Word, delivered daily, for as long as you need it.</p>
-
-    <h3>This Week at WFN</h3>
-    <p>Today's sermon, <strong>"In the Beginning Was the Word,"</strong> walks through John 1:1&ndash;3, 5 &mdash; the truth that before anything was made, the Word already was, with God and as God, and that no darkness that has ever risen has been able to put His light out.</p>
-    <div class="scripture">"For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart."<cite>Hebrews 4:12, KJV &mdash; Today's Verse of the Day</cite></div>
-    <p>And today's Declaration is built on exactly that: that the Word of God is alive and working in you right now, piercing through every lie, discerning the thoughts and intents of your heart, and holding your life together the same way it holds the universe together.</p>
-
-    <h3>What's Growing</h3>
-    <p>The WFN app keeps getting better &mdash; a cleaner Home screen, a Bible reader with tap-to-define words and translation into Yorùbá, Igbo, Hausa, Pidgin and more, and "The Word Climb," a five-level Bible quiz game you can play and share. On Instagram and X, we're posting daily prayers and sermons &mdash; real, full-length prayers worth saving and sharing with someone who needs them.</p>
-
-    <div class="cta">
-      <a class="btn" href="/app/" target="_blank" rel="noopener">Open the App &rarr;</a>
-      <a class="btn btn-outline" href="https://chat.whatsapp.com/J0JkLpylQiVKTHKcJkaKEs" target="_blank" rel="noopener">Join the Prayer Group</a>
-      <a class="btn btn-outline" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+    <div class="issue-masthead">
+      <div class="issue-masthead-inner">
+        <p class="issue-kicker">November 2026 &middot; Issue 1</p>
+        <h2>A Word for the Season</h2>
+        <p class="issue-tag">Welcome to the family — here's what's happening at Word &amp; Faith Network.</p>
+      </div>
     </div>
 
-    <p style="margin-top:28px;">Thank you for letting us into your inbox. We won't waste the space &mdash; just the Word, whenever there's something worth sending.</p>
-    <p>In His love,<br>Word &amp; Faith Network</p>
+    <div class="issue-body">
+      <div class="founder-feature">
+        <img src="/assets/newsletter/oladapo-nov-2026.jpg" alt="Oladapo Olaleye, founder of Word and Faith Network" loading="lazy">
+        <div class="founder-feature-text">
+          <span class="founder-kicker">From Oladapo</span>
+          <p>If you're reading this, you just joined a family of believers who refuse to go a day without the Word. We're glad you're here. Word and Faith Network exists for one reason: to win souls and to help them with their burdens — through prayer, Bible verses, sermons, and books.</p>
+        </div>
+      </div>
+
+      <p>Every single day, we publish a fresh Verse of the Day, a full sermon, and a Declaration you can speak over your life out loud. No subscription, no paywall, no fine print. Just the Word, delivered daily, for as long as you need it.</p>
+
+      <h3>This Week at WFN</h3>
+      <p>Today's sermon, <strong>"In the Beginning Was the Word,"</strong> walks through John 1:1&ndash;3, 5 &mdash; the truth that before anything was made, the Word already was, with God and as God, and that no darkness that has ever risen has been able to put His light out.</p>
+      <div class="scripture">"For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart."<cite>Hebrews 4:12, KJV &mdash; Today's Verse of the Day</cite></div>
+      <p>And today's Declaration is built on exactly that: that the Word of God is alive and working in you right now, piercing through every lie, discerning the thoughts and intents of your heart, and holding your life together the same way it holds the universe together.</p>
+
+      <h3>What's Growing</h3>
+      <p>The WFN app keeps getting better &mdash; a cleaner Home screen, a Bible reader with tap-to-define words and translation into Yorùbá, Igbo, Hausa, Pidgin and more, and "The Word Climb," a five-level Bible quiz game you can play and share. On Instagram and X, we're posting daily prayers and sermons &mdash; real, full-length prayers worth saving and sharing with someone who needs them.</p>
+
+      <div class="cta">
+        <a class="btn" href="/app/" target="_blank" rel="noopener">Open the App &rarr;</a>
+        <a class="btn btn-outline" href="https://chat.whatsapp.com/J0JkLpylQiVKTHKcJkaKEs" target="_blank" rel="noopener">Join the Prayer Group</a>
+        <a class="btn btn-outline" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Follow on X</a>
+      </div>
+
+      <div class="signoff">
+        <img src="/assets/oladapo-portrait.jpg" alt="Oladapo Olaleye">
+        <div class="signoff-text">
+          <strong>Oladapo Olaleye</strong>
+          Founder, Word &amp; Faith Network &mdash; thank you for letting us into your inbox.
+        </div>
+      </div>
+    </div>
   </article>
 </main>
 

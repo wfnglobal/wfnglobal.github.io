@@ -50,6 +50,7 @@ async function main() {
 
   console.log("Image URL: " + imageUrl);
   console.log("Caption length: " + caption.length + " chars");
+  console.log("Token length: " + token.length + " chars, starts '" + token.slice(0, 6) + "', ends '" + token.slice(-6) + "'");
 
   // Step 1: create a media container.
   const createRes = await fetch("https://graph.instagram.com/" + GRAPH_VERSION + "/" + igUserId + "/media", {

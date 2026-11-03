@@ -49,9 +49,9 @@
   // or DECLARATION changes here, copy the same values into
   // app/data/today.json too (same strings — just mirrored, not reworded).
   const VERSES = [
-    { text: "For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart.", ref: "Hebrews 4:12" },
-    { text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", ref: "Isaiah 41:10" },
     { text: "Search me, O God, and know my heart: try me, and know my thoughts:", ref: "Psalm 139:23" },
+    { text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", ref: "Isaiah 41:10" },
+    { text: "For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart.", ref: "Hebrews 4:12" },
     { text: "He has delivered us from the power of darkness and conveyed us into the kingdom of the Son of His love,", ref: "Colossians 1:13 NKJV" },
     { text: "Praying always with all prayer and supplication in the Spirit, and watching thereunto with all perseverance and supplication for all saints;", ref: "Ephesians 6:18 KJV" },
     { text: "Blessed is the man who endures temptation; for when he has been approved, he will receive the crown of life which the Lord has promised to those who love Him.", ref: "James 1:12 NKJV" },
@@ -75,26 +75,26 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I receive Your Word today not as information but as a living weapon — the same Word that made the mountains, the same Word that divides soul and spirit, is at work in me right now!",
-      "I declare that no situation I am walking through can hide from the Word of God, because it is quick and powerful, sharper than any two-edged sword, and it is cutting through every lie right now!",
-      "You are a discerner of the thoughts and intents of my heart, Father, and I welcome that discernment — expose what needs to be exposed in me, and heal what needs to be healed!",
+      "Father, I invite You to search me today — not to condemn me, but to know me, because You see every thought I haven't even found words for yet!",
+      "I declare that You are not watching from a distance — You try my heart, You know my thoughts, and You stay close enough to lead me through every one of them!",
+      "Nothing hidden in me is hidden from You, and I will not run from that, because what You find, Your hand is also able to heal!",
       "",
-      "I declare that I am not a product of darkness — I was made by the same Word that was in the beginning with God, and that Word is still forming and holding my life together today!",
-      "Every shadow trying to close in around me will not succeed, because the light that shines in darkness has never once been overcome, and it will not start with me!",
-      "I will not be moved by what I cannot explain, because the Word that holds the universe together is more than able to hold my life together too!",
+      "I declare that I do not have to perform my way into God's love today — He already knows my heart completely, and He is still choosing to walk with me!",
+      "Every anxious thought, every motive I have not examined, every wicked way I cannot see on my own — I hand it over to the One who searches and knows!",
+      "I will not be afraid of God's examination, because the same hand that tries my heart is the hand that leads me in the way everlasting!",
       "",
-      "So today I lay down every doubt about whether God's Word still works, and I pick up the truth that it is alive right now — piercing, discerning, and dividing the real from the fake in my life!",
-      "If you have felt like your situation is too dark or too far gone — hear this: the Word was there before the beginning, and no darkness it has ever met has outlasted it.",
-      "Save this. Speak it over anything in your life that feels hidden, stuck, or too dark to fix. The Word of God is quick and powerful. In Jesus' name, amen!"
+      "So today I lay down the fear of being fully known, and I pick up the comfort of being fully known by a Father who loves me anyway!",
+      "If you have been hiding something from God, afraid of what He will find — hear this: the One who searches your heart is the same One who promised to lead, not to abandon.",
+      "Save this. Speak it over every hidden place in your heart. Search me, O God, and know my heart; try me, and know my thoughts. In Jesus' name, amen!"
     ],
-    ref: "Hebrews 4:12"
+    ref: "Psalm 139:23"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
   // kept current every day (by 8pm) the same way as VERSES[0], SERMONS[0],
   // and DECLARATION above.
   const NIGHT_PRAYER = {
-    text: "Father, I lay tonight down at Your feet just as it was — the parts I am proud of and the parts I would rather forget. Thank You for staying patient with me when I was not patient with myself, and for mercy that never waited for me to deserve it. Quiet my mind, keep this house safe through the night, and let me wake up ready for whatever You have for tomorrow.",
+    text: "Father, before I close my eyes tonight, search my heart the way only You know how, and loosen anything I have been gripping out of fear or hurry. Thank You for walking with me through every hour of this day, even the ones I did not notice You in. Settle my spirit, keep my home safe while I sleep, and wake me ready to walk closely with You tomorrow.",
     amen: "In Jesus' name, amen."
   };
 

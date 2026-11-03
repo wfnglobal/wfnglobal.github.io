@@ -1,0 +1,67 @@
+name: Post to Instagram
+
+# Fires automatically whenever new post images land under social/posts/
+# (pushed by the daily Instagram content job), and publishes each new
+# image straight to @wordfaithnetwork via the Instagram Graph API.
+# Can also be run by hand from the Actions tab to post a specific file.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "social/posts/**/*.png"
+  workflow_dispatch:
+    inputs:
+      file:
+        description: "Path (under social/posts/) of a specific image to post"
+        required: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Find new images from this push
+        id: files
+        run: |
+          set -euo pipefail
+          if [ -n "${{ github.event.inputs.file }}" ]; then
+            FILES="${{ github.event.inputs.file }}"
+          else
+            FILES=$(git diff --name-only --diff-filter=A HEAD^ HEAD -- 'social/posts/**/*.png' || true)
+            if [ -z "$FILES" ]; then
+              # Fall back to any changed (not just added) png, in case a
+              # post was re-generated rather than newly created.
+              FILES=$(git diff --name-only HEAD^ HEAD -- 'social/posts/**/*.png' || true)
+            fi
+          fi
+          echo "Files to post:"
+          echo "$FILES"
+          {
+            echo "files<<EOF"
+            echo "$FILES"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Post each image to Instagram
+        if: steps.files.outputs.files != ''
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: |
+          set -euo pipefail
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            echo "::group::Posting $f"
+            node social/post-to-instagram.js "$f"
+            echo "::endgroup::"
+            sleep 5
+          done <<< "${{ steps.files.outputs.files }}"

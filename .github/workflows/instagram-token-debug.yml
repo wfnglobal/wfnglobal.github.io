@@ -1,0 +1,49 @@
+name: Debug an Instagram/Graph API token
+
+# Manual-only diagnostic: takes a raw access token (paste it as an input,
+# not a secret) and reports what it can see — debug_token scopes, /me on
+# both graph.facebook.com and graph.instagram.com, /me/accounts, and
+# /me/businesses. Used to figure out what a token is actually good for
+# without burning a fresh one-time auth code each time.
+on:
+  workflow_dispatch:
+    inputs:
+      token:
+        description: "Access token to inspect"
+        required: true
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect token
+        env:
+          IG_APP_ID: ${{ secrets.IG_APP_ID }}
+          IG_APP_SECRET: ${{ secrets.IG_APP_SECRET }}
+          TOKEN: ${{ github.event.inputs.token }}
+        run: |
+          set -euo pipefail
+          echo "::group::debug_token (scopes actually granted)"
+          curl -s "https://graph.facebook.com/v21.0/debug_token?input_token=$TOKEN&access_token=$IG_APP_ID|$IG_APP_SECRET"
+          echo ""
+          echo "::endgroup::"
+
+          echo "::group::GET /me on graph.facebook.com"
+          curl -s "https://graph.facebook.com/v21.0/me?fields=id,name&access_token=$TOKEN"
+          echo ""
+          echo "::endgroup::"
+
+          echo "::group::GET /me/accounts on graph.facebook.com"
+          curl -s "https://graph.facebook.com/v21.0/me/accounts?fields=id,name,instagram_business_account{id,username}&access_token=$TOKEN"
+          echo ""
+          echo "::endgroup::"
+
+          echo "::group::GET /me/businesses on graph.facebook.com"
+          curl -s "https://graph.facebook.com/v21.0/me/businesses?fields=id,name&access_token=$TOKEN"
+          echo ""
+          echo "::endgroup::"
+
+          echo "::group::GET /me on graph.instagram.com"
+          curl -s "https://graph.instagram.com/v21.0/me?fields=id,username&access_token=$TOKEN"
+          echo ""
+          echo "::endgroup::"

@@ -63,3 +63,16 @@ jobs:
           curl -s "https://graph.facebook.com/v21.0/me/businesses?fields=id,name&access_token=$USE_TOKEN"
           echo ""
           echo "::endgroup::"
+
+          echo "::group::debug_token (what scopes did we actually get?)"
+          curl -s "https://graph.facebook.com/v21.0/debug_token?input_token=$USE_TOKEN&access_token=$IG_APP_ID|$IG_APP_SECRET"
+          echo ""
+          echo "::endgroup::"
+
+          echo "::group::GET /me on graph.instagram.com (does this token work there directly?)"
+          curl -s "https://graph.instagram.com/v21.0/me?fields=id,username&access_token=$USE_TOKEN"
+          echo ""
+          echo "::endgroup::"
+
+          echo ""
+          echo "LONG_LIVED_TOKEN=$USE_TOKEN"

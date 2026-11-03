@@ -1027,7 +1027,8 @@ body::before{
         <input type="email" id="newsletterEmail" placeholder="you@example.com" required autocomplete="email">
         <button class="btn btn-gold" type="submit">Join the List</button>
       </form>
-      <p class="newsletter-note" id="newsletterNote" hidden>Thank you — we'll be in touch. (Signup isn't fully wired up yet — for now, email us directly at <a href="mailto:wordandfaithnetwork@gmail.com">wordandfaithnetwork@gmail.com</a>.)</p>
+      <p class="newsletter-note" id="newsletterNote" hidden>Thank you — you're on the list. We'll be in touch whenever there's something worth sending.</p>
+      <p class="newsletter-note" id="newsletterError" hidden>Something went wrong submitting that — please try again, or email us directly at <a href="mailto:wordandfaithnetwork@gmail.com">wordandfaithnetwork@gmail.com</a>.</p>
       <p class="newsletter-note" style="margin-top:14px;"><a href="/newsletter/">Read past issues &rarr;</a></p>
     </div>
   </div>
@@ -1529,15 +1530,49 @@ body::before{
 <script src="/app/js/wfn-lookup.js"></script>
 
 <script>
-// Newsletter box: visual only for now — not wired to Mailchimp yet.
+// Newsletter box: submits straight to HubSpot's public Forms Submission API
+// (no API key — this endpoint is designed for client-side use, same as
+// HubSpot's own embed script). Portal/Form IDs are not secrets.
 (function () {
   var form = document.getElementById("newsletterForm");
+  var emailInput = document.getElementById("newsletterEmail");
   var note = document.getElementById("newsletterNote");
-  if (!form || !note) return;
+  var errorNote = document.getElementById("newsletterError");
+  var submitBtn = form ? form.querySelector("button[type=submit]") : null;
+  if (!form || !note || !errorNote || !emailInput) return;
+
+  var HS_PORTAL_ID = "343790969";
+  var HS_FORM_ID = "ada88d1d-4e62-470a-8372-4128f7a626b7";
+  var HS_ENDPOINT = "https://api.hsforms.com/submissions/v3/integration/submit/" + HS_PORTAL_ID + "/" + HS_FORM_ID;
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    note.hidden = false;
-    form.reset();
+    note.hidden = true;
+    errorNote.hidden = true;
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Joining…"; }
+
+    fetch(HS_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fields: [{ name: "email", value: emailInput.value }],
+        context: {
+          pageUri: location.href,
+          pageName: document.title
+        }
+      })
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HubSpot submission failed: " + res.status);
+        note.hidden = false;
+        form.reset();
+      })
+      .catch(function () {
+        errorNote.hidden = false;
+      })
+      .finally(function () {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Join the List"; }
+      });
   });
 })();
 </script>

@@ -49,6 +49,7 @@
   // or DECLARATION changes here, copy the same values into
   // app/data/today.json too (same strings — just mirrored, not reworded).
   const VERSES = [
+    { text: "Moreover by them is thy servant warned: and in keeping of them there is great reward.", ref: "Psalm 19:11" },
     { text: "Search me, O God, and know my heart: try me, and know my thoughts:", ref: "Psalm 139:23" },
     { text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", ref: "Isaiah 41:10" },
     { text: "For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart.", ref: "Hebrews 4:12" },
@@ -75,19 +76,19 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I invite You to search me today — not to condemn me, but to know me, because You see every thought I haven't even found words for yet!",
-      "I declare that You are not watching from a distance — You try my heart, You know my thoughts, and You stay close enough to lead me through every one of them!",
-      "Nothing hidden in me is hidden from You, and I will not run from that, because what You find, Your hand is also able to heal!",
+      "Father, thank You for warning me through Your Word before I ever had to learn the hard way — I receive every warning in it today as love, not restriction!",
+      "I declare that I am not just hearing Your Word today, I am keeping it — because the reward You promised is not for those who admire the Word, but for those who do it!",
+      "Your Word is more to be desired than gold, sweeter than honey, and I choose it today over every cheaper thing competing for my attention!",
       "",
-      "I declare that I do not have to perform my way into God's love today — He already knows my heart completely, and He is still choosing to walk with me!",
-      "Every anxious thought, every motive I have not examined, every wicked way I cannot see on my own — I hand it over to the One who searches and knows!",
-      "I will not be afraid of God's examination, because the same hand that tries my heart is the hand that leads me in the way everlasting!",
+      "I declare that every warning I have ignored, every correction I have resisted, I receive now — because the God who warns me is the same God who rewards me!",
+      "I will not treat Your Word as information I already know — I will let it search me, warn me, and lead me into the great reward that comes only through keeping it!",
+      "Father, make my love for Your Word greater today than my love for being comfortable, because comfort never warned anyone of anything!",
       "",
-      "So today I lay down the fear of being fully known, and I pick up the comfort of being fully known by a Father who loves me anyway!",
-      "If you have been hiding something from God, afraid of what He will find — hear this: the One who searches your heart is the same One who promised to lead, not to abandon.",
-      "Save this. Speak it over every hidden place in your heart. Search me, O God, and know my heart; try me, and know my thoughts. In Jesus' name, amen!"
+      "So today I lay down the casual way I have sometimes read Your Word, and I pick up reverence for a Book that is still warning and still rewarding right now!",
+      "If you've been hearing warnings in your spirit and brushing past them — hear this: the warning was never the hard part of God's love, it was the proof of it.",
+      "Save this. Speak it over your obedience today. Moreover by them is thy servant warned, and in keeping of them there is great reward. In Jesus' name, amen!"
     ],
-    ref: "Psalm 139:23"
+    ref: "Psalm 19:11"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -99,6 +100,7 @@
   };
 
   const SERMONS = [
+    { slug: "little-by-little-not-all-at-once", title: "Little by Little, Not All at Once", ref: "Deuteronomy 7:19, 21-23", date: "November 3, 2026", excerpt: "God never promised Israel an instant Canaan — He promised a mighty hand, a God among them, and a deliverance that would come by little and little." },
     { slug: "in-the-beginning-was-the-word", title: "In the Beginning Was the Word", ref: "John 1:1-3, 5", date: "November 2, 2026", excerpt: "Before anything was made, the Word already was — with God, and was God. Everything that exists came through Him, and no darkness that has ever risen has been able to put His light out." },
     { slug: "patient-in-spirit-not-proud", title: "Patient in Spirit, Not Proud in Spirit", ref: "Ecclesiastes 7:7-9", date: "October 31, 2026", excerpt: "Oppression can make a wise man act like a fool, and a bribe can quietly undo a good heart. Ecclesiastes names a steadier way to stand — patient in spirit, slow to anger, and willing to wait for the end before judging the beginning." },
     { slug: "thoughts-of-peace-not-evil", title: "Thoughts of Peace, Not Evil", ref: "Jeremiah 29:11", date: "October 30, 2026", excerpt: "Judah heard seventy years before they heard home — and God still called the plan peace. If He can call that peace, He can call whatever you're walking through right now by its true name too." },

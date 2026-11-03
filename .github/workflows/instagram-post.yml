@@ -14,6 +14,10 @@ on:
       file:
         description: "Path (under social/posts/) of a specific image to post"
         required: false
+      graph_host:
+        description: "Graph API host to use (debugging only)"
+        required: false
+        default: "graph.instagram.com"
 
 jobs:
   post:
@@ -56,6 +60,7 @@ jobs:
         env:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_GRAPH_HOST: ${{ github.event.inputs.graph_host }}
         run: |
           set -euo pipefail
           while IFS= read -r f; do

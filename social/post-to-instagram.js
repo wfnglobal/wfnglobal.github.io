@@ -22,6 +22,7 @@
 const fs = require("fs");
 
 const GRAPH_VERSION = "v21.0";
+const GRAPH_HOST = process.env.IG_GRAPH_HOST || "graph.instagram.com";
 
 async function main() {
   const [, , pngPath] = process.argv;
@@ -53,7 +54,7 @@ async function main() {
   console.log("Token length: " + token.length + " chars, starts '" + token.slice(0, 6) + "', ends '" + token.slice(-6) + "'");
 
   // Step 1: create a media container.
-  const createRes = await fetch("https://graph.instagram.com/" + GRAPH_VERSION + "/" + igUserId + "/media", {
+  const createRes = await fetch("https://" + GRAPH_HOST + "/" + GRAPH_VERSION + "/" + igUserId + "/media", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ image_url: imageUrl, caption: caption, access_token: token })
@@ -70,7 +71,7 @@ async function main() {
   // times with a short backoff rather than failing on the first miss.
   let publishJson = null;
   for (let attempt = 1; attempt <= 5; attempt++) {
-    const publishRes = await fetch("https://graph.instagram.com/" + GRAPH_VERSION + "/" + igUserId + "/media_publish", {
+    const publishRes = await fetch("https://" + GRAPH_HOST + "/" + GRAPH_VERSION + "/" + igUserId + "/media_publish", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ creation_id: createJson.id, access_token: token })

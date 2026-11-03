@@ -42,6 +42,15 @@ async function main() {
     process.exit(1);
   }
 
+  if (process.env.IG_DEBUG === "1") {
+    const meRes = await fetch("https://" + GRAPH_HOST + "/" + GRAPH_VERSION + "/me?fields=id,name&access_token=" + encodeURIComponent(token));
+    console.log("GET /me ->", JSON.stringify(await meRes.json()));
+
+    const pagesRes = await fetch("https://" + GRAPH_HOST + "/" + GRAPH_VERSION + "/me/accounts?fields=id,name,instagram_business_account&access_token=" + encodeURIComponent(token));
+    console.log("GET /me/accounts ->", JSON.stringify(await pagesRes.json()));
+    return;
+  }
+
   const captionPath = pngPath.replace(/\.png$/i, ".caption.txt");
   const caption = fs.existsSync(captionPath) ? fs.readFileSync(captionPath, "utf8").trim() : "";
 

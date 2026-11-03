@@ -18,6 +18,10 @@ on:
         description: "Graph API host to use (debugging only)"
         required: false
         default: "graph.instagram.com"
+      debug:
+        description: "Set to 1 to print /me and /me/accounts instead of posting (debugging only)"
+        required: false
+        default: ""
 
 jobs:
   post:
@@ -61,6 +65,7 @@ jobs:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_GRAPH_HOST: ${{ github.event.inputs.graph_host }}
+          IG_DEBUG: ${{ github.event.inputs.debug }}
         run: |
           set -euo pipefail
           while IFS= read -r f; do

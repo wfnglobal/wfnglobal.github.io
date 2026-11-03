@@ -1,9 +1,11 @@
 name: Exchange Instagram auth code for a token
 
-# One-off manual tool: takes the ?code=... from the Instagram Business
-# Login redirect and exchanges it for a short-lived token, then
-# immediately exchanges that for a 60-day long-lived token. Prints the
-# result so it can be copied into the IG_ACCESS_TOKEN repo secret.
+# One-off manual tool: takes the ?code=... from the Meta Business Login
+# (config_id / Unified Login, hosted on facebook.com) redirect and
+# exchanges it for a Facebook Graph API user token, then looks at what
+# that token can actually reach (Pages, and any Instagram Business
+# Account linked to this app's Business Portfolio) so we can work out
+# the right value for the IG_ACCESS_TOKEN repo secret.
 # Not triggered automatically.
 on:
   workflow_dispatch:
@@ -19,7 +21,7 @@ jobs:
   exchange:
     runs-on: ubuntu-latest
     steps:
-      - name: Exchange code for short-lived token, then for a long-lived one
+      - name: Exchange code for a Graph API user token, then inspect it
         env:
           IG_APP_ID: ${{ secrets.IG_APP_ID }}
           IG_APP_SECRET: ${{ secrets.IG_APP_SECRET }}
@@ -27,24 +29,37 @@ jobs:
           REDIRECT_URI: ${{ github.event.inputs.redirect_uri }}
         run: |
           set -euo pipefail
-          echo "Exchanging code for a short-lived token..."
-          SHORT_RESPONSE=$(curl -s -X POST https://api.instagram.com/oauth/access_token \
-            -F "client_id=$IG_APP_ID" \
-            -F "client_secret=$IG_APP_SECRET" \
-            -F "grant_type=authorization_code" \
-            -F "redirect_uri=$REDIRECT_URI" \
-            -F "code=$CODE")
-          echo "Short-lived response: $SHORT_RESPONSE"
+          echo "Exchanging code for a Graph API user token (graph.facebook.com)..."
+          RESPONSE=$(curl -s "https://graph.facebook.com/v21.0/oauth/access_token?client_id=$IG_APP_ID&redirect_uri=$REDIRECT_URI&client_secret=$IG_APP_SECRET&code=$CODE")
+          echo "Token exchange response: $RESPONSE"
 
-          SHORT_TOKEN=$(echo "$SHORT_RESPONSE" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d).access_token||'')}catch(e){console.log('')}})")
-          USER_ID=$(echo "$SHORT_RESPONSE" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d).user_id||'')}catch(e){console.log('')}})")
+          TOKEN=$(echo "$RESPONSE" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d).access_token||'')}catch(e){console.log('')}})")
 
-          if [ -z "$SHORT_TOKEN" ]; then
+          if [ -z "$TOKEN" ]; then
             echo "::error::No access_token in response above — check the code/redirect_uri and try again (codes expire fast, ~1 minute)."
             exit 1
           fi
 
-          echo "Instagram user_id from this token: $USER_ID"
-          echo "Exchanging for a long-lived (60 day) token..."
-          LONG_RESPONSE=$(curl -s "https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret=$IG_APP_SECRET&access_token=$SHORT_TOKEN")
+          echo ""
+          echo "Got a token ($(echo -n "$TOKEN" | wc -c) chars). Exchanging for a long-lived version..."
+          LONG_RESPONSE=$(curl -s "https://graph.facebook.com/v21.0/oauth/access_token?grant_type=fb_exchange_token&client_id=$IG_APP_ID&client_secret=$IG_APP_SECRET&fb_exchange_token=$TOKEN")
           echo "Long-lived response: $LONG_RESPONSE"
+          LONG_TOKEN=$(echo "$LONG_RESPONSE" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d).access_token||'')}catch(e){console.log('')}})")
+          USE_TOKEN="$TOKEN"
+          if [ -n "$LONG_TOKEN" ]; then USE_TOKEN="$LONG_TOKEN"; fi
+
+          echo ""
+          echo "::group::GET /me"
+          curl -s "https://graph.facebook.com/v21.0/me?fields=id,name&access_token=$USE_TOKEN"
+          echo ""
+          echo "::endgroup::"
+
+          echo "::group::GET /me/accounts (Pages, with linked Instagram business account)"
+          curl -s "https://graph.facebook.com/v21.0/me/accounts?fields=id,name,instagram_business_account{id,username}&access_token=$USE_TOKEN"
+          echo ""
+          echo "::endgroup::"
+
+          echo "::group::GET /me/businesses (Business Portfolios)"
+          curl -s "https://graph.facebook.com/v21.0/me/businesses?fields=id,name&access_token=$USE_TOKEN"
+          echo ""
+          echo "::endgroup::"

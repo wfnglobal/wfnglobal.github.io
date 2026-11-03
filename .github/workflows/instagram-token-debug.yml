@@ -20,6 +20,7 @@ jobs:
         env:
           IG_APP_ID: ${{ secrets.IG_APP_ID }}
           IG_APP_SECRET: ${{ secrets.IG_APP_SECRET }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
           TOKEN: ${{ github.event.inputs.token }}
         run: |
           set -euo pipefail
@@ -47,3 +48,15 @@ jobs:
           curl -s "https://graph.instagram.com/v21.0/me?fields=id,username&access_token=$TOKEN"
           echo ""
           echo "::endgroup::"
+
+          echo "::group::GET /me?fields=instagram_accounts on graph.facebook.com"
+          curl -s "https://graph.facebook.com/v21.0/me?fields=instagram_accounts{id,username}&access_token=$TOKEN"
+          echo ""
+          echo "::endgroup::"
+
+          if [ -n "${IG_USER_ID:-}" ]; then
+            echo "::group::GET /\$IG_USER_ID (the stored IG_USER_ID secret) on graph.facebook.com"
+            curl -s "https://graph.facebook.com/v21.0/$IG_USER_ID?fields=id,username,name&access_token=$TOKEN"
+            echo ""
+            echo "::endgroup::"
+          fi

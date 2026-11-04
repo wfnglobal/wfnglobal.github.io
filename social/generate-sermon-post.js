@@ -33,8 +33,8 @@ const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
 
-const START = { title: 56, body: 23, bodyLh: 1.68 };
-const FLOOR = { title: 42, body: 19, bodyLh: 1.5 };
+const START = { title: 56, body: 26, bodyLh: 1.62 };
+const FLOOR = { title: 42, body: 22, bodyLh: 1.46 };
 
 async function main() {
   const [, , contentPath, outPath] = process.argv;

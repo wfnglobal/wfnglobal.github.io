@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WFN Prayer Series</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{width:1080px; height:1350px;}
+  body{
+    font-family:'Inter', -apple-system, system-ui, sans-serif;
+    background:
+      radial-gradient(60% 40% at 88% 6%, rgba(201,169,104,0.16), transparent 70%),
+      linear-gradient(170deg, #1C1A2B 0%, #131124 45%, #0A0916 100%);
+    color:#F2ECDD;
+    position:relative;
+    overflow:hidden;
+  }
+  .numeral{
+    position:absolute; top:58px; right:48px; font-family:'Fraunces', Georgia, serif;
+    font-weight:600; font-size:360px; line-height:1; color:transparent;
+    -webkit-text-stroke:1.4px rgba(201,169,104,0.32);
+    letter-spacing:-6px; user-select:none; z-index:0;
+  }
+  .frame{position:relative; z-index:1; width:1080px; height:1350px; padding:76px; display:flex; flex-direction:column;}
+
+  .top{display:flex; align-items:center; justify-content:space-between;}
+  .kicker{font-size:14px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:#C9A968;}
+  .progress{font-size:14px; font-weight:600; color:#8E86AE; letter-spacing:0.04em;}
+  .rule{height:1px; background:rgba(242,236,221,0.14); margin-top:22px;}
+
+  .hook{
+    font-family:'Fraunces', Georgia, serif; font-style:italic; font-weight:500;
+    font-size:52px; line-height:1.22; color:#FBF4E4; margin-top:72px; max-width:880px;
+    letter-spacing:-0.3px;
+  }
+
+  .body{margin-top:34px; font-size:24px; line-height:1.68; color:#D3CCE6; font-weight:400; max-width:860px;}
+  .body p{margin:0 0 20px;}
+  .body p:last-child{margin-bottom:0;}
+
+  .spacer{flex:1;}
+
+  .verse{display:flex; gap:22px; align-items:flex-start; padding-top:30px; border-top:1px solid rgba(242,236,221,0.14);}
+  .verse-bar{width:3px; align-self:stretch; background:linear-gradient(180deg,#C9A968,#8E6A2E); border-radius:2px; flex-shrink:0;}
+  .verse-text{font-family:'Fraunces', Georgia, serif; font-style:italic; font-size:22px; line-height:1.5; color:#EADFC4;}
+  .verse-ref{margin-top:8px; font-size:15px; font-weight:600; color:#8E86AE; letter-spacing:0.03em;}
+
+  .foot{display:flex; align-items:center; gap:12px; margin-top:38px;}
+  .foot .mark{width:26px; height:26px; flex-shrink:0;}
+  .foot-name{font-family:'Fraunces', Georgia, serif; font-weight:600; font-size:15px; color:#D3CCE6;}
+</style>
+</head>
+<body>
+  <div class="numeral">{{NUMERAL}}</div>
+  <div class="frame">
+    <div class="top">
+      <div class="kicker">{{KICKER}}</div>
+      <div class="progress">{{PROGRESS}}</div>
+    </div>
+    <div class="rule"></div>
+
+    <div class="hook">{{HOOK_HTML}}</div>
+    <div class="body">{{BODY_HTML}}</div>
+
+    <div class="spacer"></div>
+
+    <div class="verse">
+      <div class="verse-bar"></div>
+      <div>
+        <div class="verse-text">{{VERSE_TEXT}}</div>
+        <div class="verse-ref">{{VERSE_REF}}</div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <svg class="mark" viewBox="0 0 48 48">
+        <defs>
+          <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#C9A968"/><stop offset="1" stop-color="#8E6A2E"/>
+          </linearGradient>
+        </defs>
+        <circle cx="24" cy="24" r="21.3" fill="none" stroke="#C9A968" stroke-width="1.1"/>
+        <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#grad)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
+      </svg>
+      <div class="foot-name">Word &amp; Faith Network</div>
+    </div>
+  </div>
+</body>
+</html>

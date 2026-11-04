@@ -79,19 +79,19 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that You are my Shepherd, and because You are leading me, I am not lacking anything I truly need!",
-      "I will not wander through today anxious and unsettled — You make me lie down in green pastures, and You lead me beside still waters!",
-      "Every hurried, striving part of me bows to this truth: my provision does not depend on my hustle, it depends on my Shepherd!",
+      "Father, I declare today that I am a blessed man, a blessed woman — not because nothing hard is happening, but because I refuse to walk in the counsel that doesn't come from You!",
+      "I will not stand in the way of sinners, I will not sit in the seat of the scornful — my feet are too busy moving toward Your Word to stay parked in a conversation that isn't going anywhere good!",
+      "My delight is in Your law today, not my duty — I am not forcing myself to open this Word, I am choosing to want it, the way I want the things I actually love!",
       "",
-      "I declare that wherever You lead me today — into busy places or quiet ones — I will follow, because the Shepherd who feeds me also guides me!",
-      "I will not force my own peace; I will receive it, the way a sheep receives rest it never had to create for itself!",
-      "Father, still every noise in me that drowns out Your voice, so I can hear You leading before I even see the path ahead!",
+      "I declare that I am planted, not wandering — rooted by the rivers of water, not drifting toward whatever soil looks easiest this week!",
+      "When the heat comes, I will not even see it as a threat, because my roots have already settled the outcome before the drought ever arrives!",
+      "My leaf shall not wither — even in the unremarkable months when nobody is watching for fruit yet, I am still green, I am still alive, I am still Yours!",
       "",
-      "So today I lay down the pressure to supply for myself what only You can provide, and I pick up the rest of a sheep that trusts its Shepherd!",
-      "If you have been running on empty, chasing a peace you keep missing — hear this: the Shepherd who leads you to still water is not far from you right now.",
-      "Save this. Speak it over every anxious place in your life today. The LORD is my shepherd; I shall not want. In Jesus' name, amen!"
+      "So today I lay down every borrowed foundation I have been building on, and I pick up the one true Rock that was already laid for me!",
+      "If you have been building fast on sand because digging to the Rock felt too slow — hear this: today is still the digging season, and the storm has not come yet.",
+      "Save this. Speak it over your roots today. Blessed is the man that walketh not in the counsel of the ungodly, and whatsoever he doeth shall prosper. In Jesus' name, amen!"
     ],
-    ref: "Psalm 23:1-2"
+    ref: "Psalm 1:1-3"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -103,6 +103,7 @@
   };
 
   const SERMONS = [
+    { slug: "planted-by-the-rivers", title: "Planted by the Rivers", ref: "Psalm 1:1-3", date: "November 4, 2026", excerpt: "Blessing in Psalm 1 was never a feeling the wind blew in. It's a posture — what you refuse to walk in, stand in, and sit in, long before it's ever about what you're planted beside." },
     { slug: "little-by-little-not-all-at-once", title: "Little by Little, Not All at Once", ref: "Deuteronomy 7:19, 21-23", date: "November 3, 2026", excerpt: "God never promised Israel an instant Canaan — He promised a mighty hand, a God among them, and a deliverance that would come by little and little." },
     { slug: "in-the-beginning-was-the-word", title: "In the Beginning Was the Word", ref: "John 1:1-3, 5", date: "November 2, 2026", excerpt: "Before anything was made, the Word already was — with God, and was God. Everything that exists came through Him, and no darkness that has ever risen has been able to put His light out." },
     { slug: "patient-in-spirit-not-proud", title: "Patient in Spirit, Not Proud in Spirit", ref: "Ecclesiastes 7:7-9", date: "October 31, 2026", excerpt: "Oppression can make a wise man act like a fool, and a bribe can quietly undo a good heart. Ecclesiastes names a steadier way to stand — patient in spirit, slow to anger, and willing to wait for the end before judging the beginning." },
@@ -139,6 +140,28 @@
   // body[] is an array of full paragraphs rendered as-is (no markdown) in
   // the in-app reader.
   const BIBLE_STUDY = [
+    {
+      slug: "the-only-foundation-that-holds",
+      title: "The Only Foundation That Holds",
+      verses: [
+        { ref: "Matthew 7:24-27", text: "Therefore whosoever heareth these sayings of mine, and doeth them, I will liken him unto a wise man, which built his house upon a rock: And the rain descended, and the floods came, and the winds blew, and beat upon that house; and it fell not: for it was founded upon a rock. And every one that heareth these sayings of mine, and doeth them not, shall be likened unto a foolish man, which built his house upon the sand: And the rain descended, and the floods came, and the winds blew, and beat upon that house; and it fell: and great was the fall of it." },
+        { ref: "1 Corinthians 3:11", text: "For other foundation can no man lay than that is laid, which is Jesus Christ." },
+        { ref: "Psalm 127:1", text: "Except the LORD build the house, they labour in vain that build it: except the LORD keep the city, the watchman waketh but in vain." }
+      ],
+      date: "November 4, 2026",
+      excerpt: "Two men hear the exact same sermon. Build the exact same house. The only difference between them is what's underneath — and you can't see a foundation until the storm shows up to grade it.",
+      body: [
+        "Let's start with what both men in this parable have in common, because that's the part we skip past too fast. Both of them heard the sermon. Both of them built a house. Both of them, if you'd walked by on a sunny Tuesday, would have looked identical — same four walls, same roof, same front door, same Sunday testimony about how good the preaching was that week. Jesus isn't contrasting a believer and an unbeliever here. He's contrasting two people who both showed up, both said amen, and only one of them actually did anything about it.",
+        "\"Whosoever heareth these sayings of mine, and doeth them\" — that's the wise man. \"Whosoever heareth these sayings of mine, and doeth them not\" — that's the fool. Read that twice, because Jesus did not say the wise man heard more sermons, took better notes, or had a stronger emotional reaction during worship. The entire gap between wise and foolish in this parable is one word: doeth. Not heareth. Doeth.",
+        "Now here's the part that should make you a little uncomfortable, in the way a good sermon is supposed to: the sand is not a bad material because it's evil. Sand isn't sin. Sand is just... convenient. Sand is soft, easy to dig into, doesn't require any serious excavation before you can start building the parts people actually see. Nobody builds on sand because they're trying to fail. They build on sand because rock is harder to find and slower to dig into, and the house goes up faster the other way.",
+        "That's the whole temptation of the Christian life in one image. Rock-foundation obedience is slow. It means actually forgiving before you feel like it. Actually tithing before the math makes sense. Actually telling the truth when a smaller lie would move things along faster. Sand-foundation religion skips the digging and gets straight to decorating — and for a long season, on a sunny day, you genuinely cannot tell the two houses apart.",
+        "Then comes the only part of the parable that actually tests anything: \"the rain descended, and the floods came, and the winds blew, and beat upon that house.\" Notice Jesus describes the exact same storm hitting both houses. Not a harder storm for the foolish man and a gentler one for the wise. Same rain. Same flood. Same wind. The storm was never the variable in this story. The foundation was. If you are waiting for an easier life as proof that you built correctly, you are reading the wrong parable — godly obedience was never a weatherproofing spell against storms. It was always about what's still standing after one.",
+        "And this is where Paul, writing decades later to a church that was busy arguing about which preacher built the best addition to the house, cuts straight through the noise: \"other foundation can no man lay than that is laid, which is Jesus Christ\" (1 Corinthians 3:11). Not a doctrine. Not a denomination. Not a worship style, a building fund, or a favorite preacher's delivery. One foundation, already laid, available to anyone willing to dig down to it instead of building on top of whatever's lying around on the surface.",
+        "I also need you to sit with Psalm 127 for a second, because it adds something this parable alone doesn't say out loud: \"except the LORD build the house, they labour in vain that build it.\" You can have excellent carpentry skills and still build a house that falls, if God wasn't the one laying the plumb line. This is not an argument against effort — both men in Matthew 7 worked hard, sand included. It's an argument against effort aimed at the wrong foundation. Sweat does not fix sand. It just builds a more impressive house that falls harder.",
+        "So here's my real question for you today, and I need you to actually answer it instead of nodding past it: when the rain comes to your life — and it is coming, it comes to wise and foolish alike — what is underneath the thing you've built? Is it obedience you actually did, or just truth you really enjoyed hearing on a Sunday? Because the fall in this parable isn't described as a slow leak. \"Great was the fall of it.\" Sand-built lives don't crumble quietly. They collapse all at once, in public, on the exact day you needed them to hold.",
+        "Here's the mercy hiding inside this hard word: you get to choose your foundation before the storm shows up, not during it. Nobody can retrofit a rock foundation underneath a house that's already built and already falling. But you are not there yet. Today is still the digging season. Today is still the day to do what you've heard instead of just filing it away as a good word. Dig until you hit the Rock that was already laid for you, build there, and let the storm come. It will find out what you're actually standing on — and because of Who that is, you will still be standing too. In Jesus' name, amen."
+      ]
+    },
     {
       slug: "the-man-who-wouldnt-let-go",
       title: "The Man Who Wouldn't Let Go",

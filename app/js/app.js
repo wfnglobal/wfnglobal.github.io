@@ -130,14 +130,20 @@
   // isn't afraid to be funny and conversational, and brings real
   // theological sharpness — not a Sunday-school summary. Spontaneous
   // topics: parables, a single verse unpacked, a character study, a
-  // doctrine, whatever is alive that day. body[] is an array of full
-  // paragraphs rendered as-is (no markdown) in the in-app reader.
+  // doctrine, whatever is alive that day. Every study must use 2-3 related
+  // Bible passages (verses[]) that actually build the teaching, not one
+  // isolated verse — this is what makes it a *study*, not a quote card.
+  // body[] is an array of full paragraphs rendered as-is (no markdown) in
+  // the in-app reader.
   const BIBLE_STUDY = [
     {
       slug: "which-soil-are-you-today",
       title: "Which Soil Are You Today?",
-      verseRef: "Luke 8:5-8, 11-15",
-      verseText: "A sower went out to sow his seed: and as he sowed, some fell by the way side... and other fell on good ground, and sprang up, and bare fruit an hundredfold.",
+      verses: [
+        { ref: "Luke 8:5-8, 11-15", text: "A sower went out to sow his seed: and as he sowed, some fell by the way side... and other fell on good ground, and sprang up, and bare fruit an hundredfold." },
+        { ref: "Mark 4:20", text: "And these are they which are sown on good ground; such as hear the word, and receive it, and bring forth fruit, some thirtyfold, some sixty, and some an hundred." },
+        { ref: "Hosea 10:12", text: "Sow to yourselves in righteousness, reap in mercy; break up your fallow ground: for it is time to seek the LORD, till he come and rain righteousness upon you." }
+      ],
       date: "November 3, 2026",
       excerpt: "Four kinds of ground. One kind of seed. The parable of the sower was never asking what God is doing — it's asking what you're doing with what He already gave you.",
       body: [
@@ -2603,7 +2609,7 @@
       <div class="entry" style="padding-bottom:18px;">
         <a href="#/study/${esc(s.slug)}" style="display:block;">
           <div class="entry-top">
-            <span class="entry-badge" style="color:#1F6E52; background:#DCEEE6;">${esc(s.verseRef)}</span>
+            <span class="entry-badge" style="color:#1F6E52; background:#DCEEE6;">${esc(s.verses[0].ref)}</span>
             <span class="entry-date">${esc(s.date)}</span>
           </div>
           <h2 class="entry-title">${esc(s.title)}</h2>
@@ -2618,15 +2624,16 @@
     setActiveTab("bible");
     viewEl.innerHTML = `
       <div class="entry-top" style="margin-bottom:10px;">
-        <span class="entry-badge" style="color:#1F6E52; background:#DCEEE6;">${esc(s.verseRef)}</span>
+        <span class="entry-badge" style="color:#1F6E52; background:#DCEEE6;">${esc(s.verses[0].ref)}</span>
         <span class="entry-date">${esc(s.date)}</span>
       </div>
       <h1 class="entry-title" style="font-size:1.7rem; line-height:1.22; margin-bottom:16px;">${esc(s.title)}</h1>
-      <div class="card" style="border-left:5px solid #1F6E52; margin-bottom:22px;">
-        <p style="font-family:var(--font-display,'Fraunces',Georgia,serif); font-style:italic; font-size:17px; line-height:1.6; color:var(--ink);">&ldquo;${esc(s.verseText)}&rdquo;</p>
-        <p style="margin-top:10px; font-size:12.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1F6E52;">${esc(s.verseRef)}</p>
-      </div>
-      <div class="study-body">
+      ${s.verses.map((v) => `
+      <div class="card" style="border-left:5px solid #1F6E52; margin-bottom:14px;">
+        <p style="font-family:var(--font-display,'Fraunces',Georgia,serif); font-style:italic; font-size:17px; line-height:1.6; color:var(--ink);">&ldquo;${esc(v.text)}&rdquo;</p>
+        <p style="margin-top:10px; font-size:12.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1F6E52;">${esc(v.ref)}</p>
+      </div>`).join("")}
+      <div class="study-body" style="margin-top:8px;">
         ${s.body.map((p) => `<p style="font-size:16px; line-height:1.75; color:var(--ink-2); margin-bottom:16px;">${esc(p)}</p>`).join("")}
       </div>
       <a class="btn btn-block" href="#/study" style="margin-top:8px;">More Studies</a>

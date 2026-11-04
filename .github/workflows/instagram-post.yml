@@ -44,11 +44,17 @@ jobs:
           if [ -n "${{ github.event.inputs.file }}" ]; then
             FILES="${{ github.event.inputs.file }}"
           else
-            FILES=$(git diff --name-only --diff-filter=A HEAD^ HEAD -- 'social/posts/**/*.png' || true)
+            # NOTE: git's own pathspec globbing (unlike the GitHub Actions
+            # `paths:` trigger above) does NOT give `**` cross-directory
+            # meaning unless the `:(glob)` magic prefix is used. Without it,
+            # 'social/posts/**/*.png' silently matches nothing for files
+            # that live directly in social/posts/ (i.e. every real post),
+            # so this used to report zero changed files on every push.
+            FILES=$(git diff --name-only --diff-filter=A HEAD^ HEAD -- ':(glob)social/posts/**/*.png' || true)
             if [ -z "$FILES" ]; then
               # Fall back to any changed (not just added) png, in case a
               # post was re-generated rather than newly created.
-              FILES=$(git diff --name-only HEAD^ HEAD -- 'social/posts/**/*.png' || true)
+              FILES=$(git diff --name-only HEAD^ HEAD -- ':(glob)social/posts/**/*.png' || true)
             fi
           fi
           echo "Changed files:"
@@ -61,20 +67,32 @@ jobs:
           # on disk (not just the ones git reports as changed) so a
           # multi-card day always posts as one carousel.
           declare -A seen_bases
-          GROUPS=""
-          while IFS= read -r f; do
-            [ -z "$f" ] && continue
-            base=$(echo "$f" | sed -E 's/^(.*-[0-9]{4}-[0-9]{2}-[0-9]{2})(-[0-9]+)?\.png$/\1/')
-            if [ -n "${seen_bases[$base]:-}" ]; then continue; fi
-            seen_bases[$base]=1
-            parts=$(ls "${base}.png" "${base}-"[0-9]*.png 2>/dev/null | sort -V | tr '\n' ' ')
-            echo "Group for $base: $parts"
-            GROUPS="${GROUPS}${parts}"$'\n'
-          done <<< "$FILES"
+          POST_GROUPS=""
+          if [ -n "$FILES" ]; then
+            while IFS= read -r f; do
+              [ -z "$f" ] && continue
+              base=$(echo "$f" | sed -E 's/^(.*-[0-9]{4}-[0-9]{2}-[0-9]{2})(-[0-9]+)?\.png$/\1/')
+              if [ -n "${seen_bases[$base]:-}" ]; then continue; fi
+              seen_bases[$base]=1
+              # `|| true` matters here: under `set -e -o pipefail`, `ls`
+              # exits non-zero (and kills the whole step) whenever EITHER
+              # of its two glob args matches nothing — which is every
+              # single-card day, since the "-N.png" extra-card glob won't
+              # match anything. 2>/dev/null only hides ls's error message,
+              # it doesn't change its exit code.
+              parts=$(ls "${base}.png" "${base}-"[0-9]*.png 2>/dev/null | sort -V | tr '\n' ' ') || true
+              # Guard against a malformed base producing no real files on
+              # disk (e.g. an unexpected filename shape) — never emit a
+              # group that isn't backed by actual images.
+              [ -z "$parts" ] && continue
+              echo "Group for $base: $parts"
+              POST_GROUPS="${POST_GROUPS}${parts}"$'\n'
+            done <<< "$FILES"
+          fi
 
           {
             echo "groups<<EOF"
-            echo "$GROUPS"
+            echo "$POST_GROUPS"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
@@ -89,6 +107,14 @@ jobs:
           set -euo pipefail
           while IFS= read -r group; do
             [ -z "$group" ] && continue
+            # Defensive check: never hand post-to-instagram.js a group
+            # whose first file doesn't actually exist on disk (this is
+            # what let a bogus "1001" group silently fail before).
+            first_file=$(echo "$group" | awk '{print $1}')
+            if [ -z "$first_file" ] || [ ! -f "$first_file" ]; then
+              echo "::warning::Skipping bogus group (file not found): $group"
+              continue
+            fi
             echo "::group::Posting $group"
             node social/post-to-instagram.js $group
             echo "::endgroup::"

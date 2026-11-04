@@ -49,6 +49,7 @@
   // or DECLARATION changes here, copy the same values into
   // app/data/today.json too (same strings — just mirrored, not reworded).
   const VERSES = [
+    { text: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", ref: "Psalm 23:1-2" },
     { text: "Moreover by them is thy servant warned: and in keeping of them there is great reward.", ref: "Psalm 19:11" },
     { text: "Search me, O God, and know my heart: try me, and know my thoughts:", ref: "Psalm 139:23" },
     { text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", ref: "Isaiah 41:10" },
@@ -59,7 +60,6 @@
     { text: "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.", ref: "Jeremiah 29:11" },
     { text: "The heavens declare the glory of God; and the firmament sheweth his handywork.", ref: "Psalm 19:1" },
     { text: "Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves.", ref: "Philippians 2:3" },
-    { text: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", ref: "Psalm 23:1-2" },
     { text: "Pray without ceasing. Continue earnestly in prayer, being vigilant in it with thanksgiving.", ref: "1 Thessalonians 5:17; Colossians 4:2" },
     { text: "Blessed be the Lord, who daily loadeth us with benefits, even the God of our salvation.", ref: "Psalm 68:19" },
     { text: "For the word of God is living and powerful, and sharper than any two-edged sword, piercing even to the division of soul and spirit, and of joints and marrow, and is a discerner of the thoughts and intents of the heart.", ref: "Hebrews 4:12" },
@@ -76,26 +76,26 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, thank You for warning me through Your Word before I ever had to learn the hard way — I receive every warning in it today as love, not restriction!",
-      "I declare that I am not just hearing Your Word today, I am keeping it — because the reward You promised is not for those who admire the Word, but for those who do it!",
-      "Your Word is more to be desired than gold, sweeter than honey, and I choose it today over every cheaper thing competing for my attention!",
+      "Father, I declare today that You are my Shepherd, and because You are leading me, I am not lacking anything I truly need!",
+      "I will not wander through today anxious and unsettled — You make me lie down in green pastures, and You lead me beside still waters!",
+      "Every hurried, striving part of me bows to this truth: my provision does not depend on my hustle, it depends on my Shepherd!",
       "",
-      "I declare that every warning I have ignored, every correction I have resisted, I receive now — because the God who warns me is the same God who rewards me!",
-      "I will not treat Your Word as information I already know — I will let it search me, warn me, and lead me into the great reward that comes only through keeping it!",
-      "Father, make my love for Your Word greater today than my love for being comfortable, because comfort never warned anyone of anything!",
+      "I declare that wherever You lead me today — into busy places or quiet ones — I will follow, because the Shepherd who feeds me also guides me!",
+      "I will not force my own peace; I will receive it, the way a sheep receives rest it never had to create for itself!",
+      "Father, still every noise in me that drowns out Your voice, so I can hear You leading before I even see the path ahead!",
       "",
-      "So today I lay down the casual way I have sometimes read Your Word, and I pick up reverence for a Book that is still warning and still rewarding right now!",
-      "If you've been hearing warnings in your spirit and brushing past them — hear this: the warning was never the hard part of God's love, it was the proof of it.",
-      "Save this. Speak it over your obedience today. Moreover by them is thy servant warned, and in keeping of them there is great reward. In Jesus' name, amen!"
+      "So today I lay down the pressure to supply for myself what only You can provide, and I pick up the rest of a sheep that trusts its Shepherd!",
+      "If you have been running on empty, chasing a peace you keep missing — hear this: the Shepherd who leads you to still water is not far from you right now.",
+      "Save this. Speak it over every anxious place in your life today. The LORD is my shepherd; I shall not want. In Jesus' name, amen!"
     ],
-    ref: "Psalm 19:11"
+    ref: "Psalm 23:1-2"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
   // kept current every day (by 8pm) the same way as VERSES[0], SERMONS[0],
   // and DECLARATION above.
   const NIGHT_PRAYER = {
-    text: "Father, before I close my eyes tonight, search my heart the way only You know how, and loosen anything I have been gripping out of fear or hurry. Thank You for walking with me through every hour of this day, even the ones I did not notice You in. Settle my spirit, keep my home safe while I sleep, and wake me ready to walk closely with You tomorrow.",
+    text: "Father, as this day lowers its lights, I bring You everything I have carried since morning and leave it in Your hands. Thank You for being my Shepherd through today's noise, leading me even in the moments I could not feel You near. Let my heart lie down in the stillness only You give tonight, and let me wake tomorrow still following close behind You.",
     amen: "In Jesus' name, amen."
   };
 

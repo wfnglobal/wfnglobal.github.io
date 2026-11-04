@@ -1,14 +1,22 @@
 #!/usr/bin/env node
 /*
- * Generates today's Instagram "Daily Prayer" post (1080x1080 PNG) from the
- * reusable template at social/templates/prayer-post.html.
+ * Generates today's Instagram "Daily Prayer" post from the reusable
+ * template at social/templates/prayer-post.html — one or MORE 1080x1080
+ * PNG cards, depending on how long the prayer is.
  *
- * This is the Instagram-only design (approved 2026-11-02): a full, clean
- * white card — NOT the app/website's short declarative-stanza style, and
- * no photo or personal name on the card. The prayer itself should be a
- * full, profound, original prayer (a few flowing paragraphs) written to
- * speak to what an everyday reader is going through — worth saving and
- * sharing, not a one-liner.
+ * Design rule: text size only shrinks a little from the default before
+ * hitting a readable floor. If the prayer still doesn't fit at that
+ * floor size, the remaining paragraphs spill onto a new card (shown as
+ * "Part 2 of 2" etc. in the kicker) instead of crushing the font down
+ * to something squinty. Multiple cards are meant to be posted together
+ * as an Instagram carousel — post-to-instagram.js handles that.
+ *
+ * This is the Instagram-only design (approved 2026-11-02): a full,
+ * clean white card — NOT the app/website's short declarative-stanza
+ * style, and no photo or personal name on the card. The prayer itself
+ * should be a full, profound, original prayer (a few flowing
+ * paragraphs) written to speak to what an everyday reader is going
+ * through — worth saving and sharing, not a one-liner.
  *
  * Usage: node social/generate-prayer-post.js '<path-to-content.json>' '<out.png>'
  *
@@ -22,10 +30,18 @@
  *   "footerNote": "Save this & share it with someone who needs it", // optional
  *   "handle": "wfnglobal.org"                // optional
  * }
+ *
+ * Output: if the prayer fits on one card, writes exactly <out.png> (same
+ * as before). If it needs more than one card, writes <out.png> for card
+ * 1 and <out-without-ext>-2.png, -3.png, ... for the rest, and prints
+ * every path written, one per line, prefixed "WROTE: ".
  */
 const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
+
+const START = { size: 34, lh: 1.62, openerSize: 27 };
+const FLOOR = { size: 26, lh: 1.42, openerSize: 21 };
 
 async function main() {
   const [, , contentPath, outPath] = process.argv;
@@ -35,74 +51,127 @@ async function main() {
   }
   const content = JSON.parse(fs.readFileSync(contentPath, "utf8"));
   const templatePath = path.join(__dirname, "templates", "prayer-post.html");
-  let html = fs.readFileSync(templatePath, "utf8");
-
-  const esc = (s) => String(s || "").replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
-
-  const boldWrap = (text) => {
-    const escaped = esc(text);
-    if (!content.bold) return escaped;
-    const escBold = esc(content.bold);
-    return escaped.split(escBold).join(`<b>${escBold}</b>`);
-  };
-
-  const bodyHtml = (content.paragraphs || [])
-    .map((p) => `<p>${boldWrap(p)}</p>`)
-    .join("\n        ");
-
-  html = html
-    .replace("{{OPENER}}", esc(content.opener || ""))
-    .replace("{{BODY_HTML}}", bodyHtml)
-    .replace("{{KICKER}}", esc(content.kicker || "Today's Prayer"))
-    .replace("{{BRAND_SUB}}", esc(content.brandSub || "Daily Prayer"))
-    .replace("{{FOOTER_NOTE}}", esc(content.footerNote || "Save this & share it with someone who needs it"))
-    .replace("{{HANDLE}}", esc(content.handle || "wfnglobal.org"));
+  const baseHtml = fs.readFileSync(templatePath, "utf8")
+    .replace("{{OPENER}}", "")
+    .replace("{{BODY_HTML}}", "")
+    .replace("{{KICKER}}", "")
+    .replace("{{BRAND_SUB}}", escHtml(content.brandSub || "Daily Prayer"))
+    .replace("{{FOOTER_NOTE}}", escHtml(content.footerNote || "Save this & share it with someone who needs it"))
+    .replace("{{HANDLE}}", escHtml(content.handle || "wfnglobal.org"));
 
   const tmpHtmlPath = outPath.replace(/\.png$/i, "") + ".render.html";
-  fs.writeFileSync(tmpHtmlPath, html);
+  fs.writeFileSync(tmpHtmlPath, baseHtml);
 
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1080, height: 1080 } });
   await page.goto("file://" + tmpHtmlPath);
   await page.waitForTimeout(250); // let web fonts settle
 
-  // Auto-fit: the prayer's length varies day to day, so shrink the text
-  // step by step until the opener + paragraphs fit inside the fixed
-  // 1080x1080 frame without clipping into the header/footer.
-  await page.evaluate(() => {
-    const textEl = document.querySelector(".prayer-text");
-    const post = document.querySelector(".post");
-    // Readability floor: the body text never drops below 26px or a 1.42
-    // line-height, and the opener never drops below 21px — so a long
-    // prayer shrinks the text modestly rather than squeezing it into a
-    // cramped, hard-to-read block. If it still doesn't fit at the floor,
-    // that's a signal the prayer text itself should be trimmed, not a
-    // reason to keep compressing the layout.
-    let size = 34, lh = 1.62, openerSize = 27, openerLh = 1.5;
-    const minSize = 26, minLh = 1.42, minOpenerSize = 21, minOpenerLh = 1.3;
-    const fits = () => post.scrollHeight <= post.clientHeight;
-    for (let i = 0; i < 16 && !fits(); i++) {
-      size = Math.max(minSize, size - 0.7);
-      lh = Math.max(minLh, lh - 0.014);
-      openerSize = Math.max(minOpenerSize, openerSize - 0.5);
-      openerLh = Math.max(minOpenerLh, openerLh - 0.012);
-      textEl.querySelectorAll("p").forEach((el) => {
-        el.style.fontSize = size + "px";
-        el.style.lineHeight = lh;
-      });
-      const opener = textEl.querySelector(".opener");
-      if (opener) {
-        opener.style.fontSize = openerSize + "px";
-        opener.style.lineHeight = openerLh;
-      }
-      if (size <= minSize && lh <= minLh && openerSize <= minOpenerSize) break;
-    }
-  });
+  const paragraphHtmls = (content.paragraphs || []).map((p) => boldWrap(p, content.bold));
 
-  await page.screenshot({ path: outPath });
+  // Decide pagination by actually rendering trial content and measuring
+  // overflow in the real browser, rather than guessing from character
+  // counts — this is what guarantees the result is never squinty.
+  const pages = [];
+  let current = [];
+  for (let i = 0; i < paragraphHtmls.length; i++) {
+    const trial = current.concat([paragraphHtmls[i]]);
+    const isFirstPage = pages.length === 0;
+    await setPrayerContent(page, isFirstPage ? content.opener : "", trial, "Today's Prayer");
+    const fits = await shrinkToFloorAndCheckFits(page);
+    if (fits || trial.length === 1) {
+      current = trial;
+    } else {
+      pages.push(current);
+      current = [paragraphHtmls[i]];
+    }
+  }
+  if (current.length) pages.push(current);
+  if (pages.length === 0) pages.push([]);
+
+  const outBase = outPath.replace(/\.png$/i, "");
+  const written = [];
+  for (let i = 0; i < pages.length; i++) {
+    const isFirst = i === 0;
+    const kickerBase = content.kicker || "Today's Prayer";
+    const kicker = pages.length > 1 ? `${kickerBase} — Part ${i + 1} of ${pages.length}` : kickerBase;
+    await setPrayerContent(page, isFirst ? content.opener : "", pages[i], kicker);
+    await shrinkToFloorAndCheckFits(page); // final fit pass at this page's own content
+    const thisOut = i === 0 ? outPath : `${outBase}-${i + 1}.png`;
+    await page.screenshot({ path: thisOut });
+    written.push(thisOut);
+  }
+
   await browser.close();
   fs.unlinkSync(tmpHtmlPath);
-  console.log("Wrote " + outPath);
+  written.forEach((w) => console.log("WROTE: " + w));
+}
+
+function escHtml(s) {
+  return String(s || "").replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+}
+
+function boldWrap(text, bold) {
+  const escaped = escHtml(text);
+  if (!bold) return escaped;
+  const escBold = escHtml(bold);
+  return escaped.split(escBold).join(`<b>${escBold}</b>`);
+}
+
+async function setPrayerContent(page, openerText, paragraphHtmls, kickerText) {
+  await page.evaluate(
+    ({ openerText, paragraphHtmls, kickerText, START }) => {
+      document.querySelector(".kicker").textContent = kickerText;
+      const textEl = document.querySelector(".prayer-text");
+      const openerEl = textEl.querySelector(".opener");
+      if (openerText) {
+        openerEl.style.display = "";
+        openerEl.textContent = openerText;
+      } else {
+        openerEl.style.display = "none";
+        openerEl.textContent = "";
+      }
+      textEl.querySelectorAll("p").forEach((p) => p.remove());
+      paragraphHtmls.forEach((h) => {
+        const p = document.createElement("p");
+        p.innerHTML = h;
+        textEl.appendChild(p);
+      });
+      textEl.querySelectorAll("p, .opener").forEach((el) => {
+        el.style.fontSize = (el.classList.contains("opener") ? START.openerSize : START.size) + "px";
+        el.style.lineHeight = START.lh;
+      });
+    },
+    { openerText, paragraphHtmls, kickerText, START }
+  );
+}
+
+async function shrinkToFloorAndCheckFits(page) {
+  return page.evaluate(
+    ({ START, FLOOR }) => {
+      const textEl = document.querySelector(".prayer-text");
+      const post = document.querySelector(".post");
+      let size = START.size,
+        lh = START.lh,
+        openerSize = START.openerSize;
+      const fits = () => post.scrollHeight <= post.clientHeight;
+      const apply = () => {
+        textEl.querySelectorAll("p, .opener").forEach((el) => {
+          el.style.fontSize = (el.classList.contains("opener") ? openerSize : size) + "px";
+          el.style.lineHeight = lh;
+        });
+      };
+      apply();
+      while (!fits() && size > FLOOR.size) {
+        size -= 1;
+        lh = Math.max(FLOOR.lh, lh - 0.01);
+        if (openerSize > FLOOR.openerSize) openerSize -= 1;
+        apply();
+      }
+      return fits();
+    },
+    { START, FLOOR }
+  );
 }
 
 main().catch((e) => {

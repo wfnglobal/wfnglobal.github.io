@@ -5,53 +5,49 @@
 <title>WFN Follow Card</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&family=Inter:wght@400;500;600;700;800&display=swap">
 <style>
+  :root{
+    --bg:#FAF8F3; --surface:#FFFFFF; --ink:#262420; --ink-2:#585349; --ink-3:#8C8678;
+    --gold:#A9824F; --gold-light:#D3AE75; --gold-wash:#F1E7D5; --border:rgba(38,36,32,0.14);
+    --font-display:'Newsreader', Georgia, serif; --font-body:'Inter', -apple-system, system-ui, sans-serif;
+  }
   *{box-sizing:border-box; margin:0; padding:0;}
   html,body{width:1080px; height:1350px;}
-  body{
-    font-family:'Inter', -apple-system, system-ui, sans-serif;
-    background:
-      radial-gradient(70% 50% at 50% 0%, rgba(201,169,104,0.18), transparent 70%),
-      linear-gradient(170deg, #1C1A2B 0%, #131124 45%, #0A0916 100%);
-    color:#F2ECDD;
-    position:relative; overflow:hidden;
-  }
-  .frame{width:1080px; height:1350px; padding:90px 76px; display:flex; flex-direction:column; align-items:center; text-align:center;}
-  .top-rule{width:44px; height:2px; background:#C9A968; margin-top:18px;}
-  .progress{position:absolute; top:58px; right:76px; font-size:14px; font-weight:600; color:#8E86AE; letter-spacing:0.04em;}
+  body{font-family:var(--font-body); background:var(--bg); color:var(--ink); position:relative; overflow:hidden;}
+  .grain{position:absolute; inset:0; background-image:radial-gradient(#EADFC4 1px, transparent 1px); background-size:24px 24px; opacity:0.35;}
+  .frame{position:relative; width:1080px; height:1350px; padding:80px 90px; display:flex; flex-direction:column; align-items:center; text-align:center;}
 
-  .mark-big{width:84px; height:84px; margin-top:120px;}
-  .wordmark{font-family:'Fraunces', Georgia, serif; font-weight:700; font-size:44px; color:#FBF4E4; margin-top:26px; letter-spacing:-0.3px;}
-  .wordmark em{color:#C9A968; font-style:normal;}
+  .dots{position:absolute; top:64px; right:90px; display:flex; gap:7px;}
+  .dots span{width:6px; height:6px; border-radius:50%; background:var(--border);}
+  .dots span.active{background:var(--gold);}
 
-  .closing{font-family:'Fraunces', Georgia, serif; font-style:italic; font-size:30px; line-height:1.5; color:#EADFC4; margin-top:38px; max-width:760px;}
+  .art-wrap{margin-top:30px;}
+  .art-wrap svg{width:260px; height:260px;}
 
-  .cta-list{margin-top:76px; width:100%; max-width:760px; display:flex; flex-direction:column; gap:1px; border-top:1px solid rgba(242,236,221,0.16);}
-  .cta-row{display:flex; align-items:center; gap:22px; padding:26px 8px; border-bottom:1px solid rgba(242,236,221,0.16); text-align:left;}
-  .cta-row .icon{width:40px; height:40px; flex-shrink:0; display:flex; align-items:center; justify-content:center; border-radius:50%; background:rgba(201,169,104,0.14); color:#C9A968;}
-  .cta-row .icon svg{width:20px; height:20px;}
+  .wordmark{font-family:var(--font-display); font-weight:600; font-size:38px; color:var(--ink); margin-top:14px; letter-spacing:-0.3px;}
+  .wordmark em{color:var(--gold); font-style:normal;}
+
+  .closing{font-family:var(--font-display); font-style:italic; font-size:29px; line-height:1.5; color:var(--ink-2); margin-top:30px; max-width:760px;}
+
+  .cta-list{margin-top:52px; width:100%; max-width:740px; display:flex; flex-direction:column; gap:14px;}
+  .cta-row{display:flex; align-items:center; gap:20px; padding:22px 26px; text-align:left; background:var(--surface); border:1px solid var(--border); border-radius:16px;}
+  .cta-row .icon{width:40px; height:40px; flex-shrink:0; display:flex; align-items:center; justify-content:center; border-radius:50%; background:var(--gold-wash); color:var(--gold);}
+  .cta-row .icon svg{width:19px; height:19px;}
   .cta-row .text{flex:1;}
-  .cta-row .label{font-size:14px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#8E86AE;}
-  .cta-row .value{font-family:'Fraunces', Georgia, serif; font-weight:600; font-size:24px; color:#FBF4E4; margin-top:2px;}
+  .cta-row .label{font-size:12.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--ink-3);}
+  .cta-row .value{font-family:var(--font-display); font-weight:600; font-size:23px; color:var(--ink); margin-top:2px;}
 
   .spacer{flex:1;}
-  .foot-note{font-size:14px; color:#8E86AE; margin-top:30px;}
+  .foot-note{font-size:14px; color:var(--ink-3); margin-top:26px;}
 </style>
 </head>
 <body>
-  <div class="progress">{{PROGRESS}}</div>
+  <div class="grain"></div>
   <div class="frame">
-    <svg class="mark-big" viewBox="0 0 48 48">
-      <defs>
-        <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#E4C684"/><stop offset="1" stop-color="#8E6A2E"/>
-        </linearGradient>
-      </defs>
-      <circle cx="24" cy="24" r="21.3" fill="none" stroke="#C9A968" stroke-width="1"/>
-      <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#E4C684"/>
-    </svg>
+    <div class="dots">{{DOTS}}</div>
+
+    <div class="art-wrap">{{ART_SVG}}</div>
     <div class="wordmark">Word <em>&amp;</em> Faith Network</div>
     <div class="closing">{{CLOSING_LINE}}</div>
 

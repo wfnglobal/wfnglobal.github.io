@@ -1,23 +1,28 @@
 #!/usr/bin/env node
 /*
- * Generates a 6-card Instagram carousel for a "hot topic" prayer/word
+ * Generates a 7-card Instagram carousel for a "hot topic" prayer/word
  * series (finances, health, heartbreak, marriage, betrayal, divorce,
- * etc.) — cards 1-5 are numbered points (a short italic hook, a prayer
- * or declaration, and a pulled scripture), card 6 is a quiet, premium
- * follow/CTA card (follow, website, X, app).
+ * etc.): an elegant cover card announcing the series, 5 numbered point
+ * cards, and a follow/CTA card.
  *
- * Design intent: restrained and editorial, not template-y — generous
- * negative space, a ghost outline numeral instead of a loud badge, one
- * idea per card, serif/sans pairing matching the rest of WFN's brand.
- * 1080x1350 (4:5 portrait) — more room for text than the square posts.
+ * Design intent: this matches wfnglobal.org's actual design system —
+ * cream background, Newsreader/Inter type, bronze/gold/sage/terracotta —
+ * and reuses the site's own "Global reach" radiating-network motif as a
+ * real signature illustration (full-size on the cover/CTA, a quiet corner
+ * echo on each point card), recolored per card by accenting a different
+ * one of its 12 spokes. Each card is meant to stand alone as something
+ * worth saving, not just a slide in a sequence.
+ *
+ * 1080x1350 (4:5 portrait).
  *
  * Usage: node social/generate-topic-series.js '<content.json>' '<out-prefix>'
- *   e.g. node social/generate-topic-series.js series.json social/posts/series-finances-2026-11-10
- *   writes <out-prefix>-1.png ... <out-prefix>-6.png
+ *   writes <out-prefix>-1.png (cover) ... <out-prefix>-7.png (CTA)
  *
  * content.json shape:
  * {
- *   "kicker": "A PRAYER SERIES ON FINANCES",   // shown on cards 1-5
+ *   "eyebrow": "A PRAYER SERIES ON FINANCES",
+ *   "coverTitle": "Five Prayers\nFor When Money\nFeels Heavy",   // \n = line break
+ *   "coverDek": "A short 1-2 sentence promise of what this series offers.",
  *   "points": [                                 // exactly 5 entries
  *     {
  *       "numeral": "01",
@@ -41,9 +46,20 @@
 const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
+const { buildNetworkArt } = require("./lib/network-art");
 
-const START = { hook: 52, body: 24, bodyLh: 1.68, verse: 22 };
-const FLOOR = { hook: 38, body: 19, bodyLh: 1.45, verse: 18 };
+const START = { hook: 54, body: 22.5, bodyLh: 1.66 };
+const FLOOR = { hook: 40, body: 18.5, bodyLh: 1.44 };
+
+const TOTAL_CARDS = 7; // cover + 5 points + cta
+
+function dotsHtml(activeIndex, total = TOTAL_CARDS) {
+  let out = "";
+  for (let i = 0; i < total; i++) {
+    out += `<span class="${i === activeIndex ? "active" : ""}"></span>`;
+  }
+  return out;
+}
 
 async function main() {
   const [, , contentPath, outPrefix] = process.argv;
@@ -60,83 +76,92 @@ async function main() {
 
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1080, height: 1350 } });
-
   const written = [];
 
-  // Cards 1-5
-  const cardTemplatePath = path.join(__dirname, "templates", "topic-series-card.html");
-  const cardBaseHtml = fs.readFileSync(cardTemplatePath, "utf8");
+  // --- Card 1: cover ---
+  const coverTemplate = fs.readFileSync(path.join(__dirname, "templates", "topic-series-cover.html"), "utf8");
+  const coverArt = buildNetworkArt({ size: 560, accentIndex: 0, uid: "cover" });
+  const coverTitleHtml = escHtml(content.coverTitle || "").split("\n").join("<br>");
+  const coverHtml = coverTemplate
+    .replace("{{ART_SVG}}", coverArt)
+    .replace("{{EYEBROW}}", escHtml(content.eyebrow || "A Prayer Series"))
+    .replace("{{TITLE_HTML}}", coverTitleHtml)
+    .replace("{{DEK}}", escHtml(content.coverDek || ""))
+    .replace("{{DOTS}}", dotsHtml(0));
+  written.push(await renderPage(page, coverHtml, `${outPrefix}-1`));
+
+  // --- Cards 2-6: points ---
+  const pointTemplate = fs.readFileSync(path.join(__dirname, "templates", "topic-series-point.html"), "utf8");
   for (let i = 0; i < 5; i++) {
     const pt = points[i];
-    const html = cardBaseHtml
+    const cornerArt = buildNetworkArt({ size: 340, accentIndex: i * 2 + 1, muted: true, uid: `pt${i}` });
+    const html = pointTemplate
+      .replace("{{CORNER_ART_SVG}}", cornerArt)
+      .replace("{{EYEBROW}}", escHtml(content.eyebrow || "A Prayer Series"))
+      .replace("{{DOTS}}", dotsHtml(i + 1))
       .replace("{{NUMERAL}}", escHtml(pt.numeral || String(i + 1).padStart(2, "0")))
-      .replace("{{KICKER}}", escHtml(content.kicker || "A Prayer Series"))
-      .replace("{{PROGRESS}}", `${i + 1} / 6`)
       .replace("{{HOOK_HTML}}", escHtml(pt.hook || ""))
       .replace("{{BODY_HTML}}", (pt.paragraphs || []).map((p) => `<p>${escHtml(p)}</p>`).join("\n"))
       .replace("{{VERSE_TEXT}}", escHtml(pt.verseText || ""))
       .replace("{{VERSE_REF}}", escHtml(pt.verseRef || ""));
 
-    const tmpPath = `${outPrefix}-${i + 1}.render.html`;
-    fs.writeFileSync(tmpPath, html);
-    await page.goto("file://" + tmpPath);
-    await page.waitForTimeout(220);
-
-    await page.evaluate(
-      ({ START, FLOOR }) => {
-        const frame = document.querySelector(".frame");
-        const hookEl = document.querySelector(".hook");
-        const bodyEl = document.querySelector(".body");
-        const verseEl = document.querySelector(".verse-text");
-        let hookSize = START.hook, bodySize = START.body, bodyLh = START.bodyLh, verseSize = START.verse;
-        const fits = () => frame.scrollHeight <= frame.clientHeight;
-        const apply = () => {
-          hookEl.style.fontSize = hookSize + "px";
-          bodyEl.style.fontSize = bodySize + "px";
-          bodyEl.style.lineHeight = bodyLh;
-          verseEl.style.fontSize = verseSize + "px";
-        };
-        apply();
-        while (!fits() && (hookSize > FLOOR.hook || bodySize > FLOOR.body || verseSize > FLOOR.verse)) {
-          if (hookSize > FLOOR.hook) hookSize -= 2;
-          if (bodySize > FLOOR.body) bodySize -= 0.5;
-          if (verseSize > FLOOR.verse) verseSize -= 0.5;
-          bodyLh = Math.max(FLOOR.bodyLh, bodyLh - 0.015);
-          apply();
-        }
-      },
-      { START, FLOOR }
+    written.push(
+      await renderPage(page, html, `${outPrefix}-${i + 2}`, async () => {
+        await page.evaluate(
+          ({ START, FLOOR }) => {
+            const frame = document.querySelector(".frame");
+            const hookEl = document.querySelector(".hook");
+            const bodyEl = document.querySelector(".body");
+            let hookSize = START.hook, bodySize = START.body, bodyLh = START.bodyLh;
+            const fits = () => frame.scrollHeight <= frame.clientHeight;
+            const apply = () => {
+              hookEl.style.fontSize = hookSize + "px";
+              bodyEl.style.fontSize = bodySize + "px";
+              bodyEl.style.lineHeight = bodyLh;
+            };
+            apply();
+            while (!fits() && (hookSize > FLOOR.hook || bodySize > FLOOR.body)) {
+              if (hookSize > FLOOR.hook) hookSize -= 2;
+              if (bodySize > FLOOR.body) bodySize -= 0.5;
+              bodyLh = Math.max(FLOOR.bodyLh, bodyLh - 0.015);
+              apply();
+            }
+          },
+          { START, FLOOR }
+        );
+      })
     );
-
-    const outPath = `${outPrefix}-${i + 1}.png`;
-    await page.screenshot({ path: outPath });
-    fs.unlinkSync(tmpPath);
-    written.push(outPath);
   }
 
-  // Card 6 — CTA
+  // --- Card 7: CTA ---
   const cta = content.cta || {};
-  const ctaTemplatePath = path.join(__dirname, "templates", "topic-series-cta.html");
-  const ctaHtml = fs.readFileSync(ctaTemplatePath, "utf8")
-    .replace("{{PROGRESS}}", "6 / 6")
+  const ctaTemplate = fs.readFileSync(path.join(__dirname, "templates", "topic-series-cta.html"), "utf8");
+  const ctaArt = buildNetworkArt({ size: 260, accentIndex: 11, uid: "cta" });
+  const ctaHtml = ctaTemplate
+    .replace("{{ART_SVG}}", ctaArt)
+    .replace("{{DOTS}}", dotsHtml(6))
     .replace("{{CLOSING_LINE}}", escHtml(cta.closingLine || "If this spoke to you, let's stay connected."))
     .replace("{{HANDLE}}", escHtml(cta.handle || "@wordfaithnetwork"))
     .replace("{{WEBSITE}}", escHtml(cta.website || "wfnglobal.org"))
     .replace("{{X_HANDLE}}", escHtml(cta.xHandle || "@wordfaithnetwork"))
     .replace("{{APP_NOTE}}", escHtml(cta.appNote || "Link in bio"))
     .replace("{{FOOT_NOTE}}", escHtml(cta.footNote || ""));
-
-  const ctaTmpPath = `${outPrefix}-6.render.html`;
-  fs.writeFileSync(ctaTmpPath, ctaHtml);
-  await page.goto("file://" + ctaTmpPath);
-  await page.waitForTimeout(220);
-  const ctaOutPath = `${outPrefix}-6.png`;
-  await page.screenshot({ path: ctaOutPath });
-  fs.unlinkSync(ctaTmpPath);
-  written.push(ctaOutPath);
+  written.push(await renderPage(page, ctaHtml, `${outPrefix}-7`));
 
   await browser.close();
   written.forEach((w) => console.log("WROTE: " + w));
+}
+
+async function renderPage(page, html, outBase, beforeScreenshot) {
+  const tmpPath = `${outBase}.render.html`;
+  fs.writeFileSync(tmpPath, html);
+  await page.goto("file://" + path.resolve(tmpPath));
+  await page.waitForTimeout(220);
+  if (beforeScreenshot) await beforeScreenshot();
+  const outPath = `${outBase}.png`;
+  await page.screenshot({ path: outPath });
+  fs.unlinkSync(tmpPath);
+  return outPath;
 }
 
 function escHtml(s) {

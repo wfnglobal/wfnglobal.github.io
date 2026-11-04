@@ -291,6 +291,8 @@ main.app-main{
 .home-row .ico-prayer svg{color:#8C3A3A;}
 .home-row .ico-library{background:#E4EEE0; color:#3F6B3C;}
 .home-row .ico-library svg{color:#3F6B3C;}
+.home-row .ico-study{background:#DCEEE6; color:#1F6E52;}
+.home-row .ico-study svg{color:#1F6E52;}
 /* Jesus row: a warm gold-on-dark badge (a cross, not a face), set apart
    from the other icons' pastel washes so it still reads as the special
    one even as a plain row. */

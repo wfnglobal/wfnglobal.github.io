@@ -123,6 +123,38 @@
     { slug: "the-word-faith-and-prayer", title: "The Word, Faith, and Prayer", ref: "Foundational", date: "October 16, 2026", excerpt: "Our founding teaching — why Word and Faith Network exists." }
   ];
 
+  // BIBLE_STUDY[0] is always TODAY's study, newest-first — kept current the
+  // same way as SERMONS[0]. Written daily (by 7am) in a deliberately
+  // distinct voice from the sermon/prayer content: an apostolic teacher who
+  // preaches like an orator, lands a point like a great public speaker,
+  // isn't afraid to be funny and conversational, and brings real
+  // theological sharpness — not a Sunday-school summary. Spontaneous
+  // topics: parables, a single verse unpacked, a character study, a
+  // doctrine, whatever is alive that day. body[] is an array of full
+  // paragraphs rendered as-is (no markdown) in the in-app reader.
+  const BIBLE_STUDY = [
+    {
+      slug: "which-soil-are-you-today",
+      title: "Which Soil Are You Today?",
+      verseRef: "Luke 8:5-8, 11-15",
+      verseText: "A sower went out to sow his seed: and as he sowed, some fell by the way side... and other fell on good ground, and sprang up, and bare fruit an hundredfold.",
+      date: "November 3, 2026",
+      excerpt: "Four kinds of ground. One kind of seed. The parable of the sower was never asking what God is doing — it's asking what you're doing with what He already gave you.",
+      body: [
+        "Let's start right here, plainly, because Jesus Himself started plainly: a farmer went out to sow seed. That's it. No committee meeting. No market research. He just went out and started throwing seed on dirt He hadn't tested.",
+        "Now if you've ever planted anything — a garden, a business, a relationship, a prayer life — you already know where this story is going before I say another word. Some of that seed is about to land somewhere stupid. And Jesus is not embarrassed to tell you that.",
+        "Four soils, four responses, one seed. The seed never changes — that's the first thing people miss. They keep trying to fix the Word, when the whole parable is about fixing the ground. The Word of God does not need an upgrade. You might.",
+        "Soil one is the footpath — packed hard by traffic, by habit, by a hundred feet walking over it every day. The seed never even gets under the surface before the birds take it. That's the heart so busy, so distracted, so used to people walking all over it, that truth bounces right off before it ever lands.",
+        "Soil two is rock with a thin skin of dirt over it — shoots up fast, looks promising, would post well, and dies the first time the sun gets serious. That's the heart with emotion but no root. All excitement, no endurance. Quick to shout amen, slow to still be standing in September.",
+        "Soil three is thorny ground, and this is the one nobody preaches, because it doesn't look like failure — it looks like success. The seed actually grows. The thorns just grow faster. Jesus names the thorns Himself: the cares of this world, and the deceitfulness of riches. Not addiction. Not scandal. Just busyness. Just ambition left unchecked. That will choke a harvest just as dead as outright rejection — it just takes longer, and it looks far more respectable doing it.",
+        "And soil four — good ground — isn't ground with no rocks, no birds, no weeds ever. It's ground that was prepared. Broken up. Worked on. Good ground is not an accident you fall into. Good ground is a decision made over and over, every single time you choose to actually hear this Word and let it change something instead of just liking the verse.",
+        "So here's my real question for you today, and I need you to sit with it instead of skipping to the amen: which soil did you wake up as this morning? Not which one you want to be. Which one you actually were, before you opened this app.",
+        "Here's the good news nobody tells you about soil: soil can change. Rock can be cleared. Thorns can be pulled. Hard ground can be broken — Scripture even tells you how. \"Break up your fallow ground\" (Hosea 10:12). Notice that's not God's job in the verse. It's yours. He already brought the seed. He's been bringing it for years. The question was never His willingness to sow. It was always the ground.",
+        "So don't just read this and nod. Pull one weed today — a distraction, an excuse, a \"later\" you've been feeding instead of starving. Let the seed He already planted in you this morning finally reach soil that's ready for it. That's the whole study. Go be good ground."
+      ]
+    }
+  ];
+
   const PRAYER_POINTS = [
     "Thank God for His faithfulness over your life, your family, and this new day.",
     "Declare Romans 10:17 over your faith — that it is rising as you hear the Word.",
@@ -1107,6 +1139,11 @@
         <a class="home-row" href="#/sermons/${sermon.slug}">
           <div class="ico ico-sermon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h11a1 1 0 0 1 1 1v13l-4-2-4 2-4-2V5a1 1 0 0 1 1-1z"/></svg></div>
           <div class="body"><h3>Today's Sermon</h3><p>${esc(sermon.title)}</p></div>
+          <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+        </a>
+        <a class="home-row" href="#/study/${BIBLE_STUDY[0].slug}">
+          <div class="ico ico-study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M12 7l1.8 3.6L18 11l-3 2.9.7 4.1L12 16l-3.7 2 .7-4.1-3-2.9 4.2-.4z"/></svg></div>
+          <div class="body"><h3>Bible Study</h3><p>${esc(BIBLE_STUDY[0].title)}</p></div>
           <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
         </a>
         <a class="home-row" href="${bibleRowHref}">
@@ -2545,6 +2582,57 @@
     });
   }
 
+  // ---------------------------------------------------------------------
+  // Bible Study: a short daily in-app teaching (distinct from the Sermon
+  // track) — written in an apostolic, orator-style voice. List + detail
+  // both render fully in-app (no external article page).
+  // ---------------------------------------------------------------------
+
+  function viewStudyList() {
+    setHeader("Bible Study", true);
+    setActiveTab("bible");
+    viewEl.innerHTML = `
+      <div class="bible-intro-callout" style="margin-bottom:16px;">
+        <div class="ico" style="background:#DCEEE6;"><svg viewBox="0 0 24 24" fill="none" stroke="#1F6E52" stroke-width="1.9"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <div>
+          <h3>A New Study Every Day</h3>
+          <p>Spontaneous, unpredictable, and taken seriously — a parable, a verse, a character, a doctrine. Something different each morning, always worth your full attention.</p>
+        </div>
+      </div>
+    ` + BIBLE_STUDY.map((s) => `
+      <div class="entry" style="padding-bottom:18px;">
+        <a href="#/study/${esc(s.slug)}" style="display:block;">
+          <div class="entry-top">
+            <span class="entry-badge" style="color:#1F6E52; background:#DCEEE6;">${esc(s.verseRef)}</span>
+            <span class="entry-date">${esc(s.date)}</span>
+          </div>
+          <h2 class="entry-title">${esc(s.title)}</h2>
+          <p class="entry-excerpt">${esc(s.excerpt)}</p>
+        </a>
+      </div>`).join("");
+  }
+
+  function viewStudyDetail(slug) {
+    const s = BIBLE_STUDY.find((x) => x.slug === slug) || BIBLE_STUDY[0];
+    setHeader("Bible Study", true);
+    setActiveTab("bible");
+    viewEl.innerHTML = `
+      <div class="entry-top" style="margin-bottom:10px;">
+        <span class="entry-badge" style="color:#1F6E52; background:#DCEEE6;">${esc(s.verseRef)}</span>
+        <span class="entry-date">${esc(s.date)}</span>
+      </div>
+      <h1 class="entry-title" style="font-size:1.7rem; line-height:1.22; margin-bottom:16px;">${esc(s.title)}</h1>
+      <div class="card" style="border-left:5px solid #1F6E52; margin-bottom:22px;">
+        <p style="font-family:var(--font-display,'Fraunces',Georgia,serif); font-style:italic; font-size:17px; line-height:1.6; color:var(--ink);">&ldquo;${esc(s.verseText)}&rdquo;</p>
+        <p style="margin-top:10px; font-size:12.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1F6E52;">${esc(s.verseRef)}</p>
+      </div>
+      <div class="study-body">
+        ${s.body.map((p) => `<p style="font-size:16px; line-height:1.75; color:var(--ink-2); margin-bottom:16px;">${esc(p)}</p>`).join("")}
+      </div>
+      <a class="btn btn-block" href="#/study" style="margin-top:8px;">More Studies</a>
+    `;
+  }
+
   function viewPrayerIntro() {
     setHeader("Prayer", true);
     setActiveTab("prayer");
@@ -3473,6 +3561,10 @@
       if (parts[1] === "search") return viewBibleSearch(parts[2]);
       if (parts.length === 2) return viewBibleChapters(parts[1]);
       if (parts.length >= 3) return viewBibleReader(parts[1], parts[2]);
+    }
+    if (parts[0] === "study") {
+      if (parts.length >= 2) return viewStudyDetail(parts[1]);
+      return viewStudyList();
     }
     if (parts[0] === "sermons") {
       if (parts.length >= 2) {

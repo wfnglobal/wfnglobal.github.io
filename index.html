@@ -548,7 +548,7 @@ body::before{
             <span class="pillar-tab-sub">Community &middot; join now</span>
           </span>
         </a>
-        <a href="/app/#/dreams" class="pillar-link">
+        <a href="/app/#/dreams" class="pillar-link" id="pillarDreamsLink">
           <span class="pillar-tab-icon" style="background:#EFE9F6;">
             <svg width="15" height="15" viewBox="0 0 36 36" aria-hidden="true"><path d="M31 18.9A13.5 13.5 0 1 1 17.1 5 10.5 10.5 0 0 0 31 18.9Z" fill="none" stroke="#5B3F8C" stroke-width="1.8" stroke-linejoin="round"/></svg>
           </span>
@@ -1156,6 +1156,66 @@ body::before{
   </div>
 </div>
 
+<div class="decl-modal" id="dreamsModal" aria-hidden="true">
+  <div class="decl-modal-backdrop" id="dreamsModalBackdrop"></div>
+  <div class="decl-modal-sheet" role="dialog" aria-modal="true" aria-label="Dreams & Discernment">
+    <div class="decl-modal-bar">
+      <button class="decl-modal-close" id="dreamsModalClose" type="button" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="decl-modal-body">
+      <div class="declaration-box">
+        <div class="declaration-label" style="color:#5B3F8C;">Dreams &amp; Discernment</div>
+        <h2 style="margin:4px 0 16px; font-family:var(--font-display,serif);">You're Not Alone in This</h2>
+        <p style="color:var(--ink-2,#444); font-size:16px; line-height:1.75; margin-bottom:18px;">A strange dream. A nightmare that left you shaken. A recurring one you can't shake off. Millions of people wake up every day carrying something they don't know what to do with — confused, a little afraid, not sure if it means anything at all. You don't have to figure it out by yourself.</p>
+
+        <h3 style="font-size:1.1rem; margin:22px 0 8px;">What Scripture Actually Says</h3>
+        <p style="color:var(--ink-2,#444); font-size:16px; line-height:1.75; margin-bottom:16px;">The Bible never pretends dreams are nothing. God spoke to Joseph through dreams before anyone believed him (Genesis 37), warned Daniel and kings through them (Daniel 2), and Peter stood up at Pentecost and declared it as a sign of the Spirit being poured out: "your old men shall dream dreams" (Acts 2:17, quoting Joel 2:28). So no — your dream life isn't irrelevant to God.</p>
+        <p style="color:var(--ink-2,#444); font-size:16px; line-height:1.75; margin-bottom:16px;">But Scripture is just as clear that not every dream is a message, and chasing meaning in every single one is its own trap: "a dream cometh through the multitude of business" (Ecclesiastes 5:3) — sometimes a dream is just your mind processing a long day, not heaven sending you a code to crack. And Jeremiah drew a sharp line for people obsessed with decoding dreams instead of just living by what God had already plainly said: "let him that hath a dream tell a dream; and he that hath my word, let him speak my word faithfully" (Jeremiah 23:28). Discernment, not panic. Attention, not obsession.</p>
+
+        <h3 style="font-size:1.1rem; margin:22px 0 8px;">If the Dream Frightened You</h3>
+        <p style="color:var(--ink-2,#444); font-size:16px; line-height:1.75; margin-bottom:16px;">If you woke up afraid, start here: a dream — even a dark, disturbing one — does not have authority over your life. You do not need to relive it, replay it, or dissect every image before you can have peace again. Bring it to God plainly, in your own words, and then release it. You are not required to understand everything you dreamed to be free from it.</p>
+        <div style="background:#FAF8FD; border-left:5px solid #5B3F8C; border-radius:0 10px 10px 0; padding:18px 22px; margin-bottom:16px;">
+          <p style="font-family:var(--font-display,serif); font-style:italic; font-size:16.5px; line-height:1.65; color:var(--ink,#262420);">"Father, I will not carry fear from what I saw in my sleep. You did not give me a spirit of fear, but of power, and of love, and of a sound mind (2 Timothy 1:7). Whatever that dream was, I hand it to You now. I will not dwell on it, decode it in fear, or let it set the tone for my day. I lie down in peace tonight, and I rise in peace tomorrow, because You are the One who keeps me — in my sleep and out of it. In Jesus' name, amen."</p>
+        </div>
+
+        <h3 style="font-size:1.1rem; margin:22px 0 8px;">When to Bring In More Support</h3>
+        <p style="color:var(--ink-2,#444); font-size:16px; line-height:1.75; margin-bottom:16px;">If a nightmare keeps coming back, if it's tied to something painful you've lived through, or if it's genuinely disturbing your sleep, your peace, or your ability to function — that is not a sign your faith is weak. It's a sign you need more than a prayer said alone at midnight, and reaching for that help is wisdom, not a failure: pray it through with a trusted prayer partner or our WFN community, talk to a pastor or spiritual leader you trust, and consider a licensed counselor or therapist for recurring nightmares. Faith and professional help were never in competition.</p>
+
+        <h3 style="font-size:1.1rem; margin:22px 0 8px;">🔥 Tonight's Fire Prayer</h3>
+        <p style="color:var(--ink-2,#444); font-size:16px; line-height:1.75; margin-bottom:18px;">Since we can never know what you'll actually dream, this isn't a prayer about one scene or symbol — it's a shield prayer, fresh every midnight, that covers you before you ever close your eyes. Fiery, prophetic, and built to break every yoke the night season tries to set.</p>
+        <button type="button" id="dreamsToFireBtn" style="display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:#2A1333; border:none; border-radius:12px; padding:16px 18px; cursor:pointer; font-family:inherit;">
+          <span style="font-size:22px; flex-shrink:0;">🔥</span>
+          <span>
+            <span style="display:block; color:#FDF2E3; font-weight:700; font-size:15.5px;" id="dreamsToFireTitle">Shutting the Gates of the Night</span>
+            <span style="display:block; color:#E3D3C9; font-size:13px; margin-top:2px;">Updated daily at midnight &middot; tap to pray &rarr;</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="decl-modal" id="fireModal" aria-hidden="true">
+  <div class="decl-modal-backdrop" id="fireModalBackdrop"></div>
+  <div class="decl-modal-sheet" role="dialog" aria-modal="true" aria-label="Fire Prayer Against Dream Attacks">
+    <div class="decl-modal-bar">
+      <button class="decl-modal-close" id="fireModalClose" type="button" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="decl-modal-body" style="background:#1D0F28;">
+      <div class="declaration-box" style="background:transparent;">
+        <div class="declaration-label" style="color:#FDBA74;">🔥 Tonight's Fire Prayer</div>
+        <h2 id="fireModalTitle" style="margin:4px 0 10px; color:#FDF2E3; font-family:var(--font-display,serif);">Shutting the Gates of the Night</h2>
+        <p id="fireModalIntro" style="color:#E3D3C9; font-size:15.5px; line-height:1.7; margin-bottom:22px;">A shield prayer for tonight — not about what you dreamed, but about what you're covered by before you ever close your eyes. Pray this out loud. Fire answers fire.</p>
+        <div id="fireModalPoints" style="display:flex; flex-direction:column; gap:14px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="decl-modal" id="verseModal" aria-hidden="true">
   <div class="decl-modal-backdrop" id="verseModalBackdrop"></div>
   <div class="decl-modal-sheet" role="dialog" aria-modal="true" aria-label="Verse of the Day">
@@ -1501,6 +1561,62 @@ body::before{
 })();
 </script>
 
+<!-- ===== Dreams & Discernment (evergreen) + Fire Prayer (daily) modals:
+     the Dreams pillar icon opens the permanent support post instead of
+     navigating away; a button at the bottom of that post hands off to
+     the separate daily Fire Prayer modal, refreshed every midnight from
+     today.json. Both close via the same top-right bar pattern. ===== -->
+<script>
+(function(){
+  var dreamsLink = document.getElementById('pillarDreamsLink');
+  var dreamsModal = document.getElementById('dreamsModal');
+  var dreamsBackdrop = document.getElementById('dreamsModalBackdrop');
+  var dreamsClose = document.getElementById('dreamsModalClose');
+  var toFireBtn = document.getElementById('dreamsToFireBtn');
+
+  var fireModal = document.getElementById('fireModal');
+  var fireBackdrop = document.getElementById('fireModalBackdrop');
+  var fireClose = document.getElementById('fireModalClose');
+
+  function openModal(modal){
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(modal){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  if (dreamsLink && dreamsModal) {
+    dreamsLink.addEventListener('click', function(e){
+      e.preventDefault();
+      openModal(dreamsModal);
+    });
+    if (dreamsClose) dreamsClose.addEventListener('click', function(){ closeModal(dreamsModal); });
+    if (dreamsBackdrop) dreamsBackdrop.addEventListener('click', function(){ closeModal(dreamsModal); });
+  }
+
+  if (toFireBtn && fireModal) {
+    toFireBtn.addEventListener('click', function(){
+      if (dreamsModal) closeModal(dreamsModal);
+      openModal(fireModal);
+    });
+  }
+  if (fireModal) {
+    if (fireClose) fireClose.addEventListener('click', function(){ closeModal(fireModal); });
+    if (fireBackdrop) fireBackdrop.addEventListener('click', function(){ closeModal(fireModal); });
+  }
+
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape') return;
+    if (fireModal && fireModal.classList.contains('is-open')) closeModal(fireModal);
+    else if (dreamsModal && dreamsModal.classList.contains('is-open')) closeModal(dreamsModal);
+  });
+})();
+</script>
+
 <!-- ===== Phone-demo tap-to-reveal: mirrors the real app's home-screen
      interaction (tap the verse card to reveal today's Word, then the
      rest of the home feed appears) so the mockup demonstrates itself
@@ -1789,6 +1905,27 @@ body::before{
         var firstLine = data.declaration.lines.filter(function (l) { return l !== ""; })[0];
         if (teaserText && firstLine) teaserText.textContent = '"' + firstLine + '"';
         if (teaserRef) teaserRef.textContent = data.declaration.ref;
+      }
+
+      if (data.dreamFire) {
+        var fireTitleEl = document.getElementById("fireModalTitle");
+        var fireIntroEl = document.getElementById("fireModalIntro");
+        var firePointsEl = document.getElementById("fireModalPoints");
+        var dreamsToFireTitleEl = document.getElementById("dreamsToFireTitle");
+        if (fireTitleEl && data.dreamFire.title) fireTitleEl.textContent = data.dreamFire.title;
+        if (fireIntroEl && data.dreamFire.intro) fireIntroEl.textContent = data.dreamFire.intro;
+        if (dreamsToFireTitleEl && data.dreamFire.title) dreamsToFireTitleEl.textContent = data.dreamFire.title;
+        if (firePointsEl && Array.isArray(data.dreamFire.points)) {
+          firePointsEl.innerHTML = data.dreamFire.points.map(function (pt, i) {
+            return '<div style="background:rgba(253,186,116,0.08); border-left:4px solid #FDBA74; border-radius:0 10px 10px 0; padding:14px 18px;">'
+              + '<p style="font-family:var(--font-display,serif); font-style:italic; font-size:15.5px; line-height:1.6; color:#FDF2E3;"><strong style="font-style:normal; color:#FDBA74;">' + (i + 1) + '.</strong> </p>'
+              + '</div>';
+          }).join("");
+          var pointBlocks = firePointsEl.children;
+          data.dreamFire.points.forEach(function (pt, i) {
+            pointBlocks[i].querySelector("p").appendChild(document.createTextNode(pt));
+          });
+        }
       }
     })
     .catch(function () {

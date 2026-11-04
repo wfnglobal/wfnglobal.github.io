@@ -102,6 +102,34 @@
     amen: "In Jesus' name, amen."
   };
 
+  // Fire Prayer Against Dream Attacks — a DAILY-refreshed prayer (updated
+  // every midnight, same convention as VERSES[0]/SERMONS[0]/DECLARATION),
+  // separate from the evergreen "Dreams & Discernment" support page
+  // (viewDreams() below). Where the Dreams & Discernment page stays
+  // permanent and calming, this prayer is deliberately fiery, prophetic,
+  // Mountain-of-Fire-style spiritual warfare — a yoke-breaking shield
+  // prayer anyone can pray along with regardless of what they actually
+  // dreamed, since we can never know that. Written generically on
+  // purpose: never about one specific dream scenario, always a general
+  // covering. points[] renders as numbered prayer points, no markdown.
+  const DREAM_FIRE_PRAYER = {
+    title: "Shutting the Gates of the Night",
+    date: "November 4, 2026",
+    intro: "A shield prayer for tonight — not about what you dreamed, but about what you're covered by before you ever close your eyes. Pray this out loud. Fire answers fire.",
+    points: [
+      "Father, in the name of Jesus Christ, I come under the blood of the Lamb before I lay my head down tonight. I plead that blood over my mind, my spirit man, my bed, and every gate of my sleep. Let every enemy assignment scheduled against me in the night season be cancelled right now, in Jesus' name!",
+      "I decree that every evil altar, every witchcraft summons, every dream kitchen, every satanic council that has called a meeting over my life tonight — catch fire now! Let the fire of the Holy Ghost scatter every gathering convened against my destiny while I sleep!",
+      "Every spirit that attempts to approach me in the dream tonight in any form — human, animal, shadow, familiar face, or stranger — I say you have no legal right to my sleep. I am covered by the blood, I am hidden in Christ, and you cannot locate what God has hidden!",
+      "Any gate opened into my life through fear, ignorance, curiosity, trauma, or ancestral covenant, through which dream attackers have gained access before — I shut you now by the blood of Jesus, and I seal you with fire. No further entry, in the mighty name of Jesus!",
+      "Whatever the enemy is attempting to exchange tonight — sickness for my health, delay for my breakthrough, barrenness for my fruitfulness, confusion for my clarity, death for my life — I reject the exchange! I reverse it by the power of the resurrection! What is Mine stays Mine!",
+      "If I am chased in a dream tonight, I decree I will not be caught. If I am trapped, I decree the trap will not hold. If I am buried, sunk, bound, stripped, or robbed in a dream, I decree by the authority of the name of Jesus that it has no power to manifest in my waking life!",
+      "Every evil mark, garment, ring, or covenant any spirit attempts to place on me in a dream tonight — I refuse it, I put it off, and I burn it by fire! I did not sign for it, I do not receive it, and it has no claim over me, in Jesus' mighty name!",
+      "I decree angels of fire, encamped round about me, standing guard at the gate of my sleep tonight. No weapon formed against me in the dream realm shall prosper, and every tongue that rises against me in a hidden place, I condemn it, in the name of Jesus!",
+      "Father, I ask You to recover by fire everything stolen from me through dreams in seasons past — virtue, strength, destiny items, open doors, sound sleep, peace of mind. Let it be restored to me, sevenfold, according to Your Word!",
+      "So I decree: my sleep is sweet tonight, my spirit is alert even while my body rests, and whatever I dream — or don't — I wake up tomorrow further ahead than the enemy pushed to set me back. Yokes are broken. Gates are shut. I am covered. In the mighty, all-consuming name of Jesus Christ, amen! 🔥"
+    ]
+  };
+
   const SERMONS = [
     { slug: "planted-by-the-rivers", title: "Planted by the Rivers", ref: "Psalm 1:1-3", date: "November 4, 2026", excerpt: "Blessing in Psalm 1 was never a feeling the wind blew in. It's a posture — what you refuse to walk in, stand in, and sit in, long before it's ever about what you're planted beside." },
     { slug: "little-by-little-not-all-at-once", title: "Little by Little, Not All at Once", ref: "Deuteronomy 7:19, 21-23", date: "November 3, 2026", excerpt: "God never promised Israel an instant Canaan — He promised a mighty hand, a God among them, and a deliverance that would come by little and little." },
@@ -2737,10 +2765,38 @@
           <li><strong style="color:var(--ink);">Faith and professional help were never in competition.</strong> Prayer brings peace for your spirit. Counseling and therapy bring support for your mind and your story. God works through both — using one doesn't mean you believed too little in the other.</li>
         </ul>
 
-        <h2 style="font-size:1.25rem; margin:28px 0 10px;">A Closing Prayer</h2>
-        <div class="card" style="border-left:5px solid #5B3F8C; background:#FAF8FD;">
-          <p style="font-family:var(--font-display,'Fraunces',Georgia,serif); font-style:italic; font-size:16.5px; line-height:1.65; color:var(--ink);">"Lord, thank You that You are not far from me, even in my sleep. Watch over my mind tonight. Where there is fear, replace it with Your peace. Where there is confusion, give me clarity, or give me the grace to rest without needing every answer right now. And where I need more than prayer — wisdom from someone wiser, or real professional support — give me the humility to ask for it, and the courage to actually go. In Jesus' name, amen."</p>
+        <h2 style="font-size:1.25rem; margin:28px 0 10px;">🔥 Tonight's Fire Prayer</h2>
+        <p style="font-size:16px; line-height:1.75; color:var(--ink-2); margin-bottom:16px;">Since we can never know what you'll actually dream, this isn't a prayer about one scene or symbol — it's a shield prayer, fresh every midnight, that covers you before you ever close your eyes. Fiery, prophetic, and built to break every yoke the night season tries to set.</p>
+        <a class="home-row" href="#/dreams/fire">
+          <div class="ico" style="background:#2A1333;"><svg viewBox="0 0 24 24" fill="none" stroke="#FDBA74" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s4 4 4 9a4 4 0 0 1-8 0c0-2 1-3 1-3s1 2 2 2c1.5 0 1-2 1-3 0-2-2-4-2-6 0 0 2 1 2-1z"/><path d="M8 17a4 4 0 0 0 8 0"/></svg></div>
+          <div class="body"><h3>${esc(DREAM_FIRE_PRAYER.title)}</h3><p>Updated daily at midnight &middot; pray it now &rarr;</p></div>
+        </a>
+      </div>
+    `;
+  }
+
+  // Tonight's Fire Prayer Against Dream Attacks — standalone daily page,
+  // reached from the bottom of the evergreen Dreams & Discernment post.
+  // Refreshed every midnight (DREAM_FIRE_PRAYER above). The back arrow in
+  // the header is this page's close toggle, same convention as every
+  // other routed view in the app.
+  function viewDreamFire() {
+    setHeader("Fire Prayer", true);
+    setActiveTab("home");
+    viewEl.innerHTML = `
+      <div class="bible-intro-callout" style="margin-bottom:18px; background:#2A1333;">
+        <div class="ico" style="background:#43205A;"><svg viewBox="0 0 24 24" fill="none" stroke="#FDBA74" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s4 4 4 9a4 4 0 0 1-8 0c0-2 1-3 1-3s1 2 2 2c1.5 0 1-2 1-3 0-2-2-4-2-6 0 0 2 1 2-1z"/><path d="M8 17a4 4 0 0 0 8 0"/></svg></div>
+        <div>
+          <h3 style="color:#FDF2E3;">${esc(DREAM_FIRE_PRAYER.title)}</h3>
+          <p style="color:#E3D3C9;">${esc(DREAM_FIRE_PRAYER.intro)}</p>
         </div>
+      </div>
+      <div class="study-body">
+        ${DREAM_FIRE_PRAYER.points.map(function (pt, i) {
+          return '<div class="card" style="border-left:5px solid #FDBA74; background:#FAF8FD; margin-bottom:14px;">'
+            + '<p style="font-family:var(--font-display,\'Fraunces\',Georgia,serif); font-style:italic; font-size:16.5px; line-height:1.65; color:var(--ink);"><strong style="font-style:normal; color:#C2410C;">' + (i + 1) + '.</strong> ' + esc(pt) + '</p>'
+            + '</div>';
+        }).join("")}
       </div>
     `;
   }
@@ -3678,7 +3734,10 @@
       if (parts.length >= 2) return viewStudyDetail(parts[1]);
       return viewStudyList();
     }
-    if (parts[0] === "dreams") return viewDreams();
+    if (parts[0] === "dreams") {
+      if (parts[1] === "fire") return viewDreamFire();
+      return viewDreams();
+    }
     if (parts[0] === "sermons") {
       if (parts.length >= 2) {
         if (parts[1] === "list") return viewSermonsList();

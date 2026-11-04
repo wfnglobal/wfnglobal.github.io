@@ -493,10 +493,6 @@ body::before{
       <span class="eyebrow">A Church Without Walls</span>
       <h1 class="hero-title">The Word, declared. Prayer, offered. Faith, lived out.</h1>
       <p class="hero-sub">No building, no address — just a daily encounter with the Word of God, wherever you are, for every nation, every day.</p>
-      <div class="hero-ctas">
-        <a class="btn btn-gold" href="#word">Read Today's Word</a>
-        <a class="btn btn-outline" href="#prayer">Join Us in Prayer</a>
-      </div>
       <div class="pillar-tabs" id="pillarTabs">
         <button type="button" class="pillar-tab is-active" data-key="word">
           <span class="pillar-tab-icon" style="background:#F1E7D5;">
@@ -525,7 +521,7 @@ body::before{
             <span class="pillar-tab-sub">Teaching &middot; tap to read</span>
           </span>
         </button>
-        <button type="button" class="pillar-tab" data-key="study">
+        <button type="button" class="pillar-tab" data-key="study" id="pillarStudyBtn">
           <span class="pillar-tab-icon" style="background:#DCEEE6;">
             <svg width="15" height="15" viewBox="0 0 36 36" aria-hidden="true"><path d="M6 29.5A3 3 0 0 1 9 26.5H30" stroke="#1F6E52" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 5.5H30V31.5H9A3 3 0 0 1 6 28.5V8.5A3 3 0 0 1 9 5.5Z" stroke="#1F6E52" stroke-width="1.8" fill="none" stroke-linejoin="round"/></svg>
           </span>
@@ -1129,6 +1125,28 @@ body::before{
   </div>
 </div>
 
+<div class="decl-modal" id="studyModal" aria-hidden="true">
+  <div class="decl-modal-backdrop" id="studyModalBackdrop"></div>
+  <div class="decl-modal-sheet" role="dialog" aria-modal="true" aria-label="Bible Study">
+    <div class="decl-modal-bar">
+      <button class="decl-modal-close" id="studyModalClose" type="button" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="decl-modal-body">
+      <div class="declaration-box">
+        <div class="declaration-label" style="color:#1F6E52;">Bible Study</div>
+        <h2 id="studyModalTitle" style="margin:4px 0 6px; font-family:var(--font-display,serif);">Which Soil Are You Today?</h2>
+        <div id="studyModalRef" style="font-weight:800; letter-spacing:0.05em; text-transform:uppercase; font-size:13px; color:#1F6E52; margin-bottom:18px;">LUKE 8:5-8, 11-15</div>
+
+        <div id="studyModalVerses" style="display:flex; flex-direction:column; gap:14px; margin-bottom:26px;"></div>
+
+        <div id="studyModalBody" style="display:flex; flex-direction:column; gap:16px; font-size:16px; line-height:1.7; color:var(--ink-2,#444);"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="decl-modal" id="verseModal" aria-hidden="true">
   <div class="decl-modal-backdrop" id="verseModalBackdrop"></div>
   <div class="decl-modal-sheet" role="dialog" aria-modal="true" aria-label="Verse of the Day">
@@ -1434,6 +1452,46 @@ body::before{
 })();
 </script>
 
+<!-- ===== Bible Study standalone modal: opened from the "Bible Study"
+     pillar icon/tab so it shows today's full study (intro + the real
+     verses + body, pulled from today.json) rather than only the
+     static intro panel. Closes via the same top-right bar pattern as
+     the declaration modal. ===== -->
+<script>
+(function(){
+  var btn = document.getElementById('pillarStudyBtn');
+  var studyLink = document.getElementById('studyTeaserLink');
+  var triggers = [btn, studyLink].filter(Boolean);
+  var modal = document.getElementById('studyModal');
+  var backdrop = document.getElementById('studyModalBackdrop');
+  var closeBtn = document.getElementById('studyModalClose');
+  if (!triggers.length || !modal) return;
+
+  function open(){
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function close(){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  triggers.forEach(function(trigger){
+    trigger.addEventListener('click', function(e){
+      e.preventDefault();
+      open();
+    });
+  });
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  if (backdrop) backdrop.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+  });
+})();
+</script>
+
 <!-- ===== Phone-demo tap-to-reveal: mirrors the real app's home-screen
      interaction (tap the verse card to reveal today's Word, then the
      rest of the home feed appears) so the mockup demonstrates itself
@@ -1670,6 +1728,31 @@ body::before{
         if (studyTitleEl) studyTitleEl.textContent = data.bibleStudy.title;
         if (studyRefEl && data.bibleStudy.ref) studyRefEl.textContent = data.bibleStudy.ref.toUpperCase();
         if (studyLinkEl && data.bibleStudy.slug) studyLinkEl.setAttribute("href", "/app/#/study/" + data.bibleStudy.slug);
+
+        var studyModalTitleEl = document.getElementById("studyModalTitle");
+        var studyModalRefEl = document.getElementById("studyModalRef");
+        var studyModalVersesEl = document.getElementById("studyModalVerses");
+        var studyModalBodyEl = document.getElementById("studyModalBody");
+        if (studyModalTitleEl) studyModalTitleEl.textContent = data.bibleStudy.title;
+        if (studyModalRefEl && data.bibleStudy.ref) studyModalRefEl.textContent = data.bibleStudy.ref.toUpperCase();
+        if (studyModalVersesEl && Array.isArray(data.bibleStudy.verses)) {
+          studyModalVersesEl.innerHTML = data.bibleStudy.verses.map(function (v) {
+            return '<div style="background:#F3FAF6; border-left:4px solid #1F6E52; border-radius:10px; padding:16px 18px;">'
+              + '<div style="font-style:italic; font-size:16px; line-height:1.55; color:#1C4A3B;"></div>'
+              + '<div style="margin-top:8px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase; font-size:12px; color:#1F6E52;"></div>'
+              + '</div>';
+          }).join("");
+          var verseBlocks = studyModalVersesEl.children;
+          data.bibleStudy.verses.forEach(function (v, i) {
+            verseBlocks[i].querySelector("div").textContent = '"' + v.text + '"';
+            verseBlocks[i].querySelectorAll("div")[1].textContent = v.ref.toUpperCase();
+          });
+        }
+        if (studyModalBodyEl && Array.isArray(data.bibleStudy.body)) {
+          studyModalBodyEl.innerHTML = data.bibleStudy.body.map(function () { return "<p></p>"; }).join("");
+          var bodyPs = studyModalBodyEl.querySelectorAll("p");
+          data.bibleStudy.body.forEach(function (para, i) { bodyPs[i].textContent = para; });
+        }
       }
 
       if (data.declaration && Array.isArray(data.declaration.lines)) {

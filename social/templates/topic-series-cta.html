@@ -10,11 +10,13 @@
   :root{
     --bg:#FAF8F3; --surface:#FFFFFF; --ink:#262420; --ink-2:#585349; --ink-3:#8C8678;
     --gold:#A9824F; --gold-light:#D3AE75; --gold-wash:#F1E7D5; --border:rgba(38,36,32,0.14);
+    --accent:{{ACCENT}};
     --font-display:'Newsreader', Georgia, serif; --font-body:'Inter', -apple-system, system-ui, sans-serif;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html,body{width:1080px; height:1350px;}
   body{font-family:var(--font-body); background:var(--bg); color:var(--ink); position:relative; overflow:hidden;}
+  .wash{position:absolute; inset:0; background:radial-gradient(55% 40% at 50% 18%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 72%);}
   .grain{position:absolute; inset:0; background-image:radial-gradient(#EADFC4 1px, transparent 1px); background-size:24px 24px; opacity:0.35;}
   .frame{position:relative; width:1080px; height:1350px; padding:80px 90px; display:flex; flex-direction:column; align-items:center; text-align:center;}
 
@@ -22,8 +24,8 @@
   .dots span{width:6px; height:6px; border-radius:50%; background:var(--border);}
   .dots span.active{background:var(--gold);}
 
-  .art-wrap{margin-top:20px;}
-  .art-wrap svg{width:320px; height:320px;}
+  .art-wrap{margin-top:10px;}
+  .art-wrap svg{width:380px; height:380px;}
 
   .wordmark{font-family:var(--font-display); font-weight:600; font-size:46px; color:var(--ink); margin-top:18px; letter-spacing:-0.3px;}
   .wordmark em{color:var(--gold); font-style:normal;}
@@ -43,6 +45,7 @@
 </style>
 </head>
 <body>
+  <div class="wash"></div>
   <div class="grain"></div>
   <div class="frame">
     <div class="dots">{{DOTS}}</div>

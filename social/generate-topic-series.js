@@ -46,7 +46,7 @@
 const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
-const { buildNetworkArt } = require("./lib/network-art");
+const { buildNetworkArt, accentColor } = require("./lib/network-art");
 
 const START = { hook: 64, body: 25.5, bodyLh: 1.6 };
 const FLOOR = { hook: 46, body: 20, bodyLh: 1.42 };
@@ -80,9 +80,11 @@ async function main() {
 
   // --- Card 1: cover ---
   const coverTemplate = fs.readFileSync(path.join(__dirname, "templates", "topic-series-cover.html"), "utf8");
-  const coverArt = buildNetworkArt({ size: 580, accentIndex: 0, uid: "cover" });
+  const coverAccent = accentColor(0);
+  const coverArt = buildNetworkArt({ size: 580, accentIndex: 0, uid: "cover", glow: true });
   const coverTitleHtml = escHtml(content.coverTitle || "").split("\n").join("<br>");
   const coverHtml = coverTemplate
+    .replace(/\{\{ACCENT\}\}/g, coverAccent)
     .replace("{{ART_SVG}}", coverArt)
     .replace("{{EYEBROW}}", escHtml(content.eyebrow || "A Prayer Series"))
     .replace("{{TITLE_HTML}}", coverTitleHtml)
@@ -94,12 +96,15 @@ async function main() {
   const pointTemplate = fs.readFileSync(path.join(__dirname, "templates", "topic-series-point.html"), "utf8");
   for (let i = 0; i < 5; i++) {
     const pt = points[i];
-    const cornerArt = buildNetworkArt({ size: 340, accentIndex: i * 2 + 1, muted: true, uid: `pt${i}` });
+    const spoke = i * 2 + 1;
+    const accent = accentColor(spoke);
+    const cornerArt = buildNetworkArt({ size: 460, accentIndex: spoke, uid: `pt${i}` });
     const html = pointTemplate
+      .replace(/\{\{ACCENT\}\}/g, accent)
       .replace("{{CORNER_ART_SVG}}", cornerArt)
       .replace("{{EYEBROW}}", escHtml(content.eyebrow || "A Prayer Series"))
       .replace("{{DOTS}}", dotsHtml(i + 1))
-      .replace("{{NUMERAL}}", escHtml(pt.numeral || String(i + 1).padStart(2, "0")))
+      .replace(/\{\{NUMERAL\}\}/g, escHtml(pt.numeral || String(i + 1).padStart(2, "0")))
       .replace("{{HOOK_HTML}}", escHtml(pt.hook || ""))
       .replace("{{BODY_HTML}}", (pt.paragraphs || []).map((p) => `<p>${escHtml(p)}</p>`).join("\n"))
       .replace("{{VERSE_TEXT}}", escHtml(pt.verseText || ""))
@@ -136,8 +141,10 @@ async function main() {
   // --- Card 7: CTA ---
   const cta = content.cta || {};
   const ctaTemplate = fs.readFileSync(path.join(__dirname, "templates", "topic-series-cta.html"), "utf8");
-  const ctaArt = buildNetworkArt({ size: 320, accentIndex: 11, uid: "cta" });
+  const ctaAccent = accentColor(11);
+  const ctaArt = buildNetworkArt({ size: 380, accentIndex: 11, uid: "cta", glow: true });
   const ctaHtml = ctaTemplate
+    .replace(/\{\{ACCENT\}\}/g, ctaAccent)
     .replace("{{ART_SVG}}", ctaArt)
     .replace("{{DOTS}}", dotsHtml(6))
     .replace("{{CLOSING_LINE}}", escHtml(cta.closingLine || "If this spoke to you, let's stay connected."))

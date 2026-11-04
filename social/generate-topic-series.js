@@ -48,8 +48,8 @@ const path = require("path");
 const { chromium } = require("playwright");
 const { buildNetworkArt } = require("./lib/network-art");
 
-const START = { hook: 54, body: 22.5, bodyLh: 1.66 };
-const FLOOR = { hook: 40, body: 18.5, bodyLh: 1.44 };
+const START = { hook: 64, body: 25.5, bodyLh: 1.6 };
+const FLOOR = { hook: 46, body: 20, bodyLh: 1.42 };
 
 const TOTAL_CARDS = 7; // cover + 5 points + cta
 
@@ -80,7 +80,7 @@ async function main() {
 
   // --- Card 1: cover ---
   const coverTemplate = fs.readFileSync(path.join(__dirname, "templates", "topic-series-cover.html"), "utf8");
-  const coverArt = buildNetworkArt({ size: 560, accentIndex: 0, uid: "cover" });
+  const coverArt = buildNetworkArt({ size: 580, accentIndex: 0, uid: "cover" });
   const coverTitleHtml = escHtml(content.coverTitle || "").split("\n").join("<br>");
   const coverHtml = coverTemplate
     .replace("{{ART_SVG}}", coverArt)
@@ -136,7 +136,7 @@ async function main() {
   // --- Card 7: CTA ---
   const cta = content.cta || {};
   const ctaTemplate = fs.readFileSync(path.join(__dirname, "templates", "topic-series-cta.html"), "utf8");
-  const ctaArt = buildNetworkArt({ size: 260, accentIndex: 11, uid: "cta" });
+  const ctaArt = buildNetworkArt({ size: 320, accentIndex: 11, uid: "cta" });
   const ctaHtml = ctaTemplate
     .replace("{{ART_SVG}}", ctaArt)
     .replace("{{DOTS}}", dotsHtml(6))

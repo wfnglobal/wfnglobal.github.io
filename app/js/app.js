@@ -1211,6 +1211,11 @@
           <div class="body"><h3>Today's Declaration</h3><p>Pray with us</p></div>
           <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
         </a>
+        <a class="home-row" href="#/dreams">
+          <div class="ico" style="background:#EFE9F6; color:#5B3F8C;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
+          <div class="body"><h3>Dreams &amp; Discernment</h3><p>Confused or afraid about a dream? Start here</p></div>
+          <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+        </a>
         <a class="home-row" href="#/library">
           <div class="ico ico-library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 3v18M8 8h8M8 12h8"/></svg></div>
           <div class="body"><h3>The Library</h3><p>Ask Boldly — Book One</p></div>
@@ -2689,6 +2694,57 @@
     `;
   }
 
+  // ---------------------------------------------------------------------
+  // Dreams & Discernment — an evergreen support resource (not daily
+  // content like BIBLE_STUDY) for people who wake up confused or afraid
+  // after a dream and don't know what to do with it. Deliberately
+  // balanced: takes dreams seriously as something Scripture treats as
+  // real, while steering away from fear, obsessive interpretation, or
+  // treating every image as a message. Points toward real support —
+  // prayer, this community, pastoral counselling, and professional
+  // therapy — rather than offering clinical or diagnostic guidance.
+  // ---------------------------------------------------------------------
+  function viewDreams() {
+    setHeader("Dreams & Discernment", true);
+    setActiveTab("home");
+    viewEl.innerHTML = `
+      <div class="bible-intro-callout" style="margin-bottom:18px; background:#EFE9F6;">
+        <div class="ico" style="background:#DED0F0;"><svg viewBox="0 0 24 24" fill="none" stroke="#5B3F8C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
+        <div>
+          <h3>You're Not Alone in This</h3>
+          <p>A strange dream. A nightmare that left you shaken. A recurring one you can't shake off. Millions of people wake up every day carrying something they don't know what to do with — confused, a little afraid, not sure if it means anything at all. You don't have to figure it out by yourself.</p>
+        </div>
+      </div>
+
+      <div class="study-body">
+        <h2 style="font-size:1.25rem; margin-bottom:10px;">What Scripture Actually Says</h2>
+        <p style="font-size:16px; line-height:1.75; color:var(--ink-2); margin-bottom:16px;">The Bible never pretends dreams are nothing. God spoke to Joseph through dreams before anyone believed him (Genesis 37), warned Daniel and kings through them (Daniel 2), and Peter stood up at Pentecost and declared it as a sign of the Spirit being poured out: "your old men shall dream dreams" (Acts 2:17, quoting Joel 2:28). So no — your dream life isn't irrelevant to God.</p>
+        <p style="font-size:16px; line-height:1.75; color:var(--ink-2); margin-bottom:16px;">But Scripture is just as clear that not every dream is a message, and chasing meaning in every single one is its own trap: "a dream cometh through the multitude of business" (Ecclesiastes 5:3) — sometimes a dream is just your mind processing a long day, not heaven sending you a code to crack. And Jeremiah drew a sharp line for people obsessed with decoding dreams instead of just living by what God had already plainly said: "let him that hath a dream tell a dream; and he that hath my word, let him speak my word faithfully" (Jeremiah 23:28). Discernment, not panic. Attention, not obsession.</p>
+
+        <h2 style="font-size:1.25rem; margin:28px 0 10px;">If the Dream Frightened You</h2>
+        <p style="font-size:16px; line-height:1.75; color:var(--ink-2); margin-bottom:16px;">If you woke up afraid, start here: a dream — even a dark, disturbing one — does not have authority over your life. You do not need to relive it, replay it, or dissect every image before you can have peace again. Bring it to God plainly, in your own words, and then release it. You are not required to understand everything you dreamed to be free from it.</p>
+        <div class="card" style="border-left:5px solid #5B3F8C; margin-bottom:16px; background:#FAF8FD;">
+          <p style="font-family:var(--font-display,'Fraunces',Georgia,serif); font-style:italic; font-size:16.5px; line-height:1.65; color:var(--ink);">"Father, I will not carry fear from what I saw in my sleep. You did not give me a spirit of fear, but of power, and of love, and of a sound mind (2 Timothy 1:7). Whatever that dream was, I hand it to You now. I will not dwell on it, decode it in fear, or let it set the tone for my day. I lie down in peace tonight, and I rise in peace tomorrow, because You are the One who keeps me — in my sleep and out of it. In Jesus' name, amen."</p>
+        </div>
+        <p style="font-size:16px; line-height:1.75; color:var(--ink-2); margin-bottom:16px;">Say that out loud if you need to. Scripture, spoken, carries weight in a moment like this — more than silently stewing over what a symbol might have meant.</p>
+
+        <h2 style="font-size:1.25rem; margin:28px 0 10px;">When to Bring In More Support</h2>
+        <p style="font-size:16px; line-height:1.75; color:var(--ink-2); margin-bottom:16px;">Here's something worth saying plainly, because a lot of believers never hear it from a pulpit: if a nightmare keeps coming back, if it's tied to something painful you've lived through, or if it's genuinely disturbing your sleep, your peace, or your ability to function — that is not a sign your faith is weak. It's a sign you need more than a prayer said alone at midnight, and reaching for that help is wisdom, not a failure.</p>
+        <ul style="font-size:16px; line-height:1.85; color:var(--ink-2); margin:0 0 16px; padding-left:22px;">
+          <li style="margin-bottom:10px;"><strong style="color:var(--ink);">Pray it through with someone, not just alone.</strong> Bring it to a trusted prayer partner or our WFN prayer community — say it out loud to another believer instead of letting it live only in your head at 3am.</li>
+          <li style="margin-bottom:10px;"><strong style="color:var(--ink);">Talk to a pastor or spiritual leader you trust.</strong> Someone who knows you can offer real, grounded wisdom — not a generic interpretation, but actual care for your specific life.</li>
+          <li style="margin-bottom:10px;"><strong style="color:var(--ink);">Consider a licensed counselor or therapist, especially for recurring nightmares.</strong> Recurring nightmares are a recognized and treatable experience, and they're often connected to stress, grief, or things your mind hasn't fully processed yet. A licensed therapist is trained to help with exactly that — this is wise stewardship of the mind God gave you, not a lack of trust in Him.</li>
+          <li><strong style="color:var(--ink);">Faith and professional help were never in competition.</strong> Prayer brings peace for your spirit. Counseling and therapy bring support for your mind and your story. God works through both — using one doesn't mean you believed too little in the other.</li>
+        </ul>
+
+        <h2 style="font-size:1.25rem; margin:28px 0 10px;">A Closing Prayer</h2>
+        <div class="card" style="border-left:5px solid #5B3F8C; background:#FAF8FD;">
+          <p style="font-family:var(--font-display,'Fraunces',Georgia,serif); font-style:italic; font-size:16.5px; line-height:1.65; color:var(--ink);">"Lord, thank You that You are not far from me, even in my sleep. Watch over my mind tonight. Where there is fear, replace it with Your peace. Where there is confusion, give me clarity, or give me the grace to rest without needing every answer right now. And where I need more than prayer — wisdom from someone wiser, or real professional support — give me the humility to ask for it, and the courage to actually go. In Jesus' name, amen."</p>
+        </div>
+      </div>
+    `;
+  }
+
   function viewPrayerIntro() {
     setHeader("Prayer", true);
     setActiveTab("prayer");
@@ -3622,6 +3678,7 @@
       if (parts.length >= 2) return viewStudyDetail(parts[1]);
       return viewStudyList();
     }
+    if (parts[0] === "dreams") return viewDreams();
     if (parts[0] === "sermons") {
       if (parts.length >= 2) {
         if (parts[1] === "list") return viewSermonsList();

@@ -46,8 +46,11 @@
   // IMPORTANT: the public website (index.html) no longer hand-copies this
   // text — it fetches /app/data/today.json instead, so it can't silently
   // drift the way it once did. Whenever VERSES[0], SERMONS[0]/a new sermon,
-  // or DECLARATION changes here, copy the same values into
-  // app/data/today.json too (same strings — just mirrored, not reworded).
+  // BIBLE_STUDY[0]/a new study, or DECLARATION changes here, copy the same
+  // values into app/data/today.json too (same strings — just mirrored, not
+  // reworded). For BIBLE_STUDY, today.json's "bibleStudy" needs only
+  // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
+  // website only shows a teaser card linking into the app's full study.
   const VERSES = [
     { text: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", ref: "Psalm 23:1-2" },
     { text: "Moreover by them is thy servant warned: and in keeping of them there is great reward.", ref: "Psalm 19:11" },

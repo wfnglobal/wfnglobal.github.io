@@ -72,14 +72,30 @@ async function main() {
   await page.evaluate(() => {
     const textEl = document.querySelector(".prayer-text");
     const post = document.querySelector(".post");
-    let size = 40, lh = 1.42, openerSize = 30;
+    // Readability floor: the body text never drops below 26px or a 1.42
+    // line-height, and the opener never drops below 21px — so a long
+    // prayer shrinks the text modestly rather than squeezing it into a
+    // cramped, hard-to-read block. If it still doesn't fit at the floor,
+    // that's a signal the prayer text itself should be trimmed, not a
+    // reason to keep compressing the layout.
+    let size = 34, lh = 1.62, openerSize = 27, openerLh = 1.5;
+    const minSize = 26, minLh = 1.42, minOpenerSize = 21, minOpenerLh = 1.3;
     const fits = () => post.scrollHeight <= post.clientHeight;
-    for (let i = 0; i < 24 && !fits(); i++) {
-      size -= 1.4; lh -= 0.01; openerSize -= 1;
-      textEl.querySelectorAll("p, .opener").forEach((el) => {
-        el.style.fontSize = (el.classList.contains("opener") ? openerSize : size) + "px";
+    for (let i = 0; i < 16 && !fits(); i++) {
+      size = Math.max(minSize, size - 0.7);
+      lh = Math.max(minLh, lh - 0.014);
+      openerSize = Math.max(minOpenerSize, openerSize - 0.5);
+      openerLh = Math.max(minOpenerLh, openerLh - 0.012);
+      textEl.querySelectorAll("p").forEach((el) => {
+        el.style.fontSize = size + "px";
         el.style.lineHeight = lh;
       });
+      const opener = textEl.querySelector(".opener");
+      if (opener) {
+        opener.style.fontSize = openerSize + "px";
+        opener.style.lineHeight = openerLh;
+      }
+      if (size <= minSize && lh <= minLh && openerSize <= minOpenerSize) break;
     }
   });
 

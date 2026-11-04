@@ -153,6 +153,8 @@ body::before{
 .pillar-tab[data-key="faith"].is-active .pillar-tab-label{color:#7A4832;}
 .pillar-tab[data-key="study"].is-active{background:#DCEEE6;}
 .pillar-tab[data-key="study"].is-active .pillar-tab-label{color:#1F6E52;}
+.pillar-link{flex:1; min-width:135px; display:flex; align-items:center; gap:10px; border-radius:11px; padding:11px 12px; text-align:left; font-family:inherit; text-decoration:none; transition:background .15s;}
+.pillar-link:hover{background:var(--surface-2);}
 
 .hero-visual{flex:1 1 380px; min-width:300px; max-width:420px;}
 .hero-visual > div{display:none;}
@@ -532,6 +534,24 @@ body::before{
             <span class="pillar-tab-sub">Daily teaching &middot; tap to read</span>
           </span>
         </button>
+        <a href="#" class="pillar-link" id="pillarDeclLink">
+          <span class="pillar-tab-icon" style="background:#F3E3DA;">
+            <svg width="15" height="15" viewBox="0 0 36 36" aria-hidden="true"><path d="M9 6h18v24l-5-3.5-4 3.5-4-3.5-5 3.5z" fill="none" stroke="#C17A54" stroke-width="1.8" stroke-linejoin="round"/><path d="M13 13h10M13 18h10" stroke="#C17A54" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </span>
+          <span>
+            <span class="pillar-tab-label">Today's Declaration</span>
+            <span class="pillar-tab-sub">Today's word &middot; tap to pray</span>
+          </span>
+        </a>
+        <a href="#prayer" class="pillar-link">
+          <span class="pillar-tab-icon" style="background:#E4EBE6;">
+            <svg width="15" height="15" viewBox="0 0 36 36" aria-hidden="true"><circle cx="13" cy="14" r="5" fill="none" stroke="#6F8C7D" stroke-width="1.8"/><circle cx="25" cy="14" r="5" fill="none" stroke="#6F8C7D" stroke-width="1.8"/><path d="M5 30c0-5 4-9 8-9s8 4 8 9M15 30c0-5 4-9 8-9s8 4 8 9" fill="none" stroke="#6F8C7D" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </span>
+          <span>
+            <span class="pillar-tab-label">Join Us in Prayer</span>
+            <span class="pillar-tab-sub">Community &middot; join now</span>
+          </span>
+        </a>
       </div>
     </div>
 
@@ -1352,11 +1372,11 @@ body::before{
 
 <script>
 (function(){
-  var link = document.getElementById('declTeaserLink');
+  var links = [document.getElementById('declTeaserLink'), document.getElementById('pillarDeclLink')].filter(Boolean);
   var modal = document.getElementById('declModal');
   var backdrop = document.getElementById('declModalBackdrop');
   var closeBtn = document.getElementById('declModalClose');
-  if (!link || !modal) return;
+  if (!links.length || !modal) return;
 
   function open(){
     modal.classList.add('is-open');
@@ -1369,9 +1389,11 @@ body::before{
     document.body.style.overflow = '';
   }
 
-  link.addEventListener('click', function(e){
-    e.preventDefault();
-    open();
+  links.forEach(function(link){
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      open();
+    });
   });
   if (closeBtn) closeBtn.addEventListener('click', close);
   if (backdrop) backdrop.addEventListener('click', close);

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WFN Daily Word</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,900&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{width:1080px; height:1080px;}
+  body{
+    font-family:'Inter', -apple-system, system-ui, sans-serif;
+    background:radial-gradient(130% 110% at 85% -10%, #2F6752 0%, #1B3B2F 45%, #0F241C 100%);
+    color:#F6EAD2;
+    position:relative;
+    overflow:hidden;
+  }
+  .glow{position:absolute; bottom:-240px; left:-200px; width:640px; height:640px; border-radius:50%; background:radial-gradient(circle, rgba(201,169,104,0.28), transparent 70%); filter:blur(8px);}
+  .frame{position:relative; width:1080px; height:1080px; padding:76px; display:flex; flex-direction:column;}
+  .kicker{display:inline-flex; align-items:center; gap:10px; font-size:15px; font-weight:800; letter-spacing:0.2em; text-transform:uppercase; color:#C9A968;}
+  .kicker::before{content:""; width:28px; height:2px; background:#C9A968; display:inline-block;}
+  .headline{font-family:'Fraunces', Georgia, serif; font-weight:800; font-size:92px; line-height:1.04; letter-spacing:-0.5px; margin-top:34px; color:#FBF4E4;}
+  .sub{margin-top:34px; font-size:26px; line-height:1.55; color:#D9E3D8; font-weight:400; max-width:860px;}
+  .spacer{flex:1;}
+  .verse{font-size:18px; font-weight:600; color:#C9A968; letter-spacing:0.02em;}
+  .verse-text{font-size:17px; color:#AFC2B6; margin-top:4px;}
+  .foot{display:flex; align-items:center; justify-content:space-between; border-top:1px solid rgba(246,234,210,0.16); padding-top:28px; margin-top:28px;}
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand .mark{width:34px; height:34px; flex-shrink:0;}
+  .brand-name{font-family:'Fraunces', Georgia, serif; font-weight:700; font-size:18px; color:#F6EAD2;}
+  .pill{background:#C9A968; color:#13261F; font-weight:800; font-size:15px; padding:11px 22px; border-radius:100px;}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="frame">
+  <div class="kicker">{{KICKER}}</div>
+  <div class="headline">{{HEADLINE_HTML}}</div>
+  <div class="sub">{{SUB_HTML}}</div>
+  <div class="spacer"></div>
+  <div class="verse">{{VERSE_TEXT}}</div>
+  <div class="verse-text">{{VERSE_REF}}</div>
+  <div class="foot">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 48 48">
+        <defs>
+          <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#C9A968"/><stop offset="1" stop-color="#8E6A2E"/>
+          </linearGradient>
+        </defs>
+        <circle cx="24" cy="24" r="21.3" fill="none" stroke="#C9A968" stroke-width="1.1"/>
+        <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="url(#grad)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#C9A968"/>
+      </svg>
+      <div class="brand-name">Word &amp; Faith Network</div>
+    </div>
+    <div class="pill">{{HANDLE}}</div>
+  </div>
+</div>
+</body>
+</html>

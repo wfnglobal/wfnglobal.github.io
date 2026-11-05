@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "For the Son of man is not come to destroy men's lives, but to save them.", ref: "Luke 9:56" },
     { text: "Blessed be the Lord, who daily loadeth us with benefits, even the God of our salvation.", ref: "Psalm 68:19" },
     { text: "Moreover by them is thy servant warned: and in keeping of them there is great reward.", ref: "Psalm 19:11" },
     { text: "Search me, O God, and know my heart: try me, and know my thoughts:", ref: "Psalm 139:23" },
@@ -68,7 +69,6 @@
     { text: "For the word of God is living and powerful, and sharper than any two-edged sword, piercing even to the division of soul and spirit, and of joints and marrow, and is a discerner of the thoughts and intents of the heart.", ref: "Hebrews 4:12" },
     { text: "For God is not unrighteous to forget your work and labour of love, which ye have shewed toward his name, in that ye have ministered to the saints, and do minister.", ref: "Hebrews 6:10" },
     { text: "If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him.", ref: "James 1:5" },
-    { text: "For the Son of man is not come to destroy men's lives, but to save them.", ref: "Luke 9:56" },
     { text: "Commit thy works unto the LORD, and thy thoughts shall be established.", ref: "Proverbs 16:3" }
   ];
 
@@ -79,19 +79,19 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that You are the God who daily loads me with benefits — not just on the easy days, but today, in whatever this day turns out to hold!",
-      "I will not walk into tonight only counting what went wrong, when You have been quietly adding to my life all day long in ways I did not stop to notice!",
-      "Blessed be the Lord — not because today was easy, but because You never once stopped being good to me inside of it!",
+      "Father, I declare today that my approval comes from You and not from any room I walk into — I am not performing for applause, I am laboring for Your \"well done\"!",
+      "I refuse to let rejection or silence from people convince me I am not approved, when You have already called me Yours and put Your gospel in my trust!",
+      "I will not chase the crowd's opinion of me today — I will study, I will labor, I will do the quiet work nobody claps for, because You see it and that is enough!",
       "",
-      "I declare that salvation is not only where I go when I die — it is Who has been holding me together every hour I am still here living!",
-      "I will not let one hard stretch convince me that Your benefits ran out — they did not stop coming just because I stopped keeping count!",
-      "Father, open my eyes tonight to every quiet mercy I walked straight past today without ever saying thank You!",
+      "I declare that I am a workman and not a spectator — I pick up the tools today instead of just admiring what diligence produces in someone else's life!",
+      "Whatever I am believing You for, I will not wait for it lazily — I will labor first, like the husbandman, trusting that the fruit always follows the hands that actually worked!",
+      "I reject every shortcut that promises a harvest without labor — my confidence is not in luck today, it is in the Word I am willing to give real time to!",
       "",
-      "So tonight I lay down the habit of measuring my day only by its problems, and I pick up the practice of counting everything You carried me through!",
-      "If today felt like it took more than it gave, hear this: the God who daily loads you with benefits was not absent on the hard days — He was simply unseen.",
-      "Save this. Speak it over your gratitude tonight. Blessed be the Lord, who daily loadeth us with benefits, even the God of our salvation. In Jesus' name, amen!"
+      "I declare that I rightly divide Your Word of truth today — I will not wrest it, twist it, or quote it carelessly just to win an argument or sound right in a room!",
+      "Let no shame catch me flat-footed today for something I was too lazy to study — I prepare my heart now, the way Ezra did, before I am ever asked to answer for it!",
+      "Save this. Speak it over your diligence today. Study to shew thyself approved unto God, a workman that needeth not to be ashamed, rightly dividing the word of truth. In Jesus' name, amen!"
     ],
-    ref: "Psalm 68:19"
+    ref: "2 Timothy 2:15"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -132,6 +132,7 @@
   };
 
   const SERMONS = [
+    { slug: "approved-not-ashamed", title: "Approved, Not Ashamed", ref: "2 Timothy 2:15", date: "November 5, 2026", excerpt: "Paul doesn't tell Timothy to perform for a room — he tells him to study for an audience of One. The approval that frees you from shame was never coming from the crowd." },
     { slug: "planted-by-the-rivers", title: "Planted by the Rivers", ref: "Psalm 1:1-3", date: "November 4, 2026", excerpt: "Blessing in Psalm 1 was never a feeling the wind blew in. It's a posture — what you refuse to walk in, stand in, and sit in, long before it's ever about what you're planted beside." },
     { slug: "little-by-little-not-all-at-once", title: "Little by Little, Not All at Once", ref: "Deuteronomy 7:19, 21-23", date: "November 3, 2026", excerpt: "God never promised Israel an instant Canaan — He promised a mighty hand, a God among them, and a deliverance that would come by little and little." },
     { slug: "in-the-beginning-was-the-word", title: "In the Beginning Was the Word", ref: "John 1:1-3, 5", date: "November 2, 2026", excerpt: "Before anything was made, the Word already was — with God, and was God. Everything that exists came through Him, and no darkness that has ever risen has been able to put His light out." },

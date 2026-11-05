@@ -113,20 +113,21 @@
   // purpose: never about one specific dream scenario, always a general
   // covering. points[] renders as numbered prayer points, no markdown.
   const DREAM_FIRE_PRAYER = {
-    title: "Shutting the Gates of the Night",
-    date: "November 4, 2026",
-    intro: "A shield prayer for tonight — not about what you dreamed, but about what you're covered by before you ever close your eyes. Pray this out loud. Fire answers fire.",
+    title: "Scattering the Midnight Assembly",
+    date: "November 5, 2026",
+    intro: "A shield prayer for tonight — not about what you dreamed, but about what stands against the camp before you ever close your eyes. Pray this out loud. Fire answers fire.",
     points: [
-      "Father, in the name of Jesus Christ, I come under the blood of the Lamb before I lay my head down tonight. I plead that blood over my mind, my spirit man, my bed, and every gate of my sleep. Let every enemy assignment scheduled against me in the night season be cancelled right now, in Jesus' name!",
-      "I decree that every evil altar, every witchcraft summons, every dream kitchen, every satanic council that has called a meeting over my life tonight — catch fire now! Let the fire of the Holy Ghost scatter every gathering convened against my destiny while I sleep!",
-      "Every spirit that attempts to approach me in the dream tonight in any form — human, animal, shadow, familiar face, or stranger — I say you have no legal right to my sleep. I am covered by the blood, I am hidden in Christ, and you cannot locate what God has hidden!",
-      "Any gate opened into my life through fear, ignorance, curiosity, trauma, or ancestral covenant, through which dream attackers have gained access before — I shut you now by the blood of Jesus, and I seal you with fire. No further entry, in the mighty name of Jesus!",
-      "Whatever the enemy is attempting to exchange tonight — sickness for my health, delay for my breakthrough, barrenness for my fruitfulness, confusion for my clarity, death for my life — I reject the exchange! I reverse it by the power of the resurrection! What is Mine stays Mine!",
-      "If I am chased in a dream tonight, I decree I will not be caught. If I am trapped, I decree the trap will not hold. If I am buried, sunk, bound, stripped, or robbed in a dream, I decree by the authority of the name of Jesus that it has no power to manifest in my waking life!",
-      "Every evil mark, garment, ring, or covenant any spirit attempts to place on me in a dream tonight — I refuse it, I put it off, and I burn it by fire! I did not sign for it, I do not receive it, and it has no claim over me, in Jesus' mighty name!",
-      "I decree angels of fire, encamped round about me, standing guard at the gate of my sleep tonight. No weapon formed against me in the dream realm shall prosper, and every tongue that rises against me in a hidden place, I condemn it, in the name of Jesus!",
-      "Father, I ask You to recover by fire everything stolen from me through dreams in seasons past — virtue, strength, destiny items, open doors, sound sleep, peace of mind. Let it be restored to me, sevenfold, according to Your Word!",
-      "So I decree: my sleep is sweet tonight, my spirit is alert even while my body rests, and whatever I dream — or don't — I wake up tomorrow further ahead than the enemy pushed to set me back. Yokes are broken. Gates are shut. I am covered. In the mighty, all-consuming name of Jesus Christ, amen! 🔥"
+      "Father, in the mighty name of Jesus Christ, I plead the blood of the Lamb over my spirit, my soul, my body, my bed, and the threshold of my sleep tonight. Let every demonic appointment written against me for this night be torn off the register and burned to ashes, in Jesus' name!",
+      "Every witchcraft table, every coven, every midnight assembly, every satanic conference summoned to sit over my matters while I sleep — I scatter you now by fire! Let the thunder of the Holy Ghost break up every meeting convened against my life, my family, and my destiny tonight!",
+      "Any dream pot stirred for me, any dream kitchen lit for me, any cauldron cooking a portion meant to be fed to me in my sleep — I set it ablaze before it is served! What is cooked on a witchcraft fire will never enter my mouth, in the name of Jesus!",
+      "If I am hunted in a dream tonight, I decree the hunter will not overtake me. If I am chased, I will not be caught. If I am caged, bound, netted, or trapped, every chain snaps now by the power that split the Red Sea — I walk out free, in Jesus' mighty name!",
+      "Whatever exchange is being arranged against me tonight — my health for sickness, my breakthrough for delay, my fruitfulness for barrenness, my peace for torment, my life for death — I stand in the gate and I reject the exchange! It is reversed, and it falls back on the sender, in Jesus' name!",
+      "Every evil mark, every garment, every ring, chain, veil, or covenant object any hand attempts to place on me in a dream tonight — I strip it off, I refuse to wear it, and I command it to burn where it stands! I carry no enemy's label — I am marked only by the blood of Jesus!",
+      "Any altar raised against me through dreams — ancestral altar, marine altar, graveyard altar, forest altar, altar of the night — I locate you in the spirit and I set you on fire! No covenant spoken over me at any altar I never built shall stand, in the name of Jesus!",
+      "If anything is offered to me to eat or to drink in a dream tonight, I vomit it out by the fire of the Holy Ghost! I receive no covenant meal from the table of darkness — my portion is the bread and the cup of the Lord alone!",
+      "I decree a wall of fire and a company of warring angels stationed round my sleep tonight — at the door, at the window, at the gate of my dreams. No weapon fashioned against me in the dream realm shall prosper, and every voice raised against me in secret, I silence it in Jesus' name!",
+      "Father, every virtue, strength, sound sleep, open door, and good thing stolen from me through dreams in seasons past — recover it by fire and restore it to me sevenfold, according to Your Word!",
+      "So I decree: this night belongs to God and not to the enemy. My going to bed is blessed, my sleep is blessed, my rising is blessed. Whatever was planned against me in the dark has already failed, because greater is He that is in me than he that is in the world. Every gate is shut, every altar is down, every yoke is broken — I am covered, I am free, in the mighty, all-consuming name of Jesus Christ, amen! 🔥"
     ]
   };
 

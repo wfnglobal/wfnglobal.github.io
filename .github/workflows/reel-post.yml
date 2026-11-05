@@ -1,17 +1,20 @@
-name: Generate & Post Instagram Reel
+name: Render Instagram Reel
 
 # Fires when a new Reel content file lands under social/reels/ (pushed
 # by the daily Instagram content job - it writes only the TEXT content
 # there, since it has no access to the ElevenLabs key). This Action
 # does the actual rendering: calls ElevenLabs for the voiceover,
-# renders the branded video with Playwright, muxes it with ffmpeg,
-# commits the finished .mp4/.cover.png to social/posts/, then publishes
-# it to Instagram as a Reel.
+# renders the branded video with Playwright, muxes it with ffmpeg, and
+# commits the finished .mp4/.cover.png to social/posts/.
 #
-# Can also be run by hand from the Actions tab (workflow_dispatch) to
-# render+post one specific content file, optionally with debug: "1" to
-# render the video and commit it WITHOUT posting to Instagram - useful
-# for checking a new look or a new ElevenLabs voice before it goes live.
+# By design this does NOT auto-post to Instagram - Oladapo asked for
+# the daily Reel to come to him to post himself, not go out
+# automatically like the prayer/sermon image cards do. The posting
+# script (social/post-reel-to-instagram.js) is still in the repo and
+# this workflow can still call it, but only as an explicit opt-in: run
+# workflow_dispatch by hand with post: "1" if auto-posting is wanted
+# for a specific run. A plain push, or a dispatch without that input,
+# only renders and commits - it never posts on its own.
 on:
   push:
     branches: [main]
@@ -20,10 +23,10 @@ on:
   workflow_dispatch:
     inputs:
       content_file:
-        description: "Path to a specific content.json under social/reels/ to render (+ post unless debug is set)"
+        description: "Path to a specific content.json under social/reels/ to render"
         required: false
-      debug:
-        description: "Set to 1 to render and commit the video but skip posting it to Instagram"
+      post:
+        description: "Set to 1 to ALSO post this specific run straight to Instagram (default: render + commit only, never auto-posts)"
         required: false
         default: ""
 
@@ -113,8 +116,8 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Post Reel(s) to Instagram
-        if: steps.generate.outputs.bases != '' && github.event.inputs.debug != '1'
+      - name: Post Reel(s) to Instagram (only when explicitly requested)
+        if: steps.generate.outputs.bases != '' && github.event.inputs.post == '1'
         env:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
@@ -141,8 +144,9 @@ jobs:
             sleep 5
           done <<< "${{ steps.generate.outputs.bases }}"
 
-      - name: Debug mode - rendered but not posted
-        if: steps.generate.outputs.bases != '' && github.event.inputs.debug == '1'
+      - name: Rendered - ready for you to post
+        if: steps.generate.outputs.bases != '' && github.event.inputs.post != '1'
         run: |
-          echo "debug=1 was set - video(s) rendered and committed, but NOT posted to Instagram:"
+          echo "Video(s) rendered and committed to social/posts/ - NOT posted to Instagram."
+          echo "This pipeline only auto-renders; posting is always a manual/opt-in step so Oladapo can post these himself:"
           echo "${{ steps.generate.outputs.bases }}"

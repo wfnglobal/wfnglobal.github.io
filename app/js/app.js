@@ -52,7 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
-    { text: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", ref: "Psalm 23:1-2" },
+    { text: "Blessed be the Lord, who daily loadeth us with benefits, even the God of our salvation.", ref: "Psalm 68:19" },
     { text: "Moreover by them is thy servant warned: and in keeping of them there is great reward.", ref: "Psalm 19:11" },
     { text: "Search me, O God, and know my heart: try me, and know my thoughts:", ref: "Psalm 139:23" },
     { text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", ref: "Isaiah 41:10" },
@@ -64,7 +64,7 @@
     { text: "The heavens declare the glory of God; and the firmament sheweth his handywork.", ref: "Psalm 19:1" },
     { text: "Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves.", ref: "Philippians 2:3" },
     { text: "Pray without ceasing. Continue earnestly in prayer, being vigilant in it with thanksgiving.", ref: "1 Thessalonians 5:17; Colossians 4:2" },
-    { text: "Blessed be the Lord, who daily loadeth us with benefits, even the God of our salvation.", ref: "Psalm 68:19" },
+    { text: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", ref: "Psalm 23:1-2" },
     { text: "For the word of God is living and powerful, and sharper than any two-edged sword, piercing even to the division of soul and spirit, and of joints and marrow, and is a discerner of the thoughts and intents of the heart.", ref: "Hebrews 4:12" },
     { text: "For God is not unrighteous to forget your work and labour of love, which ye have shewed toward his name, in that ye have ministered to the saints, and do minister.", ref: "Hebrews 6:10" },
     { text: "If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him.", ref: "James 1:5" },
@@ -79,26 +79,26 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that I am a blessed man, a blessed woman — not because nothing hard is happening, but because I refuse to walk in the counsel that doesn't come from You!",
-      "I will not stand in the way of sinners, I will not sit in the seat of the scornful — my feet are too busy moving toward Your Word to stay parked in a conversation that isn't going anywhere good!",
-      "My delight is in Your law today, not my duty — I am not forcing myself to open this Word, I am choosing to want it, the way I want the things I actually love!",
+      "Father, I declare today that You are the God who daily loads me with benefits — not just on the easy days, but today, in whatever this day turns out to hold!",
+      "I will not walk into tonight only counting what went wrong, when You have been quietly adding to my life all day long in ways I did not stop to notice!",
+      "Blessed be the Lord — not because today was easy, but because You never once stopped being good to me inside of it!",
       "",
-      "I declare that I am planted, not wandering — rooted by the rivers of water, not drifting toward whatever soil looks easiest this week!",
-      "When the heat comes, I will not even see it as a threat, because my roots have already settled the outcome before the drought ever arrives!",
-      "My leaf shall not wither — even in the unremarkable months when nobody is watching for fruit yet, I am still green, I am still alive, I am still Yours!",
+      "I declare that salvation is not only where I go when I die — it is Who has been holding me together every hour I am still here living!",
+      "I will not let one hard stretch convince me that Your benefits ran out — they did not stop coming just because I stopped keeping count!",
+      "Father, open my eyes tonight to every quiet mercy I walked straight past today without ever saying thank You!",
       "",
-      "So today I lay down every borrowed foundation I have been building on, and I pick up the one true Rock that was already laid for me!",
-      "If you have been building fast on sand because digging to the Rock felt too slow — hear this: today is still the digging season, and the storm has not come yet.",
-      "Save this. Speak it over your roots today. Blessed is the man that walketh not in the counsel of the ungodly, and whatsoever he doeth shall prosper. In Jesus' name, amen!"
+      "So tonight I lay down the habit of measuring my day only by its problems, and I pick up the practice of counting everything You carried me through!",
+      "If today felt like it took more than it gave, hear this: the God who daily loads you with benefits was not absent on the hard days — He was simply unseen.",
+      "Save this. Speak it over your gratitude tonight. Blessed be the Lord, who daily loadeth us with benefits, even the God of our salvation. In Jesus' name, amen!"
     ],
-    ref: "Psalm 1:1-3"
+    ref: "Psalm 68:19"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
   // kept current every day (by 8pm) the same way as VERSES[0], SERMONS[0],
   // and DECLARATION above.
   const NIGHT_PRAYER = {
-    text: "Father, as this day lowers its lights, I bring You everything I have carried since morning and leave it in Your hands. Thank You for being my Shepherd through today's noise, leading me even in the moments I could not feel You near. Let my heart lie down in the stillness only You give tonight, and let me wake tomorrow still following close behind You.",
+    text: "Father, thank You for the mercy that carried me through this day, and for the benefits You quietly loaded onto my life that I did not stop to count until now. Forgive me for the moments I measured today only by what went wrong, and missed how much You were still holding together. Let me rest tonight in the simple confidence that You are still the God of my salvation, and that tomorrow is already in Your hands.",
     amen: "In Jesus' name, amen."
   };
 

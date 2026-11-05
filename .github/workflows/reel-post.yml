@@ -1,0 +1,148 @@
+name: Generate & Post Instagram Reel
+
+# Fires when a new Reel content file lands under social/reels/ (pushed
+# by the daily Instagram content job - it writes only the TEXT content
+# there, since it has no access to the ElevenLabs key). This Action
+# does the actual rendering: calls ElevenLabs for the voiceover,
+# renders the branded video with Playwright, muxes it with ffmpeg,
+# commits the finished .mp4/.cover.png to social/posts/, then publishes
+# it to Instagram as a Reel.
+#
+# Can also be run by hand from the Actions tab (workflow_dispatch) to
+# render+post one specific content file, optionally with debug: "1" to
+# render the video and commit it WITHOUT posting to Instagram - useful
+# for checking a new look or a new ElevenLabs voice before it goes live.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "social/reels/**/*.json"
+  workflow_dispatch:
+    inputs:
+      content_file:
+        description: "Path to a specific content.json under social/reels/ to render (+ post unless debug is set)"
+        required: false
+      debug:
+        description: "Set to 1 to render and commit the video but skip posting it to Instagram"
+        required: false
+        default: ""
+
+jobs:
+  reel:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies (Playwright + Chromium)
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Find new reel content file(s) from this push
+        id: find
+        run: |
+          set -euo pipefail
+          if [ -n "${{ github.event.inputs.content_file }}" ]; then
+            FILES="${{ github.event.inputs.content_file }}"
+          else
+            # NOTE: git's pathspec `**` needs the :(glob) magic prefix to
+            # match cross-directory the way the `paths:` trigger above
+            # does - see the commit that fixed the same bug in
+            # instagram-post.yml for the full explanation.
+            FILES=$(git diff --name-only --diff-filter=A HEAD^ HEAD -- ':(glob)social/reels/**/*.json' || true)
+            if [ -z "$FILES" ]; then
+              FILES=$(git diff --name-only HEAD^ HEAD -- ':(glob)social/reels/**/*.json' || true)
+            fi
+          fi
+          echo "Changed files:"
+          echo "$FILES"
+          {
+            echo "files<<EOF"
+            echo "$FILES"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Render video(s) and commit them
+        id: generate
+        if: steps.find.outputs.files != ''
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_ID: ${{ secrets.ELEVENLABS_VOICE_ID }}
+        run: |
+          set -euo pipefail
+          BASES=""
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            base="social/posts/$(basename "$f" .json)"
+            echo "::group::Rendering $f"
+            node social/generate-reel.js "$f" "$base"
+            echo "::endgroup::"
+            BASES="${BASES}${base}"$'\n'
+          done <<< "${{ steps.find.outputs.files }}"
+
+          if [ -z "$BASES" ]; then
+            echo "Nothing rendered."
+            {
+              echo "bases<<EOF"
+              echo "EOF"
+            } >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add social/posts/*.mp4 social/posts/*.cover.png
+          git commit -m "$(printf 'Render Instagram Reel video(s)\n\nCo-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>')"
+          git push
+
+          NEW_SHA=$(git rev-parse HEAD)
+          echo "new_sha=$NEW_SHA" >> "$GITHUB_OUTPUT"
+          {
+            echo "bases<<EOF"
+            echo "$BASES"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Post Reel(s) to Instagram
+        if: steps.generate.outputs.bases != '' && github.event.inputs.debug != '1'
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_GRAPH_HOST: ${{ github.event.inputs.graph_host }}
+          # Override the default GITHUB_SHA (the commit that triggered
+          # this run, which does NOT contain the newly-rendered video)
+          # with the commit the "Render" step just pushed, which does -
+          # post-reel-to-instagram.js needs a SHA whose
+          # raw.githubusercontent.com URL actually serves the file.
+          GITHUB_SHA: ${{ steps.generate.outputs.new_sha }}
+        run: |
+          set -euo pipefail
+          while IFS= read -r base; do
+            [ -z "$base" ] && continue
+            video="${base}.mp4"
+            cover="${base}.cover.png"
+            if [ ! -f "$video" ]; then
+              echo "::warning::Skipping - video not found: $video"
+              continue
+            fi
+            echo "::group::Posting $video"
+            node social/post-reel-to-instagram.js "$video" "$cover"
+            echo "::endgroup::"
+            sleep 5
+          done <<< "${{ steps.generate.outputs.bases }}"
+
+      - name: Debug mode - rendered but not posted
+        if: steps.generate.outputs.bases != '' && github.event.inputs.debug == '1'
+        run: |
+          echo "debug=1 was set - video(s) rendered and committed, but NOT posted to Instagram:"
+          echo "${{ steps.generate.outputs.bases }}"

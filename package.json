@@ -1,0 +1,8 @@
+{
+  "name": "wfnglobal-site",
+  "private": true,
+  "description": "No build step for the site itself (static HTML/CSS/JS on GitHub Pages) - this file exists only so GitHub Actions can npm-install the tooling used to render Instagram Reel videos (social/generate-reel.js).",
+  "dependencies": {
+    "playwright": "^1.48.0"
+  }
+}

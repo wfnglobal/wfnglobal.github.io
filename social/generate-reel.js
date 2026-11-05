@@ -105,10 +105,12 @@ async function main() {
 
   await page.evaluate(
     ({ content, timedLines, introDuration, fadeUpDuration, endCardDelay }) => {
+      const CINEMA_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+
       const setFadeUp = (el, delaySeconds) => {
         el.style.animationName = "fadeUp";
         el.style.animationDuration = fadeUpDuration + "s";
-        el.style.animationTimingFunction = "ease";
+        el.style.animationTimingFunction = CINEMA_EASE;
         el.style.animationDelay = delaySeconds + "s";
         el.style.animationFillMode = "forwards";
       };
@@ -131,12 +133,18 @@ async function main() {
       });
 
       setFadeUp(document.querySelector(".head"), introDuration);
-      setFadeUp(document.querySelector(".kicker"), introDuration + 0.4);
+
+      const kicker = document.querySelector(".kicker");
+      kicker.style.animationName = "kickerPop";
+      kicker.style.animationDuration = "0.8s";
+      kicker.style.animationTimingFunction = CINEMA_EASE;
+      kicker.style.animationDelay = introDuration + 0.4 + "s";
+      kicker.style.animationFillMode = "forwards";
 
       const endcard = document.querySelector(".endcard");
       endcard.style.animationName = "fadeIn";
       endcard.style.animationDuration = "1s";
-      endcard.style.animationTimingFunction = "ease";
+      endcard.style.animationTimingFunction = CINEMA_EASE;
       endcard.style.animationDelay = endCardDelay + "s";
       endcard.style.animationFillMode = "forwards";
     },

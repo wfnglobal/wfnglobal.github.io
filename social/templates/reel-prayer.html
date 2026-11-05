@@ -5,7 +5,7 @@
 <title>WFN Daily Prayer Reel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Poppins:wght@400;500;600;700;800;900&display=swap">
 <style>
   :root{
     --ink:#2B2420;
@@ -16,7 +16,11 @@
     --gold-dark:#8E6A2E;
     --border:rgba(43,36,32,0.14);
     --font-display:'Fraunces', Georgia, serif;
-    --font-body:'Inter', -apple-system, system-ui, sans-serif;
+    --font-body:'Poppins', -apple-system, system-ui, sans-serif;
+    /* "Cinematic" easing - a soft, premium deceleration (easeOutQuint)
+       instead of plain linear/ease, used for every kinetic-text reveal
+       below so motion feels directed rather than default-CSS. */
+    --ease-cinema: cubic-bezier(0.22, 1, 0.36, 1);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html,body{width:1080px; height:1920px; overflow:hidden;}
@@ -27,6 +31,19 @@
     position:relative;
   }
   .texture{position:absolute; inset:0; background-image:radial-gradient(#E9DFC4 1.5px, transparent 1.5px); background-size:30px 30px; opacity:0.07;}
+
+  /* Slow continuous drift on the whole scene - a cheap, classic
+     "Ken Burns" move that keeps a static-content frame feeling alive
+     on camera instead of looking like a still card. Independent of
+     any content timing, so it just runs free the whole video. */
+  .scene{position:absolute; inset:0; transform-origin:50% 42%;
+    animation: kenBurns 22s var(--ease-cinema) infinite alternate;}
+  @keyframes kenBurns{ from{transform:scale(1.0);} to{transform:scale(1.045);} }
+
+  /* Soft dark vignette so the warm card reads with more depth / contrast,
+     like a graded shot rather than a flat screenshot. */
+  .vignette{position:absolute; inset:0; z-index:4; pointer-events:none;
+    background:radial-gradient(ellipse 1300px 1700px at 50% 50%, transparent 55%, rgba(30,22,12,0.16) 100%);}
 
   /* Soft sunburst rays radiating from behind the header mark */
   .sunburst{position:absolute; top:-120px; left:50%; width:1500px; height:1500px; margin-left:-750px;
@@ -65,30 +82,43 @@
      fading in at page-load time, before the script gets a chance to
      set the real delay. Only their static resting state (opacity:0,
      and a transform for the slide-up ones) lives in CSS. */
-  .head{display:flex; align-items:center; gap:22px; opacity:0;}
+  .head{display:flex; align-items:center; gap:22px; opacity:0; filter:blur(10px); transform:translateY(16px) scale(0.97);}
   .mark{width:72px; height:72px; flex-shrink:0;}
   .brand-name{font-family:var(--font-display); font-weight:700; font-size:36px; color:var(--ink); letter-spacing:-0.3px;}
-  .brand-sub{font-size:17px; color:var(--ink-3); font-weight:700; margin-top:4px; letter-spacing:0.5px; text-transform:uppercase;}
+  .brand-sub{font-size:16px; color:var(--ink-3); font-weight:700; margin-top:4px; letter-spacing:1.5px; text-transform:uppercase;}
 
-  .kicker{margin-top:56px; font-size:18px; font-weight:800; letter-spacing:0.24em; text-transform:uppercase; color:var(--gold);
-    opacity:0;}
+  /* Kicker gets a punchier "title-card" reveal: starts wide-tracked and
+     slightly blurred, snaps into its tight final letter-spacing - a
+     common kinetic-type move for section headers in edited video. */
+  .kicker{margin-top:56px; font-size:19px; font-weight:800; letter-spacing:0.5em; text-transform:uppercase; color:var(--gold);
+    opacity:0; filter:blur(6px);}
 
   .prayer{flex:1; display:flex; flex-direction:column; justify-content:center; margin-top:28px;}
-  .line{font-family:var(--font-body); font-size:50px; line-height:1.42; font-weight:500; color:var(--ink); margin:0 0 30px; opacity:0; transform:translateY(22px);}
-  .line b{font-weight:700; color:#7A3B36;}
+  .line{font-family:var(--font-body); font-size:50px; line-height:1.42; font-weight:500; color:var(--ink); margin:0 0 30px;
+    opacity:0; filter:blur(14px); transform:translateY(34px) scale(0.95);}
+  .line b{font-weight:800; color:#7A3B36; text-shadow:0 0 18px rgba(169,130,79,0.35);}
   .line.opener{font-family:var(--font-display); font-style:italic; font-weight:600; color:#5B4B2A; font-size:42px; line-height:1.4;}
 
   .endcard{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px;
     background:radial-gradient(ellipse 1400px 1000px at 50% 8%, #FFFDF8 0%, #FBF4E3 42%, #F3E7C9 100%);
-    opacity:0; text-align:center; padding:0 90px;}
-  .endcard .mark2{width:110px; height:110px;}
+    opacity:0; transform:scale(1.04); text-align:center; padding:0 90px;}
+  .endcard .mark2{width:110px; height:110px; animation: markGlow 2.4s ease-in-out infinite; animation-delay:1s;}
   .endcard h2{font-family:var(--font-display); font-weight:700; font-size:46px; color:var(--ink); margin-top:10px;}
-  .endcard p.cta{font-size:28px; font-weight:600; color:var(--ink-2); max-width:820px; line-height:1.5;}
-  .endcard .handle{font-size:30px; font-weight:800; color:var(--gold-dark); letter-spacing:0.02em;}
-  .endcard .site{font-size:24px; font-weight:600; color:var(--ink-3);}
+  .endcard p.cta{font-family:var(--font-body); font-size:27px; font-weight:600; color:var(--ink-2); max-width:820px; line-height:1.5;}
+  .endcard .handle{font-family:var(--font-body); font-size:30px; font-weight:800; color:var(--gold-dark); letter-spacing:0.02em;}
+  .endcard .site{font-family:var(--font-body); font-size:24px; font-weight:600; color:var(--ink-3);}
 
-  @keyframes fadeUp{ from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:translateY(0);} }
-  @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+  @keyframes fadeUp{
+    0%{opacity:0; filter:blur(14px); transform:translateY(34px) scale(0.95);}
+    60%{opacity:1; filter:blur(0px);}
+    100%{opacity:1; filter:blur(0px); transform:translateY(0) scale(1);}
+  }
+  @keyframes kickerPop{
+    0%{opacity:0; filter:blur(6px); letter-spacing:0.5em;}
+    100%{opacity:1; filter:blur(0px); letter-spacing:0.24em;}
+  }
+  @keyframes fadeIn{ from{opacity:0; transform:scale(1.04);} to{opacity:1; transform:scale(1);} }
+  @keyframes markGlow{ 0%,100%{filter:drop-shadow(0 0 0px rgba(200,162,74,0));} 50%{filter:drop-shadow(0 0 18px rgba(200,162,74,0.55));} }
 
   /* ---- Opening: "reaching every nation" global network ---- */
   .intro{position:absolute; inset:0; z-index:5; background:radial-gradient(ellipse 1300px 1300px at 50% 42%, #2A1F14 0%, #150F0A 70%, #0E0A07 100%);
@@ -96,8 +126,8 @@
     animation: introFadeOut 0.9s ease forwards; animation-delay:3.5s;}
   .intro svg{width:1080px; height:1920px; position:absolute; top:0; left:0; overflow:visible;}
   .beam{opacity:0; stroke-width:3; stroke-dasharray:440; stroke-dashoffset:440; stroke-linecap:round;
-    animation: drawBeam 0.7s ease-out forwards;}
-  .node{opacity:0; transform-origin:center; animation: popNode 0.5s ease-out forwards;}
+    animation: drawBeam 0.7s var(--ease-cinema) forwards;}
+  .node{opacity:0; transform-origin:center; animation: popNode 0.5s var(--ease-cinema) forwards;}
   .n1{animation-delay:0.15s;} .n2{animation-delay:0.26s;} .n3{animation-delay:0.37s;}
   .n4{animation-delay:0.48s;} .n5{animation-delay:0.59s;} .n6{animation-delay:0.70s;}
   .n7{animation-delay:0.81s;} .n8{animation-delay:0.92s;} .n9{animation-delay:1.03s;}
@@ -106,10 +136,10 @@
   @keyframes popNode{ 0%{opacity:0; transform:scale(0);} 60%{opacity:1; transform:scale(1.35);} 100%{opacity:1; transform:scale(1);} }
 
   .orbit-ring{fill:none; stroke:rgba(243,217,138,0.18); stroke-width:1.5; opacity:0;
-    animation: ringFade 1s ease forwards; animation-delay:1.5s;}
+    animation: ringFade 1s var(--ease-cinema) forwards; animation-delay:1.5s;}
   @keyframes ringFade{ from{opacity:0; transform:scale(0.85);} to{opacity:1; transform:scale(1);} }
 
-  .core-glow{opacity:0; animation: coreGrow 0.8s ease forwards; animation-delay:1.9s;}
+  .core-glow{opacity:0; animation: coreGrow 0.8s var(--ease-cinema) forwards; animation-delay:1.9s;}
   @keyframes coreGrow{ from{opacity:0; transform:scale(0.3);} to{opacity:1; transform:scale(1);} }
 
   .intro-mark{position:absolute; left:50%; top:820px; transform:translate(-50%,-50%) scale(0); width:100px; height:100px;
@@ -117,9 +147,9 @@
   @keyframes markPop{ from{transform:translate(-50%,-50%) scale(0); opacity:0;} to{transform:translate(-50%,-50%) scale(1); opacity:1;} }
 
   .intro-title{position:absolute; left:0; right:0; top:1000px; text-align:center; opacity:0;
-    animation: fadeUp 0.9s ease forwards; animation-delay:2.5s;}
+    animation: fadeUp 0.9s var(--ease-cinema) forwards; animation-delay:2.5s;}
   .intro-title .name{font-family:var(--font-display); font-weight:700; font-size:50px; color:#FBEFD2; letter-spacing:-0.3px;}
-  .intro-title .tag{font-size:20px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:#C8A24A; margin-top:14px;}
+  .intro-title .tag{font-family:var(--font-body); font-size:19px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:#C8A24A; margin-top:14px;}
 
   @keyframes introFadeOut{ from{opacity:1; visibility:visible;} to{opacity:0; visibility:hidden;} }
 </style>
@@ -189,6 +219,7 @@
     </div>
   </div>
 
+  <div class="scene">
   <div class="texture"></div>
   <div class="sunburst"></div>
   <div class="ember e1"></div>
@@ -245,6 +276,9 @@
 
     <div class="prayer" id="prayerLines"><!-- .line divs injected by generate-reel.js --></div>
   </div>
+  </div><!-- /.scene -->
+
+  <div class="vignette"></div>
 
   <div class="endcard">
     <svg class="mark2" viewBox="0 0 48 48">

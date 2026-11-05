@@ -21,6 +21,16 @@
  * finds it automatically. If no caption file exists, the post goes out
  * with no caption.
  *
+ * Alt text (accessibility + Instagram SEO/search indexing): same
+ * lookup convention as the caption, but with a .alt.txt extension
+ * (e.g. prayer-2026-11-04.alt.txt). Keep it a plain, specific
+ * one-sentence description of what's on the card using the actual
+ * searchable phrase (e.g. "Daily prayer card from Word and Faith
+ * Network: a prayer for anxiety and a mind that won't rest, Psalm
+ * 1:1-3"). Falls back to the caption's first line if no .alt.txt
+ * exists, since some description is better than Instagram's default
+ * (none).
+ *
  * Required env vars (set as GitHub Actions repo secrets):
  *   IG_ACCESS_TOKEN  - long-lived Instagram/Graph API access token
  *   IG_USER_ID       - the Instagram account's numeric ID
@@ -60,6 +70,7 @@ async function main() {
   }
 
   const caption = safeReadCaption(pngPaths[0]);
+  const altText = safeReadAlt(pngPaths[0], caption);
 
   const repo = process.env.GITHUB_REPOSITORY || "wfnglobal/wfnglobal.github.io";
   const sha = process.env.GITHUB_SHA || "main";
@@ -71,9 +82,9 @@ async function main() {
 
   let creationId;
   if (imageUrls.length === 1) {
-    creationId = await createSingleMediaContainer(igUserId, token, imageUrls[0], caption);
+    creationId = await createSingleMediaContainer(igUserId, token, imageUrls[0], caption, altText);
   } else {
-    creationId = await createCarouselContainer(igUserId, token, imageUrls, caption);
+    creationId = await createCarouselContainer(igUserId, token, imageUrls, caption, altText);
   }
 
   console.log("Media container created: " + creationId);
@@ -98,11 +109,22 @@ function resolveCaptionPath(pngPath) {
   return strippedBase.replace(/\.png$/i, ".caption.txt");
 }
 
-async function createSingleMediaContainer(igUserId, token, imageUrl, caption) {
+function safeReadAlt(firstPngPath, caption) {
+  const direct = firstPngPath.replace(/\.png$/i, ".alt.txt");
+  const strippedBase = firstPngPath.replace(/-(\d+)\.png$/i, ".png").replace(/\.png$/i, ".alt.txt");
+  const p = fs.existsSync(direct) ? direct : strippedBase;
+  if (fs.existsSync(p)) return fs.readFileSync(p, "utf8").trim();
+  // Fall back to the caption's first line rather than leaving IG's
+  // default (no alt text at all) - still better for accessibility and
+  // IG's internal search/indexing of what the image is about.
+  return caption.split("\n")[0].slice(0, 280);
+}
+
+async function createSingleMediaContainer(igUserId, token, imageUrl, caption, altText) {
   const res = await fetch("https://" + GRAPH_HOST + "/" + GRAPH_VERSION + "/" + igUserId + "/media", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ image_url: imageUrl, caption: caption, access_token: token }),
+    body: JSON.stringify({ image_url: imageUrl, caption: caption, alt_text: altText, access_token: token }),
   });
   const json = await res.json();
   if (!res.ok || !json.id) {
@@ -112,13 +134,13 @@ async function createSingleMediaContainer(igUserId, token, imageUrl, caption) {
   return json.id;
 }
 
-async function createCarouselContainer(igUserId, token, imageUrls, caption) {
+async function createCarouselContainer(igUserId, token, imageUrls, caption, altText) {
   const childIds = [];
   for (const imageUrl of imageUrls) {
     const res = await fetch("https://" + GRAPH_HOST + "/" + GRAPH_VERSION + "/" + igUserId + "/media", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image_url: imageUrl, is_carousel_item: true, access_token: token }),
+      body: JSON.stringify({ image_url: imageUrl, is_carousel_item: true, alt_text: altText, access_token: token }),
     });
     const json = await res.json();
     if (!res.ok || !json.id) {

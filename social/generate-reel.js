@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 /*
- * Generates a vertical (1080x1920) voiced Reel video from
- * social/templates/reel-prayer.html, for posting as an Instagram Reel.
+ * Generates a vertical voiced Reel video from social/templates/reel-prayer.html
+ * (or reel-cinematic.html), for posting as an Instagram Reel. Templates are
+ * laid out at 1080x1920 CSS pixels but rendered at deviceScaleFactor 2, so
+ * the actual output is a true 2160x3840 ("4K" vertical) file - see the
+ * browser.newContext() call below.
  *
  * Pipeline:
  *  1. Call ElevenLabs text-to-speech for the full spoken text (opener +
@@ -172,10 +175,16 @@ async function main() {
   const templatePath = path.join(__dirname, "templates", isCinematic ? "reel-cinematic.html" : "reel-prayer.html");
   fs.copyFileSync(templatePath, renderHtmlPath);
 
+  // Templates are laid out in fixed 1080x1920 CSS pixels, but we render
+  // at deviceScaleFactor 2 so Chromium's actual framebuffer - and the
+  // video Playwright records from it - is a genuine 2160x3840 ("4K"
+  // vertical). This doubles real pixel detail in text, SVG motif edges,
+  // and gradients without touching the template's layout math at all.
   const browser = await chromium.launch();
   const context = await browser.newContext({
     viewport: { width: 1080, height: 1920 },
-    recordVideo: { dir: rawVideoDir, size: { width: 1080, height: 1920 } },
+    deviceScaleFactor: 2,
+    recordVideo: { dir: rawVideoDir, size: { width: 2160, height: 3840 } },
   });
   const page = await context.newPage();
   await page.goto("file://" + path.resolve(renderHtmlPath));
@@ -363,8 +372,8 @@ async function main() {
       "-t", String(totalDuration),
       "-vf", "fps=30,format=yuv420p",
       "-c:v", "libx264",
-      "-crf", "20",
-      "-preset", "medium",
+      "-crf", "17",
+      "-preset", "slow",
       "-c:a", "aac",
       "-b:a", "160k",
       "-movflags", "+faststart",

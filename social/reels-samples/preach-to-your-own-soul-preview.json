@@ -1,0 +1,57 @@
+{
+  "template": "cinematic",
+  "mood": "dusk",
+  "lines": [
+    { "text": "There is a kind of honesty that doesn't wait for good news first.", "visual": "path" },
+    { "text": "Habakkuk stood on a hillside and named every loss out loud.", "visual": "path" },
+    { "text": "The fig tree will not blossom. No fruit in the vines.", "visual": "path" },
+    { "text": "The labour of the olive has failed, and the fields have nothing to give.", "visual": "path" },
+    { "text": "The flock is cut off from the fold. The stalls stand empty.", "visual": "path" },
+    { "text": "No denial. No spiritualizing. Just the truth, spoken plainly.", "visual": "path" },
+
+    { "text": "And then, in the very next breath, the turn.", "visual": "dawn" },
+    { "text": "Yet I will rejoice in the Lord.", "visual": "dawn" },
+    { "text": "I will joy in the God of my salvation.", "visual": "dawn" },
+    { "text": "Not because the vine finally budded. It hadn't.", "visual": "dawn" },
+
+    { "text": "Habakkuk didn't wait for his bank account to recover before he decided to rejoice.", "visual": "anchor" },
+    { "text": "He separated his joy from his receipts while the receipts were still on the table.", "visual": "anchor" },
+    { "text": "That's not denial. That's an anchor dropped somewhere the storm can't reach.", "visual": "anchor" },
+
+    { "text": "Across the Bible, in another ruin, Job is sitting in the wreckage of everything he owned.", "visual": "room" },
+    { "text": "Ash on his skin. Grief in his posture.", "visual": "room" },
+    { "text": "And still he says the sentence that outlives every other line he ever spoke.", "visual": "room" },
+    { "text": "Though he slay me, yet will I trust in him.", "visual": "room" },
+    { "text": "No explanation required. Trust was never waiting on a memo from heaven.", "visual": "room" },
+
+    { "text": "Centuries later, a king lies awake, alone, talking to the one person who won't talk back.", "visual": "breath" },
+    { "text": "David turns and interrogates his own soul.", "visual": "breath" },
+    { "text": "Why art thou cast down, O my soul? Why art thou disquieted within me?", "visual": "breath" },
+    { "text": "He doesn't ask his soul for permission. He issues it a command.", "visual": "breath" },
+    { "text": "Hope thou in God.", "visual": "breath" },
+
+    { "text": "Three men. Three ruins. The same radical move.", "visual": "hands" },
+    { "text": "None of them waited for the circumstance to change first.", "visual": "hands" },
+    { "text": "None of them waited for the feeling to catch up first.", "visual": "hands" },
+    { "text": "Your rejoicing was never supposed to be a reaction.", "visual": "hands" },
+    { "text": "It was always meant to be a decision.", "visual": "hands" },
+    { "text": "The will moves first. The feeling is left to catch up later.", "visual": "hands" },
+
+    { "text": "So here's the real question tonight.", "visual": "seed" },
+    { "text": "What's your empty vine right now?", "visual": "seed" },
+    { "text": "What are you still waiting to change before you'll let yourself rejoice?", "visual": "seed" },
+    { "text": "Stop listening to your soul, and start talking to it.", "visual": "seed" },
+    { "text": "Preach to it until it believes you.", "visual": "seed" },
+
+    { "text": "The Lord God is my strength.", "visual": "rest" },
+    { "text": "He will make my feet like hinds' feet.", "visual": "rest" },
+    { "text": "And He will make me walk upon my high places.", "visual": "rest" },
+    { "text": "In Jesus' name, amen.", "visual": "rest" }
+  ],
+  "bold": "The will moves first.",
+  "title": "Word and Faith Network",
+  "subtitle": "Preach to Your Own Soul",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "Habakkuk, Job, and David all stood in a ruin and did the same radical thing: they rejoiced before anything changed. Rejoicing was never a reaction to good news - it's a decision the will makes first, and lets the feeling catch up later."
+}

@@ -34,5 +34,14 @@
     "mood": "light",
     "videoUrl": "/social/posts/motif-library-test.mp4",
     "posterUrl": "/social/posts/motif-library-test.cover.png"
+  },
+  {
+    "id": "sermon-summary-2026-11-06",
+    "date": "2026-11-06",
+    "title": "Approved, Not Ashamed & Planted by the Rivers",
+    "description": "A sermon-summary reflection drawing together two teachings from this week — studying for an audience of One (2 Timothy 2:15) and the tree planted by the rivers of water (Psalm 1:1-3) — told through a quiet study, a planted seed, a steady anchor, and a slow dawn.",
+    "mood": "sepia",
+    "videoUrl": "/social/posts/sermon-summary-2026-11-06.mp4",
+    "posterUrl": "/social/posts/sermon-summary-2026-11-06.cover.png"
   }
 ]

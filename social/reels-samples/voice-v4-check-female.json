@@ -1,0 +1,14 @@
+{
+  "template": "cinematic",
+  "mood": "light",
+  "voice": "female",
+  "lines": [
+    { "text": "This is a short voice check.", "visual": "dawn" },
+    { "text": "Testing the newer model for a more natural, human delivery.", "visual": "anchor" },
+    { "text": "In Jesus' name, amen.", "visual": "rest" }
+  ],
+  "title": "Word and Faith Network",
+  "subtitle": "Voice check",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org"
+}

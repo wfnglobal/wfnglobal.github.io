@@ -291,5 +291,15 @@
     <div class="handle" id="handle">@wordfaithnetwork</div>
     <div class="site" id="site">wfnglobal.org</div>
   </div>
+<!-- WFN ownership watermark (top-right), shown after the brand intro. -->
+<div style="position:absolute; top:40px; right:44px; z-index:50; display:flex; align-items:center; gap:12px; opacity:0; animation:wfnWmIn 1.2s ease 4.2s forwards; filter:drop-shadow(0 1px 6px rgba(0,0,0,0.55)); pointer-events:none;">
+  <svg viewBox="0 0 48 48" style="width:52px; height:52px;">
+    <circle cx="24" cy="24" r="21.3" fill="none" stroke="#C8A24A" stroke-width="1.4"/>
+    <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="#C8A24A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#D9B45E"/>
+  </svg>
+  <span style="font-family:'Poppins', system-ui, sans-serif; font-weight:600; font-size:24px; letter-spacing:0.3em; color:#C8A24A;">WFN</span>
+</div>
+<style>@keyframes wfnWmIn{to{opacity:0.85;}}</style>
 </body>
 </html>

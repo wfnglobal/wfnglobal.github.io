@@ -31,7 +31,7 @@
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Fraunces:opsz,wght@9..144,700&family=Poppins:wght@300;400;500;600&display=swap">
 <style>
   :root{
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -139,19 +139,49 @@
   .cap-line.scripture{font-family:var(--serif); font-style:italic; font-weight:500; font-size:60px; line-height:1.28; color:#FFF8EC;}
   .cap-line.scripture b{font-weight:600;}
 
-  /* Cold open */
+  /* Opening: the WFN "global reach" brand intro (0-4s, identical to the
+     daily reels), then this film's own title card (4-7s). generate-reel.js
+     starts narration at 7s for this template (SCENES_INTRO_DURATION). */
   .intro{position:absolute; inset:0; background:#000; z-index:30; display:flex; align-items:center; justify-content:center;
-    animation:introOut 1.0s ease 3.3s forwards;}
-  .intro .presents{position:absolute; text-align:center; font-family:var(--sans); font-weight:400; font-size:24px; letter-spacing:0.5em;
-    text-transform:uppercase; color:#D8CFBE; opacity:0; animation:presents 2.0s ease 0.25s forwards; padding:0 60px;}
-  .intro .presents small{display:block; margin-top:22px; font-size:17px; letter-spacing:0.45em; color:#9F978A;}
+    animation:introOut 1.0s ease 6.3s forwards;}
   .intro .film{position:absolute; text-align:center; font-family:var(--serif); font-weight:500; font-size:104px; line-height:1.02;
-    color:#FBF4E6; padding:0 70px; opacity:0; animation:film 1.5s cubic-bezier(0.22,1,0.36,1) 2.15s forwards;}
-  .intro .film-rule{position:absolute; top:calc(50% + 150px); width:0; height:1px; background:#C9A86E; animation:rule 1.2s ease 2.5s forwards;}
-  @keyframes presents{0%{opacity:0;} 30%{opacity:1;} 72%{opacity:1;} 100%{opacity:0;}}
+    color:#FBF4E6; padding:0 70px; opacity:0; animation:film 1.5s cubic-bezier(0.22,1,0.36,1) 4.45s forwards;}
+  .intro .film-rule{position:absolute; top:calc(50% + 150px); width:0; height:1px; background:#C9A86E; animation:rule 1.2s ease 4.8s forwards;}
   @keyframes film{from{opacity:0; letter-spacing:0.16em; filter:blur(10px);} to{opacity:1; letter-spacing:0.01em; filter:blur(0);}}
   @keyframes rule{to{width:160px;}}
   @keyframes introOut{to{opacity:0;}}
+
+  .gr{position:absolute; inset:0; z-index:32; background:radial-gradient(ellipse 1300px 1300px at 50% 42%, #2A1F14 0%, #150F0A 70%, #0E0A07 100%);
+    animation:grOut 0.9s ease 3.5s forwards;}
+  .gr svg.gr-net{width:1080px; height:1920px; position:absolute; top:0; left:0; overflow:visible;}
+  .gr-beam{opacity:0; stroke-width:3; stroke-dasharray:440; stroke-dashoffset:440; stroke-linecap:round; animation:grBeam 0.7s var(--ease) forwards;}
+  .gr-node{opacity:0; transform-box:fill-box; transform-origin:center; animation:grNode 0.5s var(--ease) forwards;}
+  .g1{animation-delay:0.15s;} .g2{animation-delay:0.26s;} .g3{animation-delay:0.37s;} .g4{animation-delay:0.48s;}
+  .g5{animation-delay:0.59s;} .g6{animation-delay:0.70s;} .g7{animation-delay:0.81s;} .g8{animation-delay:0.92s;}
+  .g9{animation-delay:1.03s;} .g10{animation-delay:1.14s;} .g11{animation-delay:1.25s;} .g12{animation-delay:1.36s;}
+  @keyframes grBeam{from{opacity:0.9; stroke-dashoffset:440;} to{opacity:0.55; stroke-dashoffset:0;}}
+  @keyframes grNode{0%{opacity:0; transform:scale(0);} 60%{opacity:1; transform:scale(1.35);} 100%{opacity:1; transform:scale(1);}}
+  .gr-ring{fill:none; stroke:rgba(243,217,138,0.18); stroke-width:1.5; opacity:0; transform-box:fill-box; transform-origin:center;
+    animation:grRing 1s var(--ease) 1.5s forwards;}
+  @keyframes grRing{from{opacity:0; transform:scale(0.85);} to{opacity:1; transform:scale(1);}}
+  .gr-core{opacity:0; transform-box:fill-box; transform-origin:center; animation:grCore 0.8s var(--ease) 1.9s forwards;}
+  @keyframes grCore{from{opacity:0; transform:scale(0.3);} to{opacity:1; transform:scale(1);}}
+  .gr-mark{position:absolute; left:50%; top:820px; transform:translate(-50%,-50%) scale(0); width:100px; height:100px;
+    animation:grMark 0.6s cubic-bezier(.2,1.4,.4,1) 2.1s forwards;}
+  @keyframes grMark{from{transform:translate(-50%,-50%) scale(0); opacity:0;} to{transform:translate(-50%,-50%) scale(1); opacity:1;}}
+  .gr-title{position:absolute; left:0; right:0; top:1000px; text-align:center; opacity:0; animation:grUp 0.9s var(--ease) 2.5s forwards;}
+  .gr-title .name{font-family:'Fraunces', Georgia, serif; font-weight:700; font-size:50px; color:#FBEFD2; letter-spacing:-0.3px;}
+  .gr-title .tag{font-family:var(--sans); font-size:19px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:#C8A24A; margin-top:14px;}
+  @keyframes grUp{from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:translateY(0);}}
+  @keyframes grOut{to{opacity:0; visibility:hidden;}}
+
+  /* Ownership watermark: WFN mark + "WFN", top-right, from the first
+     scene through the end card. */
+  .wm{position:absolute; top:30px; right:40px; z-index:22; display:flex; align-items:center; gap:12px; opacity:0;
+    animation:wmIn 1.2s ease 7.0s forwards; filter:drop-shadow(0 1px 6px rgba(0,0,0,0.6));}
+  .wm svg{width:52px; height:52px;}
+  .wm span{font-family:var(--sans); font-weight:600; font-size:24px; letter-spacing:0.3em; color:#E8C79A;}
+  @keyframes wmIn{to{opacity:0.85;}}
 
   /* End card */
   .title-card{position:absolute; inset:0; z-index:18; opacity:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -718,9 +748,58 @@
 </div>
 
 <div class="intro" id="intro">
-  <div class="presents" id="introPresents">Word and Faith Network<small>presents</small></div>
   <div class="film" id="introTitle"></div>
   <div class="film-rule"></div>
+</div>
+
+<div class="gr" aria-hidden="true">
+  <svg class="gr-net" viewBox="0 0 1080 1920">
+      <circle class="gr-ring" cx="540" cy="820" r="420"/>
+      <circle class="gr-ring" cx="540" cy="820" r="300" style="animation-delay:1.65s;"/>
+      <line class="gr-beam g1" x1="540" y1="820" x2="540.0" y2="400.0" stroke="#C8A24A"/>
+      <line class="gr-beam g2" x1="540" y1="820" x2="750.0" y2="456.3" stroke="#B5603F"/>
+      <line class="gr-beam g3" x1="540" y1="820" x2="903.7" y2="610.0" stroke="#3F7D78"/>
+      <line class="gr-beam g4" x1="540" y1="820" x2="960.0" y2="820.0" stroke="#6F8C7D"/>
+      <line class="gr-beam g5" x1="540" y1="820" x2="903.7" y2="1030.0" stroke="#7A3B36"/>
+      <line class="gr-beam g6" x1="540" y1="820" x2="750.0" y2="1183.7" stroke="#3D5A80"/>
+      <line class="gr-beam g7" x1="540" y1="820" x2="540.0" y2="1240.0" stroke="#C99A3E"/>
+      <line class="gr-beam g8" x1="540" y1="820" x2="330.0" y2="1183.7" stroke="#D97B5A"/>
+      <line class="gr-beam g9" x1="540" y1="820" x2="176.3" y2="1030.0" stroke="#3F6B4A"/>
+      <line class="gr-beam g10" x1="540" y1="820" x2="120.0" y2="820.0" stroke="#6B4A7A"/>
+      <line class="gr-beam g11" x1="540" y1="820" x2="176.3" y2="610.0" stroke="#B85C7A"/>
+      <line class="gr-beam g12" x1="540" y1="820" x2="330.0" y2="456.3" stroke="#8E6A2E"/>
+      <circle class="gr-node g1" cx="540.0" cy="400.0" r="14" fill="#C8A24A"/>
+      <circle class="gr-node g2" cx="750.0" cy="456.3" r="14" fill="#B5603F"/>
+      <circle class="gr-node g3" cx="903.7" cy="610.0" r="14" fill="#3F7D78"/>
+      <circle class="gr-node g4" cx="960.0" cy="820.0" r="14" fill="#6F8C7D"/>
+      <circle class="gr-node g5" cx="903.7" cy="1030.0" r="14" fill="#7A3B36"/>
+      <circle class="gr-node g6" cx="750.0" cy="1183.7" r="14" fill="#3D5A80"/>
+      <circle class="gr-node g7" cx="540.0" cy="1240.0" r="14" fill="#C99A3E"/>
+      <circle class="gr-node g8" cx="330.0" cy="1183.7" r="14" fill="#D97B5A"/>
+      <circle class="gr-node g9" cx="176.3" cy="1030.0" r="14" fill="#3F6B4A"/>
+      <circle class="gr-node g10" cx="120.0" cy="820.0" r="14" fill="#6B4A7A"/>
+      <circle class="gr-node g11" cx="176.3" cy="610.0" r="14" fill="#B85C7A"/>
+      <circle class="gr-node g12" cx="330.0" cy="456.3" r="14" fill="#8E6A2E"/>
+      <circle class="gr-core" cx="540" cy="820" r="54" fill="#F3D98A" opacity="0.18"/>
+  </svg>
+  <svg class="gr-mark" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="21.3" fill="none" stroke="#F3D98A" stroke-width="1.2"/>
+      <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="#E8C77A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#F3D98A"/>
+  </svg>
+  <div class="gr-title">
+    <div class="name">Word &amp; Faith Network</div>
+    <div class="tag">Reaching Every Nation</div>
+  </div>
+</div>
+
+<div class="wm" aria-hidden="true">
+  <svg viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="21.3" fill="none" stroke="#F3D98A" stroke-width="1.2"/>
+      <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="#E8C77A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#F3D98A"/>
+  </svg>
+  <span>WFN</span>
 </div>
 
 <div class="blackout" id="blackout"></div>

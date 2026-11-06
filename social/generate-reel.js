@@ -124,7 +124,11 @@ const path = require("path");
 const { execFileSync } = require("child_process");
 const { chromium } = require("playwright");
 
-const INTRO_DURATION = 4.0; // seconds - MUST match templates/reel-prayer.html's .intro animation-delay
+const BASE_INTRO_DURATION = 4.0; // seconds - MUST match templates/reel-prayer.html's .intro animation-delay
+// reel-scenes.html plays the same WFN "global reach" intro (0-4s) and then
+// the film's own title card (4-7s) before narration starts.
+const SCENES_INTRO_DURATION = 7.0;
+let INTRO_DURATION = BASE_INTRO_DURATION;
 const END_HOLD = 1.0; // pause after the last spoken line before the end card appears
 const END_CARD_DURATION = 3.0; // how long the end card stays on screen
 const CINEMATIC_END_CARD_DURATION = 4.0; // the restrained title card gets a bit longer to breathe
@@ -212,6 +216,7 @@ async function main() {
   // is a full illustrated scene with its own colour grade and camera move.
   const isScenes = content.template === "scenes";
   const isCinematic = content.template === "cinematic" || isScenes;
+  if (isScenes) INTRO_DURATION = SCENES_INTRO_DURATION;
   const lines = buildLines(content, isCinematic);
   if (lines.length === 0) {
     console.error("content.json must have at least one line (opener and/or lines[]).");
@@ -561,7 +566,7 @@ async function main() {
   // Instagram Reel cover image.
   execFileSync(
     "ffmpeg",
-    ["-y", "-ss", String(INTRO_DURATION + 1.5), "-i", finalMp4, "-frames:v", "1", "-update", "1", coverPng],
+    ["-y", "-ss", String(INTRO_DURATION + (isScenes ? 4 : 1.5)), "-i", finalMp4, "-frames:v", "1", "-update", "1", coverPng],
     { stdio: "inherit" }
   );
 

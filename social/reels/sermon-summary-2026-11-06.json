@@ -1,0 +1,57 @@
+{
+  "template": "cinematic",
+  "mood": "sepia",
+  "lines": [
+    { "text": "Two sermons this week. One quiet thread underneath both of them.", "visual": "room" },
+    { "text": "The first was called Approved, Not Ashamed.", "visual": "room" },
+    { "text": "The second, Planted by the Rivers.", "visual": "room" },
+    { "text": "Different texts. Different centuries. The same real question.", "visual": "room" },
+    { "text": "Who are you actually building your life in front of?", "visual": "room" },
+    { "text": "Not who's watching. Who you're actually answering to.", "visual": "room" },
+
+    { "text": "Paul wrote to a young pastor named Timothy, and he didn't tell him to perform.", "visual": "path" },
+    { "text": "He told him to study — to rightly divide the word of truth.", "visual": "path" },
+    { "text": "Not for a panel. Not for a platform. For an audience of One.", "visual": "path" },
+    { "text": "Because the approval Timothy actually needed was never going to come from the room.", "visual": "path" },
+    { "text": "It never does. Not really. Not for long.", "visual": "path" },
+    { "text": "Every performance needs a new audience eventually. Approval from God doesn't expire.", "visual": "path" },
+
+    { "text": "The second sermon takes you to a single image — a tree, planted, by rivers of water.", "visual": "seed" },
+    { "text": "Psalm 1 doesn't say the blessed man feels blessed.", "visual": "seed" },
+    { "text": "It says he's planted. Different word. Different claim entirely.", "visual": "seed" },
+    { "text": "Blessing was never a feeling the wind blew in on a good day.", "visual": "seed" },
+    { "text": "It's a posture — what you refuse to walk in, refuse to stand in, refuse to sit in.", "visual": "seed" },
+    { "text": "Long before it's ever about what you're planted beside.", "visual": "seed" },
+
+    { "text": "Put those two sermons next to each other and something lines up.", "visual": "anchor" },
+    { "text": "A man who studies for God alone and a tree planted by the river are doing the same thing.", "visual": "anchor" },
+    { "text": "Neither one is performing for the weather.", "visual": "anchor" },
+    { "text": "The tree doesn't negotiate with a dry season. It just keeps its roots where the water is.", "visual": "anchor" },
+    { "text": "And the leaf doesn't wither — not because nothing hard ever comes, but because something deeper is already settled.", "visual": "anchor" },
+    { "text": "That's what an approved life actually looks like. Rooted, not reactive.", "visual": "anchor" },
+
+    { "text": "So here's the real question underneath both sermons tonight.", "visual": "breath" },
+    { "text": "Whose applause have you quietly been laboring for?", "visual": "breath" },
+    { "text": "And what have you let yourself be planted beside, just because it was convenient?", "visual": "breath" },
+    { "text": "You can stop performing for a room that was never going to satisfy you anyway.", "visual": "breath" },
+    { "text": "You can stop drifting toward whatever's nearby and start choosing what you're rooted in.", "visual": "breath" },
+    { "text": "Both decisions are available to you tonight — not someday. Tonight.", "visual": "breath" },
+
+    { "text": "That's a different kind of morning to wake up inside of.", "visual": "dawn" },
+    { "text": "Not chasing a verdict from the room.", "visual": "dawn" },
+    { "text": "Not anxious about the next performance.", "visual": "dawn" },
+    { "text": "Just planted. Just approved. Just growing, whether anyone's watching or not.", "visual": "dawn" },
+    { "text": "Study rightly. Root deeply. Let the fruit make the argument for you.", "visual": "dawn" },
+
+    { "text": "Whatsoever that man does shall prosper, the Psalm says — and it isn't a slogan.", "visual": "rest" },
+    { "text": "It's a promise for whoever actually gets planted and actually stays.", "visual": "rest" },
+    { "text": "So be planted. Be approved. Be unashamed of the quiet, rooted life nobody claps for.", "visual": "rest" },
+    { "text": "In Jesus' name, amen.", "visual": "rest" }
+  ],
+  "bold": "Rooted, not reactive.",
+  "title": "Word and Faith Network",
+  "subtitle": "This week's sermons: Approved, Not Ashamed & Planted by the Rivers",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A sermon-summary reflection drawing together two teachings from this week — studying for an audience of One (2 Timothy 2:15) and the tree planted by the rivers of water (Psalm 1:1-3) — told through a quiet study, a planted seed, a steady anchor, and a slow dawn."
+}

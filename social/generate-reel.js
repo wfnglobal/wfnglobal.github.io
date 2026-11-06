@@ -27,7 +27,7 @@
  * Writes <outBase>.mp4 and <outBase>.cover.png (a still frame partway
  * into the first line, usable as the Instagram Reel cover image).
  *
- * content.json shape:
+ * content.json shape (classic - social/templates/reel-prayer.html):
  * {
  *   "opener": "Father, I come to You exhausted...",  // optional, styled as an italic opener line
  *   "lines": ["I release every outcome...", "..."],  // required, at least one
@@ -38,6 +38,26 @@
  *   "handle": "@wordfaithnetwork",                     // optional
  *   "site": "wfnglobal.org"                            // optional
  * }
+ *
+ * content.json shape (cinematic - social/templates/reel-cinematic.html,
+ * selected by "template": "cinematic"): a restrained, muted-grade
+ * motion-graphics treatment (no "card" background, no bold brand
+ * header) for a short-film-style piece. Each line names which visual
+ * "phase" is on screen while it's spoken, so the background crossfades
+ * between a small set of abstract scenes instead of staying static:
+ * {
+ *   "template": "cinematic",
+ *   "lines": [
+ *     { "text": "You already said the words.", "visual": "hands" },
+ *     { "text": "...", "visual": "room" },        // "hands" | "room" | "breath" | "rest"
+ *     ...
+ *   ],
+ *   "bold": "lay the debt down",                 // optional - exact phrase to bold, matched against lines
+ *   "title": "Word and Faith Network",            // shown on the closing title card
+ *   "subtitle": "Release the debt. Keep the boundary.",
+ *   "handle": "@wordfaithnetwork",
+ *   "site": "wfnglobal.org"
+ * }
  */
 const fs = require("fs");
 const path = require("path");
@@ -47,6 +67,7 @@ const { chromium } = require("playwright");
 const INTRO_DURATION = 4.0; // seconds - MUST match templates/reel-prayer.html's .intro animation-delay
 const END_HOLD = 1.0; // pause after the last spoken line before the end card appears
 const END_CARD_DURATION = 3.0; // how long the end card stays on screen
+const CINEMATIC_END_CARD_DURATION = 4.0; // the restrained title card gets a bit longer to breathe
 const FADE_UP_DURATION = 0.9; // seconds - matches the fadeUp keyframes' duration we set via JS below
 const VOICE_ID =
   process.env.ELEVENLABS_VOICE_ID || "pNInz6obpgDQGcFmaJgB"; // "Adam" - a standard ElevenLabs premade voice; override with ELEVENLABS_VOICE_ID if a different one fits better
@@ -64,7 +85,8 @@ async function main() {
   }
 
   const content = JSON.parse(fs.readFileSync(contentPath, "utf8"));
-  const lines = buildLines(content);
+  const isCinematic = content.template === "cinematic";
+  const lines = buildLines(content, isCinematic);
   if (lines.length === 0) {
     console.error("content.json must have at least one line (opener and/or lines[]).");
     process.exit(1);
@@ -77,21 +99,22 @@ async function main() {
   const renderHtmlPath = outBase + ".render.html";
 
   console.log("Generating voiceover (" + lines.length + " lines)...");
-  const speechText = lines.map((l) => l.text).join(". ");
-  await synthesizeSpeech(speechText, apiKey, audioPath);
+  const speechText = lines.map((l) => l.text).join(isCinematic ? " " : ". ");
+  await synthesizeSpeech(speechText, apiKey, audioPath, isCinematic);
 
   const audioDuration = getAudioDuration(audioPath);
   console.log("Audio duration: " + audioDuration.toFixed(2) + "s");
 
   const timedLines = distributeTiming(lines, audioDuration);
-  const totalDuration = INTRO_DURATION + audioDuration + END_HOLD + END_CARD_DURATION;
+  const endCardDuration = isCinematic ? CINEMATIC_END_CARD_DURATION : END_CARD_DURATION;
+  const totalDuration = INTRO_DURATION + audioDuration + END_HOLD + endCardDuration;
   console.log("Total video duration: " + totalDuration.toFixed(2) + "s");
 
   console.log("Rendering frames...");
   fs.rmSync(rawVideoDir, { recursive: true, force: true });
   fs.mkdirSync(rawVideoDir, { recursive: true });
 
-  const templatePath = path.join(__dirname, "templates", "reel-prayer.html");
+  const templatePath = path.join(__dirname, "templates", isCinematic ? "reel-cinematic.html" : "reel-prayer.html");
   fs.copyFileSync(templatePath, renderHtmlPath);
 
   const browser = await chromium.launch();
@@ -103,59 +126,146 @@ async function main() {
   await page.goto("file://" + path.resolve(renderHtmlPath));
   await page.waitForTimeout(250); // let web fonts settle before injecting content/timing
 
-  await page.evaluate(
-    ({ content, timedLines, introDuration, fadeUpDuration, endCardDelay }) => {
-      const CINEMA_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+  if (isCinematic) {
+    await page.evaluate(
+      ({ content, timedLines, introDuration, endCardDelay }) => {
+        const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+        const capLine = document.getElementById("capLine");
+        const phaseEls = {
+          hands: document.getElementById("phaseHands"),
+          room: document.getElementById("phaseRoom"),
+          breath: document.getElementById("phaseBreath"),
+          rest: document.getElementById("phaseRest"),
+        };
 
-      const setFadeUp = (el, delaySeconds) => {
-        el.style.animationName = "fadeUp";
-        el.style.animationDuration = fadeUpDuration + "s";
-        el.style.animationTimingFunction = CINEMA_EASE;
-        el.style.animationDelay = delaySeconds + "s";
-        el.style.animationFillMode = "forwards";
-      };
+        // Plain setTimeout + transition scheduling, rather than
+        // pre-baked CSS @keyframes/animation-delay like the classic
+        // template - simpler to drive one caption div's content and a
+        // handful of background "phase" layers through a real
+        // timeline. Browser timers keep running in real time while
+        // Playwright's page.waitForTimeout holds the page open for
+        // the full video length below, so this lines up with the
+        // actual recording.
+        function showPhase(key) {
+          Object.values(phaseEls).forEach((el) => { if (el) el.style.opacity = "0"; });
+          const el = phaseEls[key];
+          if (!el) return;
+          el.style.transition = "opacity 1.6s " + EASE;
+          requestAnimationFrame(() => { el.style.opacity = "1"; });
+        }
 
-      document.getElementById("kicker").textContent = content.kicker || "Today's Prayer";
-      document.getElementById("brandSub").textContent = content.brandSub || "Daily Prayer";
-      document.getElementById("ctaLine").textContent =
-        content.ctaLine || "Save this. Share this. Someone you know needs it today.";
-      document.getElementById("handle").textContent = content.handle || "@wordfaithnetwork";
-      document.getElementById("site").textContent = content.site || "wfnglobal.org";
+        function showCaption(html) {
+          capLine.style.transition = "none";
+          capLine.style.opacity = "0";
+          capLine.style.filter = "blur(12px)";
+          capLine.style.transform = "translateY(26px) scale(0.97)";
+          capLine.innerHTML = html;
+          void capLine.offsetWidth; // force reflow so the transition below actually animates
+          capLine.style.transition = "opacity 0.8s " + EASE + ", filter 0.8s " + EASE + ", transform 0.8s " + EASE;
+          requestAnimationFrame(() => {
+            capLine.style.opacity = "1";
+            capLine.style.filter = "blur(0px)";
+            capLine.style.transform = "translateY(0) scale(1)";
+          });
+        }
 
-      const container = document.getElementById("prayerLines");
-      container.innerHTML = "";
-      timedLines.forEach((line) => {
-        const div = document.createElement("div");
-        div.className = "line" + (line.isOpener ? " opener" : "");
-        div.innerHTML = line.html;
-        container.appendChild(div);
-        setFadeUp(div, introDuration + line.start);
-      });
+        function hideCaption() {
+          capLine.style.transition = "opacity 0.5s ease";
+          capLine.style.opacity = "0";
+        }
 
-      setFadeUp(document.querySelector(".head"), introDuration);
+        let lastVisual = null;
+        timedLines.forEach((line, i) => {
+          const startMs = (introDuration + line.start) * 1000;
+          const nextStartMs = i + 1 < timedLines.length ? (introDuration + timedLines[i + 1].start) * 1000 : startMs + 3000;
+          setTimeout(() => showCaption(line.html), Math.max(0, startMs));
+          setTimeout(() => hideCaption(), Math.max(startMs + 500, nextStartMs - 500));
+          if (line.visual && line.visual !== lastVisual) {
+            setTimeout(() => showPhase(line.visual), Math.max(0, startMs - 600));
+            lastVisual = line.visual;
+          }
+        });
 
-      const kicker = document.querySelector(".kicker");
-      kicker.style.animationName = "kickerPop";
-      kicker.style.animationDuration = "0.8s";
-      kicker.style.animationTimingFunction = CINEMA_EASE;
-      kicker.style.animationDelay = introDuration + 0.4 + "s";
-      kicker.style.animationFillMode = "forwards";
+        document.getElementById("titleBrand").textContent = content.title || "Word & Faith Network";
+        document.getElementById("titleTagline").textContent = content.subtitle || "";
+        document.getElementById("titleMeta").textContent =
+          (content.handle || "@wordfaithnetwork") + "  ·  " + (content.site || "wfnglobal.org");
 
-      const endcard = document.querySelector(".endcard");
-      endcard.style.animationName = "fadeIn";
-      endcard.style.animationDuration = "1s";
-      endcard.style.animationTimingFunction = CINEMA_EASE;
-      endcard.style.animationDelay = endCardDelay + "s";
-      endcard.style.animationFillMode = "forwards";
-    },
-    {
-      content,
-      timedLines,
-      introDuration: INTRO_DURATION,
-      fadeUpDuration: FADE_UP_DURATION,
-      endCardDelay: totalDuration - END_CARD_DURATION,
-    }
-  );
+        setTimeout(() => {
+          hideCaption();
+          const tc = document.getElementById("titleCard");
+          tc.style.transition = "opacity 1.2s " + EASE;
+          requestAnimationFrame(() => { tc.style.opacity = "1"; });
+        }, endCardDelay * 1000);
+
+        setTimeout(() => {
+          const b = document.getElementById("blackout");
+          b.style.transition = "opacity 1.2s ease";
+          requestAnimationFrame(() => { b.style.opacity = "1"; });
+        }, (endCardDelay + 3.0) * 1000);
+      },
+      {
+        content,
+        timedLines,
+        introDuration: INTRO_DURATION,
+        endCardDelay: totalDuration - endCardDuration,
+      }
+    );
+  } else {
+    await page.evaluate(
+      ({ content, timedLines, introDuration, fadeUpDuration, endCardDelay }) => {
+        const CINEMA_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+        const setFadeUp = (el, delaySeconds) => {
+          el.style.animationName = "fadeUp";
+          el.style.animationDuration = fadeUpDuration + "s";
+          el.style.animationTimingFunction = CINEMA_EASE;
+          el.style.animationDelay = delaySeconds + "s";
+          el.style.animationFillMode = "forwards";
+        };
+
+        document.getElementById("kicker").textContent = content.kicker || "Today's Prayer";
+        document.getElementById("brandSub").textContent = content.brandSub || "Daily Prayer";
+        document.getElementById("ctaLine").textContent =
+          content.ctaLine || "Save this. Share this. Someone you know needs it today.";
+        document.getElementById("handle").textContent = content.handle || "@wordfaithnetwork";
+        document.getElementById("site").textContent = content.site || "wfnglobal.org";
+
+        const container = document.getElementById("prayerLines");
+        container.innerHTML = "";
+        timedLines.forEach((line) => {
+          const div = document.createElement("div");
+          div.className = "line" + (line.isOpener ? " opener" : "");
+          div.innerHTML = line.html;
+          container.appendChild(div);
+          setFadeUp(div, introDuration + line.start);
+        });
+
+        setFadeUp(document.querySelector(".head"), introDuration);
+
+        const kicker = document.querySelector(".kicker");
+        kicker.style.animationName = "kickerPop";
+        kicker.style.animationDuration = "0.8s";
+        kicker.style.animationTimingFunction = CINEMA_EASE;
+        kicker.style.animationDelay = introDuration + 0.4 + "s";
+        kicker.style.animationFillMode = "forwards";
+
+        const endcard = document.querySelector(".endcard");
+        endcard.style.animationName = "fadeIn";
+        endcard.style.animationDuration = "1s";
+        endcard.style.animationTimingFunction = CINEMA_EASE;
+        endcard.style.animationDelay = endCardDelay + "s";
+        endcard.style.animationFillMode = "forwards";
+      },
+      {
+        content,
+        timedLines,
+        introDuration: INTRO_DURATION,
+        fadeUpDuration: FADE_UP_DURATION,
+        endCardDelay: totalDuration - endCardDuration,
+      }
+    );
+  }
 
   await page.waitForTimeout(Math.ceil(totalDuration * 1000) + 300);
   await context.close();
@@ -214,8 +324,14 @@ async function main() {
   console.log("WROTE: " + coverPng);
 }
 
-function buildLines(content) {
+function buildLines(content, isCinematic) {
   const lines = [];
+  if (isCinematic) {
+    (content.lines || []).forEach((l) => {
+      lines.push({ text: l.text, html: boldWrap(l.text, content.bold), isOpener: false, visual: l.visual });
+    });
+    return lines;
+  }
   if (content.opener) lines.push({ text: content.opener, html: escHtml(content.opener), isOpener: true });
   (content.lines || []).forEach((t) => {
     lines.push({ text: t, html: boldWrap(t, content.bold), isOpener: false });
@@ -247,7 +363,7 @@ function distributeTiming(lines, audioDuration) {
     const share = (l.text.length / totalChars) * usableDuration;
     const start = cursor;
     cursor += share + gap;
-    return { html: l.html, isOpener: l.isOpener, start };
+    return { html: l.html, isOpener: l.isOpener, visual: l.visual, start };
   });
 }
 
@@ -265,7 +381,13 @@ function getAudioDuration(audioPath) {
   return d;
 }
 
-async function synthesizeSpeech(text, apiKey, outPath) {
+async function synthesizeSpeech(text, apiKey, outPath, isCinematic) {
+  // The cinematic piece asks for a calm, steady, almost-private-prayer
+  // delivery - higher stability and lower "style" exaggeration than
+  // the more expressive default used for the daily card-style reels.
+  const voiceSettings = isCinematic
+    ? { stability: 0.75, similarity_boost: 0.8, style: 0.15, use_speaker_boost: true }
+    : { stability: 0.55, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true };
   const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}?output_format=mp3_44100_128`, {
     method: "POST",
     headers: {
@@ -276,7 +398,7 @@ async function synthesizeSpeech(text, apiKey, outPath) {
     body: JSON.stringify({
       text,
       model_id: "eleven_multilingual_v2",
-      voice_settings: { stability: 0.55, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true },
+      voice_settings: voiceSettings,
     }),
   });
   if (!res.ok) {

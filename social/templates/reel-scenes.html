@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WFN Scene Film</title>
+<!--
+  Scene-based "short film" template. Unlike reel-cinematic.html (one
+  theme + small abstract motifs), every scene here is its own fully
+  illustrated world with its own colour grade, atmosphere and camera
+  move, so a single film changes look as its story moves:
+
+    valley    - dusk desert valley, lone traveller, teal + amber
+    habakkuk  - burnt-orange hillside, dead vines, withered fig, prophet with staff
+    rejoice   - same prophet, arms raised, gold light breaking through cloud
+    job       - grey ash-heap ruins, broken columns, embers, seated figure
+    david     - moonlit Jerusalem rooftop, indigo + silver, lyre on the parapet
+    three     - three figures on three peaks under a rose/violet dawn
+    everyman  - modern man at a table by a rain-streaked city window, teal + amber
+    heights   - a hind on a mountain spire above a sea of clouds at sunrise
+
+  Each scene is built from layers (l-back / l-front) that get different
+  Ken Burns moves for a 2.5D parallax camera, plus an HTML particle layer
+  (.fx) for dust / ash / embers / stars / rain / bokeh / motes / smoke.
+  Only composited transforms/opacity animate - the SVG artwork itself is
+  static - so Chromium can record smoothly in real time.
+
+  generate-reel.js drives it via content.json "template": "scenes": each
+  line's "visual" is a scene key above, optional "chapter":{num,name,ref}
+  shows a chapter card as that scene opens, and "scripture": true sets
+  the line in the italic scripture face.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@300;400;500;600&display=swap">
+<style>
+  :root{
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --serif:'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+    --sans:'Poppins', -apple-system, system-ui, sans-serif;
+    --accent:#E8C79A;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{width:1080px; height:1920px; overflow:hidden; background:#000;}
+  body{font-family:var(--sans); color:#F5EFE4; position:relative;}
+
+  body[data-shot="valley"]{--accent:#F0B06A;}
+  body[data-shot="habakkuk"]{--accent:#FF9F5A;}
+  body[data-shot="rejoice"]{--accent:#FFE2A0;}
+  body[data-shot="job"]{--accent:#FF8A4C;}
+  body[data-shot="david"]{--accent:#B4C6FF;}
+  body[data-shot="three"]{--accent:#FFB3C2;}
+  body[data-shot="everyman"]{--accent:#7FD3DE;}
+  body[data-shot="heights"]{--accent:#FFD9A0;}
+
+  #stage{position:absolute; inset:0; overflow:hidden;}
+  /* Only the live scene(s) exist in the render tree at all - keeping all
+     eight scenes' full-frame layers alive at once exhausts the
+     compositor in headless Chromium and the frame goes black. */
+  .scene{position:absolute; inset:0; opacity:0; overflow:hidden; display:none;}
+  .scene.live{display:block;}
+  .layer{position:absolute; inset:0; transform-origin:var(--ox,50%) var(--oy,50%);}
+  .scene.live .layer{will-change:transform;}
+  .layer svg, .drift svg, .spin svg{position:absolute; left:0; top:0; width:1080px; height:1920px; display:block; overflow:visible;}
+  .drift{position:absolute; inset:0; animation:drift var(--ddur,40s) ease-in-out infinite alternate;}
+  .spin{position:absolute; inset:0; transform-origin:var(--rx,540px) var(--ry,960px); animation:spin var(--sdur,90s) linear infinite;}
+  @keyframes drift{from{transform:translateX(0)} to{transform:translateX(var(--drift,-60px))}}
+  @keyframes spin{from{transform:rotate(-4deg)} to{transform:rotate(4deg)}}
+
+  /* Camera moves. Back layer moves less than front = parallax depth. */
+  .scene.active .l-back{animation:var(--kb-back) var(--dur,20s) linear forwards;}
+  .scene.active .l-front{animation:var(--kb-front) var(--dur,20s) linear forwards;}
+  .scene[data-kb="push"]{--kb-back:pushB; --kb-front:pushF;}
+  .scene[data-kb="pull"]{--kb-back:pullB; --kb-front:pullF;}
+  .scene[data-kb="panl"]{--kb-back:panlB; --kb-front:panlF;}
+  .scene[data-kb="panr"]{--kb-back:panrB; --kb-front:panrF;}
+  .scene[data-kb="rise"]{--kb-back:riseB; --kb-front:riseF;}
+  @keyframes pushB{from{transform:scale(1.03)} to{transform:scale(1.10)}}
+  @keyframes pushF{from{transform:scale(1.04)} to{transform:scale(1.18)}}
+  @keyframes pullB{from{transform:scale(1.12)} to{transform:scale(1.03)}}
+  @keyframes pullF{from{transform:scale(1.22)} to{transform:scale(1.04)}}
+  @keyframes panlB{from{transform:scale(1.10) translateX(26px)} to{transform:scale(1.10) translateX(-26px)}}
+  @keyframes panlF{from{transform:scale(1.14) translateX(60px)} to{transform:scale(1.14) translateX(-60px)}}
+  @keyframes panrB{from{transform:scale(1.10) translateX(-26px)} to{transform:scale(1.10) translateX(26px)}}
+  @keyframes panrF{from{transform:scale(1.14) translateX(-60px)} to{transform:scale(1.14) translateX(60px)}}
+  @keyframes riseB{from{transform:scale(1.08) translateY(30px)} to{transform:scale(1.08) translateY(-24px)}}
+  @keyframes riseF{from{transform:scale(1.13) translateY(70px)} to{transform:scale(1.13) translateY(-46px)}}
+
+
+  /* Particles */
+  .fx{position:absolute; inset:0; pointer-events:none; overflow:hidden;}
+  .p{position:absolute; border-radius:50%; will-change:transform, opacity; opacity:0;
+     animation:pMove var(--t,20s) linear var(--d,0s) infinite;}
+  @keyframes pMove{
+    0%{transform:translate(0,0); opacity:0;}
+    15%{opacity:var(--o,0.8);}
+    85%{opacity:var(--o,0.8);}
+    100%{transform:translate(var(--dx,0px), var(--dy,0px)); opacity:0;}
+  }
+  .p.star{animation:twinkle var(--t,3s) ease-in-out var(--d,0s) infinite alternate;}
+  @keyframes twinkle{from{opacity:0.15;} to{opacity:var(--o,1);}}
+  .p.rain{border-radius:2px;}
+  .p.bokeh{animation:bokeh var(--t,8s) ease-in-out var(--d,0s) infinite alternate;}
+  @keyframes bokeh{from{opacity:calc(var(--o,0.5) * 0.4); transform:scale(0.9);} to{opacity:var(--o,0.5); transform:scale(1.08);}}
+
+  /* Birds */
+  .birds{position:absolute; inset:0; pointer-events:none;}
+  .bird{position:absolute; will-change:transform; animation:fly var(--t,40s) linear var(--d,0s) infinite;}
+  @keyframes fly{from{transform:translate(0,0);} to{transform:translate(var(--dx,-1400px), var(--dy,-120px));}}
+
+  /* Global grade layers */
+  .vignette{position:absolute; inset:0; z-index:12; pointer-events:none;
+    background:radial-gradient(ellipse 75% 60% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);}
+  .grain{position:absolute; inset:-100px; z-index:13; pointer-events:none; opacity:0.075;
+    animation:grain 0.6s steps(6) infinite;}
+  @keyframes grain{
+    0%{transform:translate(0,0);} 20%{transform:translate(-30px,20px);} 40%{transform:translate(25px,-35px);}
+    60%{transform:translate(-15px,40px);} 80%{transform:translate(35px,10px);} 100%{transform:translate(0,0);}
+  }
+  .cap-shade{position:absolute; left:0; right:0; bottom:0; height:760px; z-index:14; pointer-events:none;
+    background:linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.38) 45%, rgba(0,0,0,0) 100%);}
+  .bar{position:absolute; left:0; right:0; height:118px; background:#000; z-index:20;}
+  .bar.top{top:0;} .bar.bottom{bottom:0;}
+
+  /* Chapter card */
+  .chapter{position:absolute; left:0; right:0; top:210px; z-index:16; text-align:center; opacity:0; padding:0 80px;}
+  .chapter .num{font-family:var(--sans); font-weight:500; font-size:20px; letter-spacing:0.55em; text-transform:uppercase; color:var(--accent);}
+  .chapter .name{font-family:var(--serif); font-weight:500; font-size:88px; line-height:1.05; color:#FBF6EC; margin-top:18px;
+    text-shadow:0 2px 30px rgba(0,0,0,0.55);}
+  .chapter .rule{width:90px; height:1px; background:var(--accent); margin:26px auto 22px; opacity:0.9;}
+  .chapter .ref{font-family:var(--sans); font-weight:400; font-size:22px; letter-spacing:0.28em; text-transform:uppercase; color:#EDE4D3; opacity:0.85;}
+
+  /* Captions */
+  .caption-wrap{position:absolute; left:0; right:0; bottom:240px; z-index:15; padding:0 96px; text-align:center;}
+  .cap-line{font-family:var(--sans); font-weight:400; font-size:43px; line-height:1.45; color:#F6F0E5; opacity:0;
+    text-shadow:0 2px 3px rgba(0,0,0,0.55), 0 0 32px rgba(0,0,0,0.6);}
+  .cap-line b{font-weight:600; color:var(--accent);}
+  .cap-line.scripture{font-family:var(--serif); font-style:italic; font-weight:500; font-size:60px; line-height:1.28; color:#FFF8EC;}
+  .cap-line.scripture b{font-weight:600;}
+
+  /* Cold open */
+  .intro{position:absolute; inset:0; background:#000; z-index:30; display:flex; align-items:center; justify-content:center;
+    animation:introOut 1.0s ease 3.3s forwards;}
+  .intro .presents{position:absolute; text-align:center; font-family:var(--sans); font-weight:400; font-size:24px; letter-spacing:0.5em;
+    text-transform:uppercase; color:#D8CFBE; opacity:0; animation:presents 2.0s ease 0.25s forwards; padding:0 60px;}
+  .intro .presents small{display:block; margin-top:22px; font-size:17px; letter-spacing:0.45em; color:#9F978A;}
+  .intro .film{position:absolute; text-align:center; font-family:var(--serif); font-weight:500; font-size:104px; line-height:1.02;
+    color:#FBF4E6; padding:0 70px; opacity:0; animation:film 1.5s cubic-bezier(0.22,1,0.36,1) 2.15s forwards;}
+  .intro .film-rule{position:absolute; top:calc(50% + 150px); width:0; height:1px; background:#C9A86E; animation:rule 1.2s ease 2.5s forwards;}
+  @keyframes presents{0%{opacity:0;} 30%{opacity:1;} 72%{opacity:1;} 100%{opacity:0;}}
+  @keyframes film{from{opacity:0; letter-spacing:0.16em; filter:blur(10px);} to{opacity:1; letter-spacing:0.01em; filter:blur(0);}}
+  @keyframes rule{to{width:160px;}}
+  @keyframes introOut{to{opacity:0;}}
+
+  /* End card */
+  .title-card{position:absolute; inset:0; z-index:18; opacity:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:22px; text-align:center; padding:0 90px;
+    background:radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.86) 100%);}
+  .title-card .rule{width:80px; height:1px; background:#E8C79A;}
+  .title-card .brand{font-family:var(--serif); font-weight:600; font-size:76px; line-height:1.05; color:#FBF4E6;}
+  .title-card .tagline{font-family:var(--serif); font-style:italic; font-weight:500; font-size:48px; color:#F2D7AE;}
+  .title-card .meta{font-family:var(--sans); font-weight:400; font-size:21px; letter-spacing:0.2em; color:#CFC6B5; margin-top:12px;}
+  .blackout{position:absolute; inset:0; background:#000; z-index:40; opacity:0;}
+</style>
+</head>
+<body>
+
+<!-- Shared figures & filters (referenced by <use> in every scene) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="glow4" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="glow8" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="soft30" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="30"/></filter>
+    <filter id="cblur" x="-10%" y="-200%" width="120%" height="500%"><feGaussianBlur stdDeviation="7"/></filter>
+
+    <!-- Robed man with shepherd's staff, facing left. Base (feet) at y=0. -->
+    <g id="fig-staff">
+      <path d="M -22 -458 C -24 -486 -6 -500 8 -498 C 26 -496 34 -480 30 -456 C 36 -436 42 -414 46 -392 L -30 -392 C -28 -414 -24 -436 -22 -458 Z"/>
+      <path d="M -36 -398 C -52 -392 -62 -374 -64 -344 L -72 -190 C -78 -110 -90 -50 -100 0 L 96 0 C 88 -52 76 -112 70 -190 L 64 -344 C 62 -374 50 -392 36 -398 Z"/>
+      <path d="M 62 -300 C 100 -250 134 -200 166 -120 C 136 -128 104 -140 76 -160 Z"/>
+      <path d="M -50 -360 C -74 -322 -88 -290 -96 -258 L -84 -250 C -74 -280 -60 -312 -38 -340 Z"/>
+      <circle cx="-92" cy="-254" r="10"/>
+      <path d="M -104 -332 L -96 -332 L -106 0 L -114 0 Z"/>
+      <path d="M -100 -330 C -104 -356 -90 -372 -74 -366 C -62 -360 -64 -344 -74 -340 L -78 -347 C -73 -350 -76 -357 -82 -356 C -92 -353 -93 -342 -93 -330 Z"/>
+    </g>
+
+    <!-- Robed man standing tall, arms at his sides. -->
+    <g id="fig-robe">
+      <path d="M -22 -458 C -24 -486 -6 -500 8 -498 C 26 -496 34 -480 30 -456 C 36 -436 42 -414 46 -392 L -30 -392 C -28 -414 -24 -436 -22 -458 Z"/>
+      <path d="M -36 -398 C -52 -392 -62 -374 -64 -344 L -72 -190 C -78 -110 -90 -50 -100 0 L 96 0 C 88 -52 76 -112 70 -190 L 64 -344 C 62 -374 50 -392 36 -398 Z"/>
+      <path d="M -62 -330 C -74 -280 -80 -230 -78 -186 L -64 -188 C -64 -232 -60 -280 -50 -326 Z"/>
+      <path d="M 62 -330 C 74 -280 80 -230 78 -186 L 64 -188 C 64 -232 60 -280 50 -326 Z"/>
+      <path d="M 58 -300 C 92 -256 118 -214 140 -150 C 116 -158 94 -170 72 -186 Z"/>
+    </g>
+
+    <!-- Robed man, both arms lifted high. -->
+    <g id="fig-raise">
+      <path d="M -22 -468 C -26 -496 -8 -510 8 -508 C 26 -506 34 -490 30 -466 C 36 -446 42 -424 46 -402 L -30 -402 C -28 -424 -24 -446 -22 -468 Z"/>
+      <path d="M -36 -398 C -52 -392 -62 -374 -64 -344 L -72 -190 C -78 -110 -90 -50 -100 0 L 96 0 C 88 -52 76 -112 70 -190 L 64 -344 C 62 -374 50 -392 36 -398 Z"/>
+      <path d="M -44 -384 C -72 -424 -98 -474 -116 -532 L -100 -540 C -82 -486 -58 -440 -26 -400 Z"/>
+      <path d="M 44 -384 C 72 -424 98 -474 116 -532 L 100 -540 C 82 -486 58 -440 26 -400 Z"/>
+      <path d="M -60 -392 C -84 -420 -96 -444 -104 -470 L -80 -452 C -72 -432 -58 -414 -40 -396 Z"/>
+      <path d="M 60 -392 C 84 -420 96 -444 104 -470 L 80 -452 C 72 -432 58 -414 40 -396 Z"/>
+      <circle cx="-110" cy="-542" r="11"/><circle cx="110" cy="-542" r="11"/>
+      <path d="M 66 -280 C 104 -236 136 -196 170 -128 C 140 -136 108 -150 80 -168 Z"/>
+    </g>
+
+    <!-- Seated, hunched man (Job), facing right, holding a potsherd. -->
+    <g id="fig-seated">
+      <path d="M -82 0 C -88 -60 -82 -130 -52 -182 C -32 -216 -8 -238 18 -246 C 38 -250 54 -242 60 -228 C 68 -208 84 -188 104 -172 C 116 -164 126 -158 130 -148 C 136 -120 140 -60 146 -8 L 150 0 Z"/>
+      <circle cx="68" cy="-226" r="25"/>
+      <path d="M 40 -252 C 52 -270 84 -268 94 -244 C 98 -232 92 -220 84 -216 C 72 -226 56 -228 44 -224 C 30 -220 18 -212 6 -204 Z"/>
+      <path d="M 40 -214 C 70 -196 100 -176 124 -156 L 156 -146 L 154 -134 L 118 -142 C 92 -160 64 -180 34 -198 Z"/>
+      <path d="M 154 -156 L 178 -150 L 172 -128 L 150 -134 Z"/>
+      <path d="M -20 -200 C -30 -150 -26 -100 -10 -60 L 4 -64 C -10 -100 -12 -148 -4 -196 Z"/>
+    </g>
+
+    <!-- Young king standing, face lifted, hand on chest, cloak in the wind. -->
+    <g id="fig-david">
+      <circle cx="-4" cy="-432" r="23"/>
+      <path d="M -6 -456 C 16 -460 30 -446 28 -426 C 26 -414 20 -408 14 -404 L -10 -416 Z"/>
+      <path d="M -14 -414 L 12 -412 L 14 -396 L -12 -396 Z"/>
+      <path d="M -34 -400 C -50 -394 -58 -376 -60 -346 L -64 -200 L -68 0 L 64 0 L 60 -200 L 56 -346 C 54 -376 46 -394 32 -400 Z"/>
+      <path d="M 34 -386 C 46 -356 36 -334 8 -328 L 4 -342 C 24 -346 28 -362 20 -380 Z"/>
+      <path d="M -54 -374 C -82 -330 -98 -280 -112 -210 C -92 -222 -78 -244 -62 -280 Z"/>
+      <path d="M -24 -446 C -10 -452 8 -452 22 -446 L 22 -440 C 8 -446 -10 -446 -24 -440 Z"/>
+    </g>
+
+    <!-- Modern man seated at a table, facing right. Base = floor. -->
+    <g id="fig-modern">
+      <circle cx="6" cy="-560" r="27"/>
+      <path d="M -20 -580 C -4 -598 26 -594 34 -572 C 22 -580 6 -582 -10 -574 Z"/>
+      <path d="M -6 -536 L 18 -536 L 20 -518 L -8 -518 Z"/>
+      <path d="M -40 -524 C -62 -516 -74 -492 -78 -458 L -86 -330 L -90 -300 L 64 -300 L 60 -380 C 58 -420 54 -470 44 -500 C 36 -518 18 -526 -2 -528 Z"/>
+      <path d="M -28 -548 C -48 -556 -56 -528 -44 -510 L -34 -520 Z"/>
+      <path d="M 34 -470 C 64 -440 96 -420 140 -410 L 142 -394 C 96 -398 60 -420 26 -446 Z"/>
+      <path d="M -90 -300 L 70 -300 C 96 -300 110 -290 112 -270 L 114 -150 L 96 -150 L 92 -262 L -80 -262 Z"/>
+      <path d="M 96 -160 L 114 -160 L 118 0 L 100 0 Z"/>
+      <path d="M 96 -6 L 140 -6 L 140 0 L 96 0 Z"/>
+      <path d="M -114 -560 L -100 -560 L -100 -290 L -114 -290 Z"/>
+      <path d="M -114 -300 L 40 -300 L 40 -284 L -114 -284 Z"/>
+      <path d="M -110 -284 L -100 -284 L -100 0 L -110 0 Z"/>
+      <path d="M 26 -284 L 36 -284 L 36 0 L 26 0 Z"/>
+    </g>
+
+    <!-- A hind (doe), facing right. Base (hooves) at y=0. -->
+    <g id="fig-hind">
+      <path d="M 0 -148 C 30 -160 80 -160 112 -152 C 124 -170 136 -196 148 -214 C 152 -222 162 -226 170 -222 L 198 -202 C 202 -198 200 -192 194 -190 L 172 -188 C 166 -186 160 -182 158 -176 C 154 -160 152 -140 152 -122 C 152 -112 148 -104 142 -100 L 146 -60 L 142 -30 L 144 0 L 136 0 L 132 -32 L 128 -64 L 126 -98 C 100 -94 60 -94 34 -98 L 36 -60 L 44 -30 L 44 0 L 36 0 L 32 -28 L 22 -58 L 14 -96 C 6 -104 -2 -118 -4 -132 C -6 -140 -4 -146 0 -148 Z"/>
+      <path d="M 132 -96 L 120 -60 L 118 -30 L 116 0 L 109 0 L 110 -32 L 112 -62 L 118 -98 Z"/>
+      <path d="M 24 -96 L 18 -60 L 22 -30 L 22 0 L 15 0 L 14 -30 L 10 -62 L 8 -100 Z"/>
+      <path d="M 160 -220 C 150 -236 146 -248 150 -256 C 158 -250 164 -236 166 -224 Z"/>
+      <path d="M 166 -222 C 170 -238 176 -248 184 -252 C 184 -242 178 -232 172 -222 Z"/>
+      <path d="M 0 -146 C -8 -150 -12 -142 -8 -134 C -4 -138 -2 -142 0 -146 Z"/>
+    </g>
+  </defs>
+</svg>
+
+<div id="stage">
+
+  <!-- ============ VALLEY: dusk desert valley, lone traveller ============ -->
+  <section class="scene" data-scene="valley" data-kb="push" style="--ox:54%; --oy:74%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="v-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#061620"/><stop offset="0.33" stop-color="#14404C"/><stop offset="0.5" stop-color="#4C6A66"/>
+            <stop offset="0.57" stop-color="#C27A46"/><stop offset="0.61" stop-color="#F0B06A"/><stop offset="1" stop-color="#F0B06A"/>
+          </linearGradient>
+          <radialGradient id="v-sun"><stop offset="0" stop-color="#FFE8C0" stop-opacity="0.95"/><stop offset="0.22" stop-color="#FFC27A" stop-opacity="0.5"/><stop offset="1" stop-color="#FFB060" stop-opacity="0"/></radialGradient>
+          <linearGradient id="v-fog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8A868" stop-opacity="0"/><stop offset="0.5" stop-color="#D99A62" stop-opacity="0.42"/><stop offset="1" stop-color="#D99A62" stop-opacity="0"/></linearGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#v-sky)"/>
+        <circle cx="700" cy="1150" r="560" fill="url(#v-sun)"/>
+        <circle cx="700" cy="1150" r="60" fill="#FFF0D4"/>
+        <path d="M 0 1130 L 90 1060 L 170 1100 L 260 1010 L 360 1080 L 450 1030 L 560 1100 L 650 1050 L 760 1110 L 860 1040 L 960 1090 L 1080 1030 L 1080 1260 L 0 1260 Z" fill="#7A6E62" opacity="0.78"/>
+        <rect y="1050" width="1080" height="240" fill="url(#v-fog)"/>
+        <path d="M 0 1180 L 120 1120 L 230 1170 L 330 1140 L 430 1230 L 480 1300 L 0 1430 Z" fill="#43504C"/>
+        <path d="M 1080 1150 L 960 1110 L 860 1170 L 760 1150 L 660 1240 L 610 1300 L 1080 1450 Z" fill="#3B4643"/>
+        <rect y="1190" width="1080" height="190" fill="url(#v-fog)" opacity="0.75"/>
+      </svg>
+      <div class="drift" style="--drift:-90px; --ddur:46s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <g filter="url(#cblur)">
+          <path d="M -200 512 C 200 486 500 500 900 476 C 1000 470 1100 480 1300 474 L 1300 506 C 900 522 500 540 -200 548 Z" fill="#2C5560" opacity="0.55"/>
+          <path d="M -200 694 C 200 672 600 680 1300 662 L 1300 700 C 600 716 200 714 -200 730 Z" fill="#6E6656" opacity="0.5"/>
+          <path d="M -200 884 C 300 862 700 870 1300 852 L 1300 884 C 700 900 300 900 -200 912 Z" fill="#C88A5A" opacity="0.45"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="v-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E3634"/><stop offset="1" stop-color="#060B0D"/></linearGradient>
+          <linearGradient id="v-river" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EDBA80" stop-opacity="0.6"/><stop offset="1" stop-color="#6E5A44" stop-opacity="0.3"/></linearGradient>
+        </defs>
+        <path d="M 0 1290 C 300 1270 780 1270 1080 1290 L 1080 1920 L 0 1920 Z" fill="url(#v-floor)"/>
+        <path d="M 560 1290 C 600 1330 520 1370 560 1420 C 610 1480 470 1540 520 1620 C 570 1700 420 1780 470 1920 L 620 1920 C 570 1800 710 1720 650 1630 C 600 1560 710 1500 650 1430 C 610 1380 650 1330 596 1290 Z" fill="url(#v-river)"/>
+        <path d="M 0 1300 L 140 1340 L 220 1460 L 300 1700 L 260 1920 L 0 1920 Z" fill="#0A1012"/>
+        <path d="M 1080 1310 L 930 1360 L 860 1500 L 820 1720 L 880 1920 L 1080 1920 Z" fill="#090E10"/>
+        <g transform="translate(588 1450) scale(0.17)">
+          <ellipse cx="-380" cy="4" rx="420" ry="16" fill="#000" opacity="0.45"/>
+          <use href="#fig-staff" fill="#F0B06A" filter="url(#glow8)" opacity="0.5"/>
+          <use href="#fig-staff" fill="#05090A"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="40"></div>
+  </section>
+
+  <!-- ============ HABAKKUK: burnt hillside, dead vines, withered fig ============ -->
+  <section class="scene" data-scene="habakkuk" data-kb="panl" style="--ox:60%; --oy:60%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="h-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1C090F"/><stop offset="0.3" stop-color="#561A1E"/><stop offset="0.46" stop-color="#A63828"/>
+            <stop offset="0.56" stop-color="#E2702F"/><stop offset="0.62" stop-color="#F6B55E"/><stop offset="1" stop-color="#F6B55E"/>
+          </linearGradient>
+          <radialGradient id="h-sun"><stop offset="0" stop-color="#FFD38A" stop-opacity="0.95"/><stop offset="0.3" stop-color="#FF9A4A" stop-opacity="0.5"/><stop offset="1" stop-color="#FF7A30" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#h-sky)"/>
+        <circle cx="360" cy="1110" r="660" fill="url(#h-sun)"/>
+        <circle cx="360" cy="1110" r="215" fill="#FFC67A"/>
+        <circle cx="360" cy="1110" r="215" fill="#FFE4AE" opacity="0.35"/>
+        <path d="M 0 1240 C 120 1196 220 1206 320 1226 C 420 1246 520 1186 640 1196 C 760 1206 860 1176 1080 1206 L 1080 1420 L 0 1420 Z" fill="#5A1E18"/>
+      </svg>
+      <div class="drift" style="--drift:-110px; --ddur:38s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <g filter="url(#cblur)">
+          <path d="M -300 1008 C 100 986 500 996 1400 978 L 1400 1018 C 500 1034 100 1034 -300 1046 Z" fill="#7A2620" opacity="0.8"/>
+          <path d="M -300 1086 C 200 1072 600 1078 1400 1060 L 1400 1088 C 600 1104 200 1102 -300 1112 Z" fill="#9A3424" opacity="0.65"/>
+          <path d="M -300 850 C 300 826 700 836 1400 816 L 1400 852 C 700 872 300 870 -300 884 Z" fill="#6E2220" opacity="0.55"/>
+          <path d="M -300 632 C 300 614 700 620 1400 606 L 1400 634 C 700 650 300 650 -300 660 Z" fill="#3E1418" opacity="0.55"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="h-ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2C0D08"/><stop offset="1" stop-color="#080202"/></linearGradient>
+        </defs>
+        <path d="M 0 1520 C 200 1470 420 1380 620 1330 C 760 1296 900 1290 1080 1300 L 1080 1920 L 0 1920 Z" fill="url(#h-ground)"/>
+        <g stroke="#120504" stroke-linecap="round" fill="none">
+          <g stroke-width="5">
+            <line x1="110" y1="1550" x2="110" y2="1470"/><line x1="190" y1="1523" x2="190" y2="1452"/><line x1="270" y1="1495" x2="270" y2="1432"/>
+            <line x1="350" y1="1466" x2="350" y2="1412"/><line x1="430" y1="1438" x2="430" y2="1392"/><line x1="510" y1="1410" x2="510" y2="1374"/>
+          </g>
+          <path stroke-width="2.5" d="M 110 1478 Q 150 1500 190 1460 Q 230 1480 270 1440 Q 310 1458 350 1418 Q 390 1436 430 1398 Q 470 1414 510 1380"/>
+          <g stroke-width="8">
+            <line x1="70" y1="1720" x2="70" y2="1580"/><line x1="180" y1="1686" x2="180" y2="1560"/><line x1="290" y1="1652" x2="290" y2="1540"/>
+            <line x1="400" y1="1618" x2="400" y2="1522"/><line x1="510" y1="1584" x2="510" y2="1502"/>
+          </g>
+          <path stroke-width="3.5" d="M 70 1592 Q 125 1630 180 1572 Q 235 1604 290 1552 Q 345 1580 400 1534 Q 455 1558 510 1514"/>
+          <path stroke-width="2" d="M 125 1612 L 118 1640 M 236 1590 L 240 1618 M 346 1566 L 340 1590 M 456 1544 L 462 1570"/>
+        </g>
+        <g fill="#0B0302">
+          <path d="M 18 1920 C 30 1780 62 1680 52 1560 C 48 1500 72 1440 112 1400 L 126 1412 C 90 1450 76 1500 82 1560 C 92 1680 74 1800 80 1920 Z"/>
+        </g>
+        <g stroke="#0B0302" stroke-linecap="round" fill="none">
+          <path stroke-width="12" d="M 100 1416 C 160 1360 200 1340 262 1328"/>
+          <path stroke-width="9" d="M 108 1408 C 118 1340 108 1290 140 1238"/>
+          <path stroke-width="6" d="M 140 1240 C 170 1220 190 1190 202 1148"/>
+          <path stroke-width="5" d="M 200 1336 C 230 1300 250 1290 292 1288"/>
+          <path stroke-width="8" d="M 72 1520 C 30 1480 10 1440 -12 1428"/>
+          <path stroke-width="5" d="M 140 1250 C 110 1220 100 1200 90 1166"/>
+          <path stroke-width="4" d="M 262 1328 C 290 1310 300 1294 306 1272"/>
+          <path stroke-width="3" d="M 202 1148 C 208 1130 222 1120 236 1116"/>
+        </g>
+        <path d="M 600 1720 L 622 1676 L 690 1664 L 752 1678 L 790 1654 L 842 1662 L 872 1710 Z" fill="#140504"/>
+        <path d="M 944 1724 L 966 1672 L 1024 1662 L 1090 1668 L 1090 1730 Z" fill="#140504"/>
+        <path d="M 900 1730 L 912 1716 L 928 1722 L 920 1734 Z" fill="#140504"/>
+        <g transform="translate(762 1300) scale(0.84)">
+          <use href="#fig-staff" fill="#FF8A40" filter="url(#glow8)" opacity="0.65"/>
+          <use href="#fig-staff" fill="#120605"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="46" data-color="255,170,110"></div>
+  </section>
+
+  <!-- ============ REJOICE: gold light breaking through ============ -->
+  <section class="scene" data-scene="rejoice" data-kb="pull" style="--ox:50%; --oy:60%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="r-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2A1C0C"/><stop offset="0.25" stop-color="#6C4A1E"/><stop offset="0.44" stop-color="#C38A3A"/>
+            <stop offset="0.54" stop-color="#F2CF7E"/><stop offset="0.58" stop-color="#FFF1CC"/><stop offset="0.68" stop-color="#F6D493"/><stop offset="1" stop-color="#F6D493"/>
+          </linearGradient>
+          <radialGradient id="r-sun"><stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/><stop offset="0.14" stop-color="#FFF2C8" stop-opacity="0.75"/><stop offset="0.45" stop-color="#FFD27A" stop-opacity="0.25"/><stop offset="1" stop-color="#FFD27A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#r-sky)"/>
+        <circle cx="540" cy="1110" r="760" fill="url(#r-sun)"/>
+      </svg>
+      <div class="spin" style="--rx:540px; --ry:1110px; --sdur:70s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <g class="rays-gen" data-cx="540" data-cy="1110" data-n="22" data-len="1800" data-w="2.6" fill="#FFF6DA" opacity="0.14"></g>
+        </svg>
+      </div>
+      <div class="drift" style="--drift:-70px; --ddur:30s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <path d="M -140 760 C -40 700 80 720 140 690 C 220 650 320 680 360 730 C 410 720 460 760 440 810 C 480 840 440 880 380 870 L -140 900 Z" fill="#9C6E36" opacity="0.6"/>
+          <path d="M -140 760 C -40 700 80 720 140 690 C 220 650 320 680 360 730 C 410 720 460 760 440 810 C 480 840 440 880 380 870" fill="none" stroke="#FFE7A8" stroke-width="3" opacity="0.7"/>
+        </svg>
+      </div>
+      <div class="drift" style="--drift:70px; --ddur:30s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <path d="M 1220 740 C 1120 690 1000 710 940 680 C 860 640 760 670 720 720 C 670 712 620 750 640 800 C 600 830 640 870 700 860 L 1220 890 Z" fill="#9C6E36" opacity="0.6"/>
+          <path d="M 1220 740 C 1120 690 1000 710 940 680 C 860 640 760 670 720 720 C 670 712 620 750 640 800 C 600 830 640 870 700 860" fill="none" stroke="#FFE7A8" stroke-width="3" opacity="0.7"/>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="r-ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3C2610"/><stop offset="1" stop-color="#0E0804"/></linearGradient>
+        </defs>
+        <path d="M 0 1360 C 220 1330 400 1300 540 1296 C 700 1300 860 1330 1080 1370 L 1080 1920 L 0 1920 Z" fill="url(#r-ground)"/>
+        <g stroke="#1E1206" stroke-linecap="round" fill="none">
+          <g stroke-width="6"><line x1="90" y1="1460" x2="90" y2="1380"/><line x1="190" y1="1430" x2="190" y2="1360"/><line x1="890" y1="1430" x2="890" y2="1360"/><line x1="990" y1="1460" x2="990" y2="1380"/></g>
+          <path stroke-width="2.5" d="M 90 1390 Q 140 1410 190 1368 M 890 1368 Q 940 1410 990 1390"/>
+        </g>
+        <g transform="translate(540 1300) scale(0.96)">
+          <use href="#fig-raise" fill="#FFE6A0" filter="url(#glow8)" opacity="0.75"/>
+          <use href="#fig-raise" fill="#1C1207"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="38"></div>
+  </section>
+
+  <!-- ============ JOB: ash heap among ruins ============ -->
+  <section class="scene" data-scene="job" data-kb="push" style="--ox:45%; --oy:70%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="j-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#101215"/><stop offset="0.3" stop-color="#22262A"/><stop offset="0.55" stop-color="#3B3D3F"/>
+            <stop offset="0.66" stop-color="#5A5148"/><stop offset="0.8" stop-color="#363230"/><stop offset="1" stop-color="#161514"/>
+          </linearGradient>
+          <radialGradient id="j-ember" cx="0.32" cy="0.82" r="0.55"><stop offset="0" stop-color="#FF6A2A" stop-opacity="0.5"/><stop offset="0.4" stop-color="#B8401A" stop-opacity="0.16"/><stop offset="1" stop-color="#B8401A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#j-sky)"/>
+        <rect width="1080" height="1920" fill="url(#j-ember)"/>
+        <path d="M 0 1260 L 60 1260 L 60 1180 L 90 1170 L 100 1260 L 170 1260 L 170 1130 L 200 1150 L 220 1120 L 240 1260 L 330 1260 L 340 1210 L 380 1206 L 400 1260 L 1080 1260 L 1080 1240 L 1000 1240 L 990 1150 L 960 1160 L 950 1240 L 880 1240 L 870 1190 L 830 1196 L 820 1240 L 700 1240 L 690 1220 L 640 1226 L 630 1260 Z" fill="#2B2C2E" opacity="0.85"/>
+        <path d="M 0 1260 L 1080 1240 L 1080 1500 L 0 1500 Z" fill="#232325"/>
+        <g fill="#1C1D20">
+          <polygon points="170,1520 170,1000 186,982 200,996 214,968 230,990 244,976 244,1520"/>
+          <polygon points="860,1520 860,900 878,880 892,906 908,872 924,898 940,884 940,1520"/>
+          <rect x="380" y="1260" width="34" height="260"/>
+        </g>
+        <g stroke="#2A2B2E" stroke-width="3">
+          <line x1="190" y1="1010" x2="190" y2="1520"/><line x1="210" y1="1000" x2="210" y2="1520"/><line x1="226" y1="1004" x2="226" y2="1520"/>
+          <line x1="882" y1="908" x2="882" y2="1520"/><line x1="900" y1="900" x2="900" y2="1520"/><line x1="918" y1="904" x2="918" y2="1520"/>
+        </g>
+        <radialGradient id="j-haze" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#7A6656" stop-opacity="0.75"/><stop offset="1" stop-color="#7A6656" stop-opacity="0"/></radialGradient>
+        <ellipse cx="500" cy="1250" rx="420" ry="300" fill="url(#j-haze)"/>
+        <g fill="#1A1B1E">
+          <rect x="640" y="1060" width="40" height="460"/><rect x="800" y="1100" width="40" height="420"/>
+          <path d="M 640 1070 C 640 990 700 950 760 950 L 770 972 C 712 974 680 1008 680 1070 Z"/>
+          <path d="M 800 1110 C 800 1060 790 1020 776 998 L 796 990 C 812 1016 840 1060 840 1110 Z"/>
+        </g>
+      </svg>
+      <div class="fx" data-type="smoke" data-n="7"></div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="j-heap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#403C38"/><stop offset="0.25" stop-color="#26241F"/><stop offset="1" stop-color="#0D0D0C"/></linearGradient>
+          <radialGradient id="j-glow" cx="0.3" cy="0.5" r="0.5"><stop offset="0" stop-color="#FF5A1E" stop-opacity="0.5"/><stop offset="1" stop-color="#FF5A1E" stop-opacity="0"/></radialGradient>
+        </defs>
+        <path d="M -60 1920 L -60 1560 C 120 1500 300 1442 480 1432 C 640 1426 800 1472 1140 1560 L 1140 1920 Z" fill="url(#j-heap)"/>
+        <ellipse cx="300" cy="1640" rx="380" ry="160" fill="url(#j-glow)"/>
+        <g fill="#141414">
+          <polygon points="120,1600 160,1584 176,1610 140,1622"/><polygon points="660,1520 700,1508 712,1530 676,1540"/>
+          <polygon points="240,1700 290,1690 300,1718 252,1726"/><polygon points="980,1640 1030,1630 1040,1660 990,1668"/>
+        </g>
+        <rect x="740" y="1612" width="290" height="96" rx="12" fill="#151515"/>
+        <ellipse cx="740" cy="1660" rx="22" ry="48" fill="#202020"/>
+        <g stroke="#252525" stroke-width="3"><line x1="760" y1="1630" x2="1020" y2="1630"/><line x1="760" y1="1660" x2="1020" y2="1660"/><line x1="760" y1="1690" x2="1020" y2="1690"/></g>
+        <g transform="translate(470 1440) scale(1.06)">
+          <use href="#fig-seated" fill="#FF7A3A" filter="url(#glow8)" opacity="0.5"/>
+          <use href="#fig-seated" fill="#0B0B0C"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="ash" data-n="60"></div>
+    <div class="fx" data-type="ember" data-n="28"></div>
+  </section>
+
+  <!-- ============ DAVID: moonlit rooftop in Jerusalem ============ -->
+  <section class="scene" data-scene="david" data-kb="rise" style="--ox:48%; --oy:45%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="d-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#03071A"/><stop offset="0.42" stop-color="#0A1638"/><stop offset="0.72" stop-color="#1A2C5E"/><stop offset="1" stop-color="#233A6E"/>
+          </linearGradient>
+          <radialGradient id="d-moonglow"><stop offset="0" stop-color="#C9D6FF" stop-opacity="0.45"/><stop offset="0.35" stop-color="#8FA4E8" stop-opacity="0.15"/><stop offset="1" stop-color="#8FA4E8" stop-opacity="0"/></radialGradient>
+          <mask id="d-moonmask"><circle cx="800" cy="520" r="88" fill="#fff"/><circle cx="838" cy="496" r="80" fill="#000"/></mask>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#d-sky)"/>
+        <circle cx="800" cy="520" r="420" fill="url(#d-moonglow)"/>
+        <circle cx="800" cy="520" r="88" fill="#F4F6FF" mask="url(#d-moonmask)"/>
+        <radialGradient id="d-haze" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#5E78C8" stop-opacity="0.55"/><stop offset="1" stop-color="#5E78C8" stop-opacity="0"/></radialGradient>
+        <ellipse cx="360" cy="900" rx="520" ry="360" fill="url(#d-haze)"/>
+        <path d="M 0 1050 C 200 1000 380 1020 540 990 C 720 960 880 1000 1080 980 L 1080 1300 L 0 1300 Z" fill="#0B1430"/>
+        <g fill="#070C1E">
+          <rect x="0" y="1080" width="120" height="200"/><rect x="110" y="1050" width="90" height="230"/><rect x="190" y="1100" width="130" height="180"/>
+          <rect x="310" y="1030" width="70" height="250"/><rect x="370" y="1080" width="150" height="200"/><rect x="510" y="1050" width="100" height="230"/>
+          <path d="M 600 1050 L 600 1010 C 600 946 700 946 700 1010 L 700 1050 Z"/><rect x="600" y="1048" width="100" height="232"/>
+          <rect x="690" y="1090" width="140" height="190"/><rect x="820" y="980" width="50" height="300"/><rect x="860" y="1070" width="120" height="210"/><rect x="970" y="1040" width="110" height="240"/>
+        </g>
+        <g fill="#FFC46E" opacity="0.85">
+          <rect x="30" y="1130" width="10" height="14"/><rect x="140" y="1090" width="10" height="14"/><rect x="230" y="1150" width="10" height="14"/>
+          <rect x="330" y="1070" width="10" height="14"/><rect x="420" y="1120" width="10" height="14"/><rect x="460" y="1160" width="10" height="14"/>
+          <rect x="545" y="1090" width="10" height="14"/><rect x="640" y="1090" width="10" height="14"/><rect x="740" y="1130" width="10" height="14"/>
+          <rect x="840" y="1020" width="8" height="12"/><rect x="900" y="1110" width="10" height="14"/><rect x="1010" y="1080" width="10" height="14"/>
+        </g>
+      </svg>
+      <div class="fx" data-type="star" data-n="120" data-area="0,120,1080,860"></div>
+      <div class="drift" style="--drift:-140px; --ddur:34s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <path d="M 500 560 C 640 540 760 548 1000 530 C 1100 524 1200 530 1300 526 L 1300 540 C 1100 550 800 566 500 574 Z" fill="#2A3A6A" opacity="0.55"/>
+          <path d="M 300 760 C 500 744 800 750 1300 736 L 1300 748 C 800 764 500 766 300 774 Z" fill="#1E2C58" opacity="0.6"/>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <g transform="translate(330 1490) scale(-1.38 1.38)">
+          <use href="#fig-david" fill="#B4C6FF" filter="url(#glow8)" opacity="0.75"/>
+          <use href="#fig-david" fill="#02050E"/>
+        </g>
+        <path d="M 0 1230 L 1080 1230 L 1080 1920 L 0 1920 Z" fill="#02040B"/>
+        <g fill="#02040B">
+          <rect x="0" y="1178" width="64" height="54"/><rect x="128" y="1178" width="64" height="54"/><rect x="256" y="1178" width="64" height="54"/>
+          <rect x="640" y="1178" width="64" height="54"/><rect x="768" y="1178" width="64" height="54"/><rect x="896" y="1178" width="64" height="54"/><rect x="1024" y="1178" width="64" height="54"/>
+        </g>
+        <path d="M 0 1230 L 1080 1230" stroke="#3A4C88" stroke-width="2" opacity="0.6"/>
+        <g fill="none" stroke="#02040B" stroke-linecap="round">
+          <path stroke-width="11" d="M 790 1180 C 772 1114 780 1056 802 1022"/>
+          <path stroke-width="11" d="M 872 1180 C 892 1114 884 1056 862 1022"/>
+          <path stroke-width="9" d="M 796 1034 L 868 1034"/>
+          <path stroke-width="12" d="M 784 1180 L 878 1180"/>
+        </g>
+        <g stroke="#8FA4E8" stroke-width="1.6" opacity="0.6">
+          <line x1="812" y1="1036" x2="806" y2="1176"/><line x1="824" y1="1036" x2="820" y2="1176"/><line x1="836" y1="1036" x2="834" y2="1176"/>
+          <line x1="848" y1="1036" x2="848" y2="1176"/><line x1="858" y1="1036" x2="862" y2="1176"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ============ THREE: three men on three peaks at dawn ============ -->
+  <section class="scene" data-scene="three" data-kb="pull" style="--ox:50%; --oy:62%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="t-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#140A28"/><stop offset="0.3" stop-color="#3E204E"/><stop offset="0.52" stop-color="#A2466E"/>
+            <stop offset="0.6" stop-color="#F08A7A"/><stop offset="0.64" stop-color="#FFC79A"/><stop offset="1" stop-color="#FFC79A"/>
+          </linearGradient>
+          <radialGradient id="t-sun"><stop offset="0" stop-color="#FFF0D8" stop-opacity="1"/><stop offset="0.2" stop-color="#FFC4A0" stop-opacity="0.55"/><stop offset="1" stop-color="#FF8A9A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#t-sky)"/>
+        <circle cx="540" cy="1180" r="640" fill="url(#t-sun)"/>
+        <circle cx="540" cy="1180" r="100" fill="#FFEBD0"/>
+        <path d="M 0 1300 L 120 1240 L 240 1290 L 360 1220 L 470 1280 L 600 1230 L 720 1290 L 840 1220 L 960 1280 L 1080 1240 L 1080 1500 L 0 1500 Z" fill="#7A3E66" opacity="0.55"/>
+      </svg>
+      <div class="spin" style="--rx:540px; --ry:1180px; --sdur:80s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <g class="rays-gen" data-cx="540" data-cy="1180" data-n="18" data-len="1800" data-w="2.2" fill="#FFE2D0" opacity="0.12"></g>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="t-mist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9AB0" stop-opacity="0"/><stop offset="1" stop-color="#B85A80" stop-opacity="0.55"/></linearGradient>
+        </defs>
+        <path d="M -40 1920 L -40 1420 L 120 1330 L 220 1262 L 300 1330 L 380 1420 L 440 1390 L 540 1180 L 640 1380 L 720 1420 L 800 1330 L 860 1272 L 960 1340 L 1120 1440 L 1120 1920 Z" fill="#120818"/>
+        <path d="M -40 1420 L 120 1330 L 220 1262 L 300 1330 L 380 1420 L 440 1390 L 540 1180 L 640 1380 L 720 1420 L 800 1330 L 860 1272 L 960 1340 L 1120 1440" fill="none" stroke="#FF9AB0" stroke-width="3" opacity="0.4"/>
+        <rect y="1480" width="1080" height="440" fill="url(#t-mist)"/>
+        <g transform="translate(220 1264) scale(0.42)">
+          <use href="#fig-staff" fill="#FFB3C2" filter="url(#glow8)" opacity="0.7"/><use href="#fig-staff" fill="#0A0410"/>
+        </g>
+        <g transform="translate(540 1184) scale(0.46)">
+          <use href="#fig-robe" fill="#FFD0B0" filter="url(#glow8)" opacity="0.8"/><use href="#fig-robe" fill="#0A0410"/>
+        </g>
+        <g transform="translate(860 1274) scale(0.42)">
+          <use href="#fig-david" fill="#FFB3C2" filter="url(#glow8)" opacity="0.7"/><use href="#fig-david" fill="#0A0410"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="30" data-color="255,190,200"></div>
+  </section>
+
+  <!-- ============ EVERYMAN: modern man at a rain-streaked window ============ -->
+  <section class="scene" data-scene="everyman" data-kb="push" style="--ox:34%; --oy:68%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="e-city" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#03101A"/><stop offset="0.6" stop-color="#0B2A33"/><stop offset="1" stop-color="#16424C"/></linearGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="#070B0D"/>
+        <rect x="120" y="180" width="840" height="820" fill="url(#e-city)"/>
+        <g fill="#05121A">
+          <rect x="120" y="520" width="110" height="480"/><rect x="220" y="440" width="80" height="560"/><rect x="300" y="580" width="140" height="420"/>
+          <rect x="440" y="360" width="90" height="640"/><rect x="530" y="500" width="120" height="500"/><rect x="650" y="420" width="70" height="580"/>
+          <rect x="720" y="560" width="130" height="440"/><rect x="850" y="460" width="110" height="540"/>
+        </g>
+        <g opacity="0.7">
+          <g fill="#7FD3DE"><rect x="140" y="560" width="8" height="8"/><rect x="160" y="600" width="8" height="8"/><rect x="250" y="480" width="8" height="8"/><rect x="460" y="400" width="8" height="8"/><rect x="480" y="460" width="8" height="8"/><rect x="670" y="460" width="8" height="8"/><rect x="880" y="500" width="8" height="8"/><rect x="900" y="560" width="8" height="8"/></g>
+          <g fill="#FFC27A"><rect x="330" y="620" width="8" height="8"/><rect x="360" y="660" width="8" height="8"/><rect x="560" y="540" width="8" height="8"/><rect x="600" y="580" width="8" height="8"/><rect x="750" y="600" width="8" height="8"/><rect x="790" y="640" width="8" height="8"/><rect x="250" y="540" width="8" height="8"/></g>
+        </g>
+      </svg>
+      <div class="fx" data-type="bokeh" data-n="22" data-area="120,180,840,820"></div>
+    </div>
+    <div class="layer l-front">
+      <div class="fx" data-type="rain" data-n="70" data-area="120,260,840,980"></div>
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="e-lamp" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFB866" stop-opacity="0.45"/><stop offset="1" stop-color="#FFB866" stop-opacity="0"/></radialGradient>
+          <linearGradient id="e-spill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3FAFC0" stop-opacity="0.16"/><stop offset="1" stop-color="#3FAFC0" stop-opacity="0"/></linearGradient>
+        </defs>
+        <path d="M 0 0 L 1080 0 L 1080 1920 L 0 1920 Z M 120 180 L 120 1000 L 960 1000 L 960 180 Z" fill="#070B0D" fill-rule="evenodd"/>
+        <rect x="120" y="180" width="840" height="820" fill="none" stroke="#030607" stroke-width="40"/>
+        <line x1="540" y1="180" x2="540" y2="1000" stroke="#030607" stroke-width="18"/>
+        <line x1="120" y1="590" x2="960" y2="590" stroke="#030607" stroke-width="18"/>
+        <rect x="80" y="1000" width="920" height="32" fill="#0C1416"/>
+        <line x1="80" y1="1000" x2="1000" y2="1000" stroke="#4FB3C4" stroke-width="2" opacity="0.5"/>
+        <path d="M 120 1032 L 960 1032 L 1080 1920 L 0 1920 Z" fill="url(#e-spill)"/>
+        <circle cx="820" cy="1160" r="440" fill="url(#e-lamp)"/>
+        <rect x="380" y="1230" width="640" height="24" fill="#0E1416"/>
+        <line x1="380" y1="1230" x2="1020" y2="1230" stroke="#FFB866" stroke-width="2" opacity="0.55"/>
+        <rect x="420" y="1254" width="18" height="386" fill="#0A0E10"/><rect x="960" y="1254" width="18" height="386" fill="#0A0E10"/>
+        <rect x="740" y="1184" width="52" height="46" rx="5" fill="#111719"/>
+        <path d="M 792 1194 C 812 1194 814 1220 792 1220" fill="none" stroke="#111719" stroke-width="7"/>
+        <rect x="0" y="1640" width="1080" height="280" fill="#050809"/>
+        <g transform="translate(300 1640) scale(1.0)">
+          <use href="#fig-modern" fill="#3FAFC0" filter="url(#glow8)" opacity="0.45"/>
+          <use href="#fig-modern" fill="#020405"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ============ HEIGHTS: a hind on the high places at sunrise ============ -->
+  <section class="scene" data-scene="heights" data-kb="rise" style="--ox:62%; --oy:56%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#22457A"/><stop offset="0.3" stop-color="#5A7EBC"/><stop offset="0.5" stop-color="#C9A6B8"/>
+            <stop offset="0.58" stop-color="#F7C2A2"/><stop offset="0.63" stop-color="#FFE6BE"/><stop offset="1" stop-color="#FFE6BE"/>
+          </linearGradient>
+          <radialGradient id="g-sun"><stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/><stop offset="0.15" stop-color="#FFF1D0" stop-opacity="0.7"/><stop offset="1" stop-color="#FFD0A8" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#g-sky)"/>
+        <circle cx="300" cy="1160" r="640" fill="url(#g-sun)"/>
+        <circle cx="300" cy="1160" r="78" fill="#FFF9EA"/>
+      </svg>
+      <div class="drift" style="--drift:-120px; --ddur:44s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <path d="M -200 1214 C -100 1184 0 1194 100 1208 C 200 1174 300 1188 400 1204 C 500 1168 600 1184 700 1200 C 800 1164 900 1182 1000 1194 C 1100 1168 1200 1178 1300 1194 L 1300 1920 L -200 1920 Z" fill="#F7D8C8"/>
+          <path d="M -200 1300 C -80 1270 40 1284 160 1296 C 280 1264 400 1280 520 1292 C 640 1258 760 1274 880 1288 C 1000 1256 1120 1270 1300 1284 L 1300 1920 L -200 1920 Z" fill="#E8BAB4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <div class="drift" style="--drift:160px; --ddur:40s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <path d="M -300 1430 C -160 1394 -20 1410 120 1424 C 260 1388 400 1404 540 1420 C 680 1384 820 1402 960 1416 C 1100 1384 1240 1398 1400 1414 L 1400 1920 L -300 1920 Z" fill="#C99AAA"/>
+          <path d="M -300 1580 C -140 1540 20 1560 180 1574 C 340 1534 500 1554 660 1570 C 820 1530 980 1550 1140 1566 C 1260 1540 1340 1550 1400 1560 L 1400 1920 L -300 1920 Z" fill="#A27C98"/>
+        </svg>
+      </div>
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <path d="M 1140 1920 L 1140 1300 C 1060 1250 980 1200 900 1140 C 860 1110 820 1090 760 1086 L 720 1088 C 690 1092 660 1110 640 1140 C 600 1200 560 1300 540 1420 C 520 1560 500 1720 480 1920 Z" fill="#2A1C2C"/>
+        <path d="M 540 1420 C 560 1300 600 1200 640 1140 C 660 1110 690 1092 720 1088 L 760 1086" fill="none" stroke="#FFB59C" stroke-width="4" opacity="0.6"/>
+        <path d="M 620 1300 L 660 1260 L 700 1290 M 820 1240 L 860 1300" stroke="#3A2A3C" stroke-width="5" fill="none"/>
+        <g transform="translate(724 1090) scale(-1.25 1.25)">
+          <use href="#fig-hind" fill="#FFC9A8" filter="url(#glow8)" opacity="0.7"/>
+          <use href="#fig-hind" fill="#160C16"/>
+        </g>
+      </svg>
+    </div>
+    <div class="birds" id="birds"></div>
+    <div class="fx" data-type="motes" data-n="22" data-color="255,236,200"></div>
+  </section>
+
+</div>
+
+<div class="grain" id="grain"></div>
+<div class="vignette"></div>
+<div class="cap-shade"></div>
+
+<div class="chapter" id="chapter">
+  <div class="num" id="chapterNum"></div>
+  <div class="name" id="chapterName"></div>
+  <div class="rule"></div>
+  <div class="ref" id="chapterRef"></div>
+</div>
+
+<div class="caption-wrap"><div class="cap-line" id="capLine"></div></div>
+
+<div class="bar top"></div>
+<div class="bar bottom"></div>
+
+<div class="title-card" id="titleCard">
+  <div class="rule"></div>
+  <div class="brand" id="titleBrand">Word and Faith Network</div>
+  <div class="tagline" id="titleTagline"></div>
+  <div class="meta" id="titleMeta"></div>
+</div>
+
+<div class="intro" id="intro">
+  <div class="presents" id="introPresents">Word and Faith Network<small>presents</small></div>
+  <div class="film" id="introTitle"></div>
+  <div class="film-rule"></div>
+</div>
+
+<div class="blackout" id="blackout"></div>
+
+<script>
+(function () {
+  // Film grain: one noise tile, jittered by CSS (cheap, composited).
+  try {
+    var c = document.createElement("canvas");
+    c.width = c.height = 220;
+    var x = c.getContext("2d");
+    var img = x.createImageData(220, 220);
+    for (var i = 0; i < img.data.length; i += 4) {
+      var v = Math.random() * 255;
+      img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+      img.data[i + 3] = 255;
+    }
+    x.putImageData(img, 0, 0);
+    document.getElementById("grain").style.backgroundImage = "url(" + c.toDataURL() + ")";
+  } catch (e) {}
+
+  // God rays.
+  var NS = "http://www.w3.org/2000/svg";
+  document.querySelectorAll("g.rays-gen").forEach(function (g) {
+    var cx = +g.dataset.cx, cy = +g.dataset.cy, n = +g.dataset.n, len = +g.dataset.len, w = +g.dataset.w;
+    for (var k = 0; k < n; k++) {
+      var a = (k / n) * Math.PI * 2 + (k % 2 ? 0.05 : 0);
+      var ww = (w * (k % 3 === 0 ? 1.6 : 1)) * Math.PI / 180;
+      var p1x = cx + len * Math.cos(a - ww), p1y = cy + len * Math.sin(a - ww);
+      var p2x = cx + len * Math.cos(a + ww), p2y = cy + len * Math.sin(a + ww);
+      var poly = document.createElementNS(NS, "polygon");
+      poly.setAttribute("points", cx + "," + cy + " " + p1x.toFixed(1) + "," + p1y.toFixed(1) + " " + p2x.toFixed(1) + "," + p2y.toFixed(1));
+      g.appendChild(poly);
+    }
+  });
+
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  // Particles.
+  document.querySelectorAll(".fx").forEach(function (fx) {
+    var type = fx.dataset.type, n = +(fx.dataset.n || 30);
+    var color = fx.dataset.color;
+    if (fx.dataset.area) {
+      var ar = fx.dataset.area.split(",").map(Number);
+      fx.style.left = ar[0] + "px"; fx.style.top = ar[1] + "px";
+      fx.style.width = ar[2] + "px"; fx.style.height = ar[3] + "px";
+      fx.style.right = "auto"; fx.style.bottom = "auto";
+    }
+    var W = fx.dataset.area ? +fx.dataset.area.split(",")[2] : 1080;
+    var H = fx.dataset.area ? +fx.dataset.area.split(",")[3] : 1920;
+    for (var i = 0; i < n; i++) {
+      var p = document.createElement("span");
+      p.className = "p " + type;
+      var s, t, dx, dy, o, left, top, bg;
+      if (type === "dust") {
+        s = rnd(2, 5); t = rnd(14, 26); dx = rnd(-160, 160); dy = rnd(-220, -40); o = rnd(0.35, 0.8);
+        left = rnd(0, W); top = rnd(500, H); bg = "rgba(" + (color || "255,214,160") + ",1)";
+      } else if (type === "motes") {
+        s = rnd(3, 8); t = rnd(10, 20); dx = rnd(-80, 80); dy = rnd(-520, -240); o = rnd(0.45, 0.95);
+        left = rnd(60, W - 60); top = rnd(800, H); bg = "radial-gradient(circle, rgba(" + (color || "255,236,180") + ",1) 0%, rgba(" + (color || "255,236,180") + ",0) 70%)";
+        s *= 2.2;
+      } else if (type === "ash") {
+        s = rnd(3, 7); t = rnd(12, 22); dx = rnd(-140, 140); dy = rnd(700, 1100); o = rnd(0.35, 0.75);
+        left = rnd(0, W); top = rnd(-200, 900); bg = "rgba(" + (color || "190,186,180") + ",1)";
+      } else if (type === "ember") {
+        s = rnd(2, 5); t = rnd(6, 12); dx = rnd(-120, 120); dy = rnd(-900, -500); o = rnd(0.6, 1);
+        left = rnd(80, 700); top = rnd(1400, 1800); bg = "rgba(255," + Math.round(rnd(110, 170)) + ",60,1)";
+        p.style.boxShadow = "0 0 8px rgba(255,120,40,0.9)";
+      } else if (type === "star") {
+        s = rnd(1.2, 3.4); t = rnd(1.6, 4.5); o = rnd(0.5, 1);
+        left = rnd(0, W); top = rnd(0, H); bg = "#F4F6FF";
+        if (Math.random() < 0.12) { s += 1.2; p.style.boxShadow = "0 0 6px rgba(200,214,255,0.9)"; }
+      } else if (type === "rain") {
+        s = 2; t = rnd(0.7, 1.3); dx = rnd(-30, -10); dy = H + 140; o = rnd(0.25, 0.55);
+        left = rnd(0, W); top = rnd(-160, -60);
+        bg = "linear-gradient(to bottom, rgba(170,230,240,0) 0%, rgba(170,230,240,1) 100%)";
+        p.style.height = rnd(40, 90) + "px";
+      } else if (type === "bokeh") {
+        s = rnd(40, 140); t = rnd(5, 11); o = rnd(0.25, 0.6);
+        left = rnd(-40, W - 40); top = rnd(H * 0.25, H - 40);
+        var warm = Math.random() < 0.5;
+        bg = "radial-gradient(circle, " + (warm ? "rgba(255,190,110,0.9)" : "rgba(110,215,230,0.9)") + " 0%, rgba(0,0,0,0) 68%)";
+      } else if (type === "smoke") {
+        s = rnd(420, 760); t = rnd(26, 40); dx = rnd(-120, 120); dy = rnd(-420, -220); o = rnd(0.25, 0.45);
+        left = rnd(-200, W - 300); top = rnd(500, 1300);
+        bg = "radial-gradient(circle, rgba(96,94,92,0.75) 0%, rgba(60,60,60,0) 66%)";
+      }
+      p.style.width = s + "px";
+      if (!p.style.height) p.style.height = s + "px";
+      p.style.left = left + "px"; p.style.top = top + "px";
+      p.style.background = bg;
+      p.style.setProperty("--t", t + "s");
+      p.style.setProperty("--d", (-Math.random() * t).toFixed(2) + "s");
+      p.style.setProperty("--o", o);
+      if (dx !== undefined) p.style.setProperty("--dx", dx + "px");
+      if (dy !== undefined) p.style.setProperty("--dy", dy + "px");
+      fx.appendChild(p);
+    }
+  });
+
+  // Birds crossing the sunrise.
+  var birds = document.getElementById("birds");
+  if (birds) {
+    for (var b = 0; b < 7; b++) {
+      var d = document.createElement("div");
+      d.className = "bird";
+      var sz = rnd(18, 34);
+      d.innerHTML = '<svg width="' + sz + '" height="' + (sz * 0.5) + '" viewBox="0 0 40 20"><path d="M 0 6 C 8 0 14 2 20 12 C 26 2 32 0 40 6 C 32 4 26 8 20 16 C 14 8 8 4 0 6 Z" fill="#3A2A3A"/></svg>';
+      d.style.left = rnd(900, 1400) + "px";
+      d.style.top = rnd(520, 900) + "px";
+      d.style.setProperty("--t", rnd(34, 52) + "s");
+      d.style.setProperty("--d", (-rnd(0, 30)).toFixed(1) + "s");
+      d.style.setProperty("--dx", -rnd(1300, 1700) + "px");
+      d.style.setProperty("--dy", -rnd(60, 220) + "px");
+      birds.appendChild(d);
+    }
+  }
+})();
+</script>
+</body>
+</html>

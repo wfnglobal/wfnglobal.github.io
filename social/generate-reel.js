@@ -185,7 +185,7 @@ function pickAzureVoiceFallback(content) {
 // TTS_PROVIDER=elevenlabs|azure if you ever need to override this.
 function pickProvider() {
   const forced = (process.env.TTS_PROVIDER || "").toLowerCase();
-  if (forced === "azure" || forced === "elevenlabs") return forced;
+  if (forced === "azure" || forced === "elevenlabs" || forced === "silent") return forced;
   if (process.env.AZURE_SPEECH_KEY && process.env.AZURE_SPEECH_REGION) return "azure";
   return "elevenlabs";
 }
@@ -207,7 +207,11 @@ async function main() {
   }
 
   const content = JSON.parse(fs.readFileSync(contentPath, "utf8"));
-  const isCinematic = content.template === "cinematic";
+  // "scenes" is the illustrated short-film template (reel-scenes.html):
+  // same caption/timeline machinery as "cinematic", but every "visual" key
+  // is a full illustrated scene with its own colour grade and camera move.
+  const isScenes = content.template === "scenes";
+  const isCinematic = content.template === "cinematic" || isScenes;
   const lines = buildLines(content, isCinematic);
   if (lines.length === 0) {
     console.error("content.json must have at least one line (opener and/or lines[]).");
@@ -221,12 +225,18 @@ async function main() {
   const renderHtmlPath = outBase + ".render.html";
 
   const speechText = lines.map((l) => l.text).join(isCinematic ? " " : ". ");
-  if (provider === "azure") {
+  if (provider === "silent") {
+    // Local dry-run only (TTS_PROVIDER=silent): a silent track sized to a
+    // typical narration pace, so a template can be previewed end to end
+    // without spending TTS credits. Never used by the real workflow.
+    const est = speechText.length / 14 + lines.length * 0.5;
+    execFileSync("ffmpeg", ["-y", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=mono", "-t", est.toFixed(2), "-c:a", "libmp3lame", "-q:a", "6", audioPath], { stdio: "ignore" });
+  } else if (provider === "azure") {
     const azureVoice = pickAzureVoice(content);
     const azureVoiceFallback = pickAzureVoiceFallback(content);
     console.log("Generating voiceover (" + lines.length + " lines, Azure voice " + azureVoice + ")...");
     try {
-      await synthesizeSpeechAzure(speechText, process.env.AZURE_SPEECH_KEY, process.env.AZURE_SPEECH_REGION, audioPath, isCinematic, azureVoice, azureVoiceFallback);
+      await synthesizeSpeechAzure(speechText, process.env.AZURE_SPEECH_KEY, process.env.AZURE_SPEECH_REGION, audioPath, isCinematic, azureVoice, azureVoiceFallback, isScenes ? lines.map((l) => l.text) : null);
     } catch (e) {
       if (process.env.ELEVENLABS_API_KEY) {
         console.warn("Azure TTS failed (" + e.message + ") - falling back to ElevenLabs for this render.");
@@ -254,7 +264,8 @@ async function main() {
   fs.rmSync(rawVideoDir, { recursive: true, force: true });
   fs.mkdirSync(rawVideoDir, { recursive: true });
 
-  const templatePath = path.join(__dirname, "templates", isCinematic ? "reel-cinematic.html" : "reel-prayer.html");
+  const templateFile = isScenes ? "reel-scenes.html" : isCinematic ? "reel-cinematic.html" : "reel-prayer.html";
+  const templatePath = path.join(__dirname, "templates", templateFile);
   fs.copyFileSync(templatePath, renderHtmlPath);
 
   // Templates are laid out in fixed 1080x1920 CSS pixels. NOTE: an
@@ -280,7 +291,7 @@ async function main() {
 
   if (isCinematic) {
     await page.evaluate(
-      ({ content, timedLines, introDuration, endCardDelay }) => {
+      ({ content, timedLines, introDuration, endCardDelay, isScenes }) => {
         const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
         // "dark" (the default near-black grade) needs no class; any other
         // mood just maps straight to a body.theme-<mood> class - see
@@ -289,16 +300,28 @@ async function main() {
         // story so consecutive reels don't keep repeating one look).
         if (content.mood && content.mood !== "dark") document.body.classList.add("theme-" + content.mood);
         const capLine = document.getElementById("capLine");
-        const phaseEls = {
-          hands: document.getElementById("phaseHands"),
-          room: document.getElementById("phaseRoom"),
-          breath: document.getElementById("phaseBreath"),
-          rest: document.getElementById("phaseRest"),
-          dawn: document.getElementById("phaseDawn"),
-          path: document.getElementById("phasePath"),
-          seed: document.getElementById("phaseSeed"),
-          anchor: document.getElementById("phaseAnchor"),
-        };
+        // reel-scenes.html marks each scene with data-scene="<key>";
+        // reel-cinematic.html uses fixed phase IDs.
+        let phaseEls = {};
+        const sceneNodes = document.querySelectorAll("section[data-scene]");
+        if (sceneNodes.length) {
+          sceneNodes.forEach((n) => { phaseEls[n.dataset.scene] = n; });
+        } else {
+          phaseEls = {
+            hands: document.getElementById("phaseHands"),
+            room: document.getElementById("phaseRoom"),
+            breath: document.getElementById("phaseBreath"),
+            rest: document.getElementById("phaseRest"),
+            dawn: document.getElementById("phaseDawn"),
+            path: document.getElementById("phasePath"),
+            seed: document.getElementById("phaseSeed"),
+            anchor: document.getElementById("phaseAnchor"),
+          };
+        }
+        const introPresents = document.getElementById("introPresents");
+        if (introPresents && content.title) introPresents.firstChild.textContent = content.title;
+        const introTitle = document.getElementById("introTitle");
+        if (introTitle) introTitle.textContent = content.subtitle || "";
 
         // Plain setTimeout + transition scheduling, rather than
         // pre-baked CSS @keyframes/animation-delay like the classic
@@ -308,15 +331,54 @@ async function main() {
         // Playwright's page.waitForTimeout holds the page open for
         // the full video length below, so this lines up with the
         // actual recording.
-        function showPhase(key) {
-          Object.values(phaseEls).forEach((el) => { if (el) el.style.opacity = "0"; });
+        function showPhase(key, durSec) {
           const el = phaseEls[key];
+          Object.values(phaseEls).forEach((other) => {
+            if (!other || other === el) return;
+            other.style.opacity = "0";
+            if (isScenes) setTimeout(() => { if (other.style.opacity === "0") other.classList.remove("active", "live"); }, 2600);
+          });
           if (!el) return;
-          el.style.transition = "opacity 1.6s " + EASE;
+          if (isScenes) {
+            // Restart this scene's camera move, sized to how long it's on screen.
+            el.style.setProperty("--dur", Math.max(6, (durSec || 12) + 3).toFixed(1) + "s");
+            el.classList.remove("active");
+            void el.offsetWidth;
+            el.classList.add("active", "live");
+            document.body.dataset.shot = key;
+          }
+          el.style.transition = "opacity " + (isScenes ? "2.2s" : "1.6s") + " " + EASE;
           requestAnimationFrame(() => { el.style.opacity = "1"; });
         }
 
-        function showCaption(html) {
+        function showChapter(ch) {
+          const box = document.getElementById("chapter");
+          if (!box || !ch) return;
+          document.getElementById("chapterNum").textContent = ch.num ? "Chapter " + ch.num : "";
+          document.getElementById("chapterName").textContent = ch.name || "";
+          document.getElementById("chapterRef").textContent = ch.ref || "";
+          const name = document.getElementById("chapterName");
+          box.style.transition = "none";
+          box.style.opacity = "0";
+          name.style.transition = "none";
+          name.style.letterSpacing = "0.14em";
+          name.style.filter = "blur(8px)";
+          void box.offsetWidth;
+          box.style.transition = "opacity 1.4s " + EASE;
+          name.style.transition = "letter-spacing 2.4s " + EASE + ", filter 1.6s " + EASE;
+          requestAnimationFrame(() => {
+            box.style.opacity = "1";
+            name.style.letterSpacing = "0.02em";
+            name.style.filter = "blur(0px)";
+          });
+          setTimeout(() => {
+            box.style.transition = "opacity 1.4s ease";
+            box.style.opacity = "0";
+          }, 4600);
+        }
+
+        function showCaption(html, isScripture) {
+          capLine.classList.toggle("scripture", !!isScripture);
           capLine.style.transition = "none";
           capLine.style.opacity = "0";
           capLine.style.filter = "blur(12px)";
@@ -336,16 +398,32 @@ async function main() {
           capLine.style.opacity = "0";
         }
 
+        // How long each visual stays on screen (until the next visual
+        // change, or until the end card), so scene camera moves can be
+        // sized to fit.
+        const changeStarts = [];
+        let prevVisual = null;
+        timedLines.forEach((line) => {
+          if (line.visual && line.visual !== prevVisual) { changeStarts.push(line.start); prevVisual = line.visual; }
+        });
+        const endAt = endCardDelay - introDuration + 4;
+
         let lastVisual = null;
+        let changeIdx = 0;
         timedLines.forEach((line, i) => {
           const startMs = (introDuration + line.start) * 1000;
           const nextStartMs = i + 1 < timedLines.length ? (introDuration + timedLines[i + 1].start) * 1000 : startMs + 3000;
-          setTimeout(() => showCaption(line.html), Math.max(0, startMs));
-          setTimeout(() => hideCaption(), Math.max(startMs + 500, nextStartMs - 500));
+          const capDelay = line.chapter && isScenes ? 900 : 0;
+          setTimeout(() => showCaption(line.html, line.scripture), Math.max(0, startMs + capDelay));
+          setTimeout(() => hideCaption(), Math.max(startMs + capDelay + 500, nextStartMs - 500));
           if (line.visual && line.visual !== lastVisual) {
-            setTimeout(() => showPhase(line.visual), Math.max(0, startMs - 600));
+            const segEnd = changeIdx + 1 < changeStarts.length ? changeStarts[changeIdx + 1] : endAt;
+            const segDur = segEnd - line.start;
+            changeIdx++;
+            setTimeout(() => showPhase(line.visual, segDur), Math.max(0, startMs - (isScenes ? 1100 : 600)));
             lastVisual = line.visual;
           }
+          if (line.chapter && isScenes) setTimeout(() => showChapter(line.chapter), Math.max(0, startMs - 300));
         });
 
         document.getElementById("titleBrand").textContent = content.title || "Word & Faith Network";
@@ -371,6 +449,7 @@ async function main() {
         timedLines,
         introDuration: INTRO_DURATION,
         endCardDelay: totalDuration - endCardDuration,
+        isScenes,
       }
     );
   } else {
@@ -458,10 +537,11 @@ async function main() {
       "-map", "0:v",
       "-map", "[a]",
       "-t", String(totalDuration),
-      "-vf", "scale=2160:3840:flags=lanczos,fps=30,format=yuv420p",
+      // REEL_FAST=1 is for local dry runs only: native size, fast encode.
+      "-vf", process.env.REEL_FAST ? "fps=30,format=yuv420p" : "scale=2160:3840:flags=lanczos,fps=30,format=yuv420p",
       "-c:v", "libx264",
-      "-crf", "17",
-      "-preset", "slow",
+      "-crf", process.env.REEL_FAST ? "23" : "17",
+      "-preset", process.env.REEL_FAST ? "veryfast" : "slow",
       "-c:a", "aac",
       "-b:a", "160k",
       "-movflags", "+faststart",
@@ -490,7 +570,14 @@ function buildLines(content, isCinematic) {
   const lines = [];
   if (isCinematic) {
     (content.lines || []).forEach((l) => {
-      lines.push({ text: l.text, html: boldWrap(l.text, content.bold), isOpener: false, visual: l.visual });
+      lines.push({
+        text: l.text,
+        html: boldWrap(l.text, content.bold),
+        isOpener: false,
+        visual: l.visual,
+        chapter: l.chapter || null,
+        scripture: !!l.scripture,
+      });
     });
     return lines;
   }
@@ -525,7 +612,7 @@ function distributeTiming(lines, audioDuration) {
     const share = (l.text.length / totalChars) * usableDuration;
     const start = cursor;
     cursor += share + gap;
-    return { html: l.html, isOpener: l.isOpener, visual: l.visual, start };
+    return { html: l.html, isOpener: l.isOpener, visual: l.visual, chapter: l.chapter || null, scripture: !!l.scripture, start };
   });
 }
 
@@ -616,17 +703,24 @@ function xmlEscape(s) {
     .replace(/'/g, "&apos;");
 }
 
-async function synthesizeSpeechAzure(text, apiKey, region, outPath, isCinematic, voiceName, fallbackVoiceName) {
+async function synthesizeSpeechAzure(text, apiKey, region, outPath, isCinematic, voiceName, fallbackVoiceName, segments) {
   // Azure's neural voices already sound natural at their default rate -
   // a slight slow-down (more for the cinematic template, which wants a
   // calmer, more deliberate read) is enough to avoid the slightly
   // brisk, "read aloud" cadence these voices default to.
   const rate = isCinematic ? "-8%" : "-3%";
 
+  // For the illustrated film template, give each narrated line a short
+  // breath after it (a deliberate, documentary-style read), matching the
+  // ~0.5s inter-line gap distributeTiming() assumes for the captions.
+  const body = segments && segments.length
+    ? segments.map((t) => xmlEscape(t)).join('<break time="500ms"/>')
+    : xmlEscape(text);
+
   async function request(name) {
     const ssml =
       `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">` +
-      `<voice name="${name}"><prosody rate="${rate}">${xmlEscape(text)}</prosody></voice>` +
+      `<voice name="${name}"><prosody rate="${rate}">${body}</prosody></voice>` +
       `</speak>`;
     return fetch(`https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`, {
       method: "POST",

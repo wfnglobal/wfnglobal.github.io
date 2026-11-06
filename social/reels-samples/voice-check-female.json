@@ -1,0 +1,13 @@
+{
+  "template": "cinematic",
+  "mood": "light",
+  "voice": "female",
+  "lines": [
+    { "text": "This is a short check of the female narrator voice.", "visual": "seed" },
+    { "text": "Lowered stability, raised style, for a more natural, human sound.", "visual": "path" }
+  ],
+  "title": "Word and Faith Network",
+  "subtitle": "Voice check — female",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org"
+}

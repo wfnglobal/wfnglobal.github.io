@@ -1,0 +1,13 @@
+{
+  "template": "cinematic",
+  "mood": "light",
+  "voice": "male",
+  "lines": [
+    { "text": "This is a short check of the male narrator voice.", "visual": "dawn" },
+    { "text": "Lowered stability, raised style, for a more natural, human sound.", "visual": "anchor" }
+  ],
+  "title": "Word and Faith Network",
+  "subtitle": "Voice check — male",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org"
+}

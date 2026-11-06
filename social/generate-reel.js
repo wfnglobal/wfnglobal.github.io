@@ -18,13 +18,17 @@
  * Requires ELEVENLABS_API_KEY in the environment (a GitHub Actions
  * repo secret - see .github/workflows/reel-post.yml, which is where
  * this actually runs; it is NOT available in an ordinary scheduled
- * Claude session, only inside that Action). Optionally set
- * ELEVENLABS_VOICE_ID to use a different voice than the default below
- * - check your ElevenLabs voice library for the ID you want - and
- * ELEVENLABS_MODEL_ID to try a different ElevenLabs model (defaults to
- * "eleven_multilingual_v2"). Voice naturalness is driven by both the
- * voice itself and the voice_settings tuned in synthesizeSpeech()
- * below - see the comment there.
+ * Claude session, only inside that Action). Two premade ElevenLabs
+ * voices are used - a man's and a woman's - alternating by date unless
+ * a given piece's content.json sets "voice": "male" or "female"
+ * explicitly (see pickVoiceId() below). Override either default with
+ * ELEVENLABS_VOICE_ID_MALE / ELEVENLABS_VOICE_ID_FEMALE, or force one
+ * specific voice for every render with ELEVENLABS_VOICE_ID (wins over
+ * everything) - check your ElevenLabs voice library for the ID you
+ * want. ELEVENLABS_MODEL_ID tries a different ElevenLabs model
+ * (defaults to "eleven_multilingual_v2"). Voice naturalness is driven
+ * by both the voice itself and the voice_settings tuned in
+ * synthesizeSpeech() below - see the comment there.
  *
  * Usage:
  *   node social/generate-reel.js <content.json> <outBase>
@@ -75,8 +79,24 @@
  *   "title": "Word and Faith Network",            // shown on the closing title card
  *   "subtitle": "Release the debt. Keep the boundary.",
  *   "handle": "@wordfaithnetwork",
- *   "site": "wfnglobal.org"
+ *   "site": "wfnglobal.org",
+ *   "voice": "female",                            // optional - "male" | "female"; omit to alternate by date
+ *   "story": "A single thread wound tight..."      // optional - a short (1-3 sentence) plain-English art-
+ *                                                  // direction note on the piece's visual concept. Not shown
+ *                                                  // in the video itself; carried through to the published
+ *                                                  // videos/manifest.json entry as its public "description",
+ *                                                  // so write it as something a visitor would actually want
+ *                                                  // to read, not an internal production note.
  * }
+ *
+ * Every rendered piece - cinematic or classic - should also be added to
+ * the public video archive at videos/manifest.json (newest entries can
+ * go anywhere in the array; the page sorts by date) so it shows up on
+ * wfnglobal.org/videos/ and stays in the permanent archive there, not
+ * just in the Instagram caption. See an existing entry in that file for
+ * the exact shape (id, date, title, description, mood, videoUrl,
+ * posterUrl) - "description" should normally just be the "story" field
+ * above, lightly tidied if needed.
  */
 const fs = require("fs");
 const path = require("path");
@@ -88,8 +108,23 @@ const END_HOLD = 1.0; // pause after the last spoken line before the end card ap
 const END_CARD_DURATION = 3.0; // how long the end card stays on screen
 const CINEMATIC_END_CARD_DURATION = 4.0; // the restrained title card gets a bit longer to breathe
 const FADE_UP_DURATION = 0.9; // seconds - matches the fadeUp keyframes' duration we set via JS below
-const VOICE_ID =
-  process.env.ELEVENLABS_VOICE_ID || "pNInz6obpgDQGcFmaJgB"; // "Adam" - a standard ElevenLabs premade voice; override with ELEVENLABS_VOICE_ID if a different one fits better
+// Two premade ElevenLabs voices - a man's and a woman's - so reels don't
+// always sound like the same narrator. Pick explicitly with
+// content.json's "voice": "male" | "female", or with ELEVENLABS_VOICE_ID
+// (full override, wins over everything). With neither set, the daily
+// pipeline alternates by date so consecutive days don't repeat.
+const VOICE_ID_MALE = process.env.ELEVENLABS_VOICE_ID_MALE || "pNInz6obpgDQGcFmaJgB"; // "Adam"
+const VOICE_ID_FEMALE = process.env.ELEVENLABS_VOICE_ID_FEMALE || "21m00Tcm4TlvDq8ikWAM"; // "Rachel"
+
+function pickVoiceId(content) {
+  if (process.env.ELEVENLABS_VOICE_ID) return process.env.ELEVENLABS_VOICE_ID;
+  if (content.voice === "female") return VOICE_ID_FEMALE;
+  if (content.voice === "male") return VOICE_ID_MALE;
+  // Alternate by day-of-year so back-to-back daily reels don't repeat the
+  // same narrator, without needing any state tracked between runs.
+  const dayOfYear = Math.floor((Date.now() - Date.UTC(new Date().getUTCFullYear(), 0, 0)) / 86400000);
+  return dayOfYear % 2 === 0 ? VOICE_ID_FEMALE : VOICE_ID_MALE;
+}
 
 async function main() {
   const [, , contentPath, outBase] = process.argv;
@@ -117,9 +152,10 @@ async function main() {
   const rawVideoDir = outBase + ".video-raw";
   const renderHtmlPath = outBase + ".render.html";
 
-  console.log("Generating voiceover (" + lines.length + " lines)...");
+  const voiceId = pickVoiceId(content);
+  console.log("Generating voiceover (" + lines.length + " lines, voice " + voiceId + ")...");
   const speechText = lines.map((l) => l.text).join(isCinematic ? " " : ". ");
-  await synthesizeSpeech(speechText, apiKey, audioPath, isCinematic);
+  await synthesizeSpeech(speechText, apiKey, audioPath, isCinematic, voiceId);
 
   const audioDuration = getAudioDuration(audioPath);
   console.log("Audio duration: " + audioDuration.toFixed(2) + "s");
@@ -405,7 +441,7 @@ function getAudioDuration(audioPath) {
   return d;
 }
 
-async function synthesizeSpeech(text, apiKey, outPath, isCinematic) {
+async function synthesizeSpeech(text, apiKey, outPath, isCinematic, voiceId) {
   // Tuned for natural, human-sounding delivery rather than a flat
   // "computer voice". The ElevenLabs "stability" slider is the main
   // lever here: pushed too high (as this was before, at 0.75 for the
@@ -425,7 +461,7 @@ async function synthesizeSpeech(text, apiKey, outPath, isCinematic) {
   // available on your account, tends to sound noticeably more human
   // than v2-era models) without a code change.
   const modelId = process.env.ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
-  const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}?output_format=mp3_44100_128`, {
+  const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`, {
     method: "POST",
     headers: {
       "xi-api-key": apiKey,

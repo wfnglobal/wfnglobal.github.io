@@ -1,0 +1,38 @@
+[
+  {
+    "id": "word-faith-and-prayer",
+    "date": "2026-10-31",
+    "title": "The Word, Faith, and Prayer",
+    "description": "Our founding teaching, on video — the heart behind everything Word and Faith Network does, spoken plainly, person to person.",
+    "legacy": true,
+    "videoUrl": "/assets/video/word-faith-and-prayer.mp4",
+    "posterUrl": "/assets/video/word-faith-and-prayer-poster.jpg"
+  },
+  {
+    "id": "cinematic-forgiveness",
+    "date": "2026-11-05",
+    "title": "Lay the Debt Down",
+    "description": "A single thread wound tight, a quiet room, a slow breath releasing. Restrained, muted-grade motion graphics built around one image: forgiveness as finally letting go of what you'd been gripping — without reopening the door.",
+    "mood": "dark",
+    "videoUrl": "/social/posts/cinematic-forgiveness.mp4",
+    "posterUrl": "/social/posts/cinematic-forgiveness.cover.png"
+  },
+  {
+    "id": "cinematic-forgiveness-light",
+    "date": "2026-11-05",
+    "title": "Lay the Debt Down (Morning Light)",
+    "description": "The same prayer, retold in warm paper-and-cream tones instead of near-black — the coiled thread finally unwinding into a loose, easy ribbon. Release told gently rather than heavy.",
+    "mood": "light",
+    "videoUrl": "/social/posts/cinematic-forgiveness-light.mp4",
+    "posterUrl": "/social/posts/cinematic-forgiveness-light.cover.png"
+  },
+  {
+    "id": "steady-even-when",
+    "date": "2026-11-05",
+    "title": "Steady, Even When the Day Isn't",
+    "description": "Four small pictures of one truth: a sunrise, a long road with its waypoints, a seed just breaking ground, an anchor resting beneath slow water. Faith that holds even when feeling doesn't.",
+    "mood": "light",
+    "videoUrl": "/social/posts/motif-library-test.mp4",
+    "posterUrl": "/social/posts/motif-library-test.cover.png"
+  }
+]

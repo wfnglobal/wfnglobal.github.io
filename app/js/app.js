@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "Though he slay me, yet will I trust in him: but I will maintain mine own ways before him.", ref: "Job 13:15" },
     { text: "For the Son of man is not come to destroy men's lives, but to save them.", ref: "Luke 9:56" },
     { text: "Blessed be the Lord, who daily loadeth us with benefits, even the God of our salvation.", ref: "Psalm 68:19" },
     { text: "Moreover by them is thy servant warned: and in keeping of them there is great reward.", ref: "Psalm 19:11" },
@@ -79,19 +80,19 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that my approval comes from You and not from any room I walk into — I am not performing for applause, I am laboring for Your \"well done\"!",
-      "I refuse to let rejection or silence from people convince me I am not approved, when You have already called me Yours and put Your gospel in my trust!",
-      "I will not chase the crowd's opinion of me today — I will study, I will labor, I will do the quiet work nobody claps for, because You see it and that is enough!",
+      "Father, I declare today that my mind is a guarded room, and by Your Spirit I alone decide what is allowed to sit down in it!",
+      "Your peace, which passes all understanding, is guarding my heart and my mind right now through Christ Jesus — no anxious thought gets to unseat it today!",
+      "I refuse to rehearse the ugliest thought in my head one more time — I have faced it, I have prayed it over to You, and I release it; it owes me nothing and I owe it no more attention!",
       "",
-      "I declare that I am a workman and not a spectator — I pick up the tools today instead of just admiring what diligence produces in someone else's life!",
-      "Whatever I am believing You for, I will not wait for it lazily — I will labor first, like the husbandman, trusting that the fruit always follows the hands that actually worked!",
-      "I reject every shortcut that promises a harvest without labor — my confidence is not in luck today, it is in the Word I am willing to give real time to!",
+      "I declare that whatsoever is true, I will think on it; whatsoever is honest and just, I will think on it; whatsoever is pure and lovely, I will think on it!",
+      "If it is not of good report, if it carries no virtue, if it earns no praise, it does not get to sit down in my mind today — I am the gatekeeper and the door is mine to hold!",
+      "As I think, so I become — so I choose today to become a mind at peace, not a mind in panic, because peace is what I have decided to dwell on!",
       "",
-      "I declare that I rightly divide Your Word of truth today — I will not wrest it, twist it, or quote it carelessly just to win an argument or sound right in a room!",
-      "Let no shame catch me flat-footed today for something I was too lazy to study — I prepare my heart now, the way Ezra did, before I am ever asked to answer for it!",
-      "Save this. Speak it over your diligence today. Study to shew thyself approved unto God, a workman that needeth not to be ashamed, rightly dividing the word of truth. In Jesus' name, amen!"
+      "I will not let my circumstances write the script my thoughts play on repeat today — I write it, by the Spirit, with what is true, lovely, and worthy of praise!",
+      "Whatever chains I am sitting in today, like Paul in his, I declare my thought life still belongs to me — no prison, no pressure, no bad news gets to own my mind!",
+      "Save this. Speak it over your thoughts today. Finally, brethren, whatsoever things are true, whatsoever things are honest, whatsoever things are just, whatsoever things are pure, whatsoever things are lovely, whatsoever things are of good report; if there be any virtue, and if there be any praise, think on these things. In Jesus' name, amen!"
     ],
-    ref: "2 Timothy 2:15"
+    ref: "Philippians 4:8"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -133,6 +134,7 @@
   };
 
   const SERMONS = [
+    { slug: "think-on-these-things", title: "Think On These Things", ref: "Philippians 4:8", date: "November 6, 2026", excerpt: "Peace doesn't arrive because the anxious thought finally leaves on its own. It arrives because you evict it — and hand the empty room to something true, lovely, and worth rehearsing instead." },
     { slug: "approved-not-ashamed", title: "Approved, Not Ashamed", ref: "2 Timothy 2:15", date: "November 5, 2026", excerpt: "Paul doesn't tell Timothy to perform for a room — he tells him to study for an audience of One. The approval that frees you from shame was never coming from the crowd." },
     { slug: "planted-by-the-rivers", title: "Planted by the Rivers", ref: "Psalm 1:1-3", date: "November 4, 2026", excerpt: "Blessing in Psalm 1 was never a feeling the wind blew in. It's a posture — what you refuse to walk in, stand in, and sit in, long before it's ever about what you're planted beside." },
     { slug: "little-by-little-not-all-at-once", title: "Little by Little, Not All at Once", ref: "Deuteronomy 7:19, 21-23", date: "November 3, 2026", excerpt: "God never promised Israel an instant Canaan — He promised a mighty hand, a God among them, and a deliverance that would come by little and little." },

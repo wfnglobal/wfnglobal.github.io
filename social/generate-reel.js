@@ -139,9 +139,19 @@ const VOICE_ID_FEMALE = process.env.ELEVENLABS_VOICE_ID_FEMALE || "21m00Tcm4TlvD
 // Azure's current (2026) "Multilingual" neural voices - a newer generation
 // than the plain en-US-*Neural voices, generally rated more natural and
 // expressive, closer to what ElevenLabs produces. Used when
-// AZURE_SPEECH_KEY is configured - see pickProvider() below.
-const AZURE_VOICE_MALE = process.env.AZURE_SPEECH_VOICE_MALE || "en-US-AndrewMultilingualNeural";
-const AZURE_VOICE_FEMALE = process.env.AZURE_SPEECH_VOICE_FEMALE || "en-US-AvaMultilingualNeural";
+// AZURE_SPEECH_KEY is configured - see pickProvider() below. Default to
+// Azure's newest "HD" (Dragon HD) voices, generally considered its most
+// natural/human-sounding tier as of 2026 - real step up in warmth and
+// prosody over the older plain neural voices, GA in East US as of this
+// writing. If an HD voice ever fails for this account/region (younger
+// voices sometimes aren't enabled on every free-tier resource yet),
+// synthesizeSpeechAzure() falls back automatically to the Multilingual
+// neural voices below, which are solidly natural and definitely
+// supported everywhere Azure Speech is.
+const AZURE_VOICE_MALE = process.env.AZURE_SPEECH_VOICE_MALE || "en-US-Andrew:DragonHDLatestNeural";
+const AZURE_VOICE_FEMALE = process.env.AZURE_SPEECH_VOICE_FEMALE || "en-US-Ava:DragonHDLatestNeural";
+const AZURE_VOICE_MALE_FALLBACK = process.env.AZURE_SPEECH_VOICE_MALE_FALLBACK || "en-US-AndrewMultilingualNeural";
+const AZURE_VOICE_FEMALE_FALLBACK = process.env.AZURE_SPEECH_VOICE_FEMALE_FALLBACK || "en-US-AvaMultilingualNeural";
 
 // Shared by both providers: alternate narrator by day-of-year so
 // back-to-back daily reels don't repeat the same voice, without needing
@@ -160,6 +170,10 @@ function pickVoiceId(content) {
 function pickAzureVoice(content) {
   if (process.env.AZURE_SPEECH_VOICE) return process.env.AZURE_SPEECH_VOICE;
   return pickGender(content) === "female" ? AZURE_VOICE_FEMALE : AZURE_VOICE_MALE;
+}
+
+function pickAzureVoiceFallback(content) {
+  return pickGender(content) === "female" ? AZURE_VOICE_FEMALE_FALLBACK : AZURE_VOICE_MALE_FALLBACK;
 }
 
 // Azure Speech is the preferred provider whenever it's configured: as of
@@ -208,9 +222,10 @@ async function main() {
   const speechText = lines.map((l) => l.text).join(isCinematic ? " " : ". ");
   if (provider === "azure") {
     const azureVoice = pickAzureVoice(content);
+    const azureVoiceFallback = pickAzureVoiceFallback(content);
     console.log("Generating voiceover (" + lines.length + " lines, Azure voice " + azureVoice + ")...");
     try {
-      await synthesizeSpeechAzure(speechText, process.env.AZURE_SPEECH_KEY, process.env.AZURE_SPEECH_REGION, audioPath, isCinematic, azureVoice);
+      await synthesizeSpeechAzure(speechText, process.env.AZURE_SPEECH_KEY, process.env.AZURE_SPEECH_REGION, audioPath, isCinematic, azureVoice, azureVoiceFallback);
     } catch (e) {
       if (process.env.ELEVENLABS_API_KEY) {
         console.warn("Azure TTS failed (" + e.message + ") - falling back to ElevenLabs for this render.");
@@ -594,27 +609,40 @@ function xmlEscape(s) {
     .replace(/'/g, "&apos;");
 }
 
-async function synthesizeSpeechAzure(text, apiKey, region, outPath, isCinematic, voiceName) {
-  // Azure's Multilingual neural voices already sound natural at their
-  // default rate - a slight slow-down (more for the cinematic template,
-  // which wants a calmer, more deliberate read) is enough to avoid the
-  // slightly brisk, "read aloud" cadence these voices default to.
+async function synthesizeSpeechAzure(text, apiKey, region, outPath, isCinematic, voiceName, fallbackVoiceName) {
+  // Azure's neural voices already sound natural at their default rate -
+  // a slight slow-down (more for the cinematic template, which wants a
+  // calmer, more deliberate read) is enough to avoid the slightly
+  // brisk, "read aloud" cadence these voices default to.
   const rate = isCinematic ? "-8%" : "-3%";
-  const ssml =
-    `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">` +
-    `<voice name="${voiceName}"><prosody rate="${rate}">${xmlEscape(text)}</prosody></voice>` +
-    `</speak>`;
 
-  const res = await fetch(`https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`, {
-    method: "POST",
-    headers: {
-      "Ocp-Apim-Subscription-Key": apiKey,
-      "Content-Type": "application/ssml+xml",
-      "X-Microsoft-OutputFormat": "audio-48khz-192kbitrate-mono-mp3",
-      "User-Agent": "wfnglobal-reel-generator",
-    },
-    body: ssml,
-  });
+  async function request(name) {
+    const ssml =
+      `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">` +
+      `<voice name="${name}"><prosody rate="${rate}">${xmlEscape(text)}</prosody></voice>` +
+      `</speak>`;
+    return fetch(`https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`, {
+      method: "POST",
+      headers: {
+        "Ocp-Apim-Subscription-Key": apiKey,
+        "Content-Type": "application/ssml+xml",
+        "X-Microsoft-OutputFormat": "audio-48khz-192kbitrate-mono-mp3",
+        "User-Agent": "wfnglobal-reel-generator",
+      },
+      body: ssml,
+    });
+  }
+
+  let res = await request(voiceName);
+  if (!res.ok && fallbackVoiceName && fallbackVoiceName !== voiceName) {
+    // HD (DragonHDLatestNeural) voices are newer and not guaranteed to be
+    // enabled on every resource/region yet - rather than fail the whole
+    // render over it, drop back once to the standard Multilingual neural
+    // voice, which is universally supported and still genuinely natural.
+    const errText = await res.text().catch(() => "");
+    console.warn(`Azure voice ${voiceName} failed (${res.status}: ${errText}) - falling back to ${fallbackVoiceName}.`);
+    res = await request(fallbackVoiceName);
+  }
   if (!res.ok) {
     const errText = await res.text().catch(() => "");
     throw new Error(`Azure Speech TTS request failed (${res.status}): ${errText}`);

@@ -52,5 +52,14 @@
     "mood": "dusk",
     "videoUrl": "/social/posts/reel-2026-11-06.mp4",
     "posterUrl": "/social/posts/reel-2026-11-06.cover.png"
+  },
+  {
+    "id": "preach-to-your-own-soul",
+    "date": "2026-11-06",
+    "title": "Preach to Your Own Soul",
+    "description": "A six-chapter illustrated short film: a prophet among dead vines at dusk, a man on an ash heap in grey ruins, a king awake on a moonlit Jerusalem rooftop, three men on three peaks at dawn, a modern man at a rain-streaked window, and a hind on the high places at sunrise. Three ruins, one decision - rejoicing was never a reaction; the will moves first.",
+    "style": "film",
+    "videoUrl": "/social/posts/preach-to-your-own-soul-film.mp4?v=2",
+    "posterUrl": "/assets/video/preach-to-your-own-soul-poster.jpg?v=2"
   }
 ]

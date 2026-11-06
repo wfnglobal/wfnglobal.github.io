@@ -125,9 +125,10 @@ const { execFileSync } = require("child_process");
 const { chromium } = require("playwright");
 
 const BASE_INTRO_DURATION = 4.0; // seconds - MUST match templates/reel-prayer.html's .intro animation-delay
-// reel-scenes.html plays the same WFN "global reach" intro (0-4s) and then
-// the film's own title card (4-7s) before narration starts.
-const SCENES_INTRO_DURATION = 7.0;
+// reel-scenes.html plays the WFN "global reach" intro (0-4.4s), then
+// "Word and Faith Network presents" (4.3-6.5s), then the film's own title
+// (6.5-9.6s) before narration starts - keep in sync with that template.
+const SCENES_INTRO_DURATION = 9.5;
 let INTRO_DURATION = BASE_INTRO_DURATION;
 const END_HOLD = 1.0; // pause after the last spoken line before the end card appears
 const END_CARD_DURATION = 3.0; // how long the end card stays on screen

@@ -291,15 +291,31 @@
     <div class="handle" id="handle">@wordfaithnetwork</div>
     <div class="site" id="site">wfnglobal.org</div>
   </div>
-<!-- WFN ownership watermark (top-right), shown after the brand intro. -->
-<div style="position:absolute; top:40px; right:44px; z-index:50; display:flex; align-items:center; gap:12px; opacity:0; animation:wfnWmIn 1.2s ease 4.2s forwards; filter:drop-shadow(0 1px 6px rgba(0,0,0,0.55)); pointer-events:none;">
-  <svg viewBox="0 0 48 48" style="width:52px; height:52px;">
-    <circle cx="24" cy="24" r="21.3" fill="none" stroke="#C8A24A" stroke-width="1.4"/>
-    <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="#C8A24A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#D9B45E"/>
+<!-- WFN ownership watermark: small gold lockup, top-left, after the brand intro. -->
+<style>
+  .wfn-wm{position:absolute; top:40px; left:40px; z-index:50; display:flex; align-items:center; gap:14px; opacity:0; pointer-events:none;
+    animation:wfnWmIn 1.4s cubic-bezier(0.22,1,0.36,1) 4.2s forwards; filter:drop-shadow(0 1px 8px rgba(0,0,0,0.55));}
+  .wfn-wm svg{width:44px; height:44px; flex:none;}
+  .wfn-wm-rule{width:1px; height:36px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.75), rgba(232,199,122,0));}
+  .wfn-wm-abbr{display:block; font-family:'Cormorant Garamond','Fraunces',Georgia,serif; font-weight:600; font-size:28px; line-height:1; letter-spacing:0.34em;
+    background:linear-gradient(100deg, #B98D45 0%, #F2DDA0 42%, #FFF7DC 50%, #F2DDA0 58%, #B98D45 100%); background-size:260% 100%;
+    background-position:100% 0; -webkit-background-clip:text; background-clip:text; color:transparent; animation:wfnWmSheen 2.6s ease 4.7s forwards;}
+  .wfn-wm-full{display:block; margin-top:7px; font-family:'Poppins',system-ui,sans-serif; font-weight:500; font-size:10px; line-height:1; letter-spacing:0.42em;
+    text-transform:uppercase; color:rgba(240,228,205,0.75);}
+  @keyframes wfnWmIn{from{opacity:0; transform:translateY(-5px);} to{opacity:0.94; transform:none;}}
+  @keyframes wfnWmSheen{to{background-position:0 0;}}
+</style>
+<div class="wfn-wm" aria-hidden="true">
+  <svg viewBox="0 0 48 48">
+    <defs><linearGradient id="wfnWmGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+    <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#wfnWmGold)" stroke-width="0.7" opacity="0.5"/>
+    <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#wfnWmGold)" stroke-width="1.2"/>
+    <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#wfnWmGold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#wfnWmGold)"/>
+    <path d="M16.5 35.2 L31.5 35.2" stroke="url(#wfnWmGold)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/>
   </svg>
-  <span style="font-family:'Poppins', system-ui, sans-serif; font-weight:600; font-size:24px; letter-spacing:0.3em; color:#C8A24A;">WFN</span>
+  <div class="wfn-wm-rule"></div>
+  <div><span class="wfn-wm-abbr">WFN</span><span class="wfn-wm-full">Word &amp; Faith Network</span></div>
 </div>
-<style>@keyframes wfnWmIn{to{opacity:0.85;}}</style>
 </body>
 </html>

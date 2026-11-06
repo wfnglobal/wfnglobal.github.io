@@ -139,14 +139,20 @@
   .cap-line.scripture{font-family:var(--serif); font-style:italic; font-weight:500; font-size:60px; line-height:1.28; color:#FFF8EC;}
   .cap-line.scripture b{font-weight:600;}
 
-  /* Opening: the WFN "global reach" brand intro (0-4s, identical to the
-     daily reels), then this film's own title card (4-7s). generate-reel.js
-     starts narration at 7s for this template (SCENES_INTRO_DURATION). */
+  /* Opening: the WFN "global reach" brand intro (0-4.4s, identical to the
+     daily reels), then "Word and Faith Network presents" (4.3-6.5s), then
+     this film's own title (6.5-9.6s). generate-reel.js starts narration at
+     9.5s for this template (SCENES_INTRO_DURATION) - keep them in sync. */
   .intro{position:absolute; inset:0; background:#000; z-index:30; display:flex; align-items:center; justify-content:center;
-    animation:introOut 1.0s ease 6.3s forwards;}
+    animation:introOut 1.0s ease 8.6s forwards;}
+  .intro .presents{position:absolute; text-align:center; font-family:var(--sans); font-weight:400; font-size:24px; letter-spacing:0.5em;
+    text-transform:uppercase; color:#D8CFBE; opacity:0; animation:presents 2.2s ease 4.3s forwards; padding:0 60px;}
+  .intro .presents small{display:block; margin-top:22px; font-family:var(--serif); font-style:italic; font-size:30px; letter-spacing:0.12em;
+    text-transform:none; color:#B9A982;}
+  @keyframes presents{0%{opacity:0;} 28%{opacity:1;} 74%{opacity:1;} 100%{opacity:0;}}
   .intro .film{position:absolute; text-align:center; font-family:var(--serif); font-weight:500; font-size:104px; line-height:1.02;
-    color:#FBF4E6; padding:0 70px; opacity:0; animation:film 1.5s cubic-bezier(0.22,1,0.36,1) 4.45s forwards;}
-  .intro .film-rule{position:absolute; top:calc(50% + 150px); width:0; height:1px; background:#C9A86E; animation:rule 1.2s ease 4.8s forwards;}
+    color:#FBF4E6; padding:0 70px; opacity:0; animation:film 1.5s cubic-bezier(0.22,1,0.36,1) 6.55s forwards;}
+  .intro .film-rule{position:absolute; top:calc(50% + 150px); width:0; height:1px; background:#C9A86E; animation:rule 1.2s ease 6.9s forwards;}
   @keyframes film{from{opacity:0; letter-spacing:0.16em; filter:blur(10px);} to{opacity:1; letter-spacing:0.01em; filter:blur(0);}}
   @keyframes rule{to{width:160px;}}
   @keyframes introOut{to{opacity:0;}}
@@ -175,13 +181,22 @@
   @keyframes grUp{from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:translateY(0);}}
   @keyframes grOut{to{opacity:0; visibility:hidden;}}
 
-  /* Ownership watermark: WFN mark + "WFN", top-right, from the first
-     scene through the end card. */
-  .wm{position:absolute; top:30px; right:40px; z-index:22; display:flex; align-items:center; gap:12px; opacity:0;
-    animation:wmIn 1.2s ease 7.0s forwards; filter:drop-shadow(0 1px 6px rgba(0,0,0,0.6));}
-  .wm svg{width:52px; height:52px;}
-  .wm span{font-family:var(--sans); font-weight:600; font-size:24px; letter-spacing:0.3em; color:#E8C79A;}
-  @keyframes wmIn{to{opacity:0.85;}}
+  /* Ownership watermark: a small gold WFN lockup sitting inside the top-left
+     letterbox bar (never over the picture), from the first scene through
+     the end card. Emblem + hairline divider + "WFN" with a single gold
+     sheen as it arrives + the full name in fine tracking beneath. */
+  .wm{position:absolute; top:37px; left:40px; z-index:22; display:flex; align-items:center; gap:14px; opacity:0;
+    animation:wmIn 1.4s cubic-bezier(0.22,1,0.36,1) 9.3s forwards;}
+  .wm svg{width:44px; height:44px; flex:none; filter:drop-shadow(0 0 6px rgba(212,174,94,0.25));}
+  .wm-rule{width:1px; height:36px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.75), rgba(232,199,122,0));}
+  .wm-abbr{display:block; font-family:var(--serif); font-weight:600; font-size:28px; line-height:1; letter-spacing:0.34em;
+    background:linear-gradient(100deg, #B98D45 0%, #F2DDA0 42%, #FFF7DC 50%, #F2DDA0 58%, #B98D45 100%); background-size:260% 100%;
+    background-position:100% 0; -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:wmSheen 2.6s ease 9.8s forwards;}
+  .wm-full{display:block; margin-top:7px; font-family:var(--sans); font-weight:500; font-size:10px; line-height:1; letter-spacing:0.42em;
+    text-transform:uppercase; color:rgba(240,228,205,0.7);}
+  @keyframes wmIn{from{opacity:0; transform:translateY(-5px);} to{opacity:0.94; transform:none;}}
+  @keyframes wmSheen{to{background-position:0 0;}}
 
   /* End card */
   .title-card{position:absolute; inset:0; z-index:18; opacity:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -748,6 +763,7 @@
 </div>
 
 <div class="intro" id="intro">
+  <div class="presents" id="introPresents">Word and Faith Network<small>presents</small></div>
   <div class="film" id="introTitle"></div>
   <div class="film-rule"></div>
 </div>
@@ -795,11 +811,19 @@
 
 <div class="wm" aria-hidden="true">
   <svg viewBox="0 0 48 48">
-      <circle cx="24" cy="24" r="21.3" fill="none" stroke="#F3D98A" stroke-width="1.2"/>
-      <path d="M15 32 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 32" fill="none" stroke="#E8C77A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="#F3D98A"/>
+    <defs>
+      <linearGradient id="wmGold" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/>
+      </linearGradient>
+    </defs>
+    <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#wmGold)" stroke-width="0.7" opacity="0.5"/>
+    <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#wmGold)" stroke-width="1.2"/>
+    <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#wmGold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#wmGold)"/>
+    <path d="M16.5 35.2 L31.5 35.2" stroke="url(#wmGold)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/>
   </svg>
-  <span>WFN</span>
+  <div class="wm-rule"></div>
+  <div><span class="wm-abbr">WFN</span><span class="wm-full">Word &amp; Faith Network</span></div>
 </div>
 
 <div class="blackout" id="blackout"></div>

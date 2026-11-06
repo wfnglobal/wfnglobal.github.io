@@ -2,9 +2,10 @@
 /*
  * Generates a vertical voiced Reel video from social/templates/reel-prayer.html
  * (or reel-cinematic.html), for posting as an Instagram Reel. Templates are
- * laid out at 1080x1920 CSS pixels but rendered at deviceScaleFactor 2, so
- * the actual output is a true 2160x3840 ("4K" vertical) file - see the
- * browser.newContext() call below.
+ * laid out and recorded at their native 1080x1920 CSS pixels (see the
+ * browser.newContext() call below for why NOT to try deviceScaleFactor
+ * here), then Lanczos-upscaled to 2160x3840 ("4K" vertical) during the
+ * ffmpeg encode step for delivery.
  *
  * Pipeline:
  *  1. Call a text-to-speech provider for the full spoken text (opener +
@@ -256,16 +257,22 @@ async function main() {
   const templatePath = path.join(__dirname, "templates", isCinematic ? "reel-cinematic.html" : "reel-prayer.html");
   fs.copyFileSync(templatePath, renderHtmlPath);
 
-  // Templates are laid out in fixed 1080x1920 CSS pixels, but we render
-  // at deviceScaleFactor 2 so Chromium's actual framebuffer - and the
-  // video Playwright records from it - is a genuine 2160x3840 ("4K"
-  // vertical). This doubles real pixel detail in text, SVG motif edges,
-  // and gradients without touching the template's layout math at all.
+  // Templates are laid out in fixed 1080x1920 CSS pixels. NOTE: an
+  // earlier version of this tried deviceScaleFactor:2 + a larger
+  // recordVideo.size to get a sharper capture - don't repeat that.
+  // Playwright's recordVideo is screencast-based and captures at the
+  // viewport's CSS pixel size regardless of deviceScaleFactor; asking
+  // for a larger recordVideo.size doesn't upscale that capture; it pads
+  // the real (smaller) frame into the top-left corner of a larger
+  // canvas and fills the rest with flat grey. (deviceScaleFactor DOES
+  // work for page.screenshot(), which is why that looked fine in a
+  // local preview check and only showed up as broken in the actual
+  // recorded video.) The real upscale to 2160x3840 happens later, in
+  // the ffmpeg encode step below, via a proper Lanczos scale filter.
   const browser = await chromium.launch();
   const context = await browser.newContext({
     viewport: { width: 1080, height: 1920 },
-    deviceScaleFactor: 2,
-    recordVideo: { dir: rawVideoDir, size: { width: 2160, height: 3840 } },
+    recordVideo: { dir: rawVideoDir, size: { width: 1080, height: 1920 } },
   });
   const page = await context.newPage();
   await page.goto("file://" + path.resolve(renderHtmlPath));
@@ -451,7 +458,7 @@ async function main() {
       "-map", "0:v",
       "-map", "[a]",
       "-t", String(totalDuration),
-      "-vf", "fps=30,format=yuv420p",
+      "-vf", "scale=2160:3840:flags=lanczos,fps=30,format=yuv420p",
       "-c:v", "libx264",
       "-crf", "17",
       "-preset", "slow",

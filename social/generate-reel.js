@@ -520,6 +520,8 @@ async function main() {
   const rawVideoPath = path.join(rawVideoDir, rawVideoFile);
 
   console.log("Encoding + muxing audio...");
+  const videoKbps = Math.max(1500, Math.min(12000, Math.floor((88 * 8 * 1000) / totalDuration) - 160));
+  console.log("Video bitrate cap: " + videoKbps + " kbps");
   const finalMp4 = outBase + ".mp4";
   const coverPng = outBase + ".cover.png";
 
@@ -540,7 +542,12 @@ async function main() {
       // REEL_FAST=1 is for local dry runs only: native size, fast encode.
       "-vf", process.env.REEL_FAST ? "fps=30,format=yuv420p" : "scale=2160:3840:flags=lanczos,fps=30,format=yuv420p",
       "-c:v", "libx264",
-      "-crf", process.env.REEL_FAST ? "23" : "17",
+      "-crf", process.env.REEL_FAST ? "23" : "18",
+      // Cap the video bitrate so the finished file always fits under
+      // GitHub's 100 MB per-file limit (~90 MB target incl. audio),
+      // whatever the length - short reels still get up to 12 Mbps.
+      "-maxrate", videoKbps + "k",
+      "-bufsize", videoKbps * 2 + "k",
       "-preset", process.env.REEL_FAST ? "veryfast" : "slow",
       "-c:a", "aac",
       "-b:a", "160k",

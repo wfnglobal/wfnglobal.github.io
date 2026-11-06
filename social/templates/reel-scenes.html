@@ -110,8 +110,10 @@
   /* Global grade layers */
   .vignette{position:absolute; inset:0; z-index:12; pointer-events:none;
     background:radial-gradient(ellipse 75% 60% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);}
-  .grain{position:absolute; inset:-100px; z-index:13; pointer-events:none; opacity:0.075;
-    animation:grain 0.6s steps(6) infinite;}
+  /* Static grain texture: per-frame animated noise is almost impossible
+     to compress (it pushed a 4-minute 4K render past 1 GB), while a fixed
+     texture costs nothing after the first frame. */
+  .grain{position:absolute; inset:0; z-index:13; pointer-events:none; opacity:0.05;}
   @keyframes grain{
     0%{transform:translate(0,0);} 20%{transform:translate(-30px,20px);} 40%{transform:translate(25px,-35px);}
     60%{transform:translate(-15px,40px);} 80%{transform:translate(35px,10px);} 100%{transform:translate(0,0);}

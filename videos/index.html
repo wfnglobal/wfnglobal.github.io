@@ -162,7 +162,7 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
     batch.forEach(function (v) {
       var card = document.createElement("div");
       card.className = "video-card";
-      var badge = v.legacy ? "Founding Teaching" : (v.mood === "light" ? "Cinematic — Light" : v.mood === "dark" ? "Cinematic — Restrained" : "Reel");
+      var badge = v.legacy ? "Founding Teaching" : v.style === "film" ? "Illustrated Film" : (v.mood === "light" ? "Cinematic — Light" : v.mood === "dark" ? "Cinematic — Restrained" : "Reel");
       card.innerHTML =
         '<div class="video-frame">' +
           '<video controls preload="none" playsinline' + (v.posterUrl ? ' poster="' + esc(v.posterUrl) + '"' : '') + '>' +

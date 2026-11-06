@@ -47,13 +47,15 @@
   .phase{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0;}
   .phase svg{overflow:visible;}
 
-  /* Phase 1 - hands unclenching: an abstract open-hand line drawing,
-     fingers easing apart in a slow, barely-there motion. */
-  .p-hand path{fill:none; stroke:var(--cream-dim); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; opacity:0.85;}
-  .p-hand .finger{animation: ease-apart 7s ease-in-out infinite alternate;}
+  /* Phases 1 & 4 - a tied ribbon easing loose, then fully unwound and
+     flowing free: a abstract stand-in for "releasing what you've been
+     gripping" that reads clearly without literal hands. */
+  .p-ribbon path{fill:none; stroke:var(--cream-dim); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; opacity:0.85;}
+  .p-ribbon .strand{animation: ease-apart 7s ease-in-out infinite alternate;}
   .f1{animation-delay:0s;} .f2{animation-delay:0.4s;} .f3{animation-delay:0.8s;} .f4{animation-delay:1.2s;}
   @keyframes ease-apart{ from{transform:rotate(0deg);} to{transform:rotate(1.1deg);} }
-  .p-hand{transform-origin:540px 1000px;}
+  .p-ribbon{transform-origin:540px 1000px;}
+  .p-rest.p-ribbon path{stroke:var(--cream); opacity:0.9;}
 
   /* Phase 2 - a quiet room: a door, a window light shaft, a chair -
      all reduced to a few soft lines. */
@@ -67,12 +69,11 @@
   .r1{animation-delay:0s;} .r2{animation-delay:1.4s;} .r3{animation-delay:2.8s;} .r4{animation-delay:4.2s;}
   @keyframes breatheOut{ 0%{opacity:0; transform:scale(0.7);} 35%{opacity:0.65;} 100%{opacity:0; transform:scale(1.5);} }
 
-  /* Phase 4 - hands resting open: the same hand, stiller, lower
-     tension, glowing faintly - the camera (the whole .scene) has
-     already begun its slow pull-back via driftSlow above. */
-  .p-rest path{fill:none; stroke:var(--cream); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; opacity:0.9;}
-  .p-rest .palm-glow{animation: softPulse 5s ease-in-out infinite;}
-  @keyframes softPulse{ 0%,100%{opacity:0.15;} 50%{opacity:0.35;} }
+  /* Phase 4 - the ribbon fully unwound and drifting loose, glowing
+     faintly - the camera (the whole .scene) has already begun its
+     slow pull-back via driftSlow above. */
+  .p-rest .ribbon-glow{animation: softPulse 5s ease-in-out infinite;}
+  @keyframes softPulse{ 0%,100%{opacity:0.12;} 50%{opacity:0.28;} }
 
   /* -- Caption: the current spoken line, centered low-third, in a
      restrained serif/sans mix rather than a bold declarative card. -- */
@@ -99,6 +100,28 @@
   .blackout{position:absolute; inset:0; z-index:9; background:#000; opacity:0;}
 
   @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+
+  /* ---------------------------------------------------------------
+     Light mood - same restrained/muted grade and motion, swapped to
+     a warm paper/cream grade instead of near-black, applied via
+     body.theme-light (set by generate-reel.js from content.mood).
+     The opening "global reach" intro is intentionally left alone in
+     both moods - it's the fixed brand open, not part of the theme.
+  ----------------------------------------------------------------*/
+  body.theme-light{background:#F3ECDD;}
+  body.theme-light .scene{background:radial-gradient(ellipse 1500px 1700px at 50% 40%, #FBF4E3 0%, #F3E7C9 55%, #EADFC3 100%);}
+  body.theme-light .vignette{background:radial-gradient(ellipse 1200px 1700px at 50% 50%, transparent 46%, rgba(120,98,66,0.20) 100%);}
+  body.theme-light .grain{opacity:0.045; mix-blend-mode:multiply;}
+  body.theme-light .p-ribbon path{stroke:#6B5A3E;}
+  body.theme-light .p-breath circle{stroke:rgba(150,114,64,0.5);}
+  body.theme-light .p-breath .breath-core{fill:#96723F; opacity:0.22;}
+  body.theme-light .cap-line{color:#3A2F22; text-shadow:0 2px 18px rgba(255,255,255,0.65);}
+  body.theme-light .cap-line b{color:#8A6A2E; text-shadow:0 0 18px rgba(150,114,64,0.3);}
+  body.theme-light .title-card{background:#FBF4E3;}
+  body.theme-light .title-card .brand{color:#2B2420;}
+  body.theme-light .title-card .tagline{color:#8A6A2E;}
+  body.theme-light .title-card .meta{color:#8C7A52;}
+  body.theme-light .title-card .rule{background:rgba(140,110,60,0.5);}
 </style>
 </head>
 <body>
@@ -199,15 +222,14 @@
   <div class="grain"></div>
   <div class="vignette"></div>
 
-  <!-- Phase 1: hands unclenching -->
-  <div class="phase p-hand" id="phaseHands">
-    <svg viewBox="0 0 400 500" width="620" height="775">
-      <path class="finger f1" d="M170 420 C165 320 160 230 168 150 C171 128 196 126 198 148 C204 230 206 320 202 420"/>
-      <path class="finger f2" d="M210 422 C206 300 204 190 212 110 C215 86 242 85 244 110 C250 190 250 300 244 422"/>
-      <path class="finger f3" d="M252 424 C249 300 248 195 256 120 C259 98 285 97 287 120 C292 195 291 300 286 424"/>
-      <path class="finger f4" d="M292 426 C290 330 290 250 298 190 C301 170 324 170 326 192 C332 250 330 330 326 426"/>
-      <path d="M150 428 C150 460 170 480 210 482 C250 484 300 480 320 460 C332 448 332 430 322 420 C300 440 190 440 150 428 Z"/>
-      <path d="M150 428 C140 400 132 360 140 330 C146 308 168 310 170 334" opacity="0.6"/>
+  <!-- Phase 1: a ribbon still tied, easing at the knot -->
+  <div class="phase p-ribbon p-ribbon-tied" id="phaseHands">
+    <svg viewBox="0 0 400 500" width="560" height="700">
+      <path class="strand f1" d="M200 170 C145 142 118 205 158 238 C182 258 205 238 200 205"/>
+      <path class="strand f2" d="M200 170 C255 142 282 205 242 238 C218 258 195 238 200 205"/>
+      <path class="strand f3" d="M160 236 C175 248 225 248 240 236"/>
+      <path class="strand f4" d="M188 244 C170 288 158 336 174 392"/>
+      <path d="M212 244 C230 288 242 336 226 392" opacity="0.75"/>
     </svg>
   </div>
 
@@ -236,19 +258,16 @@
       <circle class="ring r2" cx="400" cy="400" r="70"/>
       <circle class="ring r3" cx="400" cy="400" r="70"/>
       <circle class="ring r4" cx="400" cy="400" r="70"/>
-      <circle cx="400" cy="400" r="26" fill="#9C8A6B" opacity="0.28"/>
+      <circle class="breath-core" cx="400" cy="400" r="26" fill="#9C8A6B" opacity="0.28"/>
     </svg>
   </div>
 
-  <!-- Phase 4: hands resting open -->
-  <div class="phase p-rest" id="phaseRest">
-    <svg viewBox="0 0 400 500" width="560" height="700">
-      <circle class="palm-glow" cx="230" cy="300" r="140" fill="#9C8A6B"/>
-      <path d="M170 420 C166 330 163 248 169 160 C171 140 196 139 198 158 C203 248 205 330 202 420"/>
-      <path d="M210 422 C207 310 206 210 213 120 C215 98 242 97 244 120 C250 210 250 310 244 422"/>
-      <path d="M252 424 C250 310 249 215 256 130 C259 110 285 109 287 130 C292 215 291 310 286 424"/>
-      <path d="M292 426 C291 340 291 260 298 200 C301 182 324 182 326 202 C332 260 330 340 326 426"/>
-      <path d="M150 428 C150 460 170 480 210 482 C250 484 300 480 320 460 C332 448 332 430 322 420 C300 440 190 440 150 428 Z"/>
+  <!-- Phase 4: the ribbon fully unwound, drifting loose and open -->
+  <div class="phase p-ribbon p-rest" id="phaseRest">
+    <svg viewBox="0 0 400 520" width="560" height="728">
+      <circle class="ribbon-glow" cx="230" cy="300" r="150" fill="#9C8A6B"/>
+      <path d="M150 120 C105 200 148 272 210 298 C272 324 306 386 266 446"/>
+      <path d="M192 120 C147 200 190 272 252 298" opacity="0.7"/>
     </svg>
   </div>
 

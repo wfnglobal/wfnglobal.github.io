@@ -1,0 +1,37 @@
+{
+  "template": "cinematic",
+  "mood": "light",
+  "lines": [
+    { "text": "You already said the words.", "visual": "hands" },
+    { "text": "You already chose to forgive.", "visual": "hands" },
+    { "text": "But something in you still flinches when the memory comes back.", "visual": "hands" },
+
+    { "text": "You smile when their name is mentioned.", "visual": "room" },
+    { "text": "Yet your chest tightens.", "visual": "room" },
+    { "text": "You say you've moved on.", "visual": "room" },
+    { "text": "But your body still remembers the wound.", "visual": "room" },
+    { "text": "This is not a prayer to pretend it never hurt.", "visual": "room" },
+    { "text": "This is not a prayer to reopen the door.", "visual": "room" },
+    { "text": "This is a prayer to finally lay the debt down.", "visual": "room" },
+
+    { "text": "Tonight, I release what was never mine to carry.", "visual": "breath" },
+    { "text": "I cancel the claim.", "visual": "breath" },
+    { "text": "I close the account.", "visual": "breath" },
+    { "text": "I will not keep revisiting what God has already settled.", "visual": "breath" },
+    { "text": "I will not keep bleeding where He has already spoken healing.", "visual": "breath" },
+    { "text": "I will not confuse forgiveness with access.", "visual": "breath" },
+
+    { "text": "I forgive.", "visual": "rest" },
+    { "text": "I release.", "visual": "rest" },
+    { "text": "And I refuse to reopen what heaven has closed.", "visual": "rest" },
+    { "text": "The door stays shut.", "visual": "rest" },
+    { "text": "The debt is cancelled.", "visual": "rest" },
+    { "text": "And my peace is no longer up for negotiation.", "visual": "rest" },
+    { "text": "In Jesus' name.", "visual": "rest" }
+  ],
+  "bold": "lay the debt down",
+  "title": "Word and Faith Network",
+  "subtitle": "Release the debt. Keep the boundary.",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org"
+}

@@ -47,6 +47,7 @@
  * between a small set of abstract scenes instead of staying static:
  * {
  *   "template": "cinematic",
+ *   "mood": "light",                              // optional - "dark" (default) or "light" (warm paper/cream grade instead of near-black; the opening "global reach" intro is unaffected either way)
  *   "lines": [
  *     { "text": "You already said the words.", "visual": "hands" },
  *     { "text": "...", "visual": "room" },        // "hands" | "room" | "breath" | "rest"
@@ -130,6 +131,7 @@ async function main() {
     await page.evaluate(
       ({ content, timedLines, introDuration, endCardDelay }) => {
         const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+        if (content.mood === "light") document.body.classList.add("theme-light");
         const capLine = document.getElementById("capLine");
         const phaseEls = {
           hands: document.getElementById("phaseHands"),

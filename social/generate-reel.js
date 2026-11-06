@@ -7,7 +7,7 @@
  * browser.newContext() call below.
  *
  * Pipeline:
- *  1. Call ElevenLabs text-to-speech for the full spoken text (opener +
+ *  1. Call a text-to-speech provider for the full spoken text (opener +
  *     lines joined) -> an mp3.
  *  2. Measure the real audio duration (ffprobe) and distribute it
  *     across the prayer lines proportional to each line's character
@@ -18,20 +18,37 @@
  *  4. Mux the generated audio onto the video with ffmpeg, delayed to
  *     start exactly when the intro ends.
  *
- * Requires ELEVENLABS_API_KEY in the environment (a GitHub Actions
- * repo secret - see .github/workflows/reel-post.yml, which is where
- * this actually runs; it is NOT available in an ordinary scheduled
- * Claude session, only inside that Action). Two premade ElevenLabs
- * voices are used - a man's and a woman's - alternating by date unless
- * a given piece's content.json sets "voice": "male" or "female"
- * explicitly (see pickVoiceId() below). Override either default with
- * ELEVENLABS_VOICE_ID_MALE / ELEVENLABS_VOICE_ID_FEMALE, or force one
- * specific voice for every render with ELEVENLABS_VOICE_ID (wins over
- * everything) - check your ElevenLabs voice library for the ID you
- * want. ELEVENLABS_MODEL_ID tries a different ElevenLabs model
- * (defaults to "eleven_multilingual_v2"). Voice naturalness is driven
- * by both the voice itself and the voice_settings tuned in
- * synthesizeSpeech() below - see the comment there.
+ * TEXT-TO-SPEECH PROVIDER: two are supported - Azure Speech and
+ * ElevenLabs - selected by pickProvider() above synthesizeSpeech().
+ * Azure is preferred automatically whenever AZURE_SPEECH_KEY and
+ * AZURE_SPEECH_REGION are both set (its free tier's 500k
+ * characters/month comfortably covers daily rendering, unlike this
+ * project's capped ElevenLabs quota); otherwise it falls back to
+ * ElevenLabs, and if an Azure render fails for any reason mid-run it
+ * falls back to ElevenLabs for that one render too (as long as
+ * ELEVENLABS_API_KEY is also set). Force one or the other with
+ * TTS_PROVIDER=azure|elevenlabs. All of these are GitHub Actions repo
+ * secrets/vars - see .github/workflows/reel-post.yml, which is where
+ * this actually runs; they are NOT available in an ordinary scheduled
+ * Claude session, only inside that Action.
+ *
+ * Azure: voice alternates male/female by date via pickAzureVoice()
+ * (content.json's "voice": "male"/"female" overrides this per piece),
+ * defaulting to the "Multilingual" neural voices
+ * en-US-AndrewMultilingualNeural / en-US-AvaMultilingualNeural -
+ * override with AZURE_SPEECH_VOICE_MALE / AZURE_SPEECH_VOICE_FEMALE,
+ * or force one specific voice for every render with AZURE_SPEECH_VOICE.
+ *
+ * ElevenLabs: two premade voices are used - a man's and a woman's -
+ * alternating by date the same way (see pickVoiceId() below). Override
+ * either default with ELEVENLABS_VOICE_ID_MALE /
+ * ELEVENLABS_VOICE_ID_FEMALE, or force one specific voice for every
+ * render with ELEVENLABS_VOICE_ID (wins over everything) - check your
+ * ElevenLabs voice library for the ID you want. ELEVENLABS_MODEL_ID
+ * tries a different ElevenLabs model (defaults to "eleven_v4"). Voice
+ * naturalness is driven by both the voice itself and the
+ * voice_settings tuned in synthesizeSpeech() below - see the comment
+ * there.
  *
  * Usage:
  *   node social/generate-reel.js <content.json> <outBase>
@@ -119,14 +136,43 @@ const FADE_UP_DURATION = 0.9; // seconds - matches the fadeUp keyframes' duratio
 const VOICE_ID_MALE = process.env.ELEVENLABS_VOICE_ID_MALE || "pNInz6obpgDQGcFmaJgB"; // "Adam"
 const VOICE_ID_FEMALE = process.env.ELEVENLABS_VOICE_ID_FEMALE || "21m00Tcm4TlvDq8ikWAM"; // "Rachel"
 
+// Azure's current (2026) "Multilingual" neural voices - a newer generation
+// than the plain en-US-*Neural voices, generally rated more natural and
+// expressive, closer to what ElevenLabs produces. Used when
+// AZURE_SPEECH_KEY is configured - see pickProvider() below.
+const AZURE_VOICE_MALE = process.env.AZURE_SPEECH_VOICE_MALE || "en-US-AndrewMultilingualNeural";
+const AZURE_VOICE_FEMALE = process.env.AZURE_SPEECH_VOICE_FEMALE || "en-US-AvaMultilingualNeural";
+
+// Shared by both providers: alternate narrator by day-of-year so
+// back-to-back daily reels don't repeat the same voice, without needing
+// any state tracked between runs. content.voice, when set, always wins.
+function pickGender(content) {
+  if (content.voice === "female" || content.voice === "male") return content.voice;
+  const dayOfYear = Math.floor((Date.now() - Date.UTC(new Date().getUTCFullYear(), 0, 0)) / 86400000);
+  return dayOfYear % 2 === 0 ? "female" : "male";
+}
+
 function pickVoiceId(content) {
   if (process.env.ELEVENLABS_VOICE_ID) return process.env.ELEVENLABS_VOICE_ID;
-  if (content.voice === "female") return VOICE_ID_FEMALE;
-  if (content.voice === "male") return VOICE_ID_MALE;
-  // Alternate by day-of-year so back-to-back daily reels don't repeat the
-  // same narrator, without needing any state tracked between runs.
-  const dayOfYear = Math.floor((Date.now() - Date.UTC(new Date().getUTCFullYear(), 0, 0)) / 86400000);
-  return dayOfYear % 2 === 0 ? VOICE_ID_FEMALE : VOICE_ID_MALE;
+  return pickGender(content) === "female" ? VOICE_ID_FEMALE : VOICE_ID_MALE;
+}
+
+function pickAzureVoice(content) {
+  if (process.env.AZURE_SPEECH_VOICE) return process.env.AZURE_SPEECH_VOICE;
+  return pickGender(content) === "female" ? AZURE_VOICE_FEMALE : AZURE_VOICE_MALE;
+}
+
+// Azure Speech is the preferred provider whenever it's configured: as of
+// this writing the ElevenLabs account on this project is capped at a
+// small monthly credit quota (see the 402/quota_exceeded handling below),
+// while Azure's free F0 tier gives 500,000 characters/month - far more
+// than daily reel generation needs. Force a specific provider with
+// TTS_PROVIDER=elevenlabs|azure if you ever need to override this.
+function pickProvider() {
+  const forced = (process.env.TTS_PROVIDER || "").toLowerCase();
+  if (forced === "azure" || forced === "elevenlabs") return forced;
+  if (process.env.AZURE_SPEECH_KEY && process.env.AZURE_SPEECH_REGION) return "azure";
+  return "elevenlabs";
 }
 
 async function main() {
@@ -135,9 +181,13 @@ async function main() {
     console.error("Usage: node generate-reel.js <content.json> <outBase>");
     process.exit(1);
   }
-  const apiKey = process.env.ELEVENLABS_API_KEY;
-  if (!apiKey) {
-    console.error("Missing ELEVENLABS_API_KEY environment variable.");
+  const provider = pickProvider();
+  if (provider === "azure" && !(process.env.AZURE_SPEECH_KEY && process.env.AZURE_SPEECH_REGION)) {
+    console.error("TTS_PROVIDER=azure but AZURE_SPEECH_KEY / AZURE_SPEECH_REGION are not both set.");
+    process.exit(1);
+  }
+  if (provider === "elevenlabs" && !process.env.ELEVENLABS_API_KEY) {
+    console.error("Missing ELEVENLABS_API_KEY environment variable (and no Azure credentials configured).");
     process.exit(1);
   }
 
@@ -155,10 +205,26 @@ async function main() {
   const rawVideoDir = outBase + ".video-raw";
   const renderHtmlPath = outBase + ".render.html";
 
-  const voiceId = pickVoiceId(content);
-  console.log("Generating voiceover (" + lines.length + " lines, voice " + voiceId + ")...");
   const speechText = lines.map((l) => l.text).join(isCinematic ? " " : ". ");
-  await synthesizeSpeech(speechText, apiKey, audioPath, isCinematic, voiceId);
+  if (provider === "azure") {
+    const azureVoice = pickAzureVoice(content);
+    console.log("Generating voiceover (" + lines.length + " lines, Azure voice " + azureVoice + ")...");
+    try {
+      await synthesizeSpeechAzure(speechText, process.env.AZURE_SPEECH_KEY, process.env.AZURE_SPEECH_REGION, audioPath, isCinematic, azureVoice);
+    } catch (e) {
+      if (process.env.ELEVENLABS_API_KEY) {
+        console.warn("Azure TTS failed (" + e.message + ") - falling back to ElevenLabs for this render.");
+        const voiceId = pickVoiceId(content);
+        await synthesizeSpeech(speechText, process.env.ELEVENLABS_API_KEY, audioPath, isCinematic, voiceId);
+      } else {
+        throw e;
+      }
+    }
+  } else {
+    const voiceId = pickVoiceId(content);
+    console.log("Generating voiceover (" + lines.length + " lines, voice " + voiceId + ")...");
+    await synthesizeSpeech(speechText, process.env.ELEVENLABS_API_KEY, audioPath, isCinematic, voiceId);
+  }
 
   const audioDuration = getAudioDuration(audioPath);
   console.log("Audio duration: " + audioDuration.toFixed(2) + "s");
@@ -514,6 +580,44 @@ async function synthesizeSpeech(text, apiKey, outPath, isCinematic, voiceId) {
   if (!res.ok) {
     const errText = await res.text().catch(() => "");
     throw new Error(`ElevenLabs TTS request failed (${res.status}): ${errText}`);
+  }
+  const buf = Buffer.from(await res.arrayBuffer());
+  fs.writeFileSync(outPath, buf);
+}
+
+function xmlEscape(s) {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+async function synthesizeSpeechAzure(text, apiKey, region, outPath, isCinematic, voiceName) {
+  // Azure's Multilingual neural voices already sound natural at their
+  // default rate - a slight slow-down (more for the cinematic template,
+  // which wants a calmer, more deliberate read) is enough to avoid the
+  // slightly brisk, "read aloud" cadence these voices default to.
+  const rate = isCinematic ? "-8%" : "-3%";
+  const ssml =
+    `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">` +
+    `<voice name="${voiceName}"><prosody rate="${rate}">${xmlEscape(text)}</prosody></voice>` +
+    `</speak>`;
+
+  const res = await fetch(`https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`, {
+    method: "POST",
+    headers: {
+      "Ocp-Apim-Subscription-Key": apiKey,
+      "Content-Type": "application/ssml+xml",
+      "X-Microsoft-OutputFormat": "audio-48khz-192kbitrate-mono-mp3",
+      "User-Agent": "wfnglobal-reel-generator",
+    },
+    body: ssml,
+  });
+  if (!res.ok) {
+    const errText = await res.text().catch(() => "");
+    throw new Error(`Azure Speech TTS request failed (${res.status}): ${errText}`);
   }
   const buf = Buffer.from(await res.arrayBuffer());
   fs.writeFileSync(outPath, buf);

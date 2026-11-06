@@ -82,6 +82,15 @@ jobs:
         id: generate
         if: steps.find.outputs.files != ''
         env:
+          # Azure Speech is the preferred TTS provider when both of these
+          # are set - see generate-reel.js's pickProvider() for why (its
+          # free tier's 500k characters/month comfortably covers daily
+          # rendering, unlike this project's capped ElevenLabs quota).
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
+          AZURE_SPEECH_VOICE: ${{ secrets.AZURE_SPEECH_VOICE }}
+          AZURE_SPEECH_VOICE_MALE: ${{ secrets.AZURE_SPEECH_VOICE_MALE }}
+          AZURE_SPEECH_VOICE_FEMALE: ${{ secrets.AZURE_SPEECH_VOICE_FEMALE }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           # ELEVENLABS_VOICE_ID, if set, forces every reel to one fixed
           # voice (wins over everything in generate-reel.js) - leave this

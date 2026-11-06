@@ -1,0 +1,20 @@
+{
+  "template": "cinematic",
+  "mood": "dusk",
+  "lines": [
+    { "text": "You've been holding so tight, waiting for someone to notice.", "visual": "hands" },
+    { "text": "Let the applause you were chasing finally fall from your hands.", "visual": "hands" },
+    { "text": "What's growing in you right now was never meant to be seen yet.", "visual": "seed" },
+    { "text": "Every quiet hour nobody clapped for is still being counted.", "visual": "seed" },
+    { "text": "You don't need a crowd's verdict to know you're approved.", "visual": "anchor" },
+    { "text": "He already called it good before anyone else looked up.", "visual": "anchor" },
+    { "text": "Rest here. You were never studying for their applause.", "visual": "anchor" },
+    { "text": "You were always studying for an audience of One.", "visual": "anchor" }
+  ],
+  "bold": "an audience of One",
+  "title": "Word and Faith Network",
+  "subtitle": "You already have the only approval that matters.",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A hand finally loosening its grip on something it was holding too tight, giving way to a seed breaking quiet ground, and settling into the stillness of an anchor at rest — a visual journey from straining for applause to resting in God's approval alone."
+}

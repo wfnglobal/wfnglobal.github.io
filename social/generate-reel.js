@@ -20,7 +20,11 @@
  * this actually runs; it is NOT available in an ordinary scheduled
  * Claude session, only inside that Action). Optionally set
  * ELEVENLABS_VOICE_ID to use a different voice than the default below
- * - check your ElevenLabs voice library for the ID you want.
+ * - check your ElevenLabs voice library for the ID you want - and
+ * ELEVENLABS_MODEL_ID to try a different ElevenLabs model (defaults to
+ * "eleven_multilingual_v2"). Voice naturalness is driven by both the
+ * voice itself and the voice_settings tuned in synthesizeSpeech()
+ * below - see the comment there.
  *
  * Usage:
  *   node social/generate-reel.js <content.json> <outBase>
@@ -50,9 +54,23 @@
  *   "mood": "light",                              // optional - "dark" (default) or "light" (warm paper/cream grade instead of near-black; the opening "global reach" intro is unaffected either way)
  *   "lines": [
  *     { "text": "You already said the words.", "visual": "hands" },
- *     { "text": "...", "visual": "room" },        // "hands" | "room" | "breath" | "rest"
+ *     { "text": "...", "visual": "room" },
  *     ...
  *   ],
+ *   // "visual" is one of: "hands" (a thread wound tight, one end loose),
+ *   // "room" (a quiet room, a doorway, a chair), "breath" (soft
+ *   // concentric rings releasing from a center point), "rest" (the
+ *   // thread fully unwound, a loose horizontal ribbon-wave), "dawn"
+ *   // (a horizon line, sun, rising rays), "path" (two converging lines
+ *   // with waypoint dots - a road receding), "seed" (a stem breaking
+ *   // ground with two opening leaves), "anchor" (an anchor resting over
+ *   // slow horizontal water lines). Pick whichever subset of these fits
+ *   // a given piece's theme and mood - do not default to the same two
+ *   // or three every time; the template is built to support real
+ *   // variety across reels (see social/templates/reel-cinematic.html's
+ *   // ".p-dawn / .p-path / .p-seed / .p-anchor" block for the motif
+ *   // library, and add new ones there following the same pattern
+ *   // rather than reusing one motif for every mood).
  *   "bold": "lay the debt down",                 // optional - exact phrase to bold, matched against lines
  *   "title": "Word and Faith Network",            // shown on the closing title card
  *   "subtitle": "Release the debt. Keep the boundary.",
@@ -138,6 +156,10 @@ async function main() {
           room: document.getElementById("phaseRoom"),
           breath: document.getElementById("phaseBreath"),
           rest: document.getElementById("phaseRest"),
+          dawn: document.getElementById("phaseDawn"),
+          path: document.getElementById("phasePath"),
+          seed: document.getElementById("phaseSeed"),
+          anchor: document.getElementById("phaseAnchor"),
         };
 
         // Plain setTimeout + transition scheduling, rather than
@@ -384,12 +406,25 @@ function getAudioDuration(audioPath) {
 }
 
 async function synthesizeSpeech(text, apiKey, outPath, isCinematic) {
-  // The cinematic piece asks for a calm, steady, almost-private-prayer
-  // delivery - higher stability and lower "style" exaggeration than
-  // the more expressive default used for the daily card-style reels.
+  // Tuned for natural, human-sounding delivery rather than a flat
+  // "computer voice". The ElevenLabs "stability" slider is the main
+  // lever here: pushed too high (as this was before, at 0.75 for the
+  // cinematic preset) it suppresses the voice's natural pitch/pace
+  // variation and reads as robotic; lower stability lets real prosody
+  // through at a small cost in take-to-take consistency, which doesn't
+  // matter for a single rendered line. "style" is nudged up to restore
+  // some of the natural inflection that high stability was flattening.
+  // The cinematic piece still reads a little calmer/quieter than the
+  // daily card-style reels, so it keeps marginally higher stability,
+  // but nowhere near where it was.
   const voiceSettings = isCinematic
-    ? { stability: 0.75, similarity_boost: 0.8, style: 0.15, use_speaker_boost: true }
-    : { stability: 0.55, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true };
+    ? { stability: 0.38, similarity_boost: 0.85, style: 0.45, use_speaker_boost: true }
+    : { stability: 0.32, similarity_boost: 0.85, style: 0.55, use_speaker_boost: true };
+  // Override with ELEVENLABS_MODEL_ID if you want to try a different
+  // ElevenLabs model (e.g. a newer "v3"-class model, once generally
+  // available on your account, tends to sound noticeably more human
+  // than v2-era models) without a code change.
+  const modelId = process.env.ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
   const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}?output_format=mp3_44100_128`, {
     method: "POST",
     headers: {
@@ -399,7 +434,7 @@ async function synthesizeSpeech(text, apiKey, outPath, isCinematic) {
     },
     body: JSON.stringify({
       text,
-      model_id: "eleven_multilingual_v2",
+      model_id: modelId,
       voice_settings: voiceSettings,
     }),
   });

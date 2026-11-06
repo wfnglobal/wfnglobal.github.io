@@ -75,6 +75,32 @@
   .p-rest .ribbon-glow{animation: softPulse 5s ease-in-out infinite;}
   @keyframes softPulse{ 0%,100%{opacity:0.12;} 50%{opacity:0.28;} }
 
+  /* -- A small reusable motif library beyond the four "release" phases
+     above - generate-reel.js picks whichever subset fits a given
+     piece's theme via each line's "visual" tag, so no two reels have
+     to look alike. Keep adding to this set over time rather than
+     reusing the same handful forever. -- */
+  .p-dawn line.horizon{stroke:var(--cream-dim); stroke-width:2; opacity:0.6;}
+  .p-dawn circle.sun{fill:none; stroke:var(--muted-gold); stroke-width:2.5;}
+  .p-dawn .ray{stroke:var(--muted-gold); stroke-width:2.5; stroke-linecap:round; animation: rayPulse 6s ease-in-out infinite;}
+  .p-dawn .ray:nth-child(odd){animation-delay:1.5s;}
+  @keyframes rayPulse{ 0%,100%{opacity:0.5;} 50%{opacity:1;} }
+
+  .p-path path{fill:none; stroke:var(--cream-dim); stroke-width:2.2; opacity:0.75;}
+  .p-path circle{fill:var(--muted-gold);}
+  .p-path .marker{animation: markerDrift 7s ease-in-out infinite;}
+  .p-path .m1{animation-delay:0s;} .p-path .m2{animation-delay:1.1s;} .p-path .m3{animation-delay:2.2s;}
+  @keyframes markerDrift{ 0%,100%{opacity:0.5; transform:translateY(0);} 50%{opacity:1; transform:translateY(-6px);} }
+
+  .p-seed line{stroke:var(--cream-dim); stroke-width:2; opacity:0.5;}
+  .p-seed path{fill:none; stroke:var(--cream); stroke-width:2.2; stroke-linecap:round;}
+  .p-seed .leaf{animation: leafSway 6s ease-in-out infinite alternate;}
+  @keyframes leafSway{ from{transform:rotate(0deg);} to{transform:rotate(2deg);} }
+
+  .p-anchor path, .p-anchor line, .p-anchor circle{fill:none; stroke:var(--cream-dim); stroke-width:2.2; stroke-linecap:round;}
+  .p-anchor .waves{stroke:var(--muted-gold); opacity:0.55; animation: waveDrift 8s ease-in-out infinite alternate;}
+  @keyframes waveDrift{ from{transform:translateX(0);} to{transform:translateX(14px);} }
+
   /* -- Caption: the current spoken line, centered low-third, in a
      restrained serif/sans mix rather than a bold declarative card. -- */
   .caption-wrap{position:absolute; left:0; right:0; bottom:300px; z-index:5; padding:0 110px; text-align:center;}
@@ -115,6 +141,17 @@
   body.theme-light .p-ribbon path{stroke:#6B5A3E;}
   body.theme-light .p-breath circle{stroke:rgba(150,114,64,0.5);}
   body.theme-light .p-breath .breath-core{fill:#96723F; opacity:0.22;}
+  body.theme-light .p-dawn line.horizon,
+  body.theme-light .p-path path,
+  body.theme-light .p-seed line,
+  body.theme-light .p-anchor path,
+  body.theme-light .p-anchor line,
+  body.theme-light .p-anchor circle{stroke:#6B5A3E;}
+  body.theme-light .p-seed path{stroke:#3A2F22;}
+  body.theme-light .p-dawn circle.sun,
+  body.theme-light .p-dawn .ray,
+  body.theme-light .p-path circle,
+  body.theme-light .p-anchor .waves{stroke:#96723F; fill:#96723F;}
   body.theme-light .cap-line{color:#3A2F22; text-shadow:0 2px 18px rgba(255,255,255,0.65);}
   body.theme-light .cap-line b{color:#8A6A2E; text-shadow:0 0 18px rgba(150,114,64,0.3);}
   body.theme-light .title-card{background:#FBF4E3;}
@@ -267,6 +304,53 @@
       <circle class="ribbon-glow" cx="220" cy="120" r="150" fill="#9C8A6B"/>
       <path d="M40 120 C100 70 140 170 200 120 C260 70 300 170 360 120 C390 94 405 100 410 120"/>
       <path d="M40 138 C100 88 140 188 200 138 C260 88 300 188 360 138 C390 112 405 118 410 138" opacity="0.7"/>
+    </svg>
+  </div>
+
+  <!-- Phase 5: daybreak - a plain horizon, a sun, a few rising rays -->
+  <div class="phase p-dawn" id="phaseDawn">
+    <svg viewBox="0 0 800 600" width="760" height="570">
+      <line class="horizon" x1="80" y1="420" x2="720" y2="420"/>
+      <circle class="sun" cx="400" cy="420" r="90"/>
+      <line class="ray" x1="400" y1="300" x2="400" y2="230"/>
+      <line class="ray" x1="300" y1="340" x2="255" y2="285"/>
+      <line class="ray" x1="500" y1="340" x2="545" y2="285"/>
+      <line class="ray" x1="230" y1="420" x2="160" y2="420"/>
+      <line class="ray" x1="570" y1="420" x2="640" y2="420"/>
+    </svg>
+  </div>
+
+  <!-- Phase 6: a path receding into the distance, a few waypoints -->
+  <div class="phase p-path" id="phasePath">
+    <svg viewBox="0 0 800 800" width="760" height="760">
+      <path d="M260 760 C340 560 370 420 400 180"/>
+      <path d="M540 760 C460 560 430 420 400 180" opacity="0.7"/>
+      <circle class="marker m1" cx="400" cy="560" r="7"/>
+      <circle class="marker m2" cx="400" cy="400" r="6"/>
+      <circle class="marker m3" cx="400" cy="260" r="5"/>
+    </svg>
+  </div>
+
+  <!-- Phase 7: a seedling - a stem rising from the ground, two leaves opening -->
+  <div class="phase p-seed" id="phaseSeed">
+    <svg viewBox="0 0 400 500" width="420" height="525">
+      <line x1="60" y1="420" x2="340" y2="420"/>
+      <path d="M200 420 C200 340 200 280 200 210"/>
+      <path class="leaf" d="M200 320 C150 310 125 275 135 235 C175 250 200 280 200 320 Z"/>
+      <path class="leaf" d="M200 350 C250 338 278 300 266 258 C222 275 200 308 200 350 Z"/>
+    </svg>
+  </div>
+
+  <!-- Phase 8: an anchor, settled, with a few slow lines of water beneath -->
+  <div class="phase p-anchor" id="phaseAnchor">
+    <svg viewBox="0 0 400 500" width="420" height="525">
+      <circle cx="200" cy="90" r="26"/>
+      <line x1="200" y1="116" x2="200" y2="340"/>
+      <line x1="150" y1="170" x2="250" y2="170"/>
+      <path d="M130 270 C130 330 165 360 200 360"/>
+      <path d="M270 270 C270 330 235 360 200 360"/>
+      <path class="waves" d="M60 440 C110 420 150 460 200 440 C250 420 290 460 340 440"/>
+      <path class="waves" d="M60 470 C110 450 150 490 200 470 C250 450 290 490 340 470" opacity="0.6"/>
     </svg>
   </div>
 

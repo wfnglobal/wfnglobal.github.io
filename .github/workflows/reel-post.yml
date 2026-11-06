@@ -128,7 +128,14 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add social/posts/*.mp4 social/posts/*.cover.png
           git commit -m "$(printf 'Render Instagram Reel video(s)\n\nCo-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>')"
-          git push
+          # Long 4K renders often overlap other pushes to main (daily
+          # content, site edits), so rebase onto whatever landed meanwhile
+          # and retry rather than failing at the very last step.
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && break
+            echo "Push attempt $i failed, retrying..."; sleep $((i * 5))
+            if [ "$i" = 5 ]; then exit 1; fi
+          done
 
           NEW_SHA=$(git rev-parse HEAD)
           echo "new_sha=$NEW_SHA" >> "$GITHUB_OUTPUT"

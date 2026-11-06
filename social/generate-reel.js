@@ -468,19 +468,40 @@ async function synthesizeSpeech(text, apiKey, outPath, isCinematic, voiceId) {
   // "eleven_multilingual_v2", ElevenLabs' most stable long-form model,
   // if v4 ever causes trouble on this account) without a code change.
   const modelId = process.env.ELEVENLABS_MODEL_ID || "eleven_v4";
-  const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`, {
-    method: "POST",
-    headers: {
-      "xi-api-key": apiKey,
-      "Content-Type": "application/json",
-      Accept: "audio/mpeg",
-    },
-    body: JSON.stringify({
-      text,
-      model_id: modelId,
-      voice_settings: voiceSettings,
-    }),
-  });
+
+  async function request(id) {
+    return fetch(`https://api.elevenlabs.io/v1/text-to-speech/${id}?output_format=mp3_44100_128`, {
+      method: "POST",
+      headers: {
+        "xi-api-key": apiKey,
+        "Content-Type": "application/json",
+        Accept: "audio/mpeg",
+      },
+      body: JSON.stringify({
+        text,
+        model_id: modelId,
+        voice_settings: voiceSettings,
+      }),
+    });
+  }
+
+  let res = await request(voiceId);
+  if (!res.ok && res.status === 402 && voiceId !== VOICE_ID_MALE) {
+    // ElevenLabs can 402 ("Free users cannot use library voices via the
+    // API") on a premade voice that hasn't been saved into this
+    // account's own voice list, even while another premade voice
+    // (VOICE_ID_MALE, apparently already saved there) works fine. Rather
+    // than let a plan/voice-library quirk silently break every other
+    // day's reel (the date-based alternation would hit this every time
+    // it picks the broken voice), fall back once to the known-working
+    // male voice and keep going - better one day's narrator skewing
+    // male than a failed render. This is a real account-level issue
+    // worth fixing properly (save the female voice into the ElevenLabs
+    // account's own voice list, or set ELEVENLABS_VOICE_ID_FEMALE to
+    // one that's already usable), not something to rely on long-term.
+    console.warn(`ElevenLabs voice ${voiceId} returned 402 (plan/library restriction) - falling back to the male voice for this render.`);
+    res = await request(VOICE_ID_MALE);
+  }
   if (!res.ok) {
     const errText = await res.text().catch(() => "");
     throw new Error(`ElevenLabs TTS request failed (${res.status}): ${errText}`);

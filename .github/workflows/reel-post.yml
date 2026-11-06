@@ -83,7 +83,17 @@ jobs:
         if: steps.find.outputs.files != ''
         env:
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          # ELEVENLABS_VOICE_ID, if set, forces every reel to one fixed
+          # voice (wins over everything in generate-reel.js) - leave this
+          # repo secret UNSET to let the male/female alternation below
+          # actually alternate. Set ELEVENLABS_VOICE_ID_MALE /
+          # ELEVENLABS_VOICE_ID_FEMALE instead to swap either default
+          # premade voice for one from your own ElevenLabs voice library
+          # without forcing a single narrator every day.
           ELEVENLABS_VOICE_ID: ${{ secrets.ELEVENLABS_VOICE_ID }}
+          ELEVENLABS_VOICE_ID_MALE: ${{ secrets.ELEVENLABS_VOICE_ID_MALE }}
+          ELEVENLABS_VOICE_ID_FEMALE: ${{ secrets.ELEVENLABS_VOICE_ID_FEMALE }}
+          ELEVENLABS_MODEL_ID: ${{ secrets.ELEVENLABS_MODEL_ID }}
         run: |
           set -euo pipefail
           BASES=""

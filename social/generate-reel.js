@@ -456,11 +456,13 @@ async function synthesizeSpeech(text, apiKey, outPath, isCinematic, voiceId) {
   const voiceSettings = isCinematic
     ? { stability: 0.38, similarity_boost: 0.85, style: 0.45, use_speaker_boost: true }
     : { stability: 0.32, similarity_boost: 0.85, style: 0.55, use_speaker_boost: true };
-  // Override with ELEVENLABS_MODEL_ID if you want to try a different
-  // ElevenLabs model (e.g. a newer "v3"-class model, once generally
-  // available on your account, tends to sound noticeably more human
-  // than v2-era models) without a code change.
-  const modelId = process.env.ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
+  // eleven_v4 is ElevenLabs' current flagship model and is described
+  // (by ElevenLabs, as of late 2026) as their most emotive/natural-
+  // sounding option, a real step up from the older v2-era models this
+  // was on before. Override with ELEVENLABS_MODEL_ID (e.g. back to
+  // "eleven_multilingual_v2", ElevenLabs' most stable long-form model,
+  // if v4 ever causes trouble on this account) without a code change.
+  const modelId = process.env.ELEVENLABS_MODEL_ID || "eleven_v4";
   const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`, {
     method: "POST",
     headers: {

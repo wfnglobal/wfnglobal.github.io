@@ -1,0 +1,20 @@
+{
+  "template": "cinematic",
+  "mood": "light",
+  "lines": [
+    { "text": "Some mornings the weight is already there before you open your eyes.", "visual": "dawn" },
+    { "text": "You tell yourself tomorrow will be lighter.", "visual": "dawn" },
+    { "text": "But you've said that before.", "visual": "path" },
+    { "text": "Faith is not pretending the road isn't long.", "visual": "path" },
+    { "text": "It's taking the next step anyway.", "visual": "path" },
+    { "text": "Something small is still growing in you.", "visual": "seed" },
+    { "text": "Don't mistake slow for stopped.", "visual": "seed" },
+    { "text": "You are held by something steadier than how you feel today.", "visual": "anchor" },
+    { "text": "Let that be enough for this morning.", "visual": "anchor" }
+  ],
+  "bold": "slow for stopped",
+  "title": "Word and Faith Network",
+  "subtitle": "Steady, even when the day isn't.",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org"
+}

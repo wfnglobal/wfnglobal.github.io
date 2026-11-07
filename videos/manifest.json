@@ -61,5 +61,14 @@
     "style": "film",
     "videoUrl": "/social/posts/preach-to-your-own-soul-film.mp4?v=2",
     "posterUrl": "/assets/video/preach-to-your-own-soul-poster.jpg?v=2"
+  },
+  {
+    "id": "reel-2026-11-07",
+    "date": "2026-11-07",
+    "title": "Peace, Be Still",
+    "description": "A storm-tossed boat at night under lightning and rain, calmed when a figure stands as black clouds split by gold light, resting at last into a rose-gold sunrise at sea - the story of Mark 4:35-41, and what it means to trust the same voice that's still in the boat with you before the waves actually stop.",
+    "style": "film",
+    "videoUrl": "/social/posts/reel-2026-11-07.mp4",
+    "posterUrl": "/social/posts/reel-2026-11-07.cover.png"
   }
 ]

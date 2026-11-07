@@ -114,22 +114,22 @@
   // purpose: never about one specific dream scenario, always a general
   // covering. points[] renders as numbered prayer points, no markdown.
   const DREAM_FIRE_PRAYER = {
-    title: "Breaking Every Midnight Decree",
-    date: "November 6, 2026",
-    intro: "A shield prayer for tonight — not about what you dreamed, but about every decree spoken against you in the dark before you ever close your eyes. Pray this out loud. Fire answers fire.",
+    title: "Scattering the Witchcraft Table",
+    date: "November 7, 2026",
+    intro: "Tonight's shield prayer — not about what you'll dream, but about every table spread, every summons sent, and every mark aimed at you in the dark before sleep ever closes your eyes. Pray it out loud and mean every word; fire answers fire.",
     points: [
-      "Father, by the blood of Jesus, I cancel every decree, every verdict, every sentence passed against my life in any dream court sitting tonight. No judgment entered against me in my sleep shall stand, for the Judge of all the earth has not signed it, in Jesus' mighty name!",
-      "Every parliament of darkness, every tribunal, every satanic council convened to review my file while I sleep — I set fire to your chamber now! Scatter, before the thunder of the Holy Ghost scatters you, in the name of Jesus!",
-      "Any book, ledger, or register where my name has been written down for an evil assignment tonight — I command it blotted out and burned, and I write over it with the blood of the Lamb! My name belongs in the Book of Life, nowhere else, in Jesus' name!",
-      "If I am pursued, hunted, or driven in a dream tonight, let the pursuer fall into the pit dug for me instead! If I am caged, roped, netted, or locked in, every chain breaks now, every door flies open, and I walk out free by fire, in the mighty name of Jesus!",
-      "Whatever swap is being arranged against me in the dark tonight — my destiny for a delay, my health for a sickness, my joy for a sorrow, my future for someone's past — I refuse the exchange, I reverse the exchange, and I send it back empty-handed, in Jesus' name!",
-      "Every evil seal, mark, tattoo, ring, veil, or garment any hand tries to fix on me in a dream tonight, I tear it off before it settles and I set it ablaze where it falls! I wear no covering but righteousness, I carry no seal but the Holy Ghost, in Jesus' mighty name!",
-      "Every altar raised against me tonight — ancestral altar, marine altar, village altar, graveyard altar, altar in a shrine I have never seen — catch fire now, stone by stone! No blood poured there, no incantation spoken there, has any claim on me, in the name of Jesus!",
-      "Whatever is cooked, served, or passed to me to eat or drink in a dream tonight, I reject it, I vomit it out, and I command the hand that prepared it to eat it instead! I feed only at the table of the Lord, in Jesus' mighty name!",
-      "Every marine spirit, every water power, every operator from the kingdom under the sea assigned to trouble my rest tonight — I command your waters to dry up before my presence! You will not drown what the blood of Jesus has already covered!",
-      "If I fly, fall, sink, or struggle to scream in a dream tonight, let it be the enemy's camp that falls, not me! I decree that angels of fire bear me up, and every power simulating my death, loss, or defeat in the dream realm dies in my place, in Jesus' name!",
-      "Father, every door shut against me, every virtue confiscated, every good thing buried in a grave, a coffin, or a locked room by dream wickedness in seasons past — exhume it, resurrect it, and hand it back to me now, multiplied, by fire, in Jesus' name!",
-      "So I decree over tonight: no weapon formed against me in my sleep shall prosper, no tongue that rises against me in the dark shall be justified. My rest is holy ground, my dreams are patrolled by fire, and I rise in the morning with nothing stolen and nothing broken — covered, untouchable, and free, in the mighty, all-consuming name of Jesus Christ, amen! 🔥"
+      "Father, by the blood of Jesus, I refuse every summons sent to my spirit tonight — no coven, no council, no ancestral gathering, no witchcraft assembly has the right to call me and expect an answer! I am not available, I do not attend, in the mighty name of Jesus!",
+      "Every table spread for me in the dream realm tonight — witchcraft table, satanic buffet, covenant feast laid by hands I cannot see — catch fire now and be overturned before I am ever served, in the name of Jesus!",
+      "Any garment, uniform, ring, cloth, or cloak fitted on my body, my head, or my spirit while I sleep tonight, I strip it off and set it ablaze where it falls! I wear the garment of righteousness and no other, in Jesus' mighty name!",
+      "Whatever picture, image, name tag, or likeness of me is being used for an evil working in the dream realm tonight, I command it destroyed by fire! No power manipulates my image while my body rests — I am hidden in Christ, in Jesus' name!",
+      "Every evil covenant, pact, marriage, or blood bond anyone attempts to seal with me in a dream tonight, without my spirit's consent, I declare null, void, and forever broken by the blood of Jesus! I belong to Christ alone, in His mighty name!",
+      "Every padlock, chain, rope, or seal fastened on my destiny, my womb, my business, or my finances through a dream tonight, I command it to shatter now! What God has opened, no night operator shall shut, in the name of Jesus!",
+      "If my spirit is carried, transported, or kidnapped to any evil location in the dream realm tonight, I invoke the blood of Jesus and I command my immediate, full return — body, soul, and spirit — safely to my bed, in Jesus' mighty name!",
+      "Every voice that calls my name in the dark tonight to pull me into the dream realm against my will, I silence you! I answer only to the Shepherd's voice, and I know His voice — every stranger's voice is a stranger to me, in the name of Jesus!",
+      "Any blood drawn, any sacrifice offered, any covenant sealed in my name or over my image in a dream tonight, I reject and reverse it completely! Only the blood of Jesus speaks over my life, and it speaks better things, in His mighty name!",
+      "If I am arrested, tried, chained, or detained by any power in a dream tonight, I plead the blood of Jesus as my Advocate and I command my unconditional release now, with every charge against me dropped, in the name of Jesus!",
+      "Every witch, wizard, marine agent, familiar spirit, or night operator assigned to visit, feed from, or drain me while I sleep tonight — your assignment is terminated! Fire consumes your camp before you ever reach my door, in Jesus' name!",
+      "So I decree over tonight: no table shall be spread for me that I did not set, no mark shall settle on me that heaven did not place, and no voice shall move me that is not my Father's. I sleep in peace, I rise in victory, covered and untouched, in the mighty, all-consuming name of Jesus Christ, amen! 🔥"
     ]
   };
 

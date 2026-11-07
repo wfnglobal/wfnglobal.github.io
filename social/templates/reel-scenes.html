@@ -17,6 +17,9 @@
     three     - three figures on three peaks under a rose/violet dawn
     everyman  - modern man at a table by a rain-streaked city window, teal + amber
     heights   - a hind on a mountain spire above a sea of clouds at sunrise
+    storm     - black-indigo sea storm at night, lightning, a small boat taking water
+    command   - black storm clouds split by gold light, a figure standing in the boat, arms raised
+    calm      - a calm rose-gold sea at sunrise, the same boat resting on glassy water
 
   Each scene is built from layers (l-back / l-front) that get different
   Ken Burns moves for a 2.5D parallax camera, plus an HTML particle layer
@@ -51,6 +54,9 @@
   body[data-shot="three"]{--accent:#FFB3C2;}
   body[data-shot="everyman"]{--accent:#7FD3DE;}
   body[data-shot="heights"]{--accent:#FFD9A0;}
+  body[data-shot="storm"]{--accent:#CFE8FF;}
+  body[data-shot="command"]{--accent:#FFE9B0;}
+  body[data-shot="calm"]{--accent:#FFD9B8;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -297,6 +303,13 @@
       <path d="M 160 -220 C 150 -236 146 -248 150 -256 C 158 -250 164 -236 166 -224 Z"/>
       <path d="M 166 -222 C 170 -238 176 -248 184 -252 C 184 -242 178 -232 172 -222 Z"/>
       <path d="M 0 -146 C -8 -150 -12 -142 -8 -134 C -4 -138 -2 -142 0 -146 Z"/>
+    </g>
+
+    <!-- Small fishing-boat hull (gondola profile, upturned bow/stern) + mast.
+         Waterline / widest point at y=0. -->
+    <g id="prop-boat">
+      <path d="M -280 -54 C -232 18 -120 48 0 50 C 120 48 232 18 280 -54 C 232 -16 120 10 0 12 C -120 10 -232 -16 -280 -54 Z"/>
+      <rect x="-7" y="-250" width="14" height="250" rx="3"/>
     </g>
   </defs>
 </svg>
@@ -735,6 +748,166 @@
     </div>
     <div class="birds" id="birds"></div>
     <div class="fx" data-type="motes" data-n="22" data-color="255,236,200"></div>
+  </section>
+
+  <!-- ============ STORM: black-indigo sea at night, lightning, a boat taking water ============ -->
+  <section class="scene" data-scene="storm" data-kb="push" style="--ox:52%; --oy:66%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="st-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#03040A"/><stop offset="0.4" stop-color="#0A1420"/>
+            <stop offset="0.66" stop-color="#132A38"/><stop offset="1" stop-color="#1C3A44"/>
+          </linearGradient>
+          <radialGradient id="st-flash" cx="0.68" cy="0.3" r="0.6"><stop offset="0" stop-color="#E8F6FF" stop-opacity="0.55"/><stop offset="0.4" stop-color="#9FD8E8" stop-opacity="0.18"/><stop offset="1" stop-color="#9FD8E8" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#st-sky)"/>
+        <rect width="1080" height="1920" fill="url(#st-flash)"/>
+        <g filter="url(#glow8)" opacity="0.85">
+          <path d="M 720 60 L 660 320 L 706 320 L 648 560 L 760 300 L 712 300 Z" fill="#F2FBFF"/>
+        </g>
+        <path d="M 720 60 L 660 320 L 706 320 L 648 560 L 760 300 L 712 300 Z" fill="#FFFFFF"/>
+        <path d="M 0 760 C 160 724 320 742 480 718 C 660 692 840 712 1080 684 L 1080 900 L 0 900 Z" fill="#0A1C26" opacity="0.88"/>
+      </svg>
+      <div class="drift" style="--drift:-140px; --ddur:26s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <g filter="url(#cblur)">
+          <path d="M -200 520 C 200 480 600 500 1300 460 L 1300 560 C 600 596 200 584 -200 616 Z" fill="#050B12" opacity="0.8"/>
+          <path d="M -200 300 C 260 268 660 286 1300 250 L 1300 340 C 660 368 260 358 -200 392 Z" fill="#0A1420" opacity="0.7"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="st-sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E2630"/><stop offset="1" stop-color="#010304"/></linearGradient>
+        </defs>
+        <path d="M 0 980 C 160 930 340 1000 520 940 C 700 882 860 960 1080 900 L 1080 1920 L 0 1920 Z" fill="url(#st-sea)"/>
+        <g stroke="#0A1A20" stroke-width="5" fill="none" opacity="0.8">
+          <path d="M 0 1040 C 200 990 400 1070 600 1010 C 760 964 900 1020 1080 970"/>
+          <path d="M 0 1160 C 220 1100 420 1190 640 1120 C 820 1066 940 1140 1080 1090"/>
+        </g>
+        <g stroke="#CFE8FF" stroke-width="2.5" fill="none" opacity="0.35">
+          <path d="M 40 1020 C 220 976 400 1050 580 996"/>
+          <path d="M 540 1150 C 700 1104 860 1160 1040 1104"/>
+        </g>
+        <g transform="translate(560 1200) rotate(-6) scale(0.62)">
+          <ellipse cx="0" cy="60" rx="260" ry="30" fill="#000" opacity="0.5"/>
+          <use href="#prop-boat" fill="#B8D8EC" filter="url(#glow8)" opacity="0.45"/>
+          <use href="#prop-boat" fill="#2E2012"/>
+          <path d="M -6 -150 C -40 -140 -66 -116 -72 -86 C -44 -98 -16 -104 10 -98 C 2 -122 -2 -138 -6 -150 Z" fill="#1A130B" opacity="0.95"/>
+          <g transform="translate(-130 -10) scale(0.5)"><use href="#fig-robe" fill="#CFE8FF" filter="url(#glow4)" opacity="0.45"/><use href="#fig-robe" fill="#020304"/></g>
+          <g transform="translate(110 -16) scale(0.46)"><use href="#fig-raise" fill="#CFE8FF" filter="url(#glow4)" opacity="0.45"/><use href="#fig-raise" fill="#020304"/></g>
+          <g transform="translate(-10 4) scale(0.4)"><use href="#fig-seated" fill="#8FC8E8" filter="url(#glow4)" opacity="0.3"/><use href="#fig-seated" fill="#020304"/></g>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="rain" data-n="60"></div>
+  </section>
+
+  <!-- ============ COMMAND: black clouds split by gold light, arms raised over the boat ============ -->
+  <section class="scene" data-scene="command" data-kb="rise" style="--ox:50%; --oy:58%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="cm-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#05060A"/><stop offset="0.36" stop-color="#14151C"/>
+            <stop offset="0.5" stop-color="#4A4430"/><stop offset="0.58" stop-color="#F2D98A"/>
+            <stop offset="0.66" stop-color="#2A2820"/><stop offset="1" stop-color="#0A0A0C"/>
+          </linearGradient>
+          <radialGradient id="cm-burst"><stop offset="0" stop-color="#FFFBEA" stop-opacity="1"/><stop offset="0.18" stop-color="#FFEAAE" stop-opacity="0.8"/><stop offset="0.5" stop-color="#F2C76A" stop-opacity="0.25"/><stop offset="1" stop-color="#F2C76A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#cm-sky)"/>
+        <circle cx="540" cy="1050" r="720" fill="url(#cm-burst)"/>
+        <path d="M -200 600 L -200 1040 L 50 980 L 10 900 L 90 860 L 50 780 L 140 760 L 100 660 L 210 640 L 180 600 Z" fill="#0A0A0E"/>
+        <path d="M -200 600 L -200 1040 L 50 980 L 10 900 L 90 860 L 50 780 L 140 760 L 100 660 L 210 640 L 180 600 Z" fill="none" stroke="#1A1610" stroke-width="3" opacity="0.5"/>
+        <path d="M 1300 600 L 1300 1040 L 1030 980 L 1070 900 L 990 860 L 1030 780 L 940 760 L 980 660 L 870 640 L 900 600 Z" fill="#0A0A0E"/>
+        <path d="M 1300 600 L 1300 1040 L 1030 980 L 1070 900 L 990 860 L 1030 780 L 940 760 L 980 660 L 870 640 L 900 600 Z" fill="none" stroke="#1A1610" stroke-width="3" opacity="0.5"/>
+      </svg>
+      <div class="spin" style="--rx:540px; --ry:1050px; --sdur:60s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <g class="rays-gen" data-cx="540" data-cy="1050" data-n="20" data-len="1700" data-w="2.2" fill="#FFF4CE" opacity="0.16"></g>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="cm-sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1E2420" stop-opacity="0.5"/><stop offset="0" stop-color="#5A4E2C"/><stop offset="1" stop-color="#0A0906"/></linearGradient>
+        </defs>
+        <path d="M 0 1300 C 220 1270 440 1300 660 1276 C 820 1258 940 1280 1080 1264 L 1080 1920 L 0 1920 Z" fill="url(#cm-sea)"/>
+        <g stroke="#2A2410" stroke-width="3" fill="none" opacity="0.6">
+          <path d="M 60 1340 C 260 1312 460 1340 660 1316"/>
+          <path d="M 300 1420 C 500 1392 700 1418 900 1392"/>
+        </g>
+        <g transform="translate(540 1350) scale(0.66)">
+          <ellipse cx="0" cy="56" rx="250" ry="28" fill="#000" opacity="0.45"/>
+          <use href="#prop-boat" fill="#FFE9B0" filter="url(#glow8)" opacity="0.7"/>
+          <use href="#prop-boat" fill="#0A0906"/>
+          <path d="M -6 -30 C -34 -36 -36 -10 -6 -6 C 22 -10 22 -34 -6 -30 Z" fill="#0A0906"/>
+          <g transform="translate(-6 -22) scale(0.46)">
+            <use href="#fig-raise" fill="#FFE9B0" filter="url(#glow8)" opacity="0.9"/>
+            <use href="#fig-raise" fill="#0A0906"/>
+          </g>
+          <g transform="translate(-170 -8) scale(0.32)"><use href="#fig-robe" fill="#FFE9B0" filter="url(#glow4)" opacity="0.55"/><use href="#fig-robe" fill="#0A0906"/></g>
+          <g transform="translate(150 -6) scale(0.3)"><use href="#fig-robe" fill="#FFE9B0" filter="url(#glow4)" opacity="0.55"/><use href="#fig-robe" fill="#0A0906"/></g>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="30" data-color="255,233,176"></div>
+  </section>
+
+  <!-- ============ CALM: rose-gold sunrise sea, the boat resting on glassy water ============ -->
+  <section class="scene" data-scene="calm" data-kb="pull" style="--ox:48%; --oy:60%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="cl-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2A3458"/><stop offset="0.32" stop-color="#8E7398"/><stop offset="0.5" stop-color="#E6A788"/>
+            <stop offset="0.6" stop-color="#FBCB94"/><stop offset="0.68" stop-color="#FFE6BE"/><stop offset="1" stop-color="#FFE6BE"/>
+          </linearGradient>
+          <radialGradient id="cl-sun"><stop offset="0" stop-color="#FFFBEF" stop-opacity="1"/><stop offset="0.18" stop-color="#FFE2B0" stop-opacity="0.75"/><stop offset="1" stop-color="#FFC98E" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#cl-sky)"/>
+        <circle cx="560" cy="1140" r="640" fill="url(#cl-sun)"/>
+        <circle cx="560" cy="1140" r="86" fill="#FFF8E8"/>
+      </svg>
+      <div class="drift" style="--drift:-80px; --ddur:50s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <path d="M -200 760 C 160 724 520 742 900 706 C 1040 694 1160 702 1300 694 L 1300 820 C 1160 814 1040 806 900 820 C 520 858 160 842 -200 880 Z" fill="#E8B6A0" opacity="0.55"/>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="cl-sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0B48C" stop-opacity="0.55"/><stop offset="0.4" stop-color="#8A6670" stop-opacity="0.5"/><stop offset="1" stop-color="#140E12"/></linearGradient>
+          <linearGradient id="cl-glitter" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6E2" stop-opacity="0.9"/><stop offset="1" stop-color="#FFF6E2" stop-opacity="0"/></linearGradient>
+        </defs>
+        <path d="M 0 1300 C 240 1282 480 1296 720 1280 C 860 1272 970 1282 1080 1274 L 1080 1920 L 0 1920 Z" fill="url(#cl-sea)"/>
+        <path d="M 470 1290 L 650 1290 L 760 1920 L 360 1920 Z" fill="url(#cl-glitter)" opacity="0.5"/>
+        <g stroke="#FFE6C4" stroke-width="2.5" fill="none" opacity="0.4">
+          <path d="M 80 1340 C 300 1318 520 1336 740 1312"/>
+          <path d="M 180 1440 C 420 1414 660 1434 920 1406"/>
+          <path d="M 60 1540 C 320 1512 580 1532 860 1500"/>
+          <path d="M 120 1640 C 360 1610 640 1634 940 1596"/>
+        </g>
+        <g stroke="#FFF6E2" stroke-width="4" fill="none" opacity="0.6" stroke-linecap="round">
+          <path d="M 520 1360 L 600 1352"/><path d="M 500 1460 L 610 1448"/><path d="M 470 1580 L 630 1562"/><path d="M 440 1720 L 660 1698"/>
+        </g>
+        <g transform="translate(560 1320) scale(0.64)">
+          <ellipse cx="0" cy="52" rx="240" ry="26" fill="#2A160E" opacity="0.4"/>
+          <use href="#prop-boat" fill="#FFD9B8" filter="url(#glow8)" opacity="0.5"/>
+          <use href="#prop-boat" fill="#2A1A10"/>
+          <path d="M -6 -210 L 118 -150 L -6 -46 Z" fill="#3A2414" opacity="0.95"/>
+          <path d="M -6 -210 L 118 -150 L -6 -46 Z" fill="none" stroke="#FFE6C4" stroke-width="3" opacity="0.5"/>
+          <g transform="translate(-150 -10) scale(0.36)"><use href="#fig-robe" fill="#FFD9B8" filter="url(#glow4)" opacity="0.55"/><use href="#fig-robe" fill="#1C100A"/></g>
+          <g transform="translate(150 -10) scale(0.34)"><use href="#fig-robe" fill="#FFD9B8" filter="url(#glow4)" opacity="0.55"/><use href="#fig-robe" fill="#1C100A"/></g>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="bokeh" data-n="14"></div>
   </section>
 
 </div>

@@ -1,0 +1,21 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "Every storm eventually finds the boat you're already in.", "visual": "storm", "chapter": { "num": "I", "name": "The Storm", "ref": "Mark 4:37" } },
+    { "text": "And there arose a great storm of wind, and the waves beat into the ship.", "visual": "storm", "scripture": true },
+    { "text": "Jesus was asleep in the stern, undisturbed by the chaos around him.", "visual": "storm" },
+    { "text": "Master, carest thou not that we perish?", "visual": "storm", "scripture": true },
+    { "text": "He stood. He didn't grab an oar. He didn't bail water.", "visual": "command", "chapter": { "num": "II", "name": "The Command", "ref": "Mark 4:39" } },
+    { "text": "Peace, be still.", "visual": "command", "scripture": true },
+    { "text": "And the wind ceased, and there was a great calm.", "visual": "calm", "scripture": true },
+    { "text": "The same voice is still in the boat with you tonight.", "visual": "calm" },
+    { "text": "Peace was never the absence of waves. It's the presence of the One who made them.", "visual": "calm" },
+    { "text": "In Jesus' name, amen.", "visual": "calm" }
+  ],
+  "bold": "Peace was never the absence of waves. It's the presence of the One who made them.",
+  "title": "Word and Faith Network",
+  "subtitle": "Peace, Be Still",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A storm-tossed boat at night under lightning and rain, calmed when a figure stands as black clouds split by gold light, resting at last into a rose-gold sunrise at sea - the story of Mark 4:35-41, and what it means to trust the same voice that's still in the boat with you before the waves actually stop."
+}

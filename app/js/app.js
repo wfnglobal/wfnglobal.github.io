@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "For the hope which is laid up for you in heaven, whereof ye heard before in the word of the truth of the gospel; which is come unto you, as it is in all the world; and bringeth forth fruit, as it doth also in you, since the day ye heard of it, and knew the grace of God in truth.", ref: "Colossians 1:5-6" },
     { text: "Though he slay me, yet will I trust in him: but I will maintain mine own ways before him.", ref: "Job 13:15" },
     { text: "For the Son of man is not come to destroy men's lives, but to save them.", ref: "Luke 9:56" },
     { text: "Blessed be the Lord, who daily loadeth us with benefits, even the God of our salvation.", ref: "Psalm 68:19" },
@@ -80,19 +81,19 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that my mind is a guarded room, and by Your Spirit I alone decide what is allowed to sit down in it!",
-      "Your peace, which passes all understanding, is guarding my heart and my mind right now through Christ Jesus — no anxious thought gets to unseat it today!",
-      "I refuse to rehearse the ugliest thought in my head one more time — I have faced it, I have prayed it over to You, and I release it; it owes me nothing and I owe it no more attention!",
+      "Thus says the Lord over your life this day: Christ is preeminent, and nothing that has risen against you outranks the One who made it!",
+      "I prophesy that every throne, every dominion, every principality and every power that has sat on my peace is dethroned today — they were created by Him, and they bow to Him!",
+      "I decree that what has been scattered in my life is held together by Christ — my mind, my home, my health and my finances consist in Him and shall not fall apart!",
       "",
-      "I declare that whatsoever is true, I will think on it; whatsoever is honest and just, I will think on it; whatsoever is pure and lovely, I will think on it!",
-      "If it is not of good report, if it carries no virtue, if it earns no praise, it does not get to sit down in my mind today — I am the gatekeeper and the door is mine to hold!",
-      "As I think, so I become — so I choose today to become a mind at peace, not a mind in panic, because peace is what I have decided to dwell on!",
+      "I prophesy fruit! The Word of the truth of the gospel that came to me shall bear fruit in me this season — fruit that remains, fruit that is seen, fruit that cannot be stolen!",
+      "My hope is laid up in heaven where no thief, no devil and no bad report can touch it — therefore I will not live this day afraid!",
+      "I declare that the invisible God is made visible in my life — where He has been hidden by pain, He shall be seen; where He has been doubted, He shall be known!",
       "",
-      "I will not let my circumstances write the script my thoughts play on repeat today — I write it, by the Spirit, with what is true, lovely, and worthy of praise!",
-      "Whatever chains I am sitting in today, like Paul in his, I declare my thought life still belongs to me — no prison, no pressure, no bad news gets to own my mind!",
-      "Save this. Speak it over your thoughts today. Finally, brethren, whatsoever things are true, whatsoever things are honest, whatsoever things are just, whatsoever things are pure, whatsoever things are lovely, whatsoever things are of good report; if there be any virtue, and if there be any praise, think on these things. In Jesus' name, amen!"
+      "Every 'Christ plus' I have leaned on, I tear down today — He alone shall have the preeminence in my plans, my desires, my calling and my family!",
+      "As the gospel has gone into all the world, my voice, my work and my witness shall reach places I have never been — doors shall open by the One who created them!",
+      "Save this. Speak it over your day. He is before all things, and by Him all things consist. In the mighty name of Jesus Christ, amen!"
     ],
-    ref: "Philippians 4:8"
+    ref: "Colossians 1:15-17"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -134,6 +135,7 @@
   };
 
   const SERMONS = [
+    { slug: "the-supremacy-of-christ", title: "The Supremacy of Christ", ref: "Colossians 1:15-17", date: "November 7, 2026", excerpt: "Before there was a throne, a power, or a problem, there was Christ. Everything you're afraid of was created by Him, answers to Him, and is held together by Him — which means nothing in your life outranks the One you pray to." },
     { slug: "think-on-these-things", title: "Think On These Things", ref: "Philippians 4:8", date: "November 6, 2026", excerpt: "Peace doesn't arrive because the anxious thought finally leaves on its own. It arrives because you evict it — and hand the empty room to something true, lovely, and worth rehearsing instead." },
     { slug: "approved-not-ashamed", title: "Approved, Not Ashamed", ref: "2 Timothy 2:15", date: "November 5, 2026", excerpt: "Paul doesn't tell Timothy to perform for a room — he tells him to study for an audience of One. The approval that frees you from shame was never coming from the crowd." },
     { slug: "planted-by-the-rivers", title: "Planted by the Rivers", ref: "Psalm 1:1-3", date: "November 4, 2026", excerpt: "Blessing in Psalm 1 was never a feeling the wind blew in. It's a posture — what you refuse to walk in, stand in, and sit in, long before it's ever about what you're planted beside." },

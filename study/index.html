@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily Bible Study — Word and Faith Network</title>
+<!-- Permanent share link (wfnglobal.org/study) for bios and pinned posts:
+     always forwards to whatever today's Bible Study is in the app, using the
+     same app/data/today.json "bibleStudy" field the daily 7am task updates. -->
+<meta name="description" content="Daily bread for the soul: a new Bible study every morning at 7 AM ET from Word and Faith Network. Free, every day.">
+<link rel="canonical" href="https://wfnglobal.org/study/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Word and Faith Network">
+<meta property="og:title" content="Daily Bread for the Soul — The WFN Daily Bible Study">
+<meta property="og:description" content="A new Bible study every morning at 7 AM ET. Free, every day.">
+<meta property="og:url" content="https://wfnglobal.org/study/">
+<meta property="og:image" content="https://wfnglobal.org/assets/og/daily-bible-study.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Daily Bread for the Soul — The WFN Daily Bible Study">
+<meta name="twitter:description" content="A new Bible study every morning at 7 AM ET. Free, every day.">
+<meta name="twitter:image" content="https://wfnglobal.org/assets/og/daily-bible-study.jpg">
+<link rel="icon" href="/app/icons/icon-192.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CWM8XH3FTC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CWM8XH3FTC');
+</script>
+<style>
+  html,body{margin:0; height:100%; background:#120C07; color:#F6EBD6; font-family:Georgia, 'Times New Roman', serif;}
+  body{display:flex; align-items:center; justify-content:center; text-align:center; padding:0 16px;}
+  h1{font-weight:500; font-size:30px; margin:0 0 10px; color:#F2D493;}
+  p{font-family:-apple-system, system-ui, sans-serif; font-size:15px; color:rgba(246,235,214,0.75); margin:0 0 18px;}
+  a{display:inline-block; padding:12px 26px; border-radius:100px; background:#E2BC72; color:#1E140A; text-decoration:none; font-family:-apple-system, system-ui, sans-serif; font-weight:600; font-size:15px;}
+</style>
+</head>
+<body>
+  <div>
+    <h1>Daily Bread for the Soul</h1>
+    <p>Opening today's Bible Study…</p>
+    <a id="go" href="/app/#/study">Read today's study</a>
+  </div>
+<script>
+(function () {
+  var fallback = "/app/#/study";
+  function go(url) { document.getElementById("go").setAttribute("href", url); location.replace(url); }
+  try {
+    fetch("/app/data/today.json", { cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { go(d && d.bibleStudy && d.bibleStudy.slug ? "/app/#/study/" + d.bibleStudy.slug : fallback); })
+      .catch(function () { go(fallback); });
+  } catch (e) { go(fallback); }
+})();
+</script>
+</body>
+</html>

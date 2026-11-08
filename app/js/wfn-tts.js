@@ -346,8 +346,8 @@
     glassStyleDone = true;
     var st = document.createElement("style");
     st.textContent = [
-      ":root{--wfn-glass-bg:rgba(250,248,243,0.66); --wfn-glass-border:rgba(255,255,255,0.65); --wfn-glass-ink:#231F18; --wfn-glass-ink-2:#5C5444; --wfn-glass-ink-3:#8C8370; --wfn-glass-accent:#9C7A34; --wfn-glass-line:rgba(35,31,24,0.1); --wfn-glass-press:rgba(35,31,24,0.08); --wfn-glass-shadow:0 22px 50px -18px rgba(20,14,6,0.38);}",
-      "html[data-theme='dark']{--wfn-glass-bg:rgba(52,50,58,0.58); --wfn-glass-border:rgba(255,255,255,0.14); --wfn-glass-ink:#F7F3EA; --wfn-glass-ink-2:#DCD5C7; --wfn-glass-ink-3:#A69F92; --wfn-glass-accent:#E2C27E; --wfn-glass-line:rgba(255,255,255,0.12); --wfn-glass-press:rgba(255,255,255,0.1); --wfn-glass-shadow:0 22px 50px -18px rgba(0,0,0,0.6);}",
+      ":root{--wfn-glass-bg:rgba(250,248,243,0.52); --wfn-glass-border:rgba(255,255,255,0.65); --wfn-glass-ink:#231F18; --wfn-glass-ink-2:#5C5444; --wfn-glass-ink-3:#8C8370; --wfn-glass-accent:#9C7A34; --wfn-glass-line:rgba(35,31,24,0.1); --wfn-glass-press:rgba(35,31,24,0.08); --wfn-glass-shadow:0 22px 50px -18px rgba(20,14,6,0.38);}",
+      "html[data-theme='dark']{--wfn-glass-bg:rgba(52,50,58,0.5); --wfn-glass-border:rgba(255,255,255,0.14); --wfn-glass-ink:#F7F3EA; --wfn-glass-ink-2:#DCD5C7; --wfn-glass-ink-3:#A69F92; --wfn-glass-accent:#E2C27E; --wfn-glass-line:rgba(255,255,255,0.12); --wfn-glass-press:rgba(255,255,255,0.1); --wfn-glass-shadow:0 22px 50px -18px rgba(0,0,0,0.6);}",
       ".wfn-glass{background:var(--wfn-glass-bg); -webkit-backdrop-filter:blur(26px) saturate(170%); backdrop-filter:blur(26px) saturate(170%); border:1px solid var(--wfn-glass-border); box-shadow:var(--wfn-glass-shadow); color:var(--wfn-glass-ink);}",
       "#wfnGlass{position:fixed; inset:0; z-index:430; display:none; font-family:'Inter',-apple-system,system-ui,sans-serif;}",
       "#wfnGlass.show{display:block;}",
@@ -567,10 +567,10 @@
       });
       var style = document.createElement("style");
       style.textContent = [
-        "#wfnShareBar{position:fixed; z-index:400; display:none; align-items:center; flex-wrap:nowrap; border-radius:14px; padding:3px 4px; font-family:'Inter',-apple-system,system-ui,sans-serif; max-width:calc(100vw - 16px); overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch;}",
+        "#wfnShareBar{position:fixed; z-index:400; display:none; align-items:center; flex-wrap:nowrap; border-radius:14px; padding:3px 3px; font-family:'Inter',-apple-system,system-ui,sans-serif; max-width:calc(100vw - 16px); overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch;}",
         "#wfnShareBar::-webkit-scrollbar{display:none;}",
         "#wfnShareBar.show{display:flex;}",
-        "#wfnShareBar button{flex:none; border:none; background:none; color:var(--wfn-glass-ink); font-size:14px; font-weight:500; padding:8px 11px; border-radius:10px; cursor:pointer; white-space:nowrap; font-family:inherit; letter-spacing:-0.005em;}",
+        "#wfnShareBar button{flex:none; border:none; background:none; color:var(--wfn-glass-ink); font-size:13.5px; font-weight:500; padding:8px 7px; border-radius:10px; cursor:pointer; white-space:nowrap; font-family:inherit; letter-spacing:-0.005em;}",
         "#wfnShareBar button:active{background:var(--wfn-glass-press);}",
         "#wfnShareBar .wsb-sep{flex:none; width:1px; height:18px; background:var(--wfn-glass-line);}"
       ].join("\n");

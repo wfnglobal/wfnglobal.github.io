@@ -115,22 +115,22 @@
   // purpose: never about one specific dream scenario, always a general
   // covering. points[] renders as numbered prayer points, no markdown.
   const DREAM_FIRE_PRAYER = {
-    title: "Scattering the Witchcraft Table",
-    date: "November 7, 2026",
-    intro: "Tonight's shield prayer — not about what you'll dream, but about every table spread, every summons sent, and every mark aimed at you in the dark before sleep ever closes your eyes. Pray it out loud and mean every word; fire answers fire.",
+    title: "No Exchange Tonight",
+    date: "November 8, 2026",
+    intro: "Tonight's shield prayer — not a guess at what you'll see in the dream realm, but a decree over every altar, every chase, and every attempted exchange that waits for the unguarded hours of sleep. Pray it out loud and mean every word; fire answers fire.",
     points: [
-      "Father, by the blood of Jesus, I refuse every summons sent to my spirit tonight — no coven, no council, no ancestral gathering, no witchcraft assembly has the right to call me and expect an answer! I am not available, I do not attend, in the mighty name of Jesus!",
-      "Every table spread for me in the dream realm tonight — witchcraft table, satanic buffet, covenant feast laid by hands I cannot see — catch fire now and be overturned before I am ever served, in the name of Jesus!",
-      "Any garment, uniform, ring, cloth, or cloak fitted on my body, my head, or my spirit while I sleep tonight, I strip it off and set it ablaze where it falls! I wear the garment of righteousness and no other, in Jesus' mighty name!",
-      "Whatever picture, image, name tag, or likeness of me is being used for an evil working in the dream realm tonight, I command it destroyed by fire! No power manipulates my image while my body rests — I am hidden in Christ, in Jesus' name!",
-      "Every evil covenant, pact, marriage, or blood bond anyone attempts to seal with me in a dream tonight, without my spirit's consent, I declare null, void, and forever broken by the blood of Jesus! I belong to Christ alone, in His mighty name!",
-      "Every padlock, chain, rope, or seal fastened on my destiny, my womb, my business, or my finances through a dream tonight, I command it to shatter now! What God has opened, no night operator shall shut, in the name of Jesus!",
-      "If my spirit is carried, transported, or kidnapped to any evil location in the dream realm tonight, I invoke the blood of Jesus and I command my immediate, full return — body, soul, and spirit — safely to my bed, in Jesus' mighty name!",
-      "Every voice that calls my name in the dark tonight to pull me into the dream realm against my will, I silence you! I answer only to the Shepherd's voice, and I know His voice — every stranger's voice is a stranger to me, in the name of Jesus!",
-      "Any blood drawn, any sacrifice offered, any covenant sealed in my name or over my image in a dream tonight, I reject and reverse it completely! Only the blood of Jesus speaks over my life, and it speaks better things, in His mighty name!",
-      "If I am arrested, tried, chained, or detained by any power in a dream tonight, I plead the blood of Jesus as my Advocate and I command my unconditional release now, with every charge against me dropped, in the name of Jesus!",
-      "Every witch, wizard, marine agent, familiar spirit, or night operator assigned to visit, feed from, or drain me while I sleep tonight — your assignment is terminated! Fire consumes your camp before you ever reach my door, in Jesus' name!",
-      "So I decree over tonight: no table shall be spread for me that I did not set, no mark shall settle on me that heaven did not place, and no voice shall move me that is not my Father's. I sleep in peace, I rise in victory, covered and untouched, in the mighty, all-consuming name of Jesus Christ, amen! 🔥"
+      "Father, by the blood of Jesus, I shut down every evil altar erected for my sake tonight — no priest, no diviner, no night strategist shall light a candle, break a kola, or call a name over my life and get an answer! Every altar against me is overturned, in the mighty name of Jesus!",
+      "If any power chases me in the dream realm tonight, I turn and stand in the name of Jesus — I am not the one running! Every pursuer loses strength, loses breath, and loses ground, and I outrun no one, because greater is He that is in me, in Jesus' mighty name!",
+      "Every net, snare, cage, or hidden trap set for my spirit between midnight and the breaking of day, I command it to close on empty air! My feet shall not be caught where my enemies have dug, in the name of Jesus!",
+      "I refuse every attempted exchange tonight — no one trades their sickness for my health, their poverty for my supply, their short years for my long life, or their curse for my blessing! What is mine remains mine, sealed by the blood of Jesus!",
+      "Every evil court, secret tribunal, or night session convened to pass judgment on my life while I sleep, I plead the blood of Jesus and I appeal to the Court of Heaven! No verdict stands against me that the Judge of all the earth has not signed, in Jesus' name!",
+      "Any file, ledger, or book opened against my name, my family, or my calling in the spirit realm tonight, I command it blotted out by the blood of the Lamb! Only the Book of Life carries my name, and no other register has authority to write me down, in Jesus' mighty name!",
+      "Every mirror, double, mask, or counterfeit version of me being paraded in the dream realm tonight, catch fire now and be exposed! There is only one of me, and I am hidden in Christ — no impostor speaks or acts in my name, in the name of Jesus!",
+      "Every gate assigned to open against me at midnight — gate of delay, gate of confusion, gate of sudden loss — I shut you by the blood of Jesus, and I lock you with the key of the Holy Ghost! No gate opens tonight except the gates my Father ordains, in Jesus' mighty name!",
+      "If my spirit is summoned, transported, or detained anywhere I did not send it tonight, I invoke the blood of Jesus and I command my immediate, full recall — spirit, soul, and body — back to my bed, untouched and unshaken, in Jesus' mighty name!",
+      "Every clock, calendar, or season being tampered with on my behalf in the dark tonight, I command it to run on God's time alone! No night operator steals my years, rushes my ruin, or delays my harvest, in the name of Jesus!",
+      "Every witch, wizard, familiar spirit, marine agent, or night contractor assigned to negotiate, bargain, or trade concerning my life tonight — I cancel every meeting! There is nothing to discuss, nothing to sign, and nothing to collect, in Jesus' name!",
+      "So I decree over tonight: no altar shall burn for me that I did not kindle, no gate shall open against me that heaven did not ordain, and no exchange shall stand that was not signed by my own hand and sealed by the blood of the Lamb. I sleep in peace, I rise in victory, covered and untouched, in the mighty, all-consuming name of Jesus Christ, amen! 🔥"
     ]
   };
 

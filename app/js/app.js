@@ -967,56 +967,25 @@
     return null;
   }
 
+  // Tapping a word in the Bible reader opens the full dictionary sheet
+  // (WFNLookup.openLookup: English senses, examples, synonyms, pronunciation,
+  // KJV archaic meanings, Bible-dictionary entry and a picture when helpful).
   function showWordPopover(btn) {
     const word = btn.textContent;
+    if (window.WFNLookup && window.WFNLookup.openLookup) { window.WFNLookup.openLookup(word); return; }
     const clean = word.replace(/[^A-Za-z']/g, "");
-    const key = clean.toLowerCase();
     let pop = document.getElementById("wordPop");
     if (!pop) {
       pop = document.createElement("div");
       pop.id = "wordPop";
       pop.className = "word-pop";
-      pop.setAttribute("role", "status");
       document.body.appendChild(pop);
     }
-    function place() {
-      const r = btn.getBoundingClientRect();
-      pop.style.left = Math.max(12, Math.min(window.innerWidth - 272, r.left)) + "px";
-      pop.style.top = r.bottom + 10 + "px";
-    }
-    const archaic = ARCHAIC_WORDS[key];
-    pop.innerHTML = `<b>${esc(clean)}</b>${archaic ? esc(archaic) : "Looking up…"}`;
-    place();
+    const r = btn.getBoundingClientRect();
+    pop.style.left = Math.max(12, Math.min(window.innerWidth - 272, r.left)) + "px";
+    pop.style.top = r.bottom + 10 + "px";
+    pop.innerHTML = `<b>${esc(clean)}</b>${esc(ARCHAIC_WORDS[clean.toLowerCase()] || "Dictionary unavailable — please reload.")}`;
     pop.classList.add("show");
-    if (archaic) return;
-
-    getBibleDict().then((dict) => {
-      // The popover may have moved on to a different word (or closed) by
-      // the time this resolves — only act if it's still showing this one.
-      if (!pop.classList.contains("show") || pop.dataset.word !== key) return;
-      const hit = lookupBibleDict(dict, key);
-      if (hit) {
-        pop.innerHTML = `<b>${esc(clean)}</b>${esc(hit)}`;
-        place();
-        return;
-      }
-      // Not a biblical name/term — try it as an ordinary English word.
-      fetch(DICTIONARY_API + encodeURIComponent(key))
-        .then((r) => (r.ok ? r.json() : Promise.reject()))
-        .then((json) => {
-          const meaning = json[0] && json[0].meanings && json[0].meanings[0];
-          const def = meaning && meaning.definitions && meaning.definitions[0] && meaning.definitions[0].definition;
-          if (!pop.classList.contains("show") || pop.dataset.word !== key) return;
-          pop.innerHTML = `<b>${esc(clean)}</b>${def ? esc(def) : "No definition found for this word."}`;
-          place();
-        })
-        .catch(() => {
-          if (!pop.classList.contains("show") || pop.dataset.word !== key) return;
-          pop.innerHTML = `<b>${esc(clean)}</b>No definition found for this word.`;
-          place();
-        });
-    });
-    pop.dataset.word = key;
   }
 
   document.addEventListener("click", (e) => {
@@ -2631,8 +2600,7 @@
         btn.addEventListener("click", async () => {
           const defEl = document.getElementById("verseLookupDef");
           defEl.innerHTML = `<b>${esc(btn.dataset.lookupWord)}</b> — Looking up…`;
-          const result = await window.WFNLookup.defineWord(btn.dataset.lookupWord);
-          defEl.innerHTML = `<b>${esc((result && result.word) || btn.dataset.lookupWord)}</b> — ${result && result.def ? esc(result.def) : "No definition found for this word."}`;
+          await window.WFNLookup.renderLookupInto(defEl, btn.dataset.lookupWord);
         });
       });
     });
@@ -3147,8 +3115,7 @@
         const w = (input.value || "").trim();
         if (!w) return;
         defEl.innerHTML = `<b>${esc(w)}</b> — Looking up…`;
-        const result = await window.WFNLookup.defineWord(w);
-        defEl.innerHTML = `<b>${esc((result && result.word) || w)}</b> — ${result && result.def ? esc(result.def) : "No definition found for this word."}`;
+        await window.WFNLookup.renderLookupInto(defEl, w);
       }
       document.getElementById("declarationLookupGo").addEventListener("click", go);
       input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); go(); } });

@@ -580,19 +580,13 @@
 
     function hidePop() {}
 
-    async function doLookup() {
+    function doLookup() {
       if (!window.WFNLookup) return;
       var text = currentText;
       hideBar();
-      var firstWord = (text.match(/[A-Za-z']+/) || [text])[0] || text;
+      var firstWord = (text.match(/[A-Za-z\u2019']+/) || [text])[0] || text;
       var multiWord = /\s/.test(text.trim());
-      var body = glassOpen(glassHead("Look Up") + '<div class="wg-label">' + esc(firstWord) + '</div><div class="wg-text">Looking up&hellip;</div>');
-      var result = await window.WFNLookup.defineWord(firstWord);
-      var defText = result && result.def ? esc(result.def) : "No definition found for this word.";
-      body.innerHTML = glassHead("Look Up") +
-        '<div class="wg-label">' + esc((result && result.word) || firstWord) + "</div>" +
-        '<div class="wg-text">' + defText + "</div>" +
-        (multiWord ? '<div class="wg-note">Showing the first word of your selection &mdash; select just one word for a precise definition.</div>' : "");
+      window.WFNLookup.openLookup(firstWord, multiWord ? "Showing the first word of your selection \u2014 select one word for its exact meaning." : "");
     }
 
     function doTranslate() {

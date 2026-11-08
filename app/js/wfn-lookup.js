@@ -11,7 +11,8 @@
  * else: sermon pages, library chapters, the homepage, declaration text,
  * and inside the app's own sheets.
  *
- * Exposes window.WFNLookup = { defineWord, translateText, TRANSLATE_LANGS }
+ * Exposes window.WFNLookup = { defineWord, lookupFull, renderLookupInto,
+ *   openLookup, translateText, TRANSLATE_LANGS }
  * so other scripts (app.js) can build their own UI on top of the same
  * lookup/translate pipeline instead of duplicating it.
  */
@@ -110,15 +111,64 @@
     return await translateOne(text, lang);
   }
 
-  // ---- Dictionary lookup: Bible names/terms first (same compiled
-  // dictionary the Bible reader uses), then a plain English dictionary. ----
+  // ---- Dictionary. A full English dictionary ships with the app
+  // (/app/data/dict/<first two letters>.json — Princeton WordNet 3.1, ~83k
+  // words with every main sense, example sentences and synonyms, plus
+  // pronunciation from the CMU Pronouncing Dictionary), so lookups work
+  // offline and never depend on a live API. On top of that: a King James
+  // glossary for archaic forms (hath, cometh, spake…), a lemmatizer so
+  // inflected words (arose, smote, nations, sanctified) find their entry,
+  // the Easton/Smith Bible dictionary for names, places and Bible terms,
+  // and — when online — a picture from Wikipedia for concrete things
+  // (animals, plants, objects, places, people). ----
+  var DICT_BASE = "/app/data/dict/";
+  var KJV = {
+    thee: "you (object form)", thou: "you (one person, as the subject)", thy: "your", thine: "yours; your (before a vowel)",
+    ye: "you (more than one person)", hath: "has", hast: "have (with “thou”)", hadst: "had (with “thou”)", doth: "does",
+    dost: "do (with “thou”)", didst: "did (with “thou”)", shalt: "shall (with “thou”)", wilt: "will (with “thou”)",
+    art: "are (with “thou”)", wast: "were (with “thou”)", wert: "were (with “thou”)", canst: "can (with “thou”)",
+    unto: "to; toward", whosoever: "whoever", whomsoever: "whomever", verily: "truly; certainly",
+    behold: "look! — pay attention to what follows", saith: "says", spake: "spoke", sware: "swore", brake: "broke",
+    begat: "fathered; was the father of", smote: "struck hard; defeated", slew: "killed", wrought: "worked; made; brought about",
+    wherefore: "why; for what reason — or: therefore", nigh: "near", betwixt: "between", peradventure: "perhaps; by chance",
+    howbeit: "nevertheless; however", forasmuch: "since; seeing that", henceforth: "from now on", hither: "here; to this place",
+    thither: "there; to that place", whither: "where; to what place", thence: "from there", hence: "from here; therefore",
+    whence: "from where", yea: "yes; indeed", nay: "no", lo: "look! see!", shew: "show", shewed: "showed",
+    holpen: "helped", durst: "dared", wot: "know", wist: "knew", trow: "think; believe", ere: "before",
+    anon: "at once; soon", aught: "anything", naught: "nothing", raiment: "clothing", victuals: "food",
+    kine: "cows; cattle", brethren: "brothers; fellow believers", firmament: "the sky; the expanse of the heavens",
+    sup: "eat supper; dine", meet: "fitting; proper (as in “it is meet”)", quick: "living, alive (as in “the quick and the dead”)",
+    conversation: "way of life; conduct", charity: "love — self-giving, Christlike love", prevent: "go before; come ahead of",
+    let: "hinder, restrain (in older usage) — or: allow", suffer: "allow, permit — or: endure", corn: "grain of any kind (wheat, barley)",
+    meat: "food in general", tarry: "wait; stay", amen: "so be it; truly", selah: "a pause — likely a musical rest to reflect",
+    hosanna: "“save now!” — a cry of praise", abba: "father (Aramaic, intimate)", mammon: "wealth; riches",
+    publican: "tax collector", scrip: "a small bag or wallet", lest: "so that … not; for fear that"
+  };
+  var CONCRETE = { "noun.animal": 1, "noun.plant": 1, "noun.artifact": 1, "noun.food": 1, "noun.object": 1, "noun.body": 1, "noun.location": 1, "noun.person": 1, "noun.substance": 1, "noun.phenomenon": 1 };
+  var POS_ORDER = { noun: 0, verb: 1, adjective: 2, adverb: 3 };
+
+  var shardCache = {}, excPromise = null;
+  function getShard(word) {
+    var k = word.replace(/[^a-z]/g, "").slice(0, 2) || "_";
+    if (!shardCache[k]) {
+      shardCache[k] = fetch(DICT_BASE + k + ".json")
+        .then(function (r) { return r.ok ? r.json() : {}; })
+        .catch(function () { delete shardCache[k]; return {}; });
+    }
+    return shardCache[k];
+  }
+  function getExc() {
+    if (!excPromise) excPromise = fetch(DICT_BASE + "_exc.json").then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { excPromise = null; return {}; });
+    return excPromise;
+  }
+
   var bibleDictPromise = null;
   function getBibleDict() {
     if (!bibleDictPromise) {
       bibleDictPromise = fetch("/app/data/bible-dictionary.json")
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (json) { return (json && json.entries) || {}; })
-        .catch(function () { return {}; });
+        .catch(function () { bibleDictPromise = null; return {}; });
     }
     return bibleDictPromise;
   }
@@ -126,29 +176,278 @@
     if (dict[key]) return dict[key];
     if (key.slice(-2) === "'s" && dict[key.slice(0, -2)]) return dict[key.slice(0, -2)];
     if (key.slice(-1) === "s" && dict[key.slice(0, -1)]) return dict[key.slice(0, -1)];
-    if (key.slice(-2) === "es" && dict[key.slice(0, -2)]) return dict[key.slice(0, -2)];
+    if (key.slice(-3) === "ites" && dict[key.slice(0, -4)]) return dict[key.slice(0, -4)];
+    if (key.slice(-3) === "ite" && dict[key.slice(0, -3)]) return dict[key.slice(0, -3)];
     return null;
   }
-  async function defineWord(word) {
-    var clean = (word || "").replace(/[^A-Za-z']/g, "");
-    var key = clean.toLowerCase();
-    if (!key) return { word: word || "", def: null };
-    var dict = await getBibleDict();
-    var hit = lookupBibleDict(dict, key);
-    if (hit) return { word: clean, def: hit };
-    try {
-      var res = await fetchWithTimeout(DICTIONARY_API + encodeURIComponent(key), TIMEOUT_MS);
-      if (!res.ok) throw new Error("no definition");
-      var json = await res.json();
-      var meaning = json[0] && json[0].meanings && json[0].meanings[0];
-      var def = meaning && meaning.definitions && meaning.definitions[0] && meaning.definitions[0].definition;
-      return { word: clean, def: def || null };
-    } catch (e) {
-      return { word: clean, def: null };
+
+  // Candidate base forms for an inflected word, best guess first
+  // (WordNet's "morphy" suffix rules + King James -eth/-est endings +
+  // doubled consonants + a few British spellings).
+  function baseForms(w) {
+    var out = [];
+    function add(x) { if (x && x.length > 1 && out.indexOf(x) < 0) out.push(x); }
+    var m;
+    if ((m = w.match(/^(.+?)(eth|est)$/))) {
+      var s = m[1];
+      add(s); add(s + "e");
+      if (/(.)\1$/.test(s)) add(s.slice(0, -1));
+      if (/i$/.test(s)) add(s.slice(0, -1) + "y");
     }
+    if (/th$/.test(w)) add(w.slice(0, -2));
+    if (/st$/.test(w)) add(w.slice(0, -2));
+    if (/ies$/.test(w)) add(w.slice(0, -3) + "y");
+    if (/(s|x|z|ch|sh)es$/.test(w)) add(w.slice(0, -2));
+    if (/es$/.test(w)) add(w.slice(0, -1));
+    if (/s$/.test(w) && !/ss$/.test(w)) add(w.slice(0, -1));
+    if (/ied$/.test(w)) add(w.slice(0, -3) + "y");
+    if ((m = w.match(/^(.+?)(ed|ing)$/))) {
+      var b = m[1];
+      if (/(.)\1$/.test(b) && !/(ll|ss|ff|zz)$/.test(b)) add(b.slice(0, -1));
+      add(b + "e"); add(b);
+      if (/y$/.test(b) === false && /i$/.test(b)) add(b.slice(0, -1) + "y");
+    }
+    if ((m = w.match(/^(.+?)(er|est)$/))) {
+      var a = m[1];
+      if (/i$/.test(a)) add(a.slice(0, -1) + "y");
+      if (/(.)\1$/.test(a)) add(a.slice(0, -1));
+      add(a); add(a + "e");
+    }
+    if (/ly$/.test(w)) { add(w.slice(0, -2)); if (/ily$/.test(w)) add(w.slice(0, -3) + "y"); }
+    if (/men$/.test(w)) add(w.slice(0, -3) + "man");
+    if (/our$/.test(w)) add(w.slice(0, -3) + "or");
+    if (/ise$/.test(w)) add(w.slice(0, -3) + "ize");
+    if (/ised$/.test(w)) add(w.slice(0, -4) + "ize");
+    if (/re$/.test(w)) add(w.slice(0, -2) + "er");
+    return out;
   }
 
-  window.WFNLookup = { defineWord: defineWord, translateText: translateText, TRANSLATE_LANGS: TRANSLATE_LANGS };
+  function normalizeWord(word) {
+    return (word || "").replace(/[‘’]/g, "'").replace(/^[^A-Za-z]+|[^A-Za-z]+$/g, "").replace(/'s$/i, "").replace(/[^A-Za-z'-]/g, "");
+  }
+
+  // Full lookup — returns everything the renderer needs.
+  async function lookupFull(word) {
+    var clean = normalizeWord(word);
+    var key = clean.toLowerCase().replace(/'/g, "");
+    var res = { input: clean, lemma: null, entry: null, kjv: KJV[key] || null, formOf: null, bible: null, online: null };
+    if (!key) return res;
+    var exc = await getExc();
+    var shard = await getShard(key);
+    if (shard[key]) { res.lemma = key; res.entry = shard[key]; }
+    var base = exc[key];
+    if (!base) {
+      var cands = baseForms(key);
+      for (var i = 0; i < cands.length && !base; i++) {
+        var sh = await getShard(cands[i]);
+        if (sh[cands[i]]) base = cands[i];
+      }
+    }
+    if (base && base !== key) {
+      var bsh = await getShard(base);
+      if (bsh[base]) {
+        if (!res.entry) { res.lemma = base; res.entry = bsh[base]; res.formOf = base; }
+        else res.alsoForm = base;
+      }
+    }
+    var bd = await getBibleDict();
+    res.bible = lookupBibleDict(bd, key) || (base ? lookupBibleDict(bd, base) : null);
+    // Last resort for words WordNet doesn't carry: the free online dictionary.
+    if (!res.entry && !res.bible && !res.kjv) {
+      try {
+        var r = await fetchWithTimeout(DICTIONARY_API + encodeURIComponent(key), TIMEOUT_MS);
+        if (r.ok) {
+          var json = await r.json();
+          var e = {};
+          (json || []).forEach(function (j) {
+            (j.meanings || []).forEach(function (mn) {
+              var p = mn.partOfSpeech || "other";
+              e[p] = (e[p] || []).concat((mn.definitions || []).slice(0, 6).map(function (d) {
+                var o = { d: d.definition };
+                if (d.example) o.e = [d.example];
+                if (d.synonyms && d.synonyms.length) o.s = d.synonyms.slice(0, 5);
+                return o;
+              }));
+            });
+            if (!e._p && j.phonetic) e._p = j.phonetic.replace(/^\/|\/$/g, "");
+          });
+          if (Object.keys(e).some(function (k) { return k[0] !== "_"; })) { res.entry = e; res.lemma = key; res.online = true; }
+        }
+      } catch (err) { /* offline */ }
+    }
+    return res;
+  }
+
+  // Back-compat: the short one-line answer some older callers want.
+  async function defineWord(word) {
+    var r = await lookupFull(word);
+    var first = null;
+    if (r.entry) {
+      var poss = Object.keys(r.entry).filter(function (k) { return k[0] !== "_"; });
+      if (poss.length) first = r.entry[poss[0]][0].d;
+    }
+    var def = r.kjv ? r.kjv + (first ? " — " + first : "") : (first || r.bible || null);
+    return { word: r.input, def: def };
+  }
+
+  // Picture from Wikipedia's free summary API (only for concrete things).
+  var imgCache = {};
+  function fetchImage(title) {
+    if (imgCache[title] !== undefined) return Promise.resolve(imgCache[title]);
+    var url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(title.charAt(0).toUpperCase() + title.slice(1).replace(/ /g, "_")) + "?redirect=true";
+    return fetchWithTimeout(url, 6000).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      var out = (j && j.type === "standard" && j.thumbnail && j.thumbnail.source)
+        ? { src: (j.originalimage && j.originalimage.width <= 1200 ? j.originalimage.source : j.thumbnail.source.replace(/\/\d+px-/, "/640px-")), page: j.content_urls && j.content_urls.mobile && j.content_urls.mobile.page, title: j.title }
+        : null;
+      imgCache[title] = out;
+      return out;
+    }).catch(function () { return null; });
+  }
+
+  var LOOKUP_CSS = [
+    ".wfl{font-family:'Inter',-apple-system,system-ui,sans-serif; color:var(--wfn-glass-ink,#231F18);}",
+    ".wfl-top{display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; margin:2px 0 4px;}",
+    ".wfl-word{font-family:'Fraunces',Georgia,serif; font-size:34px; line-height:1.1; font-weight:600; letter-spacing:-0.015em;}",
+    ".wfl-ipa{font-size:15px; color:var(--wfn-glass-ink-2,#5C5444); padding-bottom:4px;}",
+    ".wfl-say{border:1px solid var(--wfn-glass-line,rgba(0,0,0,.1)); background:rgba(255,255,255,.25); color:var(--wfn-glass-accent,#9C7A34); width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; padding:0; margin-bottom:2px;}",
+    ".wfl-say svg{width:16px; height:16px;}",
+    ".wfl-form{font-size:13.5px; color:var(--wfn-glass-ink-2,#5C5444); margin:2px 0 10px;}",
+    ".wfl-form a,.wfl-link{color:var(--wfn-glass-accent,#9C7A34); font-weight:600; cursor:pointer; text-decoration:none; border:0; background:none; padding:0; font:inherit;}",
+    ".wfl-img{margin:12px 0 4px; border-radius:18px; overflow:hidden; position:relative; background:rgba(0,0,0,.05); display:none;}",
+    ".wfl-img.on{display:block;}",
+    ".wfl-img img{display:block; width:100%; max-height:230px; object-fit:cover;}",
+    ".wfl-img figcaption{position:absolute; left:0; right:0; bottom:0; padding:18px 12px 7px; font-size:11px; color:#fff; background:linear-gradient(transparent,rgba(0,0,0,.55)); text-align:right;}",
+    ".wfl-img figcaption a{color:#fff; opacity:.9;}",
+    ".wfl-kjv{margin:12px 0 4px; padding:11px 14px; border-radius:14px; background:rgba(156,122,52,.12); font-size:14.5px; line-height:1.5;}",
+    ".wfl-kjv b{color:var(--wfn-glass-accent,#9C7A34); font-size:11px; letter-spacing:.12em; text-transform:uppercase; display:block; margin-bottom:2px;}",
+    ".wfl-pos{font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--wfn-glass-accent,#9C7A34); margin:18px 0 6px; padding-top:12px; border-top:1px solid var(--wfn-glass-line,rgba(0,0,0,.1));}",
+    ".wfl-pos:first-of-type{border-top:0; padding-top:0;}",
+    ".wfl ol{margin:0; padding:0 0 0 22px;}",
+    ".wfl li{margin:0 0 11px; font-size:15.5px; line-height:1.55; padding-left:2px;}",
+    ".wfl li::marker{color:var(--wfn-glass-ink-3,#8C8370); font-weight:600; font-size:13px;}",
+    ".wfl-ex{display:block; font-family:'Fraunces',Georgia,serif; font-style:italic; color:var(--wfn-glass-ink-2,#5C5444); font-size:14.5px; margin-top:3px;}",
+    ".wfl-syn{display:flex; flex-wrap:wrap; gap:5px; margin-top:6px;}",
+    ".wfl-syn button{border:1px solid var(--wfn-glass-line,rgba(0,0,0,.1)); background:rgba(255,255,255,.22); color:var(--wfn-glass-ink-2,#5C5444); border-radius:100px; padding:3px 10px; font:inherit; font-size:12.5px; cursor:pointer;}",
+    "html[data-theme='dark'] .wfl-syn button, html[data-theme='dark'] .wfl-say{background:rgba(255,255,255,.07);}",
+    ".wfl-bible{font-family:'Fraunces',Georgia,serif; font-size:15px; line-height:1.6; color:var(--wfn-glass-ink-2,#5C5444);}",
+    ".wfl-src{font-size:11.5px; color:var(--wfn-glass-ink-3,#8C8370); margin-top:16px; line-height:1.5;}",
+    ".wfl-none{font-size:15px; color:var(--wfn-glass-ink-2,#5C5444); margin:10px 0;}"
+  ].join("\n");
+  var cssDone = false;
+  function ensureLookupCss() {
+    if (window.WFNGlass && window.WFNGlass.ensureStyle) window.WFNGlass.ensureStyle();
+    if (cssDone) return; cssDone = true;
+    var st = document.createElement("style"); st.textContent = LOOKUP_CSS; document.head.appendChild(st);
+  }
+  var SPEAK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+
+  function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+  function trimBible(t) {
+    t = (t || "").replace(/\s+/g, " ").trim();
+    if (t.length <= 700) return { short: t, more: null };
+    var cut = t.lastIndexOf(". ", 640);
+    if (cut < 300) cut = 640;
+    return { short: t.slice(0, cut + 1), more: t };
+  }
+
+  function renderLookup(r) {
+    var h = '<div class="wfl">';
+    var head = r.entry ? (r.formOf ? r.input.toLowerCase() : r.lemma) : r.input;
+    if (r.bible && !r.entry) head = cap(r.input.toLowerCase());
+    h += '<div class="wfl-top"><span class="wfl-word">' + esc(head) + "</span>";
+    if (r.entry && r.entry._p && !r.formOf) h += '<span class="wfl-ipa">/' + esc(r.entry._p) + "/</span>";
+    if (typeof speechSynthesis !== "undefined") h += '<button type="button" class="wfl-say" data-say="' + esc(head) + '" aria-label="Hear pronunciation">' + SPEAK_SVG + "</button>";
+    h += "</div>";
+    if (r.formOf) h += '<div class="wfl-form">A form of <button type="button" class="wfl-link" data-look="' + esc(r.formOf) + '">' + esc(r.formOf) + "</button>" + (r.entry._p ? ' &nbsp;<span class="wfl-ipa">/' + esc(r.entry._p) + "/</span>" : "") + "</div>";
+    if (r.alsoForm) h += '<div class="wfl-form">Also a form of <button type="button" class="wfl-link" data-look="' + esc(r.alsoForm) + '">' + esc(r.alsoForm) + "</button></div>";
+    h += '<figure class="wfl-img"></figure>';
+    if (r.kjv) h += '<div class="wfl-kjv"><b>In the King James Bible</b>' + esc(r.kjv) + "</div>";
+    if (r.entry) {
+      var poss = Object.keys(r.entry).filter(function (k) { return k[0] !== "_"; });
+      poss.sort(function (a, b) { return (r.entry[b].length - r.entry[a].length) || ((POS_ORDER[a] || 9) - (POS_ORDER[b] || 9)); });
+      poss.forEach(function (p) {
+        h += '<div class="wfl-pos">' + esc(p) + "</div><ol>";
+        r.entry[p].forEach(function (s) {
+          h += "<li>" + esc(cap(s.d));
+          (s.e || []).forEach(function (ex) { ex = ex.replace(/["\u201d]?\s*-\s*[A-Z][A-Za-z.' ]+$/, "").replace(/^["\u201c]|["\u201d]$/g, ""); h += '<span class="wfl-ex">“' + esc(ex) + "”</span>"; });
+          if (s.s && s.s.length) h += '<div class="wfl-syn">' + s.s.map(function (x) { return '<button type="button" data-look="' + esc(x) + '">' + esc(x) + "</button>"; }).join("") + "</div>";
+          h += "</li>";
+        });
+        h += "</ol>";
+      });
+    }
+    if (r.bible) {
+      var b = trimBible(r.bible);
+      h += '<div class="wfl-pos">In the Bible</div><div class="wfl-bible">' + esc(b.short) +
+        (b.more ? ' <button type="button" class="wfl-link" data-more="1">Read more</button>' : "") + "</div>";
+    }
+    if (!r.entry && !r.bible && !r.kjv) h += '<div class="wfl-none">No definition found for “' + esc(r.input) + '”. Try selecting a single word, or check the spelling.</div>';
+    var src = [];
+    if (r.entry && !r.online) src.push("WordNet 3.1, Princeton University");
+    if (r.online) src.push("Free Dictionary API");
+    if (r.bible) src.push("Easton’s & Smith’s Bible Dictionaries");
+    if (src.length) h += '<div class="wfl-src">Sources: ' + src.join(" · ") + '<span class="wfl-imgsrc"></span></div>';
+    return h + "</div>";
+  }
+
+  function wantsImage(r) {
+    if (!r.entry) return !!r.bible; // Bible names/places
+    var poss = Object.keys(r.entry).filter(function (k) { return k[0] !== "_"; });
+    if (!r.entry.noun || !CONCRETE[r.entry._x]) return false;
+    var nounN = r.entry.noun.length;
+    return poss.every(function (p) { return r.entry[p].length <= nounN; });
+  }
+
+  // Render into any element and wire up its links/buttons.
+  var lookupSeq = 0;
+  async function renderLookupInto(el, word, opts) {
+    ensureLookupCss();
+    var seq = ++lookupSeq;
+    var r = await lookupFull(word);
+    if (seq !== lookupSeq) return r;
+    el.innerHTML = (opts && opts.head || "") + renderLookup(r);
+    el.querySelectorAll("[data-look]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        el.innerHTML = (opts && opts.head || "") + '<div class="wfl"><div class="wfl-none">Looking up&hellip;</div></div>';
+        var p = el.closest(".wg-panel"); if (p) p.scrollTop = 0;
+        renderLookupInto(el, b.dataset.look, opts);
+      });
+    });
+    var more = el.querySelector("[data-more]");
+    if (more) more.addEventListener("click", function () { more.parentNode.textContent = r.bible.replace(/\s+/g, " "); });
+    var say = el.querySelector("[data-say]");
+    if (say) say.addEventListener("click", function () {
+      try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(say.dataset.say); u.lang = "en-US"; u.rate = 0.85; speechSynthesis.speak(u); } catch (e) {}
+    });
+    if (wantsImage(r)) {
+      var title = r.entry ? r.lemma : r.input.toLowerCase();
+      var img = await fetchImage(title);
+      if (img && seq === lookupSeq) {
+        var fig = el.querySelector(".wfl-img");
+        if (fig) {
+          fig.innerHTML = '<img alt="' + esc(img.title) + '" src="' + esc(img.src) + '"><figcaption>' + esc(img.title) + (img.page ? ' · <a href="' + esc(img.page) + '" target="_blank" rel="noopener">Wikipedia</a>' : "") + "</figcaption>";
+          fig.querySelector("img").addEventListener("load", function () { fig.classList.add("on"); });
+          var is = el.querySelector(".wfl-imgsrc"); if (is) is.textContent = " · Image: Wikipedia";
+        }
+      }
+    }
+    return r;
+  }
+
+  // Opens the frosted-glass Look Up sheet (falls back to a plain overlay
+  // on pages without the glass system).
+  function openLookup(word, note) {
+    ensureLookupCss();
+    var G = window.WFNGlass;
+    var head = G ? G.head("Look Up") : "";
+    var loading = head + '<div class="wfl"><div class="wfl-top"><span class="wfl-word">' + esc(normalizeWord(word)) + '</span></div><div class="wfl-none">Looking up&hellip;</div></div>';
+    var body = G ? G.open(loading) : null;
+    if (!body) return;
+    var extra = note ? '<div class="wg-note" style="margin-top:0;margin-bottom:6px;">' + esc(note) + "</div>" : "";
+    renderLookupInto(body, word, { head: head + extra });
+  }
+
+  window.WFNLookup = { defineWord: defineWord, lookupFull: lookupFull, renderLookupInto: renderLookupInto, openLookup: openLookup, translateText: translateText, TRANSLATE_LANGS: TRANSLATE_LANGS };
 
   // -------------------------------------------------------------------
   // Selection-triggered floating toolbar — DISABLED. Lookup and Translate

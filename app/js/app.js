@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "Declare his glory among the heathen; his marvellous works among all nations.", ref: "1 Chronicles 16:24" },
     { text: "For the hope which is laid up for you in heaven, whereof ye heard before in the word of the truth of the gospel; which is come unto you, as it is in all the world; and bringeth forth fruit, as it doth also in you, since the day ye heard of it, and knew the grace of God in truth.", ref: "Colossians 1:5-6" },
     { text: "Though he slay me, yet will I trust in him: but I will maintain mine own ways before him.", ref: "Job 13:15" },
     { text: "For the Son of man is not come to destroy men's lives, but to save them.", ref: "Luke 9:56" },
@@ -81,19 +82,19 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Thus says the Lord over your life this day: Christ is preeminent, and nothing that has risen against you outranks the One who made it!",
-      "I prophesy that every throne, every dominion, every principality and every power that has sat on my peace is dethroned today — they were created by Him, and they bow to Him!",
-      "I decree that what has been scattered in my life is held together by Christ — my mind, my home, my health and my finances consist in Him and shall not fall apart!",
+      "Father, I declare today that upon my Mount Zion there is deliverance — every chain the enemy fastened on me is broken, and I walk out free in the name of Jesus!",
+      "I decree holiness over my life — I am set apart, and the door You shut behind me shall not swing open again!",
+      "Every captivity that rejoiced over my fall, I declare its season is over — what was done to me shall not be the end of my story!",
       "",
-      "I prophesy fruit! The Word of the truth of the gospel that came to me shall bear fruit in me this season — fruit that remains, fruit that is seen, fruit that cannot be stolen!",
-      "My hope is laid up in heaven where no thief, no devil and no bad report can touch it — therefore I will not live this day afraid!",
-      "I declare that the invisible God is made visible in my life — where He has been hidden by pain, He shall be seen; where He has been doubted, He shall be known!",
+      "I possess my possessions! What heaven settled for me long ago, I take hold of today — my peace, my health, my family, my calling and my inheritance!",
+      "I will no longer live beside my promise; I walk into it — every land the Lord has given me, I occupy by faith!",
+      "Whatever has been stolen from me — time, joy, opportunity, increase — I recover it all by the authority of the Word!",
       "",
-      "Every 'Christ plus' I have leaned on, I tear down today — He alone shall have the preeminence in my plans, my desires, my calling and my family!",
-      "As the gospel has gone into all the world, my voice, my work and my witness shall reach places I have never been — doors shall open by the One who created them!",
-      "Save this. Speak it over your day. He is before all things, and by Him all things consist. In the mighty name of Jesus Christ, amen!"
+      "I am the house of Jacob, and I am fire! Every Esau that sold my birthright for a bowl of stew becomes stubble before me today!",
+      "Like Joseph, the place where I was sold out shall become the place God sets me ablaze — I rise, I shine, and I burn for His glory!",
+      "Save this. Speak it over your house today. The house of Jacob shall possess their possessions — for the LORD hath spoken it! In Jesus' mighty name, amen!"
     ],
-    ref: "Colossians 1:15-17"
+    ref: "Obadiah 1:17-18"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -135,6 +136,7 @@
   };
 
   const SERMONS = [
+    { slug: "possess-your-possessions", title: "Possess Your Possessions", ref: "Obadiah 1:17-18", date: "November 8, 2026", excerpt: "Deliverance gets you out. Holiness keeps you out. But possession is where you finally walk into what God already gave you on paper — and the fire that burns Esau's stubble is the same fire He has put in you." },
     { slug: "the-supremacy-of-christ", title: "The Supremacy of Christ", ref: "Colossians 1:15-17", date: "November 7, 2026", excerpt: "Before there was a throne, a power, or a problem, there was Christ. Everything you're afraid of was created by Him, answers to Him, and is held together by Him — which means nothing in your life outranks the One you pray to." },
     { slug: "think-on-these-things", title: "Think On These Things", ref: "Philippians 4:8", date: "November 6, 2026", excerpt: "Peace doesn't arrive because the anxious thought finally leaves on its own. It arrives because you evict it — and hand the empty room to something true, lovely, and worth rehearsing instead." },
     { slug: "approved-not-ashamed", title: "Approved, Not Ashamed", ref: "2 Timothy 2:15", date: "November 5, 2026", excerpt: "Paul doesn't tell Timothy to perform for a room — he tells him to study for an audience of One. The approval that frees you from shame was never coming from the crowd." },

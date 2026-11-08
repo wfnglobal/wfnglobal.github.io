@@ -20,6 +20,9 @@
     storm     - black-indigo sea storm at night, lightning, a small boat taking water
     command   - black storm clouds split by gold light, a figure standing in the boat, arms raised
     calm      - a calm rose-gold sea at sunrise, the same boat resting on glassy water
+    quarry    - dusk stone canyon, violet-rose sky, a lone figure dragging a heavy boulder
+    vigil     - vast star-filled indigo night, low peaks, a small kneeling figure beneath a moon
+    daybreak  - gold sunrise burst and mist, the boulder cracking into light, a figure rising arms open
 
   Each scene is built from layers (l-back / l-front) that get different
   Ken Burns moves for a 2.5D parallax camera, plus an HTML particle layer
@@ -57,6 +60,9 @@
   body[data-shot="storm"]{--accent:#CFE8FF;}
   body[data-shot="command"]{--accent:#FFE9B0;}
   body[data-shot="calm"]{--accent:#FFD9B8;}
+  body[data-shot="quarry"]{--accent:#D79A78;}
+  body[data-shot="vigil"]{--accent:#B9C0E8;}
+  body[data-shot="daybreak"]{--accent:#FFD98A;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -908,6 +914,127 @@
       </svg>
     </div>
     <div class="fx" data-type="bokeh" data-n="14"></div>
+  </section>
+
+  <!-- ============ QUARRY: dusk stone canyon, a lone figure dragging a boulder ============ -->
+  <section class="scene" data-scene="quarry" data-kb="panl" style="--ox:52%; --oy:64%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="q-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#171320"/><stop offset="0.34" stop-color="#3A2E40"/><stop offset="0.52" stop-color="#7A5A5C"/>
+            <stop offset="0.64" stop-color="#C98A6E"/><stop offset="1" stop-color="#E7AE86"/>
+          </linearGradient>
+          <radialGradient id="q-glow" cx="0.74" cy="0.42" r="0.5"><stop offset="0" stop-color="#F4C89A" stop-opacity="0.55"/><stop offset="1" stop-color="#F4C89A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#q-sky)"/>
+        <rect width="1080" height="1920" fill="url(#q-glow)"/>
+        <path d="M 0 900 L 90 760 L 180 840 L 260 700 L 360 790 L 430 660 L 520 760 L 0 980 Z" fill="#241D28" opacity="0.88"/>
+        <path d="M 1080 920 L 980 780 L 880 850 L 790 720 L 690 800 L 1080 1000 Z" fill="#1C1620" opacity="0.88"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="q-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5A4038"/><stop offset="0.5" stop-color="#2E2220"/><stop offset="1" stop-color="#0A0808"/></linearGradient>
+        </defs>
+        <path d="M 0 1180 C 280 1150 760 1160 1080 1180 L 1080 1920 L 0 1920 Z" fill="url(#q-floor)"/>
+        <path d="M 260 1330 C 360 1320 480 1326 560 1340" stroke="#1C1512" stroke-width="10" fill="none" opacity="0.7" stroke-linecap="round"/>
+        <path d="M 260 1348 C 360 1338 480 1344 560 1358" stroke="#1C1512" stroke-width="6" fill="none" opacity="0.5" stroke-linecap="round"/>
+        <g transform="translate(600 1340) scale(0.72)">
+          <ellipse cx="0" cy="58" rx="160" ry="26" fill="#000" opacity="0.55"/>
+          <polygon points="-120,30 -150,-40 -70,-110 50,-98 120,-24 96,48 -20,66" fill="#4A3C36"/>
+          <polygon points="-120,30 -70,-110 50,-98 120,-24" fill="#6A584E" opacity="0.7"/>
+          <polygon points="-120,30 -150,-40 -70,-110 50,-98 120,-24 96,48 -20,66" fill="none" stroke="#8A7260" stroke-width="4" opacity="0.5"/>
+        </g>
+        <path d="M 470 1312 C 400 1300 320 1296 250 1308" stroke="#2A221C" stroke-width="7" fill="none" opacity="0.85"/>
+        <g transform="translate(220 1300) scale(0.56)">
+          <ellipse cx="0" cy="48" rx="140" ry="20" fill="#000" opacity="0.5"/>
+          <use href="#fig-robe" fill="#E7AE86" filter="url(#glow8)" opacity="0.4"/>
+          <use href="#fig-robe" fill="#0C0908"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="36" data-color="220,180,150"></div>
+  </section>
+
+  <!-- ============ VIGIL: vast star-filled night, a kneeling figure, distant peaks ============ -->
+  <section class="scene" data-scene="vigil" data-kb="rise" style="--ox:50%; --oy:56%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="vg-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#05060E"/><stop offset="0.5" stop-color="#121633"/>
+            <stop offset="0.72" stop-color="#262A52"/><stop offset="1" stop-color="#3A3568"/>
+          </linearGradient>
+          <radialGradient id="vg-moon"><stop offset="0" stop-color="#EDEBFF" stop-opacity="0.9"/><stop offset="0.3" stop-color="#B9C0E8" stop-opacity="0.35"/><stop offset="1" stop-color="#B9C0E8" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#vg-sky)"/>
+        <circle cx="760" cy="420" r="300" fill="url(#vg-moon)"/>
+        <circle cx="760" cy="420" r="52" fill="#F4F2FF"/>
+        <path d="M 0 1180 L 140 1080 L 260 1140 L 400 1010 L 540 1110 L 660 1000 L 820 1120 L 960 1030 L 1080 1100 L 1080 1300 L 0 1300 Z" fill="#171A30" opacity="0.92"/>
+      </svg>
+      <div class="fx" data-type="star" data-n="140" data-area="0,0,1080,1100"></div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="vg-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A1C34"/><stop offset="1" stop-color="#030308"/></linearGradient>
+        </defs>
+        <path d="M 0 1260 C 280 1232 760 1244 1080 1260 L 1080 1920 L 0 1920 Z" fill="url(#vg-floor)"/>
+        <g transform="translate(540 1340) scale(0.5)">
+          <ellipse cx="0" cy="56" rx="150" ry="22" fill="#000" opacity="0.5"/>
+          <use href="#fig-seated" fill="#B9C0E8" filter="url(#glow8)" opacity="0.45"/>
+          <use href="#fig-seated" fill="#04040A"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="18" data-color="190,200,255"></div>
+  </section>
+
+  <!-- ============ DAYBREAK: gold sunrise mist, the weight breaking into light ============ -->
+  <section class="scene" data-scene="daybreak" data-kb="pull" style="--ox:50%; --oy:60%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="db-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#241A2C"/><stop offset="0.3" stop-color="#6A3E42"/><stop offset="0.5" stop-color="#E07A4E"/>
+            <stop offset="0.62" stop-color="#FBC774"/><stop offset="1" stop-color="#FFEFC2"/>
+          </linearGradient>
+          <radialGradient id="db-burst"><stop offset="0" stop-color="#FFFBE8" stop-opacity="1"/><stop offset="0.22" stop-color="#FFE2A0" stop-opacity="0.7"/><stop offset="1" stop-color="#FFE2A0" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#db-sky)"/>
+        <circle cx="540" cy="1120" r="640" fill="url(#db-burst)"/>
+        <circle cx="540" cy="1120" r="90" fill="#FFFCEF"/>
+      </svg>
+      <div class="spin" style="--rx:540px; --ry:1120px; --sdur:70s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <g class="rays-gen" data-cx="540" data-cy="1120" data-n="22" data-len="1700" data-w="2.4" fill="#FFF3CE" opacity="0.15"></g>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="db-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A5A3C"/><stop offset="1" stop-color="#140C08"/></linearGradient>
+        </defs>
+        <path d="M 0 1320 C 280 1296 760 1308 1080 1320 L 1080 1920 L 0 1920 Z" fill="url(#db-floor)"/>
+        <g fill="#2E1E14" opacity="0.85">
+          <polygon points="300,1350 340,1300 410,1310 430,1360 380,1400 320,1390"/>
+          <polygon points="470,1370 500,1330 560,1340 540,1390"/>
+        </g>
+        <g fill="#FFE9B0" opacity="0.5" filter="url(#glow8)">
+          <polygon points="300,1350 340,1300 410,1310 430,1360 380,1400 320,1390"/>
+        </g>
+        <g transform="translate(560 1300) scale(0.5)">
+          <ellipse cx="0" cy="60" rx="150" ry="24" fill="#2A1608" opacity="0.4"/>
+          <use href="#fig-raise" fill="#FFE9B0" filter="url(#glow8)" opacity="0.85"/>
+          <use href="#fig-raise" fill="#1C0E06"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="34" data-color="255,222,160"></div>
+    <div class="fx" data-type="bokeh" data-n="12"></div>
   </section>
 
 </div>

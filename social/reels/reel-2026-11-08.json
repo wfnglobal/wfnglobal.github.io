@@ -1,0 +1,20 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "There's a weight you've been dragging so long, you've started calling it normal.", "visual": "quarry", "chapter": { "num": "I", "name": "The Weight", "ref": "Psalm 55:22" } },
+    { "text": "Cast thy burden upon the LORD, and he shall sustain thee.", "visual": "quarry", "scripture": true },
+    { "text": "You've carried it through every room where no one asked, and never once set it down.", "visual": "quarry" },
+    { "text": "So you knelt where nobody was watching, and finally let it show.", "visual": "vigil", "chapter": { "num": "II", "name": "What Holds You", "ref": "Colossians 1:17" } },
+    { "text": "He is before all things, and by him all things consist.", "visual": "vigil", "scripture": true },
+    { "text": "The same hands holding galaxies together were never too occupied to hold what's breaking you.", "visual": "vigil" },
+    { "text": "So let the weight crack open at His feet, not yours.", "visual": "daybreak" },
+    { "text": "What you couldn't carry another day, He was already carrying for you.", "visual": "daybreak" },
+    { "text": "In Jesus' name, amen.", "visual": "daybreak" }
+  ],
+  "bold": "The same hands holding galaxies together were never too occupied to hold what's breaking you.",
+  "title": "Word and Faith Network",
+  "subtitle": "What Holds You",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A lone traveler drags a boulder across a dusk canyon, kneels exhausted beneath a vast starlit sky, and watches the stone crack open into gold light as dawn breaks and the weight finally lifts - a short visual parable of Psalm 55:22 and Colossians 1:17, on handing the thing you've been secretly dragging to the One who already holds everything together."
+}

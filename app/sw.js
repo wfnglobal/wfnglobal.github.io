@@ -7,7 +7,7 @@
 // OneSignal.init() points serviceWorkerPath at this file for the same reason.
 importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");
 
-const CACHE_VERSION = "wfn-app-v65";
+const CACHE_VERSION = "wfn-app-v66";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const BIBLE_CACHE = `${CACHE_VERSION}-bible`;
 

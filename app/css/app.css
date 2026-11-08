@@ -576,6 +576,10 @@ main.app-main{
 .verse-list .v[data-color="pink"]{background:rgba(227,166,184,0.4);}
 .verse-list .v{cursor:pointer;}
 .verse-list .v .saved-dot{display:inline-block; width:6px; height:6px; border-radius:100px; background:var(--gold); margin-left:4px; vertical-align:middle;}
+/* Related-verses button at the end of a verse (opens the frosted cross-reference panel) */
+.verse-list .v .xr{display:inline-flex; align-items:center; justify-content:center; width:24px; height:22px; margin-left:3px; padding:0; border:none; background:none; color:var(--ink-3); opacity:0.75; vertical-align:-3px; cursor:pointer; border-radius:6px;}
+.verse-list .v .xr svg{width:16px; height:16px;}
+.verse-list .v .xr:active{background:var(--surface-2); opacity:1;}
 
 /* ---- Profile ---- */
 .profile-header{display:flex; align-items:center; gap:16px; margin-bottom:26px;}

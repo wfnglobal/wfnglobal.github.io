@@ -78,5 +78,31 @@ window.WFNBible = (function () {
     return results;
   }
 
-  return { getIndex, getBook, plain, search, getChapterSummary };
+  // Cross-references (OpenBible.info, CC BY) — one small file per book at
+  // /app/data/xref/<slug>.json: { "<chapter>": { "<verse>": [codes...] } },
+  // up to 12 per verse, best-ranked first. Each code is
+  // "<bookIndex>.<chapter>.<verse>" with an optional "-<endVerse>" (same
+  // chapter) or "-<endChapter>.<endVerse>" range; bookIndex is the
+  // position in index.json. Resolves null if the file is missing/offline.
+  const xrefCache = new Map();
+  function getXref(slug) {
+    if (xrefCache.has(slug)) return xrefCache.get(slug);
+    const p = fetch("/app/data/xref/" + slug + ".json")
+      .then((r) => (r.ok ? r.json() : null))
+      .catch(() => null);
+    xrefCache.set(slug, p);
+    return p;
+  }
+  function parseXref(code) {
+    const [start, end] = code.split("-");
+    const [b, c, v] = start.split(".").map(Number);
+    let ec = c, ev = v;
+    if (end) {
+      const e = end.split(".").map(Number);
+      if (e.length === 2) { ec = e[0]; ev = e[1]; } else { ev = e[0]; }
+    }
+    return { b, c, v, ec, ev };
+  }
+
+  return { getIndex, getBook, plain, search, getChapterSummary, getXref, parseXref };
 })();

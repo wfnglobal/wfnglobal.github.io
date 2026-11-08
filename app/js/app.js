@@ -1622,7 +1622,58 @@
     viewEl.innerHTML = html;
   }
 
-  async function viewBibleReader(slug, chapter) {
+  const XREF_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5h-8l-4 3v-3H5A1.5 1.5 0 0 1 3.5 15V7A1.5 1.5 0 0 1 5 5.5z"/><path d="M7.5 9.5h9M7.5 12.5h6"/></svg>';
+
+  // Frosted Related Verses panel (shared glass sheet from wfn-tts.js).
+  // Lists the verse's cross-references across the whole Bible, filling
+  // each one's text in as its book loads; tap one to jump straight to it.
+  async function openXrefSheet(bookName, chapter, verse, text, codes) {
+    if (!window.WFNGlass) return;
+    const books = await WFNBible.getIndex();
+    const items = codes.map((code) => {
+      const r = WFNBible.parseXref(code);
+      const bk = books[r.b] || {};
+      let label = `${bk.name} ${r.c}:${r.v}`;
+      if (r.ec !== r.c) label += `–${r.ec}:${r.ev}`;
+      else if (r.ev !== r.v) label += `–${r.ev}`;
+      return Object.assign(r, { slug: bk.slug, label });
+    });
+    const rows = items.map((it, i) =>
+      `<button type="button" class="wg-row" data-i="${i}"><span class="wg-row-main"><span class="wg-row-ref">${esc(it.label)}</span><span class="wg-row-text">…</span></span>` +
+      `<svg class="wg-row-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>`
+    ).join("");
+    const body = WFNGlass.open(
+      WFNGlass.head(`${esc(bookName)} ${chapter}:${verse}`) +
+      `<div class="wg-scripture">${esc(text)}</div>` +
+      `<div class="wg-rule"></div>` +
+      `<div class="wg-label">Related across the Bible &middot; ${items.length}</div>` +
+      `<div class="wg-list">${rows}</div>` +
+      `<div class="wg-note">Cross-references from OpenBible.info (CC BY), ranked by how strongly readers connect them.</div>`
+    );
+    body.querySelector(".wg-list").addEventListener("click", (e) => {
+      const row = e.target.closest(".wg-row");
+      if (!row) return;
+      const it = items[+row.dataset.i];
+      WFNGlass.close();
+      location.hash = `#/bible/${it.slug}/${it.c}/${it.v}`;
+    });
+    items.forEach(async (it, i) => {
+      try {
+        const bookData = await WFNBible.getBook(it.slug);
+        const parts = [];
+        for (let c = it.c; c <= it.ec; c++) {
+          const verses = bookData.chapters[c - 1] || [];
+          const from = c === it.c ? it.v : 1;
+          const to = c === it.ec ? it.ev : verses.length;
+          for (let v = from; v <= to && parts.length < 6; v++) if (verses[v - 1]) parts.push(WFNBible.plain(verses[v - 1]));
+        }
+        const el = body.querySelector(`.wg-row[data-i="${i}"] .wg-row-text`);
+        if (el) el.textContent = parts.join(" ");
+      } catch (err) {}
+    });
+  }
+
+  async function viewBibleReader(slug, chapter, jumpVerse) {
     chapter = parseInt(chapter, 10);
     viewEl.innerHTML = `<div class="search-status">Loading…</div>`;
     const data = await WFNBible.getBook(slug);
@@ -1694,6 +1745,13 @@
 
     const verseListEl = document.getElementById("verseList");
     verseListEl.addEventListener("click", (e) => {
+      const xr = e.target.closest(".xr");
+      if (xr) {
+        e.stopPropagation();
+        const vi = parseInt(xr.closest(".v").dataset.verse, 10);
+        openXrefSheet(data.name, chapter, vi, activePlainTexts[vi - 1] || "", xrefChapter()[String(vi)] || []);
+        return;
+      }
       if (e.target.closest(".w")) return; // word tap is handled by the global popover listener
       const p = e.target.closest(".v");
       if (!p) return;
@@ -1752,7 +1810,26 @@
       activeVersionCode = "kjv";
       if (versionLabelEl) versionLabelEl.textContent = versionDisplayName("kjv");
       wrapWordsForDefine(verseListEl);
+      addXrefButtons();
     }
+
+    // ---- Related verses: a small icon at the end of every verse that has
+    // cross-references; tapping it opens the frosted Related Verses panel.
+    let xrefData = null;
+    const xrefChapter = () => (xrefData && xrefData[String(chapter)]) || {};
+    function addXrefButtons() {
+      const ch = xrefChapter();
+      verseListEl.querySelectorAll(".v").forEach((p) => {
+        if (p.querySelector(".xr") || !ch[p.dataset.verse]) return;
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "xr";
+        b.setAttribute("aria-label", `Related verses for ${data.name} ${chapter}:${p.dataset.verse}`);
+        b.innerHTML = XREF_ICON;
+        p.appendChild(b);
+      });
+    }
+    WFNBible.getXref(slug).then((d) => { xrefData = d; addXrefButtons(); });
 
     async function loadVersion(code) {
       if (code === "kjv") { renderKJV(); return; }
@@ -1767,6 +1844,7 @@
         activeVersionCode = code;
         if (versionLabelEl) versionLabelEl.textContent = result.name;
         wrapWordsForDefine(verseListEl);
+        addXrefButtons();
       } catch (err) {
         verseListEl.innerHTML = `<div class="skeleton-note">Couldn't load ${esc(versionName)} right now &mdash; check your connection, or <button class="link-btn" id="backToKjv" type="button">switch back to KJV</button>.</div>`;
         const b = document.getElementById("backToKjv");
@@ -1851,6 +1929,10 @@
     }
 
     renderKJV();
+    if (jumpVerse) {
+      const jv = parseInt(jumpVerse, 10);
+      if (jv >= 1 && jv <= kjvVerses.length) setTimeout(() => jumpToVerse(jv), 350);
+    }
     showNoteFab(() => openNoteSheet("bible", `bible:${slug}:${chapter}`, `${data.name} ${chapter}`));
     setReadable(() => [
       `${data.name}, chapter ${chapter}.`,
@@ -3827,7 +3909,7 @@
       if (parts[1] === "books") return viewBibleBooks();
       if (parts[1] === "search") return viewBibleSearch(parts[2]);
       if (parts.length === 2) return viewBibleChapters(parts[1]);
-      if (parts.length >= 3) return viewBibleReader(parts[1], parts[2]);
+      if (parts.length >= 3) return viewBibleReader(parts[1], parts[2], parts[3]);
     }
     if (parts[0] === "study") {
       if (parts.length >= 2) return viewStudyDetail(parts[1]);

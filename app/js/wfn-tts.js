@@ -332,16 +332,100 @@
   // from the app's own UI too (e.g. a verse sheet's explicit Copy/Share
   // buttons) so there's one clipboard/share/toast implementation, not two.
   // ---------------------------------------------------------------------
+  // ---------------------------------------------------------------------
+  // Frosted-glass surfaces, shared by the website and the app: the
+  // selection bar, the toast, the Pray sheet, Lookup/Translate results and
+  // the Bible's Related Verses panel all use the same translucent,
+  // blurred "glass" look so they float over the page instead of covering
+  // it. window.WFNGlass.open(html, { onClose }) / .close() / .body().
+  // Follows the app's dark theme (html[data-theme="dark"]).
+  // ---------------------------------------------------------------------
+  var glassStyleDone = false;
+  function ensureGlassStyle() {
+    if (glassStyleDone || typeof document === "undefined") return;
+    glassStyleDone = true;
+    var st = document.createElement("style");
+    st.textContent = [
+      ":root{--wfn-glass-bg:rgba(250,248,243,0.66); --wfn-glass-border:rgba(255,255,255,0.65); --wfn-glass-ink:#231F18; --wfn-glass-ink-2:#5C5444; --wfn-glass-ink-3:#8C8370; --wfn-glass-accent:#9C7A34; --wfn-glass-line:rgba(35,31,24,0.1); --wfn-glass-press:rgba(35,31,24,0.08); --wfn-glass-shadow:0 22px 50px -18px rgba(20,14,6,0.38);}",
+      "html[data-theme='dark']{--wfn-glass-bg:rgba(52,50,58,0.58); --wfn-glass-border:rgba(255,255,255,0.14); --wfn-glass-ink:#F7F3EA; --wfn-glass-ink-2:#DCD5C7; --wfn-glass-ink-3:#A69F92; --wfn-glass-accent:#E2C27E; --wfn-glass-line:rgba(255,255,255,0.12); --wfn-glass-press:rgba(255,255,255,0.1); --wfn-glass-shadow:0 22px 50px -18px rgba(0,0,0,0.6);}",
+      ".wfn-glass{background:var(--wfn-glass-bg); -webkit-backdrop-filter:blur(26px) saturate(170%); backdrop-filter:blur(26px) saturate(170%); border:1px solid var(--wfn-glass-border); box-shadow:var(--wfn-glass-shadow); color:var(--wfn-glass-ink);}",
+      "#wfnGlass{position:fixed; inset:0; z-index:430; display:none; font-family:'Inter',-apple-system,system-ui,sans-serif;}",
+      "#wfnGlass.show{display:block;}",
+      "#wfnGlass .wg-scrim{position:absolute; inset:0; background:rgba(0,0,0,0.06);}",
+      "#wfnGlass .wg-panel{position:absolute; left:10px; right:10px; bottom:calc(10px + env(safe-area-inset-bottom,0px)); max-width:620px; margin:0 auto; max-height:72vh; overflow:auto; -webkit-overflow-scrolling:touch; border-radius:30px; padding:8px 22px 22px; transform:translateY(110%); transition:transform .32s cubic-bezier(0.22,1,0.36,1);}",
+      "#wfnGlass.open .wg-panel{transform:translateY(0);}",
+      "#wfnGlass .wg-handle{width:40px; height:5px; border-radius:100px; background:var(--wfn-glass-ink-3); opacity:0.45; margin:6px auto 14px;}",
+      "#wfnGlass .wg-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px;}",
+      "#wfnGlass .wg-title{font-size:17px; font-weight:700; color:var(--wfn-glass-ink); letter-spacing:-0.01em;}",
+      "#wfnGlass .wg-close{flex:none; width:30px; height:30px; border-radius:50%; border:1.5px solid var(--wfn-glass-ink-2); background:none; color:var(--wfn-glass-ink); display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0;}",
+      "#wfnGlass .wg-close svg{width:13px; height:13px;}",
+      "#wfnGlass .wg-scripture{font-family:'Fraunces',Georgia,serif; font-size:21px; line-height:1.5; color:var(--wfn-glass-ink); margin:4px 0 16px;}",
+      "#wfnGlass .wg-text{font-size:15.5px; line-height:1.65; color:var(--wfn-glass-ink);}",
+      "#wfnGlass .wg-label{font-size:11.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--wfn-glass-accent); margin:6px 0 4px;}",
+      "#wfnGlass .wg-note{font-size:12px; color:var(--wfn-glass-ink-3); margin-top:12px; line-height:1.5;}",
+      "#wfnGlass .wg-rule{height:1px; background:var(--wfn-glass-line); margin:14px 0 6px;}",
+      "#wfnGlass select, #wfnGlass textarea{width:100%; box-sizing:border-box; font:inherit; font-size:15px; color:var(--wfn-glass-ink); background:rgba(255,255,255,0.35); border:1px solid var(--wfn-glass-line); border-radius:14px; padding:12px 14px;}",
+      "html[data-theme='dark'] #wfnGlass select, html[data-theme='dark'] #wfnGlass textarea{background:rgba(0,0,0,0.18);}",
+      "#wfnGlass textarea{min-height:200px; line-height:1.65; resize:vertical;}",
+      "#wfnGlass .wg-actions{display:flex; gap:10px; margin-top:14px;}",
+      "#wfnGlass .wg-btn{flex:1; border:1px solid var(--wfn-glass-line); border-radius:100px; padding:12px 0; font:inherit; font-weight:700; font-size:13.5px; cursor:pointer; background:rgba(255,255,255,0.28); color:var(--wfn-glass-ink);}",
+      "html[data-theme='dark'] #wfnGlass .wg-btn{background:rgba(255,255,255,0.08);}",
+      "#wfnGlass .wg-btn.gold{background:#9C7A34; border-color:#9C7A34; color:#FFFDF8;}",
+      "#wfnGlass .wg-row{display:flex; gap:12px; align-items:flex-start; width:100%; text-align:left; background:none; border:0; border-bottom:1px solid var(--wfn-glass-line); padding:13px 2px; cursor:pointer; color:inherit; font:inherit;}",
+      "#wfnGlass .wg-row:last-child{border-bottom:0;}",
+      "#wfnGlass .wg-row:active{background:var(--wfn-glass-press); border-radius:12px;}",
+      "#wfnGlass .wg-row-main{flex:1; min-width:0;}",
+      "#wfnGlass .wg-row-ref{display:block; font-size:13px; font-weight:700; color:var(--wfn-glass-accent); letter-spacing:0.02em; margin-bottom:3px;}",
+      "#wfnGlass .wg-row-text{display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; font-family:'Fraunces',Georgia,serif; font-size:15.5px; line-height:1.5; color:var(--wfn-glass-ink-2);}",
+      "#wfnGlass .wg-row-go{flex:none; width:16px; height:16px; margin-top:3px; color:var(--wfn-glass-ink-3);}"
+    ].join("\n");
+    document.head.appendChild(st);
+  }
+  var glassEl = null, glassOnClose = null;
+  function glassClose() {
+    if (!glassEl) return;
+    glassEl.classList.remove("open");
+    var cb = glassOnClose; glassOnClose = null;
+    setTimeout(function () { if (!glassEl.classList.contains("open")) glassEl.classList.remove("show"); }, 320);
+    if (cb) cb();
+  }
+  function glassOpen(html, opts) {
+    ensureGlassStyle();
+    if (!glassEl) {
+      glassEl = document.createElement("div");
+      glassEl.id = "wfnGlass";
+      glassEl.innerHTML = '<div class="wg-scrim"></div><div class="wg-panel wfn-glass" role="dialog" aria-modal="true"><div class="wg-handle"></div><div class="wg-body"></div></div>';
+      document.body.appendChild(glassEl);
+      glassEl.querySelector(".wg-scrim").addEventListener("click", glassClose);
+      glassEl.addEventListener("click", function (e) { if (e.target.closest(".wg-close")) glassClose(); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") glassClose(); });
+    }
+    glassOnClose = (opts && opts.onClose) || null;
+    glassEl.querySelector(".wg-body").innerHTML = html;
+    glassEl.querySelector(".wg-panel").scrollTop = 0;
+    glassEl.classList.add("show");
+    void glassEl.offsetWidth;
+    glassEl.classList.add("open");
+    return glassEl.querySelector(".wg-body");
+  }
+  var GLASS_CLOSE_BTN = '<button type="button" class="wg-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>';
+  function glassHead(title) {
+    return '<div class="wg-head"><div class="wg-title">' + title + "</div>" + GLASS_CLOSE_BTN + "</div>";
+  }
+  window.WFNGlass = { open: glassOpen, close: glassClose, head: glassHead, ensureStyle: ensureGlassStyle };
+
   var shareToastEl = null;
   function wfnToast(msg) {
     if (typeof document === "undefined") return;
     if (!shareToastEl) {
       shareToastEl = document.createElement("div");
       shareToastEl.id = "wfnShareToast";
+      shareToastEl.className = "wfn-glass";
+      ensureGlassStyle();
       document.body.appendChild(shareToastEl);
       var style = document.createElement("style");
       style.textContent =
-        "#wfnShareToast{position:fixed; left:50%; bottom:calc(28px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%) translateY(12px); z-index:401; background:#231F18; color:#FFFDF8; font-size:13.5px; font-weight:600; padding:10px 18px; border-radius:100px; opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease; box-shadow:0 10px 26px -10px rgba(0,0,0,0.4); font-family:'Inter',-apple-system,system-ui,sans-serif;}" +
+        "#wfnShareToast{position:fixed; left:50%; bottom:calc(28px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%) translateY(12px); z-index:440; font-size:13.5px; font-weight:600; padding:10px 20px; border-radius:100px; opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease; font-family:'Inter',-apple-system,system-ui,sans-serif;}" +
         "#wfnShareToast.show{opacity:1; transform:translateX(-50%) translateY(0);}";
       document.head.appendChild(style);
     }
@@ -390,7 +474,6 @@
   // else that calls window.WFNShare.pray(text, ref) — so there's one
   // implementation on both the website and the app.
   // ---------------------------------------------------------------------
-  var prayEl = null;
   function buildPrayerFromPassage(text, ref) {
     var clean = (text || "").replace(/\s+/g, " ").trim();
     return (
@@ -403,64 +486,27 @@
       "In Jesus' name, amen."
     );
   }
-  function ensurePraySheet() {
-    if (prayEl) return prayEl;
-    prayEl = document.createElement("div");
-    prayEl.id = "wfnPraySheet";
-    prayEl.innerHTML =
-      '<div class="wfnps-scrim"></div>' +
-      '<div class="wfnps-panel">' +
-      '<div class="wfnps-head"><h3>Turn This Into a Prayer</h3><button type="button" class="wfnps-close" aria-label="Close">&times;</button></div>' +
-      '<p class="wfnps-ref" id="wfnpsRef"></p>' +
-      '<textarea id="wfnpsText" class="wfnps-textarea" rows="9"></textarea>' +
-      '<div class="wfnps-actions">' +
-      '<button type="button" class="wfnps-btn wfnps-btn-outline" data-action="regen">Start Over</button>' +
-      '<button type="button" class="wfnps-btn wfnps-btn-outline" data-action="copy">Copy</button>' +
-      '<button type="button" class="wfnps-btn wfnps-btn-gold" data-action="share">Share</button>' +
-      "</div>" +
-      "</div>";
-    document.body.appendChild(prayEl);
-    var style = document.createElement("style");
-    style.textContent = [
-      "#wfnPraySheet{position:fixed; inset:0; z-index:410; display:none; align-items:flex-end; justify-content:center;}",
-      "#wfnPraySheet.show{display:flex;}",
-      "#wfnPraySheet .wfnps-scrim{position:absolute; inset:0; background:rgba(20,16,8,0.45);}",
-      "#wfnPraySheet .wfnps-panel{position:relative; width:100%; max-width:560px; background:#FFFDF8; border-radius:22px 22px 0 0; padding:20px 20px calc(22px + env(safe-area-inset-bottom,0px)); box-shadow:0 -18px 44px -14px rgba(0,0,0,0.3); font-family:'Inter',-apple-system,system-ui,sans-serif; max-height:86vh; overflow:auto;}",
-      "@media (min-width:640px){#wfnPraySheet{align-items:center;} #wfnPraySheet .wfnps-panel{border-radius:22px; margin-bottom:0;}}",
-      "#wfnPraySheet .wfnps-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;}",
-      "#wfnPraySheet .wfnps-head h3{font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:1.25rem; color:#231F18; margin:0;}",
-      "#wfnPraySheet .wfnps-close{background:none; border:none; font-size:22px; line-height:1; color:#8C8370; cursor:pointer; padding:4px;}",
-      "#wfnPraySheet .wfnps-ref{font-size:12.5px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#9C7A34; margin:0 0 14px;}",
-      "#wfnPraySheet .wfnps-textarea{width:100%; min-height:190px; border-radius:14px; border:1px solid rgba(35,31,24,0.14); background:#FBF8F1; color:#231F18; font-size:15px; line-height:1.65; font-family:inherit; padding:14px; box-sizing:border-box; resize:vertical;}",
-      "#wfnPraySheet .wfnps-actions{display:flex; gap:10px; margin-top:14px;}",
-      "#wfnPraySheet .wfnps-btn{flex:1; border:none; border-radius:100px; padding:12px 0; font-weight:700; font-size:13.5px; cursor:pointer; font-family:inherit;}",
-      "#wfnPraySheet .wfnps-btn-outline{background:#F4EEE0; color:#564E3E;}",
-      "#wfnPraySheet .wfnps-btn-gold{background:#9C7A34; color:#FFFDF8;}"
-    ].join("\n");
-    document.head.appendChild(style);
-    prayEl.querySelector(".wfnps-scrim").addEventListener("click", closePraySheet);
-    prayEl.querySelector(".wfnps-close").addEventListener("click", closePraySheet);
-    prayEl.querySelector('[data-action="regen"]').addEventListener("click", function () {
-      document.getElementById("wfnpsText").value = buildPrayerFromPassage(prayEl._sourceText, prayEl._sourceRef);
-    });
-    prayEl.querySelector('[data-action="copy"]').addEventListener("click", function () {
-      wfnCopyText(document.getElementById("wfnpsText").value);
-    });
-    prayEl.querySelector('[data-action="share"]').addEventListener("click", function () {
-      wfnShareText(document.getElementById("wfnpsText").value);
-    });
-    return prayEl;
-  }
-  function closePraySheet() {
-    if (prayEl) prayEl.classList.remove("show");
-  }
   function openPraySheet(text, ref) {
-    var el = ensurePraySheet();
-    el._sourceText = text;
-    el._sourceRef = ref || "";
-    document.getElementById("wfnpsRef").textContent = ref || "";
-    document.getElementById("wfnpsText").value = buildPrayerFromPassage(text, ref);
-    el.classList.add("show");
+    var body = glassOpen(
+      glassHead("Turn This Into a Prayer") +
+      (ref ? '<div class="wg-label">' + escHtml(ref) + "</div>" : "") +
+      '<textarea id="wfnpsText" rows="9"></textarea>' +
+      '<div class="wg-actions">' +
+      '<button type="button" class="wg-btn" data-action="regen">Start Over</button>' +
+      '<button type="button" class="wg-btn" data-action="copy">Copy</button>' +
+      '<button type="button" class="wg-btn gold" data-action="share">Share</button>' +
+      "</div>"
+    );
+    var ta = body.querySelector("#wfnpsText");
+    ta.value = buildPrayerFromPassage(text, ref);
+    body.querySelector('[data-action="regen"]').addEventListener("click", function () { ta.value = buildPrayerFromPassage(text, ref); });
+    body.querySelector('[data-action="copy"]').addEventListener("click", function () { wfnCopyText(ta.value); });
+    body.querySelector('[data-action="share"]').addEventListener("click", function () { wfnShareText(ta.value); });
+  }
+  function escHtml(s) {
+    return String(s || "").replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
   }
   window.WFNShare = { copy: wfnCopyText, share: wfnShareText, toast: wfnToast, pray: openPraySheet };
 
@@ -477,7 +523,7 @@
     if (typeof document === "undefined") return;
     var EXCLUDE_SELECTOR =
       "header, footer, nav, .site-header, .site-footer, .app-header, .app-tabbar, " +
-      "#wfnVoiceStack, #voiceStack, #wfnShareBar, #wfnShareBarPop, #wfnShareToast, #wfnPraySheet, .sheet, " +
+      "#wfnVoiceStack, #voiceStack, #wfnShareBar, #wfnShareToast, #wfnGlass, .sheet, " +
       "button, select, input, textarea, a, .reader-nav, .reader-toolbar, .v, " +
       ".reader-chapter-fab-prev, .reader-chapter-fab-next";
     // The Bible reader's own verses (.v) already open a richer sheet on
@@ -495,106 +541,99 @@
       });
     }
 
+    var ACTIONS = [
+      ["copy", "Copy"], ["selectall", "Select All"], ["share", "Share"],
+      ["pray", "Pray"], ["lookup", "Look Up"], ["translate", "Translate"]
+    ];
+    var lastBlockEl = null;
+
     function ensureBar() {
       if (bar) return bar;
+      ensureGlassStyle();
       bar = document.createElement("div");
       bar.id = "wfnShareBar";
-      bar.innerHTML =
-        '<button type="button" data-action="copy">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy</button>' +
-        '<button type="button" data-action="share">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.7l7.4-4.4M8.3 13.3l7.4 4.4"/></svg>Share</button>' +
-        '<button type="button" data-action="pray">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9z"/></svg>Pray</button>' +
-        '<button type="button" data-action="lookup">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Lookup</button>' +
-        '<button type="button" data-action="translate">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h8M9 5v3M11 8c-1 3-3 5-6 6M8 8c1.3 3.6 3.4 6 7 7.5"/><path d="M14 21l4-9 4 9M15.5 18h5"/></svg>Translate</button>';
+      bar.className = "wfn-glass";
+      bar.setAttribute("role", "toolbar");
+      bar.innerHTML = ACTIONS.map(function (a, i) {
+        return (i ? '<span class="wsb-sep" aria-hidden="true"></span>' : "") +
+          '<button type="button" data-action="' + a[0] + '">' + a[1] + "</button>";
+      }).join("");
       document.body.appendChild(bar);
-      bar.querySelector('[data-action="copy"]').addEventListener("mousedown", function (e) { e.preventDefault(); doCopy(); });
-      bar.querySelector('[data-action="share"]').addEventListener("mousedown", function (e) { e.preventDefault(); doShare(); });
-      bar.querySelector('[data-action="pray"]').addEventListener("mousedown", function (e) { e.preventDefault(); doPray(); });
-      bar.querySelector('[data-action="lookup"]').addEventListener("mousedown", function (e) { e.preventDefault(); doLookup(); });
-      bar.querySelector('[data-action="translate"]').addEventListener("mousedown", function (e) { e.preventDefault(); doTranslate(); });
-      bar.querySelector('[data-action="copy"]').addEventListener("touchend", function (e) { e.preventDefault(); doCopy(); });
-      bar.querySelector('[data-action="share"]').addEventListener("touchend", function (e) { e.preventDefault(); doShare(); });
-      bar.querySelector('[data-action="pray"]').addEventListener("touchend", function (e) { e.preventDefault(); doPray(); });
-      bar.querySelector('[data-action="lookup"]').addEventListener("touchend", function (e) { e.preventDefault(); doLookup(); });
-      bar.querySelector('[data-action="translate"]').addEventListener("touchend", function (e) { e.preventDefault(); doTranslate(); });
+      var handlers = { copy: doCopy, selectall: doSelectAll, share: doShare, pray: doPray, lookup: doLookup, translate: doTranslate };
+      Array.prototype.forEach.call(bar.querySelectorAll("button"), function (btn) {
+        var fn = handlers[btn.dataset.action];
+        btn.addEventListener("mousedown", function (e) { e.preventDefault(); fn(); });
+        btn.addEventListener("touchend", function (e) { e.preventDefault(); fn(); });
+      });
       var style = document.createElement("style");
       style.textContent = [
-        "#wfnShareBar{position:fixed; z-index:400; display:none; align-items:center; justify-content:center; flex-wrap:wrap; gap:2px; background:#231F18; color:#FFFDF8; border-radius:20px; padding:6px; box-shadow:0 10px 26px -10px rgba(0,0,0,0.4); font-family:'Inter',-apple-system,system-ui,sans-serif; max-width:min(320px, calc(100vw - 20px));}",
+        "#wfnShareBar{position:fixed; z-index:400; display:none; align-items:center; flex-wrap:nowrap; border-radius:14px; padding:3px 4px; font-family:'Inter',-apple-system,system-ui,sans-serif; max-width:calc(100vw - 16px); overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch;}",
+        "#wfnShareBar::-webkit-scrollbar{display:none;}",
         "#wfnShareBar.show{display:flex;}",
-        "#wfnShareBar button{display:flex; align-items:center; gap:6px; border:none; background:none; color:#FFFDF8; font-size:13px; font-weight:700; padding:7px 11px; border-radius:100px; cursor:pointer; flex-shrink:0;}",
-        "#wfnShareBar button:active{background:rgba(255,255,255,0.14);}",
-        "#wfnShareBar button svg{width:15px; height:15px; flex-shrink:0;}",
-        "#wfnShareBarPop{position:fixed; z-index:401; max-width:280px; min-width:220px; background:#FFFDF8; color:#231F18; border-radius:13px; padding:14px 16px; font-size:13.5px; line-height:1.55; box-shadow:0 18px 44px -16px rgba(0,0,0,0.42); border:1px solid rgba(35,31,24,0.1); display:none; font-family:'Inter',-apple-system,system-ui,sans-serif;}",
-        "#wfnShareBarPop.show{display:block;}",
-        "#wfnShareBarPop b{display:block; margin-bottom:5px; color:#9C7A34; text-transform:capitalize; font-size:13px;}",
-        "#wfnShareBarPop select{margin-top:9px; width:100%; font-size:12.5px; padding:8px 10px; border-radius:8px; border:1px solid rgba(35,31,24,0.15); font-family:inherit; background:#fff; color:#231F18;}",
-        "#wfnShareBarPop .wfnsbp-note{margin-top:8px; font-size:11.5px; color:#8C8370;}"
+        "#wfnShareBar button{flex:none; border:none; background:none; color:var(--wfn-glass-ink); font-size:14px; font-weight:500; padding:8px 11px; border-radius:10px; cursor:pointer; white-space:nowrap; font-family:inherit; letter-spacing:-0.005em;}",
+        "#wfnShareBar button:active{background:var(--wfn-glass-press);}",
+        "#wfnShareBar .wsb-sep{flex:none; width:1px; height:18px; background:var(--wfn-glass-line);}"
       ].join("\n");
       document.head.appendChild(style);
       return bar;
     }
 
-    function ensurePop() {
-      if (pop) return pop;
-      pop = document.createElement("div");
-      pop.id = "wfnShareBarPop";
-      document.body.appendChild(pop);
-      return pop;
-    }
-
-    function positionPopNearBar() {
-      var el = ensurePop();
-      var r = bar.getBoundingClientRect();
-      var w = el.offsetWidth || 220, h = el.offsetHeight || 60;
-      var left = Math.max(10, Math.min(window.innerWidth - w - 10, r.left + r.width / 2 - w / 2));
-      var top = r.bottom + 8;
-      if (top + h > window.innerHeight - 10) top = Math.max(10, r.top - h - 8);
-      el.style.left = left + "px";
-      el.style.top = top + "px";
-    }
-
-    function hidePop() { if (pop) pop.classList.remove("show"); }
+    function hidePop() {}
 
     async function doLookup() {
       if (!window.WFNLookup) return;
-      var el = ensurePop();
-      var firstWord = (currentText.match(/[A-Za-z']+/) || [currentText])[0] || currentText;
-      var multiWord = /\s/.test(currentText.trim());
-      el.innerHTML = "<b>" + esc(firstWord) + "</b>Looking up&hellip;";
-      el.classList.add("show");
-      positionPopNearBar();
+      var text = currentText;
+      hideBar();
+      var firstWord = (text.match(/[A-Za-z']+/) || [text])[0] || text;
+      var multiWord = /\s/.test(text.trim());
+      var body = glassOpen(glassHead("Look Up") + '<div class="wg-label">' + esc(firstWord) + '</div><div class="wg-text">Looking up&hellip;</div>');
       var result = await window.WFNLookup.defineWord(firstWord);
       var defText = result && result.def ? esc(result.def) : "No definition found for this word.";
-      var note = multiWord
-        ? '<div class="wfnsbp-note">Showing the first word of your selection &mdash; select just one word for a precise definition.</div>'
-        : "";
-      el.innerHTML = "<b>" + esc((result && result.word) || firstWord) + "</b>" + defText + note;
-      positionPopNearBar();
+      body.innerHTML = glassHead("Look Up") +
+        '<div class="wg-label">' + esc((result && result.word) || firstWord) + "</div>" +
+        '<div class="wg-text">' + defText + "</div>" +
+        (multiWord ? '<div class="wg-note">Showing the first word of your selection &mdash; select just one word for a precise definition.</div>' : "");
     }
 
     function doTranslate() {
       if (!window.WFNLookup) return;
-      var el = ensurePop();
+      var text = currentText;
+      hideBar();
       var langs = window.WFNLookup.TRANSLATE_LANGS.filter(function (l) { return l.code !== "en"; });
       var opts = langs.map(function (l) { return '<option value="' + l.code + '">' + esc(l.name) + "</option>"; }).join("");
-      el.innerHTML = '<b>Translate</b><select><option value="">Choose a language&hellip;</option>' + opts + "</select>";
-      el.classList.add("show");
-      positionPopNearBar();
-      el.querySelector("select").addEventListener("change", async function (e) {
+      var preview = text.length > 160 ? text.slice(0, 160) + "…" : text;
+      var body = glassOpen(
+        glassHead("Translate") +
+        '<div class="wg-text" style="color:var(--wfn-glass-ink-2); margin-bottom:12px;">&ldquo;' + esc(preview) + "&rdquo;</div>" +
+        '<select><option value="">Choose a language&hellip;</option>' + opts + "</select>" +
+        '<div class="wg-out"></div>'
+      );
+      body.querySelector("select").addEventListener("change", async function (e) {
         var lang = e.target.value;
         if (!lang) return;
         var langName = (langs.filter(function (l) { return l.code === lang; })[0] || {}).name || lang;
-        el.innerHTML = "<b>" + esc(langName) + "</b>Translating&hellip;";
-        positionPopNearBar();
-        var out = await window.WFNLookup.translateText(currentText, lang);
-        var note = out ? "" : '<div class="wfnsbp-note">Translation is temporarily unavailable &mdash; showing the original English.</div>';
-        el.innerHTML = "<b>" + esc(langName) + "</b>" + esc(out || currentText) + note;
-        positionPopNearBar();
+        var outEl = body.querySelector(".wg-out");
+        outEl.innerHTML = '<div class="wg-rule"></div><div class="wg-label">' + esc(langName) + '</div><div class="wg-text">Translating&hellip;</div>';
+        var out = await window.WFNLookup.translateText(text, lang);
+        outEl.innerHTML = '<div class="wg-rule"></div><div class="wg-label">' + esc(langName) + '</div><div class="wg-text">' + esc(out || text) + "</div>" +
+          (out ? "" : '<div class="wg-note">Translation is temporarily unavailable &mdash; showing the original English.</div>');
       });
+    }
+
+    // Select the whole passage/page section the tap or selection came from,
+    // and keep the bar up so Copy/Share/Pray/etc. act on all of it.
+    function doSelectAll() {
+      var base = lastBlockEl || document.body;
+      var scope = base.closest(".article-body, #verseList, .reader-surface, .chapter, article, main, #view") || base;
+      try {
+        var range = document.createRange();
+        range.selectNodeContents(scope);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        currentText = sel.toString().replace(/\n{3,}/g, "\n\n").trim();
+        positionBarAt(range.getBoundingClientRect());
+      } catch (e) {}
     }
 
     function pageRef() {
@@ -605,13 +644,17 @@
     function positionBarAt(rect) {
       var el = ensureBar();
       el.classList.add("show");
-      hidePop();
-      var barH = el.offsetHeight || 46;
+      var barH = el.offsetHeight || 40, barW = el.offsetWidth || 300;
+      var minTop = 10, maxTop = window.innerHeight - barH - 10;
       var top = rect.top - barH - 10;
-      if (top < 8) top = rect.bottom + 10;
+      if (top < minTop) top = rect.bottom + 10;
+      // A very tall selection (e.g. Select All) can put both edges off-screen.
+      if (top > maxTop || top < minTop) top = Math.max(minTop, Math.min(maxTop, 64));
+      var half = Math.min(barW, window.innerWidth - 16) / 2;
       var left = rect.left + rect.width / 2;
+      left = Math.min(Math.max(left, half + 8), window.innerWidth - half - 8);
       el.style.top = top + "px";
-      el.style.left = Math.min(Math.max(left, 100), window.innerWidth - 100) + "px";
+      el.style.left = left + "px";
       el.style.transform = "translateX(-50%)";
     }
 
@@ -642,6 +685,7 @@
         var el = node && (node.nodeType === 1 ? node : node.parentElement);
         if (!el || el.closest(EXCLUDE_SELECTOR)) return;
         currentText = text;
+        lastBlockEl = el;
         positionBarAt(sel.getRangeAt(0).getBoundingClientRect());
       }, 60);
     });
@@ -653,6 +697,7 @@
       var text = el.textContent.replace(/\s+/g, " ").trim();
       if (!text) { hideBar(); return; }
       currentText = text;
+      lastBlockEl = el;
       positionBarAt(el.getBoundingClientRect());
     });
 

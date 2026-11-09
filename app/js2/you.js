@@ -85,7 +85,7 @@
       <section class="section" aria-labelledby="rm">
         <h2 id="rm" class="eyebrow" style="padding:0 4px">Daily reminders</h2>
         <div class="card list">
-          <label class="row-link" style="min-height:60px"><span class="grow"><span class="label">Remind me when the new Word is ready</span><span class="hint" id="nh">${notifHint()}</span></span><span class="switch"><input type="checkbox" id="notif" ${W.read("wfn2-notify", false) && "Notification" in window && Notification.permission === "granted" ? "checked" : ""}><span></span></span></label>
+          <label class="row-link" style="min-height:60px"><span class="grow"><span class="label">Remind me when the new Word is ready</span><span class="hint" id="nh">${notifHint()}</span></span><span class="switch"><input type="checkbox" id="notif" ${W.read("wfn2-notify", "Notification" in window && Notification.permission === "granted") && "Notification" in window && Notification.permission === "granted" ? "checked" : ""}><span></span></span></label>
         </div>
       </section>
 
@@ -95,6 +95,7 @@
           <button class="row-link" id="inst"><span class="grow"><span class="label">Add WFN to your home screen</span><span class="hint">Works offline, opens like an app</span></span><span class="chev">${icon("chev", "xs")}</span></button>
           <button class="row-link" id="bk"><span class="grow"><span class="label">Back up your notes</span><span class="hint">Save a file you can restore on a new phone</span></span><span class="chev">${icon("chev", "xs")}</span></button>
           <a class="row-link" href="#/climb"><span class="grow"><span class="label">The Word Climb</span><span class="hint">100-question Bible quiz</span></span><span class="chev">${icon("chev", "xs")}</span></a>
+          <a class="row-link" href="${W.BASE}app/classic.html"><span class="grow"><span class="label">Open the classic app</span><span class="hint">The previous WFN app, with translation and the Tolu voice assistant</span></span><span class="chev">${icon("chev", "xs")}</span></a>
           <button class="row-link" id="about"><span class="grow"><span class="label">About Word &amp; Faith Network</span><span class="hint">Our three pillars, contact, privacy</span></span><span class="chev">${icon("chev", "xs")}</span></button>
         </div>
       </section>
@@ -128,13 +129,16 @@
     });
     W.$$("[data-theme-set]", main).forEach((b) => b.onclick = () => { W.setSetting("theme", b.dataset.themeSet); W.$$("[data-theme-set]", main).forEach((x) => x.setAttribute("aria-selected", x === b)); });
     W.$("#rt").onclick = () => W.readingSheet();
+    // Daily reminders go out through OneSignal (sent when the new Word is published).
+    const withOS = (fn) => new Promise((res) => { if (window.OneSignalDeferred) window.OneSignalDeferred.push(async (OS) => { try { res(await fn(OS)); } catch (err) { res(null); } }); else res(null); });
     W.$("#notif").onchange = async (e) => {
       if (e.target.checked) {
-        if (!("Notification" in window)) { e.target.checked = false; return W.toast("Notifications aren’t supported here. Add WFN to your home screen first."); }
+        if (!("Notification" in window)) { e.target.checked = false; return W.toast("Add WFN to your home screen first, then turn this on."); }
         const perm = await Notification.requestPermission();
-        if (perm !== "granted") { e.target.checked = false; W.write("wfn2-notify", false); return W.toast("Notifications are blocked in your settings"); }
+        if (perm !== "granted") { e.target.checked = false; W.write("wfn2-notify", false); return W.toast("Notifications are blocked in your phone’s settings"); }
+        await withOS((OS) => OS.User.PushSubscription.optIn());
         W.write("wfn2-notify", true); W.toast("Reminders on");
-      } else { W.write("wfn2-notify", false); W.toast("Reminders off"); }
+      } else { await withOS((OS) => OS.User.PushSubscription.optOut()); W.write("wfn2-notify", false); W.toast("Reminders off"); }
       W.$("#nh").textContent = notifHint();
     };
     W.$("#inst").onclick = installSheet;

@@ -222,7 +222,7 @@
 
   // ---------- nav + router ----------
   const TABS = [["today", "Today", ""], ["bible", "Bible", "bible"], ["prayer", "Prayer", "prayer"], ["library", "Library", "library"], ["you", "You", "you"]];
-  const TAB_OF = { "": "today", bible: "bible", search: "bible", prayer: "prayer", dreams: "prayer", library: "library", sermons: "library", sermon: "library", studies: "library", study: "library", plan: "library", book: "library", you: "you", kept: "you", journal: "you", note: "you", invite: "you", scan: "you", give: "you", settings: "you", jesus: "today", climb: "today" };
+  const TAB_OF = { "": "today", home: "today", bible: "bible", search: "bible", prayer: "prayer", dreams: "prayer", library: "library", sermons: "library", sermon: "library", studies: "library", study: "library", plan: "library", book: "library", you: "you", kept: "you", journal: "you", note: "you", invite: "you", scan: "you", give: "you", settings: "you", jesus: "today", climb: "today" };
   const NO_NAV = { scan: 1, invite: 1, climb: 1 };
   function renderNav(active) {
     $("#nav").innerHTML = TABS.map(([k, label, h]) =>
@@ -282,9 +282,46 @@
 
   function start() {
     route();
-    if ("serviceWorker" in navigator && /wfnglobal\.org$|localhost$/.test(location.hostname) && location.pathname.indexOf("/app2/") === 0) {
-      navigator.serviceWorker.register("sw.js", { scope: "./" }).catch(() => {});
+    if ("serviceWorker" in navigator && location.pathname.indexOf("/app/") === 0) {
+      navigator.serviceWorker.register("/app/sw.js", { scope: "/app/" }).catch(() => {});
     }
+    refreshContent();
+  }
+
+  // The nightly tasks write sermons, studies and prayers into app/js/app.js.
+  // content.js is a snapshot of those arrays for an instant first paint;
+  // here we read the live file and, if anything moved on, swap it in.
+  const NAMES = ["VERSES", "DECLARATION", "NIGHT_PRAYER", "DREAM_FIRE_PRAYER", "SERMONS", "BIBLE_STUDY", "PRAYER_POINTS", "LIBRARY_BOOKS", "READING_PLANS"];
+  function grab(src, name) {
+    const m = new RegExp("(?:const|var|let)\\s+" + name + "\\s*=\\s*").exec(src);
+    if (!m) return null;
+    let i = m.index + m[0].length, depth = 0, str = null, escd = false;
+    const start = i;
+    for (; i < src.length; i++) {
+      const ch = src[i];
+      if (str) { if (escd) escd = false; else if (ch === "\\") escd = true; else if (ch === str) str = null; continue; }
+      if (ch === '"' || ch === "'" || ch === "`") { str = ch; continue; }
+      if (ch === "/" && src[i + 1] === "/") { i = src.indexOf("\n", i); if (i < 0) break; continue; }
+      if (ch === "[" || ch === "{") depth++;
+      if (ch === "]" || ch === "}") { depth--; if (depth === 0) return src.slice(start, i + 1); }
+    }
+    return null;
+  }
+  function sig(c) { try { return [c.VERSES[0].ref, c.SERMONS[0].slug, c.BIBLE_STUDY[0].slug, c.DREAM_FIRE_PRAYER.title, (c.DECLARATION.lines || [])[0], c.SERMONS.length, c.BIBLE_STUDY.length].join("|"); } catch (e) { return ""; } }
+  function refreshContent() {
+    fetch(BASE + "app/js/app.js", { cache: "no-cache" }).then((r) => (r.ok ? r.text() : "")).then((src) => {
+      if (!src) return;
+      const fresh = {};
+      for (const n of NAMES) {
+        const lit = grab(src, n);
+        if (!lit) return;
+        try { fresh[n] = Function('"use strict";return (' + lit + ")")(); } catch (e) { return; }
+      }
+      if (sig(fresh) === sig(C)) return;
+      Object.assign(C, fresh);
+      const k = location.hash.replace(/^#\/?/, "").split("/")[0];
+      if (["", "home", "library", "prayer", "sermons", "studies", "study", "dreams"].includes(k) && !document.querySelector(".sheet")) route();
+    }).catch(() => {});
   }
 
   window.WFN2 = { C, S, BASE, DATA, $, $$, esc, read, write, asset, plain, slugify, icon, emblem, settings: () => settings, setSetting, FONTS, READ_THEMES,

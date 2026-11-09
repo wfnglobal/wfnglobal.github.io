@@ -128,3 +128,15 @@ OneSignal push · seasonal effects.
   - Word Climb mounts the existing game.
 - Private preview published as an artifact ("WFN App 2.0"). In the preview frame the camera, downloads and email links are blocked by the viewer; they work on wfnglobal.org.
 - To go live later: move `app2/` to `app/` (or point `/app/` at it), add OneSignal to the new service worker, have the nightly tasks run `node tools/app2-content.js`, and bump the cache.
+
+## Session — Nov 9, late afternoon: prayer requests + go-live preparation
+
+- Prayer tab: "Send a prayer request" in three steps (topic, request + optional first name + who sees it, then confirmation). "Just me" keeps it in the private prayer list; "The WFN prayer team" saves it, then emails it to wordandfaithnetwork@gmail.com or sends it another way. Wording names the WFN prayer team (no Pastor Johnson).
+- App only: none of this touches the website.
+- Go-live structure is now on the branch:
+  - `app/index.html` is App 2.0; the previous app is kept whole at `app/classic.html` (linked from You → App) so it can be restored in one step.
+  - App 2.0 code: `app/js2/`, `app/css/app2.css`, `app/vendor/`. Old `app/js/app.js` stays as the content source the nightly tasks write; App 2.0 reads its arrays live, so no scheduled task needs to change.
+  - Look Up, Translate and Copy/Share/Pray on any text carry over (wfn-lookup.js, wfn-tts.js), styled in the new colours.
+  - Daily reminders use OneSignal (same app id and GitHub Action). GA4 kept. Service worker cache bumped to v71 with the new shell.
+  - Books open their full HTML pages in /library/, with the PDF as a download.
+- Remaining before the switch: Oladapo's final OK, then merge app-redesign into main (watch the CACHE_VERSION bump the nightly task makes; take the higher number + 1).

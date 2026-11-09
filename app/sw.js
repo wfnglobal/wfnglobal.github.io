@@ -7,22 +7,29 @@
 // OneSignal.init() points serviceWorkerPath at this file for the same reason.
 importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");
 
-const CACHE_VERSION = "wfn-app-v70";
+const CACHE_VERSION = "wfn-app-v71";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const BIBLE_CACHE = `${CACHE_VERSION}-bible`;
 
 const SHELL_ASSETS = [
   "/app/",
   "/app/index.html",
+  "/app/classic.html",
   "/app/manifest.webmanifest",
-  "/app/css/app.css",
+  "/app/css/app2.css",
   "/app/css/wordclimb.css",
-  "/app/js/app.js",
-  "/app/js/bible.js",
+  "/app/js2/core.js",
+  "/app/js2/today.js",
+  "/app/js2/bible.js",
+  "/app/js2/pages.js",
+  "/app/js2/you.js",
+  "/app/js2/extras.js",
+  "/app/js2/content.js",
+  "/app/vendor/qrcode.js",
   "/app/js/store.js",
   "/app/js/wfn-tts.js",
+  "/app/js/wfn-lookup.js",
   "/app/js/wordclimb.js",
-  "/app/js/season-fx.js",
   "/app/icons/icon-192.png",
   "/app/icons/icon-512.png",
 ];

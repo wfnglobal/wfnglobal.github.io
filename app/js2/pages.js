@@ -19,7 +19,10 @@
     const t = await W.today();
     if (parts[0] === "declaration") return declaration(main, t);
     if (parts[0] === "night") return night(main, t);
+    if (parts[0] === "request") return request(main);
+    if (draft && draft.step === 3) draft = null;
     const mine = W.S.getPrayers();
+    const meta = W.read("wfn2-prayer-meta", {});
     const ds = stanzas(t.declaration.lines);
     main.innerHTML = `
     <header class="page-head"><div class="row"><h1 style="flex-grow:1">Prayer</h1><button class="icon-btn" id="addP" aria-label="Add a prayer request">${icon("plus")}</button></div></header>
@@ -29,6 +32,11 @@
         <span class="serif" style="font-size:21px;line-height:32px">${esc((ds[0] || [])[0] || "")}</span>
         <span style="display:flex;gap:8px;padding-top:4px"><span class="btn sm light">Declare it out loud</span></span>
       </a>
+      <a class="card pad" href="#/prayer/request" style="display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink)">
+        <span class="tile-ic lg c-spruce">${icon("hand")}</span>
+        <span style="display:flex;flex-direction:column;gap:3px;flex-grow:1"><span style="font:600 16px var(--sans)">Send a prayer request</span><span class="small ink2">Keep it private, or let the WFN prayer team stand with you</span></span>
+        <span class="chev muted">${icon("chev", "sm")}</span>
+      </a>
       <section class="section" aria-labelledby="ppH">
         <h2 id="ppH" class="h2" style="padding:0 4px">Pray through today</h2>
         <ol class="card points">${(C.PRAYER_POINTS || []).map((p, i) => `<li><span class="n">${i + 1}</span><p>${esc(p)}</p></li>`).join("")}</ol>
@@ -37,7 +45,7 @@
         <div class="section-head"><h2 id="myH" class="h2">My prayer list</h2><span class="small muted">Private, on this phone</span></div>
         <div class="card list" id="myList">
           ${mine.length ? mine.map((m) => `<div class="row-link" style="cursor:default">
-            <span class="grow"><span class="label" style="${m.answered ? "color:var(--ink-2)" : ""}">${esc(m.text)}</span><span class="hint">${m.answered ? "Answered " + new Date(m.answeredAt || Date.now()).toLocaleDateString(undefined, { month: "short", day: "numeric" }) : "Praying since " + since(m.createdAt)}</span></span>
+            <span class="grow"><span class="label" style="${m.answered ? "color:var(--ink-2)" : ""}">${esc(m.text)}</span><span class="hint">${meta[m.id] ? esc(meta[m.id].topic) + (meta[m.id].team ? " · shared with the prayer team" : "") + " · " : ""}${m.answered ? "Answered " + new Date(m.answeredAt || Date.now()).toLocaleDateString(undefined, { month: "short", day: "numeric" }) : "Praying since " + since(m.createdAt)}</span></span>
             <button class="chip ${m.answered ? "amber" : "spruce"}" data-ans="${m.id}" aria-label="${m.answered ? "Mark as still praying" : "Mark as answered"}">${m.answered ? "Answered" : "Praying"}</button>
             <button class="icon-btn" data-del="${m.id}" aria-label="Delete">${icon("trash", "sm")}</button></div>`).join("")
           : `<button class="row-link" id="addP2" style="border:0"><span class="tile-ic c-spruce">${icon("plus")}</span><span class="grow"><span class="label">Add something you’re praying for</span><span class="hint">Track it until the answer comes, then write the testimony</span></span></button>`}
@@ -48,16 +56,73 @@
         <a class="card pad" href="#/dreams" style="display:flex;gap:14px;text-decoration:none;color:var(--ink)"><span class="tile-ic c-amber">${icon("flame")}</span><span style="display:flex;flex-direction:column;gap:3px"><span class="label" style="font:600 15.5px var(--sans)">Dreams &amp; Discernment</span><span class="small ink2">Tonight: ${esc(t.dreamFire.title)}</span></span></a>
       </section>
     </div>`;
-    const add = () => W.sheet(`<div class="sheet-head"><h2>Prayer request</h2><button class="btn sm soft" data-close>Cancel</button></div>
-      <label class="sr" for="pr">What are you praying for?</label><textarea class="field" id="pr" placeholder="What are you praying for?"></textarea>
-      <button class="btn lg block" id="prSave">Add to my list</button>`, (el) => {
-      W.$("#prSave", el).onclick = () => { const v = W.$("#pr", el).value.trim(); if (!v) return; W.S.addPrayer(v); W.closeSheet(); W.route(); };
-    });
+    const add = () => W.go("#/prayer/request");
     W.$("#addP").onclick = add;
     const a2 = W.$("#addP2"); if (a2) a2.onclick = add;
     W.$$("[data-ans]", main).forEach((b) => b.onclick = () => { W.S.togglePrayerAnswered(b.dataset.ans); W.route(); });
     W.$$("[data-del]", main).forEach((b) => b.onclick = () => { W.ask("Delete this prayer?", "Delete", () => { W.S.deletePrayer(b.dataset.del); W.route(); }); });
   });
+
+
+  // ---------- Prayer request: three short steps ----------
+  const TOPICS = ["Healing", "Family", "Finances", "Guidance", "Work & business", "Salvation of a loved one", "Protection", "Peace of mind", "Thanksgiving", "Something else"];
+  const TEAM_EMAIL = "wordandfaithnetwork@gmail.com";
+  let draft = null;
+  function request(main) {
+    if (!draft) draft = { step: 1, topic: "", text: "", name: (W.profile().name || "").split(" ")[0], who: "me" };
+    const d = draft;
+    const bars = [1, 2, 3].map((n) => `<span style="flex:1;height:4px;border-radius:9px;background:${n <= d.step ? "var(--spruce)" : "var(--sunk)"}"></span>`).join("");
+    let body = "";
+    if (d.step === 1) {
+      body = `<span class="label" style="font:600 16px var(--sans)">What would you like prayer for?</span>
+        <div class="chips" role="radiogroup" aria-label="Topic">${TOPICS.map((x) => `<button class="chip ${d.topic === x ? "on" : ""}" role="radio" aria-checked="${d.topic === x}" data-topic="${esc(x)}" style="height:40px;padding:0 15px;font-size:14px">${esc(x)}</button>`).join("")}</div>
+        <div style="display:flex;justify-content:flex-end;padding-top:6px"><button class="btn lg" id="next" ${d.topic ? "" : "disabled style=\"opacity:.45\""}>Continue</button></div>`;
+    } else if (d.step === 2) {
+      body = `<label for="rq" style="font:600 15px var(--sans)">Your request <span class="muted" style="font-weight:500">· ${esc(d.topic)}</span></label>
+        <textarea class="field" id="rq" placeholder="Write as much or as little as you like." style="min-height:150px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line)">${esc(d.text)}</textarea>
+        <label for="fn" style="font:600 15px var(--sans)">First name <span class="muted" style="font-weight:500">(optional)</span></label>
+        <input class="field" id="fn" value="${esc(d.name)}" autocomplete="given-name" style="background:var(--card);box-shadow:inset 0 0 0 1px var(--line)">
+        <span style="font:600 15px var(--sans);padding-top:4px">Who should see this?</span>
+        <div role="radiogroup" aria-label="Who should see this" style="display:flex;flex-direction:column;gap:10px">
+          ${[["me", "Just me", "Keep it in my private prayer list on this phone."], ["team", "The WFN prayer team", "Save it, then send it to the Word and Faith Network prayer team so they can stand with you in prayer."]].map(([k, a, b]) => `<button role="radio" aria-checked="${d.who === k}" data-who="${k}" style="display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:18px;text-align:left;background:var(--card);border:${d.who === k ? "2px solid var(--spruce)" : "1px solid var(--line)"};margin:${d.who === k ? "0" : "1px"}">
+            <span class="radio-dot ${d.who === k ? "on" : ""}" aria-hidden="true" style="margin-top:2px"></span><span style="display:flex;flex-direction:column;gap:4px"><span style="font:600 16px var(--sans)">${a}</span><span class="ink2" style="font-size:14px;line-height:21px">${b}</span></span></button>`).join("")}
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:10px;padding-top:6px"><button class="btn lg ghost" id="bk">Back</button><button class="btn lg" id="save">Save request</button></div>`;
+    } else {
+      const team = d.who === "team";
+      body = `<span class="tile-ic lg c-spruce" style="width:52px;height:52px;border-radius:18px">${icon("check")}</span>
+        <h2 style="margin:0;font:400 26px/32px var(--serif)">${team ? "Saved. Now send it to the prayer team." : "Saved to your prayer list."}</h2>
+        <p class="ink2" style="font-size:15px;line-height:23px">${team ? "Your request is in your list on this phone. Send it to the WFN prayer team and they will pray with you. Nothing is shared until you send it." : "It stays private on this phone. Mark it answered when God comes through, and write the testimony."}</p>
+        <blockquote class="band" style="margin:0;display:flex;flex-direction:column;gap:6px"><span class="eyebrow">${esc(d.topic)}</span><p class="serif" style="font-size:17px;line-height:27px;white-space:pre-wrap">${esc(d.text)}</p></blockquote>
+        ${team ? `<a class="btn lg block" id="mail" href="mailto:${TEAM_EMAIL}?subject=${encodeURIComponent("Prayer request: " + d.topic)}&body=${encodeURIComponent((d.text) + "\n\n" + (d.name ? "— " + d.name : "") + "\n\nSent from the WFN app")}">${icon("hand", "sm")}Email the prayer team</a>
+          <button class="btn lg block ghost" id="shareT">${icon("share", "sm")}Send another way</button>
+          <p class="small muted">Opens your email app with the request ready to send to ${TEAM_EMAIL}.</p>` : ""}
+        <a class="btn lg block ${team ? "soft" : ""}" href="#/prayer" id="done">Back to Prayer</a>`;
+    }
+    main.innerHTML = W.topbar("Prayer request", { back: "#/prayer" }) + `<div class="page" style="gap:18px">
+      ${d.step < 3 ? `<div style="display:flex;flex-direction:column;gap:8px;padding:0 4px"><span class="eyebrow">Prayer request</span><h1 style="margin:0;font:400 32px/38px var(--serif)">What can we pray for?</h1><p class="ink2" style="font-size:15px;line-height:23px">Three short steps. Your request is saved to your prayer list first, so you choose whether and when to share it.</p></div>` : ""}
+      <section class="card pad" style="display:flex;flex-direction:column;gap:16px"><div style="display:flex;gap:8px" aria-label="Step ${d.step} of 3">${bars}</div>${body}</section></div>`;
+    if (d.step === 1) {
+      W.$$("[data-topic]", main).forEach((b) => b.onclick = () => { d.topic = b.dataset.topic; request(main); });
+      W.$("#next").onclick = () => { if (d.topic) { d.step = 2; request(main); } };
+    } else if (d.step === 2) {
+      const keep = () => { d.text = W.$("#rq").value; d.name = W.$("#fn").value.trim(); };
+      W.$$("[data-who]", main).forEach((b) => b.onclick = () => { keep(); d.who = b.dataset.who; request(main); });
+      W.$("#bk").onclick = () => { keep(); d.step = 1; request(main); };
+      W.$("#save").onclick = () => {
+        keep();
+        if (!d.text.trim()) { W.toast("Write your request first"); return W.$("#rq").focus(); }
+        const pr = W.S.addPrayer(d.text.trim());
+        if (pr && pr.id) { const meta = W.read("wfn2-prayer-meta", {}); meta[pr.id] = { topic: d.topic, team: d.who === "team" }; W.write("wfn2-prayer-meta", meta); }
+        d.step = 3; request(main); window.scrollTo(0, 0);
+      };
+    } else {
+      const s = W.$("#shareT");
+      if (s) s.onclick = () => W.shareOrCopy({ title: "Prayer request", text: "Prayer request for the WFN prayer team (" + d.topic + "):\n\n" + d.text + (d.name ? "\n\n— " + d.name : "") });
+      W.$("#done").addEventListener("click", () => { draft = null; });
+      const m = W.$("#mail"); if (m) m.addEventListener("click", () => setTimeout(() => { draft = null; }, 500));
+    }
+  }
 
   function declaration(main, t) {
     const ds = stanzas(t.declaration.lines);
@@ -307,9 +372,10 @@
       <div style="display:flex;justify-content:center;padding-top:6px"><img src="${W.BASE}assets/library/${b.slug}-cover.svg" alt="${esc(b.title)} cover" style="width:200px;aspect-ratio:2/3;object-fit:cover;border-radius:12px;box-shadow:0 30px 50px -26px rgba(0,0,0,0.6);background:${b.bg1}"></div>
       <div style="display:flex;flex-direction:column;gap:8px;text-align:center"><h1 style="margin:0;font:400 30px/36px var(--serif)">${esc(b.title)}</h1><span class="small muted">By Oladapo Olaleye · Word and Faith Network</span></div>
       <p class="serif" style="font-size:18px;line-height:29px">${esc(b.desc)}</p>
-      <a class="btn lg block" href="${W.BASE}assets/library/${b.slug}.pdf" target="_blank" rel="noopener">${icon("bible", "sm")}Read the book (PDF)</a>
+      <a class="btn lg block" href="${W.BASE}library/${b.slug}.html">${icon("bible", "sm")}Read the book</a>
+      <a class="btn block soft" href="${W.BASE}assets/library/${b.slug}.pdf" target="_blank" rel="noopener">${icon("download", "sm")}Download the PDF</a>
       <button class="btn lg block ghost" id="shr">${icon("share", "sm")}Share this book</button>
     </div>`;
-    W.$("#shr").onclick = () => W.shareOrCopy({ title: b.title, text: b.title + " by Oladapo Olaleye — " + b.desc, url: "https://wfnglobal.org/assets/library/" + b.slug + ".pdf" });
+    W.$("#shr").onclick = () => W.shareOrCopy({ title: b.title, text: b.title + " by Oladapo Olaleye — " + b.desc, url: "https://wfnglobal.org/library/" + b.slug + ".html" });
   });
 })();

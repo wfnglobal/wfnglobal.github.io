@@ -386,3 +386,8 @@ textarea.field { height: auto; min-height: 120px; padding: 12px 14px; resize: ve
 .selbar .acts { display: flex; justify-content: space-between; }
 .selbar .acts button { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; border: 0; background: transparent; color: var(--ink-2); font: 500 11.5px/14px var(--sans); padding: 6px 0; border-radius: 12px; }
 .selbar .acts button:active { background: var(--sunk); }
+
+/* Shared Look Up / Translate / Share sheets (wfn-tts.js, wfn-lookup.js) in App 2.0 colours */
+html:root { --wfn-glass-bg: rgba(255,255,255,0.88); --wfn-glass-border: rgba(255,255,255,0.7); --wfn-glass-ink: #1F1D1B; --wfn-glass-ink-2: #55514B; --wfn-glass-ink-3: #6E6A63; --wfn-glass-accent: #2A6766; --wfn-glass-line: rgba(31,29,27,0.08); }
+html[data-theme="dark"]:root { --wfn-glass-bg: rgba(28,26,24,0.9); --wfn-glass-border: rgba(239,235,228,0.12); --wfn-glass-ink: #EFEBE4; --wfn-glass-ink-2: #B3ADA3; --wfn-glass-ink-3: #8F897F; --wfn-glass-accent: #7CC4C0; --wfn-glass-line: rgba(239,235,228,0.1); }
+html #wfnGlass { font-family: var(--sans); }

@@ -14,11 +14,11 @@ body{margin:0}
 a{color:#2A6766}a:hover{color:#1E4E4D}
 </style>
 </helmet>
-<div style="position: relative; width: 390px; min-height: 2000px; box-sizing: border-box; display: flex; flex-direction: column; background: #F4F2EE; color: #1F1D1B; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;"><svg aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.05; mix-blend-mode: multiply;"><filter id="paperGrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"></feTurbulence><feColorMatrix values="0 0 0 0 0.25  0 0 0 0 0.22  0 0 0 0 0.18  0 0 0 0.7 0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#paperGrain)"></rect></svg>
+<div style="position: relative; width: 390px; min-height: 2000px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F5F2; color: #1F1D1B; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;"><svg aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.05; mix-blend-mode: multiply;"><filter id="paperGrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"></feTurbulence><feColorMatrix values="0 0 0 0 0.25  0 0 0 0 0.22  0 0 0 0 0.18  0 0 0 0.7 0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#paperGrain)"></rect></svg>
 
   <header style="display: flex; align-items: center; gap: 8px; padding: 28px 20px 6px;">
     <h1 style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 32px; line-height: 38px; font-weight: 400;">Library</h1>
-    <button type="button" aria-label="Search the library" style="width: 44px; height: 44px; border: 0; border-radius: 999px; background: #ECE8E2; color: #1F1D1B; display: flex; align-items: center; justify-content: center; padding: 0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button>
+    <button type="button" aria-label="Search the library" style="width: 44px; height: 44px; border: 0; border-radius: 999px; background: #ECEAE5; color: #1F1D1B; display: flex; align-items: center; justify-content: center; padding: 0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button>
   </header>
 
   <div role="tablist" aria-label="Library sections" style="display: flex; gap: 8px; padding: 12px 16px 4px; overflow: hidden;">
@@ -28,7 +28,7 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
   </div>
 
   <main style="display: flex; flex-direction: column; gap: 30px; padding: 18px 16px 32px;">
-    <a href="#sermon" style="display: flex; gap: 16px; padding: 14px; border-radius: 26px; background: #FFFDFA; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16); text-decoration: none; color: #1F1D1B;">
+    <a href="#sermon" style="display: flex; gap: 16px; padding: 14px; border-radius: 26px; background: #FFFFFF; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16); text-decoration: none; color: #1F1D1B;">
       <img src="/_blob/32abf99b11c19fb8edc0101fe2cda624" alt="Sermon poster: Even the captive goes free" style="width: 116px; height: 145px; flex-shrink: 0; border-radius: 16px; object-fit: cover;">
       <span style="display: flex; flex-direction: column; gap: 6px; min-width: 0; padding-top: 2px;">
         <span style="font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #435C82;">Today’s sermon</span>
@@ -47,7 +47,7 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
       <div style="display: flex; gap: 12px; overflow: hidden;">
         <sc-for list="{{studies}}" as="s" hint-placeholder-count="3">
           <a href="#study" style="width: 156px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: #1F1D1B;">
-            <img src="{{s.img}}" alt="{{s.alt}}" style="width: 156px; height: 195px; border-radius: 18px; object-fit: cover; background: #ECE8E2;">
+            <img src="{{s.img}}" alt="{{s.alt}}" style="width: 156px; height: 195px; border-radius: 18px; object-fit: cover; background: #ECEAE5;">
             <span style="font-family: Literata, Georgia, serif; font-size: 16px; line-height: 21px; font-weight: 500;">{{s.title}}</span>
             <span style="font-size: 12.5px; color: #6E6A63;">{{s.meta}}</span>
           </a>
@@ -64,13 +64,13 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
         <sc-for list="{{books}}" as="b" hint-placeholder-count="4">
           <a href="#book" style="display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: #1F1D1B;">
             <sc-if value="{{b.hasImg}}" hint-placeholder-val="{{b.hasImg}}">
-              <img src="{{b.img}}" alt="Cover of {{b.title}}" style="width: 100%; aspect-ratio: 3 / 4; border-radius: 16px; object-fit: cover; background: #ECE8E2;">
+              <img src="{{b.img}}" alt="Cover of {{b.title}}" style="width: 100%; aspect-ratio: 3 / 4; border-radius: 16px; object-fit: cover; background: #ECEAE5;">
             </sc-if>
             <sc-if value="{{b.noImg}}" hint-placeholder-val="{{b.noImg}}">
               <span style="width: 100%; aspect-ratio: 3 / 4; box-sizing: border-box; border-radius: 16px; background: radial-gradient(130% 95% at 88% -10%, #2B5C5A 0%, #17403F 48%, #10302F 100%); color: #F6F3EC; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; padding: 16px;"><span style="font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #E9B872;">Book Three</span><span style="font-family: Literata, Georgia, serif; font-size: 22px; line-height: 26px; font-weight: 400;">Not Consumed</span></span>
             </sc-if>
             <span style="display: flex; flex-direction: column; gap: 2px;"><span style="font-family: Literata, Georgia, serif; font-size: 16px; line-height: 21px; font-weight: 500;">{{b.title}}</span><span style="font-size: 12.5px; color: #6E6A63;">{{b.meta}}</span></span>
-            <span style="display: block; height: 3px; border-radius: 999px; background: #ECE8E2;"><span style="display: block; width: {{b.progress}}; height: 3px; border-radius: 999px; background: #435C82;"></span></span>
+            <span style="display: block; height: 3px; border-radius: 999px; background: #ECEAE5;"><span style="display: block; width: {{b.progress}}; height: 3px; border-radius: 999px; background: #435C82;"></span></span>
           </a>
         </sc-for>
       </div>
@@ -82,7 +82,7 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
         <span style="font-size: 13px; color: #6E6A63;">27 sermons · nothing removed</span>
       </div>
       <span style="padding: 4px 4px 0; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #6E6A63;">November 2026</span>
-      <div style="display: flex; flex-direction: column; border-radius: 24px; background: #FFFDFA; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16);">
+      <div style="display: flex; flex-direction: column; border-radius: 24px; background: #FFFFFF; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16);">
         <sc-for list="{{archive}}" as="a" hint-placeholder-count="5">
           <a href="#sermon" style="display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-top: {{a.divider}}; text-decoration: none; color: #1F1D1B;">
             <span style="width: 34px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; font-variant-numeric: tabular-nums;"><span style="font-size: 18px; line-height: 20px; font-weight: 600;">{{a.day}}</span><span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6E6A63;">{{a.dow}}</span></span>
@@ -94,15 +94,15 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
       <a href="#archive" style="align-self: center; font-size: 14px; font-weight: 600; text-decoration: none; padding: 6px;">Browse the full archive</a>
     </section>
 
-    <a href="#films" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 24px; background: #E9E5DE; text-decoration: none; color: #1F1D1B;">
-      <span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 16px; background: #FFFDFA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="#1F1D1B" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"></path></svg></span>
+    <a href="#films" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 24px; background: #E8E6E1; text-decoration: none; color: #1F1D1B;">
+      <span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 16px; background: #FFFFFF; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="#1F1D1B" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"></path></svg></span>
       <span style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1;"><span style="font-size: 15px; font-weight: 600;">Films</span><span style="font-size: 13px; color: #55514B;">Illustrated 4K shorts · 9 films</span></span>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6E6A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
     </a>
   </main>
 
   <span style="flex-grow: 1;"></span>
-  <nav aria-label="Main" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 8px 6px 26px; background: #FFFDFA; border-top: 1px solid rgba(31,29,27,0.09);">
+  <nav aria-label="Main" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 8px 6px 26px; background: #FFFFFF; border-top: 1px solid rgba(31,29,27,0.09);">
     <sc-for list="{{tabs}}" as="tab" hint-placeholder-count="5">
       <a href="{{tab.href}}" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; text-decoration: none; color: {{tab.color}}; font: {{tab.weight}} 10.5px 'Instrument Sans', sans-serif;">
         <span style="width: 52px; height: 30px; border-radius: 999px; background: {{tab.pill}}; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{tab.icon}}"></path></svg></span>
@@ -116,7 +116,7 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
 class Component extends DCLogic {
   renderVals() {
     const chips = ['All', 'Sermons', 'Bible studies', 'Books', 'Plans', 'Films'].map((label, i) => ({
-      label, sel: i === 0 ? 'true' : 'false', bg: i === 0 ? '#1F1D1B' : '#FFFDFA', ink: i === 0 ? '#F4F2EE' : '#1F1D1B', border: i === 0 ? '1px solid #1F1D1B' : '1px solid rgba(31,29,27,0.12)'
+      label, sel: i === 0 ? 'true' : 'false', bg: i === 0 ? '#1F1D1B' : '#FFFFFF', ink: i === 0 ? '#F6F5F2' : '#1F1D1B', border: i === 0 ? '1px solid #1F1D1B' : '1px solid rgba(31,29,27,0.12)'
     }));
     const studies = [
       { title: 'For Such a Time as This', meta: 'Esther 4 · today', img: '/_blob/5c651684365bbba05b1f211d2f23a455', alt: 'Bible study poster, For Such a Time as This' },

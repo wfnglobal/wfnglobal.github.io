@@ -22,14 +22,14 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
     <p style="margin: 0;"><sup style="font-family: 'Instrument Sans', sans-serif; font-size: 11px; font-weight: 600; color: #6A645A; margin-right: 4px;">25</sup>But thus saith the LORD, Even the captives of the mighty shall be taken away, and the prey of the terrible shall be delivered.</p>
   </article>
 
-  <section role="dialog" aria-label="Reading settings" style="position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: 22px; padding: 10px 20px 34px; border-radius: 26px 26px 0 0; background: #FFFDFA; box-shadow: 0 -10px 40px rgba(31,29,27,0.14);">
-    <span style="align-self: center; width: 38px; height: 5px; border-radius: 12px; background: #ECE8E2;"></span>
+  <section role="dialog" aria-label="Reading settings" style="position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: 22px; padding: 10px 20px 34px; border-radius: 26px 26px 0 0; background: #FFFFFF; box-shadow: 0 -10px 40px rgba(31,29,27,0.14);">
+    <span style="align-self: center; width: 38px; height: 5px; border-radius: 12px; background: #ECEAE5;"></span>
     <div style="display: flex; align-items: center;">
       <h2 style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 21px; font-weight: 500;">Reading</h2>
-      <button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: #ECE8E2; color: #1F1D1B; font: 600 13.5px 'Instrument Sans', sans-serif;">Done</button>
+      <button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: #ECEAE5; color: #1F1D1B; font: 600 13.5px 'Instrument Sans', sans-serif;">Done</button>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;" role="radiogroup" aria-label="Theme">
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;" role="radiogroup" aria-label="Theme">
       <sc-for list="{{themes}}" as="t" hint-placeholder-count="3">
         <button type="button" role="radio" aria-checked="{{t.checked}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 18px; background: {{t.bg}}; color: {{t.ink}}; border: {{t.border}}; font: 600 13px 'Instrument Sans', sans-serif;">
           <span style="font: 500 22px Literata, Georgia, serif;">Aa</span>{{t.name}}
@@ -41,14 +41,14 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
       <div style="display: flex; font-size: 13px; font-weight: 600; color: #55514B;"><span style="flex-grow: 1;">Text size</span><span style="font-variant-numeric: tabular-nums;">21 pt</span></div>
       <div style="display: flex; align-items: center; gap: 14px;">
         <span style="font: 500 14px Literata, Georgia, serif;">A</span>
-        <span style="position: relative; flex-grow: 1; height: 4px; border-radius: 999px; background: #ECE8E2;"><span style="position: absolute; left: 0; top: 0; width: 58%; height: 4px; border-radius: 999px; background: #2A6766;"></span><span style="position: absolute; left: 58%; top: -10px; width: 24px; height: 24px; margin-left: -12px; border-radius: 999px; background: #FFFDFA; box-shadow: 0 1px 4px rgba(31,29,27,0.25);"></span></span>
+        <span style="position: relative; flex-grow: 1; height: 4px; border-radius: 999px; background: #ECEAE5;"><span style="position: absolute; left: 0; top: 0; width: 58%; height: 4px; border-radius: 999px; background: #2A6766;"></span><span style="position: absolute; left: 58%; top: -10px; width: 24px; height: 24px; margin-left: -12px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 4px rgba(31,29,27,0.25);"></span></span>
         <span style="font: 500 22px Literata, Georgia, serif;">A</span>
       </div>
     </div>
 
     <div style="display: flex; gap: 8px; overflow: hidden;" role="radiogroup" aria-label="Font">
       <sc-for list="{{fonts}}" as="f" hint-placeholder-count="5">
-        <button type="button" role="radio" aria-checked="{{f.checked}}" style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px 12px; border-radius: 16px; border: {{f.border}}; background: #FFFDFA; color: #1F1D1B;"><span style="font: 400 22px {{f.stack}};">Aa</span><span style="font: 500 11.5px 'Instrument Sans', sans-serif; color: #55514B;">{{f.name}}</span></button>
+        <button type="button" role="radio" aria-checked="{{f.checked}}" style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px 12px; border-radius: 16px; border: {{f.border}}; background: #FFFFFF; color: #1F1D1B;"><span style="font: 400 22px {{f.stack}};">Aa</span><span style="font: 500 11.5px 'Instrument Sans', sans-serif; color: #55514B;">{{f.name}}</span></button>
       </sc-for>
     </div>
 
@@ -56,7 +56,7 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
       <sc-for list="{{toggles}}" as="g" hint-placeholder-count="4">
         <label style="display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 14px; border-top: {{g.divider}};">
           <span style="display: flex; flex-direction: column; gap: 1px; flex-grow: 1;"><span style="font-size: 15px; font-weight: 500;">{{g.label}}</span><span style="font-size: 12.5px; color: #6E6A63;">{{g.hint}}</span></span>
-          <span style="position: relative; width: 46px; height: 28px; border-radius: 999px; background: {{g.track}};"><span style="position: absolute; top: 3px; left: {{g.knob}}; width: 22px; height: 22px; border-radius: 999px; background: #FFFDFA; box-shadow: 0 1px 3px rgba(31,29,27,0.25);"></span></span>
+          <span style="position: relative; width: 46px; height: 28px; border-radius: 999px; background: {{g.track}};"><span style="position: absolute; top: 3px; left: {{g.knob}}; width: 22px; height: 22px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(31,29,27,0.25);"></span></span>
         </label>
       </sc-for>
     </div>
@@ -67,8 +67,9 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
 class Component extends DCLogic {
   renderVals() {
     const themes = [
-      { name: 'Light', bg: '#FFFDFA', ink: '#1F1D1B', checked: 'false' },
+      { name: 'Light', bg: '#FFFFFF', ink: '#1F1D1B', checked: 'false' },
       { name: 'Linen', bg: '#F0ECE4', ink: '#2A2622', checked: 'true' },
+      { name: 'Mint', bg: '#EAF1EC', ink: '#1A2022', checked: 'false' },
       { name: 'Dark', bg: '#141312', ink: '#EFEBE4', checked: 'false' }
     ].map((t) => ({ ...t, border: t.checked === 'true' ? '2px solid #2A6766' : '1px solid rgba(31,29,27,0.12)' }));
     const toggles = [

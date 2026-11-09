@@ -101,7 +101,7 @@
       "x": 1880,
       "y": 5020,
       "w": 390,
-      "h": 2300,
+      "h": 2480,
       "title": "You",
       "radius": 28
     },
@@ -143,6 +143,38 @@
       "w": 1260,
       "h": 1680,
       "title": "Choose \u00b7 page colour and reading theme"
+    },
+    "Invite.dc.html": {
+      "x": 0,
+      "y": 10660,
+      "w": 390,
+      "h": 844,
+      "title": "Invite friends \u00b7 my code",
+      "radius": 28
+    },
+    "Scan.dc.html": {
+      "x": 470,
+      "y": 10660,
+      "w": 390,
+      "h": 844,
+      "title": "Invite friends \u00b7 scan",
+      "radius": 28
+    },
+    "Give.dc.html": {
+      "x": 940,
+      "y": 10660,
+      "w": 390,
+      "h": 2240,
+      "title": "Give",
+      "radius": 28
+    },
+    "GiveTo.dc.html": {
+      "x": 1410,
+      "y": 10660,
+      "w": 390,
+      "h": 844,
+      "title": "Give to \u00b7 choose a fund",
+      "radius": 28
     }
   },
   "createdOnFiles": {
@@ -160,7 +192,7 @@
   ],
   "launch": {
     "view": "focused",
-    "file": "Compare.dc.html"
+    "file": "Give.dc.html"
   },
   "notes": {
     "stage1": {
@@ -195,9 +227,16 @@
     "choose": {
       "x": -1420,
       "y": -300,
-      "text": "Your choice \u00b7 judge by eye",
+      "text": "Chosen \u00b7 B soft white page, Linen and Mint reading",
       "kind": "title1",
       "maxW": 1260
+    },
+    "stage5": {
+      "x": 0,
+      "y": 10360,
+      "text": "Stage 3c \u00b7 Invite friends and Give",
+      "kind": "title1",
+      "maxW": 1800
     }
   },
   "order": [
@@ -218,7 +257,11 @@
     "JesusMuseum.dc.html",
     "JesusGallery.dc.html",
     "WordClimb.dc.html",
-    "Compare.dc.html"
+    "Compare.dc.html",
+    "Invite.dc.html",
+    "Scan.dc.html",
+    "Give.dc.html",
+    "GiveTo.dc.html"
   ],
   "pages": [],
   "title": "WFN App 2.0"

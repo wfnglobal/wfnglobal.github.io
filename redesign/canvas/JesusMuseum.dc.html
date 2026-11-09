@@ -14,7 +14,7 @@ body{margin:0}
 a{color:#2A6766}a:hover{color:#1E4E4D}
 </style>
 </helmet>
-<div style="position: relative; width: 390px; min-height: 2300px; box-sizing: border-box; display: flex; flex-direction: column; background: #F4F2EE; color: #1F1D1B; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
+<div style="position: relative; width: 390px; min-height: 2300px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F5F2; color: #1F1D1B; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
 
   <header style="position: relative; height: 560px; overflow: hidden; color: #F6F3EC;">
     <svg width="390" height="560" viewBox="0 0 390 560" role="img" aria-label="Illustration: Jerusalem at dawn, the city walls and an open gate below the Mount of Olives" style="position: absolute; left: 0; top: 0;">
@@ -64,7 +64,7 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
   <main style="display: flex; flex-direction: column; gap: 30px; padding: 24px 16px 40px;">
     <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
       <sc-for list="{{facts}}" as="f" hint-placeholder-count="3">
-        <div style="display: flex; flex-direction: column; gap: 2px; padding: 14px; border-radius: 20px; background: #FFFDFA; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16);"><span style="font-family: Literata, Georgia, serif; font-size: 24px; line-height: 30px;">{{f.n}}</span><span style="font-size: 12px; color: #6E6A63;">{{f.label}}</span></div>
+        <div style="display: flex; flex-direction: column; gap: 2px; padding: 14px; border-radius: 20px; background: #FFFFFF; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16);"><span style="font-family: Literata, Georgia, serif; font-size: 24px; line-height: 30px;">{{f.n}}</span><span style="font-size: 12px; color: #6E6A63;">{{f.label}}</span></div>
       </sc-for>
     </div>
 
@@ -76,7 +76,7 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
 
     <section aria-labelledby="routeH" style="display: flex; flex-direction: column; gap: 14px;">
       <div style="display: flex; flex-direction: column; gap: 4px; padding: 0 4px;"><h2 id="routeH" style="margin: 0; font-family: Literata, Georgia, serif; font-size: 24px; line-height: 30px; font-weight: 400;">The route</h2><span style="font-size: 13.5px; color: #55514B;">Twelve galleries, walked in the order it happened.</span></div>
-      <ol style="list-style: none; margin: 0; padding: 8px 0; border-radius: 24px; background: #FFFDFA; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16);">
+      <ol style="list-style: none; margin: 0; padding: 8px 0; border-radius: 24px; background: #FFFFFF; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16);">
         <sc-for list="{{galleries}}" as="g" hint-placeholder-count="12">
           <li style="display: flex; gap: 14px; padding: 0 18px;">
             <span style="width: 34px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center;">
@@ -97,14 +97,14 @@ a{color:#2A6766}a:hover{color:#1E4E4D}
     <section aria-labelledby="collH" style="display: flex; flex-direction: column; gap: 12px;">
       <h2 id="collH" style="margin: 0; padding: 0 4px; font-family: Literata, Georgia, serif; font-size: 24px; line-height: 30px; font-weight: 400;">In the collection</h2>
       <sc-for list="{{collection}}" as="c" hint-placeholder-count="3">
-        <a href="#coll" style="display: flex; gap: 14px; align-items: center; padding: 14px; border-radius: 24px; background: #FFFDFA; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16); text-decoration: none; color: #1F1D1B;">
+        <a href="#coll" style="display: flex; gap: 14px; align-items: center; padding: 14px; border-radius: 24px; background: #FFFFFF; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16); text-decoration: none; color: #1F1D1B;">
           <span style="width: 64px; height: 64px; flex-shrink: 0; border-radius: 18px; background: {{c.bg}}; display: flex; align-items: center; justify-content: center; color: {{c.ink}};"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{c.icon}}"></path></svg></span>
           <span style="display: flex; flex-direction: column; gap: 2px; min-width: 0;"><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: {{c.kindInk}};">{{c.kind}}</span><span style="font-family: Literata, Georgia, serif; font-size: 17px; line-height: 22px; font-weight: 500;">{{c.title}}</span><span style="font-size: 12.5px; line-height: 17px; color: #6E6A63;">{{c.meta}}</span></span>
         </a>
       </sc-for>
     </section>
 
-    <section style="display: flex; flex-direction: column; gap: 10px; padding: 24px 22px; border-radius: 26px; background: #E9E5DE;">
+    <section style="display: flex; flex-direction: column; gap: 10px; padding: 24px 22px; border-radius: 26px; background: #E8E6E1;">
       <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #985F1E;">At the exit</span>
       <p style="margin: 0; font-family: Literata, Georgia, serif; font-size: 20px; line-height: 30px;">“He is not here: for he is risen, as he said. Come, see the place where the Lord lay.”</p>
       <span style="font-size: 13px; font-weight: 600; color: #985F1E;">Matthew 28:6 · KJV</span>
@@ -134,8 +134,8 @@ class Component extends DCLogic {
     const here = 9;
     const galleries = list.map(([num, place, title, meta], i) => ({
       num, place, title, meta: i < here ? meta + ' · visited' : (i === here ? meta + ' · you are here' : meta),
-      dotBg: i < here ? '#DFEAE6' : (i === here ? '#2A6766' : '#FFFDFA'),
-      dotInk: i < here ? '#2A6766' : (i === here ? '#FFFDFA' : '#55514B'),
+      dotBg: i < here ? '#DFEAE6' : (i === here ? '#2A6766' : '#FFFFFF'),
+      dotInk: i < here ? '#2A6766' : (i === here ? '#FFFFFF' : '#55514B'),
       dotBorder: i <= here ? '0' : '1.5px solid #CFC9C0',
       lineTop: i === 0 ? 'transparent' : (i <= here ? '#2A6766' : '#DCD6CC'),
       lineBottom: i === list.length - 1 ? 'transparent' : (i < here ? '#2A6766' : '#DCD6CC'),

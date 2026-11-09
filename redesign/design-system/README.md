@@ -46,7 +46,7 @@ Rules: minimum size 20px; clear space equal to one petal; never one-color petals
 
 App 2.0 deliberately shares nothing with the live website's warm cream, sage and bronze. Its palette is cooler and cleaner: porcelain white, cool charcoal ink, a deep spruce accent and one warm amber note. Three themes, same structure: **Light** (default), **Dark** (a cool near-black, not brown) and **Linen**, a soft warm reading theme. Exact values in `tokens.json`.
 
-- **`surface-100`** porcelain page, **`surface-200`** cards and sheets, **`surface-300`** sunken fields, **`mist`** the one cool neutral band.
+- **`surface-100`** soft-white page (#F6F5F2), **`surface-200`** cards and sheets, **`surface-300`** sunken fields, **`mist`** the one cool neutral band.
 - **`ink`**, **`ink-2`**, **`ink-3`** step from scripture and body text to captions to timestamps.
 - **`spruce`** is the working accent: links, the active tab, primary buttons, progress, and the Prayer pillar.
 - **`amber`** is the only warm color and is reserved for the Word: references and verse eyebrows.
@@ -100,3 +100,10 @@ Tabs: **Today · Bible · Prayer · Library · You**, with search at the top of 
 ## Status
 
 Version 4 covers tokens, logo, pillar coding, type roles, elevation, motion, iconography and app structure. Stage 1 also includes the redesigned Today screen on the design canvas. The Bible reader, Prayer and Library screens follow after review.
+
+
+## Version 5
+
+- Page is a near-neutral soft white (#F6F5F2), cards pure white, text a warm charcoal (#1F1D1B). Chosen by eye over warm pearl.
+- Reading themes: Light, Linen, Mint and Dark. Mint is a calm grey-green (#EAF1EC, ink #1A2022).
+- New patterns: the Give pill (amber soft ground, hand-and-heart icon) in the Today header, the Invite QR card on the spruce hero, and radio lists for payment methods and funds.

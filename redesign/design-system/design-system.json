@@ -1,0 +1,99 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-27T18:17:00Z"
+  },
+  "title": "Word and Faith Network",
+  "namespace": "WFN",
+  "libraries": [],
+  "sections": {},
+  "groups": [
+    "Logos"
+  ],
+  "assetGroups": {
+    "Logos": {
+      "name": "Logos",
+      "tile": "m",
+      "order": [
+        "emblem-light.svg",
+        "emblem-dark.svg",
+        "app-icon-emblem.svg",
+        "mark-light.svg",
+        "mark-dark.svg",
+        "wordmark-light.svg",
+        "wordmark-dark.svg",
+        "app-icon-light.svg",
+        "app-icon-dark.svg"
+      ],
+      "files": {
+        "mark-light.svg": {
+          "name": "mark-light.svg",
+          "blob": "9e687cf3296fcd95fc3f77b52314c400",
+          "size": 264,
+          "type": "image/svg+xml"
+        },
+        "mark-dark.svg": {
+          "name": "mark-dark.svg",
+          "blob": "34247d94682a67eccf85aebae95b706c",
+          "size": 264,
+          "type": "image/svg+xml"
+        },
+        "wordmark-light.svg": {
+          "name": "wordmark-light.svg",
+          "blob": "3c1b124e1185a0bd1644ee61474513e4",
+          "size": 616,
+          "type": "image/svg+xml"
+        },
+        "wordmark-dark.svg": {
+          "name": "wordmark-dark.svg",
+          "blob": "4da79ff96459cbb408ad0d1d913ce121",
+          "size": 616,
+          "type": "image/svg+xml"
+        },
+        "app-icon-light.svg": {
+          "name": "app-icon-light.svg",
+          "blob": "bdee61489f46fb65f5045dad4c5c94ae",
+          "size": 332,
+          "type": "image/svg+xml"
+        },
+        "app-icon-dark.svg": {
+          "name": "app-icon-dark.svg",
+          "blob": "3e55a867c9a31a7eae6c31daad8fbf1e",
+          "size": 332,
+          "type": "image/svg+xml"
+        },
+        "emblem-light.svg": {
+          "name": "emblem-light.svg",
+          "blob": "8815b9020b1e5306e56ee31f24c0ec31",
+          "size": 591,
+          "type": "image/svg+xml"
+        },
+        "emblem-dark.svg": {
+          "name": "emblem-dark.svg",
+          "blob": "79f8671449ea9464e5322fd3047386a5",
+          "size": 591,
+          "type": "image/svg+xml"
+        },
+        "app-icon-emblem.svg": {
+          "name": "app-icon-emblem.svg",
+          "blob": "0b86c82710176b7eeeedec69a15ad9e0",
+          "size": 701,
+          "type": "image/svg+xml"
+        }
+      }
+    }
+  },
+  "blobs": {},
+  "docs": {
+    "readme": "project/README.md",
+    "sections": []
+  },
+  "lastChange": {
+    "by": "Oladapo",
+    "at": "2026-11-09T21:00:00Z",
+    "via": "Claude",
+    "note": "Version 5: near-neutral soft white page (B) with warm charcoal ink; Linen and Mint reading themes; Give and Invite components."
+  }
+}

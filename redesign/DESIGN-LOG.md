@@ -105,3 +105,13 @@ OneSignal push · seasonal effects.
     5-question challenge tied to the day's sermon, practice by book, 60-second sprint,
     challenge a friend, Scripture hint / 50-50 / learn why, camp badges, certificate.
 - 2026-11-09 — Comparison board added (Compare.dc.html): page colour A cool white #F5F7F8 / B soft white #F6F5F2 (recommended) / C warm pearl #F4F2EE (current), and reading themes Light / Linen / Mist / Dark. Awaiting Oladapo's pick.
+
+## Session — Nov 9, evening: palette B, Invite, Give
+
+- Oladapo chose **B**: near-neutral soft white page (#F6F5F2), white cards, warm charcoal ink (#1F1D1B). Applied to every board.
+- Reading themes are now **Light, Linen, Mint, Dark** (Mint #EAF1EC, ink #1A2022).
+- **You**: real profile photo; new "Friends & giving" tiles (Invite friends, Give).
+- **Today header**: amber "Give" pill (hand-and-heart icon); avatar links to You.
+- New boards: **Invite** (My code / Scan, real QR for wfnglobal.org/app/?invite=oladapo, Share and Copy link), **Scan** (viewfinder, Allow camera, scan from a photo), **Give** (amount, currency, fund, monthly toggle, date, six payment methods, "Why give to WFN"), **Give to** sheet (Where it's needed most, Spread the Word, Care for the needy).
+- Design system bumped to v5.
+- Build notes: real payments need provider accounts (Stripe for cards/Apple Pay/Google Pay, PayPal, Paystack for Naira; Interac via the ministry's bank). Scanning needs camera permission (BarcodeDetector or a small JS QR library).

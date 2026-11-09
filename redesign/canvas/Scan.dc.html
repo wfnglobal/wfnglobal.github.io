@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Scan a friend’s code</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2A6766}a:hover{color:#1E4E4D}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; gap: 22px; padding-top: 12px; overflow: hidden; background: #0C1514; color: #F6F3EC; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(80% 50% at 50% 45%, #22312F 0%, #0C1514 75%);"></div>
+  <div style="position: relative; display: flex; align-items: center; padding: 0 8px;"><a href="You.dc.html" aria-label="Back" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #F6F3EC;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><h1 style="margin: 0; flex-grow: 1; text-align: center; font-size: 16px; font-weight: 600;">Scan a code</h1><button type="button" aria-label="Torch" style="width: 44px; height: 44px; border: 0; background: transparent; color: #F6F3EC; display: flex; align-items: center; justify-content: center; padding: 0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 2h10v5l-3 4v11h-4V11L7 7z"></path><path d="M7 7h10"></path></svg></button></div>
+  <div style="position: relative;"><div role="tablist" aria-label="Invite" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(246,243,236,0.12); margin: 0 20px;"><a href="Invite.dc.html" role="tab" aria-selected="false" style="flex: 1; height: 38px; border-radius: 999px; display: flex; align-items: center; justify-content: center; text-decoration: none; font: 600 14px 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; background: transparent; color: #DCE7E4;">My code</a><a href="Scan.dc.html" role="tab" aria-selected="true" style="flex: 1; height: 38px; border-radius: 999px; display: flex; align-items: center; justify-content: center; text-decoration: none; font: 600 14px 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; background: #F6F3EC; color: #10302F;">Scan</a></div></div>
+  <div style="position: relative; align-self: center; margin-top: 56px; width: 250px; height: 250px;">
+    <span style="position: absolute; left: 0; top: 0; width: 44px; height: 44px; border: 0 solid #F6F3EC; border-left-width: 4px; border-top-width: 4px; border-top-left-radius: 22px; border-radius: 0;"></span>
+    <span style="position: absolute; right: 0; top: 0; width: 44px; height: 44px; border: 0 solid #F6F3EC; border-right-width: 4px; border-top-width: 4px; border-top-right-radius: 22px; border-radius: 0;"></span>
+    <span style="position: absolute; left: 0; bottom: 0; width: 44px; height: 44px; border: 0 solid #F6F3EC; border-left-width: 4px; border-bottom-width: 4px; border-bottom-left-radius: 22px; border-radius: 0;"></span>
+    <span style="position: absolute; right: 0; bottom: 0; width: 44px; height: 44px; border: 0 solid #F6F3EC; border-right-width: 4px; border-bottom-width: 4px; border-bottom-right-radius: 22px; border-radius: 0;"></span>
+    <span style="position: absolute; left: 22px; right: 22px; top: 46%; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(124,196,192,0), #7CC4C0, rgba(124,196,192,0)); box-shadow: 0 0 18px 2px rgba(124,196,192,0.55);"></span>
+  </div>
+  <p style="position: relative; margin: 8px 40px 0; text-align: center; font-size: 15px; line-height: 22px; color: #DCE7E4;">Point your camera at a friend’s WFN code to open their invite.</p>
+  <span style="flex-grow: 1;"></span>
+  <div style="position: relative; display: flex; flex-direction: column; gap: 12px; padding: 0 24px 40px;">
+    <button type="button" style="height: 52px; border: 0; border-radius: 18px; background: #F6F3EC; color: #10302F; display: flex; align-items: center; justify-content: center; gap: 8px; font: 600 15px 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>Allow camera</button>
+    <p style="margin: 0; text-align: center; font-size: 13px; line-height: 19px; color: #9FBDBA;">WFN only uses the camera while this screen is open. Nothing is recorded or saved.</p>
+    <a href="#photo" style="align-self: center; font-size: 14px; font-weight: 600; color: #F6F3EC;">Scan from a photo instead</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

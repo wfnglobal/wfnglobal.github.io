@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Choose the page colour and reading theme</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1260px; height: 1680px; box-sizing: border-box; padding: 56px 60px; display: flex; flex-direction: column; gap: 40px; background: #E4E2DE; color: #1F1D1B; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
+  <header style="display: flex; flex-direction: column; gap: 8px;">
+    <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #6E6A63;">Side by side · same content, same accents</span>
+    <h1 style="margin: 0; font-family: Literata, Georgia, serif; font-size: 40px; line-height: 46px; font-weight: 400;">1. Page colour</h1>
+    <p style="margin: 0; font-size: 16px; line-height: 24px; color: #55514B;">All three use warm charcoal text. Only the page and card colours change.</p>
+  </header>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px;">
+    <sc-for list="{{options}}" as="o" hint-placeholder-count="3">
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: baseline; gap: 10px;">
+          <span style="width: 30px; height: 30px; border-radius: 999px; background: #1F1D1B; color: #FFFDFA; display: flex; align-items: center; justify-content: center; font: 600 14px 'Instrument Sans', sans-serif;">{{o.letter}}</span>
+          <span style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 17px; font-weight: 600;">{{o.name}}</span><span style="font-size: 13px; color: #55514B;">{{o.note}}</span></span>
+        </div>
+        <div style="position: relative; height: 640px; overflow: hidden; border-radius: 34px; background: {{o.bg}}; box-shadow: 0 0 0 8px #1F1D1B, 0 30px 60px -30px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 16px; padding: 26px 16px 0;">
+          <span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #6E6A63;">Monday, November 9</span>
+          <span style="margin-top: -10px; font-family: Literata, Georgia, serif; font-size: 27px; line-height: 32px; font-weight: 400;">Good morning, Oladapo</span>
+          <span style="height: 42px; border-radius: 16px; background: {{o.sunk}}; display: flex; align-items: center; padding: 0 14px; font-size: 13.5px; color: #6E6A63;">Search the Bible, sermons, declarations</span>
+          <span style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 22px; background: {{o.card}}; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16);">
+            <span style="width: 38px; height: 38px; border-radius: 14px; background: #F5EAD9;"></span>
+            <span style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #6E6A63;">Continue reading</span><span style="font-size: 14.5px; font-weight: 600;">Esther 4 · verse 14</span></span>
+          </span>
+          <span style="display: flex; flex-direction: column; gap: 12px; padding: 20px 18px; border-radius: 28px; background: radial-gradient(130% 95% at 88% -10%, #2B5C5A 0%, #17403F 48%, #10302F 100%); color: #F6F3EC;">
+            <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #E9B872;">Verse of the Day · Psalm 119:105</span>
+            <span style="font-family: Literata, Georgia, serif; font-size: 22px; line-height: 31px;">Thy word is a lamp unto my feet, and a light unto my path.</span>
+          </span>
+          <span style="display: flex; flex-direction: column; gap: 10px; padding: 18px; border-radius: 22px; background: {{o.card}}; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16);">
+            <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #2A6766;">Today’s Declaration</span>
+            <span style="font-family: Literata, Georgia, serif; font-size: 16.5px; line-height: 25px;">Father, I declare today that the prey shall be taken from the mighty, in the name of Jesus!</span>
+            <span style="height: 40px; border-radius: 14px; background: #2A6766; color: #FFFDFA; display: flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 600;">Pray it aloud</span>
+          </span>
+          <span style="flex-grow: 1;"></span>
+          <span style="margin: 0 -16px; height: 62px; background: {{o.card}}; border-top: 1px solid rgba(31,29,27,0.06); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: center; font-size: 10px; font-weight: 500; color: #6E6A63; text-align: center;"><span style="color: #2A6766; font-weight: 600;">Today</span><span>Bible</span><span>Prayer</span><span>Library</span><span>You</span></span>
+        </div>
+        <span style="font-size: 12.5px; color: #6E6A63; font-variant-numeric: tabular-nums;">Page {{o.bg}} · cards {{o.card}}</span>
+      </div>
+    </sc-for>
+  </div>
+
+  <header style="display: flex; flex-direction: column; gap: 8px; padding-top: 8px;">
+    <h2 style="margin: 0; font-family: Literata, Georgia, serif; font-size: 40px; line-height: 46px; font-weight: 400;">2. Reading theme</h2>
+    <p style="margin: 0; font-size: 16px; line-height: 24px; color: #55514B;">The same chapter, with a gold highlight, a green highlight and a note, in each theme.</p>
+  </header>
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px;">
+    <sc-for list="{{themes}}" as="t" hint-placeholder-count="4">
+      <article style="display: flex; flex-direction: column; gap: 12px; padding: 22px 20px 24px; border-radius: 26px; background: {{t.bg}}; color: {{t.ink}}; box-shadow: 0 20px 40px -24px rgba(0,0,0,0.45);">
+        <span style="display: flex; align-items: center;"><span style="flex-grow: 1; font-size: 15px; font-weight: 600;">{{t.name}}</span><span style="font-size: 11.5px; color: {{t.ink3}};">Isaiah 49</span></span>
+        <p style="margin: 0; font-family: Literata, Georgia, serif; font-size: 16.5px; line-height: 28px;"><sup style="font-family: 'Instrument Sans', sans-serif; font-size: 9.5px; font-weight: 600; color: {{t.ink3}}; margin-right: 3px;">24</sup><span style="background: {{t.gold}}; border-radius: 3px;">Shall the prey be taken from the mighty, or the lawful captive delivered?</span> <sup style="font-family: 'Instrument Sans', sans-serif; font-size: 9.5px; font-weight: 600; color: {{t.ink3}}; margin-right: 3px;">25</sup>But thus saith the LORD, Even the captives of the mighty shall be taken away, <span style="background: {{t.mint}}; border-radius: 3px;">for I will contend with him that contendeth with thee</span>, and I will save thy children.<span style="display: inline-block; width: 6px; height: 6px; margin-left: 5px; border-radius: 9px; background: {{t.note}}; vertical-align: middle;"></span></p>
+        <span style="font-size: 12px; line-height: 17px; color: {{t.ink3}};">{{t.verdict}}</span>
+      </article>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1260,"height":1680}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const options = [
+      { letter: 'A', name: 'Cool white', note: 'Crisp and clinical; furthest from the live site', bg: '#F5F7F8', card: '#FFFFFF', sunk: '#EAEEF0' },
+      { letter: 'B', name: 'Soft white (recommended)', note: 'Near-neutral with a breath of warmth', bg: '#F6F5F2', card: '#FFFFFF', sunk: '#ECEAE5' },
+      { letter: 'C', name: 'Warm pearl (current)', note: 'Softest and warmest; closest to cream', bg: '#F4F2EE', card: '#FFFDFA', sunk: '#ECE8E2' }
+    ];
+    const themes = [
+      { name: 'Light', bg: '#FFFFFF', ink: '#1F1D1B', ink3: '#6E6A63', gold: '#F7E3B5', mint: '#CDE8E4', note: '#2A6766', verdict: 'Bright daytime reading.' },
+      { name: 'Linen', bg: '#F0ECE4', ink: '#2A2622', ink3: '#6A645A', gold: '#F0D9A2', mint: '#C6DED7', note: '#2A6766', verdict: 'Warm paper. Least glare for long and evening reading.' },
+      { name: 'Mist', bg: '#EEF2F0', ink: '#1A2022', ink3: '#5F696B', gold: '#F0D9A2', mint: '#C0DDD8', note: '#1D6468', verdict: 'Cool and calm; highlights stand out a little less.' },
+      { name: 'Dark', bg: '#141312', ink: '#EFEBE4', ink3: '#8A847A', gold: '#4A3A16', mint: '#1E3F3C', note: '#7CC4C0', verdict: 'Night reading in the dark.' }
+    ];
+    return { options, themes };
+  }
+}
+</script>
+</body>
+</html>

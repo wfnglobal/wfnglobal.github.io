@@ -104,3 +104,4 @@ OneSignal push · seasonal effects.
   * The Word Climb redesigned: mountain map of the 5 real camps, streak, NEW daily
     5-question challenge tied to the day's sermon, practice by book, 60-second sprint,
     challenge a friend, Scripture hint / 50-50 / learn why, camp badges, certificate.
+- 2026-11-09 — Comparison board added (Compare.dc.html): page colour A cool white #F5F7F8 / B soft white #F6F5F2 (recommended) / C warm pearl #F4F2EE (current), and reading themes Light / Linen / Mist / Dark. Awaiting Oladapo's pick.

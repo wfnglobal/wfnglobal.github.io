@@ -136,6 +136,13 @@
       "h": 1700,
       "title": "The Word Climb",
       "radius": 28
+    },
+    "Compare.dc.html": {
+      "x": -1420,
+      "y": 0,
+      "w": 1260,
+      "h": 1680,
+      "title": "Choose \u00b7 page colour and reading theme"
     }
   },
   "createdOnFiles": {
@@ -152,7 +159,8 @@
     }
   ],
   "launch": {
-    "view": "canvas"
+    "view": "focused",
+    "file": "Compare.dc.html"
   },
   "notes": {
     "stage1": {
@@ -183,6 +191,13 @@
       "text": "Stage 3b \u00b7 The Story of Jesus museum and The Word Climb",
       "kind": "title1",
       "maxW": 1330
+    },
+    "choose": {
+      "x": -1420,
+      "y": -300,
+      "text": "Your choice \u00b7 judge by eye",
+      "kind": "title1",
+      "maxW": 1260
     }
   },
   "order": [
@@ -202,7 +217,8 @@
     "Journal.dc.html",
     "JesusMuseum.dc.html",
     "JesusGallery.dc.html",
-    "WordClimb.dc.html"
+    "WordClimb.dc.html",
+    "Compare.dc.html"
   ],
   "pages": [],
   "title": "WFN App 2.0"

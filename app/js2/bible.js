@@ -45,6 +45,11 @@
       main.innerHTML = `
       <header class="page-head"><div class="row"><h1 style="flex-grow:1">Bible</h1><button class="icon-btn" id="rs" aria-label="Reading settings">${icon("aa")}</button></div><p class="small muted">King James Version offline, plus 12 more versions</p></header>
       <div class="page">
+        ${W.intro("bible", { eyebrow: "You are on holy ground", title: "An electronic Bible is still the Bible", body: ["The screen changes. His Word does not. Approach it the way you would walk into a sanctuary: with a quiet heart and a praying spirit."], list: [["Pray before you tap.", "Ask the Holy Spirit to open your understanding."], ["Let it interrupt you.", "If a verse stops you, stay there."], ["Use the tools to understand, not to argue.", "Word meanings, other versions and translations are here to deepen your grasp of the text."], ["Return daily, not just in emergencies.", "The Word is bread for every day."], ["Guard the moment.", "Silence notifications where you can."]], verse: "For the word of God is quick, and powerful, and sharper than any twoedged sword.", ref: "Hebrews 4:12" })}
+        <div class="explore">
+          <a class="card" href="${last ? `#/bible/${esc(last.slug)}/${last.ch}` : "#/bible/genesis/1"}" id="tVer"><span class="tile-ic lg c-amber">${icon("layers")}</span><span><span class="t">13 versions</span><br><span class="s">KJV, WEB, ASV, Yorùbá, Igbo, Hausa…</span></span></a>
+          <button class="card" type="button" id="tDict" style="display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:var(--r-lg);text-align:left"><span class="tile-ic lg c-spruce">${icon("search")}</span><span><span class="t">Dictionary</span><br><span class="s">Look up any word or Bible name</span></span></button>
+        </div>
         <form class="search-field" action="#" id="bs" role="search"><span aria-hidden="true">${icon("search", "sm")}</span><input name="q" type="search" placeholder="Search the Bible, sermons and studies" aria-label="Search" autocomplete="off"></form>
         ${last ? `<a class="hero" href="#/bible/${esc(last.slug)}/${last.ch}" style="text-decoration:none;gap:8px;padding:20px 22px">
           <span class="eyebrow">Continue reading</span><span class="serif" style="font-size:28px;line-height:34px">${esc(last.name)} ${last.ch}</span>
@@ -54,19 +59,27 @@
             ${study.poster ? `<img src="${esc(W.asset(study.poster))}" alt="" loading="lazy" style="width:84px;height:105px;border-radius:14px;object-fit:cover;flex-shrink:0;background:var(--sunk)">` : ""}
             <span style="display:flex;flex-direction:column;gap:4px;min-width:0"><span class="eyebrow amber">Today · ${esc(((study.verses || [])[0] || {}).ref || "")}</span><span class="serif" style="font-size:19px;line-height:25px">${esc(study.title)}</span><span class="small ink2">${esc(study.excerpt)}</span></span></a></section>` : ""}
         <section class="section" id="books">
-          <div class="seg" role="tablist" aria-label="Testament">
-            <button role="tab" aria-selected="${tab === "old"}" data-t="old">Old Testament</button>
-            <button role="tab" aria-selected="${tab === "new"}" data-t="new">New Testament</button>
+          <div class="seg" role="tablist" aria-label="Jump to a testament">
+            <a role="tab" href="#ot" data-t="old" aria-selected="false">Old Testament</a>
+            <a role="tab" href="#nt" data-t="new" aria-selected="false">New Testament</a>
           </div>
-          <div class="grid-books">${idx.filter((b) => b.testament === tab).map((b) => `<a href="#/bible/${b.slug}">${esc(b.name)}</a>`).join("")}</div>
+          <h2 class="eyebrow" id="ot" style="padding:6px 4px 0">Old Testament · 39 books</h2>
+          <div class="grid-books">${idx.filter((b) => b.testament === "old").map((b) => `<a href="#/bible/${b.slug}">${esc(b.name)}</a>`).join("")}</div>
+          <h2 class="eyebrow" id="nt" style="padding:14px 4px 0">New Testament · 27 books</h2>
+          <div class="grid-books">${idx.filter((b) => b.testament === "new").map((b) => `<a href="#/bible/${b.slug}">${esc(b.name)}</a>`).join("")}</div>
         </section>
         ${marks.length ? `<section class="section"><div class="section-head"><h2 class="h2">Your highlights</h2><a href="#/kept/highlights">All</a></div>
           <div class="card list">${marks.slice(0, 3).map((m) => `<a class="row-link" href="#/bible/${m.bookSlug}/${m.chapter}/${m.verse}"><span style="width:10px;height:28px;border-radius:4px;flex-shrink:0;background:${m.color ? hlColor(m.color) : "var(--amber)"}"></span><span class="grow"><span class="label serif" style="font-size:16px">${esc(m.text.slice(0, 90))}${m.text.length > 90 ? "…" : ""}</span><span class="hint">${esc(m.bookName)} ${m.chapter}:${m.verse}</span></span></a>`).join("")}</div></section>` : ""}
       </div>`;
-      W.$$("[data-t]", main).forEach((b) => b.onclick = () => { tab = b.dataset.t; W.write("wfn2-testament", tab); render(); W.$("#books").scrollIntoView({ block: "start" }); });
+      W.$$("[data-t]", main).forEach((x) => x.onclick = (e) => { e.preventDefault(); tab = x.dataset.t; W.write("wfn2-testament", tab); W.$$("[data-t]", main).forEach((y) => y.setAttribute("aria-selected", String(y === x))); W.$(tab === "old" ? "#ot" : "#nt").scrollIntoView({ behavior: "smooth", block: "start" }); });
       W.$("#bs").onsubmit = (e) => { e.preventDefault(); const q = e.target.q.value.trim(); if (q) W.go("#/search/" + encodeURIComponent(q)); };
       W.$("#rs").onclick = () => settingsSheet();
-      if (W.read("wfn2-goto-books", false)) { W.write("wfn2-goto-books", false); setTimeout(() => W.$("#books").scrollIntoView({ block: "start" }), 50); }
+      W.$("#tDict").onclick = () => W.sheet(`<div class="sheet-head"><h2>Dictionary</h2><button class="btn sm soft" data-close>Close</button></div>
+        <p class="small ink2">English words, KJV words like “thee” and “hath”, and Bible names and places from Easton’s and Smith’s Bible dictionaries. In the Bible, just tap any word.</p>
+        <form id="dF" style="display:flex;gap:8px"><label class="sr" for="dW">Word</label><input class="field" id="dW" placeholder="e.g. grace, Melchizedek, begat" autocomplete="off"><button class="btn" type="submit">Look up</button></form>`, (el) => {
+        W.$("#dF", el).onsubmit = (e) => { e.preventDefault(); const w = W.$("#dW", el).value.trim(); if (!w) return; W.closeSheet(); if (window.WFNLookup) window.WFNLookup.openLookup(w); else W.toast("The dictionary is still loading. Try again in a moment."); };
+      });
+      if (W.read("wfn2-goto-books", false)) { W.write("wfn2-goto-books", false); setTimeout(() => W.$(tab === "old" ? "#ot" : "#nt").scrollIntoView({ block: "start" }), 60); }
     };
     render();
   }

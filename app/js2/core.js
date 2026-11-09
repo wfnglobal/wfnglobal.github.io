@@ -106,6 +106,7 @@
   function setSetting(k, v) { settings[k] = v; write(SET_KEY, settings); applySettings(); }
   function applySettings() {
     const root = document.documentElement;
+    root.classList.toggle("reduce-motion", !!settings.reduceMotion);
     const dark = settings.theme === "dark" || (settings.theme === "auto" && window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches);
     root.setAttribute("data-theme", dark ? "dark" : "light");
     try { localStorage.setItem("wfn2-theme", settings.theme); } catch (e) {}
@@ -156,6 +157,26 @@
   function sermonPoster(slug) { return BASE + "assets/posters/sermons/" + slug + ".jpg"; }
   function bookIndex() { return getJSON("bible/index.json"); }
   function book(slug) { return getJSON("bible/" + slug + ".json"); }
+
+  // ---------- intro cards (the classic app's welcome pages, kept short) ----------
+  function intro(key, o) {
+    if (read("wfn2-intro-" + key, false)) return "";
+    return `<section class="intro-card" id="intro-${key}" aria-label="${esc(o.title)}">
+      <span class="eyebrow ${o.tone || "amber"}">${esc(o.eyebrow)}</span>
+      <h2>${esc(o.title)}</h2>
+      ${(o.body || []).map((p) => `<p>${esc(p)}</p>`).join("")}
+      ${o.list ? `<ol class="intro-list">${o.list.map(([a, b]) => `<li><b>${esc(a)}</b> ${esc(b)}</li>`).join("")}</ol>` : ""}
+      ${o.verse ? `<p class="intro-verse">“${esc(o.verse)}” <span>${esc(o.ref)}</span></p>` : ""}
+      <button class="btn sm soft" type="button" data-intro-hide="${key}">Got it, don’t show again</button>
+    </section>`;
+  }
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-intro-hide]");
+    if (!b) return;
+    write("wfn2-intro-" + b.dataset.introHide, true);
+    const card = document.getElementById("intro-" + b.dataset.introHide);
+    if (card) card.remove();
+  });
 
   // ---------- ui bits ----------
   let toastTimer;
@@ -368,6 +389,6 @@
   }
 
   window.WFN2 = { C, S, BASE, DATA, $, $$, esc, read, write, asset, plain, slugify, icon, emblem, settings: () => settings, setSetting, FONTS, READ_THEMES,
-    profile, avatar, PHOTO_KEY, getJSON, today, sermonPoster, bookIndex, book, toast, sheet, closeSheet, ask, shareOrCopy, copyText, speak, stopSpeaking, setReadable, getReadable, sentences,
+    profile, avatar, PHOTO_KEY, getJSON, today, sermonPoster, bookIndex, book, toast, sheet, closeSheet, ask, intro, shareOrCopy, copyText, speak, stopSpeaking, setReadable, getReadable, sentences,
     view, go, back, topbar, start, route };
 })();

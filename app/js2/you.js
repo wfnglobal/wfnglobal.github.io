@@ -78,6 +78,8 @@
         <div class="card pad-s" style="display:flex;flex-direction:column;gap:12px">
           <span class="small" style="font-weight:600;color:var(--ink-2);padding:0 2px">App theme</span>
           <div class="seg" role="tablist" aria-label="App theme">${[["auto", "Automatic"], ["light", "Light"], ["dark", "Dark"]].map(([k, l]) => `<button role="tab" aria-selected="${s.theme === k}" data-theme-set="${k}">${l}</button>`).join("")}</div>
+          <p class="small muted" style="padding:0 2px">Automatic follows your phone: light by day, dark whenever your phone is in dark mode.</p>
+          <label class="row-link" style="padding:6px 2px;min-height:52px"><span class="grow"><span class="label" style="font-size:15px">Reduce motion</span><span class="hint">Turn off animations and transitions</span></span><span class="switch"><input type="checkbox" id="rmo" ${s.reduceMotion ? "checked" : ""}><span></span></span></label>
           <button class="row-link" id="rt" style="padding:6px 2px;min-height:48px"><span class="grow"><span class="label" style="font-size:15px">Reading theme</span><span class="hint">Light, Linen, Mint or Dark · now ${esc((W.READ_THEMES.find((t) => t.id === s.read) || {}).name || "Light")}</span></span><span class="chev">${icon("chev", "xs")}</span></button>
         </div>
       </section>
@@ -96,7 +98,7 @@
           <button class="row-link" id="bk"><span class="grow"><span class="label">Back up your notes</span><span class="hint">Save a file you can restore on a new phone</span></span><span class="chev">${icon("chev", "xs")}</span></button>
           <a class="row-link" href="#/climb"><span class="grow"><span class="label">The Word Climb</span><span class="hint">100-question Bible quiz</span></span><span class="chev">${icon("chev", "xs")}</span></a>
           <a class="row-link" href="${W.BASE}app/classic.html"><span class="grow"><span class="label">Open the classic app</span><span class="hint">The previous WFN app, with translation and the Tolu voice assistant</span></span><span class="chev">${icon("chev", "xs")}</span></a>
-          <button class="row-link" id="about"><span class="grow"><span class="label">About Word &amp; Faith Network</span><span class="hint">Our three pillars, contact, privacy</span></span><span class="chev">${icon("chev", "xs")}</span></button>
+          <button class="row-link" id="about"><span class="grow"><span class="label">About Word &amp; Faith Network</span><span class="hint">Our three pillars, credits, privacy</span></span><span class="chev">${icon("chev", "xs")}</span></button>
         </div>
       </section>
       <p class="small muted" style="text-align:center">WFN App 2.0 · Everything you keep stays on this phone.</p>
@@ -129,6 +131,7 @@
     });
     W.$$("[data-theme-set]", main).forEach((b) => b.onclick = () => { W.setSetting("theme", b.dataset.themeSet); W.$$("[data-theme-set]", main).forEach((x) => x.setAttribute("aria-selected", x === b)); });
     W.$("#rt").onclick = () => W.readingSheet();
+    W.$("#rmo").onchange = (e) => W.setSetting("reduceMotion", e.target.checked);
     // Daily reminders go out through OneSignal (sent when the new Word is published).
     const withOS = (fn) => new Promise((res) => { if (window.OneSignalDeferred) window.OneSignalDeferred.push(async (OS) => { try { res(await fn(OS)); } catch (err) { res(null); } }); else res(null); });
     W.$("#notif").onchange = async (e) => {
@@ -188,7 +191,10 @@
       <p class="serif" style="font-size:18px;line-height:28px">The Word produces faith, and faith prays.</p>
       <p class="small" style="font-weight:600;color:var(--amber)">Romans 10:17 · So then faith cometh by hearing, and hearing by the word of God.</p>
       <div class="card list" style="box-shadow:none">${[["The Word", "Scripture every day, not just read but declared.", "c-amber"], ["Prayer", "Declarations and prayers grounded in Scripture, morning and night.", "c-spruce"], ["Faith", "Studies, sermons and books that move you from knowing about God to walking in His promises.", "c-slate"]].map(([a, b, c], i) => `<div class="row-link" style="cursor:default"><span class="tile-ic ${c}" style="font:600 15px var(--sans)">${i + 1}</span><span class="grow"><span class="label" style="font-weight:600">${a}</span><span class="hint" style="font-size:13.5px;line-height:20px">${b}</span></span></div>`).join("")}</div>
-      <p class="small ink2">Website: <a href="https://wfnglobal.org">wfnglobal.org</a><br>Privacy: WFN doesn’t need an account. Your notes, highlights and prayers stay on this phone.</p>`);
+      <p class="small ink2">Website: <a href="https://wfnglobal.org">wfnglobal.org</a><br>Privacy: WFN doesn’t need an account. Your notes, highlights and prayers stay on this phone.</p>
+      <h3 style="margin:6px 0 0;font:600 15px var(--sans)">Credits</h3>
+      <p class="small ink2"><b>Scripture text.</b> The Bible reader’s default text is the King James Version (KJV), public domain. Other versions are fetched from free, public-domain or openly licensed sources (bible-api.com). Yorùbá, Igbo and Hausa are machine-translated from the KJV.</p>
+      <p class="small ink2"><b>Word definitions.</b> Bible names, places and terms come from Easton’s Bible Dictionary (M.G. Easton, 1897) and Smith’s Bible Dictionary (William Smith, 1863), both public domain, via the open bible-dictionary-dataset project (CC BY 4.0). Modern English words come from a free public dictionary. Related verses are from OpenBible.info (CC BY). Chapter summaries are original to Word &amp; Faith Network.</p>`);
   }
 
   // ---------- kept lists ----------

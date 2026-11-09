@@ -154,3 +154,10 @@ Oladapo found features missing after go-live. Audited the classic app (app/class
 - Translate (Yorùbá, Igbo, Hausa, Pidgin, more): Verse of the Day, declaration, night prayer, prayer points, fire prayer, sermons, studies, plan days, museum galleries, each Bible verse, and whole chapters.
 - Bible reader: tap any word for the dictionary (setting to turn off), tap a verse number to select; 13 versions (bible-api.com + machine-translated Yorùbá/Igbo/Hausa); compare versions; jump to verse; chapter summary; related verses (cross-references); Pray and Look up on verses; title button goes to the Old/New Testament book list; classic highlight colours (gold/green/blue/pink) so old highlights show; notes saved in the classic format.
 - Sermons tab is back (six tabs like classic) with today's sermon and the full archive by month, with notes. Bible studies live under the Bible tab. Library holds books and plans.
+
+## Nov 9, ~6pm: second pass after Oladapo's phone check
+
+- "Your day in the Word": progress fills left to right (1 of 5 = first segment), and steps tick themselves when opened (declaration, night prayer, today's sermon, today's study) or when the verse is heard, shared or Amen'd.
+- App theme works (tested light and dark phones); Automatic follows the phone, now explained under the switch, and the selected option is outlined in spruce so it's obvious in dark mode. Added Reduce motion.
+- Bible tab now looks like the classic one: the "You are on holy ground" welcome (with the five "How to read it well" rules, dismissible), tiles for 13 versions and the Dictionary, Bible study, then Old and New Testament book lists together with quick jump buttons.
+- Restored the rest of classic: intro cards for Prayer, Sermons and Library; Prayer Circle (WhatsApp group + X Spaces, Tue 1–2 AM ET / 6–7 AM WAT); Share the app card on Today; Read the Bible, Bible Study, Sermons, Reading Plans and Library tiles in Explore; Copy on the declaration; About & Credits text.

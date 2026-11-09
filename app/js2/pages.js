@@ -27,6 +27,7 @@
     main.innerHTML = `
     <header class="page-head"><div class="row"><h1 style="flex-grow:1">Prayer</h1><button class="icon-btn" id="addP" aria-label="Add a prayer request">${icon("plus")}</button></div></header>
     <div class="page">
+      ${W.intro("prayer", { eyebrow: "You are in the secret place", title: "Shut the door, even on a screen", tone: "spruce", body: ["The door is shut. He sees you here. Prayer on a phone is still prayer: the same Father, the same open ear, the same promise.", "Silence what you can, slow down, and speak to Him as you would in your own room."], verse: "But thou, when thou prayest, enter into thy closet, and when thou hast shut thy door, pray to thy Father which is in secret.", ref: "Matthew 6:6" })}
       <a class="hero" href="#/prayer/declaration" style="text-decoration:none;gap:12px">
         <span class="eyebrow">Today’s declaration · ${esc(t.declaration.ref || "")}</span>
         <span class="serif" style="font-size:21px;line-height:32px">${esc((ds[0] || [])[0] || "")}</span>
@@ -49,6 +50,19 @@
             <button class="chip ${m.answered ? "amber" : "spruce"}" data-ans="${m.id}" aria-label="${m.answered ? "Mark as still praying" : "Mark as answered"}">${m.answered ? "Answered" : "Praying"}</button>
             <button class="icon-btn" data-del="${m.id}" aria-label="Delete">${icon("trash", "sm")}</button></div>`).join("")
           : `<button class="row-link" id="addP2" style="border:0"><span class="tile-ic c-spruce">${icon("plus")}</span><span class="grow"><span class="label">Add something you’re praying for</span><span class="hint">Track it until the answer comes, then write the testimony</span></span></button>`}
+        </div>
+      </section>
+      <section class="section" aria-labelledby="circH">
+        <h2 id="circH" class="h2" style="padding:0 4px">Pray with us</h2>
+        <div class="card pad" style="display:flex;flex-direction:column;gap:10px">
+          <span style="font:600 16px var(--sans)">Prayer &amp; Bible Study on WhatsApp</span>
+          <p class="small ink2" style="font-size:14px;line-height:21px">A daily group for prayer requests, Bible study and encouragement with the WFN family.</p>
+          <a class="btn" href="https://chat.whatsapp.com/J0JkLpylQiVKTHKcJkaKEs" target="_blank" rel="noopener">Join on WhatsApp</a>
+        </div>
+        <div class="card pad" style="display:flex;flex-direction:column;gap:10px">
+          <span style="font:600 16px var(--sans)">The Prayer Circle</span>
+          <p class="small ink2" style="font-size:14px;line-height:21px">A live, corporate prayer call, built on Scripture and led in declaration. Tuesdays, 1:00–2:00 AM ET (Toronto) / 6:00–7:00 AM WAT (Lagos), on X Spaces.</p>
+          <a class="btn ghost" href="https://x.com/wfnglobal" target="_blank" rel="noopener">Join the Circle on X</a>
         </div>
       </section>
       <section class="section">
@@ -147,8 +161,11 @@
         <button class="btn lg" id="amen">Amen</button>
         <button class="btn lg ghost" id="ds">${icon("share", "sm")}Share</button>
       </div>
+      <button class="btn block soft" id="dc">${icon("copy", "sm")}Copy the declaration</button>
     </div>`;
+    W.$("#dc").onclick = () => W.copyText(W.$$("#dprose p").map((x) => x.textContent).join("\n") + "\n\n" + (t.declaration.ref || "") + "\nwfnglobal.org/app");
     const all = (t.declaration.lines || []).filter(Boolean).join(" ");
+    W.markDone("declaration");
     W.$("#dl").onclick = (e) => W.speak(W.$$("#dprose p").map((x) => x.textContent), e.currentTarget); void all;
     W.$("#amen").onclick = () => { W.markDone("declaration"); W.toast("Amen. Declared."); };
     W.$("#ds").onclick = () => W.shareOrCopy({ title: "Today’s declaration", text: (t.declaration.lines || []).filter(Boolean).slice(0, 3).join("\n\n") + "\n\n" + (t.declaration.ref || ""), url: "https://wfnglobal.org/app/" });
@@ -162,6 +179,7 @@
       <div class="prose" id="nprose" style="text-align:left"><p data-tr style="font-size:calc(var(--read-size) + 1px);line-height:1.7">${esc(t.night.text || "")}</p><p data-tr style="font-weight:600">${esc(t.night.amen || "Amen.")}</p></div>
       <button class="btn lg block" id="amen">Amen. Goodnight.</button>
     </div>`;
+    W.markDone("night");
     W.$("#nl").onclick = (e) => W.speak(W.$$("#nprose p").map((x) => x.textContent).join(" "), e.currentTarget);
     W.$("#amen").onclick = () => { W.markDone("night"); W.toast("Rest well. He keeps you."); };
   }
@@ -229,6 +247,7 @@
     main.innerHTML = `
     <header class="page-head"><div class="row"><h1 style="flex-grow:1">Library</h1><a class="icon-btn" href="#/search" aria-label="Search">${icon("search")}</a></div><p class="small muted">Books by Oladapo Olaleye and reading plans</p></header>
     <div class="page">
+      ${W.intro("library", { eyebrow: "Welcome to the archive", title: "Be a Berean with these pages too", tone: "slate", body: ["A book on glass is still a book to study. Full books by Oladapo Olaleye, free to read in the app or download as a PDF.", "Read with your Bible open, and search the Scriptures to see whether these things are so."], verse: "They received the word with all readiness of mind, and searched the scriptures daily, whether those things were so.", ref: "Acts 17:11" })}
       <section class="section"><div class="section-head"><h2 class="h2">Books</h2><span class="small muted">A new book every two weeks</span></div>
         <div class="hscroll">${books.map((b) => `<a class="book-cover" href="#/book/${b.slug}"><img src="${W.BASE}assets/library/${b.slug}-cover.svg" alt="" loading="lazy" onerror="this.style.background='${b.bg1}'"><span>${esc(b.title)}</span></a>`).join("")}</div>
         <div class="card list">${books.map((b) => `<a class="row-link" href="#/book/${b.slug}"><span class="grow"><span class="label serif" style="font-size:17px">${esc(b.title)}</span><span class="hint">${esc(b.badge || "")}</span></span><span class="chev">${icon("chev", "xs")}</span></a>`).join("")}</div>
@@ -248,6 +267,7 @@
     main.innerHTML = `
     <header class="page-head"><div class="row"><h1 style="flex-grow:1">Sermons</h1><a class="icon-btn" href="#/search" aria-label="Search sermons">${icon("search")}</a></div><p class="small muted">A new sermon every night by midnight · ${all.length} in the archive</p></header>
     <div class="page">
+      ${W.intro("sermons", { eyebrow: "You’re about to hear the Word preached", title: "A recorded message is still a sermon", tone: "slate", body: ["Hearing a sermon through a screen doesn’t make it less preached. Listen the way you would in the room: attentive, unhurried, testing what you hear against Scripture.", "Keep an open Bible beside you, and let what you hear send you back to Scripture rather than replace it."], verse: "Prove all things; hold fast that which is good.", ref: "1 Thessalonians 5:21" })}
       <a class="feature" href="#/sermon/${esc(t.sermon.slug)}">
         <img class="poster" src="${esc(W.sermonPoster(t.sermon.slug))}" alt="" onerror="this.remove()">
         <span class="meta"><span class="eyebrow slate">Today’s sermon · ${esc(t.sermon.ref || "")}</span><h3>${esc(t.sermon.title)}</h3><p>${esc(t.sermon.excerpt)}</p></span>
@@ -271,6 +291,7 @@
     main.innerHTML = W.topbar("Sermon", { back: "#/sermons", right: `<button class="icon-btn" id="sl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button><button class="icon-btn" id="sa" aria-label="Reading settings">${icon("aa")}</button>` }) +
       `<div class="progress" aria-hidden="true"><span id="prog"></span></div><article class="page" id="art" style="padding:20px 24px 40px;gap:20px"><p class="small muted">Loading…</p></article>`;
     W.$("#sa").onclick = () => W.readingSheet();
+    if (slug === ((C.SERMONS || [])[0] || {}).slug) W.markDone("sermon");
     let html = "";
     try {
       const r = await fetch(W.BASE + "articles/" + slug + ".html", { cache: "no-cache" });
@@ -331,6 +352,7 @@
     const s = (C.BIBLE_STUDY || []).find((x) => x.slug === parts[0]) || (C.BIBLE_STUDY || [])[0];
     if (!s) return W.go("#/library");
     const words = (s.body || []).join(" ").split(/\s+/).length;
+    if (s === (C.BIBLE_STUDY || [])[0]) W.markDone("study");
     main.innerHTML = W.topbar("Bible study", { back: "#/studies", right: `<button class="icon-btn" id="sl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button><button class="icon-btn" id="sa" aria-label="Reading settings">${icon("aa")}</button>` }) + `
     <div class="progress" aria-hidden="true"><span id="prog"></span></div>
     <article class="page" id="stdy" style="padding:20px 24px 40px;gap:20px">

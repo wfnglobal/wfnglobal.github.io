@@ -1,0 +1,183 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- WFN sermon poster - The Lawful Captive Shall Go Free (Isaiah 49:24-25), Nov 9, 2026 -->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#080C15;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden; background:#080C15;}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.78);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#E3EEFA; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(190,214,234,0.45); background:rgba(10,16,30,0.5); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FFE7A8; box-shadow:0 0 12px 3px #FFE7A8;}
+  .copy{position:absolute; left:0; right:0; top:800px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(206,224,240,0.9);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:110px; line-height:0.94; letter-spacing:-0.035em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em; background:linear-gradient(180deg,#FFFFFF 0%,#FFF1C8 35%,#F2CF7A 75%,#C99A3E 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(255,230,160,0.4)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:830px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.88);}
+  .sub b{color:#FFE3A0; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.92); max-width:540px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A1405; background:linear-gradient(180deg,#FFF1C8,#EAC26A); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(234,194,106,0.6);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070B14"/><stop offset="0.6" stop-color="#121B2B"/><stop offset="1" stop-color="#0A0F1A"/></linearGradient>
+    <linearGradient id="out" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BFD6EA"/><stop offset="0.45" stop-color="#FFF4D6"/><stop offset="0.7" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFE7A8"/></linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.3" stop-color="#FFF6DC" stop-opacity="0.9"/><stop offset="1" stop-color="#FFE7A8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6DA" stop-opacity="0.75"/><stop offset="1" stop-color="#FFE3A0" stop-opacity="0.05"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF2CF" stop-opacity="0.95"/><stop offset="1" stop-color="#C9A25A" stop-opacity="0.18"/></linearGradient>
+    <linearGradient id="iron" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1A2230"/><stop offset="1" stop-color="#2E3A4E"/></linearGradient>
+    <radialGradient id="spill" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE9B8" stop-opacity="0.42"/><stop offset="0.45" stop-color="#FFE9B8" stop-opacity="0.14"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#080C15" stop-opacity="0"/><stop offset="1" stop-color="#080C15"/></linearGradient>
+    <filter id="b4"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="b14"><feGaussianBlur stdDeviation="14"/></filter>
+    <clipPath id="archClip"><path d="M330 760 L330 400 C330 230 750 230 750 400 L750 760Z"/></clipPath>
+  </defs>
+  <rect width="1080" height="800" fill="url(#wall)"/>
+  <g id="stones" opacity="0.55"></g>
+  <!-- glow of the outside world spilling into the dungeon -->
+  <ellipse cx="540" cy="470" rx="520" ry="400" fill="url(#spill)"/>
+  <!-- the world outside the open gate -->
+  <g clip-path="url(#archClip)">
+    <rect x="300" y="200" width="480" height="580" fill="url(#out)"/>
+    <circle cx="540" cy="560" r="230" fill="url(#sun)"/>
+    <path d="M300 640 C380 610 450 625 540 612 C640 600 700 620 780 605 L780 780 L300 780Z" fill="#E9D6A6" opacity="0.55"/>
+    <path d="M300 680 C400 660 480 672 560 662 C660 652 720 668 780 660 L780 780 L300 780Z" fill="#D9BE82" opacity="0.5"/>
+    <g id="rays" opacity="0.5"></g>
+  </g>
+  <!-- arch stones (voussoirs) -->
+  <g id="vous"></g>
+  <path d="M330 760 L330 400 C330 230 750 230 750 400 L750 760" fill="none" stroke="#F6DFA5" stroke-width="3" opacity="0.55"/>
+  <!-- iron gates flung open -->
+  <g>
+    <path d="M330 300 L150 230 L150 830 L330 760Z" fill="url(#iron)"/>
+    <path d="M750 300 L930 230 L930 830 L750 760Z" fill="url(#iron)" transform="translate(1080 0) scale(-1 1) translate(-1080 0)" />
+    <g id="bars" stroke="#0A0F18" stroke-width="7"></g>
+    <path d="M330 300 L150 230" stroke="#F6DFA5" stroke-width="2" opacity="0.45"/><path d="M750 300 L930 230" stroke="#F6DFA5" stroke-width="2" opacity="0.45"/>
+  </g>
+  <!-- light pouring onto the floor -->
+  <path d="M330 760 L750 760 L1000 820 L80 820Z" fill="url(#floor)"/>
+  <g id="beams" filter="url(#b14)"></g>
+  <!-- long shadows cast toward the viewer -->
+  <g fill="#0A0F18" opacity="0.55">
+    <path d="M500 690 L530 690 L470 800 L390 800Z"/>
+    <path d="M452 690 L470 690 L400 800 L350 800Z"/>
+    <path d="M586 690 L600 690 L640 800 L600 800Z"/>
+  </g>
+  <!-- the family walking out into the light, hand in hand -->
+  <g fill="#0A0F18">
+    <!-- parent -->
+    <g transform="translate(518 690)">
+      <ellipse cx="0" cy="-118" rx="13" ry="15"/>
+      <path d="M-6 -104 L6 -104 L7 -96 L-7 -96Z"/>
+      <path d="M-20 -96 C-26 -60 -30 -20 -36 0 L-8 0 L-2 -36 L3 -36 L10 0 L34 0 C28 -20 24 -60 20 -96 C10 -101 -10 -101 -20 -96Z"/>
+      <path d="M-18 -88 C-28 -70 -34 -56 -40 -44" stroke="#0A0F18" stroke-width="9" stroke-linecap="round" fill="none"/>
+      <path d="M18 -88 C28 -70 36 -58 44 -48" stroke="#0A0F18" stroke-width="9" stroke-linecap="round" fill="none"/>
+    </g>
+    <!-- child on the left, holding the parent's hand -->
+    <g transform="translate(462 690)">
+      <ellipse cx="0" cy="-74" rx="10" ry="11"/>
+      <path d="M-13 -62 C-17 -40 -20 -16 -22 0 L-4 0 L0 -22 L4 0 L20 0 C18 -16 16 -40 13 -62 C6 -66 -6 -66 -13 -62Z"/>
+      <path d="M11 -56 C16 -50 18 -48 16 -46" stroke="#0A0F18" stroke-width="7" stroke-linecap="round" fill="none"/>
+    </g>
+    <!-- child on the right, running a step ahead -->
+    <g transform="translate(594 690)">
+      <ellipse cx="2" cy="-62" rx="9" ry="10"/>
+      <path d="M-10 -51 C-14 -32 -16 -14 -20 0 L-4 0 L1 -18 L6 0 L18 0 C14 -14 13 -32 10 -51 C4 -55 -4 -55 -10 -51Z"/>
+      <path d="M-9 -44 C-16 -48 -24 -50 -30 -52" stroke="#0A0F18" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <path d="M9 -44 C16 -54 20 -62 24 -70" stroke="#0A0F18" stroke-width="6" stroke-linecap="round" fill="none"/>
+    </g>
+  </g>
+  <!-- broken chains on the floor, catching the light -->
+  <g id="chains"></g>
+  <g id="motes"></g>
+  <rect y="700" width="1080" height="112" fill="url(#fade)"/>
+  <rect y="810" width="1080" height="540" fill="#080C15"/>
+
+</svg>
+<div class="top">
+  <div class="lock"><svg viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#lg)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#lg)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#lg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#lg)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#lg)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg><div class="rule"></div><div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div></div>
+  <div class="chip"><i></i>Today's Sermon</div>
+</div>
+<div class="copy">
+  <div class="kicker">Isaiah 49:24&ndash;25 &middot; The prey of the terrible</div>
+  <h1>Even the captive<em>goes free.</em></h1>
+  <p class="sub">God didn&rsquo;t tell you to fight harder. He said, <b>&ldquo;I will contend with him that contendeth with thee.&rdquo;</b></p>
+</div>
+<div class="cta">
+  <div class="verse">&ldquo;For I will contend with him that contendeth with thee, and I will save thy children.&rdquo;<span>Isaiah 49:25</span></div>
+  <div class="btn"><span class="l1">Read the sermon &rarr;</span><span class="l2">wfnglobal.org</span></div>
+</div>
+</div>
+<script>
+  let s = 41; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || document.querySelector("svg.art")).appendChild(e); return e; }
+  function flamePath(x, y, w, h, lean) {
+    const tx = x + lean * h, ty = y - h;
+    return `M${x - w / 2} ${y} C${x - w * 0.75} ${y - h * 0.45} ${tx - w * 0.25} ${y - h * 0.7} ${tx} ${ty} C${tx + w * 0.15} ${y - h * 0.62} ${x + w * 0.8} ${y - h * 0.45} ${x + w / 2} ${y} Z`;
+  }
+
+  // stone courses on the dungeon wall
+  const st = document.getElementById("stones");
+  for (let y = 20; y < 800; y += 46) { const off = (y / 46) % 2 ? 0 : 60;
+    el("path", { d: `M0 ${y} H1080`, stroke: "#26324A", "stroke-width": 1.5 }, st);
+    for (let x = off; x < 1080; x += 120) el("path", { d: `M${x} ${y} v46`, stroke: "#26324A", "stroke-width": 1.5 }, st); }
+  // voussoirs around the arch
+  const vo = document.getElementById("vous");
+  el("path", { d: "M280 760 L280 400 C280 190 800 190 800 400 L800 760", fill: "none", stroke: "#3A4762", "stroke-width": 3 }, vo);
+  // bars on the two open gates (perspective)
+  const bars = document.getElementById("bars");
+  for (let i = 1; i < 6; i++) { const t = i / 6;
+    const xl = 330 - t * 180, yl1 = 300 - t * 70, yl2 = 760 + t * 70; el("path", { d: `M${xl} ${yl1} L${xl} ${yl2}` }, bars);
+    const xr = 750 + t * 180; el("path", { d: `M${xr} ${yl1} L${xr} ${yl2}` }, bars); }
+  el("path", { d: "M330 530 L150 530", stroke: "#0A0F18", "stroke-width": 9 }, bars); el("path", { d: "M750 530 L930 530", stroke: "#0A0F18", "stroke-width": 9 }, bars);
+  // rays inside the arch
+  const rays = document.getElementById("rays");
+  for (let i = 0; i < 14; i++) { const a = -Math.PI + (i + 0.5) * Math.PI / 14; el("path", { d: `M540 560 L${540 + Math.cos(a - 0.04) * 500} ${560 + Math.sin(a - 0.04) * 500} L${540 + Math.cos(a + 0.04) * 500} ${560 + Math.sin(a + 0.04) * 500}Z`, fill: "#FFFFFF", opacity: (0.2 + r() * 0.4).toFixed(2) }, rays); }
+  // light beams falling into the room
+  const bm = document.getElementById("beams");
+  [[380, 240, 120], [540, 250, 160], [700, 260, 120]].forEach(([x, w, s]) => el("path", { d: `M${x - 40} 300 L${x + 40} 300 L${x + w / 2 + (x - 540) * 0.6} 800 L${x - w / 2 + (x - 540) * 0.6} 800Z`, fill: "url(#beam)", opacity: 0.55 }, bm));
+  // chains: two broken lengths and an open shackle
+  const ch = document.getElementById("chains");
+  function link(x, y, rot) { const g = el("g", { transform: `translate(${x} ${y}) rotate(${rot})` }, ch);
+    el("rect", { x: -17, y: -9, width: 34, height: 18, rx: 9, fill: "none", stroke: "#0B111C", "stroke-width": 7 }, g);
+    el("rect", { x: -17, y: -9, width: 34, height: 18, rx: 9, fill: "none", stroke: "#D9B866", "stroke-width": 2.2, opacity: 0.85 }, g); }
+  [[170, 770, 10], [198, 778, 80], [226, 772, 15], [252, 782, 95], [280, 776, 30]].forEach(a => link(...a));
+  [[800, 776, -20], [828, 770, 70], [856, 778, -10], [884, 772, 85]].forEach(a => link(...a));
+  // broken link (snapped open)
+  const g = el("g", { transform: "translate(318 784) rotate(-12)" }, ch);
+  el("path", { d: "M-6 -9 H-8 A9 9 0 0 0 -8 9 H4", fill: "none", stroke: "#0B111C", "stroke-width": 7, "stroke-linecap": "round" }, g);
+  el("path", { d: "M-6 -9 H-8 A9 9 0 0 0 -8 9 H4", fill: "none", stroke: "#FFE3A0", "stroke-width": 2.4, "stroke-linecap": "round" }, g);
+  const g2 = el("g", { transform: "translate(760 786) rotate(14)" }, ch);
+  el("path", { d: "M8 -9 H10 A9 9 0 0 1 10 9 H-2", fill: "none", stroke: "#0B111C", "stroke-width": 7, "stroke-linecap": "round" }, g2);
+  el("path", { d: "M8 -9 H10 A9 9 0 0 1 10 9 H-2", fill: "none", stroke: "#FFE3A0", "stroke-width": 2.4, "stroke-linecap": "round" }, g2);
+  // dust motes in the light
+  const mo = document.getElementById("motes");
+  for (let i = 0; i < 90; i++) el("circle", { cx: 300 + r() * 480, cy: 260 + r() * 520, r: (r() * 2 + 0.5).toFixed(2), fill: "#FFF4D0", opacity: (0.25 + r() * 0.6).toFixed(2) }, mo);
+
+</script>
+</body></html>

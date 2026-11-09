@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "Thy word is a lamp unto my feet, and a light unto my path.", ref: "Psalm 119:105" },
     { text: "Declare his glory among the heathen; his marvellous works among all nations.", ref: "1 Chronicles 16:24" },
     { text: "For the hope which is laid up for you in heaven, whereof ye heard before in the word of the truth of the gospel; which is come unto you, as it is in all the world; and bringeth forth fruit, as it doth also in you, since the day ye heard of it, and knew the grace of God in truth.", ref: "Colossians 1:5-6" },
     { text: "Though he slay me, yet will I trust in him: but I will maintain mine own ways before him.", ref: "Job 13:15" },
@@ -82,19 +83,20 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that upon my Mount Zion there is deliverance — every chain the enemy fastened on me is broken, and I walk out free in the name of Jesus!",
-      "I decree holiness over my life — I am set apart, and the door You shut behind me shall not swing open again!",
-      "Every captivity that rejoiced over my fall, I declare its season is over — what was done to me shall not be the end of my story!",
+      "Father, I declare today that the prey shall be taken from the mighty — whatever has held me in its teeth must open its mouth and let me go, in the name of Jesus!",
+      "Every claim the enemy has over my life, every signature, every open door, every old agreement — I declare it cancelled and nailed to the cross of Jesus Christ!",
+      "I am not a lawful captive anymore! The handwriting that was against me has been blotted out, and the accuser is reading from a document that no longer exists!",
       "",
-      "I possess my possessions! What heaven settled for me long ago, I take hold of today — my peace, my health, my family, my calling and my inheritance!",
-      "I will no longer live beside my promise; I walk into it — every land the Lord has given me, I occupy by faith!",
-      "Whatever has been stolen from me — time, joy, opportunity, increase — I recover it all by the authority of the Word!",
+      "I hand You my fight today, Lord! You said You will contend with him that contendeth with me — so every power contending with my peace, my health, my finances and my destiny, meet the Mighty One of Jacob!",
+      "Every strong man assigned to my house is bound in the name of Jesus, and everything he stole I recover — my joy, my years, my rest and my increase!",
+      "My name is graven on the palms of His hands — I am not forsaken, I am not forgotten, and I will not die in captivity!",
       "",
-      "I am the house of Jacob, and I am fire! Every Esau that sold my birthright for a bowl of stew becomes stubble before me today!",
-      "Like Joseph, the place where I was sold out shall become the place God sets me ablaze — I rise, I shine, and I burn for His glory!",
-      "Save this. Speak it over your house today. The house of Jacob shall possess their possessions — for the LORD hath spoken it! In Jesus' mighty name, amen!"
+      "I decree over my children: you shall be saved! Every child of mine in a far country, the Lord is bringing you home!",
+      "Every pattern that ran through my family line stops with me today — my children shall not inherit my captivity, they shall inherit my deliverance!",
+      "Thy word is a lamp unto my feet and a light unto my path — I will not walk in darkness today; I see my next step, and I take it in faith!",
+      "Save this. Speak it over your house today. The lawful captive shall be delivered and your children shall be saved — for thus saith the LORD! In Jesus' mighty name, amen!"
     ],
-    ref: "Obadiah 1:17-18"
+    ref: "Isaiah 49:24-25"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -136,6 +138,7 @@
   };
 
   const SERMONS = [
+    { slug: "the-lawful-captive-shall-go-free", title: "The Lawful Captive Shall Go Free", ref: "Isaiah 49:24-25", date: "November 9, 2026", excerpt: "Some captivity looks legal — you signed for it, you walked into it, the enemy has the paperwork. Heaven's answer is still the same: I will contend with him that contendeth with thee, and I will save thy children." },
     { slug: "possess-your-possessions", title: "Possess Your Possessions", ref: "Obadiah 1:17-18", date: "November 8, 2026", excerpt: "Deliverance gets you out. Holiness keeps you out. But possession is where you finally walk into what God already gave you on paper — and the fire that burns Esau's stubble is the same fire He has put in you." },
     { slug: "the-supremacy-of-christ", title: "The Supremacy of Christ", ref: "Colossians 1:15-17", date: "November 7, 2026", excerpt: "Before there was a throne, a power, or a problem, there was Christ. Everything you're afraid of was created by Him, answers to Him, and is held together by Him — which means nothing in your life outranks the One you pray to." },
     { slug: "think-on-these-things", title: "Think On These Things", ref: "Philippians 4:8", date: "November 6, 2026", excerpt: "Peace doesn't arrive because the anxious thought finally leaves on its own. It arrives because you evict it — and hand the empty room to something true, lovely, and worth rehearsing instead." },

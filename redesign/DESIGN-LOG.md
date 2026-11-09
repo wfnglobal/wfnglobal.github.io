@@ -140,3 +140,8 @@ OneSignal push · seasonal effects.
   - Daily reminders use OneSignal (same app id and GitHub Action). GA4 kept. Service worker cache bumped to v71 with the new shell.
   - Books open their full HTML pages in /library/, with the PDF as a download.
 - Remaining before the switch: Oladapo's final OK, then merge app-redesign into main (watch the CACHE_VERSION bump the nightly task makes; take the higher number + 1).
+
+## Nov 9, ~3pm: App 2.0 is live
+
+- Prayer requests to the team can go by email, the WhatsApp prayer group (request copied first, then pasted) or Instagram DM (ig.me/m/wordfaithnetwork).
+- Oladapo said "Switch it on". Pushed to main as 54f65b4; GitHub Pages deployed it (first attempt timed out on GitHub's side, the rerun succeeded). Old app at /app/classic.html.

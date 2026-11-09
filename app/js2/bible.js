@@ -142,8 +142,6 @@
         <p id="sumText" hidden style="font-family:var(--sans);font-size:15px;line-height:24px;margin:0 0 20px;padding:14px 16px;border-radius:16px;background:rgba(127,127,127,0.08)"></p>
         ${set.lookup !== false ? `<p class="small" id="tapHint" style="font-family:var(--sans);margin:0 0 14px;opacity:.7">Tap any word for its meaning. Tap a verse number, or the space beside a verse, to highlight, save or share.</p>` : ""}
         <p id="verses" style="margin:0"></p>
-        <div id="compare"></div>
-        <button class="btn ghost block" id="addCmp" type="button" style="margin-top:22px;font-family:var(--sans)">${icon("plus", "sm")}Compare another version</button>
       </article>
       <nav class="chapter-nav" aria-label="Chapters">
         ${prev ? `<a class="btn ghost" href="${prev}">${icon("back", "sm")}Previous</a>` : "<span></span>"}
@@ -271,27 +269,6 @@
       W.$("#verLab").textContent = (W.read && ((window.WFNLookup.TRANSLATE_LANGS.find((l) => l.code === lang) || {}).name)) || lang;
       wireVerses();
     });
-    W.$("#addCmp").onclick = () => {
-      const shown = new Set([current.version].concat(W.$$("[data-cmp]").map((x) => x.dataset.cmp)));
-      W.sheet(`<div class="sheet-head"><h2>Compare a version</h2><button class="btn sm soft" data-close>Close</button></div>
-        <p class="small muted">Shown under the version you’re reading, not in place of it.</p>
-        <div class="card list" style="box-shadow:none">${VERSIONS.filter((v) => !shown.has(v.code)).map((v) => `<button class="row-link" data-add="${v.code}"><span class="grow"><span class="label">${esc(v.name)}</span></span>${icon("plus", "sm")}</button>`).join("")}</div>`, (el) => {
-        W.$$("[data-add]", el).forEach((x) => x.onclick = async () => {
-          W.closeSheet();
-          const ver = VERSIONS.find((v) => v.code === x.dataset.add);
-          const box = document.createElement("section");
-          box.className = "compare-block"; box.dataset.cmp = ver.code;
-          box.innerHTML = `<div style="display:flex;align-items:center;gap:8px;font-family:var(--sans)"><b style="flex-grow:1;font-size:13px;letter-spacing:.12em;text-transform:uppercase">${esc(ver.name)}</b><button class="icon-btn" aria-label="Remove ${esc(ver.name)}">${icon("close", "sm")}</button></div><p style="margin:0;opacity:.7;font-family:var(--sans);font-size:15px">Loading…</p>`;
-          W.$("#compare").appendChild(box);
-          box.querySelector("button").onclick = () => box.remove();
-          try {
-            const r = await fetchVersion(ver.code);
-            box.querySelector("p").outerHTML = (r.note ? `<p class="small" style="font-family:var(--sans);opacity:.75;margin:0 0 8px">${esc(r.note)}</p>` : "") + `<p style="margin:0">${r.texts.map((t, i) => `<span class="v"><sup>${i + 1}</sup>${r.html ? t : esc(t)} </span>`).join("")}</p>`;
-          } catch (e) { box.querySelector("p").textContent = "Couldn’t load this version right now."; }
-          box.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      });
-    };
   }
 
   function lookup(word) {

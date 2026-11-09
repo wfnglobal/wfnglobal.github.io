@@ -170,3 +170,6 @@ Oladapo found features missing after go-live. Audited the classic app (app/class
 - Your day in the Word: tap the circle to tick or untick; tap the name to open; progress bars match the ticked steps; Verse/Declaration rows no longer break navigation.
 - You → Listen & Ask Tolu: switches to show or hide each; "Add Tolu to Siri" (Shortcut opening wfnglobal.org/app/#/tolu); "Talk to Tolu now".
 - Tolu now also does time and date, weather (Open-Meteo), timers, reminders/alarms into Calendar (.ics), calls, texts, WhatsApp, email, directions, web search, music on YouTube, opening apps, maths, translation, word meanings and Bible names, verses on 40+ topics, praying with you, and app settings (dark mode, text size, reading speed). Actions that leave the app come back as a button, since phones only allow those from a tap.
+
+## Nov 9, 6:20pm
+- Removed "Compare another version" from the reader (not part of the classic app). Related-verses icon after each verse opens the frosted panel; Look Up keeps its Wikipedia picture for concrete words (tent, lamb, Jerusalem).

@@ -35,3 +35,16 @@ OneSignal push · seasonal effects.
 
 ## Sessions
 - 2026-11-09 — Session 1: workspace set up; Stage 1 (design system v2 + Home) started.
+  - Design system v2 published to the WFN Design System artifact
+    (https://claude.ai/artifact/8RL7uyRhr1zmu2PGo8vvz6): Light/Dark/Paper themes,
+    pillar coding (Word = bronze, Prayer = sage, Faith = clay), highlight swatches,
+    shadow/motion rules, Inter + Newsreader (+ Atkinson Hyperlegible reading option),
+    three-petal emblem as the app mark, 5-tab structure Today · Bible · Prayer · Library · You.
+    Copies in redesign/stage1/design-system/.
+  - Design canvas "WFN App 2.0" (https://claude.ai/artifact/RdEPVN2cdCR3STjLMfwm4p):
+    Today (light + dark) and Foundations & components boards. Sources in redesign/stage1/canvas/.
+  - Open decisions for Oladapo: (1) approve the direction / changes;
+    (2) stack: recommended keeping the no-build static PWA (GitHub Pages + the six daily
+    automations keep working) with a modular rebuild, vs Next.js static export + Actions build;
+    (3) tabs: Sermons move into Library, Profile becomes "You".
+  - Next: Bible reader, Prayer, Library screens (Stage 2), then onboarding, search, You.

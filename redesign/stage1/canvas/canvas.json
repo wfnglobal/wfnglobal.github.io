@@ -1,0 +1,19 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-09T16:20:00Z" },
+  "title": "WFN App 2.0",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 390, "h": 2140, "title": "Today · Light", "radius": 28 },
+    "TodayDark.dc.html": { "x": 470, "y": 0, "w": 390, "h": 2140, "title": "Today · Dark", "radius": 28 },
+    "Foundations.dc.html": { "x": 940, "y": 0, "w": 1200, "h": 2140, "title": "Foundations & components" }
+  },
+  "order": ["Main.dc.html", "TodayDark.dc.html", "Foundations.dc.html"],
+  "notes": {
+    "stage1": { "x": 0, "y": -300, "text": "Stage 1 · Design system and the new Today screen", "kind": "title1", "maxW": 2140 }
+  },
+  "designSystems": [
+    { "title": "Word and Faith Network", "namespace": "wfn", "artifact": "https://claude.ai/artifact/8RL7uyRhr1zmu2PGo8vvz6", "version": "1794239733-5f7d", "copiedAt": "2026-11-09T16:20:00Z" }
+  ]
+}

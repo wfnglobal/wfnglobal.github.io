@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Word Climb</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2A6766}a:hover{color:#1E4E4D}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; min-height: 1700px; box-sizing: border-box; display: flex; flex-direction: column; background: #F4F2EE; color: #1F1D1B; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
+
+  <header style="display: flex; align-items: center; gap: 12px; padding: 16px 16px 6px;">
+    <a href="Main.dc.html" aria-label="Back" style="width: 44px; height: 44px; margin-left: -8px; display: flex; align-items: center; justify-content: center; color: #1F1D1B;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a>
+    <span style="flex-grow: 1;"></span>
+    <span style="height: 32px; padding: 0 12px; border-radius: 999px; background: #F5EAD9; color: #985F1E; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c1 3 4 5 4 9a4 4 0 0 1-8 0c0-2 1-3 1-3s.5 2 2 2c0-3-1-5 1-8z"></path></svg>4-day streak</span>
+  </header>
+
+  <section style="display: flex; flex-direction: column; gap: 12px; padding: 4px 20px 0;">
+    <svg width="64" height="64" viewBox="0 0 56 56" role="img" aria-label="The Word Climb"><defs><linearGradient id="wcSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCE7F3"></stop><stop offset="1" stop-color="#F6E3C4"></stop></linearGradient></defs><rect width="56" height="56" rx="18" fill="url(#wcSky)"></rect><path d="M6 46l15-21 7 9 6-8 16 20z" fill="#435C82"></path><path d="M21 25l4 5.6-4-1.6-3 2.4z" fill="#FFFDFA"></path><path d="M14 46c6-3 10-4 12-8s6-6 8-10" fill="none" stroke="#F5D59A" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 3.4"></path><path d="M34 26V13" stroke="#1F1D1B" stroke-width="1.6" stroke-linecap="round"></path><path d="M34 13l8 2.6-8 2.6z" fill="#E2A85A"></path></svg>
+    <h1 style="margin: 0; font-family: Literata, Georgia, serif; font-size: 34px; line-height: 40px; font-weight: 400;">The Word Climb</h1>
+    <p style="margin: 0; font-size: 15px; line-height: 22px; color: #55514B;">100 questions, five camps, one summit. Climb from Genesis to Revelation.</p>
+  </section>
+
+  <main style="display: flex; flex-direction: column; gap: 26px; padding: 22px 16px 40px;">
+    <section aria-label="Your climb" style="position: relative; height: 380px; border-radius: 28px; overflow: hidden; background: linear-gradient(180deg, #DCE7F3 0%, #EEF0EE 45%, #F6E3C4 100%);">
+      <svg width="358" height="380" viewBox="0 0 358 380" role="img" aria-label="Mountain map with five camps; you are at camp three, Psalms Ascent" style="position: absolute; left: 0; top: 0;">
+        <path d="M0 380 L70 230 L120 270 L190 110 L250 190 L290 150 L358 260 L358 380Z" fill="#9FB0C8"></path>
+        <path d="M0 380 L40 320 L110 290 L170 300 L230 250 L300 290 L358 300 L358 380Z" fill="#7F93B0"></path>
+        <path d="M190 110 l22 32 -14 -6 -10 10 -8 -12 -12 6z" fill="#FFFDFA" opacity="0.9"></path>
+        <path d="M46 352 C90 340 120 330 132 300 S170 262 196 248 S228 210 222 186 S206 150 196 118" fill="none" stroke="#FFFDFA" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 7"></path>
+        <path d="M46 352 C90 340 120 330 132 300 S170 262 196 248" fill="none" stroke="#2A6766" stroke-width="3" stroke-linecap="round"></path>
+        <path d="M196 106 V78" stroke="#1F1D1B" stroke-width="2" stroke-linecap="round"></path><path d="M196 78 l14 4.5 -14 4.5z" fill="#E2A85A"></path>
+      </svg>
+      <sc-for list="{{camps}}" as="c" hint-placeholder-count="5">
+        <span style="position: absolute; left: {{c.x}}; top: {{c.y}}; display: flex; align-items: center; gap: 8px;">
+          <span style="width: 28px; height: 28px; border-radius: 999px; background: {{c.bg}}; color: {{c.ink}}; border: {{c.border}}; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font: 600 12px 'Instrument Sans', sans-serif; box-shadow: 0 4px 12px -4px rgba(31,29,27,0.35);">{{c.n}}</span>
+          <span style="padding: 4px 9px; border-radius: 999px; background: rgba(255,253,250,0.86); font-size: 12px; font-weight: 600; color: #1F1D1B;">{{c.name}}</span>
+        </span>
+      </sc-for>
+      <div style="position: absolute; left: 14px; right: 14px; top: 14px; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 18px; background: rgba(255,253,250,0.86); backdrop-filter: blur(8px);">
+        <span style="display: flex; flex-direction: column; gap: 4px; flex-grow: 1;"><span style="font-size: 12.5px; font-weight: 600;">Camp 3 · Psalms Ascent</span><span style="display: block; height: 4px; border-radius: 999px; background: #ECE8E2;"><span style="display: block; width: 41%; height: 4px; border-radius: 999px; background: #2A6766;"></span></span></span>
+        <span style="font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums;">41/100</span>
+      </div>
+    </section>
+
+    <a href="#daily" style="display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: 26px; background: radial-gradient(130% 95% at 88% -10%, #2B5C5A 0%, #17403F 48%, #10302F 100%); text-decoration: none; color: #F6F3EC;">
+      <span style="display: flex; align-items: center; gap: 8px;"><span style="flex-grow: 1; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #E9B872;">Today’s challenge</span><span style="font-size: 12.5px; color: #B9CFCD;">New at midnight</span></span>
+      <span style="font-family: Literata, Georgia, serif; font-size: 22px; line-height: 28px;">Five questions from Isaiah</span>
+      <span style="font-size: 14px; line-height: 21px; color: #CFE0DD;">Drawn from today’s sermon and verse. Keep your streak alive.</span>
+      <span style="align-self: flex-start; height: 42px; padding: 0 18px; border-radius: 14px; background: #F6F3EC; color: #1F1D1B; display: flex; align-items: center; font-size: 14.5px; font-weight: 600;">Start · about 2 min</span>
+    </a>
+
+    <section aria-labelledby="modesH" style="display: flex; flex-direction: column; gap: 12px;">
+      <h2 id="modesH" style="margin: 0; padding: 0 4px; font-family: Literata, Georgia, serif; font-size: 22px; line-height: 28px; font-weight: 400;">Ways to play</h2>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
+        <sc-for list="{{modes}}" as="m" hint-placeholder-count="4">
+          <a href="#mode" style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 24px; background: #FFFDFA; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16); text-decoration: none; color: #1F1D1B;">
+            <span style="width: 38px; height: 38px; border-radius: 14px; background: {{m.soft}}; color: {{m.ink}}; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{m.icon}}"></path></svg></span>
+            <span style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 15px; font-weight: 600;">{{m.title}}</span><span style="font-size: 12.5px; line-height: 17px; color: #6E6A63;">{{m.meta}}</span></span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="helpH" style="display: flex; flex-direction: column; gap: 10px; padding: 18px 20px; border-radius: 24px; background: #E9E5DE;">
+      <h2 id="helpH" style="margin: 0; font-size: 15px; font-weight: 600;">Help on the climb</h2>
+      <div style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 20px; color: #55514B;">
+        <span><strong style="color: #1F1D1B;">Scripture hint</strong> shows the verse that holds the answer.</span>
+        <span><strong style="color: #1F1D1B;">50/50</strong> removes two wrong answers, once per camp.</span>
+        <span><strong style="color: #1F1D1B;">Learn why</strong> after every answer, with the verse to read.</span>
+      </div>
+    </section>
+
+    <section aria-labelledby="badgesH" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; padding: 0 4px;"><h2 id="badgesH" style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 22px; line-height: 28px; font-weight: 400;">Camp badges</h2><span style="font-size: 13px; color: #6E6A63;">2 of 5</span></div>
+      <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px;">
+        <sc-for list="{{badges}}" as="b" hint-placeholder-count="5">
+          <span style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <span style="width: 56px; height: 56px; border-radius: 999px; background: {{b.bg}}; color: {{b.ink}}; border: {{b.border}}; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font: 500 18px Literata, Georgia, serif;">{{b.n}}</span>
+            <span style="font-size: 11px; line-height: 14px; text-align: center; color: #55514B;">{{b.name}}</span>
+          </span>
+        </sc-for>
+      </div>
+      <a href="#cert" style="align-self: center; padding: 6px; font-size: 14px; font-weight: 600; text-decoration: none;">Reach the summit for your Certificate of the Climb</a>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const at = 2;
+    const raw = [
+      { n: 1, name: 'Genesis Steps', x: '30px', y: '330px' },
+      { n: 2, name: 'Exodus Trail', x: '118px', y: '284px' },
+      { n: 3, name: 'Psalms Ascent', x: '184px', y: '236px' },
+      { n: 4, name: "Prophets' Climb", x: '150px', y: '172px' },
+      { n: 5, name: 'Revelation Summit', x: '120px', y: '108px' }
+    ];
+    const camps = raw.map((c, i) => ({ ...c,
+      bg: i < at ? '#2A6766' : (i === at ? '#E2A85A' : '#FFFDFA'),
+      ink: i < at ? '#FFFDFA' : '#1F1D1B',
+      border: i <= at ? '0' : '1.5px solid #CFC9C0' }));
+    const modes = [
+      { title: 'Continue the climb', meta: 'Camp 3 · 9 questions left', soft: '#DFEAE6', ink: '#2A6766', icon: 'M5 20l6-9 3 4 2-3 4 8zM12 4v4' },
+      { title: 'Practice by book', meta: 'Pick any book of the Bible', soft: '#F5EAD9', ink: '#985F1E', icon: 'M2 5.5c3-1.5 6.5-1.5 10 1 3.5-2.5 7-2.5 10-1V19c-3-1.5-6.5-1.5-10 1-3.5-2.5-7-2.5-10-1zM12 6.5V20' },
+      { title: 'Sixty-second sprint', meta: 'As many as you can', soft: '#E4E8F0', ink: '#435C82', icon: 'M12 21a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM12 9v4l2.5 2M9 2h6' },
+      { title: 'Challenge a friend', meta: 'Send the same 10 questions', soft: '#E9E5DE', ink: '#1F1D1B', icon: 'M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20a6 6 0 0 1 12 0M13 20a5 5 0 0 1 9 0' }
+    ];
+    const badges = raw.map((c, i) => ({ n: c.n, name: c.name.split(' ')[0].replace("'", '’'),
+      bg: i < at ? '#F5EAD9' : '#FFFDFA', ink: i < at ? '#985F1E' : '#B3ADA3', border: i < at ? '2px solid #E2A85A' : '1.5px dashed #CFC9C0' }));
+    return { camps, modes, badges };
+  }
+}
+</script>
+</body>
+</html>

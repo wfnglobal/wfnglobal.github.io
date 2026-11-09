@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Reading settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&amp;family=Spectral:wght@400;500&amp;family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2A6766}a:hover{color:#1E4E4D}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #F0ECE4; color: #2A2622; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;"><svg aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.05; mix-blend-mode: multiply;"><filter id="paperGrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"></feTurbulence><feColorMatrix values="0 0 0 0 0.25  0 0 0 0 0.22  0 0 0 0 0.18  0 0 0 0.7 0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#paperGrain)"></rect></svg>
+
+  <article aria-hidden="true" style="padding: 76px 26px 0; font-family: Literata, Georgia, serif; font-size: 21px; line-height: 36px; color: #2A2622;">
+    <p style="margin: 0 0 6px; font-family: 'Instrument Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #8E5A1C;">Isaiah 49 · Linen theme, focus mode</p>
+    <p style="margin: 0 0 16px;"><sup style="font-family: 'Instrument Sans', sans-serif; font-size: 11px; font-weight: 600; color: #6A645A; margin-right: 4px;">24</sup>Shall the prey be taken from the mighty, or the lawful captive delivered?</p>
+    <p style="margin: 0;"><sup style="font-family: 'Instrument Sans', sans-serif; font-size: 11px; font-weight: 600; color: #6A645A; margin-right: 4px;">25</sup>But thus saith the LORD, Even the captives of the mighty shall be taken away, and the prey of the terrible shall be delivered.</p>
+  </article>
+
+  <section role="dialog" aria-label="Reading settings" style="position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: 22px; padding: 10px 20px 34px; border-radius: 26px 26px 0 0; background: #FFFDFA; box-shadow: 0 -10px 40px rgba(31,29,27,0.14);">
+    <span style="align-self: center; width: 38px; height: 5px; border-radius: 12px; background: #ECE8E2;"></span>
+    <div style="display: flex; align-items: center;">
+      <h2 style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 21px; font-weight: 500;">Reading</h2>
+      <button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: #ECE8E2; color: #1F1D1B; font: 600 13.5px 'Instrument Sans', sans-serif;">Done</button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;" role="radiogroup" aria-label="Theme">
+      <sc-for list="{{themes}}" as="t" hint-placeholder-count="3">
+        <button type="button" role="radio" aria-checked="{{t.checked}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 18px; background: {{t.bg}}; color: {{t.ink}}; border: {{t.border}}; font: 600 13px 'Instrument Sans', sans-serif;">
+          <span style="font: 500 22px Literata, Georgia, serif;">Aa</span>{{t.name}}
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; font-size: 13px; font-weight: 600; color: #55514B;"><span style="flex-grow: 1;">Text size</span><span style="font-variant-numeric: tabular-nums;">21 pt</span></div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="font: 500 14px Literata, Georgia, serif;">A</span>
+        <span style="position: relative; flex-grow: 1; height: 4px; border-radius: 999px; background: #ECE8E2;"><span style="position: absolute; left: 0; top: 0; width: 58%; height: 4px; border-radius: 999px; background: #2A6766;"></span><span style="position: absolute; left: 58%; top: -10px; width: 24px; height: 24px; margin-left: -12px; border-radius: 999px; background: #FFFDFA; box-shadow: 0 1px 4px rgba(31,29,27,0.25);"></span></span>
+        <span style="font: 500 22px Literata, Georgia, serif;">A</span>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 8px; overflow: hidden;" role="radiogroup" aria-label="Font">
+      <sc-for list="{{fonts}}" as="f" hint-placeholder-count="5">
+        <button type="button" role="radio" aria-checked="{{f.checked}}" style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px 12px; border-radius: 16px; border: {{f.border}}; background: #FFFDFA; color: #1F1D1B;"><span style="font: 400 22px {{f.stack}};">Aa</span><span style="font: 500 11.5px 'Instrument Sans', sans-serif; color: #55514B;">{{f.name}}</span></button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-direction: column; border-radius: 18px; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16);">
+      <sc-for list="{{toggles}}" as="g" hint-placeholder-count="4">
+        <label style="display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 14px; border-top: {{g.divider}};">
+          <span style="display: flex; flex-direction: column; gap: 1px; flex-grow: 1;"><span style="font-size: 15px; font-weight: 500;">{{g.label}}</span><span style="font-size: 12.5px; color: #6E6A63;">{{g.hint}}</span></span>
+          <span style="position: relative; width: 46px; height: 28px; border-radius: 999px; background: {{g.track}};"><span style="position: absolute; top: 3px; left: {{g.knob}}; width: 22px; height: 22px; border-radius: 999px; background: #FFFDFA; box-shadow: 0 1px 3px rgba(31,29,27,0.25);"></span></span>
+        </label>
+      </sc-for>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const themes = [
+      { name: 'Light', bg: '#FFFDFA', ink: '#1F1D1B', checked: 'false' },
+      { name: 'Linen', bg: '#F0ECE4', ink: '#2A2622', checked: 'true' },
+      { name: 'Dark', bg: '#141312', ink: '#EFEBE4', checked: 'false' }
+    ].map((t) => ({ ...t, border: t.checked === 'true' ? '2px solid #2A6766' : '1px solid rgba(31,29,27,0.12)' }));
+    const toggles = [
+      { label: 'Focus mode', hint: 'Hide everything but the text', on: true },
+      { label: 'Verse numbers', hint: 'Small numbers before each verse', on: true },
+      { label: 'Words of Jesus in red', hint: 'Gospels and Revelation', on: false },
+      { label: 'Tap a word to define it', hint: 'Offline dictionary and Bible names', on: true }
+    ].map((g, i) => ({ ...g, divider: i ? '1px solid rgba(31,29,27,0.08)' : '0', track: g.on ? '#2A6766' : '#D8D3CB', knob: g.on ? '21px' : '3px' }));
+    const fonts = [['Literata', 'Literata, Georgia, serif'], ['Source Serif', "'Source Serif 4', Georgia, serif"], ['Spectral', 'Spectral, Georgia, serif'], ['Instrument', "'Instrument Sans', sans-serif"], ['Hyperlegible', "'Atkinson Hyperlegible', sans-serif"]].map(([name, stack], i) => ({ name, stack, checked: i === 0 ? 'true' : 'false', border: i === 0 ? '2px solid #2A6766' : '1px solid rgba(31,29,27,0.12)' }));
+    return { themes, toggles, fonts };
+  }
+}
+</script>
+</body>
+</html>

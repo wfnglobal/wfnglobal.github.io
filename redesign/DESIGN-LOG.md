@@ -81,3 +81,26 @@ OneSignal push · seasonal effects.
   toggles, back up notes, install, Word Climb, about), Notes & journal (daily prompt
   from the verse, Journal/Prayer/Dream tags, entries linked to verses and sermons).
   Next: Stage 4 = build. Open: tabs + stack confirmation.
+- 2026-11-09 — Decisions confirmed: keep the no-build static stack (Next.js declined);
+  five tabs Today · Bible · Prayer · Library · You. Feedback round:
+  * Whole app made warmer, softer, more premium (design system v4): warm pearl/stone
+    neutrals (#F4F2EE / #FFFDFA / #ECE8E2), warm charcoal ink, 5% paper-grain texture on
+    every screen, bigger radii (cards 24, hero 30, buttons 16), soft diffuse card shadows
+    instead of hard borders, Literata headings at weight 400, glowing Verse of the Day card,
+    Mist reading theme renamed/warmed to Linen. Still no overlap with the live site.
+  * You: profile photo (tap avatar, camera badge, file picker), Font size slider with live
+    preview, five reading fonts (Literata, Source Serif 4, Spectral, Instrument Sans,
+    Atkinson Hyperlegible) — also in the reading settings sheet.
+  * Today gets an "Explore" row with NEW icons for The Story of Jesus (Jerusalem gate
+    opening onto a path of light) and The Word Climb (mountain, dotted path, summit flag).
+  * The Story of Jesus redesigned as a museum walk through Jerusalem: entrance (illustrated
+    Jerusalem at dawn, audio guide, 12 galleries / 80 min, the route from Prophecy to the
+    Mount of Olives with visited / you-are-here, collection: JESUS Film, Tissot watercolours,
+    photos of the real sites) and Gallery X Golgotha (audio guide with Tolu, placard,
+    exhibits, trilingual titulus, seven words from the cross, film, "leave a prayer at
+    the cross", next gallery). Photo/painting plates are placeholders until licensed
+    images are sourced (Wikimedia Commons / Brooklyn Museum Tissot public domain;
+    JESUS Film Project embeds).
+  * The Word Climb redesigned: mountain map of the 5 real camps, streak, NEW daily
+    5-question challenge tied to the day's sermon, practice by book, 60-second sprint,
+    challenge a friend, Scripture hint / 50-50 / learn why, camp badges, certificate.

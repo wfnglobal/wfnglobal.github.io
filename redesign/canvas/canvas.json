@@ -1,0 +1,209 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Foundations.dc.html": {
+      "h": 2140,
+      "title": "Foundations & components",
+      "w": 1200,
+      "x": 940,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 2496,
+      "radius": 28,
+      "title": "Today \u00b7 Light",
+      "w": 912,
+      "x": 0,
+      "y": -356
+    },
+    "TodayDark.dc.html": {
+      "h": 2140,
+      "radius": 28,
+      "title": "Today \u00b7 Dark",
+      "w": 390,
+      "x": 470,
+      "y": 0
+    },
+    "BibleHome.dc.html": {
+      "x": 0,
+      "y": 2600,
+      "w": 390,
+      "h": 1560,
+      "title": "Bible",
+      "radius": 28
+    },
+    "Reader.dc.html": {
+      "x": 470,
+      "y": 2600,
+      "w": 390,
+      "h": 844,
+      "title": "Bible reader \u00b7 selecting a verse",
+      "radius": 28
+    },
+    "ReaderSettings.dc.html": {
+      "x": 940,
+      "y": 2600,
+      "w": 390,
+      "h": 844,
+      "title": "Reading settings",
+      "radius": 28
+    },
+    "Prayer.dc.html": {
+      "x": 1410,
+      "y": 2600,
+      "w": 390,
+      "h": 2000,
+      "title": "Prayer",
+      "radius": 28
+    },
+    "Library.dc.html": {
+      "x": 1880,
+      "y": 2600,
+      "w": 390,
+      "h": 2000,
+      "title": "Library",
+      "radius": 28
+    },
+    "Onboarding.dc.html": {
+      "x": 0,
+      "y": 5020,
+      "w": 390,
+      "h": 844,
+      "title": "Welcome \u00b7 the three pillars",
+      "radius": 28
+    },
+    "Search.dc.html": {
+      "x": 470,
+      "y": 5020,
+      "w": 390,
+      "h": 1100,
+      "title": "Search across everything",
+      "radius": 28
+    },
+    "Sermon.dc.html": {
+      "x": 940,
+      "y": 5020,
+      "w": 390,
+      "h": 1900,
+      "title": "Sermon reading page",
+      "radius": 28
+    },
+    "Dreams.dc.html": {
+      "x": 1410,
+      "y": 5020,
+      "w": 390,
+      "h": 1700,
+      "title": "Dreams & Discernment",
+      "radius": 28
+    },
+    "You.dc.html": {
+      "x": 1880,
+      "y": 5020,
+      "w": 390,
+      "h": 2300,
+      "title": "You",
+      "radius": 28
+    },
+    "Journal.dc.html": {
+      "x": 2350,
+      "y": 5020,
+      "w": 390,
+      "h": 1300,
+      "title": "Notes & journal",
+      "radius": 28
+    },
+    "JesusMuseum.dc.html": {
+      "x": 0,
+      "y": 7760,
+      "w": 390,
+      "h": 2300,
+      "title": "The Story of Jesus \u00b7 museum entrance",
+      "radius": 28
+    },
+    "JesusGallery.dc.html": {
+      "x": 470,
+      "y": 7760,
+      "w": 390,
+      "h": 2500,
+      "title": "Gallery X \u00b7 Golgotha",
+      "radius": 28
+    },
+    "WordClimb.dc.html": {
+      "x": 940,
+      "y": 7760,
+      "w": 390,
+      "h": 1700,
+      "title": "The Word Climb",
+      "radius": 28
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-11-09T16:20:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/8RL7uyRhr1zmu2PGo8vvz6",
+      "copiedAt": "2026-11-09T18:21:00Z",
+      "namespace": "wfn",
+      "title": "Word and Faith Network",
+      "version": "1794247573-e112"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "stage1": {
+      "kind": "title1",
+      "maxW": 2140,
+      "text": "Stage 1 \u00b7 Design system and the new Today screen",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "stage2": {
+      "x": 0,
+      "y": 2300,
+      "text": "Stage 2 \u00b7 Bible, Prayer and Library",
+      "kind": "title1",
+      "maxW": 2270
+    },
+    "stage3": {
+      "x": 0,
+      "y": 4720,
+      "text": "Stage 3 \u00b7 Welcome, search, sermon, dreams, You and journal",
+      "kind": "title1",
+      "maxW": 2740
+    },
+    "stage4": {
+      "x": 0,
+      "y": 7460,
+      "text": "Stage 3b \u00b7 The Story of Jesus museum and The Word Climb",
+      "kind": "title1",
+      "maxW": 1330
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "TodayDark.dc.html",
+    "Foundations.dc.html",
+    "BibleHome.dc.html",
+    "Reader.dc.html",
+    "ReaderSettings.dc.html",
+    "Prayer.dc.html",
+    "Library.dc.html",
+    "Onboarding.dc.html",
+    "Search.dc.html",
+    "Sermon.dc.html",
+    "Dreams.dc.html",
+    "You.dc.html",
+    "Journal.dc.html",
+    "JesusMuseum.dc.html",
+    "JesusGallery.dc.html",
+    "WordClimb.dc.html"
+  ],
+  "pages": [],
+  "title": "WFN App 2.0"
+}

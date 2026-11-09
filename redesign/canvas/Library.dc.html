@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Library</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2A6766}a:hover{color:#1E4E4D}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; min-height: 2000px; box-sizing: border-box; display: flex; flex-direction: column; background: #F4F2EE; color: #1F1D1B; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;"><svg aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.05; mix-blend-mode: multiply;"><filter id="paperGrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"></feTurbulence><feColorMatrix values="0 0 0 0 0.25  0 0 0 0 0.22  0 0 0 0 0.18  0 0 0 0.7 0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#paperGrain)"></rect></svg>
+
+  <header style="display: flex; align-items: center; gap: 8px; padding: 28px 20px 6px;">
+    <h1 style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 32px; line-height: 38px; font-weight: 400;">Library</h1>
+    <button type="button" aria-label="Search the library" style="width: 44px; height: 44px; border: 0; border-radius: 999px; background: #ECE8E2; color: #1F1D1B; display: flex; align-items: center; justify-content: center; padding: 0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button>
+  </header>
+
+  <div role="tablist" aria-label="Library sections" style="display: flex; gap: 8px; padding: 12px 16px 4px; overflow: hidden;">
+    <sc-for list="{{chips}}" as="c" hint-placeholder-count="6">
+      <button type="button" role="tab" aria-selected="{{c.sel}}" style="flex-shrink: 0; height: 34px; padding: 0 14px; border-radius: 999px; border: {{c.border}}; background: {{c.bg}}; color: {{c.ink}}; font: 600 13.5px 'Instrument Sans', sans-serif;">{{c.label}}</button>
+    </sc-for>
+  </div>
+
+  <main style="display: flex; flex-direction: column; gap: 30px; padding: 18px 16px 32px;">
+    <a href="#sermon" style="display: flex; gap: 16px; padding: 14px; border-radius: 26px; background: #FFFDFA; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16); text-decoration: none; color: #1F1D1B;">
+      <img src="/_blob/32abf99b11c19fb8edc0101fe2cda624" alt="Sermon poster: Even the captive goes free" style="width: 116px; height: 145px; flex-shrink: 0; border-radius: 16px; object-fit: cover;">
+      <span style="display: flex; flex-direction: column; gap: 6px; min-width: 0; padding-top: 2px;">
+        <span style="font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #435C82;">Today’s sermon</span>
+        <span style="font-family: Literata, Georgia, serif; font-size: 20px; line-height: 26px; font-weight: 500;">The Lawful Captive Shall Go Free</span>
+        <span style="font-size: 13px; color: #6E6A63;">Isaiah 49:24–25 · 9 min read</span>
+        <span style="flex-grow: 1;"></span>
+        <span style="display: flex; gap: 14px; font-size: 13.5px; font-weight: 600; color: #2A6766;"><span>Read</span><span>Listen · 11 min</span></span>
+      </span>
+    </a>
+
+    <section aria-labelledby="studyH" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; padding: 0 4px;">
+        <h2 id="studyH" style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 21px; line-height: 28px; font-weight: 400;">Bible studies</h2>
+        <a href="#studies" style="font-size: 13.5px; font-weight: 600; text-decoration: none;">All 8</a>
+      </div>
+      <div style="display: flex; gap: 12px; overflow: hidden;">
+        <sc-for list="{{studies}}" as="s" hint-placeholder-count="3">
+          <a href="#study" style="width: 156px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: #1F1D1B;">
+            <img src="{{s.img}}" alt="{{s.alt}}" style="width: 156px; height: 195px; border-radius: 18px; object-fit: cover; background: #ECE8E2;">
+            <span style="font-family: Literata, Georgia, serif; font-size: 16px; line-height: 21px; font-weight: 500;">{{s.title}}</span>
+            <span style="font-size: 12.5px; color: #6E6A63;">{{s.meta}}</span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="booksH" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; padding: 0 4px;">
+        <h2 id="booksH" style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 21px; line-height: 28px; font-weight: 400;">Free books</h2>
+        <span style="font-size: 13px; color: #6E6A63;">New every two weeks</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px;">
+        <sc-for list="{{books}}" as="b" hint-placeholder-count="4">
+          <a href="#book" style="display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: #1F1D1B;">
+            <sc-if value="{{b.hasImg}}" hint-placeholder-val="{{b.hasImg}}">
+              <img src="{{b.img}}" alt="Cover of {{b.title}}" style="width: 100%; aspect-ratio: 3 / 4; border-radius: 16px; object-fit: cover; background: #ECE8E2;">
+            </sc-if>
+            <sc-if value="{{b.noImg}}" hint-placeholder-val="{{b.noImg}}">
+              <span style="width: 100%; aspect-ratio: 3 / 4; box-sizing: border-box; border-radius: 16px; background: radial-gradient(130% 95% at 88% -10%, #2B5C5A 0%, #17403F 48%, #10302F 100%); color: #F6F3EC; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; padding: 16px;"><span style="font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #E9B872;">Book Three</span><span style="font-family: Literata, Georgia, serif; font-size: 22px; line-height: 26px; font-weight: 400;">Not Consumed</span></span>
+            </sc-if>
+            <span style="display: flex; flex-direction: column; gap: 2px;"><span style="font-family: Literata, Georgia, serif; font-size: 16px; line-height: 21px; font-weight: 500;">{{b.title}}</span><span style="font-size: 12.5px; color: #6E6A63;">{{b.meta}}</span></span>
+            <span style="display: block; height: 3px; border-radius: 999px; background: #ECE8E2;"><span style="display: block; width: {{b.progress}}; height: 3px; border-radius: 999px; background: #435C82;"></span></span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="archH" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; padding: 0 4px;">
+        <h2 id="archH" style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 21px; line-height: 28px; font-weight: 400;">Sermon archive</h2>
+        <span style="font-size: 13px; color: #6E6A63;">27 sermons · nothing removed</span>
+      </div>
+      <span style="padding: 4px 4px 0; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #6E6A63;">November 2026</span>
+      <div style="display: flex; flex-direction: column; border-radius: 24px; background: #FFFDFA; border: 1px solid rgba(31,29,27,0.05); box-shadow: 0 1px 2px rgba(31,29,27,0.04), 0 14px 34px -18px rgba(31,29,27,0.16);">
+        <sc-for list="{{archive}}" as="a" hint-placeholder-count="5">
+          <a href="#sermon" style="display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-top: {{a.divider}}; text-decoration: none; color: #1F1D1B;">
+            <span style="width: 34px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; font-variant-numeric: tabular-nums;"><span style="font-size: 18px; line-height: 20px; font-weight: 600;">{{a.day}}</span><span style="font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6E6A63;">{{a.dow}}</span></span>
+            <span style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 0;"><span style="font-family: Literata, Georgia, serif; font-size: 16.5px; line-height: 22px; font-weight: 500;">{{a.title}}</span><span style="font-size: 12.5px; color: #985F1E; font-weight: 500;">{{a.ref}}</span></span>
+            <sc-if value="{{a.read}}" hint-placeholder-val="{{a.read}}"><svg width="18" height="18" viewBox="0 0 24 24" role="img" aria-label="Read"><circle cx="12" cy="12" r="10" fill="#DFEAE6"></circle><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#2A6766" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
+          </a>
+        </sc-for>
+      </div>
+      <a href="#archive" style="align-self: center; font-size: 14px; font-weight: 600; text-decoration: none; padding: 6px;">Browse the full archive</a>
+    </section>
+
+    <a href="#films" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 24px; background: #E9E5DE; text-decoration: none; color: #1F1D1B;">
+      <span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 16px; background: #FFFDFA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="#1F1D1B" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"></path></svg></span>
+      <span style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1;"><span style="font-size: 15px; font-weight: 600;">Films</span><span style="font-size: 13px; color: #55514B;">Illustrated 4K shorts · 9 films</span></span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6E6A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+    </a>
+  </main>
+
+  <span style="flex-grow: 1;"></span>
+  <nav aria-label="Main" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 8px 6px 26px; background: #FFFDFA; border-top: 1px solid rgba(31,29,27,0.09);">
+    <sc-for list="{{tabs}}" as="tab" hint-placeholder-count="5">
+      <a href="{{tab.href}}" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; text-decoration: none; color: {{tab.color}}; font: {{tab.weight}} 10.5px 'Instrument Sans', sans-serif;">
+        <span style="width: 52px; height: 30px; border-radius: 999px; background: {{tab.pill}}; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{tab.icon}}"></path></svg></span>
+        {{tab.label}}
+      </a>
+    </sc-for>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const chips = ['All', 'Sermons', 'Bible studies', 'Books', 'Plans', 'Films'].map((label, i) => ({
+      label, sel: i === 0 ? 'true' : 'false', bg: i === 0 ? '#1F1D1B' : '#FFFDFA', ink: i === 0 ? '#F4F2EE' : '#1F1D1B', border: i === 0 ? '1px solid #1F1D1B' : '1px solid rgba(31,29,27,0.12)'
+    }));
+    const studies = [
+      { title: 'For Such a Time as This', meta: 'Esther 4 · today', img: '/_blob/5c651684365bbba05b1f211d2f23a455', alt: 'Bible study poster, For Such a Time as This' },
+      { title: 'Too Many to Win With', meta: 'Judges 6–7 · Nov 8', img: '/_blob/4ef638e2d5ca137506dc0ee5276ee009', alt: 'Bible study poster, Too Many to Win With' },
+      { title: 'Possess Your Possessions', meta: 'Sermon · Obadiah 1', img: '/_blob/3bb670bc83c7c66b3075cd63b1be9b65', alt: 'Sermon poster, Possess Your Possessions' }
+    ];
+    const books = [
+      { title: 'Another Jesus', meta: 'Book Four · newest', img: '/_blob/8704fa384d29edf1b12bbc946c354d96', progress: '0%' },
+      { title: 'Not Consumed', meta: 'Book Three', img: '', progress: '35%' },
+      { title: 'Look Back, Look Forward', meta: 'Book Two', img: '/_blob/0950d0a0dadfd6693a8972d30bb809dc', progress: '100%' },
+      { title: 'Ask Boldly', meta: 'Book One', img: '/_blob/a0b61e15b95d1c77930b021c909a1b91', progress: '100%' }
+    ].map((b) => ({ ...b, hasImg: !!b.img, noImg: !b.img }));
+    const archive = [
+      { day: '9', dow: 'Mon', title: 'The Lawful Captive Shall Go Free', ref: 'Isaiah 49:24–25', read: false },
+      { day: '8', dow: 'Sun', title: 'Possess Your Possessions', ref: 'Obadiah 1:17–18', read: true },
+      { day: '7', dow: 'Sat', title: 'The Supremacy of Christ', ref: 'Colossians 1:15–17', read: true },
+      { day: '6', dow: 'Fri', title: 'Think On These Things', ref: 'Philippians 4:8', read: true },
+      { day: '5', dow: 'Thu', title: 'Approved, Not Ashamed', ref: '2 Timothy 2:15', read: false }
+    ].map((a, i) => ({ ...a, divider: i ? '1px solid rgba(31,29,27,0.08)' : '0' }));
+    const icons = {
+      today: 'M3 18h18M7 18a5 5 0 0 1 10 0M12 4v3M4.9 9.9l2.1 2.1M19.1 9.9L17 12',
+      bible: 'M2 5.5c3-1.5 6.5-1.5 10 1 3.5-2.5 7-2.5 10-1V19c-3-1.5-6.5-1.5-10 1-3.5-2.5-7-2.5-10-1zM12 6.5V20',
+      prayer: 'M12 3c-3 2.5-5 5.5-5 9v8M12 3c3 2.5 5 5.5 5 9v8M12 3v17M4 20h16',
+      library: 'M4 4h4v16H4zM10 4h4v16h-4zM16.5 4.5l3.5 1-4 15-3.5-1',
+      you: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0'
+    };
+    const active = 3;
+    const tabs = [['Today', 'today', 'Main.dc.html'], ['Bible', 'bible', 'BibleHome.dc.html'], ['Prayer', 'prayer', 'Prayer.dc.html'], ['Library', 'library', 'Library.dc.html'], ['You', 'you', '#you']].map(([label, k, href], i) => ({
+      label, href, icon: icons[k], color: i === active ? '#2A6766' : '#6E6A63', weight: i === active ? 600 : 500, pill: i === active ? '#DFEAE6' : 'transparent'
+    }));
+    return { chips, studies, books, archive, tabs };
+  }
+}
+</script>
+</body>
+</html>

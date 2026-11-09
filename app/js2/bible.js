@@ -10,152 +10,343 @@
     return reader(main, parts[0], +parts[1], parts[2] ? +parts[2] : null);
   });
 
+  // Bible versions, same list as the classic app. Public-domain versions
+  // come from bible-api.com; Yorùbá, Igbo and Hausa are machine-translated
+  // from the KJV and labelled that way.
+  const BIBLE_API = "https://bible-api.com/";
+  const VERSIONS = [
+    { code: "kjv", name: "King James Version", short: "KJV" },
+    { code: "web", name: "World English Bible", short: "WEB" },
+    { code: "asv", name: "American Standard Version", short: "ASV" },
+    { code: "bbe", name: "Bible in Basic English", short: "BBE" },
+    { code: "darby", name: "Darby Translation", short: "Darby" },
+    { code: "ylt", name: "Young’s Literal Translation", short: "YLT" },
+    { code: "dra", name: "Douay-Rheims", short: "DRA" },
+    { code: "webbe", name: "World English Bible, British Edition", short: "WEBBE" },
+    { code: "oeb-us", name: "Open English Bible, US", short: "OEB" },
+    { code: "clementine", name: "Clementine Vulgate (Latin)", short: "Latin" },
+    { code: "yo-mt", name: "Yorùbá (machine-translated)", short: "Yorùbá", mt: "yo" },
+    { code: "ig-mt", name: "Igbo (machine-translated)", short: "Igbo", mt: "ig" },
+    { code: "ha-mt", name: "Hausa (machine-translated)", short: "Hausa", mt: "ha" },
+  ];
+  // Highlight colours use the classic app's names so highlights made there still show.
+  const HL = { gold: "#F7E3B5", green: "#CDE8E4", blue: "#D6E2F2", pink: "#F3D6D6" };
+  const HL_ALIAS = { mint: "green", sky: "blue", rose: "pink" };
+  function hlName(c) { return HL_ALIAS[c] || c; }
+  function hlColor(c) { return HL[hlName(c)] || HL.gold; }
+
   async function home(main) {
     const idx = await W.bookIndex();
     const last = W.read("wfn2-last-read", null);
     let tab = W.read("wfn2-testament", "new");
     const marks = W.S.getMarks();
+    const study = (W.C.BIBLE_STUDY || [])[0];
     const render = () => {
       main.innerHTML = `
-      <header class="page-head"><div class="row"><h1 style="flex-grow:1">Bible</h1><button class="icon-btn" id="rs" aria-label="Reading settings">${icon("aa")}</button></div><p class="small muted">King James Version · works offline</p></header>
+      <header class="page-head"><div class="row"><h1 style="flex-grow:1">Bible</h1><button class="icon-btn" id="rs" aria-label="Reading settings">${icon("aa")}</button></div><p class="small muted">King James Version offline, plus 12 more versions</p></header>
       <div class="page">
         <form class="search-field" action="#" id="bs" role="search"><span aria-hidden="true">${icon("search", "sm")}</span><input name="q" type="search" placeholder="Search the Bible, sermons and studies" aria-label="Search" autocomplete="off"></form>
         ${last ? `<a class="hero" href="#/bible/${esc(last.slug)}/${last.ch}" style="text-decoration:none;gap:8px;padding:20px 22px">
           <span class="eyebrow">Continue reading</span><span class="serif" style="font-size:28px;line-height:34px">${esc(last.name)} ${last.ch}</span>
           <span style="font-size:14px;color:var(--hero-2)">${esc((last.snippet || "").slice(0, 110))}${last.snippet && last.snippet.length > 110 ? "…" : ""}</span></a>` : ""}
-        <section class="section">
+        ${study ? `<section class="section"><div class="section-head"><h2 class="h2">Bible study</h2><a href="#/studies">All ${(W.C.BIBLE_STUDY || []).length}</a></div>
+          <a class="card" href="#/study/${esc(study.slug)}" style="display:flex;gap:14px;padding:14px;text-decoration:none;color:var(--ink)">
+            ${study.poster ? `<img src="${esc(W.asset(study.poster))}" alt="" loading="lazy" style="width:84px;height:105px;border-radius:14px;object-fit:cover;flex-shrink:0;background:var(--sunk)">` : ""}
+            <span style="display:flex;flex-direction:column;gap:4px;min-width:0"><span class="eyebrow amber">Today · ${esc(((study.verses || [])[0] || {}).ref || "")}</span><span class="serif" style="font-size:19px;line-height:25px">${esc(study.title)}</span><span class="small ink2">${esc(study.excerpt)}</span></span></a></section>` : ""}
+        <section class="section" id="books">
           <div class="seg" role="tablist" aria-label="Testament">
             <button role="tab" aria-selected="${tab === "old"}" data-t="old">Old Testament</button>
             <button role="tab" aria-selected="${tab === "new"}" data-t="new">New Testament</button>
           </div>
           <div class="grid-books">${idx.filter((b) => b.testament === tab).map((b) => `<a href="#/bible/${b.slug}">${esc(b.name)}</a>`).join("")}</div>
         </section>
-        ${marks.length ? `<section class="section"><div class="section-head"><h2 class="h2">Your highlights</h2><a href="#/kept/highlights">All ${marks.length}</a></div>
+        ${marks.length ? `<section class="section"><div class="section-head"><h2 class="h2">Your highlights</h2><a href="#/kept/highlights">All</a></div>
           <div class="card list">${marks.slice(0, 3).map((m) => `<a class="row-link" href="#/bible/${m.bookSlug}/${m.chapter}/${m.verse}"><span style="width:10px;height:28px;border-radius:4px;flex-shrink:0;background:${m.color ? hlColor(m.color) : "var(--amber)"}"></span><span class="grow"><span class="label serif" style="font-size:16px">${esc(m.text.slice(0, 90))}${m.text.length > 90 ? "…" : ""}</span><span class="hint">${esc(m.bookName)} ${m.chapter}:${m.verse}</span></span></a>`).join("")}</div></section>` : ""}
       </div>`;
-      W.$$("[data-t]", main).forEach((b) => b.onclick = () => { tab = b.dataset.t; W.write("wfn2-testament", tab); render(); });
+      W.$$("[data-t]", main).forEach((b) => b.onclick = () => { tab = b.dataset.t; W.write("wfn2-testament", tab); render(); W.$("#books").scrollIntoView({ block: "start" }); });
       W.$("#bs").onsubmit = (e) => { e.preventDefault(); const q = e.target.q.value.trim(); if (q) W.go("#/search/" + encodeURIComponent(q)); };
       W.$("#rs").onclick = () => settingsSheet();
+      if (W.read("wfn2-goto-books", false)) { W.write("wfn2-goto-books", false); setTimeout(() => W.$("#books").scrollIntoView({ block: "start" }), 50); }
     };
     render();
   }
-  function hlColor(c) { return { gold: "#F7E3B5", mint: "#CDE8E4", rose: "#F3D6D6", sky: "#D6E2F2" }[c] || "#F7E3B5"; }
 
   async function chapters(main, slug) {
     const idx = await W.bookIndex();
     const b = idx.find((x) => x.slug === slug);
     if (!b) return W.go("#/bible");
     const readCh = W.read("wfn2-read-ch", {})[slug] || [];
-    main.innerHTML = W.topbar(b.name, { back: "#/bible" }) + `<div class="page tight"><p class="eyebrow">${b.chapters} chapters</p>
+    main.innerHTML = W.topbar(b.name, { back: "#/bible" }) + `<div class="page tight">
+      <div style="display:flex;align-items:center;gap:8px"><p class="eyebrow" style="flex-grow:1">${b.testament === "old" ? "Old" : "New"} Testament · ${b.chapters} chapters</p><a class="chip" href="#/bible" id="allBooks">All books</a></div>
       <div class="grid-ch">${Array.from({ length: b.chapters }, (_, i) => `<a href="#/bible/${slug}/${i + 1}" class="${readCh.includes(i + 1) ? "read" : ""}" aria-label="Chapter ${i + 1}${readCh.includes(i + 1) ? ", read" : ""}">${i + 1}</a>`).join("")}</div></div>`;
+    W.$("#allBooks").onclick = () => { W.write("wfn2-testament", b.testament); W.write("wfn2-goto-books", true); };
   }
 
   // In the dark app, "Light" reading follows the app into Dark so the page never glares at night.
   function readTheme() { const s = W.settings(); return s.read === "light" && document.documentElement.dataset.theme === "dark" ? "dark" : s.read; }
   let selected = [];
+  let current = null; // { slug, name, ch, plain: [...], version }
+
+  function wrapWords(html) {
+    // Wrap each word (outside tags) in a tappable span for the dictionary.
+    return html.replace(/(<[^>]+>)|([A-Za-z][A-Za-z']*)/g, (m, tag, word) => (tag ? tag : `<span class="w">${word}</span>`));
+  }
+
   async function reader(main, slug, ch, focusVerse) {
     const [idx, data] = await Promise.all([W.bookIndex(), W.book(slug)]);
     const bi = idx.findIndex((x) => x.slug === slug);
     const b = idx[bi];
     if (!b || !data.chapters[ch - 1]) return W.go("#/bible/" + slug);
-    const verses = data.chapters[ch - 1];
+    const kjv = data.chapters[ch - 1];
     const set = W.settings();
     selected = [];
-    const marks = W.S.getMarks().filter((m) => m.bookSlug === slug && m.chapter === ch);
-    const notes = W.S.getNotes().filter((n) => n.refKey && n.refKey.indexOf(slug + ":" + ch + ":") === 0);
-    const markOf = (v) => marks.find((m) => m.verse === v);
     const prev = ch > 1 ? `#/bible/${slug}/${ch - 1}` : bi > 0 ? `#/bible/${idx[bi - 1].slug}/${idx[bi - 1].chapters}` : null;
     const next = ch < b.chapters ? `#/bible/${slug}/${ch + 1}` : bi < idx.length - 1 ? `#/bible/${idx[bi + 1].slug}/1` : null;
-    W.write("wfn2-last-read", { slug, name: b.name, ch, snippet: W.plain(verses[0]) });
+    W.write("wfn2-last-read", { slug, name: b.name, ch, snippet: W.plain(kjv[0]) });
     const rc = W.read("wfn2-read-ch", {}); rc[slug] = Array.from(new Set((rc[slug] || []).concat(ch))); W.write("wfn2-read-ch", rc);
+    let version = W.read("wfn2-version", "kjv");
+    if (!VERSIONS.find((v) => v.code === version)) version = "kjv";
+    current = { slug, name: b.name, ch, plain: kjv.map(W.plain), version: "kjv" };
 
     main.innerHTML = `<div class="reader ${set.nums ? "" : "no-nums"} ${set.red ? "red" : ""}" data-read="${readTheme()}">
       <header class="topbar">
-        <a class="icon-btn" href="#/bible/${slug}" aria-label="Chapters">${icon("back")}</a>
-        <a class="book-btn" href="#/bible/${slug}" style="text-decoration:none">${esc(b.name)} ${ch} ${icon("down", "xs")}</a>
+        <a class="icon-btn" href="#/bible/${slug}" aria-label="Chapters of ${esc(b.name)}">${icon("back")}</a>
+        <button class="book-btn" id="bookBtn" type="button" aria-label="Choose a book: Old or New Testament">${esc(b.name)} ${ch} ${icon("down", "xs")}</button>
         <button class="icon-btn" id="rListen" aria-label="Listen to this chapter" aria-pressed="false">${icon("listen")}</button>
         <button class="icon-btn" id="rSet" aria-label="Reading settings">${icon("aa")}</button>
       </header>
+      <div class="reader-tools" role="toolbar" aria-label="Reader tools">
+        <button class="chip" id="verBtn" type="button" aria-label="Bible version">${icon("layers", "xs")}<span id="verLab">KJV</span>${icon("down", "xs")}</button>
+        <button class="chip" id="jumpBtn" type="button">${icon("jump", "xs")}Jump</button>
+        <button class="chip" id="sumBtn" type="button" aria-expanded="false">${icon("summary", "xs")}Summary</button>
+        <button class="chip" id="trBtn" type="button">${icon("globe", "xs")}Translate</button>
+      </div>
       <article class="reader-text" aria-label="${esc(b.name)} chapter ${ch}">
         <h2>${esc(b.name)} ${ch}</h2>
-        <button class="chip summary-btn" id="sumBtn" aria-expanded="false">${icon("summary", "xs")}What this chapter is about</button>
-        <p id="sumText" class="small" hidden style="font-family:var(--sans);font-size:15px;line-height:24px;margin:0 0 20px;padding:14px 16px;border-radius:16px;background:rgba(127,127,127,0.08)"></p>
-        <p style="margin:0">${verses.map((t, i) => {
-          const v = i + 1, m = markOf(v), noted = notes.some((n) => n.refKey === slug + ":" + ch + ":" + v);
-          return `<span class="v ${m && m.color ? "hl-" + m.color : ""} ${noted ? "noted" : ""}" id="v${v}" data-v="${v}" role="button" tabindex="0"><sup>${v}</sup>${t.replace(/class="woc"/g, 'class="wj"')} </span>`;
-        }).join("")}</p>
+        <p id="verNote" class="small" hidden style="font-family:var(--sans);margin:0 0 16px;opacity:.75"></p>
+        <p id="sumText" hidden style="font-family:var(--sans);font-size:15px;line-height:24px;margin:0 0 20px;padding:14px 16px;border-radius:16px;background:rgba(127,127,127,0.08)"></p>
+        ${set.lookup !== false ? `<p class="small" id="tapHint" style="font-family:var(--sans);margin:0 0 14px;opacity:.7">Tap any word for its meaning. Tap a verse number to highlight, save or share.</p>` : ""}
+        <p id="verses" style="margin:0"></p>
+        <div id="compare"></div>
+        <button class="btn ghost block" id="addCmp" type="button" style="margin-top:22px;font-family:var(--sans)">${icon("plus", "sm")}Compare another version</button>
       </article>
       <nav class="chapter-nav" aria-label="Chapters">
         ${prev ? `<a class="btn ghost" href="${prev}">${icon("back", "sm")}Previous</a>` : "<span></span>"}
         ${next ? `<a class="btn" href="${next}">Next chapter${icon("chev", "sm")}</a>` : ""}
       </nav>
     </div>`;
-    if (focusVerse) { const el = W.$("#v" + focusVerse); if (el) setTimeout(() => { el.scrollIntoView({ block: "center" }); el.classList.add("sel"); setTimeout(() => el.classList.remove("sel"), 1600); }, 60); }
 
-    W.$("#rSet").onclick = () => settingsSheet(() => reader(main, slug, ch));
-    W.$("#rListen").onclick = (e) => W.speak(b.name + " chapter " + ch + ". " + verses.map(W.plain).join(" "), e.currentTarget);
-    W.$("#sumBtn").onclick = async (e) => {
-      const p = W.$("#sumText");
-      if (!p.hidden) { p.hidden = true; e.currentTarget.setAttribute("aria-expanded", "false"); return; }
-      p.textContent = "Loading…"; p.hidden = false; e.currentTarget.setAttribute("aria-expanded", "true");
-      try { const s = await W.getJSON("summaries/" + slug + ".json"); p.textContent = (s.chapters && s.chapters[String(ch)]) || "A summary for this chapter is coming soon."; }
-      catch (err) { p.textContent = "A summary for this chapter is coming soon."; }
-    };
+    const versesEl = W.$("#verses");
+    const lookupOn = set.lookup !== false;
+    function paint(texts, isHtml) {
+      const marks = W.S.getMarks().filter((m) => m.bookSlug === slug && m.chapter === ch);
+      const notes = W.S.getNotes().filter((n) => n.refKey && (n.refKey.indexOf("bible:" + slug + ":" + ch + ":") === 0 || n.refKey.indexOf(slug + ":" + ch + ":") === 0));
+      versesEl.innerHTML = texts.map((t, i) => {
+        const v = i + 1, m = marks.find((x) => x.verse === v);
+        const noted = notes.some((n) => n.refKey === "bible:" + slug + ":" + ch + ":" + v || n.refKey === slug + ":" + ch + ":" + v);
+        const body = isHtml ? t.replace(/class="woc"/g, 'class="wj"') : esc(t);
+        return `<span class="v ${m && m.color ? "hl-" + hlName(m.color) : ""} ${noted ? "noted" : ""}" id="v${v}" data-v="${v}"><sup role="button" tabindex="0" aria-label="Verse ${v}, highlight, save or share">${v}</sup>${lookupOn ? wrapWords(body) : body} </span>`;
+      }).join("");
+    }
+    async function fetchVersion(code) {
+      const ver = VERSIONS.find((v) => v.code === code);
+      if (code === "kjv") return { texts: kjv, html: true };
+      if (ver.mt) {
+        const plain = kjv.map(W.plain);
+        const outs = await W.translateTexts(plain, ver.mt);
+        return { texts: outs.map((o, i) => o || plain[i]), note: `Machine-translated from the KJV, not a published ${ver.short} Bible. Helpful for meaning, not a substitute for a professional translation.` };
+      }
+      const r = await fetch(BIBLE_API + encodeURIComponent(b.name + " " + ch).replace(/%20/g, "+") + "?translation=" + code);
+      if (!r.ok) throw new Error("bad");
+      const j = await r.json();
+      if (!j.verses || !j.verses.length) throw new Error("none");
+      const arr = []; j.verses.forEach((x) => { arr[x.verse - 1] = x.text.trim(); });
+      return { texts: Array.from(arr, (x) => x || "") };
+    }
+    async function load(code) {
+      const ver = VERSIONS.find((v) => v.code === code) || VERSIONS[0];
+      W.$("#verLab").textContent = ver.short;
+      const note = W.$("#verNote");
+      if (code !== "kjv") { versesEl.innerHTML = `<span style="font-family:var(--sans);font-size:15px;opacity:.7">Loading ${esc(ver.name)}…</span>`; }
+      try {
+        const r = await fetchVersion(code);
+        paint(r.texts, !!r.html);
+        current.plain = r.texts.map((t) => (r.html ? W.plain(t) : t));
+        current.version = code;
+        note.hidden = !r.note && code === "kjv";
+        note.textContent = r.note || (code === "kjv" ? "" : ver.name);
+        W.write("wfn2-version", code);
+      } catch (e) {
+        paint(kjv, true); current.plain = kjv.map(W.plain); current.version = "kjv"; W.$("#verLab").textContent = "KJV";
+        note.hidden = false; note.textContent = "Couldn’t load " + ver.name + " right now. Check your connection. Showing the KJV.";
+      }
+      wireVerses();
+    }
+    function wireVerses() {
+      W.$$(".v", versesEl).forEach((el) => {
+        const sup = el.querySelector("sup");
+        const pick = () => toggle(el);
+        sup.addEventListener("click", (e) => { e.stopPropagation(); pick(); });
+        sup.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+        el.addEventListener("click", (e) => {
+          if (window.getSelection && String(window.getSelection()).length > 1) return;
+          const w = e.target.closest(".w");
+          if (w && lookupOn) { lookup(w.textContent); return; }
+          if (!lookupOn) pick();
+        });
+      });
+    }
     const toggle = (el) => {
       const v = +el.dataset.v;
       if (selected.includes(v)) { selected = selected.filter((x) => x !== v); el.classList.remove("sel"); }
       else { selected.push(v); el.classList.add("sel"); }
-      selBar(main, slug, b.name, ch, verses);
+      selBar(slug, b.name, ch);
     };
-    W.$$(".v", main).forEach((el) => {
-      el.addEventListener("click", (e) => { if (window.getSelection && String(window.getSelection()).length > 1) return; toggle(el); });
-      el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(el); } });
+
+    paint(kjv, true); wireVerses();
+    if (version !== "kjv") load(version);
+    if (focusVerse) { const el = W.$("#v" + focusVerse); if (el) setTimeout(() => { el.scrollIntoView({ block: "center" }); el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1800); }, 80); }
+    W.setReadable(() => [b.name + ", chapter " + ch + "."].concat(current.plain));
+
+    W.$("#bookBtn").onclick = () => { W.write("wfn2-testament", b.testament); W.write("wfn2-goto-books", true); W.go("#/bible"); };
+    W.$("#rSet").onclick = () => settingsSheet(() => reader(main, slug, ch));
+    W.$("#rListen").onclick = (e) => W.speak([b.name + ", chapter " + ch + "."].concat(current.plain), e.currentTarget);
+    W.$("#verBtn").onclick = () => W.sheet(`<div class="sheet-head"><h2>Bible version</h2><button class="btn sm soft" data-close>Close</button></div>
+      <div class="card list" role="radiogroup" aria-label="Bible version" style="box-shadow:none">${VERSIONS.map((v) => `<button class="row-link" role="radio" aria-checked="${current.version === v.code}" data-ver="${v.code}"><span class="grow"><span class="label">${esc(v.name)}</span><span class="hint">${v.code === "kjv" ? "Works offline" : v.mt ? "Machine-translated from the KJV" : "Public domain · needs a connection"}</span></span><span class="radio-dot" aria-hidden="true"></span></button>`).join("")}</div>`, (el) => {
+      W.$$("[data-ver]", el).forEach((x) => x.onclick = () => { W.closeSheet(); load(x.dataset.ver); });
     });
+    W.$("#jumpBtn").onclick = () => W.sheet(`<div class="sheet-head"><h2>Jump to a verse</h2><button class="btn sm soft" data-close>Close</button></div>
+      <p class="small muted">${esc(b.name)} ${ch} · ${kjv.length} verses</p>
+      <div class="grid-ch">${kjv.map((_, i) => `<a href="#" data-jv="${i + 1}">${i + 1}</a>`).join("")}</div>`, (el) => {
+      W.$$("[data-jv]", el).forEach((x) => x.onclick = (e) => { e.preventDefault(); W.closeSheet(); const t = W.$("#v" + x.dataset.jv); if (t) { t.scrollIntoView({ behavior: "smooth", block: "center" }); t.classList.remove("flash"); void t.offsetWidth; t.classList.add("flash"); setTimeout(() => t.classList.remove("flash"), 1800); } });
+    });
+    W.$("#sumBtn").onclick = async (e) => {
+      const p = W.$("#sumText");
+      if (!p.hidden) { p.hidden = true; e.currentTarget.setAttribute("aria-expanded", "false"); return; }
+      p.textContent = "Loading…"; p.hidden = false; e.currentTarget.setAttribute("aria-expanded", "true");
+      let txt = null;
+      try { txt = window.WFNBible ? await window.WFNBible.getChapterSummary(slug, ch) : null; } catch (err) {}
+      p.textContent = txt || "A plain-English summary for this chapter is coming soon.";
+    };
+    W.$("#trBtn").onclick = () => W.pickLang(async (lang) => {
+      if (lang === "en") return load("kjv");
+      const mt = VERSIONS.find((v) => v.mt === lang);
+      if (mt) return load(mt.code);
+      versesEl.style.opacity = ".5";
+      const outs = await W.translateTexts(kjv.map(W.plain), lang);
+      versesEl.style.opacity = "";
+      paint(outs.map((o, i) => o || W.plain(kjv[i])), false);
+      current.plain = outs.map((o, i) => o || W.plain(kjv[i]));
+      const n = W.$("#verNote"); n.hidden = false; n.textContent = "Machine-translated from the KJV. Tap Translate, then English, to go back.";
+      W.$("#verLab").textContent = (W.read && ((window.WFNLookup.TRANSLATE_LANGS.find((l) => l.code === lang) || {}).name)) || lang;
+      wireVerses();
+    });
+    W.$("#addCmp").onclick = () => {
+      const shown = new Set([current.version].concat(W.$$("[data-cmp]").map((x) => x.dataset.cmp)));
+      W.sheet(`<div class="sheet-head"><h2>Compare a version</h2><button class="btn sm soft" data-close>Close</button></div>
+        <p class="small muted">Shown under the version you’re reading, not in place of it.</p>
+        <div class="card list" style="box-shadow:none">${VERSIONS.filter((v) => !shown.has(v.code)).map((v) => `<button class="row-link" data-add="${v.code}"><span class="grow"><span class="label">${esc(v.name)}</span></span>${icon("plus", "sm")}</button>`).join("")}</div>`, (el) => {
+        W.$$("[data-add]", el).forEach((x) => x.onclick = async () => {
+          W.closeSheet();
+          const ver = VERSIONS.find((v) => v.code === x.dataset.add);
+          const box = document.createElement("section");
+          box.className = "compare-block"; box.dataset.cmp = ver.code;
+          box.innerHTML = `<div style="display:flex;align-items:center;gap:8px;font-family:var(--sans)"><b style="flex-grow:1;font-size:13px;letter-spacing:.12em;text-transform:uppercase">${esc(ver.name)}</b><button class="icon-btn" aria-label="Remove ${esc(ver.name)}">${icon("close", "sm")}</button></div><p style="margin:0;opacity:.7;font-family:var(--sans);font-size:15px">Loading…</p>`;
+          W.$("#compare").appendChild(box);
+          box.querySelector("button").onclick = () => box.remove();
+          try {
+            const r = await fetchVersion(ver.code);
+            box.querySelector("p").outerHTML = (r.note ? `<p class="small" style="font-family:var(--sans);opacity:.75;margin:0 0 8px">${esc(r.note)}</p>` : "") + `<p style="margin:0">${r.texts.map((t, i) => `<span class="v"><sup>${i + 1}</sup>${r.html ? t : esc(t)} </span>`).join("")}</p>`;
+          } catch (e) { box.querySelector("p").textContent = "Couldn’t load this version right now."; }
+          box.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+    };
   }
 
-  function selBar(main, slug, name, ch, verses) {
+  function lookup(word) {
+    if (window.WFNLookup && window.WFNLookup.openLookup) return window.WFNLookup.openLookup(word);
+    W.toast("The dictionary is still loading. Try again in a moment.");
+  }
+
+  async function related(slug, name, ch, v, text) {
+    if (!window.WFNBible || !window.WFNGlass) return W.toast("Related verses are still loading.");
+    let x = null;
+    try { x = await window.WFNBible.getXref(slug); } catch (e) {}
+    const codes = (x && x[String(ch)] && x[String(ch)][String(v)]) || [];
+    if (!codes.length) return W.toast("No related verses for " + name + " " + ch + ":" + v);
+    const books = await W.bookIndex();
+    const items = codes.map((code) => { const r = window.WFNBible.parseXref(code); const bk = books[r.b] || {}; let label = `${bk.name} ${r.c}:${r.v}`; if (r.ec !== r.c) label += `–${r.ec}:${r.ev}`; else if (r.ev !== r.v) label += `–${r.ev}`; return Object.assign(r, { slug: bk.slug, label }); });
+    const G = window.WFNGlass;
+    const body = G.open(G.head(`${esc(name)} ${ch}:${v}`) + `<div class="wg-scripture">${esc(text)}</div><div class="wg-rule"></div><div class="wg-label">Related across the Bible · ${items.length}</div><div class="wg-list">${items.map((it, i) => `<button type="button" class="wg-row" data-i="${i}"><span class="wg-row-main"><span class="wg-row-ref">${esc(it.label)}</span><span class="wg-row-text">…</span></span></button>`).join("")}</div><div class="wg-note">Cross-references from OpenBible.info (CC BY).</div>`);
+    body.querySelector(".wg-list").addEventListener("click", (e) => { const row = e.target.closest(".wg-row"); if (!row) return; const it = items[+row.dataset.i]; G.close(); W.go(`#/bible/${it.slug}/${it.c}/${it.v}`); });
+    items.forEach(async (it, i) => { try { const bd = await W.book(it.slug); const parts = []; for (let c = it.c; c <= it.ec; c++) { const vs = bd.chapters[c - 1] || []; const from = c === it.c ? it.v : 1, to = c === it.ec ? it.ev : vs.length; for (let k = from; k <= to && parts.length < 6; k++) if (vs[k - 1]) parts.push(W.plain(vs[k - 1])); } const el = body.querySelector(`.wg-row[data-i="${i}"] .wg-row-text`); if (el) el.textContent = parts.join(" "); } catch (err) {} });
+  }
+
+  function selBar(slug, name, ch) {
     let bar = W.$(".selbar");
     if (!selected.length) { if (bar) bar.remove(); return; }
     selected.sort((a, b) => a - b);
     const ref = name + " " + ch + ":" + rangeLabel(selected);
-    const text = selected.map((v) => W.plain(verses[v - 1])).join(" ");
+    const text = selected.map((v) => current.plain[v - 1] || "").join(" ");
+    const kjvText = () => W.book(slug).then((d) => selected.map((v) => W.plain(d.chapters[ch - 1][v - 1])));
     if (!bar) { bar = document.createElement("div"); bar.className = "selbar"; bar.setAttribute("role", "toolbar"); bar.setAttribute("aria-label", "Verse actions"); document.body.appendChild(bar); }
     const mk = selected.length === 1 ? W.S.getMark(slug, ch, selected[0]) : null;
+    const verLab = (VERSIONS.find((v) => v.code === current.version) || { short: "KJV" }).short;
     bar.innerHTML = `<div style="display:flex;align-items:center;gap:10px;padding:0 4px">
         <b style="flex-grow:1;font:600 14px var(--sans)">${esc(ref)}</b>
-        <div class="swatches" role="group" aria-label="Highlight colour">${["gold", "mint", "rose", "sky"].map((c) => `<button class="swatch" data-c="${c}" aria-label="Highlight ${c}" aria-pressed="${mk && mk.color === c}" style="background:${hlColor(c)}"></button>`).join("")}</div>
+        <div class="swatches" role="group" aria-label="Highlight colour">${Object.keys(HL).map((c) => `<button class="swatch" data-c="${c}" aria-label="Highlight ${c}" aria-pressed="${!!(mk && hlName(mk.color) === c)}" style="background:${HL[c]}"></button>`).join("")}</div>
       </div>
       <div class="acts">
         <button data-a="save">${icon(mk && mk.saved ? "check" : "save")}${mk && mk.saved ? "Saved" : "Save"}</button>
         <button data-a="note">${icon("pen")}Note</button>
         <button data-a="copy">${icon("copy")}Copy</button>
         <button data-a="share">${icon("share")}Share</button>
-        <button data-a="clear">${icon("close")}Clear</button>
-      </div>`;
+        <button data-a="pray">${icon("hand")}Pray</button>
+        <button data-a="lookup">${icon("search")}Look up</button>
+        <button data-a="translate">${icon("globe")}Translate</button>
+        <button data-a="related">${icon("related")}Related</button>
+      </div>
+      <button class="btn sm soft" data-a="clear" style="align-self:center">Done</button>`;
     const cleanup = () => { selected = []; W.$$(".v.sel").forEach((e) => e.classList.remove("sel")); bar.remove(); };
-    W.$$(".swatch", bar).forEach((s) => s.onclick = () => {
+    W.$$(".swatch", bar).forEach((s) => s.onclick = async () => {
       const c = s.dataset.c;
-      selected.forEach((v) => {
+      const ktexts = await kjvText();
+      selected.forEach((v, i) => {
         const cur = W.S.getMark(slug, ch, v);
-        const next = cur && cur.color === c ? null : c;
-        W.S.setHighlight(slug, name, ch, v, W.plain(verses[v - 1]), next);
+        const nxt = cur && hlName(cur.color) === c ? null : c;
+        W.S.setHighlight(slug, name, ch, v, ktexts[i], nxt);
         const el = W.$("#v" + v);
         el.className = el.className.replace(/\bhl-\w+/g, "").trim();
-        if (next) el.classList.add("hl-" + next);
+        if (nxt) el.classList.add("hl-" + nxt);
       });
       cleanup();
     });
-    bar.onclick = (e) => {
+    bar.onclick = async (e) => {
       const a = e.target.closest("[data-a]"); if (!a) return;
       const act = a.dataset.a;
+      const full = "“" + text + "” " + ref + " (" + verLab + ")";
       if (act === "clear") return cleanup();
-      if (act === "copy") { W.copyText("“" + text + "” " + ref + " (KJV)"); return cleanup(); }
-      if (act === "share") { W.shareOrCopy({ title: ref, text: "“" + text + "” " + ref + " (KJV)" }); return cleanup(); }
-      if (act === "save") { selected.forEach((v) => W.S.toggleSaved(slug, name, ch, v, W.plain(verses[v - 1]))); W.toast("Saved to your verses"); return cleanup(); }
-      if (act === "note") {
-        const v0 = selected[0];
+      if (act === "copy") { W.copyText(full); return cleanup(); }
+      if (act === "share") { W.shareOrCopy({ title: ref, text: full }); return cleanup(); }
+      if (act === "pray") { cleanup(); if (window.WFNShare && window.WFNShare.pray) window.WFNShare.pray(text, ref); return; }
+      if (act === "save") { const kt = await kjvText(); selected.forEach((v, i) => W.S.toggleSaved(slug, name, ch, v, kt[i])); W.toast("Saved to your verses"); return cleanup(); }
+      if (act === "note") { const v0 = selected[0]; cleanup(); return noteSheet({ type: "bible", refKey: "bible:" + slug + ":" + ch + ":" + v0, refLabel: ref, quote: text, onSave: () => { const el = W.$("#v" + v0); if (el) el.classList.add("noted"); } }); }
+      if (act === "related") { const v0 = selected[0]; cleanup(); return related(slug, name, ch, v0, current.plain[v0 - 1] || ""); }
+      if (act === "lookup") {
+        const words = Array.from(new Set((text.match(/[A-Za-z][A-Za-z']+/g) || [])));
         cleanup();
-        noteSheet({ refKey: slug + ":" + ch + ":" + v0, refLabel: ref, quote: text, onSave: () => { const el = W.$("#v" + v0); if (el) el.classList.add("noted"); } });
+        return W.sheet(`<div class="sheet-head"><h2>Look up a word</h2><button class="btn sm soft" data-close>Close</button></div><p class="small muted">${esc(ref)}</p><div class="chips">${words.map((w) => `<button class="chip" data-w="${esc(w)}">${esc(w)}</button>`).join("")}</div><div id="lkOut" style="font-size:15px;line-height:23px"></div>`, (el) => {
+          W.$$("[data-w]", el).forEach((b) => b.onclick = async () => { const out = W.$("#lkOut", el); out.innerHTML = "<b>" + esc(b.dataset.w) + "</b> · looking up…"; if (window.WFNLookup) await window.WFNLookup.renderLookupInto(out, b.dataset.w); });
+        });
+      }
+      if (act === "translate") {
+        cleanup();
+        return W.pickLang(async (lang) => {
+          W.sheet(`<div class="sheet-head"><h2>${esc(ref)}</h2><button class="btn sm soft" data-close>Close</button></div><p class="serif" id="tvOut" style="font-size:18px;line-height:29px">Translating…</p><p class="small muted">Original: ${esc(text)}</p>`);
+          const out = lang === "en" ? text : window.WFNLookup ? await window.WFNLookup.translateText(text, lang) : null;
+          const el = W.$("#tvOut"); if (el) el.textContent = out || (text + " (translation unavailable right now)");
+        });
       }
     };
   }
@@ -190,12 +381,12 @@
       </div>
       <div class="font-row" role="radiogroup" aria-label="Font">${W.FONTS.map((f) => `<button role="radio" aria-checked="${s.font === f.id}" data-font="${f.id}"><b style="font-family:${esc(f.stack)}">Aa</b><small>${esc(f.name.replace(" Hyperlegible", "").replace(" Sans", ""))}</small></button>`).join("")}</div>
       <div class="card list" style="border-radius:18px">
-        ${[["nums", "Verse numbers", "Small numbers before each verse"], ["red", "Words of Jesus in red", "Gospels, Acts and Revelation"]].map(([k, l, h]) => `<label class="row-link" style="min-height:54px"><span class="grow"><span class="label" style="font-size:15px">${l}</span><span class="hint">${h}</span></span><span class="switch"><input type="checkbox" data-k="${k}" ${s[k] ? "checked" : ""}><span></span></span></label>`).join("")}
+        ${[["nums", "Verse numbers", "Small numbers before each verse"], ["red", "Words of Jesus in red", "Gospels, Acts and Revelation"], ["lookup", "Tap a word to define it", "Dictionary, Bible names and KJV words"]].map(([k, l, h]) => `<label class="row-link" style="min-height:54px"><span class="grow"><span class="label" style="font-size:15px">${l}</span><span class="hint">${h}</span></span><span class="switch"><input type="checkbox" data-k="${k}" ${s[k] !== false && (k !== "red" || s[k]) && (k !== "nums" || s[k]) ? "checked" : ""}><span></span></span></label>`).join("")}
       </div>`;
     const wire = (el) => {
       W.$$("[data-read]", el).forEach((b) => b.onclick = () => { W.setSetting("read", b.dataset.read); refresh(el); });
       W.$$("[data-font]", el).forEach((b) => b.onclick = () => { W.setSetting("font", b.dataset.font); refresh(el); });
-      W.$$("[data-k]", el).forEach((c) => c.onchange = () => { W.setSetting(c.dataset.k, c.checked); if (onChange) applyLive(); });
+      W.$$("[data-k]", el).forEach((c) => c.onchange = () => { W.setSetting(c.dataset.k, c.checked); if (c.dataset.k === "lookup" && onChange) { W.closeSheet(); onChange(); } else if (onChange) applyLive(); });
       const sz = W.$("#sz", el);
       sz.oninput = () => { W.setSetting("size", +sz.value); W.$("#szv", el).textContent = sz.value + " pt"; };
     };

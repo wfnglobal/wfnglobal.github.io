@@ -59,13 +59,14 @@
     <div class="page">
       <section class="hero" id="votd" aria-labelledby="votdH">
         <div style="display:flex;align-items:center;gap:8px"><h2 id="votdH" class="eyebrow" style="flex-grow:1">Verse of the Day</h2></div>
-        <p class="verse">${esc(t.verse.text)}</p>
+        <p class="verse" data-tr>${esc(t.verse.text)}</p>
         <span class="ref">${esc(t.verse.ref)} · KJV</span>
-        ${t.verse.summary ? `<p class="summary" id="votdSum" hidden>${esc(t.verse.summary)}</p>` : ""}
+        ${t.verse.summary ? `<p class="summary" id="votdSum" hidden data-tr>${esc(t.verse.summary)}</p>` : ""}
         <div class="actions">
           <button class="icon-btn on-hero" id="vListen" aria-label="Listen" aria-pressed="false">${icon("listen")}</button>
           <button class="icon-btn on-hero" id="vShare" aria-label="Share">${icon("share")}</button>
           ${t.verse.summary ? `<button class="icon-btn on-hero" id="vSum" aria-label="What this verse means" aria-expanded="false">${icon("summary")}</button>` : ""}
+          ${W.translateBtn("#votd", "hero-chip")}
           <span style="flex-grow:1"></span>
           <button class="btn sm light" id="vAmen">${done.verse ? icon("check", "sm") + "Amen" : "Amen"}</button>
         </div>
@@ -73,10 +74,11 @@
 
       <section class="card pad" id="decl" aria-labelledby="declH" style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;align-items:center"><h2 id="declH" class="eyebrow spruce" style="flex-grow:1">Today’s Declaration</h2><span class="small muted">${esc(t.declaration.ref || "")}</span></div>
-        <div class="serif" style="font-size:18px;line-height:29px;display:flex;flex-direction:column;gap:10px">${declPreview.map((l) => `<p>${esc(l)}</p>`).join("")}</div>
+        <div class="serif" style="font-size:18px;line-height:29px;display:flex;flex-direction:column;gap:10px">${declPreview.map((l) => `<p data-tr>${esc(l)}</p>`).join("")}</div>
         <div style="display:flex;gap:8px;padding-top:4px">
           <a class="btn sm" href="#/prayer/declaration">Declare it all</a>
-          <button class="btn sm ghost" id="dListen" aria-pressed="false">${icon("listen", "sm")}Listen</button>
+          <button class="btn sm ghost" id="dListen" aria-pressed="false" aria-label="Listen">${icon("listen", "sm")}<span data-ltxt>Listen</span></button>
+          ${W.translateBtn("#decl")}
         </div>
       </section>
 
@@ -134,8 +136,8 @@
     </div>`;
 
     const vText = t.verse.text + " " + t.verse.ref;
-    W.$("#vListen").onclick = (e) => W.speak(t.verse.text + ". " + t.verse.ref.replace(":", ", verse "), e.currentTarget);
-    W.$("#dListen").onclick = (e) => W.speak((t.declaration.lines || []).filter(Boolean).join(" "), e.currentTarget);
+    W.$("#vListen").onclick = (e) => W.speak([W.$("#votd .verse").textContent, t.verse.ref.replace(":", ", verse ")], e.currentTarget);
+    W.$("#dListen").onclick = (e) => W.speak((t.declaration.lines || []).filter(Boolean), e.currentTarget);
     W.$("#vShare").onclick = () => W.shareOrCopy({ title: "Verse of the Day", text: "“" + t.verse.text + "” " + t.verse.ref, url: "https://wfnglobal.org/app/" });
     const sumBtn = W.$("#vSum");
     if (sumBtn) sumBtn.onclick = () => { const s = W.$("#votdSum"); s.hidden = !s.hidden; sumBtn.setAttribute("aria-expanded", String(!s.hidden)); };

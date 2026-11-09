@@ -67,6 +67,13 @@
     summary: "M4 6h16M4 11h16M4 16h10",
     note: "M5 4h14v12l-4 4H5zM15 20v-4h4",
     cross: "M12 3v18M7 8h10",
+    sermons: "M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zM19 11a7 7 0 0 1-14 0M12 19v3",
+    mic: "M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zM19 11a7 7 0 0 1-14 0M12 19v3",
+    globe: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18",
+    wave: "M6 10v4M10 6v12M14 9v6M18 7v10",
+    layers: "M12 3l9 5-9 5-9-5zM3 13l9 5 9-5",
+    jump: "M4 6h16M4 12h10M4 18h7",
+    related: "M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1",
     send: "M22 2L11 13M22 2l-7 20-4-9-9-4z",
   };
   function icon(name, cls) {
@@ -204,26 +211,61 @@
     ta.remove();
   }
 
-  // Read aloud with the device voice (works offline, no key).
-  let speaking = null;
-  function speak(text, btn) {
-    if (!("speechSynthesis" in window)) { toast("Read aloud isn't supported on this browser"); return; }
-    if (speaking) { speechSynthesis.cancel(); const was = speaking; speaking = null; if (was === btn) return; }
-    const u = new SpeechSynthesisUtterance(text);
-    u.rate = 0.95; u.lang = "en-GB";
-    const voices = speechSynthesis.getVoices();
-    const v = voices.find((x) => /en-(GB|NG|US)/.test(x.lang) && /natural|premium|enhanced|google/i.test(x.name)) || voices.find((x) => /^en/.test(x.lang));
-    if (v) u.voice = v;
-    speaking = btn || true;
-    if (btn) btn.setAttribute("aria-pressed", "true");
-    u.onend = u.onerror = () => { if (btn) btn.setAttribute("aria-pressed", "false"); speaking = null; };
-    speechSynthesis.speak(u);
+  // ---------- Read aloud ----------
+  // Uses the shared WFN voice engine (app/js/wfn-tts.js): the voice and
+  // speed chosen in Listen apply everywhere. A listen button shows Stop
+  // while it reads, and a second tap stops it.
+  const TTS = () => window.WFNTTS && window.WFNTTS.supported ? window.WFNTTS : null;
+  let activeBtn = null;
+  function setBtn(btn, on) {
+    if (!btn) return;
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.setAttribute("aria-label", on ? "Stop reading" : (btn.dataset.label || "Listen"));
+    const svg = btn.querySelector("svg.i");
+    if (svg) svg.querySelector("path").setAttribute("d", P[on ? "stop" : "listen"]);
+    const txt = btn.querySelector("[data-ltxt]");
+    if (txt) txt.textContent = on ? "Stop" : "Listen";
   }
-  function stopSpeaking() { if (speaking && "speechSynthesis" in window) speechSynthesis.cancel(); speaking = null; }
+  function sentences(text) {
+    return String(text).replace(/\s+/g, " ").match(/[^.!?;:]+[.!?;:]*["”’)]?\s*/g) || [text];
+  }
+  function speak(text, btn) {
+    const t = TTS();
+    if (!t) { toast("Read aloud isn't supported on this browser"); return; }
+    const busy = t.getState() !== "idle";
+    if (busy) { t.stop(); const was = activeBtn; setBtn(activeBtn, false); activeBtn = null; if (was === btn) return; }
+    const items = Array.isArray(text) ? text : sentences(text).map((x) => x.trim()).filter(Boolean);
+    activeBtn = btn || null;
+    if (btn) { if (!btn.dataset.label) btn.dataset.label = btn.getAttribute("aria-label") || "Listen"; setBtn(btn, true); }
+    t.speak(items);
+  }
+  function stopSpeaking() { const t = TTS(); if (t && t.getState() !== "idle") t.stop(); setBtn(activeBtn, false); activeBtn = null; }
+  function wireTTSState() {
+    const t = TTS();
+    if (!t) return setTimeout(wireTTSState, 300);
+    t.onState((st) => { if (st === "idle" && activeBtn) { setBtn(activeBtn, false); activeBtn = null; } });
+  }
+  setTimeout(wireTTSState, 0);
+
+  // What "Listen" reads on the current screen. Views may register a
+  // function returning a list of sentences; otherwise the screen's own
+  // headings and paragraphs are read.
+  let readable = null;
+  function setReadable(fn) { readable = fn || null; }
+  function getReadable() {
+    if (readable) { try { const r = readable(); if (r && r.length) return r; } catch (e) {} }
+    const out = [], seen = new Set();
+    $$("#main h1, #main h2, #main h3, #main p, #main li, #main blockquote p, #main .serif").forEach((el) => {
+      if (el.closest("button, .nav, .sheet, [data-noread]")) return;
+      const t = el.textContent.replace(/\s+/g, " ").trim();
+      if (t.length > 1 && !seen.has(t)) { seen.add(t); out.push(t); }
+    });
+    return out;
+  }
 
   // ---------- nav + router ----------
-  const TABS = [["today", "Today", ""], ["bible", "Bible", "bible"], ["prayer", "Prayer", "prayer"], ["library", "Library", "library"], ["you", "You", "you"]];
-  const TAB_OF = { "": "today", home: "today", bible: "bible", search: "bible", prayer: "prayer", dreams: "prayer", library: "library", sermons: "library", sermon: "library", studies: "library", study: "library", plan: "library", book: "library", you: "you", kept: "you", journal: "you", note: "you", invite: "you", scan: "you", give: "you", settings: "you", jesus: "today", climb: "today" };
+  const TABS = [["today", "Today", ""], ["bible", "Bible", "bible"], ["sermons", "Sermons", "sermons"], ["prayer", "Prayer", "prayer"], ["library", "Library", "library"], ["you", "You", "you"]];
+  const TAB_OF = { "": "today", home: "today", bible: "bible", search: "bible", prayer: "prayer", dreams: "prayer", library: "library", sermons: "sermons", sermon: "sermons", studies: "bible", study: "bible", plan: "library", book: "library", you: "you", kept: "you", journal: "you", note: "you", invite: "you", scan: "you", give: "you", settings: "you", jesus: "today", climb: "today" };
   const NO_NAV = { scan: 1, invite: 1, climb: 1 };
   function renderNav(active) {
     $("#nav").innerHTML = TABS.map(([k, label, h]) =>
@@ -234,7 +276,7 @@
   let lastHash = "";
   const scrollMem = {};
   function route() {
-    closeSheet(); stopSpeaking(); $$(".selbar").forEach((n) => n.remove());
+    closeSheet(); stopSpeaking(); readable = null; try { if (window.WFNGlass && document.querySelector("#wfnGlass.open")) window.WFNGlass.close(); } catch (e) {} $$(".selbar").forEach((n) => n.remove());
     if (window.WFNGame && !/^#\/climb/.test(location.hash)) { try { window.WFNGame.unmount(); } catch (e) {} }
     const hash = location.hash.replace(/^#\/?/, "");
     scrollMem[lastHash] = window.scrollY;
@@ -246,7 +288,7 @@
     renderNav(tab);
     const hide = NO_NAV[key] || (key === "bible" && parts.length >= 3);
     $("#nav").hidden = !!hide;
-    $("#app").classList.toggle("no-nav", !!hide);
+    $("#app").classList.toggle("no-nav", !!hide); document.body.classList.toggle("no-nav", !!hide);
     const main = $("#main");
     main.className = "view";
     main.innerHTML = "";
@@ -326,6 +368,6 @@
   }
 
   window.WFN2 = { C, S, BASE, DATA, $, $$, esc, read, write, asset, plain, slugify, icon, emblem, settings: () => settings, setSetting, FONTS, READ_THEMES,
-    profile, avatar, PHOTO_KEY, getJSON, today, sermonPoster, bookIndex, book, toast, sheet, closeSheet, ask, shareOrCopy, copyText, speak, stopSpeaking,
+    profile, avatar, PHOTO_KEY, getJSON, today, sermonPoster, bookIndex, book, toast, sheet, closeSheet, ask, shareOrCopy, copyText, speak, stopSpeaking, setReadable, getReadable, sentences,
     view, go, back, topbar, start, route };
 })();

@@ -145,3 +145,12 @@ OneSignal push · seasonal effects.
 
 - Prayer requests to the team can go by email, the WhatsApp prayer group (request copied first, then pasted) or Instagram DM (ig.me/m/wordfaithnetwork).
 - Oladapo said "Switch it on". Pushed to main as 54f65b4; GitHub Pages deployed it (first attempt timed out on GitHub's side, the rerun succeeded). Old app at /app/classic.html.
+
+## Nov 9, evening: restored everything the classic app had
+
+Oladapo found features missing after go-live. Audited the classic app (app/classic.html + app/js/app.js) and brought back:
+- Listen (floating, every screen): voice choice incl. Pidgin, speed, Play/Pause/Resume/Stop. Inline listen buttons now turn into Stop while reading.
+- Ask Tolu: mic or typed requests; opens sermons, studies, declaration, night/fire prayer, Bible book/chapter/verse, library, give, invite, Jesus, game; "search for…" across sermons, studies, library and the whole Bible; read/stop/pause/resume.
+- Translate (Yorùbá, Igbo, Hausa, Pidgin, more): Verse of the Day, declaration, night prayer, prayer points, fire prayer, sermons, studies, plan days, museum galleries, each Bible verse, and whole chapters.
+- Bible reader: tap any word for the dictionary (setting to turn off), tap a verse number to select; 13 versions (bible-api.com + machine-translated Yorùbá/Igbo/Hausa); compare versions; jump to verse; chapter summary; related verses (cross-references); Pray and Look up on verses; title button goes to the Old/New Testament book list; classic highlight colours (gold/green/blue/pink) so old highlights show; notes saved in the classic format.
+- Sermons tab is back (six tabs like classic) with today's sermon and the full archive by month, with notes. Bible studies live under the Bible tab. Library holds books and plans.

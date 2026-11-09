@@ -312,7 +312,7 @@
       <h1 style="font-size:34px;line-height:40px">${g.title}</h1>
     </header>
     <div class="page">
-      <p class="serif" style="font-size:19px;line-height:31px;padding:0 4px">${esc(g.text)}</p>
+      <div style="display:flex;justify-content:flex-end">${W.translateBtn("#gtext")}</div><p class="serif" id="gtext" style="font-size:19px;line-height:31px;padding:0 4px"><span data-tr>${esc(g.text)}</span></p>
       <div id="psg" class="stack"></div>
       ${golgotha ? `<section class="section"><h2 class="h2" style="padding:0 4px">The seven sayings from the cross</h2>
         <ol class="card points">${g.sayings.map((s, i) => `<li><span class="n" style="background:var(--amber-soft);color:var(--amber);font-size:11px">${["I", "II", "III", "IV", "V", "VI", "VII"][i]}</span><p>${esc(s[0])}<br><span class="small" style="font-family:var(--sans);font-weight:600;color:var(--amber)">${s[1]}</span></p></li>`).join("")}</ol></section>
@@ -322,7 +322,7 @@
         ${n < 12 ? `<a class="btn" href="#/jesus/${n + 1}">${GALLERIES[n].place}${icon("chev", "sm")}</a>` : `<a class="btn" href="#/jesus">Finish the walk</a>`}
       </div>
     </div>`;
-    W.$("#gl").onclick = (e) => W.speak(g.title + ". " + g.text, e.currentTarget);
+    W.$("#gl").onclick = (e) => W.speak([g.title + "."].concat(W.$$("#gtext [data-tr], #psg p").map((x) => x.textContent)), e.currentTarget);
     // Show the first passage of each reference in full, from the offline Bible.
     const box = W.$("#psg");
     for (const [label, path] of g.refs) {

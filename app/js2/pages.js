@@ -38,8 +38,8 @@
         <span class="chev muted">${icon("chev", "sm")}</span>
       </a>
       <section class="section" aria-labelledby="ppH">
-        <h2 id="ppH" class="h2" style="padding:0 4px">Pray through today</h2>
-        <ol class="card points">${(C.PRAYER_POINTS || []).map((p, i) => `<li><span class="n">${i + 1}</span><p>${esc(p)}</p></li>`).join("")}</ol>
+        <div class="section-head"><h2 id="ppH" class="h2">Pray through today</h2>${W.translateBtn("#pp")}</div>
+        <ol class="card points" id="pp">${(C.PRAYER_POINTS || []).map((p, i) => `<li><span class="n">${i + 1}</span><p data-tr>${esc(p)}</p></li>`).join("")}</ol>
       </section>
       <section class="section" aria-labelledby="myH">
         <div class="section-head"><h2 id="myH" class="h2">My prayer list</h2><span class="small muted">Private, on this phone</span></div>
@@ -141,15 +141,15 @@
     const ds = stanzas(t.declaration.lines);
     main.innerHTML = W.topbar("Today’s declaration", { back: "#/prayer", right: `<button class="icon-btn" id="dl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button>` }) + `
     <div class="page">
-      <p class="eyebrow spruce" style="padding:0 4px">${esc(t.declaration.ref || "")} · say it out loud</p>
-      <div class="prose" style="gap:22px">${ds.map((s) => `<div style="display:flex;flex-direction:column;gap:12px">${s.map((l) => `<p style="font-size:calc(var(--read-size) + 1px);line-height:1.6">${esc(l)}</p>`).join("")}</div>`).join('<hr class="hr">')}</div>
+      <div style="display:flex;align-items:center;gap:8px;padding:0 4px"><p class="eyebrow spruce" style="flex-grow:1">${esc(t.declaration.ref || "")} · say it out loud</p>${W.translateBtn("#dprose")}</div>
+      <div class="prose" id="dprose" style="gap:22px">${ds.map((s) => `<div style="display:flex;flex-direction:column;gap:12px">${s.map((l) => `<p data-tr style="font-size:calc(var(--read-size) + 1px);line-height:1.6">${esc(l)}</p>`).join("")}</div>`).join('<hr class="hr">')}</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
         <button class="btn lg" id="amen">Amen</button>
         <button class="btn lg ghost" id="ds">${icon("share", "sm")}Share</button>
       </div>
     </div>`;
     const all = (t.declaration.lines || []).filter(Boolean).join(" ");
-    W.$("#dl").onclick = (e) => W.speak(all, e.currentTarget);
+    W.$("#dl").onclick = (e) => W.speak(W.$$("#dprose p").map((x) => x.textContent), e.currentTarget); void all;
     W.$("#amen").onclick = () => { W.markDone("declaration"); W.toast("Amen. Declared."); };
     W.$("#ds").onclick = () => W.shareOrCopy({ title: "Today’s declaration", text: (t.declaration.lines || []).filter(Boolean).slice(0, 3).join("\n\n") + "\n\n" + (t.declaration.ref || ""), url: "https://wfnglobal.org/app/" });
   }
@@ -158,10 +158,11 @@
     main.innerHTML = W.topbar("Night prayer", { back: "#/prayer", right: `<button class="icon-btn" id="nl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button>` }) + `
     <div class="page">
       <div style="display:flex;justify-content:center;color:var(--slate)">${icon("moon").replace('class="i "', 'class="i" style="width:44px;height:44px;stroke-width:1.3"')}</div>
-      <div class="prose" style="text-align:left"><p style="font-size:calc(var(--read-size) + 1px);line-height:1.7">${esc(t.night.text || "")}</p><p style="font-weight:600">${esc(t.night.amen || "Amen.")}</p></div>
+      <div style="display:flex;justify-content:flex-end">${W.translateBtn("#nprose")}</div>
+      <div class="prose" id="nprose" style="text-align:left"><p data-tr style="font-size:calc(var(--read-size) + 1px);line-height:1.7">${esc(t.night.text || "")}</p><p data-tr style="font-weight:600">${esc(t.night.amen || "Amen.")}</p></div>
       <button class="btn lg block" id="amen">Amen. Goodnight.</button>
     </div>`;
-    W.$("#nl").onclick = (e) => W.speak((t.night.text || "") + " " + (t.night.amen || ""), e.currentTarget);
+    W.$("#nl").onclick = (e) => W.speak(W.$$("#nprose p").map((x) => x.textContent).join(" "), e.currentTarget);
     W.$("#amen").onclick = () => { W.markDone("night"); W.toast("Rest well. He keeps you."); };
   }
 
@@ -208,12 +209,12 @@
     let p = t.dreamFire;
     if (id) { try { p = ((await W.getJSON("dream-archive.json")).prayers || []).find((x) => x.id === id) || p; } catch (e) {} }
     main.innerHTML = W.topbar("Fire prayer", { back: "#/dreams", right: `<button class="icon-btn" id="fl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button>` }) + `
-    <div class="page">
-      <div style="display:flex;flex-direction:column;gap:10px;padding:0 4px"><span class="eyebrow amber">${esc(p.date || "Tonight")}</span><h2 class="serif" style="margin:0;font-weight:400;font-size:30px;line-height:37px">${esc(p.title)}</h2><p class="serif ink2" style="font-size:17px;line-height:28px">${esc(p.intro || "")}</p></div>
-      <ol class="card points">${(p.points || []).map((x, i) => `<li><span class="n">${i + 1}</span><p>${esc(x)}</p></li>`).join("")}</ol>
+    <div class="page" id="fire">
+      <div style="display:flex;flex-direction:column;gap:10px;padding:0 4px"><span class="eyebrow amber">${esc(p.date || "Tonight")}</span><h2 class="serif" style="margin:0;font-weight:400;font-size:30px;line-height:37px">${esc(p.title)}</h2><p class="serif ink2" data-tr style="font-size:17px;line-height:28px">${esc(p.intro || "")}</p><div>${W.translateBtn("#fire")}</div></div>
+      <ol class="card points">${(p.points || []).map((x, i) => `<li><span class="n">${i + 1}</span><p data-tr>${esc(x)}</p></li>`).join("")}</ol>
       <button class="btn lg block" id="amen">Amen</button>
     </div>`;
-    W.$("#fl").onclick = (e) => W.speak(p.title + ". " + (p.points || []).join(" "), e.currentTarget);
+    W.$("#fl").onclick = (e) => W.speak([p.title].concat(W.$$("#fire [data-tr]").map((x) => x.textContent)), e.currentTarget);
     W.$("#amen").onclick = () => W.toast("Amen. Sleep in peace.");
   }
   async function archive(main) {
@@ -224,48 +225,50 @@
 
   // ---------- Library ----------
   W.view("library", async function (main) {
-    const t = await W.today();
-    const studies = C.BIBLE_STUDY || [], sermons = C.SERMONS || [], books = C.LIBRARY_BOOKS || [], plans = C.READING_PLANS || [];
+    const books = C.LIBRARY_BOOKS || [], plans = C.READING_PLANS || [];
     main.innerHTML = `
-    <header class="page-head"><div class="row"><h1 style="flex-grow:1">Library</h1><a class="icon-btn" href="#/search" aria-label="Search">${icon("search")}</a></div></header>
+    <header class="page-head"><div class="row"><h1 style="flex-grow:1">Library</h1><a class="icon-btn" href="#/search" aria-label="Search">${icon("search")}</a></div><p class="small muted">Books by Oladapo Olaleye and reading plans</p></header>
+    <div class="page">
+      <section class="section"><div class="section-head"><h2 class="h2">Books</h2><span class="small muted">A new book every two weeks</span></div>
+        <div class="hscroll">${books.map((b) => `<a class="book-cover" href="#/book/${b.slug}"><img src="${W.BASE}assets/library/${b.slug}-cover.svg" alt="" loading="lazy" onerror="this.style.background='${b.bg1}'"><span>${esc(b.title)}</span></a>`).join("")}</div>
+        <div class="card list">${books.map((b) => `<a class="row-link" href="#/book/${b.slug}"><span class="grow"><span class="label serif" style="font-size:17px">${esc(b.title)}</span><span class="hint">${esc(b.badge || "")}</span></span><span class="chev">${icon("chev", "xs")}</span></a>`).join("")}</div>
+      </section>
+      ${plans.length ? `<section class="section"><h2 class="h2" style="padding:0 4px">Reading plans</h2>${plans.map((pl) => { const pr = W.S.getPlanProgress(pl.slug); const n = (pr && pr.completedDays || []).length; return `<a class="card pad" href="#/plan/${pl.slug}" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink)"><span class="eyebrow spruce">${pl.days.length} days${n ? " · " + n + " done" : ""}</span><span class="h2">${esc(pl.title)}</span><span class="small ink2">${esc(pl.subtitle)}</span></a>`; }).join("")}</section>` : ""}
+    </div>`;
+  });
+
+  // ---------- Sermons: its own tab, with the full archive ----------
+  W.view("sermons", async function (main) {
+    const t = await W.today();
+    const all = C.SERMONS || [];
+    const notes = W.S.getNotes();
+    const nc = (slug) => notes.filter((n) => n.refKey === "sermon:" + slug).length;
+    const months = {};
+    all.slice(1).forEach((s) => { const k = (s.date || "").replace(/^([A-Za-z]+) \d+, (\d{4})$/, "$1 $2") || "Earlier"; (months[k] = months[k] || []).push(s); });
+    main.innerHTML = `
+    <header class="page-head"><div class="row"><h1 style="flex-grow:1">Sermons</h1><a class="icon-btn" href="#/search" aria-label="Search sermons">${icon("search")}</a></div><p class="small muted">A new sermon every night by midnight · ${all.length} in the archive</p></header>
     <div class="page">
       <a class="feature" href="#/sermon/${esc(t.sermon.slug)}">
         <img class="poster" src="${esc(W.sermonPoster(t.sermon.slug))}" alt="" onerror="this.remove()">
-        <span class="meta"><span class="eyebrow slate">Latest sermon · ${esc(t.sermon.ref || "")}</span><h3>${esc(t.sermon.title)}</h3><p>${esc(t.sermon.excerpt)}</p></span>
+        <span class="meta"><span class="eyebrow slate">Today’s sermon · ${esc(t.sermon.ref || "")}</span><h3>${esc(t.sermon.title)}</h3><p>${esc(t.sermon.excerpt)}</p></span>
       </a>
-      <section class="section"><div class="section-head"><h2 class="h2">Bible studies</h2><a href="#/studies">All ${studies.length}</a></div>
-        <div class="hscroll">${studies.slice(0, 6).map((s) => `<a href="#/study/${s.slug}" style="width:220px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink)">
-          ${s.poster ? `<img src="${esc(W.asset(s.poster))}" alt="" loading="lazy" style="width:220px;aspect-ratio:4/5;object-fit:cover;border-radius:18px;background:var(--sunk)">` : `<span style="width:220px;aspect-ratio:4/5;border-radius:18px;background:var(--hero);display:flex;align-items:flex-end;padding:16px;color:var(--hero-ink);font:400 21px/27px var(--serif)">${esc(s.title)}</span>`}
-          <span class="serif" style="font-size:17px;line-height:23px">${esc(s.title)}</span><span class="small muted">${esc(s.date || "")}</span></a>`).join("")}</div>
-      </section>
-      <section class="section"><div class="section-head"><h2 class="h2">Books by Oladapo Olaleye</h2></div>
-        <div class="hscroll">${books.map((b) => `<a class="book-cover" href="#/book/${b.slug}"><img src="${W.BASE}assets/library/${b.slug}-cover.svg" alt="" loading="lazy" onerror="this.style.background='${b.bg1}'"><span>${esc(b.title)}</span></a>`).join("")}</div>
-      </section>
-      ${plans.length ? `<section class="section"><h2 class="h2" style="padding:0 4px">Reading plans</h2>${plans.map((p) => { const pr = W.S.getPlanProgress(p.slug); const n = (pr && pr.completedDays || []).length; return `<a class="card pad" href="#/plan/${p.slug}" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink)"><span class="eyebrow spruce">${p.days.length} days${n ? " · " + n + " done" : ""}</span><span class="h2">${esc(p.title)}</span><span class="small ink2">${esc(p.subtitle)}</span></a>`; }).join("")}</section>` : ""}
-      <section class="section"><div class="section-head"><h2 class="h2">Sermons</h2><a href="#/sermons">All ${sermons.length}</a></div>
-        <div class="card list">${sermons.slice(1, 6).map(sermonRow).join("")}</div>
-      </section>
+      <p class="serif ink2" style="padding:0 4px;font-size:16px;line-height:26px">“So then faith cometh by hearing, and hearing by the word of God.” <span class="small" style="font-family:var(--sans);font-weight:600;color:var(--amber)">Romans 10:17</span></p>
+      ${Object.entries(months).map(([m, list]) => `<section class="section"><h2 class="eyebrow" style="padding:0 4px">${esc(m)}</h2><div class="card list">${list.map((s) => `<div class="thumb-row" style="padding:12px 12px 12px 16px">
+        <a href="#/sermon/${s.slug}" style="display:flex;gap:14px;align-items:center;flex-grow:1;min-width:0;text-decoration:none;color:var(--ink)"><span class="ph c-slate" data-slug="${s.slug}">${esc(s.title.charAt(0))}</span><span class="grow"><span class="title">${esc(s.title)}</span><span class="sub">${esc(s.ref)} · ${esc(s.date || "")}</span></span></a>
+        <button class="icon-btn" data-note="${s.slug}" data-title="${esc(s.title)}" aria-label="${nc(s.slug) ? nc(s.slug) + " notes" : "Add a note"}">${nc(s.slug) ? `<span class="small" style="font-weight:600;color:var(--spruce)">${nc(s.slug)}</span>` : icon("pen", "sm")}</button></div>`).join("")}</div></section>`).join("")}
     </div>`;
-  });
-  function sermonRow(s) {
-    return `<a class="thumb-row" href="#/sermon/${s.slug}"><span class="ph c-slate">${esc(s.title.charAt(0))}</span><span class="grow"><span class="title">${esc(s.title)}</span><span class="sub">${esc(s.ref)} · ${esc(s.date || "")}</span></span></a>`;
-  }
-  W.view("sermons", function (main) {
-    main.innerHTML = W.topbar("Sermons", { back: "#/library" }) + `<div class="page tight"><div class="card list">${(C.SERMONS || []).map(sermonRow).join("")}</div></div>`;
-    W.$$(".thumb-row .ph", main).forEach((ph) => {
-      const slug = ph.parentElement.getAttribute("href").split("/").pop();
-      const img = new Image(); img.onload = () => { img.alt = ""; ph.replaceWith(img); }; img.src = W.sermonPoster(slug);
-    });
+    W.$$(".ph[data-slug]", main).forEach((ph) => { const img = new Image(); img.onload = () => { img.alt = ""; img.style.cssText = "width:56px;height:70px;border-radius:12px;object-fit:cover;flex-shrink:0"; ph.replaceWith(img); }; img.src = W.sermonPoster(ph.dataset.slug); });
+    W.$$("[data-note]", main).forEach((b) => b.onclick = () => W.noteSheet({ type: "sermon", refKey: "sermon:" + b.dataset.note, refLabel: b.dataset.title, onSave: () => W.route() }));
   });
   W.view("studies", function (main) {
-    main.innerHTML = W.topbar("Bible studies", { back: "#/library" }) + `<div class="page tight"><div class="card list">${(C.BIBLE_STUDY || []).map((s) => `<a class="thumb-row" href="#/study/${s.slug}">${s.poster ? `<img src="${esc(W.asset(s.poster))}" alt="" loading="lazy">` : `<span class="ph c-amber">${esc(s.title.charAt(0))}</span>`}<span class="grow"><span class="title">${esc(s.title)}</span><span class="sub">${esc((s.verses || []).map((v) => v.ref).join(" · "))}</span></span></a>`).join("")}</div></div>`;
+    main.innerHTML = W.topbar("Bible studies", { back: "#/bible" }) + `<p class="small ink2" style="padding:0 20px">A new study every morning at 7. A parable, a verse, a character, a doctrine.</p>` + `<div class="page tight"><div class="card list">${(C.BIBLE_STUDY || []).map((s) => `<a class="thumb-row" href="#/study/${s.slug}">${s.poster ? `<img src="${esc(W.asset(s.poster))}" alt="" loading="lazy">` : `<span class="ph c-amber">${esc(s.title.charAt(0))}</span>`}<span class="grow"><span class="title">${esc(s.title)}</span><span class="sub">${esc((s.verses || []).map((v) => v.ref).join(" · "))}</span></span></a>`).join("")}</div></div>`;
   });
 
   // Sermon: reads the full sermon from the website's article page.
   W.view("sermon", async function (main, parts) {
     const slug = parts[0];
     const s = (C.SERMONS || []).find((x) => x.slug === slug) || { slug, title: "", ref: "", excerpt: "" };
-    main.innerHTML = W.topbar("Sermon", { back: "#/library", right: `<button class="icon-btn" id="sl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button><button class="icon-btn" id="sa" aria-label="Reading settings">${icon("aa")}</button>` }) +
+    main.innerHTML = W.topbar("Sermon", { back: "#/sermons", right: `<button class="icon-btn" id="sl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button><button class="icon-btn" id="sa" aria-label="Reading settings">${icon("aa")}</button>` }) +
       `<div class="progress" aria-hidden="true"><span id="prog"></span></div><article class="page" id="art" style="padding:20px 24px 40px;gap:20px"><p class="small muted">Loading…</p></article>`;
     W.$("#sa").onclick = () => W.readingSheet();
     let html = "";
@@ -288,10 +291,10 @@
         const txt = n.textContent.trim();
         if (!txt) return;
         words += txt.split(/\s+/).length;
-        if (tag === "h2" || tag === "h3") bodyHtml += `<h2>${esc(txt)}</h2>`;
-        else if (n.classList.contains("pull-verse")) { const cite = n.querySelector("cite"); const ct = cite ? cite.textContent.trim() : ""; if (cite) cite.remove(); bodyHtml += `<p class="pull">${esc(n.textContent.trim())}${ct ? `<cite>${esc(ct)}</cite>` : ""}</p>`; }
-        else if (tag === "ul" || tag === "ol") bodyHtml += `<${tag} style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px">${Array.from(n.querySelectorAll("li")).map((li) => `<li>${esc(li.textContent.trim())}</li>`).join("")}</${tag}>`;
-        else bodyHtml += `<p>${esc(txt)}</p>`;
+        if (tag === "h2" || tag === "h3") bodyHtml += `<h2 data-tr>${esc(txt)}</h2>`;
+        else if (n.classList.contains("pull-verse")) { const cite = n.querySelector("cite"); const ct = cite ? cite.textContent.trim() : ""; if (cite) cite.remove(); bodyHtml += `<p class="pull"><span data-tr>${esc(n.textContent.trim())}</span>${ct ? `<cite>${esc(ct)}</cite>` : ""}</p>`; }
+        else if (tag === "ul" || tag === "ol") bodyHtml += `<${tag} style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px">${Array.from(n.querySelectorAll("li")).map((li) => `<li data-tr>${esc(li.textContent.trim())}</li>`).join("")}</${tag}>`;
+        else bodyHtml += `<p data-tr>${esc(txt)}</p>`;
       });
     }
     const mins = Math.max(3, Math.round(words / 220));
@@ -300,11 +303,11 @@
       <img class="poster" src="${esc(W.sermonPoster(slug))}" alt="" onerror="this.remove()">
       <div style="display:flex;flex-direction:column;gap:10px">
         <span class="eyebrow slate">Sermon${date ? " · " + esc(date) : ""}</span>
-        <h1 style="margin:0;font:400 32px/39px var(--serif);letter-spacing:-0.01em">${esc(title)}</h1>
-        <p class="serif ink2" style="font-style:italic;font-size:18px;line-height:28px">${esc(sub)}</p>
-        ${words ? `<span class="small muted">${mins} min read</span>` : ""}
+        <h1 data-tr style="margin:0;font:400 32px/39px var(--serif);letter-spacing:-0.01em">${esc(title)}</h1>
+        <p class="serif ink2" data-tr style="font-style:italic;font-size:18px;line-height:28px">${esc(sub)}</p>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">${words ? `<span class="small muted" style="flex-grow:1">${mins} min read</span>` : ""}${W.translateBtn("#art")}<button class="chip" type="button" id="snote">${icon("pen", "xs")}Note</button></div>
       </div>
-      ${sText ? `<blockquote class="scripture-box"><p>${esc(sText)}</p><cite>${esc(sRef)}</cite></blockquote>` : ""}
+      ${sText ? `<blockquote class="scripture-box"><p data-tr>${esc(sText)}</p><cite>${esc(sRef)}</cite></blockquote>` : ""}
       ${bodyHtml ? `<div class="prose">${bodyHtml}</div>` : `<div class="empty">The full sermon opens on the website.<br><br><a class="btn" href="${W.BASE}articles/${esc(slug)}.html">Read on wfnglobal.org</a></div>`}
       <div class="band" style="display:flex;flex-direction:column;gap:12px">
         <span class="eyebrow">At the end of every sermon</span>
@@ -312,7 +315,9 @@
       </div>`;
     W.$("#amen").onclick = () => { W.markDone("sermon"); W.toast("Amen."); };
     W.$("#shr").onclick = () => W.shareOrCopy({ title, text: title + " — " + sub, url: "https://wfnglobal.org/articles/" + slug + ".html" });
-    W.$("#sl").onclick = (e) => W.speak(title + ". " + (W.$("#art .prose") ? W.$("#art .prose").innerText : sub), e.currentTarget);
+    W.$("#sl").onclick = (e) => W.speak(W.$$("#art [data-tr]").map((x) => x.textContent), e.currentTarget);
+    W.$("#snote").onclick = () => W.noteSheet({ type: "sermon", refKey: "sermon:" + slug, refLabel: title });
+    if (/autoread/.test(location.hash)) setTimeout(() => W.$("#sl").click(), 500);
     progress();
   });
   function progress() {
@@ -326,16 +331,16 @@
     const s = (C.BIBLE_STUDY || []).find((x) => x.slug === parts[0]) || (C.BIBLE_STUDY || [])[0];
     if (!s) return W.go("#/library");
     const words = (s.body || []).join(" ").split(/\s+/).length;
-    main.innerHTML = W.topbar("Bible study", { back: "#/library", right: `<button class="icon-btn" id="sl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button><button class="icon-btn" id="sa" aria-label="Reading settings">${icon("aa")}</button>` }) + `
+    main.innerHTML = W.topbar("Bible study", { back: "#/studies", right: `<button class="icon-btn" id="sl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button><button class="icon-btn" id="sa" aria-label="Reading settings">${icon("aa")}</button>` }) + `
     <div class="progress" aria-hidden="true"><span id="prog"></span></div>
-    <article class="page" style="padding:20px 24px 40px;gap:20px">
+    <article class="page" id="stdy" style="padding:20px 24px 40px;gap:20px">
       ${s.poster ? `<img class="poster" src="${esc(W.asset(s.poster))}" alt="${esc(s.posterAlt || "")}">` : ""}
       <div style="display:flex;flex-direction:column;gap:10px"><span class="eyebrow amber">Bible study · ${esc(s.date || "")}</span>
-        <h1 style="margin:0;font:400 32px/39px var(--serif);letter-spacing:-0.01em">${esc(s.title)}</h1>
-        <p class="serif ink2" style="font-style:italic;font-size:18px;line-height:28px">${esc(s.excerpt)}</p>
-        <span class="small muted">${Math.max(3, Math.round(words / 220))} min read · ${(s.verses || []).length} passages</span></div>
-      ${(s.verses || []).map((v) => `<blockquote class="scripture-box"><p>${esc(v.text)}</p><cite>${esc(v.ref)} · KJV</cite></blockquote>`).join("")}
-      <div class="prose">${(s.body || []).map((p) => `<p>${esc(p)}</p>`).join("")}</div>
+        <h1 data-tr style="margin:0;font:400 32px/39px var(--serif);letter-spacing:-0.01em">${esc(s.title)}</h1>
+        <p class="serif ink2" data-tr style="font-style:italic;font-size:18px;line-height:28px">${esc(s.excerpt)}</p>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="small muted" style="flex-grow:1">${Math.max(3, Math.round(words / 220))} min read · ${(s.verses || []).length} passages</span>${W.translateBtn("#stdy")}</div></div>
+      ${(s.verses || []).map((v) => `<blockquote class="scripture-box"><p data-tr>${esc(v.text)}</p><cite>${esc(v.ref)} · KJV</cite></blockquote>`).join("")}
+      <div class="prose">${(s.body || []).map((p) => `<p data-tr>${esc(p)}</p>`).join("")}</div>
       <div class="band" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
         <button class="btn" id="amen">Amen</button>
         <button class="btn ghost" id="note">${icon("pen", "sm")}Note</button>
@@ -343,7 +348,7 @@
       </div>
     </article>`;
     W.$("#sa").onclick = () => W.readingSheet();
-    W.$("#sl").onclick = (e) => W.speak(s.title + ". " + (s.body || []).join(" "), e.currentTarget);
+    W.$("#sl").onclick = (e) => W.speak(W.$$("#stdy [data-tr]").map((x) => x.textContent), e.currentTarget);
     W.$("#amen").onclick = () => { W.markDone("study"); W.toast("Amen."); };
     W.$("#note").onclick = () => W.noteSheet({ type: "study", refKey: "study:" + s.slug, refLabel: s.title });
     W.$("#shr").onclick = () => W.shareOrCopy({ title: s.title, text: s.title + " — " + s.excerpt, url: "https://wfnglobal.org/app/" });
@@ -359,12 +364,12 @@
       const n = Math.min(p.days.length, Math.max(1, +parts[1])), d = p.days[n - 1];
       const isDone = doneDays.includes(n);
       main.innerHTML = W.topbar("Day " + n + " of " + p.days.length, { back: "#/plan/" + p.slug }) + `
-      <article class="page" style="padding:20px 24px 40px;gap:20px">
+      <article class="page" id="pday" style="padding:20px 24px 40px;gap:20px">
         <span class="eyebrow spruce">${esc(p.title)}</span>
-        <h1 style="margin:0;font:400 30px/37px var(--serif)">${esc(d.title)}</h1>
-        <blockquote class="scripture-box"><p>${esc(d.verse)}</p><cite>${esc(d.ref)} · KJV</cite></blockquote>
-        <div class="prose"><p>${esc(d.devotional)}</p></div>
-        <div class="band" style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">Pray</span><p class="serif" style="font-size:17.5px;line-height:28px">${esc(d.prayer)}</p></div>
+        <div style="display:flex;align-items:flex-start;gap:10px"><h1 data-tr style="margin:0;flex-grow:1;font:400 30px/37px var(--serif)">${esc(d.title)}</h1>${W.translateBtn("#pday")}</div>
+        <blockquote class="scripture-box"><p data-tr>${esc(d.verse)}</p><cite>${esc(d.ref)} · KJV</cite></blockquote>
+        <div class="prose"><p data-tr>${esc(d.devotional)}</p></div>
+        <div class="band" style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">Pray</span><p class="serif" data-tr style="font-size:17.5px;line-height:28px">${esc(d.prayer)}</p></div>
         <button class="btn lg block ${isDone ? "ghost" : ""}" id="dn">${isDone ? icon("check", "sm") + "Completed" : "Mark day " + n + " complete"}</button>
         ${n < p.days.length ? `<a class="btn lg block soft" href="#/plan/${p.slug}/${n + 1}">Day ${n + 1}: ${esc(p.days[n].title)}</a>` : ""}
       </article>`;

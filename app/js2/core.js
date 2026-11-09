@@ -37,6 +37,7 @@
     save: "M6 3h12v18l-6-4-6 4z",
     listen: "M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13",
     stop: "M7 7h10v10H7z",
+    pause: "M8 5v14M16 5v14",
     play: "M8 5.5v13l10.5-6.5z",
     plus: "M12 5v14M5 12h14",
     check: "M5 12.5l4.5 4.5L19 7",
@@ -250,21 +251,62 @@
   function sentences(text) {
     return String(text).replace(/\s+/g, " ").match(/[^.!?;:]+[.!?;:]*["”’)]?\s*/g) || [text];
   }
+  // A listen button is identified by its key (id), not the element, so a
+  // re-rendered screen still knows that this button's reading is playing.
+  let activeKey = null;
+  function keyOf(btn) { return btn ? (btn.id || btn.dataset.say || "btn") + "@" + location.hash : null; }
   function speak(text, btn) {
     const t = TTS();
     if (!t) { toast("Read aloud isn't supported on this browser"); return; }
-    const busy = t.getState() !== "idle";
-    if (busy) { t.stop(); const was = activeBtn; setBtn(activeBtn, false); activeBtn = null; if (was === btn) return; }
+    const key = keyOf(btn);
+    if (t.getState() !== "idle") {
+      const was = activeKey;
+      stopSpeaking();
+      if (was && was === key) return; // second tap on the same button = Stop
+    }
     const items = Array.isArray(text) ? text : sentences(text).map((x) => x.trim()).filter(Boolean);
-    activeBtn = btn || null;
+    activeBtn = btn || null; activeKey = key;
     if (btn) { if (!btn.dataset.label) btn.dataset.label = btn.getAttribute("aria-label") || "Listen"; setBtn(btn, true); }
     t.speak(items);
   }
-  function stopSpeaking() { const t = TTS(); if (t && t.getState() !== "idle") t.stop(); setBtn(activeBtn, false); activeBtn = null; }
+  // Stop hard: some phones (iOS Safari especially) keep talking after a
+  // single cancel(), so cancel again a moment later.
+  function stopSpeaking() {
+    const t = TTS();
+    if (t) t.stop();
+    if ("speechSynthesis" in window) {
+      try { speechSynthesis.cancel(); } catch (e) {}
+      setTimeout(() => { try { if (!t || t.getState() === "idle") speechSynthesis.cancel(); } catch (e) {} }, 80);
+      setTimeout(() => { try { if (!t || t.getState() === "idle") speechSynthesis.cancel(); } catch (e) {} }, 400);
+    }
+    if (activeBtn) setBtn(activeBtn, false);
+    $$("[aria-pressed='true'][data-label]").forEach((b) => setBtn(b, false));
+    activeBtn = null; activeKey = null;
+  }
   function wireTTSState() {
     const t = TTS();
     if (!t) return setTimeout(wireTTSState, 300);
-    t.onState((st) => { if (st === "idle" && activeBtn) { setBtn(activeBtn, false); activeBtn = null; } });
+    t.onState((st) => {
+      if (st === "idle") { if (activeBtn) setBtn(activeBtn, false); activeBtn = null; activeKey = null; }
+      else if (activeKey) { const b = $$("button").find((x) => keyOf(x) === activeKey); if (b && b !== activeBtn) { activeBtn = b; setBtn(b, true); } }
+      nowPlaying(st);
+    });
+  }
+  // A small "now reading" bar with Pause and Stop, shown whenever anything
+  // is being read aloud, so Stop is always one tap away.
+  function nowPlaying(st) {
+    let bar = $("#nowPlaying");
+    if (st === "idle") { if (bar) bar.remove(); return; }
+    if (!bar) {
+      bar = document.createElement("div"); bar.id = "nowPlaying"; bar.className = "now-playing"; bar.setAttribute("role", "region"); bar.setAttribute("aria-label", "Reading aloud");
+      bar.innerHTML = `<span class="np-wave" aria-hidden="true"><i></i><i></i><i></i></span><span class="np-t" id="npT">Reading aloud</span><button class="np-b" id="npP" type="button"></button><button class="np-b np-stop" id="npS" type="button">${icon("stop", "sm")}Stop</button>`;
+      document.body.appendChild(bar);
+      $("#npS").onclick = () => stopSpeaking();
+      $("#npP").onclick = () => { const t = TTS(); if (!t) return; if (t.getState() === "playing") t.pause(); else t.resume(); };
+    }
+    $("#npP").innerHTML = st === "paused" ? icon("play", "sm") + "Resume" : icon("pause", "sm") + "Pause";
+    $("#npT").textContent = st === "paused" ? "Paused" : "Reading aloud";
+    bar.classList.toggle("paused", st === "paused");
   }
   setTimeout(wireTTSState, 0);
 
@@ -344,10 +386,48 @@
     try { if (sessionStorage.getItem("wfn2-nav") && history.length > 1) { e.preventDefault(); history.back(); } } catch (err) {}
   });
 
+  // ---------- scroll: tab bar and chapter arrows slide away while reading ----------
+  // Like the classic app: scrolling down hides the tab bar and the chapter
+  // arrows; scrolling up, reaching the top, or pausing brings them back.
+  // The arrows also drift down the screen as you read through a chapter.
+  function setupScroll() {
+    let lastY = window.scrollY, idle = null;
+    const show = () => document.body.classList.remove("chrome-hidden");
+    const hide = () => document.body.classList.add("chrome-hidden");
+    window.addEventListener("scroll", () => {
+      const y = window.scrollY, d = y - lastY;
+      if (y < 40) show(); else if (d > 6) hide(); else if (d < -6) show();
+      lastY = y;
+      clearTimeout(idle); idle = setTimeout(show, 1200);
+      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      const top = (20 + Math.min(1, Math.max(0, y / max)) * 52).toFixed(1) + "%";
+      $$(".ch-fab").forEach((f) => { f.style.top = top; });
+      const tt = $("#toTop"); if (tt) tt.classList.toggle("show", y > 900);
+    }, { passive: true });
+    const tt = document.createElement("button");
+    tt.id = "toTop"; tt.className = "to-top"; tt.type = "button"; tt.setAttribute("aria-label", "Back to top");
+    tt.innerHTML = '<svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>';
+    tt.onclick = () => window.scrollTo({ top: 0, behavior: settings.reduceMotion ? "auto" : "smooth" });
+    document.body.appendChild(tt);
+  }
+
   function start() {
+    setupScroll();
     route();
     if ("serviceWorker" in navigator && location.pathname.indexOf("/app/") === 0) {
-      navigator.serviceWorker.register("/app/sw.js", { scope: "/app/" }).catch(() => {});
+      navigator.serviceWorker.register("/app/sw.js", { scope: "/app/" }).then((reg) => {
+        // Check for a new version whenever the app comes back to the front.
+        document.addEventListener("visibilitychange", () => { if (!document.hidden) reg.update().catch(() => {}); });
+      }).catch(() => {});
+      // When a new version takes over, reload once so the phone shows it
+      // straight away instead of on the next launch.
+      let reloaded = false;
+      const hadController = !!navigator.serviceWorker.controller;
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (reloaded || !hadController) return;
+        if (document.querySelector(".sheet, .selbar, #nowPlaying")) return; // don't interrupt someone mid-task
+        reloaded = true; location.reload();
+      });
     }
     refreshContent();
   }

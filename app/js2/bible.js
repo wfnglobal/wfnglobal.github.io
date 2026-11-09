@@ -121,7 +121,9 @@
     if (!VERSIONS.find((v) => v.code === version)) version = "kjv";
     current = { slug, name: b.name, ch, plain: kjv.map(W.plain), version: "kjv" };
 
-    main.innerHTML = `<div class="reader ${set.nums ? "" : "no-nums"} ${set.red ? "red" : ""}" data-read="${readTheme()}">
+    main.innerHTML = `<div class="reader ${set.nums ? "" : "no-nums"} ${set.red ? "red" : ""} ${set.byverse === false ? "" : "by-verse"}" data-read="${readTheme()}">
+      <div class="ch-fab prev">${prev ? `<a href="${prev}" aria-label="Previous chapter">${icon("back", "sm")}</a>` : `<span aria-hidden="true">${icon("back", "sm")}</span>`}</div>
+      <div class="ch-fab next">${next ? `<a href="${next}" aria-label="Next chapter">${icon("chev", "sm")}</a>` : `<span aria-hidden="true">${icon("chev", "sm")}</span>`}</div>
       <header class="topbar">
         <a class="icon-btn" href="#/bible/${slug}" aria-label="Chapters of ${esc(b.name)}">${icon("back")}</a>
         <button class="book-btn" id="bookBtn" type="button" aria-label="Choose a book: Old or New Testament">${esc(b.name)} ${ch} ${icon("down", "xs")}</button>
@@ -138,7 +140,7 @@
         <h2>${esc(b.name)} ${ch}</h2>
         <p id="verNote" class="small" hidden style="font-family:var(--sans);margin:0 0 16px;opacity:.75"></p>
         <p id="sumText" hidden style="font-family:var(--sans);font-size:15px;line-height:24px;margin:0 0 20px;padding:14px 16px;border-radius:16px;background:rgba(127,127,127,0.08)"></p>
-        ${set.lookup !== false ? `<p class="small" id="tapHint" style="font-family:var(--sans);margin:0 0 14px;opacity:.7">Tap any word for its meaning. Tap a verse number to highlight, save or share.</p>` : ""}
+        ${set.lookup !== false ? `<p class="small" id="tapHint" style="font-family:var(--sans);margin:0 0 14px;opacity:.7">Tap any word for its meaning. Tap a verse number, or the space beside a verse, to highlight, save or share.</p>` : ""}
         <p id="verses" style="margin:0"></p>
         <div id="compare"></div>
         <button class="btn ghost block" id="addCmp" type="button" style="margin-top:22px;font-family:var(--sans)">${icon("plus", "sm")}Compare another version</button>
@@ -195,7 +197,22 @@
       }
       wireVerses();
     }
+    const XR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5h-8l-4 3v-3H5A1.5 1.5 0 0 1 3.5 15V7A1.5 1.5 0 0 1 5 5.5z"/><path d="M7.5 9.5h9M7.5 12.5h6"/></svg>';
+    let xref = null;
+    function addXr() {
+      const chx = (xref && xref[String(ch)]) || {};
+      W.$$(".v", versesEl).forEach((p) => {
+        if (p.querySelector(".xr") || !chx[p.dataset.v]) return;
+        const btn = document.createElement("button");
+        btn.type = "button"; btn.className = "xr"; btn.innerHTML = XR;
+        btn.setAttribute("aria-label", "Related verses for " + b.name + " " + ch + ":" + p.dataset.v);
+        btn.addEventListener("click", (e) => { e.stopPropagation(); const v = +p.dataset.v; related(slug, b.name, ch, v, current.plain[v - 1] || ""); });
+        p.appendChild(btn);
+      });
+    }
+    if (window.WFNBible) window.WFNBible.getXref(slug).then((d) => { xref = d; addXr(); }).catch(() => {});
     function wireVerses() {
+      addXr();
       W.$$(".v", versesEl).forEach((el) => {
         const sup = el.querySelector("sup");
         const pick = () => toggle(el);
@@ -205,7 +222,7 @@
           if (window.getSelection && String(window.getSelection()).length > 1) return;
           const w = e.target.closest(".w");
           if (w && lookupOn) { lookup(w.textContent); return; }
-          if (!lookupOn) pick();
+          pick();
         });
       });
     }
@@ -394,12 +411,12 @@
       </div>
       <div class="font-row" role="radiogroup" aria-label="Font">${W.FONTS.map((f) => `<button role="radio" aria-checked="${s.font === f.id}" data-font="${f.id}"><b style="font-family:${esc(f.stack)}">Aa</b><small>${esc(f.name.replace(" Hyperlegible", "").replace(" Sans", ""))}</small></button>`).join("")}</div>
       <div class="card list" style="border-radius:18px">
-        ${[["nums", "Verse numbers", "Small numbers before each verse"], ["red", "Words of Jesus in red", "Gospels, Acts and Revelation"], ["lookup", "Tap a word to define it", "Dictionary, Bible names and KJV words"]].map(([k, l, h]) => `<label class="row-link" style="min-height:54px"><span class="grow"><span class="label" style="font-size:15px">${l}</span><span class="hint">${h}</span></span><span class="switch"><input type="checkbox" data-k="${k}" ${s[k] !== false && (k !== "red" || s[k]) && (k !== "nums" || s[k]) ? "checked" : ""}><span></span></span></label>`).join("")}
+        ${[["byverse", "Verse by verse", "Each verse on its own line, like the classic app"], ["nums", "Verse numbers", "Small numbers before each verse"], ["red", "Words of Jesus in red", "Gospels, Acts and Revelation"], ["lookup", "Tap a word to define it", "Dictionary, Bible names and KJV words"]].map(([k, l, h]) => `<label class="row-link" style="min-height:54px"><span class="grow"><span class="label" style="font-size:15px">${l}</span><span class="hint">${h}</span></span><span class="switch"><input type="checkbox" data-k="${k}" ${s[k] !== false && (k !== "red" || s[k]) && (k !== "nums" || s[k]) ? "checked" : ""}><span></span></span></label>`).join("")}
       </div>`;
     const wire = (el) => {
       W.$$("[data-read]", el).forEach((b) => b.onclick = () => { W.setSetting("read", b.dataset.read); refresh(el); });
       W.$$("[data-font]", el).forEach((b) => b.onclick = () => { W.setSetting("font", b.dataset.font); refresh(el); });
-      W.$$("[data-k]", el).forEach((c) => c.onchange = () => { W.setSetting(c.dataset.k, c.checked); if (c.dataset.k === "lookup" && onChange) { W.closeSheet(); onChange(); } else if (onChange) applyLive(); });
+      W.$$("[data-k]", el).forEach((c) => c.onchange = () => { W.setSetting(c.dataset.k, c.checked); if ((c.dataset.k === "lookup" || c.dataset.k === "byverse") && onChange) { W.closeSheet(); onChange(); } else if (onChange) applyLive(); });
       const sz = W.$("#sz", el);
       sz.oninput = () => { W.setSetting("size", +sz.value); W.$("#szv", el).textContent = sz.value + " pt"; };
     };

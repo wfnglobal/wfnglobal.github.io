@@ -1,0 +1,204 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- WFN Bible study poster - For Such a Time as This (Esther 4), Nov 9, 2026 -->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#0A0417;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden; background:#0A0417;}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.78);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#F3D9F4; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(221,166,224,0.45); background:rgba(40,12,48,0.45); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#E9A3EC; box-shadow:0 0 12px 3px #E9A3EC;}
+  .copy{position:absolute; left:0; right:0; top:790px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(234,203,236,0.88);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:112px; line-height:0.94; letter-spacing:-0.035em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em; background:linear-gradient(180deg,#FFE9C2 0%,#F2B35F 40%,#E9A23B 75%,#B9701E 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(255,190,90,0.35)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:830px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.88);}
+  .sub b{color:#FFD98F; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.92); max-width:540px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A1405; background:linear-gradient(180deg,#FFE7A6,#E9B24F); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(233,178,79,0.6);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+
+  <defs>
+    <linearGradient id="hall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07030F"/><stop offset="0.3" stop-color="#200E38"/><stop offset="0.55" stop-color="#4A1C55"/><stop offset="0.74" stop-color="#9B4E58"/><stop offset="0.88" stop-color="#E0924A"/><stop offset="1" stop-color="#F3C77A"/>
+    </linearGradient>
+    <linearGradient id="colFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B1240"/><stop offset="1" stop-color="#15081F"/></linearGradient>
+    <linearGradient id="colNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1C0E2C"/><stop offset="1" stop-color="#0A0414"/></linearGradient>
+    <radialGradient id="archGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE3A8" stop-opacity="0.95"/><stop offset="0.45" stop-color="#F3A85C" stop-opacity="0.55"/><stop offset="1" stop-color="#F3A85C" stop-opacity="0"/></radialGradient>
+    <radialGradient id="beam" cx="0.5" cy="0" r="1"><stop offset="0" stop-color="#FFEAC0" stop-opacity="0.9"/><stop offset="1" stop-color="#FFC266" stop-opacity="0"/></radialGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1030" stop-opacity="0.6"/><stop offset="1" stop-color="#0A0414" stop-opacity="0.9"/></linearGradient>
+    <radialGradient id="flameGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE9A8"/><stop offset="0.3" stop-color="#FFB547" stop-opacity="0.7"/><stop offset="1" stop-color="#FF8A2A" stop-opacity="0"/></radialGradient>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#B8230E"/><stop offset="0.35" stop-color="#FF6A1F"/><stop offset="0.7" stop-color="#FFB347"/><stop offset="1" stop-color="#FFF1B8"/></linearGradient>
+    <linearGradient id="core" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFB347"/><stop offset="1" stop-color="#FFFBE6"/></linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A0417" stop-opacity="0"/><stop offset="1" stop-color="#0A0417"/></linearGradient>
+    <filter id="b6"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="b16"><feGaussianBlur stdDeviation="16"/></filter>
+  </defs>
+  <rect width="1080" height="800" fill="url(#hall)"/>
+  <g id="dust"></g>
+
+  <!-- royal banners hanging between the foremost columns -->
+  <g id="banners"></g>
+
+  <!-- the long hall floor, perspective lines converging on the throne -->
+  <path d="M0 800 L430 468 L650 468 L1080 800Z" fill="url(#floor)"/>
+  <g id="floorLines" opacity="0.4"></g>
+
+  <!-- receding columns, far to near -->
+  <g id="columnsFar"></g>
+  <g id="columnsNear"></g>
+
+  <!-- the archway: light pouring from the throne room -->
+  <ellipse cx="540" cy="455" rx="150" ry="110" fill="url(#archGlow)" filter="url(#b16)"/>
+  <path d="M470 560 L470 410 C470 358 610 358 610 410 L610 560Z" fill="#FFE9C0" opacity="0.92"/>
+  <path d="M470 560 L446 568 L446 400 L470 410Z M610 560 L634 568 L634 400 L610 410Z" fill="#241030"/>
+  <!-- the throne, small, deep in the light -->
+  <g transform="translate(540 500) scale(0.62)">
+    <rect x="-34" y="-58" width="68" height="70" rx="6" fill="#2A1430" opacity="0.88"/>
+    <rect x="-40" y="-70" width="10" height="82" rx="3" fill="#2A1430" opacity="0.88"/>
+    <rect x="30" y="-70" width="10" height="82" rx="3" fill="#2A1430" opacity="0.88"/>
+    <circle cx="0" cy="-30" r="13" fill="#17081D"/>
+    <path d="M-13 -18 C-16 0 -17 16 -15 24 L15 24 C17 16 16 0 13 -18Z" fill="#17081D"/>
+    <!-- the scepter, extended -->
+    <path d="M16 -18 L54 -36" stroke="#17081D" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="57" cy="-37" r="5.5" fill="#F6D27A"/>
+  </g>
+  <!-- beam of mercy reaching from the scepter down toward Esther -->
+  <path d="M560 468 L492 640 L588 640Z" fill="url(#beam)" opacity="0.55"/>
+
+  <!-- side torches, foreground -->
+  <g id="torchL" transform="translate(150 760)"></g>
+  <g id="torchR" transform="translate(930 760)"></g>
+
+  <!-- Esther, walking the corridor toward the throne, royal violet silhouette -->
+  <g transform="translate(540 660) scale(1.72)">
+    <ellipse cx="0" cy="78" rx="34" ry="8" fill="#000" opacity="0.3"/>
+    <!-- gown -->
+    <path d="M0 -46 C-9 -40 -15 -30 -17 -14 C-22 10 -30 40 -34 74 C-18 82 18 82 34 74 C30 40 22 10 17 -14 C15 -30 9 -40 0 -46Z" fill="#3A1148"/>
+    <path d="M0 -46 C-6 -34 -9 -18 -9 2 C-9 30 -13 54 -16 74 L0 78 L16 74 C13 54 9 30 9 2 C9 -18 6 -34 0 -46Z" fill="#541B66" opacity="0.9"/>
+    <!-- trailing train, reaching back toward viewer -->
+    <path d="M-17 -14 C-30 6 -46 34 -58 70 C-46 78 -34 80 -26 76 C-18 48 -14 18 -14 -8Z" fill="#2C0E38" opacity="0.92"/>
+    <!-- raised arm, reaching toward the light -->
+    <path d="M14 -34 C24 -30 32 -20 36 -6" stroke="#3A1148" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <circle cx="37" cy="-4" r="6.5" fill="#3A1148"/>
+    <path d="M-14 -34 C-20 -24 -22 -12 -20 2" stroke="#3A1148" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <!-- head and diadem -->
+    <circle cx="0" cy="-54" r="11.5" fill="#2C0E38"/>
+    <path d="M-10 -61 C-6 -68 6 -68 10 -61 C6 -64 -6 -64 -10 -61Z" fill="#F6D27A"/>
+    <circle cx="0" cy="-66" r="3" fill="#F6D27A" stroke="#1A0A22" stroke-width="0.8"/>
+    <circle cx="-7" cy="-63" r="2.1" fill="#F6D27A" stroke="#1A0A22" stroke-width="0.8"/>
+    <circle cx="7" cy="-63" r="2.1" fill="#F6D27A" stroke="#1A0A22" stroke-width="0.8"/>
+    <path d="M-10 -61 C-6 -68 6 -68 10 -61 C6 -64 -6 -64 -10 -61Z" fill="none" stroke="#1A0A22" stroke-width="0.7" opacity="0.6"/>
+  </g>
+
+  <rect y="690" width="1080" height="112" fill="url(#fade)"/>
+  <rect y="800" width="1080" height="550" fill="#0A0417"/>
+
+</svg>
+<div class="top">
+  <div class="lock"><svg viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#lg)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#lg)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#lg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#lg)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#lg)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg><div class="rule"></div><div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div></div>
+  <div class="chip"><i></i>Daily Bible Study</div>
+</div>
+<div class="copy">
+  <div class="kicker">Esther 4 &middot; The queen&rsquo;s uninvited walk</div>
+  <h1>For such a<em>time as this.</em></h1>
+  <p class="sub">Esther wasn&rsquo;t safer in the palace than anywhere else &mdash; <b>she was positioned there, for this exact day.</b></p>
+</div>
+<div class="cta">
+  <div class="verse">&ldquo;So will I go in unto the king, which is not according to the law: and if I perish, I perish.&rdquo;<span>Esther 4:16</span></div>
+  <div class="btn"><span class="l1">Study it today &rarr;</span><span class="l2">wfnglobal.org/study</span></div>
+</div>
+</div>
+<script>
+  let s = 41; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || document.querySelector("svg.art")).appendChild(e); return e; }
+  function flamePath(x, y, w, h, lean) {
+    const tx = x + lean * h, ty = y - h;
+    return `M${x - w / 2} ${y} C${x - w * 0.75} ${y - h * 0.45} ${tx - w * 0.25} ${y - h * 0.7} ${tx} ${ty} C${tx + w * 0.15} ${y - h * 0.62} ${x + w * 0.8} ${y - h * 0.45} ${x + w / 2} ${y} Z`;
+  }
+
+  // drifting gold dust, filling the upper hall with quiet atmosphere
+  const dust = document.getElementById("dust");
+  for (let i = 0; i < 90; i++) {
+    const y = r() * 700;
+    el("circle", { cx: r() * 1080, cy: y, r: (r() * 1.6 + 0.4).toFixed(2), fill: r() > 0.72 ? "#E9A3EC" : "#F3C77A", opacity: (0.08 + r() * 0.3 * (y / 700)).toFixed(2) }, dust);
+  }
+
+  // royal banners hanging from the upper hall beside the foremost columns
+  const banners = document.getElementById("banners");
+  [150, 930].forEach(bx => {
+    el("path", { d: `M${bx - 46} 210 L${bx + 46} 210 L${bx + 40} 560 L${bx} 600 L${bx - 40} 560 Z`, fill: "#2A1030", opacity: 0.82 }, banners);
+    el("path", { d: `M${bx - 46} 210 L${bx + 46} 210 L${bx + 43} 400 L${bx - 43} 400 Z`, fill: "#3A1540", opacity: 0.5 }, banners);
+    el("rect", { x: bx - 46, y: 204, width: 92, height: 10, fill: "#E8C77E", opacity: 0.75 }, banners);
+    el("line", { x1: bx, y1: 210, x2: bx, y2: 598, stroke: "#E8C77E", "stroke-width": 1, opacity: 0.3 }, banners);
+  });
+
+  // floor lines converging on the vanishing point behind the arch
+  const fl = document.getElementById("floorLines");
+  const vp = { x: 540, y: 468 };
+  const bases = [-540, -340, -180, -60, 60, 180, 340, 540];
+  bases.forEach(bx => el("line", { x1: 540 + bx, y1: 800, x2: vp.x, y2: vp.y, stroke: "#F3C77A", "stroke-width": 1.1 }, fl));
+
+  // receding colonnade: far (small, near the arch) then near (large, foreground)
+  const far = document.getElementById("columnsFar"), near = document.getElementById("columnsNear");
+  const cols = [
+    { x: 410, y: 560, w: 20, h: 190, side: -1, g: far }, { x: 670, y: 560, w: 20, h: 190, side: 1, g: far },
+    { x: 330, y: 650, w: 30, h: 260, side: -1, g: far }, { x: 750, y: 650, w: 30, h: 260, side: 1, g: far },
+    { x: 215, y: 760, w: 48, h: 360, side: -1, g: near }, { x: 865, y: 760, w: 48, h: 360, side: 1, g: near },
+    { x: 55, y: 800, w: 70, h: 430, side: -1, g: near }, { x: 1025, y: 800, w: 70, h: 430, side: 1, g: near }
+  ];
+  cols.forEach(c => {
+    const fillId = c.g === far ? "colFar" : "colNear";
+    const capW = c.w * 1.5;
+    el("rect", { x: c.x - c.w / 2, y: c.y - c.h, width: c.w, height: c.h, fill: `url(#${fillId})` }, c.g);
+    el("rect", { x: c.x - capW / 2, y: c.y - c.h - c.w * 0.5, width: capW, height: c.w * 0.5, fill: `url(#${fillId})` }, c.g);
+    el("rect", { x: c.x - capW / 2, y: c.y - 14, width: capW, height: 14, fill: `url(#${fillId})` }, c.g);
+    // rim light on the side facing the center aisle
+    const rimX = c.side < 0 ? c.x + c.w / 2 : c.x - c.w / 2;
+    el("line", { x1: rimX, y1: c.y - c.h, x2: rimX, y2: c.y, stroke: "#E9A85C", "stroke-width": 1.6, opacity: 0.5 }, c.g);
+  });
+
+  // torches flanking the foreground, each a small brazier with a flame
+  [{ g: document.getElementById("torchL"), sc: 1 }, { g: document.getElementById("torchR"), sc: 1 }].forEach(t => {
+    el("rect", { x: -5, y: 0, width: 10, height: 46, fill: "#17081D" }, t.g);
+    el("path", { d: "M-20 0 L20 0 L12 -14 L-12 -14Z", fill: "#17081D" }, t.g);
+    el("ellipse", { cx: 0, cy: -16, rx: 30, ry: 24, fill: "url(#flameGlow)" }, t.g);
+    el("path", { d: flamePath(0, -14, 30, 54, (r() - 0.5) * 0.3), fill: "#FF6A1F" }, t.g);
+    el("path", { d: flamePath(0, -14, 19, 42, (r() - 0.5) * 0.3), fill: "url(#flame)" }, t.g);
+    el("path", { d: flamePath(0, -14, 9, 24, (r() - 0.5) * 0.3), fill: "url(#core)", opacity: 0.9 }, t.g);
+  });
+
+  // drifting embers
+  const emG = el("g", {}, document.querySelector("svg.art"));
+  for (let i = 0; i < 46; i++) {
+    const left = r() < 0.5;
+    el("circle", { cx: left ? 110 + r() * 160 : 810 + r() * 160, cy: 760 - r() * 320, r: (r() * 2.2 + 0.5).toFixed(2), fill: r() > 0.5 ? "#FFC266" : "#E9A3EC", opacity: (0.3 + r() * 0.55).toFixed(2) }, emG);
+  }
+</script>
+</body></html>

@@ -275,6 +275,8 @@
     const t = TTS();
     if (t) t.stop();
     if ("speechSynthesis" in window) {
+      // iOS ignores cancel() while paused or mid-utterance unless paused first.
+      try { speechSynthesis.pause(); } catch (e) {}
       try { speechSynthesis.cancel(); } catch (e) {}
       setTimeout(() => { try { if (!t || t.getState() === "idle") speechSynthesis.cancel(); } catch (e) {} }, 80);
       setTimeout(() => { try { if (!t || t.getState() === "idle") speechSynthesis.cancel(); } catch (e) {} }, 400);
@@ -400,7 +402,7 @@
       lastY = y;
       clearTimeout(idle); idle = setTimeout(show, 1200);
       const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-      const top = (20 + Math.min(1, Math.max(0, y / max)) * 52).toFixed(1) + "%";
+      const top = (46 + Math.min(1, Math.max(0, y / max)) * 16).toFixed(1) + "%";
       $$(".ch-fab").forEach((f) => { f.style.top = top; });
       const tt = $("#toTop"); if (tt) tt.classList.toggle("show", y > 900);
     }, { passive: true });

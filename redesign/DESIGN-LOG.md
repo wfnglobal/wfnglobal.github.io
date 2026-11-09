@@ -161,3 +161,12 @@ Oladapo found features missing after go-live. Audited the classic app (app/class
 - App theme works (tested light and dark phones); Automatic follows the phone, now explained under the switch, and the selected option is outlined in spruce so it's obvious in dark mode. Added Reduce motion.
 - Bible tab now looks like the classic one: the "You are on holy ground" welcome (with the five "How to read it well" rules, dismissible), tiles for 13 versions and the Dictionary, Bible study, then Old and New Testament book lists together with quick jump buttons.
 - Restored the rest of classic: intro cards for Prayer, Sermons and Library; Prayer Circle (WhatsApp group + X Spaces, Tue 1–2 AM ET / 6–7 AM WAT); Share the app card on Today; Read the Bible, Bible Study, Sermons, Reading Plans and Library tiles in Explore; Copy on the declaration; About & Credits text.
+
+## Nov 9, ~6pm: reader arrows, Stop, checklist, optional Listen/Tolu, Siri-like Tolu
+
+- Bible reader (Nov 8 classic features carried over): related-verses icon after every verse that has cross-references, verse-by-verse layout (setting), frosted selection bar (Copy, Select All, Share, Pray, Look Up, Translate) from wfn-tts.js, full offline dictionary with pictures on word tap.
+- Previous/next chapter arrows float at the sides and slide away while scrolling down, back on scroll up or pause; tab bar does the same. Fixed: the page fade used a transform that trapped fixed controls inside the page, so the arrows never showed.
+- Listen: a "Reading aloud" bar with Pause and Stop appears whenever anything is read; Stop pauses then cancels speech (iOS needs both) and repeats the cancel.
+- Your day in the Word: tap the circle to tick or untick; tap the name to open; progress bars match the ticked steps; Verse/Declaration rows no longer break navigation.
+- You → Listen & Ask Tolu: switches to show or hide each; "Add Tolu to Siri" (Shortcut opening wfnglobal.org/app/#/tolu); "Talk to Tolu now".
+- Tolu now also does time and date, weather (Open-Meteo), timers, reminders/alarms into Calendar (.ics), calls, texts, WhatsApp, email, directions, web search, music on YouTube, opening apps, maths, translation, word meanings and Bible names, verses on 40+ topics, praying with you, and app settings (dark mode, text size, reading speed). Actions that leave the app come back as a button, since phones only allow those from a tap.

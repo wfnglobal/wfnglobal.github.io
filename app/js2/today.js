@@ -32,8 +32,8 @@
     const evening = new Date().getHours() >= 18;
     const done = doneToday();
     const steps = [
-      ["verse", "Verse of the Day", "#votd"],
-      ["declaration", "Today’s declaration", "#decl"],
+      ["verse", "Verse of the Day", "#/"],
+      ["declaration", "Today’s declaration", "#/prayer/declaration"],
       ["study", "Bible study", "#/study/" + t.study.slug],
       ["sermon", "Sermon", "#/sermon/" + t.sermon.slug],
       ["night", "Night prayer", "#/prayer/night"],
@@ -86,12 +86,12 @@
 
       <section class="card pad" aria-labelledby="dayH" style="display:flex;flex-direction:column;gap:14px">
         <div style="display:flex;align-items:baseline"><h2 id="dayH" class="h2" style="flex-grow:1">Your day in the Word</h2><span class="small muted" style="font-variant-numeric:tabular-nums">${nDone} of ${steps.length}</span></div>
-        <div style="display:flex;gap:4px" aria-hidden="true">${steps.map((s, i) => `<span style="flex:1;height:5px;border-radius:9px;background:${i < nDone ? "var(--spruce)" : "var(--sunk)"}"></span>`).join("")}</div>
-        <div class="list" style="margin:0 -18px">
-          ${steps.map((s) => `<a class="row-link" href="${s[2]}" style="min-height:50px">
-            <span class="radio-dot ${done[s[0]] ? "on" : ""}" aria-hidden="true"></span>
-            <span class="grow"><span class="label" style="${done[s[0]] ? "color:var(--ink-3)" : ""}">${s[1]}</span></span>
-            ${done[s[0]] ? '<span class="small muted">Done</span>' : `<span class="chev">${icon("chev", "xs")}</span>`}</a>`).join("")}
+        <div style="display:flex;gap:4px" aria-hidden="true">${steps.map((s) => `<span style="flex:1;height:5px;border-radius:9px;background:${done[s[0]] ? "var(--spruce)" : "var(--sunk)"}"></span>`).join("")}</div>
+        <div class="list day-list" style="margin:0 -18px">
+          ${steps.map((s) => `<div class="row-link" style="min-height:52px;padding:0 10px 0 6px;gap:4px">
+            <button class="day-tick" type="button" data-tick="${s[0]}" role="checkbox" aria-checked="${!!done[s[0]]}" aria-label="${s[1]}: mark ${done[s[0]] ? "not done" : "done"}"><span class="radio-dot ${done[s[0]] ? "on" : ""}" aria-hidden="true"></span></button>
+            <a class="grow day-go" href="${s[2]}" data-go="${s[0]}" style="flex-direction:row;align-items:center;min-height:52px;text-decoration:none;color:var(--ink)"><span class="label" style="flex-grow:1;${done[s[0]] ? "color:var(--ink-3)" : ""}">${s[1]}</span>${done[s[0]] ? '<span class="small muted" style="padding-right:6px">Done</span>' : `<span class="chev">${icon("chev", "xs")}</span>`}</a>
+          </div>`).join("")}
         </div>
       </section>
 
@@ -161,6 +161,8 @@
     W.$("#vShare").onclick = () => markDone("verse") || W.shareOrCopy({ title: "Verse of the Day", text: "“" + t.verse.text + "” " + t.verse.ref, url: "https://wfnglobal.org/app/" });
     const sumBtn = W.$("#vSum");
     if (sumBtn) sumBtn.onclick = () => { const s = W.$("#votdSum"); s.hidden = !s.hidden; sumBtn.setAttribute("aria-expanded", String(!s.hidden)); };
+    W.$$("[data-tick]", main).forEach((b) => b.onclick = () => { const k = b.dataset.tick; markDone(k, !doneToday()[k]); const y = window.scrollY; W.route(); requestAnimationFrame(() => window.scrollTo(0, y)); });
+    W.$$('[data-go="verse"]', main).forEach((a) => a.onclick = (e) => { e.preventDefault(); const v = W.$("#votd"); v.scrollIntoView({ behavior: "smooth", block: "center" }); v.classList.add("pulse-once"); setTimeout(() => v.classList.remove("pulse-once"), 1400); });
     W.$("#vAmen").onclick = (e) => { markDone("verse"); e.currentTarget.innerHTML = icon("check", "sm") + "Amen"; W.toast("Amen. Verse kept for today."); };
     void vText;
     const sc = W.$("#shareCard");

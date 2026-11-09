@@ -84,6 +84,16 @@
         </div>
       </section>
 
+      <section class="section" aria-labelledby="vc">
+        <h2 id="vc" class="eyebrow" style="padding:0 4px">Listen &amp; Ask Tolu</h2>
+        <div class="card list">
+          <label class="row-link" style="min-height:60px"><span class="tile-ic c-spruce">${icon("listen")}</span><span class="grow"><span class="label">Listen</span><span class="hint">Read any screen aloud, with Pause and Stop</span></span><span class="switch"><input type="checkbox" id="optListen" ${s.showListen !== false ? "checked" : ""}><span></span></span></label>
+          <label class="row-link" style="min-height:60px"><span class="tile-ic c-amber">${icon("mic")}</span><span class="grow"><span class="label">Ask Tolu</span><span class="hint">Your voice assistant for the Word and everyday things</span></span><span class="switch"><input type="checkbox" id="optTolu" ${s.showTolu !== false ? "checked" : ""}><span></span></span></label>
+          <button class="row-link" id="siri"><span class="tile-ic c-ink">${icon("sparkle")}</span><span class="grow"><span class="label">Add Tolu to Siri</span><span class="hint">Say “Hey Siri, Tolu” to open Tolu straight away</span></span><span class="chev">${icon("chev", "xs")}</span></button>
+          <button class="row-link" id="tryTolu"><span class="tile-ic c-slate">${icon("wave")}</span><span class="grow"><span class="label">Talk to Tolu now</span><span class="hint">Time, weather, timers, reminders, calls, directions, Scripture</span></span><span class="chev">${icon("chev", "xs")}</span></button>
+        </div>
+      </section>
+
       <section class="section" aria-labelledby="rm">
         <h2 id="rm" class="eyebrow" style="padding:0 4px">Daily reminders</h2>
         <div class="card list">
@@ -144,6 +154,14 @@
       } else { await withOS((OS) => OS.User.PushSubscription.optOut()); W.write("wfn2-notify", false); W.toast("Reminders off"); }
       W.$("#nh").textContent = notifHint();
     };
+    const vp = () => { W.setSetting("showListen", W.$("#optListen").checked); W.setSetting("showTolu", W.$("#optTolu").checked); if (W.applyVoicePrefs) W.applyVoicePrefs(); W.toast("Saved"); };
+    W.$("#optListen").onchange = vp; W.$("#optTolu").onchange = vp;
+    W.$("#tryTolu").onclick = () => W.openTolu && W.openTolu();
+    W.$("#siri").onclick = () => W.sheet(`<div class="sheet-head"><h2>Add Tolu to Siri</h2><button class="btn sm soft" data-close>Done</button></div>
+      <p class="ink2" style="font-size:15px;line-height:23px">Make a one-step Shortcut, then say “Hey Siri, Tolu” and WFN opens with Tolu ready to listen.</p>
+      <ol class="points card" style="box-shadow:none">${["Open the Shortcuts app on your iPhone and tap +.", "Tap Add Action, search for “Open URLs”, and choose it.", "Type the link below as the URL.", "Tap the name at the top, call it “Tolu”, and tap Done.", "Now say “Hey Siri, Tolu”."].map((x, i) => `<li><span class="n">${i + 1}</span><p style="font-family:var(--sans);font-size:15.5px;line-height:24px">${x}</p></li>`).join("")}</ol>
+      <div style="display:flex;gap:8px;align-items:center"><code style="flex-grow:1;padding:12px 14px;border-radius:14px;background:var(--sunk);font-size:14px;word-break:break-all">https://wfnglobal.org/app/#/tolu</code><button class="btn" id="cpT">Copy</button></div>
+      <p class="small muted">On Android, add the same link to Google Assistant routines or as a home-screen shortcut.</p>`, (el) => { W.$("#cpT", el).onclick = () => W.copyText("https://wfnglobal.org/app/#/tolu"); });
     W.$("#inst").onclick = installSheet;
     W.$("#bk").onclick = backupSheet;
     W.$("#about").onclick = aboutSheet;

@@ -115,3 +115,16 @@ OneSignal push · seasonal effects.
 - New boards: **Invite** (My code / Scan, real QR for wfnglobal.org/app/?invite=oladapo, Share and Copy link), **Scan** (viewfinder, Allow camera, scan from a photo), **Give** (amount, currency, fund, monthly toggle, date, six payment methods, "Why give to WFN"), **Give to** sheet (Where it's needed most, Spread the Word, Care for the needy).
 - Design system bumped to v5.
 - Build notes: real payments need provider accounts (Stripe for cards/Apple Pay/Google Pay, PayPal, Paystack for Naira; Interac via the ministry's bank). Scanning needs camera permission (BarcodeDetector or a small JS QR library).
+
+## Session — Nov 9, afternoon: Stage 4 begins, the real App 2.0
+
+- Built the real app in `app2/` (no build step). Nothing in `app/` or the live site changed.
+  - `app2/js/core.js` router, settings, sheets, read-aloud; `today.js`, `bible.js`, `pages.js`, `you.js`, `extras.js` for the screens.
+  - Uses the same on-phone storage as the old app (`app/js/store.js`), so people keep their notes, highlights, prayers and plan progress when 2.0 goes live.
+  - Content bridge: `node tools/app2-content.js` regenerates `app2/js/content.js` from the arrays the nightly tasks already write in `app/js/app.js`. Today's verse, sermon, study, declaration and fire prayer come live from `app/data/today.json`. Full sermons are read from `/articles/<slug>.html`.
+  - Invite: real QR (vendored qrcode-generator, MIT) and a camera scanner (BarcodeDetector, falling back to vendored jsQR, Apache-2.0).
+  - Give: amount, currency (CAD/USD/GBP/NGN), funds, monthly, six methods. `window.WFN_GIVING` takes the payment links (Stripe, PayPal, Paystack, Interac email) at go-live; until then the Give button explains and offers to email the ministry.
+  - Story of Jesus: 12 galleries with KJV passages from the offline Bible, Golgotha with the seven sayings.
+  - Word Climb mounts the existing game.
+- Private preview published as an artifact ("WFN App 2.0"). In the preview frame the camera, downloads and email links are blocked by the viewer; they work on wfnglobal.org.
+- To go live later: move `app2/` to `app/` (or point `/app/` at it), add OneSignal to the new service worker, have the nightly tasks run `node tools/app2-content.js`, and bump the cache.

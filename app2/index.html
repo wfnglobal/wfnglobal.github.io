@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WFN · Word and Faith Network</title>
+<meta name="description" content="Daily scripture, sermons, Bible studies and prayer from Word and Faith Network, with the full King James Bible offline.">
+<meta name="robots" content="noindex">
+<script>
+(function () {
+  try {
+    var p = localStorage.getItem("wfn2-theme") || "auto";
+    var dark = p === "dark" || (p === "auto" && window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+  } catch (e) {}
+})();
+</script>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#F6F5F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141312" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="../app/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="WFN">
+<link rel="icon" href="../app/icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Spectral:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="../app/css/wordclimb.css">
+</head>
+<body>
+<a class="sr" href="#main">Skip to content</a>
+<div id="app"><main id="main" tabindex="-1"></main></div>
+<nav class="nav" id="nav" aria-label="Main"></nav>
+<script>window.WFN_BASE = window.WFN_BASE || "/";</script>
+<script src="../app/js/store.js"></script>
+<script src="js/content.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="../app/js/wordclimb.js" defer></script>
+<script src="js/core.js"></script>
+<script src="js/today.js"></script>
+<script src="js/bible.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/you.js"></script>
+<script src="js/extras.js"></script>
+<script>WFN2.start();</script>
+</body>
+</html>

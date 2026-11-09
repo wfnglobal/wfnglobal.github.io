@@ -64,6 +64,54 @@
       "h": 2000,
       "title": "Library",
       "radius": 28
+    },
+    "Onboarding.dc.html": {
+      "x": 0,
+      "y": 5020,
+      "w": 390,
+      "h": 844,
+      "title": "Welcome \u00b7 the three pillars",
+      "radius": 28
+    },
+    "Search.dc.html": {
+      "x": 470,
+      "y": 5020,
+      "w": 390,
+      "h": 1100,
+      "title": "Search across everything",
+      "radius": 28
+    },
+    "Sermon.dc.html": {
+      "x": 940,
+      "y": 5020,
+      "w": 390,
+      "h": 1900,
+      "title": "Sermon reading page",
+      "radius": 28
+    },
+    "Dreams.dc.html": {
+      "x": 1410,
+      "y": 5020,
+      "w": 390,
+      "h": 1700,
+      "title": "Dreams & Discernment",
+      "radius": 28
+    },
+    "You.dc.html": {
+      "x": 1880,
+      "y": 5020,
+      "w": 390,
+      "h": 1500,
+      "title": "You",
+      "radius": 28
+    },
+    "Journal.dc.html": {
+      "x": 2350,
+      "y": 5020,
+      "w": 390,
+      "h": 1300,
+      "title": "Notes & journal",
+      "radius": 28
     }
   },
   "createdOnFiles": {
@@ -97,6 +145,13 @@
       "text": "Stage 2 \u00b7 Bible, Prayer and Library",
       "kind": "title1",
       "maxW": 2270
+    },
+    "stage3": {
+      "x": 0,
+      "y": 4720,
+      "text": "Stage 3 \u00b7 Welcome, search, sermon, dreams, You and journal",
+      "kind": "title1",
+      "maxW": 2740
     }
   },
   "order": [
@@ -107,7 +162,13 @@
     "Reader.dc.html",
     "ReaderSettings.dc.html",
     "Prayer.dc.html",
-    "Library.dc.html"
+    "Library.dc.html",
+    "Onboarding.dc.html",
+    "Search.dc.html",
+    "Sermon.dc.html",
+    "Dreams.dc.html",
+    "You.dc.html",
+    "Journal.dc.html"
   ],
   "pages": [],
   "title": "WFN App 2.0"

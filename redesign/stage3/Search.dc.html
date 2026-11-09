@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Search</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1D6468}a:hover{color:#134649}
+mark{background:#F7E3B5;color:inherit;border-radius:3px;padding:0 1px}
+</style>
+</helmet>
+<div style="width: 390px; min-height: 1100px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px; padding: 18px 16px 32px; background: #F6F7F5; color: #15191A; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <label for="q" style="flex-grow: 1; display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 14px; border-radius: 12px; background: #FFFFFF; border: 2px solid #1D6468; color: #646D70;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input id="q" type="search" value="captive" style="flex-grow: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: 500 16px 'Instrument Sans', sans-serif; color: #15191A;">
+    </label>
+    <a href="Main.dc.html" style="font-size: 15px; font-weight: 600; text-decoration: none;">Cancel</a>
+  </div>
+
+  <div style="display: flex; gap: 8px; flex-wrap: wrap;" role="tablist" aria-label="Filter results">
+    <sc-for list="{{filters}}" as="f" hint-placeholder-count="5">
+      <button type="button" role="tab" aria-selected="{{f.sel}}" style="height: 32px; padding: 0 12px; border-radius: 999px; border: {{f.border}}; background: {{f.bg}}; color: {{f.ink}}; font: 600 13px 'Instrument Sans', sans-serif;">{{f.label}} <span style="font-weight: 500; opacity: 0.75;">{{f.n}}</span></button>
+    </sc-for>
+  </div>
+
+  <section aria-labelledby="sBible" style="display: flex; flex-direction: column; gap: 10px;">
+    <div style="display: flex; align-items: center; gap: 8px; padding: 0 4px;"><span style="width: 6px; height: 6px; border-radius: 999px; background: #9A5B12;"></span><h2 id="sBible" style="margin: 0; flex-grow: 1; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #9A5B12;">Bible · 93 verses</h2><a href="#all" style="font-size: 13px; font-weight: 600; text-decoration: none;">See all</a></div>
+    <div style="display: flex; flex-direction: column; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.09);">
+      <a href="Reader.dc.html" style="display: flex; flex-direction: column; gap: 4px; padding: 14px 18px; text-decoration: none; color: #15191A;"><span style="font-size: 13px; font-weight: 600; color: #9A5B12;">Isaiah 49:24</span><span style="font-family: Literata, Georgia, serif; font-size: 16px; line-height: 25px;">Shall the prey be taken from the mighty, or the lawful <mark>captive</mark> delivered?</span></a>
+      <a href="#v" style="display: flex; flex-direction: column; gap: 4px; padding: 14px 18px; border-top: 1px solid rgba(21,25,26,0.08); text-decoration: none; color: #15191A;"><span style="font-size: 13px; font-weight: 600; color: #9A5B12;">Isaiah 61:1</span><span style="font-family: Literata, Georgia, serif; font-size: 16px; line-height: 25px;">…he hath sent me to bind up the brokenhearted, to proclaim liberty to the <mark>captives</mark>, and the opening of the prison to them that are bound;</span></a>
+      <a href="#v" style="display: flex; flex-direction: column; gap: 4px; padding: 14px 18px; border-top: 1px solid rgba(21,25,26,0.08); text-decoration: none; color: #15191A;"><span style="font-size: 13px; font-weight: 600; color: #9A5B12;">Luke 4:18</span><span style="font-family: Literata, Georgia, serif; font-size: 16px; line-height: 25px;">…to preach deliverance to the <mark>captives</mark>, and recovering of sight to the blind, to set at liberty them that are bruised,</span></a>
+      <a href="#v" style="display: flex; flex-direction: column; gap: 4px; padding: 14px 18px; border-top: 1px solid rgba(21,25,26,0.08); text-decoration: none; color: #15191A;"><span style="font-size: 13px; font-weight: 600; color: #9A5B12;">Ephesians 4:8</span><span style="font-family: Literata, Georgia, serif; font-size: 16px; line-height: 25px;">Wherefore he saith, When he ascended up on high, he led captivity <mark>captive</mark>, and gave gifts unto men.</span></a>
+    </div>
+  </section>
+
+  <section aria-labelledby="sSermons" style="display: flex; flex-direction: column; gap: 10px;">
+    <div style="display: flex; align-items: center; gap: 8px; padding: 0 4px;"><span style="width: 6px; height: 6px; border-radius: 999px; background: #3D5A86;"></span><h2 id="sSermons" style="margin: 0; flex-grow: 1; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #3D5A86;">Sermons · 2</h2></div>
+    <div style="display: flex; flex-direction: column; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.09);">
+      <a href="Sermon.dc.html" style="display: flex; gap: 12px; align-items: center; padding: 12px 14px; text-decoration: none; color: #15191A;"><img src="/_blob/32abf99b11c19fb8edc0101fe2cda624" alt="" style="width: 44px; height: 55px; border-radius: 8px; object-fit: cover;"><span style="display: flex; flex-direction: column; gap: 2px;"><span style="font-family: Literata, Georgia, serif; font-size: 16px; font-weight: 500;">The Lawful <mark>Captive</mark> Shall Go Free</span><span style="font-size: 12.5px; color: #646D70;">Isaiah 49:24–25 · Nov 9</span></span></a>
+      <a href="#s" style="display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-top: 1px solid rgba(21,25,26,0.08); text-decoration: none; color: #15191A;"><img src="/_blob/3bb670bc83c7c66b3075cd63b1be9b65" alt="" style="width: 44px; height: 55px; border-radius: 8px; object-fit: cover;"><span style="display: flex; flex-direction: column; gap: 2px;"><span style="font-family: Literata, Georgia, serif; font-size: 16px; font-weight: 500;">Possess Your Possessions</span><span style="font-size: 12.5px; color: #646D70;">“…every <mark>captivity</mark> that rejoiced over my fall…” · Nov 8</span></span></a>
+    </div>
+  </section>
+
+  <section aria-labelledby="sDecl" style="display: flex; flex-direction: column; gap: 10px;">
+    <div style="display: flex; align-items: center; gap: 8px; padding: 0 4px;"><span style="width: 6px; height: 6px; border-radius: 999px; background: #1D6468;"></span><h2 id="sDecl" style="margin: 0; flex-grow: 1; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #1D6468;">Declarations &amp; prayers · 2</h2></div>
+    <div style="display: flex; flex-direction: column; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.09);">
+      <a href="Prayer.dc.html" style="display: flex; flex-direction: column; gap: 4px; padding: 14px 18px; text-decoration: none; color: #15191A;"><span style="font-size: 12.5px; font-weight: 600; color: #1D6468;">Today’s Declaration · Nov 9</span><span style="font-family: Literata, Georgia, serif; font-size: 16px; line-height: 25px;">I am not a lawful <mark>captive</mark> anymore! The handwriting that was against me has been blotted out.</span></a>
+      <a href="#d" style="display: flex; flex-direction: column; gap: 4px; padding: 14px 18px; border-top: 1px solid rgba(21,25,26,0.08); text-decoration: none; color: #15191A;"><span style="font-size: 12.5px; font-weight: 600; color: #1D6468;">Declaration · Nov 8</span><span style="font-family: Literata, Georgia, serif; font-size: 16px; line-height: 25px;">Every <mark>captivity</mark> that rejoiced over my fall, I declare its season is over!</span></a>
+    </div>
+  </section>
+
+  <p style="margin: 0; text-align: center; font-size: 12.5px; color: #646D70;">Search works offline for the Bible, and for everything WFN has published.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const filters = [['All', 97], ['Bible', 93], ['Sermons', 2], ['Declarations', 2], ['Studies', 0]].map(([label, n], i) => ({
+      label, n, sel: i === 0 ? 'true' : 'false', bg: i === 0 ? '#15191A' : '#FFFFFF', ink: i === 0 ? '#F6F7F5' : '#15191A', border: i === 0 ? '1px solid #15191A' : '1px solid rgba(21,25,26,0.12)'
+    }));
+    return { filters };
+  }
+}
+</script>
+</body>
+</html>

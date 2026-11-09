@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dreams and Discernment</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1D6468}a:hover{color:#134649}
+</style>
+</helmet>
+<div style="width: 390px; min-height: 1700px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F7F5; color: #15191A; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
+  <header style="display: flex; flex-direction: column; gap: 14px; padding: 14px 20px 26px; background: #12383A; color: #F2F6F5;">
+    <a href="Main.dc.html" aria-label="Back" style="width: 44px; height: 44px; margin-left: -12px; display: flex; align-items: center; justify-content: center; color: #F2F6F5;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a>
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E9B872" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"></path></svg>
+    <h1 style="margin: 0; font-family: Literata, Georgia, serif; font-size: 32px; line-height: 38px; font-weight: 500;">Dreams &amp; Discernment</h1>
+    <p style="margin: 0; font-size: 15px; line-height: 23px; color: #B9CFCD;">A strange dream, a nightmare, a recurring one you can’t shake. You don’t have to work it out alone, and you don’t have to be afraid of it.</p>
+  </header>
+
+  <main style="display: flex; flex-direction: column; gap: 28px; padding: 24px 16px 36px;">
+    <a href="#fire" style="display: flex; flex-direction: column; gap: 10px; padding: 20px; border-radius: 20px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.09); text-decoration: none; color: #15191A;">
+      <span style="display: flex; align-items: center; gap: 8px;"><span style="width: 6px; height: 6px; border-radius: 999px; background: #1D6468;"></span><span style="flex-grow: 1; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #1D6468;">Tonight’s fire prayer</span><span style="font-size: 12.5px; color: #646D70;">New at midnight</span></span>
+      <span style="font-family: Literata, Georgia, serif; font-size: 22px; line-height: 28px; font-weight: 500;">The Watchman Does Not Sleep</span>
+      <span style="font-size: 14px; line-height: 21px; color: #4A5254;">Twelve prayer points to cover you before you close your eyes.</span>
+      <span style="display: flex; gap: 10px; padding-top: 4px;"><span style="height: 40px; padding: 0 16px; border-radius: 10px; background: #1D6468; color: #FFFFFF; display: flex; align-items: center; font-size: 14px; font-weight: 600;">Pray now</span><span style="height: 40px; padding: 0 14px; border-radius: 10px; border: 1px solid rgba(21,25,26,0.12); display: flex; align-items: center; font-size: 14px; font-weight: 600;">Listen</span></span>
+    </a>
+
+    <section aria-labelledby="scrH" style="display: flex; flex-direction: column; gap: 12px;">
+      <h2 id="scrH" style="margin: 0; padding: 0 4px; font-family: Literata, Georgia, serif; font-size: 21px; line-height: 28px; font-weight: 500;">What Scripture says</h2>
+      <p style="margin: 0; padding: 0 4px; font-family: Literata, Georgia, serif; font-size: 17px; line-height: 28px;">God has spoken through dreams, to Joseph, to Daniel, and in the outpouring of the Spirit. Scripture is just as clear that not every dream is a message. Discernment, not panic.</p>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; padding: 0 4px;">
+        <sc-for list="{{refs}}" as="r" hint-placeholder-count="5"><a href="#ref" style="height: 32px; padding: 0 12px; border-radius: 999px; background: #F7EBDA; color: #9A5B12; display: flex; align-items: center; font-size: 13px; font-weight: 600; text-decoration: none;">{{r}}</a></sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="afraidH" style="display: flex; flex-direction: column; gap: 12px;">
+      <h2 id="afraidH" style="margin: 0; padding: 0 4px; font-family: Literata, Georgia, serif; font-size: 21px; line-height: 28px; font-weight: 500;">If the dream frightened you</h2>
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: 18px; background: #E6EDEC;">
+        <p style="margin: 0; font-family: Literata, Georgia, serif; font-size: 17.5px; line-height: 28px;">Father, I will not carry fear from what I saw in my sleep. You did not give me a spirit of fear, but of power, and of love, and of a sound mind. I hand this dream to You now. I lie down in peace, and I rise in peace, because You keep me. In Jesus’ name, amen.</p>
+        <span style="font-size: 13px; font-weight: 600; color: #9A5B12;">2 Timothy 1:7</span>
+      </div>
+    </section>
+
+    <section aria-labelledby="journalH" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; padding: 0 4px;"><h2 id="journalH" style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 21px; line-height: 28px; font-weight: 500;">Dream journal</h2><span style="font-size: 12.5px; color: #646D70;">Private, on this phone</span></div>
+      <a href="Journal.dc.html" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 18px; background: #FFFFFF; border: 1px dashed rgba(21,25,26,0.22); text-decoration: none; color: #15191A;">
+        <span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #DDEBEA; color: #1D6468; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span>
+        <span style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 15px; font-weight: 600;">Write down a dream</span><span style="font-size: 13px; color: #646D70;">Note it, pray over it, then let it go</span></span>
+      </a>
+    </section>
+
+    <section aria-labelledby="supportH" style="display: flex; flex-direction: column; gap: 12px;">
+      <h2 id="supportH" style="margin: 0; padding: 0 4px; font-family: Literata, Georgia, serif; font-size: 21px; line-height: 28px; font-weight: 500;">When to bring in more support</h2>
+      <div style="display: flex; flex-direction: column; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.09);">
+        <sc-for list="{{support}}" as="s" hint-placeholder-count="4">
+          <div style="display: flex; flex-direction: column; gap: 3px; padding: 14px 18px; border-top: {{s.divider}};"><span style="font-size: 15px; font-weight: 600;">{{s.title}}</span><span style="font-size: 13.5px; line-height: 20px; color: #4A5254;">{{s.text}}</span></div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="archH" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; padding: 0 4px;"><h2 id="archH" style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 21px; line-height: 28px; font-weight: 500;">Fire prayer archive</h2><a href="#archive" style="font-size: 13.5px; font-weight: 600; text-decoration: none;">All 6</a></div>
+      <div style="display: flex; flex-direction: column; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.09);">
+        <sc-for list="{{archive}}" as="a" hint-placeholder-count="3">
+          <a href="#fp" style="display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-top: {{a.divider}}; text-decoration: none; color: #15191A;"><span style="width: 52px; flex-shrink: 0; font-size: 12.5px; color: #646D70; font-variant-numeric: tabular-nums;">{{a.date}}</span><span style="flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 16.5px; font-weight: 500;">{{a.title}}</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#646D70" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const support = [
+      { title: 'Pray it through with someone', text: 'A trusted prayer partner, or the WFN prayer community.' },
+      { title: 'Talk to a pastor you trust', text: 'Someone who knows your life, not a generic interpretation.' },
+      { title: 'See a licensed counselor for recurring nightmares', text: 'They are common and treatable, and often tied to stress or grief.' },
+      { title: 'Faith and help work together', text: 'Prayer for the spirit, counsel for the mind. God uses both.' }
+    ].map((s, i) => ({ ...s, divider: i ? '1px solid rgba(21,25,26,0.08)' : '0' }));
+    const archive = [
+      { date: 'Nov 8', title: 'No Exchange Tonight' },
+      { date: 'Nov 7', title: 'Scattering the Witchcraft Table' },
+      { date: 'Nov 6', title: 'Breaking Every Midnight Decree' }
+    ].map((a, i) => ({ ...a, divider: i ? '1px solid rgba(21,25,26,0.08)' : '0' }));
+    return { refs: ['Genesis 37', 'Daniel 2', 'Acts 2:17', 'Ecclesiastes 5:3', 'Jeremiah 23:28'], support, archive };
+  }
+}
+</script>
+</body>
+</html>

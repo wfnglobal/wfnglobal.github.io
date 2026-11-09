@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Notes and journal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1D6468}a:hover{color:#134649}
+</style>
+</helmet>
+<div style="width: 390px; min-height: 1300px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; padding: 14px 16px 36px; background: #F6F7F5; color: #15191A; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
+  <div style="display: flex; align-items: center; gap: 4px;">
+    <a href="You.dc.html" aria-label="Back to You" style="width: 44px; height: 44px; margin-left: -10px; display: flex; align-items: center; justify-content: center; color: #15191A;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a>
+    <h1 style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 28px; line-height: 34px; font-weight: 500;">Notes &amp; journal</h1>
+    <button type="button" aria-label="Search notes" style="width: 44px; height: 44px; border: 0; background: transparent; color: #4A5254; display: flex; align-items: center; justify-content: center; padding: 0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button>
+  </div>
+
+  <section aria-label="New entry" style="display: flex; flex-direction: column; gap: 12px; padding: 18px; border-radius: 20px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.09);">
+    <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #9A5B12;">Today · Psalm 119:105</span>
+    <label for="entry" style="font-family: Literata, Georgia, serif; font-size: 19px; line-height: 27px; font-weight: 500;">Where do you need light for your next step?</label>
+    <textarea id="entry" rows="3" placeholder="Write freely. Only you can see this." style="resize: none; border: 0; border-radius: 12px; background: #ECEFEC; padding: 12px 14px; font: 400 15.5px/23px Literata, Georgia, serif; color: #15191A;"></textarea>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <button type="button" style="height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid rgba(21,25,26,0.12); background: #FFFFFF; color: #15191A; font: 500 13px 'Instrument Sans', sans-serif;">Journal</button>
+      <button type="button" style="height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid rgba(21,25,26,0.12); background: #FFFFFF; color: #15191A; font: 500 13px 'Instrument Sans', sans-serif;">Prayer</button>
+      <button type="button" style="height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid rgba(21,25,26,0.12); background: #FFFFFF; color: #15191A; font: 500 13px 'Instrument Sans', sans-serif;">Dream</button>
+      <span style="flex-grow: 1;"></span>
+      <button type="button" style="height: 36px; padding: 0 16px; border: 0; border-radius: 999px; background: #1D6468; color: #FFFFFF; font: 600 13.5px 'Instrument Sans', sans-serif;">Save</button>
+    </div>
+  </section>
+
+  <div role="tablist" aria-label="Filter" style="display: flex; gap: 8px; flex-wrap: wrap;">
+    <sc-for list="{{chips}}" as="c" hint-placeholder-count="5"><button type="button" role="tab" aria-selected="{{c.sel}}" style="height: 32px; padding: 0 12px; border-radius: 999px; border: {{c.border}}; background: {{c.bg}}; color: {{c.ink}}; font: 600 13px 'Instrument Sans', sans-serif;">{{c.label}}</button></sc-for>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <sc-for list="{{entries}}" as="e" hint-placeholder-count="4">
+      <article style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.09);">
+        <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 6px; height: 6px; border-radius: 999px; background: {{e.c}};"></span><span style="flex-grow: 1; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: {{e.c}};">{{e.kind}}</span><span style="font-size: 12.5px; color: #646D70;">{{e.date}}</span></div>
+        <sc-if value="{{e.hasQuote}}" hint-placeholder-val="{{e.hasQuote}}"><p style="margin: 0; padding: 8px 12px; border-radius: 10px; background: #F7EBDA; font-family: Literata, Georgia, serif; font-size: 14.5px; line-height: 22px; color: #4A5254;">{{e.quote}}</p></sc-if>
+        <p style="margin: 0; font-family: Literata, Georgia, serif; font-size: 16.5px; line-height: 25px;">{{e.text}}</p>
+        <span style="font-size: 12.5px; font-weight: 600; color: #646D70;">{{e.meta}}</span>
+      </article>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const chips = ['All', 'Bible notes', 'Journal', 'Prayers', 'Dreams'].map((label, i) => ({
+      label, sel: i === 0 ? 'true' : 'false', bg: i === 0 ? '#15191A' : '#FFFFFF', ink: i === 0 ? '#F6F7F5' : '#15191A', border: i === 0 ? '1px solid #15191A' : '1px solid rgba(21,25,26,0.12)'
+    }));
+    const entries = [
+      { kind: 'Note on Isaiah 49:25', date: 'Today', c: '#9A5B12', quote: '“…for I will contend with him that contendeth with thee, and I will save thy children.”', text: 'This fight was never mine to carry. Handing it back today.', meta: 'Linked to verse · open in Bible' },
+      { kind: 'Journal', date: 'Yesterday', c: '#1D6468', quote: '', text: 'Possess your possessions. Wrote down three things God already gave me that I have been living beside instead of walking into.', meta: 'From the sermon “Possess Your Possessions”' },
+      { kind: 'Dream', date: 'Nov 6', c: '#3D5A86', quote: '', text: 'Wrote it down, prayed the fire prayer over it, and let it go. Slept in peace after.', meta: 'Prayed over · released' },
+      { kind: 'Sermon note', date: 'Nov 5', c: '#3D5A86', quote: '', text: 'Study for an audience of One. Approval was never coming from the crowd.', meta: 'Approved, Not Ashamed · 2 Timothy 2:15' }
+    ].map((e) => ({ ...e, hasQuote: !!e.quote }));
+    return { chips, entries };
+  }
+}
+</script>
+</body>
+</html>

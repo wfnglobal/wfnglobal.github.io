@@ -70,3 +70,14 @@ OneSignal push · seasonal effects.
   New features introduced: answered-prayer journal, book reading progress, read ticks
   in the archive, listen bar in reader, related-verses action.
   Still open: 5-tab structure and stack choice (recommendation: stay no-build static).
+- 2026-11-09 — Stage 2 accepted ("Go to stage 3"). Stage 3 designed on the canvas:
+  Welcome (three pillars + Romans 10:17, step 1 of 3: name, reminders, install next),
+  Search (one box over Bible + sermons + declarations, filter chips with counts, match
+  highlighting; "captive" = 93 real KJV verses), Sermon reading page (progress bar,
+  poster, scripture block, pull quote, Amen / Pray this sermon / previous sermon),
+  Dreams & Discernment (spruce header, tonight's fire prayer, Scripture chips,
+  peace prayer, NEW private dream journal, support guidance, fire prayer archive),
+  You (month-in-the-Word grid, stats, what you've kept, daily reminder times with
+  toggles, back up notes, install, Word Climb, about), Notes & journal (daily prompt
+  from the verse, Journal/Prayer/Dream tags, entries linked to verses and sermons).
+  Next: Stage 4 = build. Open: tabs + stack confirmation.

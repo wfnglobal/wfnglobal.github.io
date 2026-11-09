@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>You</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1D6468}a:hover{color:#134649}
+</style>
+</helmet>
+<div style="width: 390px; min-height: 1500px; box-sizing: border-box; display: flex; flex-direction: column; background: #F6F7F5; color: #15191A; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
+  <header style="display: flex; align-items: center; gap: 14px; padding: 32px 20px 8px;">
+    <span style="width: 56px; height: 56px; border-radius: 999px; background: #E6EDEC; display: flex; align-items: center; justify-content: center; font: 600 22px 'Instrument Sans', sans-serif;">O</span>
+    <span style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1;"><h1 style="margin: 0; font-family: Literata, Georgia, serif; font-size: 26px; line-height: 32px; font-weight: 500;">Oladapo</h1><span style="font-size: 13px; color: #646D70;">In the Word since October 2026</span></span>
+    <a href="#edit" style="font-size: 14px; font-weight: 600; text-decoration: none;">Edit</a>
+  </header>
+
+  <main style="display: flex; flex-direction: column; gap: 26px; padding: 16px 16px 32px;">
+    <section aria-labelledby="rhythmH" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 20px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.09);">
+      <div style="display: flex; align-items: baseline;"><h2 id="rhythmH" style="margin: 0; flex-grow: 1; font-size: 15px; font-weight: 600;">November in the Word</h2><span style="font-size: 13px; color: #646D70; font-variant-numeric: tabular-nums;">8 of 9 days</span></div>
+      <div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 5px;" aria-hidden="true">
+        <sc-for list="{{days}}" as="d" hint-placeholder-count="30"><span style="aspect-ratio: 1; border-radius: 6px; background: {{d.c}};"></span></sc-for>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding-top: 4px;">
+        <sc-for list="{{stats}}" as="s" hint-placeholder-count="3">
+          <div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums;">{{s.n}}</span><span style="font-size: 12.5px; color: #4A5254;">{{s.label}}</span></div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="keptH" style="display: flex; flex-direction: column; gap: 10px;">
+      <h2 id="keptH" style="margin: 0; padding: 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #646D70;">What you’ve kept</h2>
+      <div style="display: flex; flex-direction: column; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.09);">
+        <sc-for list="{{kept}}" as="k" hint-placeholder-count="4">
+          <a href="{{k.href}}" style="display: flex; align-items: center; gap: 14px; min-height: 54px; padding: 0 18px; border-top: {{k.divider}}; text-decoration: none; color: #15191A;">
+            <span style="width: 10px; height: 10px; border-radius: 3px; background: {{k.c}};"></span>
+            <span style="flex-grow: 1; font-size: 15.5px; font-weight: 500;">{{k.label}}</span>
+            <span style="font-size: 14px; color: #646D70; font-variant-numeric: tabular-nums;">{{k.n}}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#646D70" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="notifH" style="display: flex; flex-direction: column; gap: 10px;">
+      <h2 id="notifH" style="margin: 0; padding: 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #646D70;">Daily reminders</h2>
+      <div style="display: flex; flex-direction: column; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.09);">
+        <sc-for list="{{reminders}}" as="r" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 18px; border-top: {{r.divider}};">
+            <span style="display: flex; flex-direction: column; gap: 1px; flex-grow: 1;"><span style="font-size: 15px; font-weight: 500;">{{r.label}}</span><span style="font-size: 12.5px; color: #646D70;">{{r.hint}}</span></span>
+            <span style="height: 30px; padding: 0 10px; border-radius: 8px; background: #ECEFEC; display: flex; align-items: center; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; color: {{r.timeInk}};">{{r.time}}</span>
+            <span style="position: relative; width: 46px; height: 28px; border-radius: 999px; background: {{r.track}};"><span style="position: absolute; top: 3px; left: {{r.knob}}; width: 22px; height: 22px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(21,25,26,0.25);"></span></span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="appH" style="display: flex; flex-direction: column; gap: 10px;">
+      <h2 id="appH" style="margin: 0; padding: 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #646D70;">App</h2>
+      <div style="display: flex; flex-direction: column; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.09);">
+        <sc-for list="{{app}}" as="a" hint-placeholder-count="5">
+          <a href="#app" style="display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 0 18px; border-top: {{a.divider}}; text-decoration: none; color: #15191A;">
+            <span style="display: flex; flex-direction: column; gap: 1px; flex-grow: 1;"><span style="font-size: 15.5px; font-weight: 500;">{{a.label}}</span><span style="font-size: 12.5px; color: #646D70;">{{a.hint}}</span></span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#646D70" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+
+  <span style="flex-grow: 1;"></span>
+  <nav aria-label="Main" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 8px 6px 26px; background: #FFFFFF; border-top: 1px solid rgba(21,25,26,0.09);">
+    <sc-for list="{{tabs}}" as="tab" hint-placeholder-count="5">
+      <a href="{{tab.href}}" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; text-decoration: none; color: {{tab.color}}; font: {{tab.weight}} 10.5px 'Instrument Sans', sans-serif;">
+        <span style="width: 52px; height: 30px; border-radius: 999px; background: {{tab.pill}}; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{tab.icon}}"></path></svg></span>
+        {{tab.label}}
+      </a>
+    </sc-for>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const read = [1, 2, 3, 4, 6, 7, 8, 9];
+    const days = Array.from({ length: 30 }, (_, i) => ({ c: read.includes(i + 1) ? '#1D6468' : (i < 9 ? '#DDEBEA' : '#ECEFEC') }));
+    const stats = [{ n: 34, label: 'Chapters read' }, { n: 9, label: 'Sermons' }, { n: 17, label: 'Prayers prayed' }];
+    const div = (arr) => arr.map((x, i) => ({ ...x, divider: i ? '1px solid rgba(21,25,26,0.08)' : '0' }));
+    const kept = div([
+      { label: 'Notes & journal', n: 12, c: '#1D6468', href: 'Journal.dc.html' },
+      { label: 'Highlights', n: 48, c: '#F7E3B5', href: '#h' },
+      { label: 'Saved verses', n: 23, c: '#9A5B12', href: '#v' },
+      { label: 'Saved prayers & declarations', n: 9, c: '#3D5A86', href: '#p' }
+    ]);
+    const reminders = div([
+      { label: 'Verse & declaration', hint: 'Morning Word', time: '6:30 AM', on: true },
+      { label: 'Bible study', hint: 'New every morning', time: '7:15 AM', on: true },
+      { label: 'Night prayer', hint: 'Close the day', time: '9:00 PM', on: true },
+      { label: 'Fire prayer', hint: 'Before you sleep', time: '11:00 PM', on: false }
+    ]).map((r) => ({ ...r, track: r.on ? '#1D6468' : '#D5DBD8', knob: r.on ? '21px' : '3px', timeInk: r.on ? '#15191A' : '#646D70' }));
+    const app = div([
+      { label: 'Reading appearance', hint: 'Theme, text size, typeface' },
+      { label: 'Back up your notes', hint: 'Last backed up today · restore on a new phone' },
+      { label: 'Add WFN to your home screen', hint: 'Works offline, opens like an app' },
+      { label: 'The Word Climb', hint: '100-question Bible quiz' },
+      { label: 'About Word & Faith Network', hint: 'Our three pillars, contact, privacy' }
+    ]);
+    const icons = {
+      today: 'M3 18h18M7 18a5 5 0 0 1 10 0M12 4v3M4.9 9.9l2.1 2.1M19.1 9.9L17 12',
+      bible: 'M2 5.5c3-1.5 6.5-1.5 10 1 3.5-2.5 7-2.5 10-1V19c-3-1.5-6.5-1.5-10 1-3.5-2.5-7-2.5-10-1zM12 6.5V20',
+      prayer: 'M12 3c-3 2.5-5 5.5-5 9v8M12 3c3 2.5 5 5.5 5 9v8M12 3v17M4 20h16',
+      library: 'M4 4h4v16H4zM10 4h4v16h-4zM16.5 4.5l3.5 1-4 15-3.5-1',
+      you: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0'
+    };
+    const active = 4;
+    const tabs = [['Today', 'today', 'Main.dc.html'], ['Bible', 'bible', 'BibleHome.dc.html'], ['Prayer', 'prayer', 'Prayer.dc.html'], ['Library', 'library', 'Library.dc.html'], ['You', 'you', 'You.dc.html']].map(([label, k, href], i) => ({
+      label, href, icon: icons[k], color: i === active ? '#1D6468' : '#646D70', weight: i === active ? 600 : 500, pill: i === active ? '#DDEBEA' : 'transparent'
+    }));
+    return { days, stats, kept, reminders, app, tabs };
+  }
+}
+</script>
+</body>
+</html>

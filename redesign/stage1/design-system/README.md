@@ -2,7 +2,7 @@
 
 A brand system for a church without walls: a global, fully digital ministry built around one daily rhythm. The Word, declared. Prayer, offered. Faith, lived out.
 
-Version 2 (November 2026) extends the system for **WFN App 2.0**, the complete redesign of the progressive web app at wfnglobal.org/app. The website facelift already runs on version 1; version 2 keeps its character and adds what a daily reading and prayer product needs: a reading theme, highlight colors, pillar coding, elevation and motion rules, and app components.
+Version 3 (November 2026) is the system for **WFN App 2.0**, the complete redesign of the progressive web app at wfnglobal.org/app. The website facelift runs on version 1. At Oladapo's direction the app takes its own visual identity, sharing no colors or typefaces with the live site, and adds what a daily reading and prayer product needs: reading themes, highlight colors, pillar coding, elevation and motion rules, and app components.
 
 ## What the brand believes
 
@@ -26,7 +26,7 @@ Facts that shape the product, not just the copy:
 
 1. **The Word is the interface.** Scripture is the largest, calmest thing on any screen. Chrome recedes: hairlines, not boxes; type, not icons.
 2. **One daily rhythm.** Home is "Today": the day's verse, declaration, study, sermon and night prayer in the order they're meant to be lived, with quiet progress. It is not a feed.
-3. **Read without interruption.** Every long text (Bible, sermon, study, book) opens in the same reading surface with three themes (Light, Paper, Dark), adjustable size, and a focus mode that hides all chrome.
+3. **Read without interruption.** Every long text (Bible, sermon, study, book) opens in the same reading surface with three themes (Light, Mist, Dark), adjustable size, and a focus mode that hides all chrome.
 4. **Pick up where you left off.** The app always knows the last chapter, sermon, book page and plan day, and offers one tap back.
 5. **Restraint over decoration.** No gradients behind text, no stock imagery, no glow, no emoji as icons. Color appears only where it carries meaning.
 
@@ -38,33 +38,32 @@ Interface copy is short and literal: "Continue reading", "Save declaration", "Ma
 
 ## Logo
 
-**Current mark: the three-petal emblem** (`assets/Logos/emblem-light.svg`, `emblem-dark.svg`, `app-icon-emblem.svg`). Three petals turning around one centre: the Word (sand gold), Prayer (sage) and Faith (clay) held together by a single point. It shipped on the website header in the October 2026 facelift and becomes the app icon and app header mark in App 2.0. The petal colors are the source of the pillar colors below.
+The three-petal emblem stays the brand mark: three petals turning around one centre, the Word, Prayer and Faith held together by a single point. In App 2.0 its petals take the app's own pillar colors (amber, spruce, slate) on a charcoal disc (`assets/Logos/emblem-*.svg` hold the website version). The earlier ring-and-line mark is superseded.
 
-The earlier ring-and-line mark (`mark-*`, `wordmark-*`, `app-icon-light/dark`) is kept for reference but superseded.
-
-Rules: minimum size 20px; clear space equal to one petal on every side; never recolor the petals to one color; never rotate, outline or stretch it; on photographs use the app-icon tile.
+Rules: minimum size 20px; clear space equal to one petal; never one-color petals; never rotate, outline or stretch it.
 
 ## Color
 
-Three themes, same structure: **Light** (default), **Dark**, and **Paper**, a warm sepia theme used only inside the reading surface. Exact values in `tokens.json`.
+App 2.0 deliberately shares nothing with the live website's warm cream, sage and bronze. Its palette is cooler and cleaner: porcelain white, cool charcoal ink, a deep spruce accent and one warm amber note. Three themes, same structure: **Light** (default), **Dark** (a cool near-black, not brown) and **Mist**, a soft grey-green reading theme. Exact values in `tokens.json`.
 
-- **`surface-100`** is the page, a warm white rather than pure white. **`surface-200`** is a card or sheet on it. **`surface-300`** is sunken: inputs, search, segmented controls, progress tracks. **`sand`** is the one warm neutral band: the Today rhythm rail and selected chips.
-- **`ink`**, **`ink-2`**, **`ink-3`** step from scripture and body text to captions to timestamps. Body copy and scripture always sit on `ink`.
-- **`sage`** is the working accent: links, the active tab, primary buttons, progress. A muted green-teal, deep enough to pass 4.5:1 as text.
-- **`bronze`** is reserved for the Word: scripture references, the verse-of-the-day eyebrow. One or two uses per screen.
-- **`clay`** marks Faith (studies, sermons, books, plans) and doubles as the only destructive color.
+- **`surface-100`** porcelain page, **`surface-200`** cards and sheets, **`surface-300`** sunken fields, **`mist`** the one cool neutral band.
+- **`ink`**, **`ink-2`**, **`ink-3`** step from scripture and body text to captions to timestamps.
+- **`spruce`** is the working accent: links, the active tab, primary buttons, progress, and the Prayer pillar.
+- **`amber`** is the only warm color and is reserved for the Word: references and verse eyebrows.
+- **`slate`** marks Faith: studies, sermons, books, plans.
+- **`hero`** is the deep-spruce Verse of the Day card, the single dark block on a light screen, with `hero-ink` scripture and an `hero-accent` amber eyebrow.
 
-**Pillar coding.** Every piece of content belongs to one pillar, shown by a 6px dot or a thin rule in `pillar-word`, `pillar-prayer` or `pillar-faith`, never by a colored card. A reader learns the system without being told: bronze is Scripture, sage is prayer, clay is teaching.
+**Pillar coding.** Every piece of content belongs to one pillar, shown by a 6px dot or eyebrow color in `pillar-word` (amber), `pillar-prayer` (spruce) or `pillar-faith` (slate), never by a colored card.
 
-**Highlights.** Four Bible highlight swatches (`highlight-gold`, `-sage`, `-blush`, `-sky`), tuned per theme so ink stays at 4.5:1 or better on top of them.
+**Highlights.** Gold, mint, rose and sky, tuned per theme so ink stays at 4.5:1 or better.
 
 ## Type
 
-- **Inter** is the interface: navigation, buttons, labels, metadata. Tabular figures for counts, dates and progress.
-- **Newsreader** (optical sizing) carries Display and Scripture: headlines, every verse, every declaration, sermons, studies and books. Never set a verse in Inter; never set a button in Newsreader. The reader should tell, without reading a word, whether they're looking at the product or at the Word.
-- **Atkinson Hyperlegible** is an accessibility reading option in the reading surface, offered next to Newsreader.
+- **Instrument Sans** is the interface: navigation, buttons, labels, metadata. Tabular figures for counts and progress.
+- **Literata** (optical sizing), a typeface designed for long-form screen reading, carries Display and Scripture: headlines, verses, declarations, sermons, studies, books. Never set a verse in the sans; never set a button in Literata.
+- **Atkinson Hyperlegible** is an accessibility option in the reading surface.
 
-Reading measure: 60 to 68 characters. Verse numbers are Inter at `eyebrow` size in `ink-3`, set as superscript inline, never in the margin. Scripture references are Inter `label` in `bronze`, written "Isaiah 49:25 · KJV".
+Reading measure 60 to 68 characters. Verse numbers: sans, `eyebrow` size, `ink-3`, superscript inline. References: sans `label` in `amber`, written "Isaiah 49:25 · KJV".
 
 ## Spacing, shape and elevation
 
@@ -78,7 +77,7 @@ One curve, `cubic-bezier(0.2, 0, 0, 1)`: 140ms for press states and toggles, 240
 
 ## Iconography
 
-Line icons on a 24px grid, 1.75px stroke, round caps and joins, drawn in `ink` or `ink-2`; the active tab icon switches to `sage` with a filled variant. Five tab icons: Today (sunrise over a line), Bible (open book), Prayer (two hands meeting as an arch), Library (three spines), You (person). No crosses, doves or flames as UI icons; the brand mark carries the meaning.
+Line icons on a 24px grid, 1.75px stroke, round caps and joins, drawn in `ink` or `ink-2`; the active tab icon switches to `spruce` on a `spruce-soft` pill. Five tab icons: Today (sunrise over a line), Bible (open book), Prayer (two hands meeting as an arch), Library (three spines), You (person). No crosses, doves or flames as UI icons; the brand mark carries the meaning.
 
 ## App structure (App 2.0)
 
@@ -92,4 +91,4 @@ Tabs: **Today · Bible · Prayer · Library · You**, with search at the top of 
 
 ## Status
 
-Version 2 covers tokens, logo, pillar coding, type roles, elevation, motion, iconography and app structure. Stage 1 also includes the redesigned Today screen on the design canvas. The Bible reader, Prayer and Library screens follow after review.
+Version 3 covers tokens, logo, pillar coding, type roles, elevation, motion, iconography and app structure. Stage 1 also includes the redesigned Today screen on the design canvas. The Bible reader, Prayer and Library screens follow after review.

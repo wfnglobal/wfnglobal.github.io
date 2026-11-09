@@ -8,30 +8,30 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&amp;display=swap">
 <style>
 body{margin:0}
-a{color:#456E61}a:hover{color:#2F5248}
+a{color:#1D6468}a:hover{color:#134649}
 </style>
 </helmet>
-<div style="width: 390px; min-height: 2140px; box-sizing: border-box; display: flex; flex-direction: column; background: {{t.bg}}; color: {{t.ink}}; font-family: Inter, -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
+<div style="width: 390px; min-height: 2140px; box-sizing: border-box; display: flex; flex-direction: column; background: {{t.bg}}; color: {{t.ink}}; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
 
   <header style="display: flex; flex-direction: column; gap: 6px; padding: 20px 20px 4px;">
     <div style="display: flex; align-items: center; gap: 8px; height: 44px;">
-      <svg width="30" height="30" viewBox="0 0 48 48" role="img" aria-label="Word and Faith Network"><circle cx="24" cy="24" r="23" fill="{{t.emblemGround}}"></circle><path d="M24 7 C 31 14, 33 21, 24 25 C 15 21, 17 14, 24 7 Z" fill="#D3AE75"></path><path transform="rotate(120 24 25)" d="M24 7 C 31 14, 33 21, 24 25 C 15 21, 17 14, 24 7 Z" fill="#9CB6A4"></path><path transform="rotate(240 24 25)" d="M24 7 C 31 14, 33 21, 24 25 C 15 21, 17 14, 24 7 Z" fill="#DDA488"></path><circle cx="24" cy="25" r="4.5" fill="{{t.emblemGround}}"></circle><circle cx="24" cy="25" r="2.1" fill="{{t.bg}}"></circle></svg>
+      <svg width="30" height="30" viewBox="0 0 48 48" role="img" aria-label="Word and Faith Network"><circle cx="24" cy="24" r="23" fill="{{t.emblemGround}}"></circle><path d="M24 7 C 31 14, 33 21, 24 25 C 15 21, 17 14, 24 7 Z" fill="{{t.petalWord}}"></path><path transform="rotate(120 24 25)" d="M24 7 C 31 14, 33 21, 24 25 C 15 21, 17 14, 24 7 Z" fill="{{t.petalPrayer}}"></path><path transform="rotate(240 24 25)" d="M24 7 C 31 14, 33 21, 24 25 C 15 21, 17 14, 24 7 Z" fill="{{t.petalFaith}}"></path><circle cx="24" cy="25" r="4.5" fill="{{t.emblemGround}}"></circle><circle cx="24" cy="25" r="2.1" fill="{{t.bg}}"></circle></svg>
       <span style="flex-grow: 1;"></span>
       <button type="button" aria-label="Notifications" style="width: 44px; height: 44px; border: 0; border-radius: 999px; background: transparent; color: {{t.ink2}}; display: flex; align-items: center; justify-content: center; padding: 0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></button>
-      <button type="button" aria-label="Your profile" style="width: 36px; height: 36px; border: 0; border-radius: 999px; background: {{t.sand}}; color: {{t.ink}}; font: 600 14px Inter, sans-serif; padding: 0;">O</button>
+      <button type="button" aria-label="Your profile" style="width: 36px; height: 36px; border: 0; border-radius: 999px; background: {{t.sand}}; color: {{t.ink}}; font: 600 14px 'Instrument Sans', sans-serif; padding: 0;">O</button>
     </div>
     <p style="margin: 10px 0 0; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{t.ink3}};">Monday, November 9</p>
-    <h1 style="margin: 0; font-family: Newsreader, Georgia, serif; font-size: 32px; line-height: 38px; font-weight: 500; letter-spacing: -0.01em;">Good morning, Oladapo</h1>
+    <h1 style="margin: 0; font-family: Literata, Georgia, serif; font-size: 32px; line-height: 38px; font-weight: 500; letter-spacing: -0.01em;">Good morning, Oladapo</h1>
   </header>
 
   <main style="display: flex; flex-direction: column; gap: 28px; padding: 14px 16px 32px;">
 
     <label for="globalSearch" style="display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 14px; border-radius: 12px; background: {{t.sunk}}; color: {{t.ink3}};">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
-      <input id="globalSearch" type="search" placeholder="Search the Bible, sermons, declarations" style="flex-grow: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: 400 15px Inter, sans-serif; color: {{t.ink}};">
+      <input id="globalSearch" type="search" placeholder="Search the Bible, sermons, declarations" style="flex-grow: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: 400 15px 'Instrument Sans', sans-serif; color: {{t.ink}};">
     </label>
 
     <a href="#continue" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; background: {{t.card}}; border: 1px solid {{t.line}}; text-decoration: none; color: {{t.ink}};">
@@ -44,19 +44,19 @@ a{color:#456E61}a:hover{color:#2F5248}
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{t.ink3}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
     </a>
 
-    <section aria-labelledby="votdLabel" style="display: flex; flex-direction: column; gap: 18px; padding: 24px 22px 20px; border-radius: 26px; background: {{t.bronzeSoft}};">
+    <section aria-labelledby="votdLabel" style="display: flex; flex-direction: column; gap: 18px; padding: 24px 22px 20px; border-radius: 26px; background: {{t.hero}}; color: {{t.heroInk}};">
       <div style="display: flex; align-items: center; gap: 8px;">
-        <span style="width: 6px; height: 6px; border-radius: 999px; background: {{t.bronze}};"></span>
-        <h2 id="votdLabel" style="margin: 0; flex-grow: 1; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{t.bronze}};">Verse of the Day</h2>
-        <span style="font-size: 13px; font-weight: 500; color: {{t.bronze}};">Psalm 119:105</span>
+        <span style="width: 6px; height: 6px; border-radius: 999px; background: {{t.heroAccent}};"></span>
+        <h2 id="votdLabel" style="margin: 0; flex-grow: 1; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{t.heroAccent}};">Verse of the Day</h2>
+        <span style="font-size: 13px; font-weight: 500; color: {{t.heroAccent}};">Psalm 119:105</span>
       </div>
-      <p style="margin: 0; font-family: Newsreader, Georgia, serif; font-size: 27px; line-height: 37px; font-weight: 400; letter-spacing: -0.005em; text-wrap: balance;">Thy word is a lamp unto my feet, and a light unto my path.</p>
-      <p style="margin: 0; font-size: 14.5px; line-height: 22px; color: {{t.ink2}};">An ancient oil lamp lit only the next step or two. That is the promise: enough light for the step in front of you.</p>
+      <p style="margin: 0; font-family: Literata, Georgia, serif; font-size: 27px; line-height: 37px; font-weight: 400; letter-spacing: -0.005em; text-wrap: balance;">Thy word is a lamp unto my feet, and a light unto my path.</p>
+      <p style="margin: 0; font-size: 14.5px; line-height: 22px; color: {{t.hero2}};">An ancient oil lamp lit only the next step or two. That is the promise: enough light for the step in front of you.</p>
       <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <button type="button" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 13px; border: 0; border-radius: 999px; background: {{t.chipOnBand}}; color: {{t.ink}}; font: 500 13px Inter, sans-serif;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path></svg>Listen</button>
-        <button type="button" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 13px; border: 0; border-radius: 999px; background: {{t.chipOnBand}}; color: {{t.ink}}; font: 500 13px Inter, sans-serif;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg>Save</button>
-        <button type="button" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 13px; border: 0; border-radius: 999px; background: {{t.chipOnBand}}; color: {{t.ink}}; font: 500 13px Inter, sans-serif;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="M7 8l5-5 5 5"></path><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"></path></svg>Share</button>
-        <button type="button" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 13px; border: 0; border-radius: 999px; background: {{t.chipOnBand}}; color: {{t.ink}}; font: 500 13px Inter, sans-serif;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"></path></svg>Translate</button>
+        <button type="button" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 13px; border: 0; border-radius: 999px; background: {{t.chipOnBand}}; color: {{t.heroInk}}; font: 500 13px 'Instrument Sans', sans-serif;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path></svg>Listen</button>
+        <button type="button" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 13px; border: 0; border-radius: 999px; background: {{t.chipOnBand}}; color: {{t.heroInk}}; font: 500 13px 'Instrument Sans', sans-serif;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg>Save</button>
+        <button type="button" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 13px; border: 0; border-radius: 999px; background: {{t.chipOnBand}}; color: {{t.heroInk}}; font: 500 13px 'Instrument Sans', sans-serif;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="M7 8l5-5 5 5"></path><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"></path></svg>Share</button>
+        <button type="button" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 13px; border: 0; border-radius: 999px; background: {{t.chipOnBand}}; color: {{t.heroInk}}; font: 500 13px 'Instrument Sans', sans-serif;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"></path></svg>Translate</button>
       </div>
     </section>
 
@@ -66,20 +66,20 @@ a{color:#456E61}a:hover{color:#2F5248}
         <h2 id="declLabel" style="margin: 0; flex-grow: 1; font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{t.sage}};">Today’s Declaration</h2>
         <span style="font-size: 13px; color: {{t.ink3}};">Isaiah 49:24–25</span>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 10px; font-family: Newsreader, Georgia, serif; font-size: 18.5px; line-height: 28px;">
+      <div style="display: flex; flex-direction: column; gap: 10px; font-family: Literata, Georgia, serif; font-size: 18.5px; line-height: 28px;">
         <p style="margin: 0;">Father, I declare today that the prey shall be taken from the mighty. Whatever has held me in its teeth must open its mouth and let me go, in the name of Jesus!</p>
         <p style="margin: 0;">I am not a lawful captive anymore!</p>
         <p style="margin: 0; color: {{t.ink3}};">… 10 more lines</p>
       </div>
       <div style="display: flex; gap: 10px;">
-        <a href="#declaration" style="flex-grow: 1; display: flex; align-items: center; justify-content: center; gap: 8px; height: 48px; border-radius: 12px; background: {{t.sage}}; color: {{t.onSage}}; font: 600 15px Inter, sans-serif; text-decoration: none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"></path></svg>Pray it aloud</a>
+        <a href="#declaration" style="flex-grow: 1; display: flex; align-items: center; justify-content: center; gap: 8px; height: 48px; border-radius: 12px; background: {{t.sage}}; color: {{t.onSage}}; font: 600 15px 'Instrument Sans', sans-serif; text-decoration: none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"></path></svg>Pray it aloud</a>
         <button type="button" aria-label="Save declaration" style="width: 48px; height: 48px; border-radius: 12px; border: 1px solid {{t.line}}; background: transparent; color: {{t.ink}}; display: flex; align-items: center; justify-content: center; padding: 0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
       </div>
     </section>
 
     <section aria-labelledby="rhythmLabel" style="display: flex; flex-direction: column; gap: 14px;">
       <div style="display: flex; align-items: center; gap: 12px; padding: 0 4px;">
-        <h2 id="rhythmLabel" style="margin: 0; flex-grow: 1; font-family: Newsreader, Georgia, serif; font-size: 22px; line-height: 28px; font-weight: 500;">Your day in the Word</h2>
+        <h2 id="rhythmLabel" style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 22px; line-height: 28px; font-weight: 500;">Your day in the Word</h2>
         <svg width="30" height="30" viewBox="0 0 36 36" role="img" aria-label="2 of 5 complete"><circle cx="18" cy="18" r="15" fill="none" stroke="{{t.sunk}}" stroke-width="3.5"></circle><circle cx="18" cy="18" r="15" fill="none" stroke="{{t.sage}}" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="37.7 94.2" transform="rotate(-90 18 18)"></circle></svg>
         <span style="font-size: 13px; font-weight: 600; color: {{t.ink2}}; font-variant-numeric: tabular-nums;">2 of 5</span>
       </div>
@@ -97,7 +97,7 @@ a{color:#456E61}a:hover{color:#2F5248}
             </span>
             <span style="display: flex; flex-direction: column; gap: 3px; min-width: 0; flex-grow: 1;">
               <span style="font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: {{r.color}};">{{r.kind}}</span>
-              <span style="font-family: Newsreader, Georgia, serif; font-size: 18px; line-height: 24px; font-weight: 500; color: {{r.titleColor}};">{{r.title}}</span>
+              <span style="font-family: Literata, Georgia, serif; font-size: 18px; line-height: 24px; font-weight: 500; color: {{r.titleColor}};">{{r.title}}</span>
               <span style="font-size: 13px; line-height: 18px; color: {{t.ink3}};">{{r.meta}}</span>
             </span>
           </li>
@@ -109,7 +109,7 @@ a{color:#456E61}a:hover{color:#2F5248}
       <div style="display: flex; align-items: flex-start; gap: 12px;">
         <span style="display: flex; flex-direction: column; gap: 3px; flex-grow: 1;">
           <span style="font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: {{t.clay}};">Reading plan</span>
-          <h2 id="planLabel" style="margin: 0; font-family: Newsreader, Georgia, serif; font-size: 20px; line-height: 26px; font-weight: 500;">Faith Cometh by Hearing</h2>
+          <h2 id="planLabel" style="margin: 0; font-family: Literata, Georgia, serif; font-size: 20px; line-height: 26px; font-weight: 500;">Faith Cometh by Hearing</h2>
           <span style="font-size: 13px; color: {{t.ink3}};">Day 6 of 21 · Romans 10</span>
         </span>
         <span style="font-size: 13px; font-weight: 600; color: {{t.ink2}}; font-variant-numeric: tabular-nums;">29%</span>
@@ -117,11 +117,11 @@ a{color:#456E61}a:hover{color:#2F5248}
       <div style="display: grid; grid-template-columns: repeat(21, minmax(0, 1fr)); gap: 3px;" aria-hidden="true">
         <sc-for list="{{planDays}}" as="d" hint-placeholder-count="21"><span style="height: 6px; border-radius: 999px; background: {{d.c}};"></span></sc-for>
       </div>
-      <a href="#plan" style="align-self: flex-start; display: flex; align-items: center; gap: 6px; font: 600 14px Inter, sans-serif; color: {{t.sage}}; text-decoration: none;">Continue day 6<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
+      <a href="#plan" style="align-self: flex-start; display: flex; align-items: center; gap: 6px; font: 600 14px 'Instrument Sans', sans-serif; color: {{t.sage}}; text-decoration: none;">Continue day 6<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
     </section>
 
     <section aria-labelledby="exploreLabel" style="display: flex; flex-direction: column; gap: 14px;">
-      <h2 id="exploreLabel" style="margin: 0; padding: 0 4px; font-family: Newsreader, Georgia, serif; font-size: 22px; line-height: 28px; font-weight: 500;">Go deeper</h2>
+      <h2 id="exploreLabel" style="margin: 0; padding: 0 4px; font-family: Literata, Georgia, serif; font-size: 22px; line-height: 28px; font-weight: 500;">Go deeper</h2>
       <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
         <sc-for list="{{tiles}}" as="k" hint-placeholder-count="4">
           <a href="#tile" style="display: flex; flex-direction: column; gap: 14px; padding: 16px; border-radius: 18px; background: {{t.card}}; border: 1px solid {{t.line}}; text-decoration: none; color: {{t.ink}};">
@@ -145,7 +145,7 @@ a{color:#456E61}a:hover{color:#2F5248}
     </a>
 
     <section aria-labelledby="commLabel" style="display: flex; flex-direction: column; gap: 14px;">
-      <h2 id="commLabel" style="margin: 0; padding: 0 4px; font-family: Newsreader, Georgia, serif; font-size: 22px; line-height: 28px; font-weight: 500;">Pray with the network</h2>
+      <h2 id="commLabel" style="margin: 0; padding: 0 4px; font-family: Literata, Georgia, serif; font-size: 22px; line-height: 28px; font-weight: 500;">Pray with the network</h2>
       <div style="display: flex; flex-direction: column; border-radius: 18px; background: {{t.card}}; border: 1px solid {{t.line}};">
         <a href="#circle" style="display: flex; align-items: center; gap: 14px; padding: 16px 18px; text-decoration: none; color: {{t.ink}};">
           <span style="width: 8px; height: 8px; border-radius: 999px; background: {{t.sage}}; flex-shrink: 0;"></span>
@@ -164,7 +164,7 @@ a{color:#456E61}a:hover{color:#2F5248}
   <span style="flex-grow: 1;"></span>
   <nav aria-label="Main" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 8px 6px 26px; background: {{t.card}}; border-top: 1px solid {{t.line}};">
     <sc-for list="{{tabs}}" as="tab" hint-placeholder-count="5">
-      <a href="#tab" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; text-decoration: none; color: {{tab.color}}; font: {{tab.weight}} 10.5px Inter, sans-serif;">
+      <a href="#tab" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; text-decoration: none; color: {{tab.color}}; font: {{tab.weight}} 10.5px 'Instrument Sans', sans-serif;">
         <span style="width: 52px; height: 30px; border-radius: 999px; background: {{tab.pill}}; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{tab.icon}}"></path></svg></span>
         {{tab.label}}
       </a>
@@ -177,15 +177,19 @@ class Component extends DCLogic {
   renderVals() {
     const dark = (this.props.theme ?? 'light') === 'dark';
     const t = dark ? {
-      bg: '#141412', card: '#1D1C19', sunk: '#262521', sand: '#2E2B25', line: 'rgba(239,235,227,0.12)',
-      ink: '#EFEBE3', ink2: '#B5AFA3', ink3: '#8F897D', sage: '#8DB8A8', sageSoft: '#1F2D28', onSage: '#10201A',
-      bronze: '#D2AE74', bronzeSoft: '#2E261A', clay: '#DB9A7C', claySoft: '#33221B',
-      chipOnBand: 'rgba(239,235,227,0.08)', emblemGround: '#EFEBE3'
+      bg: '#0E1213', card: '#161B1C', sunk: '#1F2627', sand: '#1C2425', line: 'rgba(236,240,239,0.10)',
+      ink: '#ECF0EF', ink2: '#A9B3B3', ink3: '#7E8A8B', sage: '#7CC4C0', sageSoft: '#163033', onSage: '#0B1A1B',
+      bronze: '#E2A85A', bronzeSoft: '#2D2316', clay: '#9DB3D9', claySoft: '#1B2536',
+      hero: '#16393A', heroInk: '#F2F6F5', hero2: '#B9CFCD', heroAccent: '#E9B872',
+      chipOnBand: 'rgba(255,255,255,0.10)', emblemGround: '#ECF0EF',
+      petalWord: '#C8862F', petalPrayer: '#2F8A86', petalFaith: '#5677AE'
     } : {
-      bg: '#F7F5F0', card: '#FFFFFF', sunk: '#EFEBE3', sand: '#E9E1D2', line: 'rgba(34,33,30,0.10)',
-      ink: '#22211E', ink2: '#57534B', ink3: '#716C62', sage: '#456E61', sageSoft: '#E3ECE7', onSage: '#FFFFFF',
-      bronze: '#86652F', bronzeSoft: '#F2EADB', clay: '#9A5639', claySoft: '#F4E5DD',
-      chipOnBand: 'rgba(255,255,255,0.7)', emblemGround: '#22211E'
+      bg: '#F6F7F5', card: '#FFFFFF', sunk: '#ECEFEC', sand: '#E6EDEC', line: 'rgba(21,25,26,0.09)',
+      ink: '#15191A', ink2: '#4A5254', ink3: '#646D70', sage: '#1D6468', sageSoft: '#DDEBEA', onSage: '#FFFFFF',
+      bronze: '#9A5B12', bronzeSoft: '#F7EBDA', clay: '#3D5A86', claySoft: '#E3E9F3',
+      hero: '#12383A', heroInk: '#F2F6F5', hero2: '#B9CFCD', heroAccent: '#E9B872',
+      chipOnBand: 'rgba(255,255,255,0.10)', emblemGround: '#15191A',
+      petalWord: '#E2A85A', petalPrayer: '#7CC4C0', petalFaith: '#9DB3D9'
     };
     const rows = [
       { time: '6:00 AM', kind: 'Declaration', title: 'The lawful captive shall be delivered', meta: 'Prayed · 2 min', color: t.sage, done: true },

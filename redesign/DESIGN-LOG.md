@@ -48,3 +48,10 @@ OneSignal push · seasonal effects.
     automations keep working) with a modular rebuild, vs Next.js static export + Actions build;
     (3) tabs: Sermons move into Library, Profile becomes "You".
   - Next: Bible reader, Prayer, Library screens (Stage 2), then onboarding, search, You.
+- 2026-11-09 — Session 1 review: Oladapo likes the direction and layout, but both Today
+  boards used the live site's colors. Rule from now on: App 2.0 shares NO colors or
+  typefaces with the live site/app. Design system v3: porcelain #F6F7F5, cool charcoal
+  ink #15191A, spruce accent #1D6468 (Prayer + UI), amber #9A5B12 (Word), slate blue
+  #3D5A86 (Faith), deep-spruce Verse of the Day hero card #12383A, cool near-black dark
+  theme #0E1213, Mist reading theme; Literata (scripture/display) + Instrument Sans (UI).
+  Emblem petals recolored to the app palette. Canvas updated.

@@ -8,39 +8,39 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&amp;family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap">
 <style>
 body{margin:0}
-a{color:#456E61}a:hover{color:#2F5248}
+a{color:#1D6468}a:hover{color:#134649}
 </style>
 </helmet>
-<div style="width: 1200px; height: 2140px; box-sizing: border-box; padding: 64px 72px; display: flex; flex-direction: column; gap: 56px; background: #F7F5F0; color: #22211E; font-family: Inter, -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
+<div style="width: 1200px; height: 2140px; box-sizing: border-box; padding: 64px 72px; display: flex; flex-direction: column; gap: 56px; background: #F6F7F5; color: #15191A; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
 
   <header style="display: flex; align-items: flex-end; gap: 32px;">
     <div style="display: flex; flex-direction: column; gap: 10px; flex-grow: 1;">
       <div style="display: flex; align-items: center; gap: 12px;">
-        <svg width="40" height="40" viewBox="0 0 48 48" role="img" aria-label="Word and Faith Network emblem"><circle cx="24" cy="24" r="23" fill="#22211E"></circle><path d="M24 7 C 31 14, 33 21, 24 25 C 15 21, 17 14, 24 7 Z" fill="#D3AE75"></path><path transform="rotate(120 24 25)" d="M24 7 C 31 14, 33 21, 24 25 C 15 21, 17 14, 24 7 Z" fill="#9CB6A4"></path><path transform="rotate(240 24 25)" d="M24 7 C 31 14, 33 21, 24 25 C 15 21, 17 14, 24 7 Z" fill="#DDA488"></path><circle cx="24" cy="25" r="4.5" fill="#22211E"></circle><circle cx="24" cy="25" r="2.1" fill="#F7F5F0"></circle></svg>
-        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #716C62;">WFN App 2.0 · Design system v2</span>
+        <svg width="40" height="40" viewBox="0 0 48 48" role="img" aria-label="Word and Faith Network emblem"><circle cx="24" cy="24" r="23" fill="#15191A"></circle><path d="M24 7 C 31 14, 33 21, 24 25 C 15 21, 17 14, 24 7 Z" fill="#E2A85A"></path><path transform="rotate(120 24 25)" d="M24 7 C 31 14, 33 21, 24 25 C 15 21, 17 14, 24 7 Z" fill="#7CC4C0"></path><path transform="rotate(240 24 25)" d="M24 7 C 31 14, 33 21, 24 25 C 15 21, 17 14, 24 7 Z" fill="#9DB3D9"></path><circle cx="24" cy="25" r="4.5" fill="#15191A"></circle><circle cx="24" cy="25" r="2.1" fill="#F6F7F5"></circle></svg>
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #646D70;">WFN App 2.0 · Design system v2</span>
       </div>
-      <h1 style="margin: 0; font-family: Newsreader, Georgia, serif; font-size: 52px; line-height: 58px; font-weight: 500; letter-spacing: -0.015em;">The Word is the interface.</h1>
-      <p style="margin: 0; max-width: 640px; font-size: 17px; line-height: 27px; color: #57534B;">Warm whites, charcoal ink, one working accent. Scripture is always the largest and calmest thing on the screen. Color appears only where it means something: bronze for the Word, sage for Prayer, clay for Faith.</p>
+      <h1 style="margin: 0; font-family: Literata, Georgia, serif; font-size: 52px; line-height: 58px; font-weight: 500; letter-spacing: -0.015em;">The Word is the interface.</h1>
+      <p style="margin: 0; max-width: 640px; font-size: 17px; line-height: 27px; color: #4A5254;">Porcelain white, cool charcoal ink and one deep spruce accent. Scripture is always the largest and calmest thing on the screen. Color appears only where it means something: amber for the Word, spruce for Prayer, slate blue for Faith.</p>
     </div>
   </header>
 
   <section aria-labelledby="colorH" style="display: flex; flex-direction: column; gap: 20px;">
-    <h2 id="colorH" style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #716C62;">Color · light theme</h2>
+    <h2 id="colorH" style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #646D70;">Color · light theme</h2>
     <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px;">
       <sc-for list="{{neutrals}}" as="c" hint-placeholder-count="7">
         <div style="display: flex; flex-direction: column; gap: 8px;">
-          <span style="height: 72px; border-radius: 14px; background: {{c.hex}}; border: 1px solid rgba(34,33,30,0.10);"></span>
+          <span style="height: 72px; border-radius: 14px; background: {{c.hex}}; border: 1px solid rgba(21,25,26,0.10);"></span>
           <span style="font-size: 13px; font-weight: 600;">{{c.name}}</span>
-          <span style="font-size: 12px; color: #716C62; font-variant-numeric: tabular-nums;">{{c.hex}}</span>
+          <span style="font-size: 12px; color: #646D70; font-variant-numeric: tabular-nums;">{{c.hex}}</span>
         </div>
       </sc-for>
     </div>
     <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
       <sc-for list="{{pillars}}" as="p" hint-placeholder-count="3">
-        <div style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(34,33,30,0.10);">
+        <div style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.10);">
           <div style="display: flex; gap: 8px;">
             <span style="flex-grow: 1; height: 52px; border-radius: 12px; background: {{p.hex}};"></span>
             <span style="flex-grow: 1; height: 52px; border-radius: 12px; background: {{p.soft}};"></span>
@@ -49,92 +49,92 @@ a{color:#456E61}a:hover{color:#2F5248}
             <span style="width: 7px; height: 7px; border-radius: 999px; background: {{p.hex}};"></span>
             <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: {{p.hex}};">{{p.pillar}}</span>
             <span style="flex-grow: 1;"></span>
-            <span style="font-size: 12px; color: #716C62;">{{p.token}} {{p.hex}}</span>
+            <span style="font-size: 12px; color: #646D70;">{{p.token}} {{p.hex}}</span>
           </div>
-          <p style="margin: 0; font-size: 14px; line-height: 21px; color: #57534B;">{{p.use}}</p>
+          <p style="margin: 0; font-size: 14px; line-height: 21px; color: #4A5254;">{{p.use}}</p>
         </div>
       </sc-for>
     </div>
     <div style="display: flex; align-items: center; gap: 12px;">
       <span style="font-size: 13px; font-weight: 600; width: 120px;">Highlights</span>
       <sc-for list="{{highlights}}" as="h" hint-placeholder-count="4">
-        <span style="padding: 6px 12px; border-radius: 8px; background: {{h.hex}}; font-family: Newsreader, Georgia, serif; font-size: 16px;">a light unto my path</span>
+        <span style="padding: 6px 12px; border-radius: 8px; background: {{h.hex}}; font-family: Literata, Georgia, serif; font-size: 16px;">a light unto my path</span>
       </sc-for>
     </div>
   </section>
 
   <section aria-labelledby="typeH" style="display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 48px;">
     <div style="display: flex; flex-direction: column; gap: 22px;">
-      <h2 id="typeH" style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #716C62;">Type · Newsreader for the Word</h2>
-      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #716C62;">display-hero · 34/40</span><span style="font-family: Newsreader, Georgia, serif; font-size: 34px; line-height: 40px; font-weight: 500;">Good evening, Oladapo</span></div>
-      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #716C62;">verse-lg · 24/35</span><span style="font-family: Newsreader, Georgia, serif; font-size: 24px; line-height: 35px;">For I will contend with him that contendeth with thee, and I will save thy children.</span></div>
-      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #716C62;">reading · 19/32 · 64 characters per line</span><span style="max-width: 560px; font-family: Newsreader, Georgia, serif; font-size: 19px; line-height: 32px;">Some captivity looks legal. You signed for it, you walked into it, and the enemy has the paperwork. Heaven’s answer is still the same.</span></div>
+      <h2 id="typeH" style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #646D70;">Type · Literata for the Word</h2>
+      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #646D70;">display-hero · 34/40</span><span style="font-family: Literata, Georgia, serif; font-size: 34px; line-height: 40px; font-weight: 500;">Good evening, Oladapo</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #646D70;">verse-lg · 24/35</span><span style="font-family: Literata, Georgia, serif; font-size: 24px; line-height: 35px;">For I will contend with him that contendeth with thee, and I will save thy children.</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #646D70;">reading · 19/32 · 64 characters per line</span><span style="max-width: 560px; font-family: Literata, Georgia, serif; font-size: 19px; line-height: 32px;">Some captivity looks legal. You signed for it, you walked into it, and the enemy has the paperwork. Heaven’s answer is still the same.</span></div>
     </div>
     <div style="display: flex; flex-direction: column; gap: 22px;">
-      <h2 style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #716C62;">Type · Inter for the product</h2>
-      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #716C62;">title · 17/22 semibold</span><span style="font-size: 17px; line-height: 22px; font-weight: 600;">Continue reading</span></div>
-      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #716C62;">body · 16/24</span><span style="font-size: 16px; line-height: 24px;">A new sermon, verse and declaration arrive every night at midnight.</span></div>
-      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #716C62;">label · 13/18 · reference in bronze</span><span style="font-size: 13px; line-height: 18px; font-weight: 500; color: #86652F;">Isaiah 49:25 · KJV</span></div>
-      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #716C62;">eyebrow · 11/14 · tracked caps</span><span style="font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #456E61;">Today’s Declaration</span></div>
-      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #716C62;">readable option · Atkinson Hyperlegible</span><span style="font-family: 'Atkinson Hyperlegible', Inter, sans-serif; font-size: 18px; line-height: 28px;">Thy word is a lamp unto my feet.</span></div>
+      <h2 style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #646D70;">Type · Instrument Sans for the product</h2>
+      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #646D70;">title · 17/22 semibold</span><span style="font-size: 17px; line-height: 22px; font-weight: 600;">Continue reading</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #646D70;">body · 16/24</span><span style="font-size: 16px; line-height: 24px;">A new sermon, verse and declaration arrive every night at midnight.</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #646D70;">label · 13/18 · reference in amber</span><span style="font-size: 13px; line-height: 18px; font-weight: 500; color: #9A5B12;">Isaiah 49:25 · KJV</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #646D70;">eyebrow · 11/14 · tracked caps</span><span style="font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #1D6468;">Today’s Declaration</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 12px; color: #646D70;">readable option · Atkinson Hyperlegible</span><span style="font-family: 'Atkinson Hyperlegible', 'Instrument Sans', sans-serif; font-size: 18px; line-height: 28px;">Thy word is a lamp unto my feet.</span></div>
     </div>
   </section>
 
   <section aria-labelledby="compH" style="display: flex; flex-direction: column; gap: 22px;">
-    <h2 id="compH" style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #716C62;">Components</h2>
+    <h2 id="compH" style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #646D70;">Components</h2>
     <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px;">
 
-      <div style="display: flex; flex-direction: column; gap: 14px; padding: 22px; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(34,33,30,0.10);">
+      <div style="display: flex; flex-direction: column; gap: 14px; padding: 22px; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.10);">
         <span style="font-size: 13px; font-weight: 600;">Buttons</span>
-        <button type="button" style="height: 48px; border: 0; border-radius: 12px; background: #456E61; color: #FFFFFF; font: 600 15px Inter, sans-serif;">Pray it aloud</button>
-        <button type="button" style="height: 48px; border: 1px solid rgba(34,33,30,0.14); border-radius: 12px; background: #FFFFFF; color: #22211E; font: 600 15px Inter, sans-serif;">Save to my prayers</button>
+        <button type="button" style="height: 48px; border: 0; border-radius: 12px; background: #1D6468; color: #FFFFFF; font: 600 15px 'Instrument Sans', sans-serif;">Pray it aloud</button>
+        <button type="button" style="height: 48px; border: 1px solid rgba(21,25,26,0.14); border-radius: 12px; background: #FFFFFF; color: #15191A; font: 600 15px 'Instrument Sans', sans-serif;">Save to my prayers</button>
         <div style="display: flex; gap: 10px; align-items: center;">
-          <button type="button" style="height: 40px; padding: 0 4px; border: 0; background: transparent; color: #456E61; font: 600 15px Inter, sans-serif;">Read the sermon</button>
+          <button type="button" style="height: 40px; padding: 0 4px; border: 0; background: transparent; color: #1D6468; font: 600 15px 'Instrument Sans', sans-serif;">Read the sermon</button>
           <span style="flex-grow: 1;"></span>
-          <button type="button" aria-label="Share" style="width: 44px; height: 44px; border: 0; border-radius: 999px; background: #EFEBE3; color: #22211E; display: flex; align-items: center; justify-content: center; padding: 0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="M7 8l5-5 5 5"></path><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"></path></svg></button>
+          <button type="button" aria-label="Share" style="width: 44px; height: 44px; border: 0; border-radius: 999px; background: #ECEFEC; color: #15191A; display: flex; align-items: center; justify-content: center; padding: 0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="M7 8l5-5 5 5"></path><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"></path></svg></button>
         </div>
       </div>
 
-      <div style="display: flex; flex-direction: column; gap: 14px; padding: 22px; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(34,33,30,0.10);">
+      <div style="display: flex; flex-direction: column; gap: 14px; padding: 22px; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.10);">
         <span style="font-size: 13px; font-weight: 600;">Chips, search, progress</span>
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-          <span style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; background: #F2EADB; color: #86652F; font: 600 12.5px Inter, sans-serif;"><span style="width: 6px; height: 6px; border-radius: 9px; background: #86652F;"></span>Scripture</span>
-          <span style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; background: #E3ECE7; color: #456E61; font: 600 12.5px Inter, sans-serif;"><span style="width: 6px; height: 6px; border-radius: 9px; background: #456E61;"></span>Prayer</span>
-          <span style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; background: #F4E5DD; color: #9A5639; font: 600 12.5px Inter, sans-serif;"><span style="width: 6px; height: 6px; border-radius: 9px; background: #9A5639;"></span>Teaching</span>
+          <span style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; background: #F7EBDA; color: #9A5B12; font: 600 12.5px 'Instrument Sans', sans-serif;"><span style="width: 6px; height: 6px; border-radius: 9px; background: #9A5B12;"></span>Scripture</span>
+          <span style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; background: #DDEBEA; color: #1D6468; font: 600 12.5px 'Instrument Sans', sans-serif;"><span style="width: 6px; height: 6px; border-radius: 9px; background: #1D6468;"></span>Prayer</span>
+          <span style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; background: #E3E9F3; color: #3D5A86; font: 600 12.5px 'Instrument Sans', sans-serif;"><span style="width: 6px; height: 6px; border-radius: 9px; background: #3D5A86;"></span>Teaching</span>
         </div>
-        <label for="fSearch" style="display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 14px; border-radius: 12px; background: #EFEBE3; color: #716C62;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg><input id="fSearch" type="search" value="captive" style="flex-grow: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: 400 15px Inter, sans-serif; color: #22211E;"></label>
+        <label for="fSearch" style="display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 14px; border-radius: 12px; background: #ECEFEC; color: #646D70;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg><input id="fSearch" type="search" value="captive" style="flex-grow: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: 400 15px 'Instrument Sans', sans-serif; color: #15191A;"></label>
         <div style="display: flex; flex-direction: column; gap: 6px;">
-          <span style="display: flex; font-size: 12.5px; color: #57534B;"><span style="flex-grow: 1;">Faith Cometh by Hearing</span><span style="font-variant-numeric: tabular-nums;">Day 6 / 21</span></span>
-          <span style="display: block; height: 4px; border-radius: 999px; background: #EFEBE3;"><span style="display: block; width: 29%; height: 4px; border-radius: 999px; background: #456E61;"></span></span>
+          <span style="display: flex; font-size: 12.5px; color: #4A5254;"><span style="flex-grow: 1;">Faith Cometh by Hearing</span><span style="font-variant-numeric: tabular-nums;">Day 6 / 21</span></span>
+          <span style="display: block; height: 4px; border-radius: 999px; background: #ECEFEC;"><span style="display: block; width: 29%; height: 4px; border-radius: 999px; background: #1D6468;"></span></span>
         </div>
       </div>
 
-      <div style="display: flex; flex-direction: column; gap: 0; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(34,33,30,0.10); overflow: hidden;">
+      <div style="display: flex; flex-direction: column; gap: 0; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.10); overflow: hidden;">
         <span style="font-size: 13px; font-weight: 600; padding: 22px 22px 10px;">List rows</span>
         <sc-for list="{{rows}}" as="r" hint-placeholder-count="3">
-          <a href="#row" style="display: flex; align-items: center; gap: 12px; padding: 14px 22px; border-top: 1px solid rgba(34,33,30,0.08); text-decoration: none; color: #22211E;">
+          <a href="#row" style="display: flex; align-items: center; gap: 12px; padding: 14px 22px; border-top: 1px solid rgba(21,25,26,0.08); text-decoration: none; color: #15191A;">
             <span style="width: 7px; height: 7px; border-radius: 999px; background: {{r.c}};"></span>
-            <span style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 0;"><span style="font-family: Newsreader, Georgia, serif; font-size: 17px; line-height: 22px; font-weight: 500;">{{r.title}}</span><span style="font-size: 12.5px; color: #716C62;">{{r.meta}}</span></span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#716C62" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+            <span style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 0;"><span style="font-family: Literata, Georgia, serif; font-size: 17px; line-height: 22px; font-weight: 500;">{{r.title}}</span><span style="font-size: 12.5px; color: #646D70;">{{r.meta}}</span></span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#646D70" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
           </a>
         </sc-for>
       </div>
     </div>
 
     <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px;">
-      <div style="position: relative; height: 230px; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(34,33,30,0.10); padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px;">
+      <div style="position: relative; height: 230px; border-radius: 18px; background: #FFFFFF; border: 1px solid rgba(21,25,26,0.10); padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px;">
         <span style="font-size: 13px; font-weight: 600;">Selection bar · floats above text, never covers it</span>
-        <p style="margin: 34px 0 0; font-family: Newsreader, Georgia, serif; font-size: 19px; line-height: 30px;">But thus saith the LORD, <span style="background: #D3E1EE; border-radius: 3px;">Even the captives of the mighty shall be taken away</span>, and the prey of the terrible shall be delivered.</p>
-        <div style="position: absolute; left: 50%; top: 52px; transform: translateX(-50%); display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: 14px; background: rgba(255,255,255,0.72); border: 1px solid rgba(34,33,30,0.10); box-shadow: 0 8px 30px rgba(34,33,30,0.12); backdrop-filter: blur(14px);">
-          <sc-for list="{{selActions}}" as="a" hint-placeholder-count="6"><button type="button" style="height: 34px; padding: 0 10px; border: 0; border-radius: 10px; background: transparent; color: #22211E; font: 500 13px Inter, sans-serif;">{{a}}</button></sc-for>
+        <p style="margin: 34px 0 0; font-family: Literata, Georgia, serif; font-size: 19px; line-height: 30px;">But thus saith the LORD, <span style="background: #D6E2F2; border-radius: 3px;">Even the captives of the mighty shall be taken away</span>, and the prey of the terrible shall be delivered.</p>
+        <div style="position: absolute; left: 50%; top: 52px; transform: translateX(-50%); display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: 14px; background: rgba(255,255,255,0.74); border: 1px solid rgba(21,25,26,0.10); box-shadow: 0 8px 30px rgba(21,25,26,0.12); backdrop-filter: blur(14px);">
+          <sc-for list="{{selActions}}" as="a" hint-placeholder-count="6"><button type="button" style="height: 34px; padding: 0 10px; border: 0; border-radius: 10px; background: transparent; color: #15191A; font: 500 13px 'Instrument Sans', sans-serif;">{{a}}</button></sc-for>
         </div>
       </div>
-      <div style="height: 230px; border-radius: 18px; background: #E9E1D2; padding: 22px 22px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden;">
+      <div style="height: 230px; border-radius: 18px; background: #E6EDEC; padding: 22px 22px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden;">
         <span style="font-size: 13px; font-weight: 600; margin-bottom: auto;">Bottom sheet · Look Up</span>
-        <div style="border-radius: 26px 26px 0 0; background: #FFFFFF; box-shadow: 0 8px 30px rgba(34,33,30,0.12); padding: 10px 22px 18px; display: flex; flex-direction: column; gap: 8px;">
-          <span style="align-self: center; width: 36px; height: 4px; border-radius: 9px; background: #EFEBE3;"></span>
-          <div style="display: flex; align-items: baseline; gap: 10px;"><span style="font-family: Newsreader, Georgia, serif; font-size: 26px; font-weight: 500;">contend</span><span style="font-size: 14px; color: #57534B;">/kənˈtɛnd/</span></div>
-          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #456E61;">Verb</span>
+        <div style="border-radius: 26px 26px 0 0; background: #FFFFFF; box-shadow: 0 8px 30px rgba(21,25,26,0.12); padding: 10px 22px 18px; display: flex; flex-direction: column; gap: 8px;">
+          <span style="align-self: center; width: 36px; height: 4px; border-radius: 9px; background: #ECEFEC;"></span>
+          <div style="display: flex; align-items: baseline; gap: 10px;"><span style="font-family: Literata, Georgia, serif; font-size: 26px; font-weight: 500;">contend</span><span style="font-size: 14px; color: #4A5254;">/kənˈtɛnd/</span></div>
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #1D6468;">Verb</span>
           <span style="font-size: 15px; line-height: 22px;">1. To compete for something; to strive against an opponent.</span>
         </div>
       </div>
@@ -142,18 +142,18 @@ a{color:#456E61}a:hover{color:#2F5248}
   </section>
 
   <section aria-labelledby="readH" style="display: flex; flex-direction: column; gap: 20px;">
-    <h2 id="readH" style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #716C62;">Reading surface · Light, Paper, Dark</h2>
+    <h2 id="readH" style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #646D70;">Reading surface · Light, Mist, Dark</h2>
     <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px;">
       <sc-for list="{{reading}}" as="m" hint-placeholder-count="3">
-        <article style="display: flex; flex-direction: column; gap: 16px; padding: 22px 24px 26px; border-radius: 18px; background: {{m.bg}}; color: {{m.ink}}; border: 1px solid rgba(34,33,30,0.10);">
+        <article style="display: flex; flex-direction: column; gap: 16px; padding: 22px 24px 26px; border-radius: 18px; background: {{m.bg}}; color: {{m.ink}}; border: 1px solid rgba(21,25,26,0.10);">
           <div style="display: flex; align-items: center; gap: 10px;">
             <span style="font-size: 13px; font-weight: 600;">Isaiah 49</span>
             <span style="font-size: 12px; color: {{m.ink3}};">KJV</span>
             <span style="flex-grow: 1;"></span>
             <span style="font-size: 12px; font-weight: 600; color: {{m.ink3}};">{{m.name}}</span>
-            <span style="font-family: Newsreader, Georgia, serif; font-size: 18px; color: {{m.ink3}};">Aa</span>
+            <span style="font-family: Literata, Georgia, serif; font-size: 18px; color: {{m.ink3}};">Aa</span>
           </div>
-          <p style="margin: 0; font-family: Newsreader, Georgia, serif; font-size: 18px; line-height: 31px;"><sup style="font-family: Inter, sans-serif; font-size: 10px; font-weight: 600; color: {{m.ink3}}; margin-right: 3px;">24</sup>Shall the prey be taken from the mighty, or the lawful captive delivered? <sup style="font-family: Inter, sans-serif; font-size: 10px; font-weight: 600; color: {{m.ink3}}; margin-right: 3px;">25</sup>But thus saith the LORD, <span style="background: {{m.hl}}; border-radius: 3px; box-decoration-break: clone;">Even the captives of the mighty shall be taken away, and the prey of the terrible shall be delivered</span>: for I will contend with him that contendeth with thee, and I will save thy children.<span style="display: inline-block; width: 7px; height: 7px; margin-left: 5px; border-radius: 999px; background: {{m.note}}; vertical-align: middle;" aria-label="Has a note" role="img"></span></p>
+          <p style="margin: 0; font-family: Literata, Georgia, serif; font-size: 18px; line-height: 31px;"><sup style="font-family: 'Instrument Sans', sans-serif; font-size: 10px; font-weight: 600; color: {{m.ink3}}; margin-right: 3px;">24</sup>Shall the prey be taken from the mighty, or the lawful captive delivered? <sup style="font-family: 'Instrument Sans', sans-serif; font-size: 10px; font-weight: 600; color: {{m.ink3}}; margin-right: 3px;">25</sup>But thus saith the LORD, <span style="background: {{m.hl}}; border-radius: 3px; box-decoration-break: clone;">Even the captives of the mighty shall be taken away, and the prey of the terrible shall be delivered</span>: for I will contend with him that contendeth with thee, and I will save thy children.<span style="display: inline-block; width: 7px; height: 7px; margin-left: 5px; border-radius: 999px; background: {{m.note}}; vertical-align: middle;" aria-label="Has a note" role="img"></span></p>
           <p style="margin: 0; font-size: 12.5px; color: {{m.ink3}};">Highlighted · 1 note · cross-references for verse 25</p>
         </article>
       </sc-for>
@@ -166,25 +166,25 @@ class Component extends DCLogic {
   renderVals() {
     return {
       neutrals: [
-        { name: 'surface-100', hex: '#F7F5F0' }, { name: 'surface-200', hex: '#FFFFFF' }, { name: 'surface-300', hex: '#EFEBE3' },
-        { name: 'sand', hex: '#E9E1D2' }, { name: 'ink', hex: '#22211E' }, { name: 'ink-2', hex: '#57534B' }, { name: 'ink-3', hex: '#716C62' }
+        { name: 'surface-100', hex: '#F6F7F5' }, { name: 'surface-200', hex: '#FFFFFF' }, { name: 'surface-300', hex: '#ECEFEC' },
+        { name: 'mist', hex: '#E6EDEC' }, { name: 'ink', hex: '#15191A' }, { name: 'ink-2', hex: '#4A5254' }, { name: 'ink-3', hex: '#646D70' }
       ],
       pillars: [
-        { pillar: 'The Word', token: 'bronze', hex: '#86652F', soft: '#F2EADB', use: 'Verse of the Day, scripture references, the Bible. One or two touches per screen.' },
-        { pillar: 'Prayer', token: 'sage', hex: '#456E61', soft: '#E3ECE7', use: 'The working accent too: links, active tab, primary buttons, progress. Declarations and prayers.' },
-        { pillar: 'Faith', token: 'clay', hex: '#9A5639', soft: '#F4E5DD', use: 'Bible studies, sermons, books and reading plans. The only destructive color.' }
+        { pillar: 'The Word', token: 'amber', hex: '#9A5B12', soft: '#F7EBDA', use: 'Verse of the Day, scripture references, the Bible. A warm amber, used once or twice per screen.' },
+        { pillar: 'Prayer', token: 'spruce', hex: '#1D6468', soft: '#DDEBEA', use: 'The working accent too: links, active tab, primary buttons, progress. Declarations and prayers.' },
+        { pillar: 'Faith', token: 'slate', hex: '#3D5A86', soft: '#E3E9F3', use: 'Bible studies, sermons, books and reading plans. The only destructive color.' }
       ],
-      highlights: [{ hex: '#F5E2A8' }, { hex: '#CFE3D6' }, { hex: '#F2D3C6' }, { hex: '#D3E1EE' }],
+      highlights: [{ hex: '#F7E3B5' }, { hex: '#CDE8E4' }, { hex: '#F3D6D6' }, { hex: '#D6E2F2' }],
       rows: [
-        { title: 'The Lawful Captive Shall Go Free', meta: 'Sermon · Isaiah 49:24–25 · Nov 9', c: '#9A5639' },
-        { title: 'The Watchman Does Not Sleep', meta: 'Fire prayer · 12 points · Nov 9', c: '#456E61' },
-        { title: 'Thy word is a lamp unto my feet', meta: 'Saved verse · Psalm 119:105', c: '#86652F' }
+        { title: 'The Lawful Captive Shall Go Free', meta: 'Sermon · Isaiah 49:24–25 · Nov 9', c: '#3D5A86' },
+        { title: 'The Watchman Does Not Sleep', meta: 'Fire prayer · 12 points · Nov 9', c: '#1D6468' },
+        { title: 'Thy word is a lamp unto my feet', meta: 'Saved verse · Psalm 119:105', c: '#9A5B12' }
       ],
       selActions: ['Copy', 'Highlight', 'Note', 'Share', 'Pray', 'Look Up'],
       reading: [
-        { name: 'Light', bg: '#FFFFFF', ink: '#22211E', ink3: '#716C62', hl: '#F5E2A8', note: '#456E61' },
-        { name: 'Paper', bg: '#F3ECDD', ink: '#2B261D', ink3: '#766D5C', hl: '#C4D9C6', note: '#456E61' },
-        { name: 'Dark', bg: '#141412', ink: '#EFEBE3', ink3: '#8F897D', hl: '#5A4A1E', note: '#8DB8A8' }
+        { name: 'Light', bg: '#FFFFFF', ink: '#15191A', ink3: '#646D70', hl: '#F7E3B5', note: '#1D6468' },
+        { name: 'Mist', bg: '#EEF2F0', ink: '#1A2022', ink3: '#5F696B', hl: '#CDE8E4', note: '#1D6468' },
+        { name: 'Dark', bg: '#0E1213', ink: '#ECEFEC', ink3: '#8F897D', hl: '#5A4A1E', note: '#8DB8A8' }
       ]
     };
   }

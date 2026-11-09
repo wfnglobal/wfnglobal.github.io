@@ -175,10 +175,14 @@
   // Bible passages (verses[]) that actually build the teaching, not one
   // isolated verse — this is what makes it a *study*, not a quote card.
   // body[] is an array of full paragraphs rendered as-is (no markdown) in
-  // the in-app reader.
+  // the in-app reader. Optional poster/posterAlt: a 4:5 stop-to-scroll poster
+  // (assets/posters/study/<slug>.jpg, source in social/posters/) shown right
+  // under the title in viewStudyDetail; the daily task makes one each day.
   const BIBLE_STUDY = [
     {
       slug: "too-many-to-win-with",
+    poster: "/assets/posters/study/too-many-to-win-with.jpg",
+    posterAlt: "Bible study poster: Gideon raises a ram's horn on a moonlit ridge as a thin line of torch-bearers faces the endless tents of Midian. Too many to win with, Judges 6-7.",
       title: "Too Many to Win With",
       verses: [
         { ref: "Judges 6:11-16", text: "And there came an angel of the LORD, and sat under an oak which was in Ophrah, that pertained unto Joash the Abiezrite: and his son Gideon threshed wheat by it, to hide it from the Midianites. And the angel of the LORD appeared unto him, and said unto him, The LORD is with thee, thou mighty man of valour. And Gideon said unto him, Oh my Lord, if the LORD be with us, why then is all this befallen us? and where be all his miracles which our fathers told us of, saying, Did not the LORD bring us up from Egypt? but now the LORD hath forsaken us, and delivered us into the hands of the Midianites. And the LORD looked upon him, and said, Go in this thy might, and thou shalt save Israel from the hand of the Midianites: have not I sent thee? And he said unto him, Oh my Lord, wherewith shall I save Israel? behold, my family is poor, and I am the least in my father's house. And the LORD said unto him, Surely I will be with thee, and thou shalt smite the Midianites as one man." },
@@ -2859,6 +2863,7 @@
         <span class="entry-date">${esc(s.date)}</span>
       </div>
       <h1 class="entry-title" style="font-size:1.7rem; line-height:1.22; margin-bottom:16px;">${esc(s.title)}</h1>
+      ${s.poster ? `<figure style="margin:0 0 18px;"><img src="${esc(s.poster)}" width="1440" height="1800" alt="${esc(s.posterAlt || ("Poster for " + s.title))}" style="display:block; width:100%; height:auto; border-radius:18px; box-shadow:0 20px 44px -22px rgba(20,12,6,0.5);" onerror="this.parentNode.style.display='none'"></figure>` : ""}
       ${s.verses.map((v) => `
       <div class="card" style="border-left:5px solid #1F6E52; margin-bottom:14px;">
         <p style="font-family:var(--font-display,'Fraunces',Georgia,serif); font-style:italic; font-size:17px; line-height:1.6; color:var(--ink);">&ldquo;${esc(v.text)}&rdquo;</p>

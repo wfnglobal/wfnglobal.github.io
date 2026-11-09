@@ -2953,8 +2953,56 @@
           <div class="ico" style="background:#2A1333;"><svg viewBox="0 0 24 24" fill="none" stroke="#FDBA74" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s4 4 4 9a4 4 0 0 1-8 0c0-2 1-3 1-3s1 2 2 2c1.5 0 1-2 1-3 0-2-2-4-2-6 0 0 2 1 2-1z"/><path d="M8 17a4 4 0 0 0 8 0"/></svg></div>
           <div class="body"><h3>${esc(DREAM_FIRE_PRAYER.title)}</h3><p>Updated daily at midnight &middot; pray it now &rarr;</p></div>
         </a>
+        <a class="home-row" href="#/dreams/archive" style="margin-top:10px;">
+          <div class="ico" style="background:#EFE9F6;"><svg viewBox="0 0 24 24" fill="none" stroke="#5B3F8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/></svg></div>
+          <div class="body"><h3>Fire Prayer Archive</h3><p>Every fire prayer posted so far &middot; pray any night again &rarr;</p></div>
+        </a>
       </div>
     `;
+  }
+
+  // Archive of every past Fire Prayer (app/data/dream-archive.json, newest
+  // first; the midnight task prepends each new prayer). Network-first in
+  // the service worker so a new night's entry shows up straight away.
+  let dreamArchivePromise = null;
+  function getDreamArchive() {
+    if (!dreamArchivePromise) {
+      dreamArchivePromise = fetch("/app/data/dream-archive.json", { cache: "no-cache" })
+        .then((r) => (r.ok ? r.json() : { prayers: [] }))
+        .catch(() => { dreamArchivePromise = null; return { prayers: [] }; });
+    }
+    return dreamArchivePromise;
+  }
+
+  function viewDreamArchive() {
+    setHeader("Fire Prayer Archive", true);
+    setActiveTab("home");
+    viewEl.innerHTML = `<p style="color:var(--ink-3); padding:20px 0;">Loading the archive&hellip;</p>`;
+    getDreamArchive().then((data) => {
+      const list = (data.prayers || []).slice();
+      if (!list.some((p) => p.title === DREAM_FIRE_PRAYER.title)) {
+        list.unshift({ id: "tonight", date: DREAM_FIRE_PRAYER.date, title: DREAM_FIRE_PRAYER.title, intro: DREAM_FIRE_PRAYER.intro, points: DREAM_FIRE_PRAYER.points });
+      }
+      viewEl.innerHTML = `
+        <div class="bible-intro-callout" style="margin-bottom:18px; background:#2A1333;">
+          <div class="ico" style="background:#43205A;"><svg viewBox="0 0 24 24" fill="none" stroke="#FDBA74" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s4 4 4 9a4 4 0 0 1-8 0c0-2 1-3 1-3s1 2 2 2c1.5 0 1-2 1-3 0-2-2-4-2-6 0 0 2 1 2-1z"/><path d="M8 17a4 4 0 0 0 8 0"/></svg></div>
+          <div>
+            <h3 style="color:#FDF2E3;">Every Fire Prayer, in One Place</h3>
+            <p style="color:#E3D3C9;">${list.length} shield prayers against dream attacks so far, newest first. A new one is added every midnight &mdash; pray any of them again tonight.</p>
+          </div>
+        </div>
+        ${list.map((p, i) => `
+        <a class="entry" href="#/dreams/fire/${esc(i === 0 && p.title === DREAM_FIRE_PRAYER.title ? "" : p.id)}" style="display:block; margin-bottom:12px;">
+          <div class="entry-top">
+            <span class="entry-badge" style="color:#C2410C; background:#FDEBDD;">${i === 0 && p.title === DREAM_FIRE_PRAYER.title ? "Tonight" : "Fire Prayer"}</span>
+            <span class="entry-date">${esc(p.date)}</span>
+          </div>
+          <h2 class="entry-title">${esc(p.title)}</h2>
+          <p class="entry-excerpt">${esc(p.intro)}</p>
+          <span class="entry-link">Pray it &rarr;</span>
+        </a>`).join("")}
+      `;
+    });
   }
 
   // Tonight's Fire Prayer Against Dream Attacks — standalone daily page,
@@ -2962,23 +3010,41 @@
   // Refreshed every midnight (DREAM_FIRE_PRAYER above). The back arrow in
   // the header is this page's close toggle, same convention as every
   // other routed view in the app.
-  function viewDreamFire() {
+  function viewDreamFire(id) {
+    if (id) {
+      setHeader("Fire Prayer", true);
+      setActiveTab("home");
+      getDreamArchive().then((data) => {
+        const p = (data.prayers || []).find((x) => x.id === id);
+        renderDreamFire(p || DREAM_FIRE_PRAYER, !!p);
+      });
+      return;
+    }
+    renderDreamFire(DREAM_FIRE_PRAYER, false);
+  }
+
+  function renderDreamFire(P, fromArchive) {
     setHeader("Fire Prayer", true);
     setActiveTab("home");
     viewEl.innerHTML = `
       <div class="bible-intro-callout" style="margin-bottom:18px; background:#2A1333;">
         <div class="ico" style="background:#43205A;"><svg viewBox="0 0 24 24" fill="none" stroke="#FDBA74" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s4 4 4 9a4 4 0 0 1-8 0c0-2 1-3 1-3s1 2 2 2c1.5 0 1-2 1-3 0-2-2-4-2-6 0 0 2 1 2-1z"/><path d="M8 17a4 4 0 0 0 8 0"/></svg></div>
         <div>
-          <h3 style="color:#FDF2E3;">${esc(DREAM_FIRE_PRAYER.title)}</h3>
-          <p style="color:#E3D3C9;">${esc(DREAM_FIRE_PRAYER.intro)}</p>
+          ${fromArchive ? `<p style="color:#FDBA74; font-size:11.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:4px;">From the archive &middot; ${esc(P.date)}</p>` : ""}
+          <h3 style="color:#FDF2E3;">${esc(P.title)}</h3>
+          <p style="color:#E3D3C9;">${esc(P.intro)}</p>
         </div>
       </div>
       <div class="study-body">
-        ${DREAM_FIRE_PRAYER.points.map(function (pt, i) {
+        ${P.points.map(function (pt, i) {
           return '<div class="card" style="border-left:5px solid #FDBA74; background:#FAF8FD; margin-bottom:14px;">'
             + '<p style="font-family:var(--font-display,\'Fraunces\',Georgia,serif); font-style:italic; font-size:16.5px; line-height:1.65; color:var(--ink);"><strong style="font-style:normal; color:#C2410C;">' + (i + 1) + '.</strong> ' + esc(pt) + '</p>'
             + '</div>';
         }).join("")}
+        <a class="home-row" href="#/dreams/archive" style="margin-top:8px;">
+          <div class="ico" style="background:#EFE9F6;"><svg viewBox="0 0 24 24" fill="none" stroke="#5B3F8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/></svg></div>
+          <div class="body"><h3>Fire Prayer Archive</h3><p>Every fire prayer posted so far &rarr;</p></div>
+        </a>
       </div>
     `;
   }
@@ -3916,7 +3982,8 @@
       return viewStudyList();
     }
     if (parts[0] === "dreams") {
-      if (parts[1] === "fire") return viewDreamFire();
+      if (parts[1] === "fire") return viewDreamFire(parts[2]);
+      if (parts[1] === "archive") return viewDreamArchive();
       return viewDreams();
     }
     if (parts[0] === "sermons") {
@@ -4096,5 +4163,17 @@
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/app/sw.js").catch(() => {});
     }
+  });
+
+  // A home-screen app can sit open in the background for days. When it comes
+  // back to the front on a new day (or after 3+ hours) while the reader is on
+  // Home, reload so the new verse, sermon and declaration appear right away.
+  const loadedAt = Date.now();
+  const loadedDay = new Date().toDateString();
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState !== "visible") return;
+    const onHome = !location.hash || location.hash === "#" || location.hash === "#/";
+    const stale = new Date().toDateString() !== loadedDay || Date.now() - loadedAt > 3 * 3600 * 1000;
+    if (onHome && stale) location.reload();
   });
 })();

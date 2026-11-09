@@ -7,7 +7,7 @@
 // OneSignal.init() points serviceWorkerPath at this file for the same reason.
 importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");
 
-const CACHE_VERSION = "wfn-app-v69";
+const CACHE_VERSION = "wfn-app-v70";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const BIBLE_CACHE = `${CACHE_VERSION}-bible`;
 
@@ -65,6 +65,15 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+// Fetch past the browser's HTTP cache (GitHub Pages serves max-age=600), so
+// a fresh deploy of the daily verse/sermon/declaration shows up immediately
+// instead of up to 10 minutes later. "no-cache" still revalidates with the
+// ETag, so unchanged files cost almost nothing.
+function freshFetch(req) {
+  if (req.mode === "navigate") return fetch(req.url, { cache: "no-cache", credentials: "same-origin" });
+  return fetch(new Request(req, { cache: "no-cache" }));
+}
+
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
@@ -74,12 +83,12 @@ self.addEventListener("fetch", (event) => {
   // Today's content snapshot (verse/sermon/declaration): network-first,
   // so the website never shows yesterday's cached content — falls back to
   // cache only when offline.
-  if (url.pathname === "/app/data/today.json") {
+  if (url.pathname === "/app/data/today.json" || url.pathname === "/app/data/dream-archive.json") {
     event.respondWith(
       (async () => {
         const cache = await caches.open(BIBLE_CACHE);
         try {
-          const fresh = await fetch(req);
+          const fresh = await freshFetch(req);
           if (fresh.ok) cache.put(req, fresh.clone());
           return fresh;
         } catch (e) {
@@ -117,7 +126,7 @@ self.addEventListener("fetch", (event) => {
       (async () => {
         const cache = await caches.open(SHELL_CACHE);
         try {
-          const fresh = await fetch(req);
+          const fresh = await freshFetch(req);
           if (fresh.ok) cache.put(req, fresh.clone());
           return fresh;
         } catch (e) {

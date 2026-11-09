@@ -1,0 +1,18 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "There's a field in you that's been holding stubble for years, the old defeat that sold you cheap.", "visual": "stubble", "chapter": { "num": "I", "name": "The Burning", "ref": "Obadiah 1:18" } },
+    { "text": "And the house of Jacob shall be a fire, and the house of Esau for stubble, and they shall kindle in them, and devour them.", "visual": "stubble", "scripture": true },
+    { "text": "Let it burn. The fire that's clearing that field is the same fire God already put in you.", "visual": "stubble" },
+    { "text": "Walk through what's left of it. There's a gate still standing on the other side.", "visual": "gate" },
+    { "text": "Here's what they don't tell you: the ground behind that gate was already signed over to your name.", "visual": "gate" },
+    { "text": "So stop visiting your inheritance. Walk the land. It's already yours.", "visual": "vineyard", "chapter": { "num": "II", "name": "Possess It", "ref": "Obadiah 1:17" } },
+    { "text": "In Jesus' name, amen.", "visual": "vineyard" }
+  ],
+  "bold": "the same fire God already put in you",
+  "title": "Word and Faith Network",
+  "subtitle": "Possess Your Possessions",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A traveler stands before a burning dusk field as the old stubble catches fire, walks through a glowing stone gate into the night, and arrives at dawn in a fruited vineyard with arms lifted - a short visual parable of Obadiah 1:17-18, on letting the old defeat burn and walking into the inheritance God already signed over to you."
+}

@@ -67,6 +67,9 @@
   // ---------- Prayer request: three short steps ----------
   const TOPICS = ["Healing", "Family", "Finances", "Guidance", "Work & business", "Salvation of a loved one", "Protection", "Peace of mind", "Thanksgiving", "Something else"];
   const TEAM_EMAIL = "wordandfaithnetwork@gmail.com";
+  const WA_GROUP = "https://chat.whatsapp.com/J0JkLpylQiVKTHKcJkaKEs";
+  const IG_DM = "https://ig.me/m/wordfaithnetwork";
+  function reqText(d) { return "Prayer request (" + d.topic + "):\n\n" + d.text.trim() + (d.name ? "\n\n— " + d.name : ""); }
   let draft = null;
   function request(main) {
     if (!draft) draft = { step: 1, topic: "", text: "", name: (W.profile().name || "").split(" ")[0], who: "me" };
@@ -94,9 +97,12 @@
         <h2 style="margin:0;font:400 26px/32px var(--serif)">${team ? "Saved. Now send it to the prayer team." : "Saved to your prayer list."}</h2>
         <p class="ink2" style="font-size:15px;line-height:23px">${team ? "Your request is in your list on this phone. Send it to the WFN prayer team and they will pray with you. Nothing is shared until you send it." : "It stays private on this phone. Mark it answered when God comes through, and write the testimony."}</p>
         <blockquote class="band" style="margin:0;display:flex;flex-direction:column;gap:6px"><span class="eyebrow">${esc(d.topic)}</span><p class="serif" style="font-size:17px;line-height:27px;white-space:pre-wrap">${esc(d.text)}</p></blockquote>
-        ${team ? `<a class="btn lg block" id="mail" href="mailto:${TEAM_EMAIL}?subject=${encodeURIComponent("Prayer request: " + d.topic)}&body=${encodeURIComponent((d.text) + "\n\n" + (d.name ? "— " + d.name : "") + "\n\nSent from the WFN app")}">${icon("hand", "sm")}Email the prayer team</a>
-          <button class="btn lg block ghost" id="shareT">${icon("share", "sm")}Send another way</button>
-          <p class="small muted">Opens your email app with the request ready to send to ${TEAM_EMAIL}.</p>` : ""}
+        ${team ? `<div style="display:flex;flex-direction:column;gap:10px">
+            <a class="btn lg block" id="mail" href="mailto:${TEAM_EMAIL}?subject=${encodeURIComponent("Prayer request: " + d.topic)}&body=${encodeURIComponent(reqText(d) + "\n\nSent from the WFN app")}">${icon("note", "sm")}Send by email</a>
+            <button class="btn lg block ghost" id="wa" data-href="${WA_GROUP}">${icon("share", "sm")}Post in the WhatsApp group</button>
+            <button class="btn lg block ghost" id="ig" data-href="${IG_DM}">${icon("send", "sm")}Message us on Instagram</button>
+          </div>
+          <p class="small muted">Email opens with your request ready to send to ${TEAM_EMAIL}. For WhatsApp and Instagram, your request is copied first, so you just paste it. Everyone in the WhatsApp group will see what you post there.</p>` : ""}
         <a class="btn lg block ${team ? "soft" : ""}" href="#/prayer" id="done">Back to Prayer</a>`;
     }
     main.innerHTML = W.topbar("Prayer request", { back: "#/prayer" }) + `<div class="page" style="gap:18px">
@@ -117,8 +123,15 @@
         d.step = 3; request(main); window.scrollTo(0, 0);
       };
     } else {
-      const s = W.$("#shareT");
-      if (s) s.onclick = () => W.shareOrCopy({ title: "Prayer request", text: "Prayer request for the WFN prayer team (" + d.topic + "):\n\n" + d.text + (d.name ? "\n\n— " + d.name : "") });
+      ["wa", "ig"].forEach((id) => {
+        const b = W.$("#" + id); if (!b) return;
+        b.onclick = () => {
+          const txt = reqText(d), href = b.dataset.href;
+          const go = () => { window.open(href, "_blank", "noopener") || (location.href = href); };
+          if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(() => { W.toast("Request copied. Paste it in the chat."); setTimeout(go, 600); }, go);
+          else { W.copyText(txt); setTimeout(go, 600); }
+        };
+      });
       W.$("#done").addEventListener("click", () => { draft = null; });
       const m = W.$("#mail"); if (m) m.addEventListener("click", () => setTimeout(() => { draft = null; }, 500));
     }

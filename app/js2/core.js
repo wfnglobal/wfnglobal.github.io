@@ -67,6 +67,7 @@
     summary: "M4 6h16M4 11h16M4 16h10",
     note: "M5 4h14v12l-4 4H5zM15 20v-4h4",
     cross: "M12 3v18M7 8h10",
+    send: "M22 2L11 13M22 2l-7 20-4-9-9-4z",
   };
   function icon(name, cls) {
     return `<svg class="i ${cls || ""}" viewBox="0 0 24 24" aria-hidden="true"><path d="${P[name] || ""}"/></svg>`;

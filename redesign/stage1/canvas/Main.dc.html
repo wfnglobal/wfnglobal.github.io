@@ -109,15 +109,15 @@ a{color:#1D6468}a:hover{color:#134649}
       <div style="display: flex; align-items: flex-start; gap: 12px;">
         <span style="display: flex; flex-direction: column; gap: 3px; flex-grow: 1;">
           <span style="font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: {{t.clay}};">Reading plan</span>
-          <h2 id="planLabel" style="margin: 0; font-family: Literata, Georgia, serif; font-size: 20px; line-height: 26px; font-weight: 500;">Faith Cometh by Hearing</h2>
-          <span style="font-size: 13px; color: {{t.ink3}};">Day 6 of 21 · Romans 10</span>
+          <h2 id="planLabel" style="margin: 0; font-family: Literata, Georgia, serif; font-size: 20px; line-height: 26px; font-weight: 500;">Who You Are in Christ</h2>
+          <span style="font-size: 13px; color: {{t.ink3}};">Day 3 of 7 · You Are Free From Condemnation</span>
         </span>
         <span style="font-size: 13px; font-weight: 600; color: {{t.ink2}}; font-variant-numeric: tabular-nums;">29%</span>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(21, minmax(0, 1fr)); gap: 3px;" aria-hidden="true">
-        <sc-for list="{{planDays}}" as="d" hint-placeholder-count="21"><span style="height: 6px; border-radius: 999px; background: {{d.c}};"></span></sc-for>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px;" aria-hidden="true">
+        <sc-for list="{{planDays}}" as="d" hint-placeholder-count="7"><span style="height: 6px; border-radius: 999px; background: {{d.c}};"></span></sc-for>
       </div>
-      <a href="#plan" style="align-self: flex-start; display: flex; align-items: center; gap: 6px; font: 600 14px 'Instrument Sans', sans-serif; color: {{t.sage}}; text-decoration: none;">Continue day 6<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
+      <a href="#plan" style="align-self: flex-start; display: flex; align-items: center; gap: 6px; font: 600 14px 'Instrument Sans', sans-serif; color: {{t.sage}}; text-decoration: none;">Continue day 3<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a>
     </section>
 
     <section aria-labelledby="exploreLabel" style="display: flex; flex-direction: column; gap: 14px;">
@@ -198,7 +198,7 @@ class Component extends DCLogic {
       { time: '8:00 PM', kind: 'Night Prayer', title: 'Before you close your eyes', meta: '1 min · ready at 8 PM', color: t.sage, done: false },
       { time: 'Midnight', kind: 'Fire Prayer', title: 'The Watchman Does Not Sleep', meta: '12 prayer points', color: t.sage, done: false }
     ].map((r, i) => ({ ...r, open: !r.done, divider: i ? '1px solid ' + t.line : '0', titleColor: r.done ? t.ink2 : t.ink }));
-    const planDays = Array.from({ length: 21 }, (_, i) => ({ c: i < 6 ? t.clay : t.sunk }));
+    const planDays = Array.from({ length: 7 }, (_, i) => ({ c: i < 2 ? t.clay : t.sunk }));
     const tiles = [
       { title: 'Bible', meta: 'Offline KJV · 5 versions', color: t.bronze, soft: t.bronzeSoft, icon: 'M2 5.5c3-1.5 6.5-1.5 10 1 3.5-2.5 7-2.5 10-1V19c-3-1.5-6.5-1.5-10 1-3.5-2.5-7-2.5-10-1zM12 6.5V20' },
       { title: 'Prayer', meta: '12 saved prayers', color: t.sage, soft: t.sageSoft, icon: 'M12 3c-3 2.5-5 5.5-5 9v8M12 3c3 2.5 5 5.5 5 9v8M12 3v17M4 20h16' },

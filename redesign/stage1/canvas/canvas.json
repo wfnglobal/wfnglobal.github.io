@@ -1,60 +1,114 @@
 {
   "v": 3,
-  "createdOnFiles": {
-    "v": 1,
-    "at": "2026-11-09T16:20:00Z"
+  "attachments": {},
+  "boards": {
+    "Foundations.dc.html": {
+      "h": 2140,
+      "title": "Foundations & components",
+      "w": 1200,
+      "x": 940,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 2496,
+      "radius": 28,
+      "title": "Today \u00b7 Light",
+      "w": 912,
+      "x": 0,
+      "y": -356
+    },
+    "TodayDark.dc.html": {
+      "h": 2140,
+      "radius": 28,
+      "title": "Today \u00b7 Dark",
+      "w": 390,
+      "x": 470,
+      "y": 0
+    },
+    "BibleHome.dc.html": {
+      "x": 0,
+      "y": 2600,
+      "w": 390,
+      "h": 1560,
+      "title": "Bible",
+      "radius": 28
+    },
+    "Reader.dc.html": {
+      "x": 470,
+      "y": 2600,
+      "w": 390,
+      "h": 844,
+      "title": "Bible reader \u00b7 selecting a verse",
+      "radius": 28
+    },
+    "ReaderSettings.dc.html": {
+      "x": 940,
+      "y": 2600,
+      "w": 390,
+      "h": 844,
+      "title": "Reading settings",
+      "radius": 28
+    },
+    "Prayer.dc.html": {
+      "x": 1410,
+      "y": 2600,
+      "w": 390,
+      "h": 2000,
+      "title": "Prayer",
+      "radius": 28
+    },
+    "Library.dc.html": {
+      "x": 1880,
+      "y": 2600,
+      "w": 390,
+      "h": 2000,
+      "title": "Library",
+      "radius": 28
+    }
   },
-  "title": "WFN App 2.0",
+  "createdOnFiles": {
+    "at": "2026-11-09T16:20:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/8RL7uyRhr1zmu2PGo8vvz6",
+      "copiedAt": "2026-11-09T16:47:00Z",
+      "namespace": "wfn",
+      "title": "Word and Faith Network",
+      "version": "1794242462-a310"
+    }
+  ],
   "launch": {
     "view": "canvas"
   },
-  "pages": [],
-  "boards": {
-    "Main.dc.html": {
+  "notes": {
+    "stage1": {
+      "kind": "title1",
+      "maxW": 2140,
+      "text": "Stage 1 \u00b7 Design system and the new Today screen",
+      "w": 240,
       "x": 0,
-      "y": 0,
-      "w": 390,
-      "h": 2140,
-      "title": "Today \u00b7 Light",
-      "radius": 28
+      "y": -300
     },
-    "TodayDark.dc.html": {
-      "x": 470,
-      "y": 0,
-      "w": 390,
-      "h": 2140,
-      "title": "Today \u00b7 Dark",
-      "radius": 28
-    },
-    "Foundations.dc.html": {
-      "x": 940,
-      "y": 0,
-      "w": 1200,
-      "h": 2140,
-      "title": "Foundations & components"
+    "stage2": {
+      "x": 0,
+      "y": 2300,
+      "text": "Stage 2 \u00b7 Bible, Prayer and Library",
+      "kind": "title1",
+      "maxW": 2270
     }
   },
   "order": [
     "Main.dc.html",
     "TodayDark.dc.html",
-    "Foundations.dc.html"
+    "Foundations.dc.html",
+    "BibleHome.dc.html",
+    "Reader.dc.html",
+    "ReaderSettings.dc.html",
+    "Prayer.dc.html",
+    "Library.dc.html"
   ],
-  "notes": {
-    "stage1": {
-      "x": 0,
-      "y": -300,
-      "text": "Stage 1 \u00b7 Design system and the new Today screen",
-      "kind": "title1",
-      "maxW": 2140
-    }
-  },
-  "designSystems": [
-    {
-      "title": "Word and Faith Network",
-      "namespace": "wfn",
-      "artifact": "https://claude.ai/artifact/8RL7uyRhr1zmu2PGo8vvz6",
-      "version": "1794242462-a310",
-      "copiedAt": "2026-11-09T16:47:00Z"
-    }
-  ]
+  "pages": [],
+  "title": "WFN App 2.0"
 }

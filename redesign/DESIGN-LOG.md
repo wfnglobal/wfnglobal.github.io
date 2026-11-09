@@ -55,3 +55,18 @@ OneSignal push · seasonal effects.
   #3D5A86 (Faith), deep-spruce Verse of the Day hero card #12383A, cool near-black dark
   theme #0E1213, Mist reading theme; Literata (scripture/display) + Instrument Sans (UI).
   Emblem petals recolored to the app palette. Canvas updated.
+- 2026-11-09 — Stage 1 approved ("This is better"). Stage 2 designed on the canvas:
+  Bible home (search, pick-up card, reading plan ring, OT/NT books by section, your
+  highlights/notes/saved counts), Bible reader (Isaiah 49 with highlight, note dot,
+  floating selection panel: 4 highlight colours + Note/Copy/Share/Pray/Related/Look Up,
+  listen bar with prev/next chapter), Reading settings sheet (Light/Mist/Dark, size,
+  Literata vs Hyperlegible, focus mode, verse numbers, red letters, tap-to-define),
+  Prayer (today/my prayers/saved, full declaration with Pray aloud + Prayed/Save/Share,
+  prayer points from the sermon, Tonight: night prayer + fire prayer card, private
+  prayer list with Praying/Answered + testimony, Prayer Circle/WhatsApp),
+  Library (filter chips, today's sermon with poster, study posters, free books with
+  reading progress, sermon archive by month with read ticks, Films). Today's plan card
+  now uses the real plan "Who You Are in Christ" (7 days).
+  New features introduced: answered-prayer journal, book reading progress, read ticks
+  in the archive, listen bar in reader, related-verses action.
+  Still open: 5-tab structure and stack choice (recommendation: stay no-build static).

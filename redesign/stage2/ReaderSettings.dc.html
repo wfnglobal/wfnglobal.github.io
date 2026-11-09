@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Reading settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&amp;family=Atkinson+Hyperlegible:wght@400;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1D6468}a:hover{color:#134649}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #EEF2F0; color: #1A2022; font-family: 'Instrument Sans', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased;">
+
+  <article aria-hidden="true" style="padding: 76px 26px 0; font-family: Literata, Georgia, serif; font-size: 21px; line-height: 36px; color: #1A2022;">
+    <p style="margin: 0 0 6px; font-family: 'Instrument Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #93570F;">Isaiah 49 · Mist theme, focus mode</p>
+    <p style="margin: 0 0 16px;"><sup style="font-family: 'Instrument Sans', sans-serif; font-size: 11px; font-weight: 600; color: #5F696B; margin-right: 4px;">24</sup>Shall the prey be taken from the mighty, or the lawful captive delivered?</p>
+    <p style="margin: 0;"><sup style="font-family: 'Instrument Sans', sans-serif; font-size: 11px; font-weight: 600; color: #5F696B; margin-right: 4px;">25</sup>But thus saith the LORD, Even the captives of the mighty shall be taken away, and the prey of the terrible shall be delivered.</p>
+  </article>
+
+  <section role="dialog" aria-label="Reading settings" style="position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; gap: 22px; padding: 10px 20px 34px; border-radius: 26px 26px 0 0; background: #FFFFFF; box-shadow: 0 -10px 40px rgba(21,25,26,0.14);">
+    <span style="align-self: center; width: 38px; height: 5px; border-radius: 9px; background: #ECEFEC;"></span>
+    <div style="display: flex; align-items: center;">
+      <h2 style="margin: 0; flex-grow: 1; font-family: Literata, Georgia, serif; font-size: 21px; font-weight: 500;">Reading</h2>
+      <button type="button" style="height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: #ECEFEC; color: #15191A; font: 600 13.5px 'Instrument Sans', sans-serif;">Done</button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;" role="radiogroup" aria-label="Theme">
+      <sc-for list="{{themes}}" as="t" hint-placeholder-count="3">
+        <button type="button" role="radio" aria-checked="{{t.checked}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 14px; background: {{t.bg}}; color: {{t.ink}}; border: {{t.border}}; font: 600 13px 'Instrument Sans', sans-serif;">
+          <span style="font: 500 22px Literata, Georgia, serif;">Aa</span>{{t.name}}
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; font-size: 13px; font-weight: 600; color: #4A5254;"><span style="flex-grow: 1;">Text size</span><span style="font-variant-numeric: tabular-nums;">21 pt</span></div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="font: 500 14px Literata, Georgia, serif;">A</span>
+        <span style="position: relative; flex-grow: 1; height: 4px; border-radius: 999px; background: #ECEFEC;"><span style="position: absolute; left: 0; top: 0; width: 58%; height: 4px; border-radius: 999px; background: #1D6468;"></span><span style="position: absolute; left: 58%; top: -10px; width: 24px; height: 24px; margin-left: -12px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 4px rgba(21,25,26,0.25);"></span></span>
+        <span style="font: 500 22px Literata, Georgia, serif;">A</span>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 4px; border-radius: 12px; background: #ECEFEC;" role="radiogroup" aria-label="Typeface">
+      <button type="button" role="radio" aria-checked="true" style="height: 40px; border: 0; border-radius: 9px; background: #FFFFFF; color: #15191A; font: 500 16px Literata, Georgia, serif; box-shadow: 0 1px 2px rgba(21,25,26,0.08);">Literata</button>
+      <button type="button" role="radio" aria-checked="false" style="height: 40px; border: 0; border-radius: 9px; background: transparent; color: #4A5254; font: 400 15px 'Atkinson Hyperlegible', sans-serif;">Hyperlegible</button>
+    </div>
+
+    <div style="display: flex; flex-direction: column; border-radius: 14px; border: 1px solid rgba(21,25,26,0.09);">
+      <sc-for list="{{toggles}}" as="g" hint-placeholder-count="4">
+        <label style="display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 14px; border-top: {{g.divider}};">
+          <span style="display: flex; flex-direction: column; gap: 1px; flex-grow: 1;"><span style="font-size: 15px; font-weight: 500;">{{g.label}}</span><span style="font-size: 12.5px; color: #646D70;">{{g.hint}}</span></span>
+          <span style="position: relative; width: 46px; height: 28px; border-radius: 999px; background: {{g.track}};"><span style="position: absolute; top: 3px; left: {{g.knob}}; width: 22px; height: 22px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(21,25,26,0.25);"></span></span>
+        </label>
+      </sc-for>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const themes = [
+      { name: 'Light', bg: '#FFFFFF', ink: '#15191A', checked: 'false' },
+      { name: 'Mist', bg: '#EEF2F0', ink: '#1A2022', checked: 'true' },
+      { name: 'Dark', bg: '#0E1213', ink: '#ECF0EF', checked: 'false' }
+    ].map((t) => ({ ...t, border: t.checked === 'true' ? '2px solid #1D6468' : '1px solid rgba(21,25,26,0.12)' }));
+    const toggles = [
+      { label: 'Focus mode', hint: 'Hide everything but the text', on: true },
+      { label: 'Verse numbers', hint: 'Small numbers before each verse', on: true },
+      { label: 'Words of Jesus in red', hint: 'Gospels and Revelation', on: false },
+      { label: 'Tap a word to define it', hint: 'Offline dictionary and Bible names', on: true }
+    ].map((g, i) => ({ ...g, divider: i ? '1px solid rgba(21,25,26,0.08)' : '0', track: g.on ? '#1D6468' : '#D5DBD8', knob: g.on ? '21px' : '3px' }));
+    return { themes, toggles };
+  }
+}
+</script>
+</body>
+</html>

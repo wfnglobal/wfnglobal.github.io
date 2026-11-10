@@ -152,6 +152,7 @@
   }
 
   function declaration(main, t) {
+    W.markSeen && W.markSeen("declaration");
     const ds = stanzas(t.declaration.lines);
     main.innerHTML = W.topbar("Today’s declaration", { back: "#/prayer", right: `<button class="icon-btn" id="dl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button>` }) + `
     <div class="page">
@@ -171,6 +172,7 @@
   }
 
   function night(main, t) {
+    W.markSeen && W.markSeen("night");
     main.innerHTML = W.topbar("Night prayer", { back: "#/prayer", right: `<button class="icon-btn" id="nl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button>` }) + `
     <div class="page">
       <div style="display:flex;justify-content:center;color:var(--slate)">${icon("moon").replace('class="i "', 'class="i" style="width:44px;height:44px;stroke-width:1.3"')}</div>
@@ -284,6 +286,7 @@
 
   // Sermon: reads the full sermon from the website's article page.
   W.view("sermon", async function (main, parts) {
+    W.today().then((td) => { if (td.sermon && td.sermon.slug === parts[0] && W.markSeen) W.markSeen("sermon"); }).catch(() => {});
     const slug = parts[0];
     const s = (C.SERMONS || []).find((x) => x.slug === slug) || { slug, title: "", ref: "", excerpt: "" };
     main.innerHTML = W.topbar("Sermon", { back: "#/sermons", right: `<button class="icon-btn" id="sl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button><button class="icon-btn" id="sa" aria-label="Reading settings">${icon("aa")}</button>` }) +
@@ -346,6 +349,7 @@
   }
 
   W.view("study", function (main, parts) {
+    W.today().then((td) => { if (td.study && td.study.slug === parts[0] && W.markSeen) W.markSeen("study"); }).catch(() => {});
     const s = (C.BIBLE_STUDY || []).find((x) => x.slug === parts[0]) || (C.BIBLE_STUDY || [])[0];
     if (!s) return W.go("#/library");
     const words = (s.body || []).join(" ").split(/\s+/).length;

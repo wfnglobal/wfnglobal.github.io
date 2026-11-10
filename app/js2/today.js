@@ -15,6 +15,8 @@
     Object.keys(all).sort().slice(0, -60).forEach((x) => delete all[x]);
     W.write("wfn2-done", all);
   }
+  // One-time fix: earlier builds ticked steps just for opening a page. Start today clean.
+  try { if (!localStorage.getItem("wfn2-done-v2")) { const all = W.read("wfn2-done", {}); delete all[dayKey()]; W.write("wfn2-done", all); localStorage.setItem("wfn2-done-v2", "1"); } } catch (e) {}
   W.markDone = markDone; W.doneToday = doneToday; W.dayKey = dayKey;
 
   function greeting() {
@@ -60,37 +62,46 @@
 
     <div class="page">
       <section class="hero" id="votd" aria-labelledby="votdH">
-        <div style="display:flex;align-items:center;gap:8px"><h2 id="votdH" class="eyebrow" style="flex-grow:1">Verse of the Day</h2></div>
+        <div style="display:flex;align-items:center;gap:8px;margin:-6px -10px -6px 0"><h2 id="votdH" class="eyebrow" style="flex-grow:1">Verse of the Day</h2>
+          <button class="icon-btn on-hero" id="vMore" aria-label="More: meaning, listen, share, translate" aria-expanded="false" aria-controls="votdMore">${icon("summary")}</button></div>
         <p class="verse" data-tr>${esc(t.verse.text)}</p>
-        <span class="ref">${esc(t.verse.ref)} · KJV</span>
-        ${t.verse.summary ? `<p class="summary" id="votdSum" hidden data-tr>${esc(t.verse.summary)}</p>` : ""}
-        <div class="actions">
-          <button class="icon-btn on-hero" id="vListen" aria-label="Listen" aria-pressed="false">${icon("listen")}</button>
-          <button class="icon-btn on-hero" id="vShare" aria-label="Share">${icon("share")}</button>
-          ${t.verse.summary ? `<button class="icon-btn on-hero" id="vSum" aria-label="What this verse means" aria-expanded="false">${icon("summary")}</button>` : ""}
-          ${W.translateBtn("#votd", "hero-chip")}
-          <span style="flex-grow:1"></span>
-          <button class="btn sm light" id="vAmen">${done.verse ? icon("check", "sm") + "Amen" : "Amen"}</button>
+        <span class="ref">${esc(t.verse.ref)} · KJV${done.verse ? ` <span class="amen-dot" title="Amen’d">${icon("check", "xs")}</span>` : ""}</span>
+        <div class="reveal" id="votdMore" hidden>
+          ${t.verse.summary ? `<p class="summary" data-tr>${esc(t.verse.summary)}</p>` : ""}
+          <div class="mini-actions" role="toolbar" aria-label="Verse actions">
+            <button class="glass-ic" id="vListen" aria-label="Listen" aria-pressed="false">${icon("listen", "sm")}</button>
+            <button class="glass-ic" id="vShare" aria-label="Share">${icon("share", "sm")}</button>
+            <button class="glass-ic" type="button" data-translate="#votd" aria-label="Translate">${icon("globe", "sm")}<span data-tlab class="sr">Translate</span></button>
+            <span style="flex-grow:1"></span>
+            <button class="amen-pill ${done.verse ? "on" : ""}" id="vAmen" aria-pressed="${!!done.verse}">${icon("check", "xs")}<span>${done.verse ? "Amen’d" : "Amen"}</span></button>
+          </div>
         </div>
       </section>
 
       <section class="card pad" id="decl" aria-labelledby="declH" style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;align-items:center"><h2 id="declH" class="eyebrow spruce" style="flex-grow:1">Today’s Declaration</h2><span class="small muted">${esc(t.declaration.ref || "")}</span></div>
-        <div class="serif" style="font-size:18px;line-height:29px;display:flex;flex-direction:column;gap:10px">${declPreview.map((l) => `<p data-tr>${esc(l)}</p>`).join("")}</div>
-        <div style="display:flex;gap:8px;padding-top:4px;flex-wrap:wrap">
-          <a class="btn sm" href="#/prayer/declaration">Declare it all</a>
-          <button class="btn sm ghost" id="dListen" aria-pressed="false" aria-label="Listen">${icon("listen", "sm")}<span data-ltxt>Listen</span></button>
-          ${W.translateBtn("#decl")}
+        <div class="serif decl-text" style="font-size:18px;line-height:29px;display:flex;flex-direction:column;gap:10px">${declPreview.map((l) => `<p data-tr>${esc(l)}</p>`).join("")}</div>
+        <div class="reveal" id="declMore" hidden>
+          <div class="serif" style="font-size:18px;line-height:29px;display:flex;flex-direction:column;gap:10px">${(t.declaration.lines || []).filter(Boolean).slice(2).map((l) => `<p data-tr>${esc(l)}</p>`).join("")}</div>
+          <div class="mini-actions light" role="toolbar" aria-label="Declaration actions">
+            <button class="glass-ic" id="dListen" aria-label="Listen" aria-pressed="false">${icon("listen", "sm")}</button>
+            <button class="glass-ic" type="button" data-translate="#decl" aria-label="Translate">${icon("globe", "sm")}<span data-tlab class="sr">Translate</span></button>
+            <button class="glass-ic" id="dShare" aria-label="Share">${icon("share", "sm")}</button>
+            <a class="glass-ic" href="#/prayer/declaration" aria-label="Open full screen">${icon("expand", "sm")}</a>
+            <span style="flex-grow:1"></span>
+            <button class="amen-pill ${done.declaration ? "on" : ""}" id="dAmen" aria-pressed="${!!done.declaration}">${icon("check", "xs")}<span>${done.declaration ? "Declared" : "Amen"}</span></button>
+          </div>
         </div>
+        <button class="glass-btn" id="declBtn" aria-expanded="false" aria-controls="declMore"><span class="glass-sheen" aria-hidden="true"></span>${icon("flame", "sm")}<span id="declLab">Declare it all</span></button>
       </section>
 
       <section class="card pad" aria-labelledby="dayH" style="display:flex;flex-direction:column;gap:14px">
-        <div style="display:flex;align-items:baseline"><h2 id="dayH" class="h2" style="flex-grow:1">Your day in the Word</h2><span class="small muted" style="font-variant-numeric:tabular-nums">${nDone} of ${steps.length}</span></div>
-        <div style="display:flex;gap:4px" aria-hidden="true">${steps.map((s) => `<span style="flex:1;height:5px;border-radius:9px;background:${done[s[0]] ? "var(--spruce)" : "var(--sunk)"}"></span>`).join("")}</div>
+        <div style="display:flex;align-items:baseline"><h2 id="dayH" class="h2" style="flex-grow:1">Your day in the Word</h2><span class="small muted" id="dayCount" style="font-variant-numeric:tabular-nums">${nDone} of ${steps.length}</span></div>
+        <div style="display:flex;gap:4px" aria-hidden="true">${steps.map((s) => `<span data-bar="${s[0]}" style="flex:1;height:5px;border-radius:9px;transition:background .25s;background:${done[s[0]] ? "var(--spruce)" : "var(--sunk)"}"></span>`).join("")}</div>
         <div class="list day-list" style="margin:0 -18px">
           ${steps.map((s) => `<div class="row-link" style="min-height:52px;padding:0 10px 0 6px;gap:4px">
             <button class="day-tick" type="button" data-tick="${s[0]}" role="checkbox" aria-checked="${!!done[s[0]]}" aria-label="${s[1]}: mark ${done[s[0]] ? "not done" : "done"}"><span class="radio-dot ${done[s[0]] ? "on" : ""}" aria-hidden="true"></span></button>
-            <a class="grow day-go" href="${s[2]}" data-go="${s[0]}" style="flex-direction:row;align-items:center;min-height:52px;text-decoration:none;color:var(--ink)"><span class="label" style="flex-grow:1;${done[s[0]] ? "color:var(--ink-3)" : ""}">${s[1]}</span>${done[s[0]] ? '<span class="small muted" style="padding-right:6px">Done</span>' : `<span class="chev">${icon("chev", "xs")}</span>`}</a>
+            <a class="grow day-go" href="${s[2]}" data-go="${s[0]}" style="flex-direction:row;align-items:center;min-height:52px;text-decoration:none;color:var(--ink)"><span class="label" style="flex-grow:1;${done[s[0]] ? "color:var(--ink-3)" : ""}">${s[1]}</span><span class="day-tail">${done[s[0]] ? '<span class="small muted" style="padding-right:6px">Done</span>' : `<span class="chev">${icon("chev", "xs")}</span>`}</span></a>
           </div>`).join("")}
         </div>
       </section>
@@ -155,16 +166,44 @@
       </section>` : ""}
     </div>`;
 
-    const vText = t.verse.text + " " + t.verse.ref;
-    W.$("#vListen").onclick = (e) => markDone("verse") || W.speak([W.$("#votd .verse").textContent, t.verse.ref.replace(":", ", verse ")], e.currentTarget);
+    const toggle = (btn, panel, on) => { panel.hidden = !on; btn.setAttribute("aria-expanded", String(on)); };
+    const vMore = W.$("#vMore"), vPanel = W.$("#votdMore");
+    vMore.onclick = () => toggle(vMore, vPanel, vPanel.hidden);
+    W.$("#vListen").onclick = (e) => W.speak([W.$("#votd .verse").textContent, t.verse.ref.replace(":", ", verse ")], e.currentTarget);
+    W.$("#vShare").onclick = () => W.shareOrCopy({ title: "Verse of the Day", text: "“" + t.verse.text + "” " + t.verse.ref, url: "https://wfnglobal.org/app/" });
+    const amen = (btn, key, onTxt, offTxt, msg) => {
+      const on = !doneToday()[key];
+      markDone(key, on);
+      btn.classList.toggle("on", on); btn.setAttribute("aria-pressed", String(on));
+      btn.querySelector("span").textContent = on ? onTxt : offTxt;
+      if (on) W.toast(msg);
+      refreshDay();
+    };
+    W.$("#vAmen").onclick = (e) => amen(e.currentTarget, "verse", "Amen’d", "Amen", "Amen. Verse kept for today.");
+    W.$("#dAmen").onclick = (e) => amen(e.currentTarget, "declaration", "Declared", "Amen", "Amen. Declared.");
+    const dBtn = W.$("#declBtn"), dPanel = W.$("#declMore");
+    dBtn.onclick = () => { const on = dPanel.hidden; toggle(dBtn, dPanel, on); W.$("#declLab").textContent = on ? "Show less" : "Declare it all"; };
     W.$("#dListen").onclick = (e) => W.speak((t.declaration.lines || []).filter(Boolean), e.currentTarget);
-    W.$("#vShare").onclick = () => markDone("verse") || W.shareOrCopy({ title: "Verse of the Day", text: "“" + t.verse.text + "” " + t.verse.ref, url: "https://wfnglobal.org/app/" });
-    const sumBtn = W.$("#vSum");
-    if (sumBtn) sumBtn.onclick = () => { const s = W.$("#votdSum"); s.hidden = !s.hidden; sumBtn.setAttribute("aria-expanded", String(!s.hidden)); };
-    W.$$("[data-tick]", main).forEach((b) => b.onclick = () => { const k = b.dataset.tick; markDone(k, !doneToday()[k]); const y = window.scrollY; W.route(); requestAnimationFrame(() => window.scrollTo(0, y)); });
-    W.$$('[data-go="verse"]', main).forEach((a) => a.onclick = (e) => { e.preventDefault(); const v = W.$("#votd"); v.scrollIntoView({ behavior: "smooth", block: "center" }); v.classList.add("pulse-once"); setTimeout(() => v.classList.remove("pulse-once"), 1400); });
-    W.$("#vAmen").onclick = (e) => { markDone("verse"); e.currentTarget.innerHTML = icon("check", "sm") + "Amen"; W.toast("Amen. Verse kept for today."); };
-    void vText;
+    W.$("#dShare").onclick = () => W.shareOrCopy({ title: "Today’s declaration", text: (t.declaration.lines || []).filter(Boolean).slice(0, 3).join("\n\n") + "\n\n" + (t.declaration.ref || ""), url: "https://wfnglobal.org/app/" });
+    // Your day in the Word: nothing is ticked for you; tick any step, in any order.
+    function refreshDay() {
+      const d = doneToday();
+      const n = steps.filter((s) => d[s[0]]).length;
+      const c = W.$("#dayCount"); if (c) c.textContent = n + " of " + steps.length;
+      W.$$("[data-bar]", main).forEach((b) => { b.style.background = d[b.dataset.bar] ? "var(--spruce)" : "var(--sunk)"; });
+      W.$$("[data-tick]", main).forEach((b) => {
+        const k = b.dataset.tick, on = !!d[k];
+        b.setAttribute("aria-checked", String(on));
+        b.querySelector(".radio-dot").classList.toggle("on", on);
+        const row = b.parentElement, lab = row.querySelector(".label"), tail = row.querySelector(".day-tail");
+        lab.style.color = on ? "var(--ink-3)" : "";
+        tail.innerHTML = on ? '<span class="small muted" style="padding-right:6px">Done</span>' : `<span class="chev">${icon("chev", "xs")}</span>`;
+      });
+    }
+    W.$$("[data-tick]", main).forEach((b) => b.onclick = () => { const k = b.dataset.tick; markDone(k, !doneToday()[k]); refreshDay();
+      const map = { verse: ["#vAmen", "Amen’d"], declaration: ["#dAmen", "Declared"] }; const m = map[k];
+      if (m) { const on = !!doneToday()[k], a = W.$(m[0]); a.classList.toggle("on", on); a.setAttribute("aria-pressed", String(on)); a.querySelector("span").textContent = on ? m[1] : "Amen"; } });
+    W.$$('[data-go="verse"]', main).forEach((a) => a.onclick = (e) => { e.preventDefault(); const v = W.$("#votd"); v.scrollIntoView({ behavior: "smooth", block: "center" }); toggle(vMore, vPanel, true); v.classList.add("pulse-once"); setTimeout(() => v.classList.remove("pulse-once"), 1400); });
     const sc = W.$("#shareCard");
     if (sc) {
       const hide = () => { try { localStorage.setItem("wfn-app-share-dismissed", "1"); } catch (e) {} sc.remove(); };

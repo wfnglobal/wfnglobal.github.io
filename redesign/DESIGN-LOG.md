@@ -173,3 +173,13 @@ Oladapo found features missing after go-live. Audited the classic app (app/class
 
 ## Nov 9, 6:20pm
 - Removed "Compare another version" from the reader (not part of the classic app). Related-verses icon after each verse opens the frosted panel; Look Up keeps its Wikipedia picture for concrete words (tent, lamb, Jerusalem).
+
+## Session — Nov 9, evening: calmer Today and reading (preview only, not live yet)
+
+- Bible tab: removed the "13 versions" and "Dictionary" cards (versions live in the reader's KJV chip; Look Up works by tapping any word).
+- Reader: the KJV / Jump / Summary / globe row slides away while reading and comes back on scroll up. Translate is now a globe icon everywhere.
+- Today:
+  - Verse of the Day shows only the verse; the three-line icon reveals the meaning plus Listen, Share, Translate (icons) and a small "Amen" pill that becomes "Amen'd".
+  - Declaration shows two lines and a liquid-glass "Declare it all" button that opens the full declaration with Listen, Translate, Share, full-screen icons and a small Amen pill.
+  - Your day in the Word: nothing ticks itself any more (opening a page no longer marks it done); tick any step in any order. A one-time reset clears today's auto-ticks.
+- Tab bar: floating liquid-glass capsule that hides while scrolling down and returns on scroll up (no more auto-return after a pause).

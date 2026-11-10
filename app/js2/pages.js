@@ -165,7 +165,6 @@
     </div>`;
     W.$("#dc").onclick = () => W.copyText(W.$$("#dprose p").map((x) => x.textContent).join("\n") + "\n\n" + (t.declaration.ref || "") + "\nwfnglobal.org/app");
     const all = (t.declaration.lines || []).filter(Boolean).join(" ");
-    W.markDone("declaration");
     W.$("#dl").onclick = (e) => W.speak(W.$$("#dprose p").map((x) => x.textContent), e.currentTarget); void all;
     W.$("#amen").onclick = () => { W.markDone("declaration"); W.toast("Amen. Declared."); };
     W.$("#ds").onclick = () => W.shareOrCopy({ title: "Today’s declaration", text: (t.declaration.lines || []).filter(Boolean).slice(0, 3).join("\n\n") + "\n\n" + (t.declaration.ref || ""), url: "https://wfnglobal.org/app/" });
@@ -179,7 +178,6 @@
       <div class="prose" id="nprose" style="text-align:left"><p data-tr style="font-size:calc(var(--read-size) + 1px);line-height:1.7">${esc(t.night.text || "")}</p><p data-tr style="font-weight:600">${esc(t.night.amen || "Amen.")}</p></div>
       <button class="btn lg block" id="amen">Amen. Goodnight.</button>
     </div>`;
-    W.markDone("night");
     W.$("#nl").onclick = (e) => W.speak(W.$$("#nprose p").map((x) => x.textContent).join(" "), e.currentTarget);
     W.$("#amen").onclick = () => { W.markDone("night"); W.toast("Rest well. He keeps you."); };
   }
@@ -291,7 +289,6 @@
     main.innerHTML = W.topbar("Sermon", { back: "#/sermons", right: `<button class="icon-btn" id="sl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button><button class="icon-btn" id="sa" aria-label="Reading settings">${icon("aa")}</button>` }) +
       `<div class="progress" aria-hidden="true"><span id="prog"></span></div><article class="page" id="art" style="padding:20px 24px 40px;gap:20px"><p class="small muted">Loading…</p></article>`;
     W.$("#sa").onclick = () => W.readingSheet();
-    if (slug === ((C.SERMONS || [])[0] || {}).slug) W.markDone("sermon");
     let html = "";
     try {
       const r = await fetch(W.BASE + "articles/" + slug + ".html", { cache: "no-cache" });
@@ -352,7 +349,6 @@
     const s = (C.BIBLE_STUDY || []).find((x) => x.slug === parts[0]) || (C.BIBLE_STUDY || [])[0];
     if (!s) return W.go("#/library");
     const words = (s.body || []).join(" ").split(/\s+/).length;
-    if (s === (C.BIBLE_STUDY || [])[0]) W.markDone("study");
     main.innerHTML = W.topbar("Bible study", { back: "#/studies", right: `<button class="icon-btn" id="sl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button><button class="icon-btn" id="sa" aria-label="Reading settings">${icon("aa")}</button>` }) + `
     <div class="progress" aria-hidden="true"><span id="prog"></span></div>
     <article class="page" id="stdy" style="padding:20px 24px 40px;gap:20px">

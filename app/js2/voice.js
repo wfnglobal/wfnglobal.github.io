@@ -501,7 +501,7 @@
     });
   }
   W.pickLang = pickLang;
-  W.translateBtn = (target, cls) => `<button class="chip ${cls || ""}" type="button" data-translate="${target}">${icon("globe", "xs")}<span data-tlab>Translate</span></button>`;
+  W.translateBtn = (target, cls) => `<button class="chip icon-chip ${cls || ""}" type="button" data-translate="${target}" aria-label="Translate">${icon("globe", "xs")}<span data-tlab class="sr">Translate</span></button>`;
   document.addEventListener("click", (e) => {
     const b = e.target.closest("[data-translate]");
     if (!b) return;

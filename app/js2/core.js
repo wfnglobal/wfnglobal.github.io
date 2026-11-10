@@ -45,6 +45,7 @@
     hl: "M4 20h16M7 16l9.5-9.5a2.1 2.1 0 0 1 3 3L10 19H7z",
     moon: "M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z",
     sun: "M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4",
+    expand: "M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5",
     flame: "M12 22c4 0 7-2.7 7-7 0-4-3-6-4-10-2 2-3 4-3 6-1.5-1-2-2.5-2-4-3 2.5-5 5.5-5 8 0 4.3 3 7 7 7z",
     gate: "M5 21V10a7 7 0 0 1 14 0v11M3 21h18M9 21v-6a3 3 0 0 1 6 0v6",
     mount: "M3 20l6-10 4 6 2-3 6 7zM14 6h.01M16 4l2 2",
@@ -389,8 +390,8 @@
   });
 
   // ---------- scroll: tab bar and chapter arrows slide away while reading ----------
-  // Like the classic app: scrolling down hides the tab bar and the chapter
-  // arrows; scrolling up, reaching the top, or pausing brings them back.
+  // Scrolling down hides the tab bar, the reader's tool row and the chapter
+  // arrows; scrolling up, or reaching the top or the end, brings them back.
   // The arrows also drift down the screen as you read through a chapter.
   function setupScroll() {
     let lastY = window.scrollY, idle = null;
@@ -400,7 +401,7 @@
       const y = window.scrollY, d = y - lastY;
       if (y < 40) show(); else if (d > 6) hide(); else if (d < -6) show();
       lastY = y;
-      clearTimeout(idle); idle = setTimeout(show, 1200);
+      clearTimeout(idle); idle = setTimeout(() => { if (window.scrollY + innerHeight >= document.documentElement.scrollHeight - 4) show(); }, 400);
       const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
       const top = (46 + Math.min(1, Math.max(0, y / max)) * 16).toFixed(1) + "%";
       $$(".ch-fab").forEach((f) => { f.style.top = top; });

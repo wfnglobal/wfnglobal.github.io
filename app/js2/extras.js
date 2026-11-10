@@ -265,6 +265,10 @@
   });
 
   // ---------- The Story of Jesus ----------
+  // Paintings: original scenes made for WFN (redesign/museum-source), one per gallery.
+  const ART = ["01-prophecy", "02-bethlehem", "03-nazareth", "04-jordan", "05-galilee", "06-jerusalem", "07-upper-room", "08-gethsemane", "09-via-dolorosa", "10-golgotha", "11-garden-tomb", "12-mount-of-olives"];
+  const ART_TITLES = ["The Prophet’s Lamp", "Glory in the Stable", "The Carpenter’s Shop", "The Heavens Opened", "Dawn on the Lake", "Hosanna in the Road", "The Bread and the Cup", "The Garden at Night", "The Narrow Street", "It Is Finished", "The Stone Rolled Away", "Into the Cloud"];
+  const artSrc = (i) => W.BASE + "app/img/museum/" + ART[i] + ".jpg";
   const GALLERIES = [
     { n: "I", place: "Prophecy", title: "Written Centuries Before", refs: [["Isaiah 53:5", "isaiah/53/5"], ["Micah 5:2", "micah/5/2"]], text: "Hundreds of years before Bethlehem, the prophets wrote of a child born in David’s town, a servant wounded for our transgressions, a King riding on a donkey. The story of Jesus begins in promises." , tone: ["#2B2A4A", "#121126"] },
     { n: "II", place: "Bethlehem", title: "The Nativity", refs: [["Luke 2:1–20", "luke/2"], ["Matthew 2:1–12", "matthew/2"]], text: "No room in the inn, a manger for a cradle, shepherds at night and wise men from the east. God came near in the smallest way, and heaven sang about it.", tone: ["#3B2A1A", "#140D07"] },
@@ -284,7 +288,7 @@
     if (parts[0]) return gallery(main, Math.max(1, Math.min(12, +parts[0])));
     const next = (visited.length ? Math.max(...visited) : 0) + 1;
     main.innerHTML = `
-    <header class="hero-head" style="background:radial-gradient(120% 90% at 80% -10%, #6B4E2A 0%, #2E2214 45%, #141009 100%);padding-bottom:30px">
+    <header class="hero-head museum-hero" style="background-image:linear-gradient(180deg, rgba(20,16,9,0.55) 0%, rgba(20,16,9,0.35) 35%, rgba(20,16,9,0.92) 100%), url('${artSrc(9)}');padding-bottom:30px">
       <a class="icon-btn on-hero" href="#/" data-back aria-label="Back" style="margin-left:-12px">${icon("back")}</a>
       <span class="eyebrow" style="color:#E9B872">A walk through the Gospels</span>
       <h1 style="font-size:36px;line-height:42px">The Story of Jesus</h1>
@@ -294,7 +298,7 @@
     </header>
     <div class="page">
       <ol class="gallery-list">${GALLERIES.map((g, i) => { const done = visited.includes(i + 1); return `<li><span class="rail"><i class="${i && visited.includes(i) ? "done" : ""}" style="${i ? "" : "visibility:hidden"}"></i><span class="dot ${done ? "done" : ""}">${g.n}</span><i class="${done && visited.includes(i + 2) ? "done" : ""}" style="${i === 11 ? "visibility:hidden" : ""}"></i></span>
-        <a href="#/jesus/${i + 1}"><span class="place">${g.place}</span><span class="title">${g.title}</span><span class="meta">${g.refs.map((r) => r[0]).join(" · ")}${done ? " · visited" : ""}</span></a></li>`; }).join("")}</ol>
+        <a href="#/jesus/${i + 1}" class="gl-item"><img class="gl-thumb" src="${artSrc(i)}" alt="" loading="lazy"><span class="gl-txt"><span class="place">${g.place}</span><span class="title">${g.title}</span><span class="meta">${g.refs.map((r) => r[0]).join(" · ")}${done ? " · visited" : ""}</span></span></a></li>`; }).join("")}</ol>
       <section class="section"><h2 class="h2" style="padding:0 4px">From the collection</h2>
         <a class="card pad" href="https://www.jesusfilm.org/watch/jesus.html/english.html" target="_blank" rel="noopener" style="display:flex;gap:14px;text-decoration:none;color:var(--ink)"><span class="tile-ic lg c-ink">${icon("play")}</span><span><span style="font:600 15.5px var(--sans)">The JESUS Film</span><br><span class="small ink2">The Gospel of Luke on film, free to watch in hundreds of languages. Opens jesusfilm.org.</span></span></a>
       </section>
@@ -305,13 +309,13 @@
     const v = W.read("wfn2-museum", []); if (!v.includes(n)) { v.push(n); W.write("wfn2-museum", v); }
     const golgotha = !!g.sayings;
     main.innerHTML = `
-    <header class="hero-head" style="background:radial-gradient(120% 90% at 75% -10%, ${g.tone[0]} 0%, ${g.tone[1]} 85%);min-height:${golgotha ? 360 : 300}px;justify-content:flex-end">
-      <div style="display:flex;align-items:center;margin:0 -12px auto"><a class="icon-btn on-hero" href="#/jesus" aria-label="All galleries">${icon("back")}</a><span style="flex-grow:1;text-align:center;font:600 13px var(--sans);color:rgba(246,243,236,0.7)">Gallery ${g.n} of XII</span><button class="icon-btn on-hero" id="gl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button></div>
-      ${golgotha ? `<svg viewBox="0 0 120 120" width="96" height="96" aria-hidden="true" style="align-self:center;opacity:0.9"><path d="M60 14v92M38 36h44" stroke="#E9B872" stroke-width="5" stroke-linecap="round"/><circle cx="60" cy="36" r="30" fill="none" stroke="rgba(233,184,114,0.18)" stroke-width="16"/></svg>` : ""}
+    <header class="hero-head museum-art" style="background-image:linear-gradient(180deg, rgba(10,8,6,0.45) 0%, rgba(10,8,6,0) 22%, rgba(10,8,6,0) 52%, rgba(10,8,6,0.88) 100%), url('${artSrc(n - 1)}')">
+      <div style="display:flex;align-items:center;margin:0 -6px auto -12px"><a class="icon-btn on-hero" href="#/jesus" aria-label="All galleries">${icon("back")}</a><span style="flex-grow:1;text-align:center;font:600 13px var(--sans);color:rgba(246,243,236,0.85)">Gallery ${g.n} of XII</span><button class="icon-btn on-hero" id="gl" aria-label="Listen" aria-pressed="false">${icon("listen")}</button></div>
       <span class="eyebrow" style="color:#E9B872">${g.place}</span>
       <h1 style="font-size:34px;line-height:40px">${g.title}</h1>
     </header>
     <div class="page">
+      <p class="museum-plaque"><b>${esc(ART_TITLES[n - 1])}</b><span>Gallery ${g.n} · ${esc(g.place)} · Original painting, Word and Faith Network collection</span></p>
       <div style="display:flex;justify-content:flex-end">${W.translateBtn("#gtext")}</div><p class="serif" id="gtext" style="font-size:19px;line-height:31px;padding:0 4px"><span data-tr>${esc(g.text)}</span></p>
       <div id="psg" class="stack"></div>
       ${golgotha ? `<section class="section"><h2 class="h2" style="padding:0 4px">The seven sayings from the cross</h2>
@@ -338,10 +342,5 @@
     }
   }
 
-  // ---------- Word Climb ----------
-  W.view("climb", function (main) {
-    main.innerHTML = `<div style="min-height:100vh;display:flex;flex-direction:column">${W.topbar("The Word Climb", { back: "#/" })}<div id="wcRoot" style="flex-grow:1"></div></div>`;
-    const mount = () => { if (window.WFNGame) window.WFNGame.mount(W.$("#wcRoot")); else setTimeout(mount, 100); };
-    mount();
-  });
+  // The Word Climb lives in app/js2/climb.js.
 })();

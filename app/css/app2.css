@@ -591,3 +591,94 @@ body.chrome-hidden .reader-tools { transform: translateY(-110%); opacity: 0; poi
 .bn-vgrid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
 .bn-vgrid a { height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--ink); background: var(--card); font: 600 15px var(--sans); font-variant-numeric: tabular-nums; }
 .bn-vgrid a:active { background: var(--spruce); color: #fff; }
+
+/* ---------- The Word Climb (App 2.0) ---------- */
+.wc2 { --wc2-sky1: #DCE7F3; --wc2-sky2: #F6E3C4; --wc2-far1: #AEBDD2; --wc2-far2: #8FA2BE; --wc2-near1: #7F93B0; --wc2-near2: #5D7396; min-height: 100vh; }
+:root[data-theme="dark"] .wc2 { --wc2-sky1: #1B2536; --wc2-sky2: #3A2E22; --wc2-far1: #3E4C66; --wc2-far2: #2F3B52; --wc2-near1: #26324A; --wc2-near2: #1A2335; }
+.wc2-hero { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 4px 12px 0; }
+.wc2-hero h1 { margin: 0; font: 400 34px/40px var(--serif); }
+.wc2-hero p { color: var(--ink-2); font-size: 15px; line-height: 23px; max-width: 30ch; }
+.wc2-streak { display: inline-flex; align-items: center; gap: 5px; height: 30px; padding: 0 11px; border-radius: 999px; background: var(--amber-soft); color: var(--amber); font: 600 12.5px var(--sans); }
+.wc2-map { overflow: hidden; display: flex; flex-direction: column; gap: 14px; padding: 0 0 16px; border-radius: 28px; }
+.wc2-map .btn { margin: 0 16px; width: auto; }
+.wc2-map-art { position: relative; }
+.wc2-map-svg { display: block; width: 100%; height: auto; }
+.wc2-camp .ring { fill: #fff; stroke: #CFC9C0; stroke-width: 1.5; }
+.wc2-camp text { font: 700 13px var(--sans); fill: #1F1D1B; }
+.wc2-camp.done .ring { fill: var(--spruce); stroke: none; } .wc2-camp.done text { fill: #fff; }
+.wc2-camp.here .ring { fill: #E2A85A; stroke: #fff; stroke-width: 2.5; }
+.wc2-camp .pulse { fill: none; stroke: #E2A85A; stroke-width: 2; opacity: .6; transform-box: fill-box; transform-origin: center; animation: wc2Pulse 2s ease-out infinite; }
+@keyframes wc2Pulse { from { transform: scale(.7); opacity: .7; } to { transform: scale(1.35); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .wc2-camp .pulse { animation: none; } }
+.wc2-labels span { position: absolute; transform: translate(24px, -50%); font: 600 11.5px var(--sans); color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.45); white-space: nowrap; pointer-events: none; }
+.wc2-labels span.here { color: #FFF2D9; font-size: 12.5px; }
+.wc2-labels span.top { transform: translate(calc(-100% - 22px), -50%); }
+.wc2-map-foot { display: flex; align-items: center; gap: 12px; padding: 0 18px; }
+.wc2-map-foot .grow { flex-grow: 1; display: flex; flex-direction: column; gap: 6px; }
+.wc2-bar { display: block; height: 6px; border-radius: 9px; background: var(--sunk); overflow: hidden; }
+.wc2-bar span { display: block; height: 6px; background: linear-gradient(90deg, var(--spruce), #E2A85A); border-radius: 9px; }
+.wc2-daily { display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: var(--ink); background: linear-gradient(135deg, var(--card), var(--amber-soft)); }
+.wc2-modes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.wc2-mode { display: flex; flex-direction: column; gap: 12px; padding: 16px; text-decoration: none; color: var(--ink); }
+.wc2-mode .t { display: block; font: 600 15.5px/20px var(--sans); }
+.wc2-mode .m { display: block; margin-top: 3px; font: 400 12.5px/17px var(--sans); color: var(--ink-3); }
+.wc2-help { display: flex; flex-direction: column; gap: 10px; font-size: 14px; line-height: 21px; color: var(--ink-2); }
+.wc2-help b { display: inline-flex; align-items: center; gap: 5px; color: var(--ink); margin-right: 4px; }
+.wc2-badges { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.wc2-badge { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.wc2-badge .medal { width: 52px; height: 52px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font: 700 16px var(--sans); color: #B3ADA3; background: var(--card); border: 1.5px dashed #CFC9C0; }
+.wc2-badge.got .medal { color: #985F1E; background: radial-gradient(circle at 35% 30%, #FFF4DF, #F5EAD9 60%, #EBD3AE); border: 2px solid #E2A85A; box-shadow: 0 6px 14px -8px rgba(152,95,30,.6); }
+.wc2-badge.got .medal svg { width: 20px; height: 20px; stroke-width: 2.4; }
+.wc2-badge .nm { font: 600 11.5px var(--sans); color: var(--ink-2); }
+.wc2-books { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.wc2-books a { display: flex; align-items: center; gap: 8px; min-height: 50px; padding: 0 14px; border-radius: 14px; background: var(--card); border: 1px solid var(--hair); text-decoration: none; color: var(--ink); font: 500 15px var(--sans); }
+.wc2-books a span:first-child { flex-grow: 1; }
+.wc2-books .n { font: 600 12px var(--sans); color: var(--spruce); background: var(--spruce-soft); border-radius: 999px; padding: 3px 8px; }
+/* game */
+.wc2-game .topbar h1 { color: var(--ink-2); }
+.wc2-count { min-width: 44px; padding-right: 8px; text-align: right; font: 600 13px var(--sans); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.wc2-track { height: 4px; margin: 0 16px; border-radius: 9px; background: var(--sunk); overflow: hidden; }
+.wc2-track span { display: block; height: 4px; width: 0; background: linear-gradient(90deg, var(--spruce), #E2A85A); border-radius: 9px; transition: width .4s ease; }
+.wc2-q { display: flex; flex-direction: column; gap: 10px; padding: 6px 4px 2px; }
+.wc2-q h2 { margin: 0; font: 400 25px/34px var(--serif); text-wrap: balance; }
+.wc2-opts { display: flex; flex-direction: column; gap: 10px; }
+.wc2-opt { display: flex; align-items: center; gap: 14px; min-height: 58px; padding: 10px 16px 10px 12px; border-radius: 18px; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); text-align: left; color: var(--ink); font: 500 16px/22px var(--sans); transition: transform .12s ease, background .2s, border-color .2s, opacity .2s; }
+.wc2-opt:not(:disabled):active { transform: scale(.985); }
+.wc2-opt .key { width: 32px; height: 32px; flex-shrink: 0; border-radius: 11px; background: var(--sunk); display: flex; align-items: center; justify-content: center; font: 700 13px var(--sans); color: var(--ink-2); }
+.wc2-opt.right { background: var(--spruce-soft); border-color: var(--spruce); }
+.wc2-opt.right .key { background: var(--spruce); color: #fff; }
+.wc2-opt.wrong { background: #F7E1DE; border-color: #C6574A; }
+.wc2-opt.wrong .key { background: #C6574A; color: #fff; }
+:root[data-theme="dark"] .wc2-opt.wrong { background: #3A1E1B; }
+.wc2-opt.gone { opacity: .28; }
+.wc2-opt:disabled { cursor: default; }
+.wc2-tools { display: flex; gap: 8px; flex-wrap: wrap; }
+.wc2-tools .chip:disabled { opacity: .45; }
+.wc2-hint { animation: revealIn .25s ease both; }
+.wc2-why { display: flex; flex-direction: column; gap: 10px; padding: 18px; border-radius: 22px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); animation: revealIn .25s ease both; }
+.wc2-why p { font-size: 17px; line-height: 27px; }
+.wc2-why a { font-weight: 600; text-decoration: none; }
+.wc2-verdict { display: inline-flex; align-items: center; gap: 8px; font: 600 16px var(--sans); }
+.wc2-verdict svg { width: 22px; height: 22px; padding: 4px; border-radius: 999px; stroke-width: 2.6; }
+.wc2-why.ok .wc2-verdict { color: var(--spruce); } .wc2-why.ok .wc2-verdict svg { background: var(--spruce); color: #fff; }
+.wc2-why.no .wc2-verdict { color: #B04A3E; } .wc2-why.no .wc2-verdict svg { background: #C6574A; color: #fff; }
+.wc2-why .btn { margin-top: 6px; }
+.wc2-done { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding-top: 10px; }
+.wc2-done h2 { margin: 0; font: 400 28px/34px var(--serif); text-wrap: balance; }
+.wc2-done p { font-size: 15.5px; line-height: 24px; max-width: 34ch; }
+.wc2-done .scripture-box, .wc2-done p.serif { text-align: left; align-self: stretch; max-width: none; }
+.wc2-ring { --p: 0; width: 132px; height: 132px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: conic-gradient(var(--spruce) calc(var(--p) * 1%), var(--sunk) 0); }
+.wc2-ring span { width: 108px; height: 108px; border-radius: 999px; background: var(--bg); display: flex; align-items: baseline; justify-content: center; padding-top: 34px; box-sizing: border-box; font: 600 36px var(--sans); font-variant-numeric: tabular-nums; }
+.wc2-ring small { font-size: 16px; color: var(--ink-3); }
+.wc2-cert { width: 100%; height: auto; border-radius: 18px; box-shadow: var(--shadow); }
+
+/* The Story of Jesus: paintings */
+.museum-hero, .museum-art { background-size: cover; background-position: center; }
+.museum-art { aspect-ratio: 3 / 2.15; min-height: 300px; justify-content: flex-end; padding-bottom: 22px; }
+.museum-art h1 { text-shadow: 0 2px 12px rgba(0,0,0,0.5); }
+.museum-plaque { display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; margin: -4px 0 0; border-left: 3px solid var(--amber); background: var(--card); border-radius: 0 14px 14px 0; box-shadow: var(--shadow); }
+.museum-plaque b { font: 500 17px/22px var(--serif); }
+.museum-plaque span { font-size: 12px; line-height: 17px; color: var(--ink-3); }
+.gl-item { flex-direction: row !important; align-items: center; gap: 12px !important; }
+.gl-thumb { width: 74px; height: 52px; border-radius: 10px; object-fit: cover; flex-shrink: 0; box-shadow: 0 6px 14px -8px rgba(0,0,0,0.5); }
+.gl-txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }

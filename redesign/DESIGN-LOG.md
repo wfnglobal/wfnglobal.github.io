@@ -190,3 +190,9 @@ Oladapo found features missing after go-live. Audited the classic app (app/class
 - Today header: Give pill and the avatar removed (emblem + search only). Give stays in You.
 - Bible tab: Old Testament / New Testament tabs; tap a book to open its chapters, tap a chapter to open its verse numbers, tap a verse to read from there. Replaces the long list of all 66 books.
 - Fixed the blank Bible reader in the preview: app/js/bible.js and wfn-lookup.js now honour WFN_BASE (live site still uses /app/data/).
+
+## Session — Nov 9, late night: Word Climb rebuilt, museum paintings (preview only)
+
+- The Word Climb rebuilt from the canvas design in `app/js2/climb.js`: mountain map with five camps, Today's challenge (5 questions from the sermon's book when possible) with a streak, four ways to play (continue the climb: 10 questions, pass with 8; practice by book; 60-second sprint; challenge a friend by link), Scripture hint (twice per run), 50/50 (once), Learn why after every answer with the verse from the offline Bible, camp badges, camp scrolls, and a Certificate of the Climb at the summit.
+- Every one of the 300 questions now carries its Bible reference (`app/js2/climb-refs.js`), checked against the KJV data. The classic game file only gained an export of its question bank.
+- The Story of Jesus: twelve original paintings (`app/img/museum/`), composed as scenes and given an oil-paint finish (sources and the painting script in `redesign/museum-source/`). Each gallery opens on its painting with a museum plaque; the walk list shows thumbnails; the entrance uses Golgotha.

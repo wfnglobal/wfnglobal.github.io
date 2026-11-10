@@ -971,5 +971,6 @@
     root = null; state = null;
   }
 
-  window.WFNGame = { mount: mount, unmount: unmount, ICON: CLIMB_ICON };
+  // LEVELS and SCROLLS are shared with the App 2.0 climb (app/js2/climb.js).
+  window.WFNGame = { mount: mount, unmount: unmount, ICON: CLIMB_ICON, LEVELS: LEVELS, SCROLLS: SCROLLS, Sound: Sound };
 })();

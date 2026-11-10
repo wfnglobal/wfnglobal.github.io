@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "Heal me, O LORD, and I shall be healed; save me, and I shall be saved: for thou art my praise.", ref: "Jeremiah 17:14" },
     { text: "Thy word is a lamp unto my feet, and a light unto my path.", ref: "Psalm 119:105" },
     { text: "Declare his glory among the heathen; his marvellous works among all nations.", ref: "1 Chronicles 16:24" },
     { text: "For the hope which is laid up for you in heaven, whereof ye heard before in the word of the truth of the gospel; which is come unto you, as it is in all the world; and bringeth forth fruit, as it doth also in you, since the day ye heard of it, and knew the grace of God in truth.", ref: "Colossians 1:5-6" },
@@ -83,20 +84,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that the prey shall be taken from the mighty — whatever has held me in its teeth must open its mouth and let me go, in the name of Jesus!",
-      "Every claim the enemy has over my life, every signature, every open door, every old agreement — I declare it cancelled and nailed to the cross of Jesus Christ!",
-      "I am not a lawful captive anymore! The handwriting that was against me has been blotted out, and the accuser is reading from a document that no longer exists!",
+      "Father, I declare today that I am not hiding in the crowd anymore — I am pressing through to Jesus, and nothing between us is big enough to stop me!",
+      "Every year I have carried this burden, every report I have been handed, every expert who sent me home worse — none of it is the final word over my life!",
+      "I have heard of Jesus, and faith has come by hearing — so I rise, I move, and I reach!",
       "",
-      "I hand You my fight today, Lord! You said You will contend with him that contendeth with me — so every power contending with my peace, my health, my finances and my destiny, meet the Mighty One of Jacob!",
-      "Every strong man assigned to my house is bound in the name of Jesus, and everything he stole I recover — my joy, my years, my rest and my increase!",
-      "My name is graven on the palms of His hands — I am not forsaken, I am not forgotten, and I will not die in captivity!",
+      "I say it and I keep saying it: if I may but touch His clothes, I shall be whole!",
+      "I grab the promise by its edge — the Sun of righteousness has risen over me with healing in His wings!",
+      "Let every fountain of sickness, loss and shame in my life dry up straightway, in the name of Jesus!",
       "",
-      "I decree over my children: you shall be saved! Every child of mine in a far country, the Lord is bringing you home!",
-      "Every pattern that ran through my family line stops with me today — my children shall not inherit my captivity, they shall inherit my deliverance!",
-      "Thy word is a lamp unto my feet and a light unto my path — I will not walk in darkness today; I see my next step, and I take it in faith!",
-      "Save this. Speak it over your house today. The lawful captive shall be delivered and your children shall be saved — for thus saith the LORD! In Jesus' mighty name, amen!"
+      "I am not bumping into Jesus today — I am drawing from Him on purpose, and virtue is flowing into my body, my mind and my home!",
+      "I am not unclean, I am not untouchable, I am not forgotten — He has called me Daughter, He has called me Son!",
+      "Heal me, O LORD, and I shall be healed; save me, and I shall be saved — for You are my praise!",
+      "",
+      "Save this. Speak it over your house today. I have touched the hem of His garment and I go in peace, whole of my plague! In Jesus' mighty name, amen!"
     ],
-    ref: "Isaiah 49:24-25"
+    ref: "Mark 5:27-29"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -138,6 +140,7 @@
   };
 
   const SERMONS = [
+    { slug: "if-i-may-but-touch", title: "If I May But Touch", ref: "Mark 5:27-29", date: "November 10, 2026", excerpt: "Twelve years of doctors, twelve years of shame, and a whole crowd between her and Jesus. She didn't wait for the crowd to clear — she pressed in, reached for the hem, and straightway the fountain dried up." },
     { slug: "the-lawful-captive-shall-go-free", title: "The Lawful Captive Shall Go Free", ref: "Isaiah 49:24-25", date: "November 9, 2026", excerpt: "Some captivity looks legal — you signed for it, you walked into it, the enemy has the paperwork. Heaven's answer is still the same: I will contend with him that contendeth with thee, and I will save thy children." },
     { slug: "possess-your-possessions", title: "Possess Your Possessions", ref: "Obadiah 1:17-18", date: "November 8, 2026", excerpt: "Deliverance gets you out. Holiness keeps you out. But possession is where you finally walk into what God already gave you on paper — and the fire that burns Esau's stubble is the same fire He has put in you." },
     { slug: "the-supremacy-of-christ", title: "The Supremacy of Christ", ref: "Colossians 1:15-17", date: "November 7, 2026", excerpt: "Before there was a throne, a power, or a problem, there was Christ. Everything you're afraid of was created by Him, answers to Him, and is held together by Him — which means nothing in your life outranks the One you pray to." },

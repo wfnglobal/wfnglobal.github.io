@@ -3,7 +3,8 @@
   "use strict";
   const C = window.WFN_CONTENT || {};
   const S = window.WFNStore;
-  const BASE = window.WFN_BASE || "/";
+  // An empty WFN_BASE is valid: the private preview serves files relative to the page.
+  const BASE = typeof window.WFN_BASE === "string" ? window.WFN_BASE : "/";
   const DATA = BASE + "app/data/";
 
   // ---------- helpers ----------

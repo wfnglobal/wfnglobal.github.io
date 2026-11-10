@@ -2,8 +2,10 @@
 // Loads the KJV index + per-book JSON (served from /app/data/bible/, cached offline by the service worker).
 
 window.WFNBible = (function () {
-  const DATA_BASE = "/app/data/bible/";
-  const SUMMARY_BASE = "/app/data/summaries/";
+  // WFN_BASE lets a private preview serve the same files from another root.
+  const ROOT = (typeof window !== "undefined" && typeof window.WFN_BASE === "string" ? window.WFN_BASE : "/") + "app/data/";
+  const DATA_BASE = ROOT + "bible/";
+  const SUMMARY_BASE = ROOT + "summaries/";
   let indexPromise = null;
   const bookCache = new Map(); // slug -> { name, slug, chapters: [...] }
   const summaryCache = new Map(); // slug -> { name, slug, chapters: { "1": "...", ... } } | null (none available)
@@ -87,7 +89,7 @@ window.WFNBible = (function () {
   const xrefCache = new Map();
   function getXref(slug) {
     if (xrefCache.has(slug)) return xrefCache.get(slug);
-    const p = fetch("/app/data/xref/" + slug + ".json")
+    const p = fetch(ROOT + "xref/" + slug + ".json")
       .then((r) => (r.ok ? r.json() : null))
       .catch(() => null);
     xrefCache.set(slug, p);

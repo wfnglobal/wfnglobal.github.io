@@ -183,3 +183,10 @@ Oladapo found features missing after go-live. Audited the classic app (app/class
   - Declaration shows two lines and a liquid-glass "Declare it all" button that opens the full declaration with Listen, Translate, Share, full-screen icons and a small Amen pill.
   - Your day in the Word: nothing ticks itself any more (opening a page no longer marks it done); tick any step in any order. A one-time reset clears today's auto-ticks.
 - Tab bar: floating liquid-glass capsule that hides while scrolling down and returns on scroll up (no more auto-return after a pause).
+
+## Session — Nov 9, night: day list, header, Bible navigator (preview only)
+
+- Your day in the Word: Verse of the Day ticks itself the first time Today opens each day; declaration, study, sermon and night prayer are ticked by hand.
+- Today header: Give pill and the avatar removed (emblem + search only). Give stays in You.
+- Bible tab: Old Testament / New Testament tabs; tap a book to open its chapters, tap a chapter to open its verse numbers, tap a verse to read from there. Replaces the long list of all 66 books.
+- Fixed the blank Bible reader in the preview: app/js/bible.js and wfn-lookup.js now honour WFN_BASE (live site still uses /app/data/).

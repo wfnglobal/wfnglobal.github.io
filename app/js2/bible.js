@@ -54,20 +54,43 @@
           <a class="card" href="#/study/${esc(study.slug)}" style="display:flex;gap:14px;padding:14px;text-decoration:none;color:var(--ink)">
             ${study.poster ? `<img src="${esc(W.asset(study.poster))}" alt="" loading="lazy" style="width:84px;height:105px;border-radius:14px;object-fit:cover;flex-shrink:0;background:var(--sunk)">` : ""}
             <span style="display:flex;flex-direction:column;gap:4px;min-width:0"><span class="eyebrow amber">Today · ${esc(((study.verses || [])[0] || {}).ref || "")}</span><span class="serif" style="font-size:19px;line-height:25px">${esc(study.title)}</span><span class="small ink2">${esc(study.excerpt)}</span></span></a></section>` : ""}
-        <section class="section" id="books">
-          <div class="seg" role="tablist" aria-label="Jump to a testament">
-            <a role="tab" href="#ot" data-t="old" aria-selected="false">Old Testament</a>
-            <a role="tab" href="#nt" data-t="new" aria-selected="false">New Testament</a>
+        <section class="section" id="books" aria-label="Books of the Bible">
+          <div class="seg" role="tablist" aria-label="Testament">
+            <button role="tab" id="tabOT" data-t="old" aria-selected="${tab === "old"}" aria-controls="bookNav">Old Testament</button>
+            <button role="tab" id="tabNT" data-t="new" aria-selected="${tab === "new"}" aria-controls="bookNav">New Testament</button>
           </div>
-          <h2 class="eyebrow" id="ot" style="padding:6px 4px 0">Old Testament · 39 books</h2>
-          <div class="grid-books">${idx.filter((b) => b.testament === "old").map((b) => `<a href="#/bible/${b.slug}">${esc(b.name)}</a>`).join("")}</div>
-          <h2 class="eyebrow" id="nt" style="padding:14px 4px 0">New Testament · 27 books</h2>
-          <div class="grid-books">${idx.filter((b) => b.testament === "new").map((b) => `<a href="#/bible/${b.slug}">${esc(b.name)}</a>`).join("")}</div>
+          <div class="card book-nav" id="bookNav" role="tabpanel" aria-labelledby="${tab === "old" ? "tabOT" : "tabNT"}"></div>
         </section>
         ${marks.length ? `<section class="section"><div class="section-head"><h2 class="h2">Your highlights</h2><a href="#/kept/highlights">All</a></div>
           <div class="card list">${marks.slice(0, 3).map((m) => `<a class="row-link" href="#/bible/${m.bookSlug}/${m.chapter}/${m.verse}"><span style="width:10px;height:28px;border-radius:4px;flex-shrink:0;background:${m.color ? hlColor(m.color) : "var(--amber)"}"></span><span class="grow"><span class="label serif" style="font-size:16px">${esc(m.text.slice(0, 90))}${m.text.length > 90 ? "…" : ""}</span><span class="hint">${esc(m.bookName)} ${m.chapter}:${m.verse}</span></span></a>`).join("")}</div></section>` : ""}
       </div>`;
-      W.$$("[data-t]", main).forEach((x) => x.onclick = (e) => { e.preventDefault(); tab = x.dataset.t; W.write("wfn2-testament", tab); W.$$("[data-t]", main).forEach((y) => y.setAttribute("aria-selected", String(y === x))); W.$(tab === "old" ? "#ot" : "#nt").scrollIntoView({ behavior: "smooth", block: "start" }); });
+      // Books of the Bible: two tabs, then book -> chapter -> verse, all on one page.
+      let openBook = null, openCh = null;
+      const nav = W.$("#bookNav", main);
+      const drawNav = async () => {
+        const books = idx.filter((x) => x.testament === tab);
+        nav.innerHTML = books.map((bk) => {
+          const open = bk.slug === openBook;
+          return `<div class="bn-book ${open ? "open" : ""}">
+            <button class="bn-row" type="button" data-book="${bk.slug}" aria-expanded="${open}"><span class="bn-name">${esc(bk.name)}</span><span class="bn-count">${bk.chapters}</span><span class="bn-chev">${icon("down", "xs")}</span></button>
+            ${open ? `<div class="bn-ch" role="group" aria-label="${esc(bk.name)} chapters">${Array.from({ length: bk.chapters }, (_, i) => `<button type="button" data-ch="${i + 1}" class="${openCh === i + 1 ? "on" : ""}" aria-pressed="${openCh === i + 1}">${i + 1}</button>`).join("")}</div>
+              ${openCh ? `<div class="bn-verses" id="bnVerses"><div class="bn-vhead"><span>${esc(bk.name)} ${openCh} · select a verse</span><a href="#/bible/${bk.slug}/${openCh}">Read chapter</a></div><div class="bn-vgrid"><span class="small muted">Loading…</span></div></div>` : ""}` : ""}
+          </div>`;
+        }).join("");
+        W.$$("[data-book]", nav).forEach((x) => x.onclick = () => { const was = openBook === x.dataset.book; openBook = was ? null : x.dataset.book; openCh = null; drawNav().then(() => { if (!was) { const row = W.$(`[data-book="${openBook}"]`, nav); if (row) row.scrollIntoView({ behavior: "smooth", block: "start" }); } }); });
+        W.$$("[data-ch]", nav).forEach((x) => x.onclick = () => { const c = +x.dataset.ch; openCh = openCh === c ? null : c; drawNav(); });
+        if (openBook && openCh) {
+          const g = W.$(".bn-vgrid", nav);
+          try {
+            const data = await W.book(openBook);
+            const n = (data.chapters[openCh - 1] || []).length;
+            g.innerHTML = Array.from({ length: n }, (_, i) => `<a href="#/bible/${openBook}/${openCh}/${i + 1}">${i + 1}</a>`).join("");
+          } catch (err) { g.innerHTML = '<span class="small muted">Couldn’t load the verses. Check your connection.</span>'; }
+        }
+      };
+      drawNav();
+      W.$$("[data-t]", main).forEach((x) => x.onclick = () => { tab = x.dataset.t; W.write("wfn2-testament", tab); openBook = null; openCh = null;
+        W.$$("[data-t]", main).forEach((y) => y.setAttribute("aria-selected", String(y === x))); nav.setAttribute("aria-labelledby", x.id); drawNav(); });
       W.$("#bs").onsubmit = (e) => { e.preventDefault(); const q = e.target.q.value.trim(); if (q) W.go("#/search/" + encodeURIComponent(q)); };
       W.$("#rs").onclick = () => settingsSheet();
       if (W.read("wfn2-goto-books", false)) { W.write("wfn2-goto-books", false); setTimeout(() => W.$(tab === "old" ? "#ot" : "#nt").scrollIntoView({ block: "start" }), 60); }

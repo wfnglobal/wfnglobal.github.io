@@ -121,7 +121,8 @@
   // the Easton/Smith Bible dictionary for names, places and Bible terms,
   // and — when online — a picture from Wikipedia for concrete things
   // (animals, plants, objects, places, people). ----
-  var DICT_BASE = "/app/data/dict/";
+  var APP_DATA = (typeof window !== "undefined" && typeof window.WFN_BASE === "string" ? window.WFN_BASE : "/") + "app/data/";
+  var DICT_BASE = APP_DATA + "dict/";
   var KJV = {
     thee: "you (object form)", thou: "you (one person, as the subject)", thy: "your", thine: "yours; your (before a vowel)",
     ye: "you (more than one person)", hath: "has", hast: "have (with “thou”)", hadst: "had (with “thou”)", doth: "does",
@@ -165,7 +166,7 @@
   var bibleDictPromise = null;
   function getBibleDict() {
     if (!bibleDictPromise) {
-      bibleDictPromise = fetch("/app/data/bible-dictionary.json")
+      bibleDictPromise = fetch(APP_DATA + "bible-dictionary.json")
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (json) { return (json && json.entries) || {}; })
         .catch(function () { bibleDictPromise = null; return {}; });

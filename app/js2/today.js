@@ -32,6 +32,11 @@
     const name = p.name ? ", " + esc(p.name.split(" ")[0]) : "";
     const date = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
     const evening = new Date().getHours() >= 18;
+    // Your day in the Word starts itself: Verse of the Day is ticked the first
+    // time Today opens each day. Everything after it is ticked by hand.
+    const autoKey = "wfn2-verse-auto-" + dayKey();
+    if (!W.read(autoKey, false)) { markDone("verse"); W.write(autoKey, true);
+      try { Object.keys(localStorage).filter((k) => k.indexOf("wfn2-verse-auto-") === 0 && k !== autoKey).forEach((k) => localStorage.removeItem(k)); } catch (e) {} }
     const done = doneToday();
     const steps = [
       ["verse", "Verse of the Day", "#/"],
@@ -52,9 +57,7 @@
       <div class="row">
         ${W.emblem(30, document.documentElement.dataset.theme === "dark" ? "#EFEBE4" : "#1F1D1B")}
         <span style="flex-grow:1"></span>
-        <a class="chip amber" href="#/give" aria-label="Give to WFN">${icon("hand", "sm")}Give</a>
         <a class="icon-btn" href="#/search" aria-label="Search">${icon("search")}</a>
-        <a href="#/you" aria-label="You" style="display:flex">${W.avatar("sm")}</a>
       </div>
       <p class="eyebrow" style="margin-top:10px">${esc(date)}</p>
       <h1>${greeting()}${name}</h1>

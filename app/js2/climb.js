@@ -379,7 +379,10 @@
           <div class="stack" style="width:100%">${actions}</div>
         </section>`;
       window.scrollTo(0, 0);
-      const again = W.$("#wcAgain"); if (again) again.onclick = (e) => { e.preventDefault(); W.route(); };
+      // A button that points at the address we're already on would do nothing: start the next run directly.
+      W.$$("a.btn", body).forEach((a) => a.addEventListener("click", (e) => {
+        if (a.getAttribute("href") === location.hash) { e.preventDefault(); window.scrollTo(0, 0); W.route(); }
+      }));
       const sh = W.$("#wcShare");
       if (sh) sh.onclick = () => {
         const p = W.profile(); const first = (p.name || "").split(" ")[0];

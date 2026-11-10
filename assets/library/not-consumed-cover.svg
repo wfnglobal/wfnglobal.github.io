@@ -1,0 +1,47 @@
+<svg viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="covTitle covDesc">
+        <title id="covTitle">Not Consumed — Word and Faith Network, by Oladapo Olaleye</title>
+        <desc id="covDesc">Book cover: deep plum-to-black gradient with a bush wrapped in gold flame that is not burned up, the bold title Not Consumed, the subtitle, and the author's name.</desc>
+        <defs>
+          <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#3B1740"/>
+            <stop offset="55%" stop-color="#1D0C22"/>
+            <stop offset="100%" stop-color="#0A0509"/>
+          </linearGradient>
+          <radialGradient id="glow" cx="50%" cy="26%" r="58%">
+            <stop offset="0%" stop-color="#F2B65A" stop-opacity="0.42"/>
+            <stop offset="55%" stop-color="#F2B65A" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#F2B65A" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#F6E8BE"/>
+            <stop offset="100%" stop-color="#C9A968"/>
+          </linearGradient>
+          <linearGradient id="flame" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" stop-color="#C9344A"/>
+            <stop offset="55%" stop-color="#F2A63A"/>
+            <stop offset="100%" stop-color="#FFE9B0"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="900" fill="url(#bgGrad)"/>
+        <rect width="600" height="900" fill="url(#glow)"/>
+        <rect x="24" y="24" width="552" height="852" fill="none" stroke="#C9A968" stroke-opacity="0.35" stroke-width="1.5"/>
+        <g transform="translate(300 210)">
+          <path d="M0,-118 C26,-82 50,-60 44,-20 C62,-38 66,-62 60,-82 C92,-40 96,10 70,44 C60,58 42,70 22,76 L-22,76 C-46,70 -64,56 -74,40 C-96,6 -86,-36 -60,-70 C-62,-46 -54,-28 -40,-18 C-48,-58 -26,-90 0,-118Z" fill="url(#flame)" opacity="0.95"/>
+          <path d="M0,-70 C16,-46 26,-24 20,4 C30,-6 34,-20 32,-32 C48,-6 46,28 26,50 L-26,50 C-46,30 -48,-4 -30,-30 C-30,-14 -24,-4 -16,2 C-20,-28 -12,-50 0,-70Z" fill="#FFF3D2" opacity="0.75"/>
+          <g stroke="#2E1A12" stroke-width="7" stroke-linecap="round" fill="none">
+            <path d="M0,86 C0,60 -4,36 -26,14"/><path d="M0,86 C2,58 8,40 30,20"/><path d="M-12,48 C-26,40 -40,40 -52,30"/><path d="M10,44 C26,38 40,30 50,16"/><path d="M0,86 L0,40"/>
+          </g>
+          <g fill="#4E6A3A"><ellipse cx="-34" cy="16" rx="12" ry="7"/><ellipse cx="36" cy="18" rx="12" ry="7"/><ellipse cx="-54" cy="30" rx="10" ry="6"/><ellipse cx="52" cy="14" rx="10" ry="6"/><ellipse cx="0" cy="34" rx="11" ry="7"/></g>
+          <path d="M-90,96 L90,96" stroke="#C9A968" stroke-opacity="0.5" stroke-width="1"/>
+        </g>
+        <text x="300" y="380" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="13" font-weight="700" letter-spacing="5" fill="#E8B05A">WORD &amp; FAITH NETWORK</text>
+        <line x1="255" y1="402" x2="345" y2="402" stroke="#E8B05A" stroke-width="1" opacity="0.6"/>
+        <text x="300" y="500" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="96" font-weight="900" fill="url(#goldText)" letter-spacing="1">NOT</text>
+        <text x="300" y="598" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="80" font-weight="900" fill="url(#goldText)" letter-spacing="1">CONSUMED</text>
+        <line x1="200" y1="630" x2="400" y2="630" stroke="#E8B05A" stroke-width="1" opacity="0.7"/>
+        <text x="300" y="664" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="22" fill="#F1D7B4">Sin Took the Covering.</text>
+        <text x="300" y="694" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="22" fill="#F4D9A9">Mercy Would Not Let Go.</text>
+        <text x="300" y="740" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="11.5" font-weight="600" letter-spacing="0.4" fill="#C2A2C6" font-style="italic">"It is of the LORD's mercies that we are not consumed." Lamentations 3:22</text>
+        <text x="300" y="806" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#F4E3C4">OLADAPO OLALEYE</text>
+        <text x="300" y="828" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="10.5" letter-spacing="2" fill="#A98AAE">BOOK THREE &#183; THE LIBRARY</text>
+      </svg>

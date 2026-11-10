@@ -67,18 +67,31 @@
       // Books of the Bible: two tabs, then book -> chapter -> verse, all on one page.
       let openBook = null, openCh = null;
       const nav = W.$("#bookNav", main);
+      const PER_ROW = 5;
+      const chapterGrid = (bk) => {
+        let html = "";
+        const rowEnd = openCh ? Math.min(bk.chapters, Math.ceil(openCh / PER_ROW) * PER_ROW) : 0;
+        for (let c = 1; c <= bk.chapters; c++) {
+          html += `<button type="button" data-ch="${c}" class="${openCh === c ? "on" : ""}" aria-pressed="${openCh === c}" aria-label="Chapter ${c}">${c}</button>`;
+          if (c === rowEnd) html += `<div class="bn-verses" id="bnVerses"><div class="bn-vhead"><span>${esc(bk.name)} ${openCh}</span><button type="button" class="bn-close" aria-label="Close">${icon("close", "xs")}</button></div>
+            <a class="btn block bn-read" href="#/bible/${bk.slug}/${openCh}">Read ${esc(bk.name)} ${openCh}</a>
+            <span class="bn-vlabel">Or start at a verse</span><div class="bn-vgrid"><span class="small muted">Loading…</span></div></div>`;
+        }
+        return html;
+      };
       const drawNav = async () => {
         const books = idx.filter((x) => x.testament === tab);
         nav.innerHTML = books.map((bk) => {
           const open = bk.slug === openBook;
           return `<div class="bn-book ${open ? "open" : ""}">
             <button class="bn-row" type="button" data-book="${bk.slug}" aria-expanded="${open}"><span class="bn-name">${esc(bk.name)}</span><span class="bn-count">${bk.chapters}</span><span class="bn-chev">${icon("down", "xs")}</span></button>
-            ${open ? `<div class="bn-ch" role="group" aria-label="${esc(bk.name)} chapters">${Array.from({ length: bk.chapters }, (_, i) => `<button type="button" data-ch="${i + 1}" class="${openCh === i + 1 ? "on" : ""}" aria-pressed="${openCh === i + 1}">${i + 1}</button>`).join("")}</div>
-              ${openCh ? `<div class="bn-verses" id="bnVerses"><div class="bn-vhead"><span>${esc(bk.name)} ${openCh} · select a verse</span><a href="#/bible/${bk.slug}/${openCh}">Read chapter</a></div><div class="bn-vgrid"><span class="small muted">Loading…</span></div></div>` : ""}` : ""}
+            ${open ? `<div class="bn-ch" role="group" aria-label="${esc(bk.name)} chapters">${chapterGrid(bk)}</div>` : ""}
           </div>`;
         }).join("");
         W.$$("[data-book]", nav).forEach((x) => x.onclick = () => { const was = openBook === x.dataset.book; openBook = was ? null : x.dataset.book; openCh = null; drawNav().then(() => { if (!was) { const row = W.$(`[data-book="${openBook}"]`, nav); if (row) row.scrollIntoView({ behavior: "smooth", block: "start" }); } }); });
-        W.$$("[data-ch]", nav).forEach((x) => x.onclick = () => { const c = +x.dataset.ch; openCh = openCh === c ? null : c; drawNav(); });
+        W.$$("[data-ch]", nav).forEach((x) => x.onclick = () => { const c = +x.dataset.ch; openCh = openCh === c ? null : c;
+          drawNav().then(() => { const v = W.$("#bnVerses", nav); if (v) v.scrollIntoView({ behavior: "smooth", block: "nearest" }); }); });
+        const cl = W.$(".bn-close", nav); if (cl) cl.onclick = () => { openCh = null; drawNav(); };
         if (openBook && openCh) {
           const g = W.$(".bn-vgrid", nav);
           try {

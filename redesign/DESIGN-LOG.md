@@ -196,3 +196,14 @@ Oladapo found features missing after go-live. Audited the classic app (app/class
 - The Word Climb rebuilt from the canvas design in `app/js2/climb.js`: mountain map with five camps, Today's challenge (5 questions from the sermon's book when possible) with a streak, four ways to play (continue the climb: 10 questions, pass with 8; practice by book; 60-second sprint; challenge a friend by link), Scripture hint (twice per run), 50/50 (once), Learn why after every answer with the verse from the offline Bible, camp badges, camp scrolls, and a Certificate of the Climb at the summit.
 - Every one of the 300 questions now carries its Bible reference (`app/js2/climb-refs.js`), checked against the KJV data. The classic game file only gained an export of its question bank.
 - The Story of Jesus: twelve original paintings (`app/img/museum/`), composed as scenes and given an oil-paint finish (sources and the painting script in `redesign/museum-source/`). Each gallery opens on its painting with a museum plaque; the walk list shows thumbnails; the entrance uses Golgotha.
+
+## Session — Nov 10: THE WAY, an open-world game (preview only)
+
+- New 3D game at `#/way` (`app/js2/way.js`, three.js r128 in `app/vendor/three.min.js`, loaded only when the game opens). A big "THE WAY" card sits at the top of Explore on Today.
+- Free roam of Capernaum (houses, synagogue, Peter's house with outside stairs, market, well, stable), the western hills, the south road to the inn, and the Sea of Galilee with a dock and a sailing boat. Rideable donkey; boat mode on the water.
+- Real-time day and night (a full day in ten minutes): sky shader, sun shadows, stars, lamps that glow at night, a water shader with reflections, fog, birds.
+- Controls without a controller: left-side thumbstick, drag the right side to look, Run / Jump / action buttons. Keyboard too (WASD, Shift, Space, E, M, P).
+- GTA-style HUD: rotating minimap with blips, full map with waypoints, objective line, five gold Faith stars, letterbox cutscenes, "Deed done" screen with the Scripture.
+- Five deeds (Jesus is never shown; His words appear as Scripture): The Lost Sheep (Luke 15), Five Loaves with 12 baskets to gather (John 6), Fishers of Men with a race back before the net breaks (Luke 5), The Good Samaritan by donkey to the inn (Luke 10), Through the Roof (Mark 2).
+- Twelve hidden verse scrolls, photo mode with share, a quiet psalm "radio" with wind, water, birds and crickets, three graphics settings, progress saved on the phone (`wfn2-way`).
+- All five deeds were played through in testing with no errors. Service worker cache moved to v82.

@@ -161,6 +161,12 @@
 
       <section class="section" aria-labelledby="exH">
         <h2 id="exH" class="h2" style="padding:0 4px">Explore</h2>
+        <a class="way-hero" href="#/way" style="background-image:url('${W.BASE}app/img/museum/05-galilee.jpg')">
+          <span class="way-hero-k">New · Open-world game</span>
+          <span class="way-hero-t">THE WAY</span>
+          <span class="way-hero-s">Walk Galilee. Sail the lake. Five deeds from the Gospels.</span>
+          <span class="way-hero-b">${icon("play", "sm")}Play</span>
+        </a>
         <div class="explore">
           <a class="card" href="${lastRead ? `#/bible/${esc(lastRead.slug)}/${lastRead.ch}` : "#/bible/genesis/1"}"><span class="tile-ic lg c-amber">${icon("bible")}</span><span><span class="t">Read the Bible</span><br><span class="s">${lastRead ? "Back to " + esc(lastRead.name) + " " + lastRead.ch : "Start with Genesis, or any book"}</span></span></a>
           <a class="card" href="#/studies"><span class="tile-ic lg c-spruce">${icon("summary")}</span><span><span class="t">Bible Study</span><br><span class="s">A new study every morning</span></span></a>

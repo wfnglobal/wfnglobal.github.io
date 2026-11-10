@@ -336,8 +336,8 @@
 
   // ---------- nav + router ----------
   const TABS = [["today", "Today", ""], ["bible", "Bible", "bible"], ["sermons", "Sermons", "sermons"], ["prayer", "Prayer", "prayer"], ["library", "Library", "library"], ["you", "You", "you"]];
-  const TAB_OF = { "": "today", home: "today", bible: "bible", search: "bible", prayer: "prayer", dreams: "prayer", library: "library", sermons: "sermons", sermon: "sermons", studies: "bible", study: "bible", plan: "library", book: "library", you: "you", kept: "you", journal: "you", note: "you", invite: "you", scan: "you", give: "you", settings: "you", jesus: "today", climb: "today" };
-  const NO_NAV = { scan: 1, invite: 1, climb: 1 };
+  const TAB_OF = { "": "today", home: "today", bible: "bible", search: "bible", prayer: "prayer", dreams: "prayer", library: "library", sermons: "sermons", sermon: "sermons", studies: "bible", study: "bible", plan: "library", book: "library", you: "you", kept: "you", journal: "you", note: "you", invite: "you", scan: "you", give: "you", settings: "you", jesus: "today", climb: "today", way: "today" };
+  const NO_NAV = { scan: 1, invite: 1, climb: 1, way: 1 };
   function renderNav(active) {
     $("#nav").innerHTML = TABS.map(([k, label, h]) =>
       `<a href="#/${h}" ${k === active ? 'aria-current="page"' : ""}><span class="pill">${icon(k === "today" ? "today" : k)}</span>${label}</a>`).join("");

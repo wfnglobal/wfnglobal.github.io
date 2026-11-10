@@ -26,6 +26,9 @@
     stubble   - a burning dusk field, crimson/copper sky, dry chaff catching fire, figure watching
     gate      - indigo night, a carved stone gate with warm gold light glowing in its seam, figure approaching
     vineyard  - green-gold dawn, rows of fruited vines on a hillside, figure arms raised among them
+    multitude - sun-baked dusty-ochre midday market, a pressed crowd of small silhouettes, one figure pushing through
+    hem       - close warm amber-rose firelight, a robed figure mid-stride, a bright gold flare where a hand meets the hem
+    whole     - wide bright gold-cream dawn burst, a lone figure standing with arms lifted in the light
 
   Each scene is built from layers (l-back / l-front) that get different
   Ken Burns moves for a 2.5D parallax camera, plus an HTML particle layer
@@ -69,6 +72,9 @@
   body[data-shot="stubble"]{--accent:#FF6A3D;}
   body[data-shot="gate"]{--accent:#E3C27A;}
   body[data-shot="vineyard"]{--accent:#BFE07A;}
+  body[data-shot="multitude"]{--accent:#D9A868;}
+  body[data-shot="hem"]{--accent:#FF8F6B;}
+  body[data-shot="whole"]{--accent:#FFF0B0;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -1187,6 +1193,129 @@
     </div>
     <div class="fx" data-type="motes" data-n="30" data-color="236,228,150"></div>
     <div class="fx" data-type="bokeh" data-n="12"></div>
+  </section>
+
+  <!-- ============ MULTITUDE: sun-baked dusty-ochre midday market, a pressed crowd ============ -->
+  <section class="scene" data-scene="multitude" data-kb="panl" style="--ox:50%; --oy:66%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="mt-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8E7850"/><stop offset="0.38" stop-color="#C6A066"/>
+            <stop offset="0.68" stop-color="#E4C184"/><stop offset="1" stop-color="#F3DCA6"/>
+          </linearGradient>
+          <radialGradient id="mt-haze" cx="0.5" cy="0.55" r="0.6"><stop offset="0" stop-color="#FFF3CE" stop-opacity="0.55"/><stop offset="1" stop-color="#FFF3CE" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#mt-sky)"/>
+        <rect width="1080" height="1920" fill="url(#mt-haze)"/>
+        <path d="M 0 1080 L 160 1010 L 340 1060 L 520 980 L 700 1040 L 900 990 L 1080 1050 L 1080 1180 L 0 1180 Z" fill="#6E5938" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="mt-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A6E44"/><stop offset="1" stop-color="#2A200E"/></linearGradient>
+        </defs>
+        <path d="M 0 1240 C 280 1216 760 1228 1080 1240 L 1080 1920 L 0 1920 Z" fill="url(#mt-floor)"/>
+        <g fill="#2A2210" opacity="0.88">
+          <g transform="translate(180 1460) scale(0.3)"><use href="#fig-robe"/></g>
+          <g transform="translate(300 1500) scale(0.34)"><use href="#fig-robe"/></g>
+          <g transform="translate(420 1440) scale(0.27)"><use href="#fig-staff"/></g>
+          <g transform="translate(760 1480) scale(0.32)"><use href="#fig-robe"/></g>
+          <g transform="translate(880 1440) scale(0.28)"><use href="#fig-robe"/></g>
+          <g transform="translate(960 1500) scale(0.33)"><use href="#fig-staff"/></g>
+        </g>
+        <g transform="translate(560 1620) scale(0.56)">
+          <ellipse cx="0" cy="58" rx="160" ry="24" fill="#1C1608" opacity="0.5"/>
+          <use href="#fig-robe" fill="#FFE2A0" filter="url(#glow8)" opacity="0.4"/>
+          <use href="#fig-robe" fill="#140F06"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="30" data-color="226,196,140"></div>
+    <div class="fx" data-type="motes" data-n="14" data-color="255,235,180"></div>
+  </section>
+
+  <!-- ============ HEM: close warm amber-rose light, a hand reaching for the hem ============ -->
+  <section class="scene" data-scene="hem" data-kb="push" style="--ox:46%; --oy:62%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="hm-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3A1C14"/><stop offset="0.36" stop-color="#7A3420"/>
+            <stop offset="0.64" stop-color="#C6632E"/><stop offset="1" stop-color="#F0A758"/>
+          </linearGradient>
+          <radialGradient id="hm-flare" cx="0.44" cy="0.82" r="0.3"><stop offset="0" stop-color="#FFF6D8" stop-opacity="1"/><stop offset="0.3" stop-color="#FFC878" stop-opacity="0.7"/><stop offset="1" stop-color="#FFC878" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#hm-sky)"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="hm-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5A2A16" stop-opacity="0"/><stop offset="1" stop-color="#140804"/></linearGradient>
+        </defs>
+        <g transform="translate(560 1560) scale(0.74)">
+          <ellipse cx="0" cy="56" rx="160" ry="22" fill="#140804" opacity="0.5"/>
+          <use href="#fig-robe" fill="#FFB878" filter="url(#glow8)" opacity="0.5"/>
+          <use href="#fig-robe" fill="#1A0D06"/>
+        </g>
+        <ellipse cx="648" cy="1468" rx="150" ry="130" fill="#1A0A04" opacity="0.6" filter="url(#soft30)"/>
+        <circle cx="648" cy="1468" r="110" fill="url(#hm-flare)"/>
+        <circle cx="648" cy="1468" r="22" fill="#FFFEF6"/>
+        <g stroke="#FFF4D4" stroke-width="11" stroke-linecap="round" opacity="0.95" filter="url(#glow8)">
+          <path d="M 560 1548 L 622 1486"/>
+          <path d="M 576 1566 L 640 1500"/>
+          <path d="M 548 1528 L 604 1472"/>
+        </g>
+        <g stroke="#2A160A" stroke-width="6" stroke-linecap="round" opacity="0.9">
+          <path d="M 560 1548 L 622 1486"/>
+          <path d="M 576 1566 L 640 1500"/>
+          <path d="M 548 1528 L 604 1472"/>
+        </g>
+        <path d="M 0 1660 C 280 1636 760 1648 1080 1660 L 1080 1920 L 0 1920 Z" fill="url(#hm-floor)"/>
+      </svg>
+    </div>
+    <div class="fx" data-type="ember" data-n="16"></div>
+    <div class="fx" data-type="motes" data-n="20" data-color="255,214,150"></div>
+  </section>
+
+  <!-- ============ WHOLE: wide bright gold-cream dawn burst, arms lifted in the light ============ -->
+  <section class="scene" data-scene="whole" data-kb="rise" style="--ox:50%; --oy:58%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wh-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#CDAE6E"/><stop offset="0.3" stop-color="#F0D28E"/>
+            <stop offset="0.6" stop-color="#FCE8B8"/><stop offset="1" stop-color="#FFF8E4"/>
+          </linearGradient>
+          <radialGradient id="wh-burst"><stop offset="0" stop-color="#FFFEF4" stop-opacity="1"/><stop offset="0.24" stop-color="#FFEFB8" stop-opacity="0.75"/><stop offset="1" stop-color="#FFEFB8" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#wh-sky)"/>
+        <circle cx="540" cy="980" r="700" fill="url(#wh-burst)"/>
+        <circle cx="540" cy="980" r="96" fill="#FFFFFA"/>
+      </svg>
+      <div class="spin" style="--rx:540px; --ry:980px; --sdur:64s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <g class="rays-gen" data-cx="540" data-cy="980" data-n="24" data-len="1800" data-w="2.6" fill="#FFF8DE" opacity="0.18"></g>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wh-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9A866"/><stop offset="1" stop-color="#2A2008"/></linearGradient>
+        </defs>
+        <path d="M 0 1340 C 280 1312 760 1324 1080 1340 L 1080 1920 L 0 1920 Z" fill="url(#wh-floor)"/>
+        <g transform="translate(540 1440) scale(0.6)">
+          <ellipse cx="0" cy="60" rx="150" ry="24" fill="#241A06" opacity="0.4"/>
+          <use href="#fig-raise" fill="#FFF8E0" filter="url(#glow8)" opacity="0.7"/>
+          <use href="#fig-raise" fill="#1E1608"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="32" data-color="255,246,212"></div>
+    <div class="fx" data-type="bokeh" data-n="14"></div>
   </section>
 
 </div>

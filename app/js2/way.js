@@ -306,12 +306,12 @@
       this.buildNature(); progress(0.78); await step();
 
       // people and animals
-      this.player = this.makePerson({ robe: 0x7b4a3a, sash: 0xd9b26a, wrap: 0xe8dcc4, skin: 0x8a5a3c });
+      this.player = this.makePerson({ robe: 0x7b4a3a, sash: 0xd9b26a, wrap: 0xe8dcc4, skin: 0x8a5a3c, headcloth: true });
       scene.add(this.player.g);
       this.donkey = this.makeDonkey(); this.donkey.position.set(P.stable[0], height(P.stable[0], P.stable[1]), P.stable[1]); scene.add(this.donkey);
       const rv = rnd(42); const ROBES = [0x6d7f8f, 0x9a6b4a, 0xb9a27a, 0x5e6b4a, 0x8a5070, 0xc7b89a, 0x6a5848, 0x44607a];
       for (let i = 0; i < 18; i++) {
-        const p = this.makePerson({ robe: ROBES[i % ROBES.length], sash: ROBES[(i + 3) % ROBES.length], wrap: i % 3 ? 0xe2d5bc : 0x7d6a58, skin: [0x8a5a3c, 0x6e4630, 0xa0704c][i % 3], veil: i % 2 === 0 });
+        const p = this.makePerson({ robe: ROBES[i % ROBES.length], sash: ROBES[(i + 3) % ROBES.length], wrap: i % 3 ? 0xe2d5bc : 0x7d6a58, skin: [0x8a5a3c, 0x6e4630, 0xa0704c][i % 3], veil: i % 2 === 0, hair: [0x1e1510, 0x2e1e14, 0x8a8278, 0x14100c][i % 4] });
         const a = rv() * Math.PI * 2, rr = 8 + rv() * 28;
         p.g.position.set(TOWN[0] + Math.cos(a) * rr, 0, TOWN[1] + Math.sin(a) * rr);
         p.target = null; p.wait = rv() * 4; p.speed = 1.1 + rv() * 0.7; p.phase = rv() * 10;
@@ -320,9 +320,9 @@
       // mission people (shown when relevant)
       this.cast = {};
       const castMk = (key, colors, pos, rot) => { const p = this.makePerson(colors); p.g.position.set(pos[0], height(pos[0], pos[1]), pos[1]); p.g.rotation.y = rot || 0; this.scene.add(p.g); this.cast[key] = p; return p; };
-      castMk("shepherd", { robe: 0x6a5a40, sash: 0x3e3226, wrap: 0xd8c8a8, skin: 0x7a4c32, staff: true }, P.shepherd, 1.2);
+      castMk("shepherd", { robe: 0x6a5a40, sash: 0x3e3226, wrap: 0xd8c8a8, skin: 0x7a4c32, staff: true, hair: 0x9a948a, headcloth: true }, P.shepherd, 1.2);
       castMk("andrew", { robe: 0x4f6f8a, sash: 0xc9a36a, wrap: 0xe6dac2, skin: 0x8a5a3c }, P.andrew, 2.2);
-      castMk("boy", { robe: 0xb5764a, sash: 0x5a3a26, wrap: 0x3a2a1e, skin: 0x8a5a3c, scale: 0.72 }, P.boy, 0.5);
+      castMk("boy", { robe: 0xb5764a, sash: 0x5a3a26, wrap: 0x3a2a1e, skin: 0x8a5a3c, scale: 0.72, headcloth: false }, P.boy, 0.5);
       castMk("simon", { robe: 0x5a4a3c, sash: 0x2e5a6a, wrap: 0xe6dac2, skin: 0x7a4c32 }, [P.simon[0], P.simon[1]], -1.6);
       this.cast.simon.g.position.y = DOCK.y;
       castMk("wounded", { robe: 0xcab89a, sash: 0x8a3a2a, wrap: 0xcab89a, skin: 0x8a5a3c }, P.wounded, 0);
@@ -366,34 +366,90 @@
     }
 
     // ---------- builders ----------
+    // A person built like a real body: lathe-turned robe over walking legs,
+    // shoulders, two-part arms with hands, neck, an oval head with eyes, brows,
+    // nose, ears, mouth, hair and (for men) a beard. Faces switch off at a distance.
+    mat(color, rough) { this._mats = this._mats || {}; const k = color + ":" + (rough || 0.9); return this._mats[k] || (this._mats[k] = new THREE.MeshStandardMaterial({ color, roughness: rough || 0.9 })); }
+    personGeo() {
+      if (this._pg) return this._pg;
+      const T = THREE; const V = (x, y) => new T.Vector2(x, y);
+      const robe = new T.LatheGeometry([V(0.001, 0.2), V(0.31, 0.21), V(0.29, 0.42), V(0.255, 0.72), V(0.215, 0.98), V(0.235, 1.18), V(0.255, 1.33), V(0.235, 1.42), V(0.16, 1.48), V(0.07, 1.505), V(0.001, 1.51)], 22);
+      const pos = robe.attributes.position;
+      for (let i = 0; i < pos.count; i++) { const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i); const a = Math.atan2(z, x); const fold = y < 1.0 ? (1 - y) * 0.05 * Math.sin(a * 7) : 0; const r = Math.hypot(x, z); if (r > 0.01) { const k = (r + fold) / r; pos.setX(i, x * k); pos.setZ(i, z * k * 0.74); } }
+      robe.computeVertexNormals();
+      const veil = new T.LatheGeometry([V(0.001, 0.205), V(0.135, 0.2), V(0.15, 0.12), V(0.155, 0.02), V(0.2, -0.12), V(0.27, -0.3), V(0.3, -0.62)], 18, Math.PI * 0.25, Math.PI * 1.5);
+      return (this._pg = {
+        robe, veil,
+        sash: new T.TorusGeometry(0.22, 0.035, 6, 20).rotateX(Math.PI / 2).scale(1, 1, 0.74),
+        shoulder: new T.SphereGeometry(0.1, 10, 8),
+        upper: new T.CylinderGeometry(0.068, 0.072, 0.3, 8).translate(0, -0.15, 0),
+        fore: new T.CylinderGeometry(0.088, 0.058, 0.27, 8).translate(0, -0.135, 0),
+        hand: new T.SphereGeometry(0.048, 8, 6).scale(0.85, 1.25, 0.6),
+        thigh: new T.CylinderGeometry(0.075, 0.06, 0.74, 8).translate(0, -0.37, 0),
+        sandal: new T.BoxGeometry(0.1, 0.045, 0.24),
+        neck: new T.CylinderGeometry(0.052, 0.06, 0.12, 10),
+        head: new T.SphereGeometry(0.112, 18, 14).scale(0.9, 1.12, 1),
+        jaw: new T.SphereGeometry(0.085, 14, 10).scale(1, 0.85, 1),
+        ear: new T.SphereGeometry(0.026, 8, 6).scale(0.5, 1.2, 0.9),
+        eyeW: new T.SphereGeometry(0.017, 10, 8).scale(1.3, 0.75, 0.6),
+        eyeP: new T.SphereGeometry(0.0095, 8, 6),
+        brow: new T.BoxGeometry(0.042, 0.009, 0.012),
+        nose: new T.ConeGeometry(0.019, 0.05, 6).rotateX(-Math.PI / 2 - 0.35),
+        mouth: new T.BoxGeometry(0.038, 0.007, 0.01),
+        hair: new T.SphereGeometry(0.122, 16, 10, 0, Math.PI * 2, 0, Math.PI * 0.36).scale(0.94, 1.1, 1.04),
+        hairBack: new T.SphereGeometry(0.121, 16, 12, Math.PI * 1.02, Math.PI * 0.96, Math.PI * 0.2, Math.PI * 0.48).scale(0.95, 1.1, 1.05),
+        beard: new T.SphereGeometry(0.098, 14, 10, Math.PI * 0.1, Math.PI * 0.8, Math.PI * 0.42, Math.PI * 0.5),
+        cap: new T.SphereGeometry(0.13, 16, 12, 0, Math.PI * 2, 0, Math.PI * 0.42).scale(0.96, 1.05, 1.06),
+        tail: new T.CylinderGeometry(0.1, 0.17, 0.4, 12, 1, true, Math.PI * 0.6, Math.PI * 0.8),
+      });
+    }
     makePerson(o) {
-      const T = THREE; const g = new T.Group(); const s = o.scale || 1;
-      const robe = new T.MeshStandardMaterial({ color: o.robe, roughness: 0.95 });
-      const skin = new T.MeshStandardMaterial({ color: o.skin, roughness: 0.8 });
-      const wrap = new T.MeshStandardMaterial({ color: o.wrap, roughness: 0.95 });
-      const sash = new T.MeshStandardMaterial({ color: o.sash, roughness: 0.9 });
-      const body = new T.Mesh(new T.CylinderGeometry(0.27, 0.48, 1.32, 12), robe); body.position.y = 0.74; g.add(body);
-      const belt = new T.Mesh(new T.CylinderGeometry(0.31, 0.33, 0.1, 12), sash); belt.position.y = 1.0; g.add(belt);
-      const sh = new T.Mesh(new T.SphereGeometry(0.3, 12, 8), robe); sh.scale.set(1.15, 0.55, 0.85); sh.position.y = 1.38; g.add(sh);
-      const head = new T.Mesh(new T.SphereGeometry(0.17, 14, 10), skin); head.position.y = 1.64; g.add(head);
-      const cap = new T.Mesh(new T.SphereGeometry(0.19, 14, 10, 0, Math.PI * 2, 0, Math.PI * 0.55), wrap); cap.position.y = 1.66; g.add(cap);
-      const drape = new T.Mesh(new T.CylinderGeometry(0.17, 0.24, o.veil ? 0.75 : 0.42, 10, 1, true, Math.PI * 0.5, Math.PI), wrap); drape.position.set(0, o.veil ? 1.32 : 1.5, -0.02); drape.material.side = T.DoubleSide; g.add(drape);
-      const arm = (side) => { const p = new T.Group(); p.position.set(0.33 * side, 1.38, 0); const a = new T.Mesh(new T.CylinderGeometry(0.075, 0.065, 0.62, 8), robe); a.position.y = -0.3; p.add(a); const h = new T.Mesh(new T.SphereGeometry(0.065, 8, 6), skin); h.position.y = -0.63; p.add(h); g.add(p); return p; };
+      const T = THREE; const G = this.personGeo(); const g = new T.Group(); const s = o.scale || 1;
+      const veiled = !!o.veil, child = s < 0.85, beard = o.beard != null ? o.beard : !veiled && !child;
+      const robe = this.mat(o.robe, 0.95), skin = this.mat(o.skin, 0.65), wrap = this.mat(o.wrap, 0.95), sash = this.mat(o.sash);
+      const hairC = this.mat(o.hair != null ? o.hair : 0x1e1510, 1), dark = this.mat(0x120c08, 0.4), white = this.mat(0xeee6da, 0.4), lip = this.mat(0x5a2e22, 0.7), leather = this.mat(0x4a3424, 1);
+      const add = (parent, geo, m, x, y, z, shadow) => { const mesh = new T.Mesh(geo, m); mesh.position.set(x || 0, y || 0, z || 0); if (shadow) mesh.castShadow = true; parent.add(mesh); return mesh; };
+      const rig = new T.Group(); g.add(rig);
+      // legs (pivot at the hip)
+      const leg = (side) => { const p = new T.Group(); p.position.set(0.1 * side, 0.94, 0); rig.add(p); add(p, G.thigh, skin, 0, 0, 0); add(p, G.sandal, leather, 0, -0.74, 0.05, true); return p; };
+      const legL = leg(-1), legR = leg(1);
+      const body = add(rig, G.robe, robe, 0, 0, 0, true);
+      add(rig, G.sash, sash, 0, 0.98, 0);
+      for (const sd of [-1, 1]) { const sh = add(rig, G.shoulder, robe, 0.19 * sd, 1.42, 0, true); sh.scale.set(1, 0.8, 0.85); }
+      // arms: shoulder pivot, elbow pivot, sleeve flares at the wrist
+      const arm = (side) => { const p = new T.Group(); p.position.set(0.235 * side, 1.42, 0); p.rotation.z = 0.08 * side; rig.add(p); add(p, G.upper, robe, 0, 0, 0, true); const el = new T.Group(); el.position.y = -0.3; el.rotation.x = -0.22; p.add(el); add(el, G.fore, robe, 0, 0, 0, true); add(el, G.hand, skin, 0, -0.31, 0.005); p.elbow = el; return p; };
       const armL = arm(-1), armR = arm(1);
-      const foot = (side) => { const f = new T.Mesh(new T.BoxGeometry(0.12, 0.08, 0.26), new T.MeshStandardMaterial({ color: 0x4a3424 })); f.position.set(0.14 * side, 0.04, 0.05); g.add(f); return f; };
-      const footL = foot(-1), footR = foot(1);
-      if (o.staff) { const st = new T.Mesh(new T.CylinderGeometry(0.035, 0.035, 2.1, 6), new T.MeshStandardMaterial({ color: 0x5a4028 })); st.position.set(0, -0.35, 0.1); armR.add(st); armR.rotation.x = -0.3; }
-      g.traverse((m) => { if (m.isMesh) { m.castShadow = true; } });
+      add(rig, G.neck, skin, 0, 1.53, 0.005);
+      const head = new T.Group(); head.position.set(0, 1.66, 0.01); rig.add(head);
+      add(head, G.head, skin, 0, 0.02, 0, true);
+      add(head, G.jaw, skin, 0, -0.045, 0.022);
+      const face = new T.Group(); head.add(face);
+      for (const sd of [-1, 1]) {
+        add(face, G.ear, skin, 0.1 * sd, 0.01, -0.005);
+        add(face, G.eyeW, white, 0.037 * sd, 0.03, 0.093);
+        add(face, G.eyeP, dark, 0.037 * sd, 0.03, 0.102);
+        const b = add(face, G.brow, hairC, 0.038 * sd, 0.058, 0.098); b.rotation.z = -0.12 * sd;
+      }
+      add(face, G.nose, skin, 0, 0.0, 0.112);
+      add(face, G.mouth, beard ? dark : lip, 0, -0.045, 0.097);
+      if (veiled) { add(head, G.cap, wrap, 0, 0.025, -0.008, true); const v = add(head, G.veil, wrap, 0, -0.18, -0.01, true); v.material = wrap; wrap.side = T.DoubleSide; }
+      else {
+        add(head, G.hair, hairC, 0, 0.03, -0.012); add(head, G.hairBack, hairC, 0, 0.03, -0.012);
+        if (o.headcloth !== false && !child && (o.headcloth || (o.robe + o.skin) % 3 === 0)) { add(head, G.cap, wrap, 0, 0.035, -0.01, true); const t = add(head, G.tail, wrap, 0, -0.12, -0.02, true); t.material = wrap; wrap.side = T.DoubleSide; }
+      }
+      if (beard) { const bd = add(head, G.beard, hairC, 0, -0.04, 0.012); bd.scale.set(1.04, 1.15, 1.08); }
+      if (o.staff) { const st = new T.Mesh(new T.CylinderGeometry(0.03, 0.03, 2.0, 6), this.mat(0x5a4028)); st.position.set(0, -0.3, 0.05); st.castShadow = true; armR.elbow.add(st); armR.rotation.x = -0.25; armR.elbow.rotation.x = -0.9; }
       g.scale.setScalar(s);
-      return { g, armL, armR, footL, footR, body, t: 0 };
+      return { g, rig, armL, armR, legL, legR, body, face, head, t: Math.random() * 6, staff: !!o.staff };
     }
     animatePerson(p, speed, dt) {
-      p.t += dt * (2 + speed * 2.2);
-      const a = Math.sin(p.t) * Math.min(1, speed / 3) * 0.65;
-      if (!p.holdArms) { p.armL.rotation.x = a; p.armR.rotation.x = -a; }
-      p.footL.position.z = 0.05 + Math.sin(p.t) * 0.22 * Math.min(1, speed / 2);
-      p.footR.position.z = 0.05 - Math.sin(p.t) * 0.22 * Math.min(1, speed / 2);
-      p.body.position.y = 0.74 + Math.abs(Math.cos(p.t)) * 0.035 * Math.min(1, speed / 2);
+      p.t += dt * (2 + speed * 2.1);
+      const k = Math.min(1, speed / 3), sw = Math.sin(p.t);
+      if (!p.holdArms) { p.armL.rotation.x = sw * k * 0.55; if (!p.staff) p.armR.rotation.x = -sw * k * 0.55; p.armL.elbow.rotation.x = -0.22 - k * 0.25; }
+      p.legL.rotation.x = -sw * k * 0.5; p.legR.rotation.x = sw * k * 0.5;
+      p.rig.position.y = Math.abs(Math.cos(p.t)) * 0.03 * k;
+      p.rig.rotation.y = sw * k * 0.05;
+      if (k < 0.05) { p.rig.position.y = Math.sin(p.t * 0.6) * 0.004; p.head.rotation.y = Math.sin(p.t * 0.21) * 0.25; } else p.head.rotation.y *= 0.9;
     }
     makeSheep() {
       const T = THREE; const g = new T.Group();
@@ -601,7 +657,7 @@
         <canvas class="wy-mini" id="wyMini" width="300" height="300" aria-label="Minimap, tap for the full map"></canvas>
         <div class="wy-joy" id="wyJoy" hidden><span></span></div>
         <div class="wy-pads">
-          <button class="wy-pad act" id="wyAct" hidden><span id="wyActL">Talk</span></button>
+          <button class="wy-pad act idle" id="wyAct" aria-disabled="true"><span id="wyActL">Action</span></button>
           <button class="wy-pad jump" id="wyJump" aria-label="Jump">${icon("chev")}</button>
           <button class="wy-pad run" id="wyRun" aria-label="Run">RUN</button>
         </div>
@@ -629,7 +685,7 @@
       });
     }
     hold(label, secs) {
-      return new Promise((res) => { this.holdTask = { label, secs, t: 0, res }; const h = W.$("#wyHold", this.hud); h.hidden = false; W.$("#wyHoldL", h).textContent = label; W.$("#wyHoldBar", h).style.width = "0%"; });
+      return new Promise((res) => { this.holdTask = { label, secs, t: 0, res }; const h = W.$("#wyHold", this.hud); h.hidden = false; W.$("#wyHoldL", h).textContent = label; h.dataset.hint = "Press and hold the gold “" + label + "” button"; W.$("#wyHoldBar", h).style.width = "0%"; });
     }
     meter(label, v) { const m = W.$("#wyMeter", this.hud); if (label == null) { m.hidden = true; return; } m.hidden = false; W.$("#wyMeterL", m).textContent = label; W.$("#wyMeterBar", m).style.width = clamp(v, 0, 1) * 100 + "%"; }
 
@@ -813,7 +869,7 @@
       this.vy -= 18 * dt; pl.position.y += this.vy * dt;
       if (pl.position.y <= gy) { pl.position.y = gy; this.vy = 0; this.grounded = true; }
       this.animatePerson(this.player, inp.m * (inp.run ? 8 : 4.4), dt);
-      if (this.carry) { this.carry.position.set(pl.position.x, pl.position.y + 1.62, pl.position.z); this.carry.rotation.y = pl.rotation.y + Math.PI / 2; this.player.holdArms = true; this.player.armL.rotation.x = this.player.armR.rotation.x = -2.6; } else this.player.holdArms = false;
+      if (this.carry) { this.carry.position.set(pl.position.x, pl.position.y + 1.62, pl.position.z); this.carry.rotation.y = pl.rotation.y + Math.PI / 2; this.player.holdArms = true; this.player.armL.rotation.x = this.player.armR.rotation.x = -2.5; this.player.armL.elbow.rotation.x = this.player.armR.elbow.rotation.x = -0.9; } else if (this.player.holdArms) { this.player.holdArms = false; this.player.armR.elbow.rotation.x = -0.22; }
     }
 
     updateWorld(dt) {
@@ -827,6 +883,7 @@
         g.position.set(cx, height(cx, cz), cz); g.rotation.y = Math.atan2(dx, dz); this.animatePerson(p, p.speed, dt);
       }
       for (const b of this.birds) { const u = b.userData; u.a += dt * u.s; b.position.set(u.cx + Math.cos(u.a) * u.r, u.h + Math.sin(u.a * 3) * 1.5, u.cz + Math.sin(u.a) * u.r); b.rotation.y = -u.a; b.scale.y = 1; const flap = Math.sin(t * 9 + u.r) * 0.5; const ps = b.geometry.attributes.position; ps.setY(0, flap); ps.setY(3, flap); ps.needsUpdate = true; }
+      if ((this._lod = (this._lod || 0) + 1) % 10 === 0) { const cp = this.camera.position; for (const p of this.npcs.concat(Object.values(this.cast))) p.face.visible = p.g.position.distanceTo(cp) < 26; }
       this.waterMat.uniforms.t.value = t;
       this.markerGroup.children.forEach((m, i) => { m.beam.material.opacity = 0.18 + Math.sin(t * 2 + i) * 0.06; m.ring.scale.setScalar(1 + Math.sin(t * 2.5 + i) * 0.06); });
       if (this.objMarker.visible) { this.objMarker.beam.material.opacity = 0.25 + Math.sin(t * 3) * 0.08; }
@@ -844,7 +901,11 @@
       // what can I do here?
       this.context = this.findContext();
       const act = W.$("#wyAct", this.hud);
-      if (this.context && !this.cine && !this.talking) { act.hidden = false; W.$("#wyActL", act).textContent = this.context.label; } else act.hidden = true;
+      const lab = this.holdTask ? this.holdTask.label : this.context ? this.context.label : "Action";
+      act.hidden = !!(this.cine || this.talking);
+      act.classList.toggle("idle", !this.holdTask && !this.context);
+      act.setAttribute("aria-disabled", String(!this.holdTask && !this.context));
+      const L = W.$("#wyActL", act); if (L.textContent !== lab) { L.textContent = lab; act.classList.remove("pop"); void act.offsetWidth; if (lab !== "Action") act.classList.add("pop"); }
       // hold-to-do tasks
       if (this.holdTask) {
         const h = this.holdTask; const pressing = this.actDown || this.keys.KeyE || this.keys.Enter;
@@ -912,7 +973,7 @@
       this.sun.position.set(pl.x + lightDir.x * 120, pl.y + lightDir.y * 120, pl.z + lightDir.z * 120); this.sun.target.position.set(pl.x, pl.y, pl.z);
       this.sun.intensity = el > -0.05 ? 0.3 + 1.7 * day : 0.22; this.sun.color.setHex(el > -0.05 ? 0xfff1d6 : 0x9fb4e0).lerp(new T.Color(0xffa060), dusk * 0.8);
       this.hemi.intensity = 0.2 + 0.4 * day; this.hemi.color.setHex(0xdfe9f3).lerp(new T.Color(0x5a6a9a), 1 - day);
-      this.renderer.toneMappingExposure = 0.7 + 0.4 * day;
+      this.renderer.toneMappingExposure = 0.62 + 0.28 * day;
       this.stars.material.opacity = (1 - day) * 0.9;
       this.lamps.forEach((l, i) => (l.material.opacity = (1 - day) * (0.35 + Math.sin(this.elapsed * 6 + i) * 0.04)));
       const wu = this.waterMat.uniforms; wu.sunDir.value.copy(lightDir); wu.sky.value.copy(hor); wu.fogCol.value.copy(hor); wu.camPos.value.copy(this.camera.position); wu.dim.value = 0.35 + 0.65 * day; wu.sunCol.value.copy(this.sun.color).multiplyScalar(el > -0.05 ? 1 : 0.4);

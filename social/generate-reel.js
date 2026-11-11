@@ -215,7 +215,11 @@ async function main() {
   // "scenes" is the illustrated short-film template (reel-scenes.html):
   // same caption/timeline machinery as "cinematic", but every "visual" key
   // is a full illustrated scene with its own colour grade and camera move.
-  const isScenes = content.template === "scenes";
+  // "action" (reel-action.html) is the fast-cut film template: same scene
+  // machinery as "scenes", plus hard cuts, shake, lightning and a full
+  // synthesised sound design (social/sfx.js) mixed under the voice.
+  const isAction = content.template === "action";
+  const isScenes = content.template === "scenes" || isAction;
   const isCinematic = content.template === "cinematic" || isScenes;
   if (isScenes) INTRO_DURATION = SCENES_INTRO_DURATION;
   const lines = buildLines(content, isCinematic);
@@ -266,11 +270,26 @@ async function main() {
   const totalDuration = INTRO_DURATION + audioDuration + END_HOLD + endCardDuration;
   console.log("Total video duration: " + totalDuration.toFixed(2) + "s");
 
+  // When each shot cuts in (seconds from the start of the video) - the
+  // page uses the same lead, so the sound design can hit the same frames.
+  const CUT_LEAD = isAction ? 0.12 : isScenes ? 1.1 : 0.6;
+  let sfxPath = null;
+  if (isAction) {
+    const { buildSoundtrack, readSceneMeta } = require("./sfx");
+    const cuts = [];
+    let prevV = null;
+    timedLines.forEach((l) => { if (l.visual && l.visual !== prevV) { cuts.push({ key: l.visual, t: Math.max(0, INTRO_DURATION + l.start - CUT_LEAD) }); prevV = l.visual; } });
+    const meta = readSceneMeta(fs.readFileSync(path.join(__dirname, "templates", "reel-action.html"), "utf8"));
+    sfxPath = outBase + ".sfx.wav";
+    console.log("Building sound design (" + cuts.length + " shots)...");
+    buildSoundtrack({ total: totalDuration, intro: INTRO_DURATION, endCard: totalDuration - endCardDuration, cuts, scenes: meta, sound: content.sound }, sfxPath);
+  }
+
   console.log("Rendering frames...");
   fs.rmSync(rawVideoDir, { recursive: true, force: true });
   fs.mkdirSync(rawVideoDir, { recursive: true });
 
-  const templateFile = isScenes ? "reel-scenes.html" : isCinematic ? "reel-cinematic.html" : "reel-prayer.html";
+  const templateFile = isAction ? "reel-action.html" : isScenes ? "reel-scenes.html" : isCinematic ? "reel-cinematic.html" : "reel-prayer.html";
   const templatePath = path.join(__dirname, "templates", templateFile);
   fs.copyFileSync(templatePath, renderHtmlPath);
 
@@ -297,7 +316,7 @@ async function main() {
 
   if (isCinematic) {
     await page.evaluate(
-      ({ content, timedLines, introDuration, endCardDelay, isScenes }) => {
+      ({ content, timedLines, introDuration, endCardDelay, isScenes, cutLead }) => {
         const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
         // "dark" (the default near-black grade) needs no class; any other
         // mood just maps straight to a body.theme-<mood> class - see
@@ -426,7 +445,7 @@ async function main() {
             const segEnd = changeIdx + 1 < changeStarts.length ? changeStarts[changeIdx + 1] : endAt;
             const segDur = segEnd - line.start;
             changeIdx++;
-            setTimeout(() => showPhase(line.visual, segDur), Math.max(0, startMs - (isScenes ? 1100 : 600)));
+            setTimeout(() => showPhase(line.visual, segDur), Math.max(0, startMs - cutLead * 1000));
             lastVisual = line.visual;
           }
           if (line.chapter && isScenes) setTimeout(() => showChapter(line.chapter), Math.max(0, startMs - 300));
@@ -456,6 +475,7 @@ async function main() {
         introDuration: INTRO_DURATION,
         endCardDelay: totalDuration - endCardDuration,
         isScenes,
+        cutLead: CUT_LEAD,
       }
     );
   } else {
@@ -541,7 +561,14 @@ async function main() {
       "-y",
       "-i", rawVideoPath,
       "-i", audioPath,
-      "-filter_complex", `[1:a]adelay=${Math.round(INTRO_DURATION * 1000)}|${Math.round(INTRO_DURATION * 1000)}[a]`,
+      ...(sfxPath ? ["-i", sfxPath] : []),
+      // With a sound design track: the voice ducks the effects/score
+      // (sidechain), then both are summed and limited.
+      "-filter_complex", sfxPath
+        ? `[1:a]adelay=${Math.round(INTRO_DURATION * 1000)}|${Math.round(INTRO_DURATION * 1000)},aformat=channel_layouts=stereo,volume=1.15,asplit=2[v1][v2];` +
+          `[2:a]volume=0.5[s];[s][v1]sidechaincompress=threshold=0.04:ratio=5:attack=15:release=350:makeup=1[sd];` +
+          `[sd][v2]amix=inputs=2:normalize=0:duration=longest,alimiter=limit=0.93[a]`
+        : `[1:a]adelay=${Math.round(INTRO_DURATION * 1000)}|${Math.round(INTRO_DURATION * 1000)}[a]`,
       "-map", "0:v",
       "-map", "[a]",
       "-t", String(totalDuration),
@@ -574,6 +601,7 @@ async function main() {
   fs.rmSync(rawVideoDir, { recursive: true, force: true });
   fs.rmSync(renderHtmlPath, { force: true });
   fs.rmSync(audioPath, { force: true });
+  if (sfxPath) fs.rmSync(sfxPath, { force: true });
 
   console.log("WROTE: " + finalMp4);
   console.log("WROTE: " + coverPng);

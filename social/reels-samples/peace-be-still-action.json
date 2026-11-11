@@ -1,0 +1,29 @@
+{
+  "template": "action",
+  "voice": "male",
+  "title": "Word and Faith Network",
+  "subtitle": "Peace, Be Still",
+  "bold": "Peace, be still",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "The storm on the Sea of Galilee, cut like a film: a calm evening crossing, a black wall of weather, lightning in the water, fishermen bailing for their lives, and a Man asleep in the stern who stands up and speaks to the sea. Then a car in the rain tonight, and the same words for your storm.",
+  "lines": [
+    { "text": "Evening on the Sea of Galilee. Not a ripple.", "visual": "dusk" },
+    { "text": "Let us pass over unto the other side.", "visual": "setout", "scripture": true },
+    { "text": "Then the sky went black.", "visual": "cloudwall" },
+    { "text": "And there arose a great storm of wind.", "visual": "bolt", "scripture": true },
+    { "text": "Waves taller than the mast.", "visual": "wave" },
+    { "text": "Men who had fished this sea all their lives, bailing for their lives.", "visual": "deck" },
+    { "text": "Water to the ankles. Then the knees.", "visual": "hands" },
+    { "text": "And they were terrified.", "visual": "face" },
+    { "text": "And He was in the hinder part of the ship, asleep on a pillow.", "visual": "sleep", "scripture": true },
+    { "text": "Master, carest thou not that we perish?", "visual": "wake", "scripture": true },
+    { "text": "Then He arose.", "visual": "rise" },
+    { "text": "And said unto the sea, Peace, be still.", "visual": "command", "scripture": true },
+    { "text": "And the wind ceased, and there was a great calm.", "visual": "calm", "scripture": true },
+    { "text": "What manner of man is this, that even the wind and the sea obey him?", "visual": "awe", "scripture": true },
+    { "text": "Your storm might be a diagnosis. A debt. A door that just shut.", "visual": "car" },
+    { "text": "But the One in your boat has never lost a storm.", "visual": "carDawn" },
+    { "text": "Speak to it today. Peace, be still.", "visual": "sunrise" }
+  ]
+}

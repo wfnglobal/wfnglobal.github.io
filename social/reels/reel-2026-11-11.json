@@ -1,0 +1,18 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "Ziklag was ash before David even got close enough to call out any names.", "visual": "ziklag", "chapter": { "num": "I", "name": "The Ashes", "ref": "1 Samuel 30:3" } },
+    { "text": "His wives were gone. His sons were gone. And the men who'd just lost everything too started talking about ending him instead.", "visual": "ziklag" },
+    { "text": "He didn't argue with their grief. He encouraged himself in the Lord — then asked the only question that mattered: shall I pursue?", "visual": "enquire" },
+    { "text": "Pursue: for thou shalt surely overtake them, and without fail recover all.", "visual": "enquire", "scripture": true },
+    { "text": "So he ran after what was stolen — not alone, not quietly, not waiting for anyone's permission to want it back.", "visual": "pursuit", "chapter": { "num": "II", "name": "Recover All", "ref": "1 Samuel 30:8" } },
+    { "text": "Whatever your Ziklag burned down, the same God is still saying pursue — and still promising all.", "visual": "restored" },
+    { "text": "In Jesus' name, amen.", "visual": "restored" }
+  ],
+  "bold": "without fail recover all",
+  "title": "Word and Faith Network",
+  "subtitle": "Pursue, Overtake, Recover All",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A burned-out camp smolders into night as a grieving man kneels under a single shaft of light to ask God one question, then runs hard across a torch-lit dusk wilderness after what was taken - arriving at a gold sunrise where the flock is walked back in and nothing is missing. A visual telling of David at Ziklag (1 Samuel 30): ash, inquiry, pursuit, and a dawn where nothing is lacking."
+}

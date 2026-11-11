@@ -121,22 +121,22 @@
   // purpose: never about one specific dream scenario, always a general
   // covering. points[] renders as numbered prayer points, no markdown.
   const DREAM_FIRE_PRAYER = {
-    title: "The Blood Still Speaks",
-    date: "November 10, 2026",
-    intro: "Tonight's shield prayer is not a guess at your dream — it is the blood of Jesus applied over your life before the lights go out, the same blood that made every destroyer pass over in Egypt. Pray it out loud and mean it; the blood still speaks.",
+    title: "A Wall of Fire Round About Me",
+    date: "November 11, 2026",
+    intro: "Tonight's shield prayer is not a guess at your dream — it is Zechariah's promise sent ahead of you into the dark: a wall of fire no power can climb, tunnel under, or see through. Pray it out loud and let the fire stand before you sleep.",
     points: [
-      "Father, tonight I apply the blood of Jesus over the doorposts of my life the way Israel applied it over Egypt, and I decree that every destroyer sent to pass through my sleep passes over me and finds nothing to touch, in the mighty name of Jesus!",
-      "Every evil altar lit on my behalf tonight — in a dream, in a shrine, in a hidden chamber I will never see — I set it on fire from here by the blood of the Lamb! Let it consume the hand that lit it, in the name of Jesus!",
-      "If any power rises to chase me, trap me, or trade my destiny for another's in the dream realm tonight, I decree disgrace upon that power! Let the chaser be chased, let the trapper be trapped, let no exchange concerning my life stand, in Jesus' mighty name!",
-      "If any hand in the dark attempts to place a mark, a ring, a garment, or any evil covering on my body while I sleep, let fire swallow it before it touches me! I am already covered in the blood and clothed in righteousness — no foreign mark shall be found on me, in the name of Jesus!",
-      "Every witchcraft table, coven, or secret session gathered tonight to call my name or cast a vote over my life, I overturn your table by fire and scatter your gathering before you rise, in Jesus' mighty name!",
-      "Every ledger being written against me in the dark — every false account, every manufactured debt, every accusation drawn up while I sleep — I set it ablaze and I plead the blood of Jesus over every page! Let every charge be blotted out before morning, in the name of Jesus!",
-      "Every chain forged for my hands or feet in the dream realm tonight, snap now by the power in the blood of Jesus! I was not born to be bound, and I will not be bound in my sleep, in Jesus' mighty name!",
-      "Every gate assigned to work against me between midnight and daybreak — gate of delay, gate of loss, gate of confusion, gate of exchange — hear the word of the Lord and be shut! Only the gates my Father opens shall open over my life tonight, in the mighty name of Jesus!",
-      "If my spirit has been summoned, detained, or carried anywhere I did not send it, I sound the trumpet of recall right now by the blood of Jesus — spirit, soul, and body, return to my bed whole and untouched, in Jesus' mighty name!",
-      "Let the lamp of the Lord stay lit over my house tonight — no darkness assigned against this household shall overtake it, for greater is He that is in me than any power gathered outside, in the name of Jesus!",
-      "Every evil court convened to judge me while I rest, I reject your verdict and I appeal to the Court of Heaven, where the blood of Jesus has already spoken a better word than any charge laid against me, in Jesus' mighty name!",
-      "So I decree over tonight: the blood has already spoken, the destroyer must pass over, every chain is broken, and no power gathered against me shall see the morning with its plan intact! I lay down in peace, I rise in victory, untouched and unshaken, in the mighty, all-consuming name of Jesus Christ, amen! 🔥"
+      "Father, by the authority of Zechariah 2:5, I decree a wall of fire round about me tonight — before my body, behind my back, over my bed, and around every border of my sleep — no power shall cross it, in the mighty name of Jesus!",
+      "Every evil altar lit on the far side of my wall of fire tonight, burn down to ash before the hand that struck the match can finish its rites, in the name of Jesus!",
+      "Any power that runs to chase me, waits to trap me, or schemes to trade my portion for another's in the dream realm tonight meets my wall of fire first and is turned back scorched, in Jesus' mighty name!",
+      "Every mark, ring, garment, or covering any hand attempts to throw over my wall of fire tonight catches flame in the air and falls to ash before it ever reaches my skin, in the name of Jesus!",
+      "Every witchcraft table set to study me, call my name, or cast a vote over my life tonight loses my scent and my shadow the moment my wall of fire rises — you are searching for someone you cannot find, in Jesus' mighty name!",
+      "Every pit dug for me in the dream realm tonight, by the word of the Lord, swallows its own digger before the sun comes up, in the name of Jesus!",
+      "Every rope, net, or chain thrown across my wall of fire tonight burns through before it ever tightens — I was not born to be bound, and I will not be bound in my sleep, in Jesus' mighty name!",
+      "Every gate assigned to work against me between midnight and daybreak — gate of delay, gate of sickness, gate of confusion, gate of loss — stands outside my wall of fire and shall not open, in the mighty name of Jesus!",
+      "If my spirit has been summoned, detained, or carried anywhere outside my wall of fire tonight, I sound the trumpet of recall now — spirit, soul, and body, come home whole and untouched, in Jesus' mighty name!",
+      "Let my wall of fire stretch over my household tonight — every room, every bed, every name under this roof covered — so that no darkness assigned against this house gets past the flame, in the name of Jesus!",
+      "Every evil court convened outside my wall tonight to pass a verdict on my life, your judgment cannot cross the fire and cannot find me — I stand inside a better court, and the Judge of that court is my Father, in Jesus' mighty name!",
+      "So I decree over tonight: the wall is fire, the fire is the blood, and the blood has already spoken — no weapon formed in the dark shall prosper, no power gathered against me shall find a way in, and I will rise in the morning exactly as I lay down: covered, untouched, and victorious, in the mighty, all-consuming name of Jesus Christ, amen! 🔥"
     ]
   };
 

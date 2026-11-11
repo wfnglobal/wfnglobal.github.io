@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "For by thee I have run through a troop; and by my God have I leaped over a wall.", ref: "Psalm 18:29" },
     { text: "Heal me, O LORD, and I shall be healed; save me, and I shall be saved: for thou art my praise.", ref: "Jeremiah 17:14" },
     { text: "Thy word is a lamp unto my feet, and a light unto my path.", ref: "Psalm 119:105" },
     { text: "Declare his glory among the heathen; his marvellous works among all nations.", ref: "1 Chronicles 16:24" },
@@ -84,21 +85,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that I am not hiding in the crowd anymore — I am pressing through to Jesus, and nothing between us is big enough to stop me!",
-      "Every year I have carried this burden, every report I have been handed, every expert who sent me home worse — none of it is the final word over my life!",
-      "I have heard of Jesus, and faith has come by hearing — so I rise, I move, and I reach!",
+      "Father, I declare today that I will not sit in the ashes of what the enemy burned — I encourage myself in the LORD my God!",
+      "My tears have had their night, but they do not get the final word over my life!",
+      "Every stone of blame and accusation lifted against me falls to the ground, in the name of Jesus!",
       "",
-      "I say it and I keep saying it: if I may but touch His clothes, I shall be whole!",
-      "I grab the promise by its edge — the Sun of righteousness has risen over me with healing in His wings!",
-      "Let every fountain of sickness, loss and shame in my life dry up straightway, in the name of Jesus!",
+      "I enquire of the LORD before I move — and when He says pursue, I pursue!",
+      "By my God I run through a troop, and by my God I leap over every wall in my way!",
+      "I shall surely overtake, and without fail I shall recover all!",
       "",
-      "I am not bumping into Jesus today — I am drawing from Him on purpose, and virtue is flowing into my body, my mind and my home!",
-      "I am not unclean, I am not untouchable, I am not forgotten — He has called me Daughter, He has called me Son!",
-      "Heal me, O LORD, and I shall be healed; save me, and I shall be saved — for You are my praise!",
+      "I take back my peace, my joy, my health and my finances — nothing lacking, neither small nor great!",
+      "I take back my children, my marriage and my fire for God — the enemy was only holding what belongs to me!",
+      "The LORD restores the years the locust has eaten, and my Ziklag becomes the doorway to my crowning!",
       "",
-      "Save this. Speak it over your house today. I have touched the hem of His garment and I go in peace, whole of my plague! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. I pursue, I overtake, and I recover all! In Jesus' mighty name, amen!"
     ],
-    ref: "Mark 5:27-29"
+    ref: "1 Samuel 30:6, 8"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -140,6 +141,7 @@
   };
 
   const SERMONS = [
+    { slug: "pursue-overtake-recover-all", title: "Pursue, Overtake, Recover All", ref: "1 Samuel 30:6, 8", date: "November 11, 2026", excerpt: "Ziklag was ashes, the families were gone, and his own men picked up stones. David didn't start with a counterattack — he encouraged himself in the LORD, asked first, and heard heaven say: pursue, and without fail recover all." },
     { slug: "if-i-may-but-touch", title: "If I May But Touch", ref: "Mark 5:27-29", date: "November 10, 2026", excerpt: "Twelve years of doctors, twelve years of shame, and a whole crowd between her and Jesus. She didn't wait for the crowd to clear — she pressed in, reached for the hem, and straightway the fountain dried up." },
     { slug: "the-lawful-captive-shall-go-free", title: "The Lawful Captive Shall Go Free", ref: "Isaiah 49:24-25", date: "November 9, 2026", excerpt: "Some captivity looks legal — you signed for it, you walked into it, the enemy has the paperwork. Heaven's answer is still the same: I will contend with him that contendeth with thee, and I will save thy children." },
     { slug: "possess-your-possessions", title: "Possess Your Possessions", ref: "Obadiah 1:17-18", date: "November 8, 2026", excerpt: "Deliverance gets you out. Holiness keeps you out. But possession is where you finally walk into what God already gave you on paper — and the fire that burns Esau's stubble is the same fire He has put in you." },

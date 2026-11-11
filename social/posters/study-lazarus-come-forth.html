@@ -1,0 +1,164 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- WFN Bible study poster - Lazarus, Come Forth (John 11), Nov 11, 2026 -->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#06090F;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden; background:#06090F;}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.78);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#FFE6BE; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(255,214,150,0.45); background:rgba(42,28,8,0.45); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FFD37A; box-shadow:0 0 12px 3px #FFD37A;}
+  .copy{position:absolute; left:0; right:0; top:790px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(246,221,181,0.88);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:116px; line-height:0.94; letter-spacing:-0.035em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em; background:linear-gradient(180deg,#FFF3CC 0%,#FFD27A 38%,#F0A23B 72%,#C96A1E 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 26px rgba(255,190,90,0.4)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:830px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.88);}
+  .sub b{color:#FFD98F; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.92); max-width:540px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A1405; background:linear-gradient(180deg,#FFE7A6,#E9B24F); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(233,178,79,0.6);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+
+  <defs>
+    <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#040608"/><stop offset="0.3" stop-color="#0C1620"/><stop offset="0.56" stop-color="#1B2A33"/><stop offset="0.76" stop-color="#2E3A33"/><stop offset="1" stop-color="#3A3326"/>
+    </linearGradient>
+    <linearGradient id="hillFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17202A"/><stop offset="1" stop-color="#0A1218"/></linearGradient>
+    <linearGradient id="hillNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#121B16"/><stop offset="1" stop-color="#060A08"/></linearGradient>
+    <radialGradient id="tombGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF3CC" stop-opacity="0.98"/><stop offset="0.4" stop-color="#FFC56A" stop-opacity="0.72"/><stop offset="1" stop-color="#FFC56A" stop-opacity="0"/></radialGradient>
+    <linearGradient id="tombLight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6D8"/><stop offset="1" stop-color="#F0A23B"/></linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7A6" stop-opacity="0.85"/><stop offset="1" stop-color="#FFE7A6" stop-opacity="0"/></linearGradient>
+    <radialGradient id="moon" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#F4F1DC"/><stop offset="0.14" stop-color="#E9F0D8" stop-opacity="0.55"/><stop offset="1" stop-color="#1B2A33" stop-opacity="0"/></radialGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06090F" stop-opacity="0"/><stop offset="1" stop-color="#06090F"/></linearGradient>
+    <filter id="b6"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="b22"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+  <rect width="1080" height="800" fill="url(#dusk)"/>
+  <g id="stars"></g>
+  <circle cx="900" cy="150" r="170" fill="url(#moon)"/>
+  <circle cx="900" cy="150" r="40" fill="#F4F1DC" opacity="0.92"/>
+
+  <!-- far ridge of Bethany, olive-grey, dusk-lit -->
+  <path d="M0 420 C150 388 280 404 420 384 C580 362 720 398 880 378 C960 368 1020 380 1080 372 L1080 800 L0 800Z" fill="url(#hillFar)"/>
+  <g id="olives"></g>
+
+  <!-- the near hillside, the rock face holding the tomb cut into it -->
+  <path d="M0 800 C60 560 160 430 330 400 C470 376 560 392 640 430 C760 486 840 560 900 650 C950 726 980 770 1080 800Z" fill="url(#hillNear)"/>
+
+  <!-- tomb glow washing up the rock -->
+  <ellipse cx="520" cy="620" rx="330" ry="260" fill="url(#tombGlow)" filter="url(#b22)" opacity="0.8"/>
+
+  <!-- the tomb mouth: a carved square opening, stone rolled aside -->
+  <g>
+    <rect x="452" y="470" width="150" height="220" rx="10" fill="#070A0C"/>
+    <rect x="452" y="470" width="150" height="220" rx="10" fill="url(#tombLight)" opacity="0.98"/>
+    <rect x="452" y="470" width="150" height="220" rx="10" fill="#050706" opacity="0.0"/>
+    <!-- deep shadow lintel framing the light -->
+    <path d="M440 476 L452 470 L602 470 L614 476 L614 696 L602 690 L452 690 L440 696Z" fill="#05070A" opacity="0.55"/>
+    <!-- the rolled stone, disc, resting to the side of the opening -->
+    <ellipse cx="398" cy="706" rx="58" ry="24" fill="#070A0C" opacity="0.5"/>
+    <ellipse cx="392" cy="690" rx="62" ry="54" fill="#1C2630"/>
+    <ellipse cx="392" cy="690" rx="62" ry="54" fill="none" stroke="#3A4A56" stroke-width="2" opacity="0.6"/>
+    <path d="M360 660 C375 674 408 676 424 660" stroke="#3A4A56" stroke-width="2" opacity="0.5" fill="none"/>
+  </g>
+
+  <!-- light beam falling from the tomb mouth onto the ground -->
+  <path d="M470 686 L584 686 L660 800 L404 800Z" fill="url(#beam)" opacity="0.65"/>
+
+  <!-- Lazarus: bound figure stepping out of the light, graveclothes -->
+  <g transform="translate(527 640) scale(1.5)" opacity="0.96">
+    <ellipse cx="0" cy="92" rx="30" ry="7" fill="#000" opacity="0.3"/>
+    <path d="M-20 -58 C-26 -28 -28 10 -24 60 C-26 72 -22 82 -14 88 L14 88 C22 82 26 72 24 60 C28 10 26 -28 20 -58Z" fill="#F3E8CE"/>
+    <path d="M-14 -40 L14 -34 M-15 -14 L15 -10 M-16 14 L16 18 M-15 42 L15 46" stroke="#C9B588" stroke-width="3" opacity="0.6"/>
+    <circle cx="0" cy="-70" r="15" fill="#F3E8CE"/>
+    <path d="M-15 -70 L15 -70 M-13 -62 L13 -62" stroke="#C9B588" stroke-width="2.4" opacity="0.65"/>
+    <path d="M-20 -50 C-30 -34 -34 -10 -30 10" stroke="#F3E8CE" stroke-width="13" stroke-linecap="round" fill="none"/>
+    <path d="M20 -50 C30 -34 34 -10 30 10" stroke="#F3E8CE" stroke-width="13" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Jesus: dark silhouette before the tomb, one arm raised in command -->
+  <g transform="translate(730 668) scale(1.74)">
+    <ellipse cx="0" cy="78" rx="32" ry="7" fill="#000" opacity="0.35"/>
+    <path d="M0 -44 C-10 -36 -16 -24 -17 -8 C-19 16 -24 46 -28 74 C-10 82 10 82 28 74 C24 46 19 16 17 -8 C16 -24 10 -36 0 -44Z" fill="#05070A"/>
+    <circle cx="0" cy="-52" r="11" fill="#05070A"/>
+    <path d="M9 -32 C20 -46 30 -62 38 -82" stroke="#05070A" stroke-width="9" stroke-linecap="round" fill="none"/>
+    <path d="M-9 -30 L-22 -2" stroke="#05070A" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="38" cy="-83" r="7" fill="url(#tombGlow)" opacity="0.9"/>
+  </g>
+
+  <!-- Martha & Mary, small kneeling silhouettes at a distance, lower left -->
+  <g id="women"></g>
+
+  <rect y="690" width="1080" height="112" fill="url(#fade)"/>
+  <rect y="800" width="1080" height="550" fill="#06090F"/>
+
+</svg>
+<div class="top">
+  <div class="lock"><svg viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#lg)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#lg)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#lg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#lg)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#lg)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg><div class="rule"></div><div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div></div>
+  <div class="chip"><i></i>Daily Bible Study</div>
+</div>
+<div class="copy">
+  <div class="kicker">John 11 &middot; The voice that woke the dead</div>
+  <h1>Lazarus,<em>come forth.</em></h1>
+  <p class="sub">He waited two extra days, wept at the grave anyway, then spoke <b>one sentence into death itself.</b></p>
+</div>
+<div class="cta">
+  <div class="verse">&ldquo;He cried with a loud voice, Lazarus, come forth.&rdquo;<span>John 11:43</span></div>
+  <div class="btn"><span class="l1">Study it today &rarr;</span><span class="l2">wfnglobal.org/study</span></div>
+</div>
+</div>
+<script>
+  let s = 71; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || document.querySelector("svg.art")).appendChild(e); return e; }
+
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 90; i++) { const y = r() * 340; el("circle", { cx: r() * 1080, cy: y, r: (r() * 1.2 + 0.3).toFixed(2), fill: "#E6EEF2", opacity: (0.15 + r() * 0.55 * (1 - y / 420)).toFixed(2) }, stars); }
+
+  // sparse olive trees along the far ridge
+  const olives = document.getElementById("olives");
+  for (let i = 0; i < 9; i++) {
+    const x = 60 + i * 115 + (r() - 0.5) * 40; const y = 392 + (r() - 0.5) * 20; const sc = 0.7 + r() * 0.5;
+    el("ellipse", { cx: x, cy: y - 18 * sc, rx: 15 * sc, ry: 11 * sc, fill: "#0E1A14", opacity: 0.8 }, olives);
+    el("rect", { x: x - 2, y: y - 10 * sc, width: 4, height: 12 * sc, fill: "#0E1A14", opacity: 0.8 }, olives);
+  }
+
+  // Martha and Mary, two small kneeling silhouettes, lower-left, watching from a distance
+  const women = document.getElementById("women");
+  [{ x: 150, y: 742, sc: 1.0 }, { x: 196, y: 752, sc: 0.92 }].forEach(w => {
+    el("ellipse", { cx: w.x, cy: w.y + 30 * w.sc, rx: 26 * w.sc, ry: 6 * w.sc, fill: "#000", opacity: 0.3 }, women);
+    el("path", { d: `M${w.x} ${w.y - 20 * w.sc} C${w.x - 20 * w.sc} ${w.y - 8 * w.sc} ${w.x - 24 * w.sc} ${w.y + 14 * w.sc} ${w.x - 14 * w.sc} ${w.y + 28 * w.sc} L${w.x + 16 * w.sc} ${w.y + 28 * w.sc} C${w.x + 22 * w.sc} ${w.y + 10 * w.sc} ${w.x + 18 * w.sc} ${w.y - 10 * w.sc} ${w.x} ${w.y - 20 * w.sc}Z`, fill: "#05070A", opacity: 0.92 }, women);
+    el("circle", { cx: w.x - 2 * w.sc, cy: w.y - 26 * w.sc, r: 8 * w.sc, fill: "#05070A", opacity: 0.92 }, women);
+  });
+
+  // faint drifting dust / incense motes catching the tomb light
+  const emG = el("g", {}, document.querySelector("svg.art"));
+  for (let i = 0; i < 40; i++) {
+    el("circle", { cx: 420 + r() * 300, cy: 560 + r() * 200, r: (r() * 2 + 0.4).toFixed(2), fill: "#FFE7A6", opacity: (0.15 + r() * 0.4).toFixed(2) }, emG);
+  }
+</script>
+</body></html>

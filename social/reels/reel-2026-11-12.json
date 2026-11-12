@@ -1,0 +1,18 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "Elijah climbed Carmel, bowed to the ground, his face between his knees, and told his servant: go look toward the sea.", "visual": "carmel", "chapter": { "num": "I", "name": "The Mountain", "ref": "1 Kings 18:42" } },
+    { "text": "Six times the servant climbed back down with the same report: there is nothing.", "visual": "watch" },
+    { "text": "And it came to pass at the seventh time, that he said, Behold, there ariseth a little cloud out of the sea, like a man's hand.", "visual": "cloud", "scripture": true, "chapter": { "num": "II", "name": "The Cloud", "ref": "1 Kings 18:44" } },
+    { "text": "Small enough to miss. Big enough to mean the rain was already on its way.", "visual": "cloud" },
+    { "text": "Elijah didn't wait for proof. Prepare thy chariot, he said, that the rain stop thee not.", "visual": "chariot" },
+    { "text": "Whatever you're still climbing the mountain to ask about today, go again.", "visual": "chariot" },
+    { "text": "In Jesus' name, amen.", "visual": "chariot" }
+  ],
+  "bold": "go again",
+  "title": "Word and Faith Network",
+  "subtitle": "Go Again Seven Times",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A four-scene illustrated short film: a prophet bowed low on a bronze dusk mountaintop, a servant standing watch over a flat grey-teal sea with nothing on it, a small hand-shaped cloud breaking gold light at the horizon, and a chariot racing ahead of a gathering indigo storm. A visual telling of 1 Kings 18:42-44 - the breakthrough that only shows up on the seventh look."
+}

@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "For the vision is yet for an appointed time, but at the end it shall speak, and not lie: though it tarry, wait for it; because it will surely come, it will not tarry.", ref: "Habakkuk 2:3" },
     { text: "For by thee I have run through a troop; and by my God have I leaped over a wall.", ref: "Psalm 18:29" },
     { text: "Heal me, O LORD, and I shall be healed; save me, and I shall be saved: for thou art my praise.", ref: "Jeremiah 17:14" },
     { text: "Thy word is a lamp unto my feet, and a light unto my path.", ref: "Psalm 119:105" },
@@ -85,21 +86,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that I will not sit in the ashes of what the enemy burned — I encourage myself in the LORD my God!",
-      "My tears have had their night, but they do not get the final word over my life!",
-      "Every stone of blame and accusation lifted against me falls to the ground, in the name of Jesus!",
+      "Father, I declare today that I will not stop praying because the horizon says nothing — Your word over my life is already settled in heaven!",
+      "I hear the sound of abundance of rain before I ever see a cloud!",
+      "I bow low, I press in, and I pray until the answer comes down!",
       "",
-      "I enquire of the LORD before I move — and when He says pursue, I pursue!",
-      "By my God I run through a troop, and by my God I leap over every wall in my way!",
-      "I shall surely overtake, and without fail I shall recover all!",
+      "Six nothings will not talk me out of my seventh time — I go again!",
+      "I will not faint and I will not be weary in well doing — in due season I shall reap!",
+      "The vision is for an appointed time; though it tarry, I wait for it, because it will surely come!",
       "",
-      "I take back my peace, my joy, my health and my finances — nothing lacking, neither small nor great!",
-      "I take back my children, my marriage and my fire for God — the enemy was only holding what belongs to me!",
-      "The LORD restores the years the locust has eaten, and my Ziklag becomes the doorway to my crowning!",
+      "I will not despise the day of small things — that cloud like a man's hand is the hand of my God rising for me!",
+      "After the drought comes abundance — over my health, my home, my finances and my children!",
+      "I prepare my chariot today, because the rain is on its way and nothing will stop it!",
       "",
-      "Save this. Speak it over your house today. I pursue, I overtake, and I recover all! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. I go again, and the rain is coming! In Jesus' mighty name, amen!"
     ],
-    ref: "1 Samuel 30:6, 8"
+    ref: "1 Kings 18:43-44"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -141,6 +142,7 @@
   };
 
   const SERMONS = [
+    { slug: "go-again-seven-times", title: "Go Again Seven Times", ref: "1 Kings 18:43-44", date: "November 12, 2026", excerpt: "Six times the servant looked toward the sea and came back with the same report: there is nothing. Elijah never argued with the report — he just said, go again. The seventh time, a cloud like a man's hand, and the prophet told the king to get his chariot ready." },
     { slug: "pursue-overtake-recover-all", title: "Pursue, Overtake, Recover All", ref: "1 Samuel 30:6, 8", date: "November 11, 2026", excerpt: "Ziklag was ashes, the families were gone, and his own men picked up stones. David didn't start with a counterattack — he encouraged himself in the LORD, asked first, and heard heaven say: pursue, and without fail recover all." },
     { slug: "fear-not", title: "Fear Not: Why Heaven Keeps Saying It", ref: "Genesis 3:10; Matthew 28:5-6", date: "November 11, 2026", excerpt: "Every time heaven shows up in Scripture, it opens with the same two words. Here's why, where fear first crept in, why David said “I will not be afraid,” and how an empty tomb ended the hiding." },
     { slug: "if-i-may-but-touch", title: "If I May But Touch", ref: "Mark 5:27-29", date: "November 10, 2026", excerpt: "Twelve years of doctors, twelve years of shame, and a whole crowd between her and Jesus. She didn't wait for the crowd to clear — she pressed in, reached for the hem, and straightway the fountain dried up." },

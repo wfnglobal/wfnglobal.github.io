@@ -1,0 +1,222 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  WFN X poster, 1080x1350 (4:5): "Not Alone. Surrounded by Fire." (Nov 12,
+  2026) for the Fire Prayer Against Dream Attacks ("Chariots of Fire
+  Surround Me", 2 Kings 6:17). New scene + new palette from prior days:
+  a believer stands at a mountain peak at night while a ring of blazing
+  gold-white chariot wheels races round the summit and shadow-wisps
+  dissolve down the slopes. Deep violet/aubergine night instead of the
+  midnight-blue + orange used on 11/8-11/11. Render with
+  social/render-poster.js.
+-->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#0A0612;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden;
+    background:linear-gradient(180deg,#120A24 0%,#2B1150 26%,#4A1942 48%,#341038 66%,#1B0B22 84%,#08050E 100%);}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.72);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#FFE9A8; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(220,180,255,0.4); background:rgba(180,100,255,0.1); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FFD23D; box-shadow:0 0 12px 3px rgba(255,210,61,0.8);}
+  .copy{position:absolute; left:0; right:0; top:752px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(255,230,170,0.85);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:116px; line-height:0.96; letter-spacing:-0.035em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em;
+    background:linear-gradient(180deg,#FFFBE0 0%,#FFE39A 36%,#FFC83D 68%,#FF9D2E 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(255,200,61,0.45)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:820px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.86);}
+  .sub b{color:#FFE39A; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:22px; line-height:1.3; color:rgba(246,236,214,0.9); max-width:530px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#241104; background:linear-gradient(180deg,#FFEFC2,#FFC83D); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(255,200,61,0.7);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <radialGradient id="glory" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF6D8" stop-opacity="0.6"/><stop offset="0.4" stop-color="#FFD23D" stop-opacity="0.18"/><stop offset="1" stop-color="#FFD23D" stop-opacity="0"/></radialGradient>
+    <radialGradient id="peakGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE9A8" stop-opacity="0.5"/><stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#8A3FA8"/><stop offset="0.35" stop-color="#E06A2E"/><stop offset="0.7" stop-color="#FFC83D"/><stop offset="1" stop-color="#FFFBE0"/></linearGradient>
+    <linearGradient id="flameCore" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFD98A"/><stop offset="1" stop-color="#FFFFF5"/></linearGradient>
+    <linearGradient id="shadow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#05030B" stop-opacity="0.95"/><stop offset="1" stop-color="#1B0E28" stop-opacity="0"/></linearGradient>
+    <linearGradient id="mountainFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B1442"/><stop offset="1" stop-color="#160A28"/></linearGradient>
+    <linearGradient id="mountainMid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F0F34"/><stop offset="1" stop-color="#110720"/></linearGradient>
+    <linearGradient id="mountainNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#140A22"/><stop offset="1" stop-color="#0A0612"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B0E28"/><stop offset="1" stop-color="#08050E"/></linearGradient>
+    <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="blur3"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="blur14"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="smoke" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="60"/><feGaussianBlur stdDeviation="2.5"/></filter>
+  </defs>
+
+  <g id="stars"></g>
+  <!-- the glory, breaking behind the peak -->
+  <circle cx="540" cy="300" r="300" fill="url(#glory)"/>
+  <g id="rays" opacity="0.5"></g>
+
+  <!-- far mountain range -->
+  <path d="M0 560 C120 520 240 540 360 505 C500 465 620 510 760 480 C880 456 980 490 1080 468 L1080 700 L0 700Z" fill="url(#mountainFar)"/>
+  <path d="M0 610 C160 570 300 595 440 555 C600 510 740 565 900 535 C980 520 1030 532 1080 522 L1080 740 L0 740Z" fill="url(#mountainMid)"/>
+
+  <!-- shadow powers dissolving down the slopes, driven back -->
+  <g filter="url(#smoke)" opacity="0.9">
+    <path d="M-40 420 C70 440 150 480 220 540 C255 570 262 592 248 606 C226 592 200 582 178 590 C200 616 206 638 192 654 C168 630 138 622 112 630 C130 656 128 680 110 698 C76 664 24 656 -40 664Z" fill="url(#shadow)"/>
+    <path d="M1120 440 C1010 450 920 492 858 544 C826 572 818 592 832 604 C854 591 882 584 904 591 C882 613 877 634 891 648 C914 626 944 619 970 626 C953 650 955 674 972 692 C1008 660 1052 652 1120 658Z" fill="#05030B" opacity="0.85"/>
+  </g>
+  <g opacity="0.5"><circle cx="128" cy="548" r="3" fill="#7A2FD6"/><circle cx="145" cy="546" r="3" fill="#7A2FD6"/><circle cx="938" cy="578" r="2.8" fill="#7A2FD6"/><circle cx="954" cy="577" r="2.8" fill="#7A2FD6"/></g>
+
+  <!-- the mountain, full of fire -->
+  <path d="M0 740 C90 640 180 560 290 500 C380 452 440 400 540 330 C640 400 700 452 790 500 C900 560 990 640 1080 740 L1080 800 L0 800Z" fill="url(#mountainNear)"/>
+  <ellipse cx="540" cy="660" rx="430" ry="150" fill="url(#peakGlow)" opacity="0.6"/>
+
+  <!-- ground -->
+  <path d="M0 772 C300 758 780 758 1080 772 L1080 1350 L0 1350Z" fill="url(#ground)"/>
+
+  <!-- ring of chariots round the mountain -->
+  <g id="chariotTrails"></g>
+  <g id="chariots"></g>
+
+  <!-- the believer at the peak, lifted hands, at peace -->
+  <g transform="translate(540 360)">
+    <ellipse cx="0" cy="54" rx="40" ry="10" fill="#000" opacity="0.3" filter="url(#blur8)"/>
+    <circle cx="0" cy="48" r="60" fill="url(#peakGlow)" opacity="0.8"/>
+    <path d="M-16 50 C-16 20 -9 2 0 2 C9 2 16 20 16 50Z" fill="#1A0F28"/>
+    <circle cx="0" cy="-6" r="14" fill="#2A1830"/>
+    <path d="M-30 20 C-36 2 -34 -10 -26 -16" stroke="#1A0F28" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M30 20 C36 2 34 -10 26 -16" stroke="#1A0F28" stroke-width="9" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <g id="embers"></g>
+</svg>
+
+<div class="top">
+  <div class="lock">
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#g)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#g)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#g)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#g)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg>
+    <div class="rule"></div>
+    <div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div>
+  </div>
+  <div class="chip"><i></i>Fire Prayer &middot; Tonight</div>
+</div>
+
+<div class="copy">
+  <div class="kicker">Lord, open my eyes tonight</div>
+  <h1>Not alone.<em>Surrounded.</em></h1>
+  <p class="sub">Every altar, every chase, every evil court just rode into a mountain full of <b>horses and chariots of fire.</b></p>
+</div>
+
+<div class="cta">
+  <div class="verse">&ldquo;...the mountain was full of horses and chariots of fire round about.&rdquo;<span>2 Kings 6:17</span></div>
+  <div class="btn"><span class="l1">Pray it before bed &rarr;</span><span class="l2">wfnglobal.org/dreams</span></div>
+</div>
+</div>
+<script>
+  // deterministic RNG
+  let s = 19; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 180; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const y = r() * 560;
+    c.setAttribute("cx", r() * 1080); c.setAttribute("cy", y);
+    c.setAttribute("r", (r() * 1.4 + 0.35).toFixed(2));
+    c.setAttribute("fill", r() > 0.82 ? "#FFE9A8" : "#E6D6FF");
+    c.setAttribute("opacity", (0.25 + r() * 0.7 * (1 - y / 700)).toFixed(2));
+    stars.appendChild(c);
+  }
+  // faint rays from the glory, behind the peak
+  const rays = document.getElementById("rays");
+  for (let i = 0; i < 18; i++) {
+    const a = (i / 18) * Math.PI * 2;
+    const x1 = 540 + Math.cos(a) * 90, y1 = 300 + Math.sin(a) * 90;
+    const x2 = 540 + Math.cos(a) * 260, y2 = 300 + Math.sin(a) * 260;
+    const l = document.createElementNS(NS, "line");
+    l.setAttribute("x1", x1); l.setAttribute("y1", y1); l.setAttribute("x2", x2); l.setAttribute("y2", y2);
+    l.setAttribute("stroke", "#FFE9A8"); l.setAttribute("stroke-width", (r() * 1.6 + 0.4).toFixed(2));
+    l.setAttribute("opacity", (0.08 + r() * 0.14).toFixed(2));
+    rays.appendChild(l);
+  }
+
+  // ring of chariots of fire round the mountain (wheel + spokes + flame tail,
+  // trailing light to suggest horses racing)
+  const chariots = document.getElementById("chariots"), trails = document.getElementById("chariotTrails");
+  const cx = 540, cy = 560, rx = 400, ry = 108;
+  const items = [];
+  for (let i = 0; i < 22; i++) {
+    const t = (i / 22) * Math.PI * 2 + r() * 0.06;
+    const x = cx + Math.cos(t) * rx, y = cy + Math.sin(t) * ry;
+    const front = Math.sin(t) > -0.15;
+    const scale = (front ? 1 : 0.68) * (0.8 + r() * 0.35);
+    items.push({ x, y, t, front, scale });
+  }
+  items.sort((a, b) => a.y - b.y);
+  items.forEach(it => {
+    const dx = -Math.sin(it.t), dy = Math.cos(it.t) * (ry / rx); // tangent direction (trail points backward)
+    const len = Math.hypot(dx, dy) || 1;
+    const tx = -dx / len, ty = -dy / len;
+    const g1 = document.createElementNS(NS, "g");
+    g1.setAttribute("transform", `translate(${it.x} ${it.y})`);
+    g1.setAttribute("opacity", it.front ? 0.95 : 0.55);
+    const glow = document.createElementNS(NS, "circle");
+    glow.setAttribute("r", 30 * it.scale); glow.setAttribute("fill", "url(#flameCore)"); glow.setAttribute("opacity", 0.22); glow.setAttribute("filter", "url(#blur8)");
+    g1.appendChild(glow);
+    (it.front ? chariots : trails).appendChild(g1);
+
+    // light trail behind the wheel
+    const trail = document.createElementNS(NS, "path");
+    const tlen = 70 * it.scale;
+    trail.setAttribute("d", `M0 0 L${(tx * tlen).toFixed(1)} ${(ty * tlen).toFixed(1)}`);
+    trail.setAttribute("stroke", "url(#flame)"); trail.setAttribute("stroke-width", (10 * it.scale).toFixed(1));
+    trail.setAttribute("stroke-linecap", "round"); trail.setAttribute("opacity", it.front ? 0.5 : 0.3);
+    g1.appendChild(trail);
+
+    // wheel
+    const wheel = document.createElementNS(NS, "circle");
+    wheel.setAttribute("r", (13 * it.scale).toFixed(1)); wheel.setAttribute("fill", "url(#flame)"); wheel.setAttribute("stroke", "#FFFBE0"); wheel.setAttribute("stroke-width", "1.2");
+    g1.appendChild(wheel);
+    const hub = document.createElementNS(NS, "circle");
+    hub.setAttribute("r", (4.5 * it.scale).toFixed(1)); hub.setAttribute("fill", "url(#flameCore)");
+    g1.appendChild(hub);
+    for (let k = 0; k < 6; k++) {
+      const a2 = (k / 6) * Math.PI * 2;
+      const spoke = document.createElementNS(NS, "line");
+      spoke.setAttribute("x1", 0); spoke.setAttribute("y1", 0);
+      spoke.setAttribute("x2", (Math.cos(a2) * 12 * it.scale).toFixed(1)); spoke.setAttribute("y2", (Math.sin(a2) * 12 * it.scale).toFixed(1));
+      spoke.setAttribute("stroke", "#FFFBE0"); spoke.setAttribute("stroke-width", "1"); spoke.setAttribute("opacity", "0.8");
+      g1.appendChild(spoke);
+    }
+  });
+
+  // embers rising from the mountain
+  const em = document.getElementById("embers");
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const a = r() * Math.PI * 2;
+    c.setAttribute("cx", cx + Math.cos(a) * rx * (0.65 + r() * 0.5));
+    c.setAttribute("cy", cy - 10 - r() * 320);
+    c.setAttribute("r", (r() * 2.2 + 0.6).toFixed(2));
+    c.setAttribute("fill", r() > 0.5 ? "#FFE39A" : "#FFC83D");
+    c.setAttribute("opacity", (0.3 + r() * 0.55).toFixed(2));
+    em.appendChild(c);
+  }
+</script>
+</body></html>

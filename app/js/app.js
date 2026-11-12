@@ -122,22 +122,21 @@
   // purpose: never about one specific dream scenario, always a general
   // covering. points[] renders as numbered prayer points, no markdown.
   const DREAM_FIRE_PRAYER = {
-    title: "A Wall of Fire Round About Me",
-    date: "November 11, 2026",
-    intro: "Tonight's shield prayer is not a guess at your dream — it is Zechariah's promise sent ahead of you into the dark: a wall of fire no power can climb, tunnel under, or see through. Pray it out loud and let the fire stand before you sleep.",
+    title: "Chariots of Fire Surround Me",
+    date: "November 12, 2026",
+    intro: "Tonight's shield prayer is not a guess at your dream — it is Elisha's open-eyed vision loosed ahead of you into the dark: a mountain full of horses and chariots of fire stationed round about you before any enemy arrives. Pray it out loud and let the fire take its position before you sleep.",
     points: [
-      "Father, by the authority of Zechariah 2:5, I decree a wall of fire round about me tonight — before my body, behind my back, over my bed, and around every border of my sleep — no power shall cross it, in the mighty name of Jesus!",
-      "Every evil altar lit on the far side of my wall of fire tonight, burn down to ash before the hand that struck the match can finish its rites, in the name of Jesus!",
-      "Any power that runs to chase me, waits to trap me, or schemes to trade my portion for another's in the dream realm tonight meets my wall of fire first and is turned back scorched, in Jesus' mighty name!",
-      "Every mark, ring, garment, or covering any hand attempts to throw over my wall of fire tonight catches flame in the air and falls to ash before it ever reaches my skin, in the name of Jesus!",
-      "Every witchcraft table set to study me, call my name, or cast a vote over my life tonight loses my scent and my shadow the moment my wall of fire rises — you are searching for someone you cannot find, in Jesus' mighty name!",
-      "Every pit dug for me in the dream realm tonight, by the word of the Lord, swallows its own digger before the sun comes up, in the name of Jesus!",
-      "Every rope, net, or chain thrown across my wall of fire tonight burns through before it ever tightens — I was not born to be bound, and I will not be bound in my sleep, in Jesus' mighty name!",
-      "Every gate assigned to work against me between midnight and daybreak — gate of delay, gate of sickness, gate of confusion, gate of loss — stands outside my wall of fire and shall not open, in the mighty name of Jesus!",
-      "If my spirit has been summoned, detained, or carried anywhere outside my wall of fire tonight, I sound the trumpet of recall now — spirit, soul, and body, come home whole and untouched, in Jesus' mighty name!",
-      "Let my wall of fire stretch over my household tonight — every room, every bed, every name under this roof covered — so that no darkness assigned against this house gets past the flame, in the name of Jesus!",
-      "Every evil court convened outside my wall tonight to pass a verdict on my life, your judgment cannot cross the fire and cannot find me — I stand inside a better court, and the Judge of that court is my Father, in Jesus' mighty name!",
-      "So I decree over tonight: the wall is fire, the fire is the blood, and the blood has already spoken — no weapon formed in the dark shall prosper, no power gathered against me shall find a way in, and I will rise in the morning exactly as I lay down: covered, untouched, and victorious, in the mighty, all-consuming name of Jesus Christ, amen! 🔥"
+      "Father, as You opened the eyes of Elisha's servant, open the eyes of my spirit tonight and let me see what is already true — horses and chariots of fire stationed round about me, before my bed, behind my back, and over every border of my sleep, in the mighty name of Jesus!",
+      "Every evil altar lit anywhere on my account tonight, every candle struck, every incantation spoken over my name — a chariot of fire rides in before the rite is finished, and that altar goes up in flames, in the name of Jesus!",
+      "Every power that rises to chase me, waits to trap me, or schemes to trade my portion for another's in the dream realm tonight runs straight into a wall of horsemen it never saw coming and is scattered, in Jesus' mighty name!",
+      "Every mark, ring, garment, or covering any hand dares lift toward me while I sleep tonight catches fire in the hand that holds it and falls to ash before it ever reaches my skin, in the name of Jesus!",
+      "Every witchcraft table, coven, or secret session convened tonight to study my file, call my name, or cast a vote over my life looks up to find chariots of fire ringing the room and scatters in terror, in Jesus' mighty name!",
+      "Every pit dug, net spread, or snare set along my path between midnight and daybreak — the wheels of fire roll over it first, and the digger falls into what was dug for me, in the name of Jesus!",
+      "Every gate assigned to work against me tonight — gate of delay, gate of sickness, gate of confusion, gate of sudden loss — finds a chariot of fire parked across its threshold and shall not open, in the mighty name of Jesus!",
+      "If my spirit has been summoned, detained, or carried anywhere outside my ring of fire tonight, I sound the trumpet of recall now — mount up on chariots of fire and bring me home, spirit, soul, and body, whole and untouched, in Jesus' mighty name!",
+      "Let the same mountain full of horses and chariots ring my household tonight — every room, every bed, every name under this roof — so that no darkness assigned against this house finds a way past the fire, in the name of Jesus!",
+      "Every evil court, secret tribunal, or night session convened to pass a verdict on my life while I rest meets a chariot of fire standing at its gate — your judgment is turned back, and I appeal to a better Court whose Judge is my Father, in Jesus' mighty name!",
+      "So I decree over tonight: the mountain is full of horses, the valley is full of fire, and I am not the one surrounded — my enemies are. I will rise in the morning exactly as I lay down: covered, untouched, and victorious, in the mighty, all-consuming name of Jesus Christ, amen! 🔥"
     ]
   };
 

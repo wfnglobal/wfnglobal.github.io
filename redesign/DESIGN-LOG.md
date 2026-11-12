@@ -196,3 +196,11 @@ Oladapo found features missing after go-live. Audited the classic app (app/class
 - The Word Climb rebuilt from the canvas design in `app/js2/climb.js`: mountain map with five camps, Today's challenge (5 questions from the sermon's book when possible) with a streak, four ways to play (continue the climb: 10 questions, pass with 8; practice by book; 60-second sprint; challenge a friend by link), Scripture hint (twice per run), 50/50 (once), Learn why after every answer with the verse from the offline Bible, camp badges, camp scrolls, and a Certificate of the Climb at the summit.
 - Every one of the 300 questions now carries its Bible reference (`app/js2/climb-refs.js`), checked against the KJV data. The classic game file only gained an export of its question bank.
 - The Story of Jesus: twelve original paintings (`app/img/museum/`), composed as scenes and given an oil-paint finish (sources and the painting script in `redesign/museum-source/`). Each gallery opens on its painting with a museum plaque; the walk list shows thumbnails; the entrance uses Golgotha.
+
+## Session — Nov 11, night: natural human voice for Listen (branch `listen-voice`, preview only)
+
+- Listen on today's verse, declaration, sermon and Bible study now plays a real human voice when a recording exists: the same Azure voices as the WFN videos (Andrew / Ava HD, falling back to Andrew / Ava Multilingual), alternating by day. The videos are untouched.
+- Recordings are made by `.github/workflows/listen-audio.yml` → `social/generate-listen-audio.js` whenever `app/data/today.json` changes, saved under `audio/listen/` with `manifest.json`. Kept 14 days; capped at 380,000 characters a month (repo variable `LISTEN_MONTHLY_BUDGET`) so the free Azure tier still covers the reels.
+- The app checks a text fingerprint before playing, so a translated or edited page uses the phone voice instead of a mismatched recording. Bible chapters, Tolu and other screens keep the phone voice.
+- Pause / Resume / Stop work the same as before. Played recordings are kept on the phone by the service worker (`wfn-listen` cache) and replay offline.
+- You → Listen & Ask Tolu gains a "Natural voice" switch (on by default).

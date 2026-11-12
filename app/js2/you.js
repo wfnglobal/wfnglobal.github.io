@@ -88,6 +88,7 @@
         <h2 id="vc" class="eyebrow" style="padding:0 4px">Listen &amp; Ask Tolu</h2>
         <div class="card list">
           <label class="row-link" style="min-height:60px"><span class="tile-ic c-spruce">${icon("listen")}</span><span class="grow"><span class="label">Listen</span><span class="hint">Read any screen aloud, with Pause and Stop</span></span><span class="switch"><input type="checkbox" id="optListen" ${s.showListen !== false ? "checked" : ""}><span></span></span></label>
+          <label class="row-link" style="min-height:60px"><span class="tile-ic c-slate">${icon("wave")}</span><span class="grow"><span class="label">Natural voice</span><span class="hint">Today’s verse, declaration, sermon and study read in a real human voice</span></span><span class="switch"><input type="checkbox" id="optNatural" ${s.naturalVoice !== false ? "checked" : ""}><span></span></span></label>
           <label class="row-link" style="min-height:60px"><span class="tile-ic c-amber">${icon("mic")}</span><span class="grow"><span class="label">Ask Tolu</span><span class="hint">Your voice assistant for the Word and everyday things</span></span><span class="switch"><input type="checkbox" id="optTolu" ${s.showTolu !== false ? "checked" : ""}><span></span></span></label>
           <button class="row-link" id="siri"><span class="tile-ic c-ink">${icon("sparkle")}</span><span class="grow"><span class="label">Add Tolu to Siri</span><span class="hint">Say “Hey Siri, Tolu” to open Tolu straight away</span></span><span class="chev">${icon("chev", "xs")}</span></button>
           <button class="row-link" id="tryTolu"><span class="tile-ic c-slate">${icon("wave")}</span><span class="grow"><span class="label">Talk to Tolu now</span><span class="hint">Time, weather, timers, reminders, calls, directions, Scripture</span></span><span class="chev">${icon("chev", "xs")}</span></button>
@@ -155,7 +156,7 @@
       W.$("#nh").textContent = notifHint();
     };
     const vp = () => { W.setSetting("showListen", W.$("#optListen").checked); W.setSetting("showTolu", W.$("#optTolu").checked); if (W.applyVoicePrefs) W.applyVoicePrefs(); W.toast("Saved"); };
-    W.$("#optListen").onchange = vp; W.$("#optTolu").onchange = vp;
+    W.$("#optListen").onchange = vp; W.$("#optTolu").onchange = vp; W.$("#optNatural").onchange = () => { W.setSetting("naturalVoice", W.$("#optNatural").checked); W.toast("Saved"); };
     W.$("#tryTolu").onclick = () => W.openTolu && W.openTolu();
     W.$("#siri").onclick = () => W.sheet(`<div class="sheet-head"><h2>Add Tolu to Siri</h2><button class="btn sm soft" data-close>Done</button></div>
       <p class="ink2" style="font-size:15px;line-height:23px">Make a one-step Shortcut, then say “Hey Siri, Tolu” and WFN opens with Tolu ready to listen.</p>

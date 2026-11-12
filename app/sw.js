@@ -7,7 +7,10 @@
 // OneSignal.init() points serviceWorkerPath at this file for the same reason.
 importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");
 
-const CACHE_VERSION = "wfn-app-v83";
+const CACHE_VERSION = "wfn-app-v84";
+// Listen recordings (human voice) live in their own cache, outside the
+// versioned app caches, so an app update never deletes them.
+const LISTEN_CACHE = "wfn-listen";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const BIBLE_CACHE = `${CACHE_VERSION}-bible`;
 
@@ -91,6 +94,28 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
+  // Listen recordings: played from this phone once saved (works offline),
+  // otherwise streamed from the site while a full copy is saved for next time.
+  if (url.pathname.startsWith("/audio/listen/") && url.pathname.endsWith(".mp3")) {
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open(LISTEN_CACHE);
+        const cached = await cache.match(url.pathname);
+        if (cached) return rangeFrom(req, cached);
+        event.waitUntil(
+          fetch(url.pathname).then(async (res) => {
+            if (!res.ok || res.status !== 200) return;
+            await cache.put(url.pathname, res);
+            const keys = await cache.keys();
+            for (const k of keys.slice(0, Math.max(0, keys.length - 12))) await cache.delete(k);
+          }).catch(() => {})
+        );
+        return fetch(req);
+      })()
+    );
+    return;
+  }
+
   // Today's content snapshot (verse/sermon/declaration): network-first,
   // so the website never shows yesterday's cached content — falls back to
   // cache only when offline.
@@ -148,3 +173,22 @@ self.addEventListener("fetch", (event) => {
     );
   }
 });
+
+// Serve a byte range from a saved recording (audio players ask for ranges).
+async function rangeFrom(req, res) {
+  const range = req.headers.get("range");
+  if (!range) return res;
+  const buf = await res.arrayBuffer();
+  const size = buf.byteLength;
+  const m = /bytes=(\d*)-(\d*)/.exec(range);
+  let start = 0, end = size - 1;
+  if (m) {
+    if (m[1] === "" && m[2] !== "") { start = Math.max(0, size - +m[2]); }
+    else { start = +m[1] || 0; if (m[2] !== "") end = Math.min(+m[2], size - 1); }
+  }
+  if (start >= size) return new Response(null, { status: 416, headers: { "Content-Range": `bytes */${size}` } });
+  return new Response(buf.slice(start, end + 1), {
+    status: 206,
+    headers: { "Content-Type": "audio/mpeg", "Content-Range": `bytes ${start}-${end}/${size}`, "Content-Length": String(end - start + 1), "Accept-Ranges": "bytes" },
+  });
+}

@@ -191,7 +191,7 @@
     const toggle = (btn, panel, on) => { panel.hidden = !on; btn.setAttribute("aria-expanded", String(on)); };
     const vMore = W.$("#vMore"), vPanel = W.$("#votdMore");
     vMore.onclick = () => toggle(vMore, vPanel, vPanel.hidden);
-    W.$("#vListen").onclick = (e) => W.speak([W.$("#votd .verse").textContent, t.verse.ref.replace(":", ", verse ")], e.currentTarget);
+    W.$("#vListen").onclick = (e) => W.speak([W.$("#votd .verse").textContent, t.verse.ref.replace(":", ", verse ")], e.currentTarget, "verse:" + t.updated);
     W.$("#vShare").onclick = () => W.shareOrCopy({ title: "Verse of the Day", text: "“" + t.verse.text + "” " + t.verse.ref, url: "https://wfnglobal.org/app/" });
     const amen = (btn, key, onTxt, offTxt, msg) => {
       const on = !doneToday()[key];
@@ -205,7 +205,7 @@
     W.$("#dAmen").onclick = (e) => amen(e.currentTarget, "declaration", "Declared", "Amen", "Amen. Declared.");
     const dBtn = W.$("#declBtn"), dPanel = W.$("#declMore");
     dBtn.onclick = () => { const on = dPanel.hidden; if (on) { markSeen("declaration"); refreshDay(); } toggle(dBtn, dPanel, on); W.$("#declLab").textContent = on ? "Show less" : "Declare it all"; };
-    W.$("#dListen").onclick = (e) => W.speak((t.declaration.lines || []).filter(Boolean), e.currentTarget);
+    W.$("#dListen").onclick = (e) => W.speak((t.declaration.lines || []).filter(Boolean), e.currentTarget, "declaration:" + t.updated);
     W.$("#dShare").onclick = () => W.shareOrCopy({ title: "Today’s declaration", text: (t.declaration.lines || []).filter(Boolean).slice(0, 3).join("\n\n") + "\n\n" + (t.declaration.ref || ""), url: "https://wfnglobal.org/app/" });
     // Your day in the Word: nothing is ticked for you; tick any step, in any order.
     const tail2 = (k, d) => tail(k, d);

@@ -1,0 +1,63 @@
+name: Record Listen audio (human voice)
+
+# Whenever today's content lands (app/data/today.json), record the day's
+# verse, declaration, sermon and Bible study in a natural Azure voice so
+# the app's Listen button plays a real human voice. Uses the same Azure
+# secrets and voices as the reel videos; it never touches the videos.
+# Commits MP3s + audio/listen/manifest.json. If the Azure secrets are
+# missing or the monthly budget is used up, the app simply keeps using
+# the phone's own voice for those items.
+on:
+  push:
+    branches: [main, listen-voice]
+    paths:
+      - "app/data/today.json"
+      - "social/generate-listen-audio.js"
+      - ".github/workflows/listen-audio.yml"
+  workflow_dispatch: {}
+
+concurrency:
+  group: listen-audio-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright (reads the sermon page the same way the app does)
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Record today's Listen audio
+        env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
+          AZURE_SPEECH_VOICE_MALE: ${{ secrets.AZURE_SPEECH_VOICE_MALE }}
+          AZURE_SPEECH_VOICE_FEMALE: ${{ secrets.AZURE_SPEECH_VOICE_FEMALE }}
+          LISTEN_MONTHLY_BUDGET: ${{ vars.LISTEN_MONTHLY_BUDGET }}
+        run: node social/generate-listen-audio.js
+
+      - name: Commit the recordings
+        run: |
+          set -euo pipefail
+          git add -A audio/listen
+          if git diff --cached --quiet; then echo "No new audio."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record today's Listen audio"
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && break
+            echo "Push attempt $i failed, retrying..."; sleep $((i * 5))
+            if [ "$i" = 5 ]; then exit 1; fi
+          done

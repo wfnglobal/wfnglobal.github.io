@@ -166,7 +166,7 @@
     </div>`;
     W.$("#dc").onclick = () => W.copyText(W.$$("#dprose p").map((x) => x.textContent).join("\n") + "\n\n" + (t.declaration.ref || "") + "\nwfnglobal.org/app");
     const all = (t.declaration.lines || []).filter(Boolean).join(" ");
-    W.$("#dl").onclick = (e) => W.speak(W.$$("#dprose p").map((x) => x.textContent), e.currentTarget); void all;
+    W.$("#dl").onclick = (e) => W.speak(W.$$("#dprose p").map((x) => x.textContent), e.currentTarget, "declaration:" + t.updated); void all;
     W.$("#amen").onclick = () => { W.markDone("declaration"); W.toast("Amen. Declared."); };
     W.$("#ds").onclick = () => W.shareOrCopy({ title: "Today’s declaration", text: (t.declaration.lines || []).filter(Boolean).slice(0, 3).join("\n\n") + "\n\n" + (t.declaration.ref || ""), url: "https://wfnglobal.org/app/" });
   }
@@ -336,7 +336,7 @@
       </div>`;
     W.$("#amen").onclick = () => { W.markDone("sermon"); W.toast("Amen."); };
     W.$("#shr").onclick = () => W.shareOrCopy({ title, text: title + " — " + sub, url: "https://wfnglobal.org/articles/" + slug + ".html" });
-    W.$("#sl").onclick = (e) => W.speak(W.$$("#art [data-tr]").map((x) => x.textContent), e.currentTarget);
+    W.$("#sl").onclick = (e) => W.speak(W.$$("#art [data-tr]").map((x) => x.textContent), e.currentTarget, "sermon:" + slug);
     W.$("#snote").onclick = () => W.noteSheet({ type: "sermon", refKey: "sermon:" + slug, refLabel: title });
     if (/autoread/.test(location.hash)) setTimeout(() => W.$("#sl").click(), 500);
     progress();
@@ -370,7 +370,7 @@
       </div>
     </article>`;
     W.$("#sa").onclick = () => W.readingSheet();
-    W.$("#sl").onclick = (e) => W.speak(W.$$("#stdy [data-tr]").map((x) => x.textContent), e.currentTarget);
+    W.$("#sl").onclick = (e) => W.speak(W.$$("#stdy [data-tr]").map((x) => x.textContent), e.currentTarget, "study:" + s.slug);
     W.$("#amen").onclick = () => { W.markDone("study"); W.toast("Amen."); };
     W.$("#note").onclick = () => W.noteSheet({ type: "study", refKey: "study:" + s.slug, refLabel: s.title });
     W.$("#shr").onclick = () => W.shareOrCopy({ title: s.title, text: s.title + " — " + s.excerpt, url: "https://wfnglobal.org/app/" });

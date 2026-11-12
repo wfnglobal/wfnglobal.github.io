@@ -158,7 +158,7 @@
       if (t.bibleStudy && t.bibleStudy.slug && t.bibleStudy.slug !== study0.slug) Object.assign(study, t.bibleStudy);
       const declaration = t.declaration && t.declaration.lines ? t.declaration : C.DECLARATION;
       const dreamFire = t.dreamFire && t.dreamFire.points ? Object.assign({}, C.DREAM_FIRE_PRAYER, t.dreamFire) : C.DREAM_FIRE_PRAYER;
-      return { verse, sermon, study, declaration, dreamFire, night: C.NIGHT_PRAYER };
+      return { verse, sermon, study, declaration, dreamFire, night: C.NIGHT_PRAYER, updated: t.updated || "" };
     });
   }
   function sermonPoster(slug) { return BASE + "assets/posters/sermons/" + slug + ".jpg"; }
@@ -261,30 +261,85 @@
   // re-rendered screen still knows that this button's reading is playing.
   let activeKey = null;
   function keyOf(btn) { return btn ? (btn.id || btn.dataset.say || "btn") + "@" + location.hash : null; }
-  function speak(text, btn) {
+  // ---------- Natural human voice ----------
+  // Each night a GitHub Action records the day's verse, declaration,
+  // sermon and Bible study in an Azure voice (social/generate-listen-audio.js)
+  // and lists them in /audio/listen/manifest.json. When a Listen button's
+  // item has a recording whose text still matches what's on screen (not
+  // translated, not edited), the recording plays; otherwise the phone's
+  // voice reads as before. The service worker keeps played recordings
+  // for offline listening.
+  const LISTEN_DIR = BASE + "audio/listen/";
+  let listenMan = null;
+  try { listenMan = JSON.parse(localStorage.getItem("wfn2-listen-man") || "null"); } catch (e) {}
+  function loadListenManifest() {
+    return fetch(LISTEN_DIR + "manifest.json", { cache: "no-cache" }).then((r) => r.ok ? r.json() : null).then((m) => {
+      if (m && m.items) { listenMan = m; try { localStorage.setItem("wfn2-listen-man", JSON.stringify(m)); } catch (e) {} }
+    }).catch(() => {});
+  }
+  loadListenManifest();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) loadListenManifest(); });
+  const fp = (s) => String(s || "").toLowerCase().replace(/[^a-z]/g, "").slice(0, 48);
+  function recordingFor(audioKey, items) {
+    if (!audioKey || !listenMan || !listenMan.items || settings.naturalVoice === false) return null;
+    const rec = listenMan.items[audioKey];
+    if (!rec || !rec.file) return null;
+    return rec.fp === fp(items.join(" ")) ? rec : null;
+  }
+  const hp = new Audio();
+  hp.preload = "auto";
+  let hpState = "idle", hpItems = null;
+  function hpSet(st) { hpState = st; ttsState(st); }
+  hp.addEventListener("playing", () => hpSet("playing"));
+  hp.addEventListener("pause", () => { if (hpState !== "idle" && !hp.ended) hpSet("paused"); });
+  hp.addEventListener("ended", () => { hpItems = null; hpSet("idle"); });
+  hp.addEventListener("error", () => {
+    if (hpState === "idle" || !hpItems) return;
+    // Recording unavailable (offline and not yet saved): read with the phone voice instead.
+    const items = hpItems; hpItems = null; hpState = "idle";
+    const t = TTS(); if (t) t.speak(items); else hpSet("idle");
+  });
+  const human = {
+    getState: () => hpState,
+    pause: () => { try { hp.pause(); } catch (e) {} },
+    resume: () => { hp.play().catch(() => {}); },
+    stop: () => { const was = hpState; hpItems = null; hpState = "idle"; try { hp.pause(); hp.removeAttribute("src"); hp.load(); } catch (e) {} if (was !== "idle") ttsState("idle"); },
+  };
+  function engine() { return hpState !== "idle" ? human : TTS(); }
+
+  function speak(text, btn, audioKey) {
     const t = TTS();
-    if (!t) { toast("Read aloud isn't supported on this browser"); return; }
     const key = keyOf(btn);
-    if (t.getState() !== "idle") {
+    if (hpState !== "idle" || (t && t.getState() !== "idle")) {
       const was = activeKey;
       stopSpeaking();
       if (was && was === key) return; // second tap on the same button = Stop
     }
     const items = Array.isArray(text) ? text : sentences(text).map((x) => x.trim()).filter(Boolean);
+    const rec = recordingFor(audioKey, items);
+    if (!rec && !t) { toast("Read aloud isn't supported on this browser"); return; }
     activeBtn = btn || null; activeKey = key;
     if (btn) { if (!btn.dataset.label) btn.dataset.label = btn.getAttribute("aria-label") || "Listen"; setBtn(btn, true); }
+    if (rec) {
+      hpItems = items; hpState = "loading"; ttsState("playing");
+      hp.src = LISTEN_DIR + rec.file;
+      try { hp.playbackRate = t && t.getRate ? (+t.getRate() || 1) : 1; } catch (e) {}
+      hp.play().catch(() => { if (hpItems) { const it = hpItems; hpItems = null; hpState = "idle"; if (t) t.speak(it); else ttsState("idle"); } });
+      return;
+    }
     t.speak(items);
   }
   // Stop hard: some phones (iOS Safari especially) keep talking after a
   // single cancel(), so cancel again a moment later.
   function stopSpeaking() {
+    human.stop();
     const t = TTS();
     if (t) t.stop();
     if ("speechSynthesis" in window) {
       // iOS ignores cancel() while paused or mid-utterance unless paused first.
       try { speechSynthesis.pause(); } catch (e) {}
       try { speechSynthesis.cancel(); } catch (e) {}
-      setTimeout(() => { try { if (!t || t.getState() === "idle") speechSynthesis.cancel(); } catch (e) {} }, 80);
+      setTimeout(() => { try { if ((!t || t.getState() === "idle") && hpState === "idle") speechSynthesis.cancel(); } catch (e) {} }, 80);
       setTimeout(() => { try { if (!t || t.getState() === "idle") speechSynthesis.cancel(); } catch (e) {} }, 400);
     }
     if (activeBtn) setBtn(activeBtn, false);
@@ -294,11 +349,12 @@
   function wireTTSState() {
     const t = TTS();
     if (!t) return setTimeout(wireTTSState, 300);
-    t.onState((st) => {
-      if (st === "idle") { if (activeBtn) setBtn(activeBtn, false); activeBtn = null; activeKey = null; }
-      else if (activeKey) { const b = $$("button").find((x) => keyOf(x) === activeKey); if (b && b !== activeBtn) { activeBtn = b; setBtn(b, true); } }
-      nowPlaying(st);
-    });
+    t.onState((st) => { if (hpState === "idle") ttsState(st); });
+  }
+  function ttsState(st) {
+    if (st === "idle") { if (activeBtn) setBtn(activeBtn, false); activeBtn = null; activeKey = null; }
+    else if (activeKey) { const b = $$("button").find((x) => keyOf(x) === activeKey); if (b && b !== activeBtn) { activeBtn = b; setBtn(b, true); } }
+    nowPlaying(st);
   }
   // A small "now reading" bar with Pause and Stop, shown whenever anything
   // is being read aloud, so Stop is always one tap away.
@@ -310,7 +366,7 @@
       bar.innerHTML = `<span class="np-wave" aria-hidden="true"><i></i><i></i><i></i></span><span class="np-t" id="npT">Reading aloud</span><button class="np-b" id="npP" type="button"></button><button class="np-b np-stop" id="npS" type="button">${icon("stop", "sm")}Stop</button>`;
       document.body.appendChild(bar);
       $("#npS").onclick = () => stopSpeaking();
-      $("#npP").onclick = () => { const t = TTS(); if (!t) return; if (t.getState() === "playing") t.pause(); else t.resume(); };
+      $("#npP").onclick = () => { const t = engine(); if (!t) return; if (t.getState() === "playing" || t.getState() === "loading") t.pause(); else t.resume(); };
     }
     $("#npP").innerHTML = st === "paused" ? icon("play", "sm") + "Resume" : icon("pause", "sm") + "Pause";
     $("#npT").textContent = st === "paused" ? "Paused" : "Reading aloud";

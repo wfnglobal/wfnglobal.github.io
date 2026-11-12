@@ -1,0 +1,45 @@
+{
+ "items": {
+  "declaration:2026-11-11": {
+   "file": "declaration-2026-11-11-a856ef6b23.mp3",
+   "fp": "fatherideclaretodaythatiwillnotsitintheashesofwh",
+   "hash": "a856ef6b23",
+   "chars": 935,
+   "voice": "en-US-Andrew:DragonHDLatestNeural",
+   "month": "2026-11",
+   "date": "2026-11-11",
+   "bytes": 415008
+  },
+  "verse:2026-11-11": {
+   "file": "verse-2026-11-11-90813fce6d.mp3",
+   "fp": "forbytheeihaverunthroughatroopandbymygodhaveilea",
+   "hash": "90813fce6d",
+   "chars": 99,
+   "voice": "en-US-Andrew:DragonHDLatestNeural",
+   "month": "2026-11",
+   "date": "2026-11-11",
+   "bytes": 47664
+  },
+  "sermon:pursue-overtake-recover-all": {
+   "file": "sermon-pursue-overtake-recover-all-340bea7975.mp3",
+   "fp": "pursueovertakerecoverallziklagwasashesthefamilie",
+   "hash": "340bea7975",
+   "chars": 5162,
+   "voice": "en-US-Andrew:DragonHDLatestNeural",
+   "month": "2026-11",
+   "date": "2026-11-11",
+   "bytes": 2084112
+  },
+  "study:lazarus-come-forth": {
+   "file": "study-lazarus-come-forth-3460901f23.mp3",
+   "fp": "lazaruscomeforthmarthatoldjesusflatoutthathewast",
+   "hash": "3460901f23",
+   "chars": 9953,
+   "voice": "en-US-Andrew:DragonHDLatestNeural",
+   "month": "2026-11",
+   "date": "2026-11-11",
+   "bytes": 3792240
+  }
+ },
+ "updated": "2026-11-12T04:34:02.097Z"
+}

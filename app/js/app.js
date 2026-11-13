@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "Cast thy burden upon the LORD, and he shall sustain thee: he shall never suffer the righteous to be moved.", ref: "Psalm 55:22" },
     { text: "For the vision is yet for an appointed time, but at the end it shall speak, and not lie: though it tarry, wait for it; because it will surely come, it will not tarry.", ref: "Habakkuk 2:3" },
     { text: "For by thee I have run through a troop; and by my God have I leaped over a wall.", ref: "Psalm 18:29" },
     { text: "Heal me, O LORD, and I shall be healed; save me, and I shall be saved: for thou art my praise.", ref: "Jeremiah 17:14" },
@@ -86,21 +87,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that I will not stop praying because the horizon says nothing — Your word over my life is already settled in heaven!",
-      "I hear the sound of abundance of rain before I ever see a cloud!",
-      "I bow low, I press in, and I pray until the answer comes down!",
+      "Father, I declare today that I come to Jesus just as I am — tired, heavy laden, and done carrying what You never handed me!",
+      "I cast my burden upon the LORD, and He shall sustain me!",
+      "I receive rest unto my soul — my mind is quiet, my heart is still, my strength is renewed!",
       "",
-      "Six nothings will not talk me out of my seventh time — I go again!",
-      "I will not faint and I will not be weary in well doing — in due season I shall reap!",
-      "The vision is for an appointed time; though it tarry, I wait for it, because it will surely come!",
+      "Every yoke the enemy fastened on my neck is destroyed because of the anointing!",
+      "Fear, shame, addiction, and every family pattern of bondage — your hold is broken over me and my house!",
+      "I stand fast in the liberty wherewith Christ hath made me free, and I will not be entangled again!",
       "",
-      "I will not despise the day of small things — that cloud like a man's hand is the hand of my God rising for me!",
-      "After the drought comes abundance — over my health, my home, my finances and my children!",
-      "I prepare my chariot today, because the rain is on its way and nothing will stop it!",
+      "I take His yoke upon me — I walk in step with Jesus, and He pulls the weight!",
+      "His yoke is easy, His burden is light, and His assignment fits my life!",
+      "I will never be moved, because the One who carries me never lets go!",
       "",
-      "Save this. Speak it over your house today. I go again, and the rain is coming! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. I lay it down, I take His yoke, and I walk in rest! In Jesus' mighty name, amen!"
     ],
-    ref: "1 Kings 18:43-44"
+    ref: "Matthew 11:28-30"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -141,6 +142,7 @@
   };
 
   const SERMONS = [
+    { slug: "trade-your-yoke", title: "Trade Your Yoke", ref: "Matthew 11:28-30", date: "November 13, 2026", excerpt: "Jesus never told the weary to stop carrying everything. He told them to come and trade — your yoke for His, your heavy for His light — and find a rest that reaches all the way down to the soul." },
     { slug: "go-again-seven-times", title: "Go Again Seven Times", ref: "1 Kings 18:43-44", date: "November 12, 2026", excerpt: "Six times the servant looked toward the sea and came back with the same report: there is nothing. Elijah never argued with the report — he just said, go again. The seventh time, a cloud like a man's hand, and the prophet told the king to get his chariot ready." },
     { slug: "pursue-overtake-recover-all", title: "Pursue, Overtake, Recover All", ref: "1 Samuel 30:6, 8", date: "November 11, 2026", excerpt: "Ziklag was ashes, the families were gone, and his own men picked up stones. David didn't start with a counterattack — he encouraged himself in the LORD, asked first, and heard heaven say: pursue, and without fail recover all." },
     { slug: "fear-not", title: "Fear Not: Why Heaven Keeps Saying It", ref: "Genesis 3:10; Matthew 28:5-6", date: "November 11, 2026", excerpt: "Every time heaven shows up in Scripture, it opens with the same two words. Here's why, where fear first crept in, why David said “I will not be afraid,” and how an empty tomb ended the hiding." },

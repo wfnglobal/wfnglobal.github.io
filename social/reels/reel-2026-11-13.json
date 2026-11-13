@@ -1,0 +1,18 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "You've carried this so long, the ache stopped surprising you.", "visual": "burden", "chapter": { "num": "I", "name": "The Weary Road", "ref": "Matthew 11:28" } },
+    { "text": "Jesus doesn't wait for you to fix it first. He just says: come, exactly as you are.", "visual": "burden" },
+    { "text": "Come unto me, all ye that labour and are heavy laden, and I will give you rest.", "visual": "exchange", "scripture": true, "chapter": { "num": "II", "name": "The Trade", "ref": "Matthew 11:28-29" } },
+    { "text": "Take my yoke upon you, and learn of me; for I am meek and lowly in heart.", "visual": "exchange", "scripture": true },
+    { "text": "Not freedom from every yoke — a trade for His: fitted to you, carried at His pace, beside Him instead of alone.", "visual": "unyoked" },
+    { "text": "For my yoke is easy, and my burden is light.", "visual": "unyoked", "scripture": true },
+    { "text": "Set it down. Trade it. Find rest unto your soul. In Jesus' name, amen.", "visual": "pasture" }
+  ],
+  "bold": "a trade for His",
+  "title": "Word and Faith Network",
+  "subtitle": "Trade Your Yoke",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A four-scene illustrated short film: a weary traveler bowed under an unseen weight on a dusk road, hands exchanging a worn yoke for a new one in firelit gold, a figure standing upright as cool night breaks into gold dawn with the old burden left behind, and a quiet green pastoral sunrise where a flock finally rests. A visual telling of Matthew 11:28-30 - trading the yoke that's crushing you for the one that was made to fit."
+}

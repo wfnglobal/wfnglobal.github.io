@@ -108,7 +108,7 @@
   // kept current every day (by 8pm) the same way as VERSES[0], SERMONS[0],
   // and DECLARATION above.
   const NIGHT_PRAYER = {
-    text: "Father, I lay tonight down exactly as it was — the parts I handled well and the parts I only barely survived — because You never asked me to sort them before I brought them to You. Thank You for walking closer than I noticed through the hard stretches, and for strength that was already there before I remembered to ask for it. Quiet the arguments my mind wants to keep replaying now that the day is over, and let me rest in what's already settled instead of what's still unresolved. Wake me tomorrow steadied by a mercy I never had to manufacture myself.",
+    text: "Father, thank You for the mercy that caught me today, even in the moments I never looked up long enough to notice I needed it. I let go now of every detail I'm tempted to keep finishing in my head tonight — the word I wish I'd said better, the plan I can't stop checking — because You were already holding all of it before I was. Settle my spirit into the rest You promised, and let tomorrow meet me already covered by a grace I didn't have to go looking for.",
     amen: "In Jesus' name, amen."
   };
 

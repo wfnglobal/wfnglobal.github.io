@@ -1,0 +1,153 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- WFN sermon poster - What Is That in Thine Hand? (Exodus 4:2-4), Nov 14, 2026 -->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#0A111B;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden; background:#0A111B;}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(240,196,130,0), rgba(240,196,130,0.8), rgba(240,196,130,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.78);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#F3EBDD; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(247,190,120,0.5); background:rgba(8,18,28,0.55); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FFD58C; box-shadow:0 0 12px 3px #FFC46E;}
+  .copy{position:absolute; left:0; right:0; top:800px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(132,214,214,0.95);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:106px; line-height:0.94; letter-spacing:-0.035em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em; background:linear-gradient(180deg,#FFF6DC 0%,#FFD27A 34%,#F08A3C 68%,#C9452B 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(240,150,80,0.42)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:830px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.88);}
+  .sub b{color:#FFC98A; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.92); max-width:540px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#7FD3D0;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A0E08; background:linear-gradient(180deg,#FFE3A6,#F0913F); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(238,154,88,0.55);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A111B"/><stop offset="0.3" stop-color="#132A40"/><stop offset="0.52" stop-color="#245365"/><stop offset="0.66" stop-color="#7B6A58"/><stop offset="0.74" stop-color="#D98A48"/><stop offset="0.8" stop-color="#F6C47A"/></linearGradient>
+    <linearGradient id="mtn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B2C3E"/><stop offset="1" stop-color="#0E1824"/></linearGradient>
+    <linearGradient id="mtn2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2D4656"/><stop offset="1" stop-color="#3E4A50"/></linearGradient>
+    <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D08A48"/><stop offset="0.35" stop-color="#9A5A2E"/><stop offset="1" stop-color="#2A1610"/></linearGradient>
+    <radialGradient id="fireglow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF2C8"/><stop offset="0.2" stop-color="#FFC25E" stop-opacity="0.9"/><stop offset="0.55" stop-color="#F0782E" stop-opacity="0.35"/><stop offset="1" stop-color="#C9452B" stop-opacity="0"/></radialGradient>
+    <radialGradient id="rodglow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF6D8" stop-opacity="0.95"/><stop offset="0.35" stop-color="#FFD27A" stop-opacity="0.5"/><stop offset="1" stop-color="#F08A3C" stop-opacity="0"/></radialGradient>
+    <linearGradient id="rod" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF1C4"/><stop offset="0.5" stop-color="#F2B259"/><stop offset="1" stop-color="#B86A2A"/></linearGradient>
+    <linearGradient id="snake" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#C98A3A"/><stop offset="0.18" stop-color="#3F4A2E"/><stop offset="1" stop-color="#1A2418"/></linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A111B" stop-opacity="0"/><stop offset="1" stop-color="#0A111B"/></linearGradient>
+    <filter id="b3"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="b8"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="b20"><feGaussianBlur stdDeviation="20"/></filter>
+  </defs>
+  <rect width="1080" height="820" fill="url(#sky)"/>
+  <g id="stars"></g>
+  <!-- dawn behind the far range -->
+  <ellipse cx="760" cy="600" rx="420" ry="120" fill="#FFD28A" opacity="0.35" filter="url(#b20)"/>
+  <path d="M520 600 C600 560 660 540 720 548 C800 530 880 520 960 540 C1020 548 1060 556 1080 560 L1080 620 L520 620Z" fill="url(#mtn2)" opacity="0.8"/>
+  <!-- Horeb, the mountain of God -->
+  <path d="M-20 640 L120 470 L190 420 L250 330 L300 270 L330 250 L372 300 L430 360 L470 380 L540 470 L620 560 L700 640Z" fill="url(#mtn)"/>
+  <path d="M330 250 L372 300 L430 360 L470 380 L540 470 L620 560" fill="none" stroke="#F2B86A" stroke-width="2" opacity="0.35"/>
+  <path d="M300 270 L330 250" stroke="#F2B86A" stroke-width="2" opacity="0.35"/>
+  <!-- the bush that burned and was not consumed -->
+  <circle cx="196" cy="572" r="190" fill="url(#fireglow)" opacity="0.85"/>
+  <g id="bush"></g>
+  <g id="flames"></g>
+  <!-- desert floor -->
+  <path d="M0 610 C180 600 360 616 540 620 C720 624 900 606 1080 612 L1080 820 L0 820Z" fill="url(#sand)"/>
+  <g id="ripples" stroke="#F4BE7A" stroke-linecap="round" fill="none" opacity="0.18"></g>
+  <ellipse cx="196" cy="624" rx="200" ry="22" fill="#FFB860" opacity="0.25" filter="url(#b8)"/>
+  <!-- the serpent on the ground, its tail already turning back into a rod -->
+  <ellipse cx="520" cy="770" rx="230" ry="14" fill="#1A0E08" opacity="0.4" filter="url(#b3)"/>
+  <path d="M650 742 C610 778 548 784 506 764 C462 744 432 748 408 770 C390 786 352 782 346 752 C342 730 352 712 366 700" fill="none" stroke="url(#snake)" stroke-width="20" stroke-linecap="round"/>
+  <path d="M650 742 C610 778 548 784 506 764 C462 744 432 748 408 770 C390 786 352 782 346 752" fill="none" stroke="#E0A04C" stroke-width="2" stroke-dasharray="3 9" opacity="0.5"/>
+  <!-- raised head -->
+  <path d="M352 704 C350 688 364 676 382 678 C398 680 404 690 398 698 C390 706 372 710 360 712Z" fill="#1A2418"/>
+  <circle cx="384" cy="688" r="2.6" fill="#F6C46A"/>
+  <path d="M400 696 L414 694 M414 694 L420 689 M414 694 L420 699" stroke="#C9452B" stroke-width="2" stroke-linecap="round"/>
+  <!-- the rod in his grip, glowing -->
+  <circle cx="676" cy="690" r="90" fill="url(#rodglow)"/>
+  <path d="M646 746 L724 604" stroke="url(#rod)" stroke-width="13" stroke-linecap="round"/>
+  <path d="M650 736 L722 606" stroke="#FFF6DA" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+  <g id="sparks"></g>
+  <!-- Moses, the shepherd, reaching for the tail -->
+  <ellipse cx="808" cy="752" rx="86" ry="10" fill="#140A06" opacity="0.5"/>
+  <g fill="#0C1118">
+    <path d="M776 528 C760 560 752 610 750 660 C748 700 742 730 734 750 L874 750 C864 720 858 690 854 650 C850 600 842 556 830 528 C818 516 790 516 776 528Z"/>
+    <path d="M786 486 C784 462 798 448 814 450 C832 452 842 468 838 490 C836 506 828 520 812 522 C796 522 788 506 786 486Z"/>
+    <path d="M782 482 C784 456 802 440 820 442 C842 446 852 470 846 500 C858 520 852 548 842 556 C846 520 836 500 826 492 C812 486 794 488 782 482Z"/>
+    <!-- reaching arm -->
+    <path d="M790 540 C770 572 748 600 726 616 L716 606 C734 588 756 560 772 530Z"/>
+    <ellipse cx="720" cy="612" rx="13" ry="10" transform="rotate(-30 720 612)"/>
+    <!-- other arm -->
+    <path d="M832 544 C846 580 850 616 846 640 L834 640 C834 614 828 584 818 556Z"/>
+    <!-- beard -->
+    <path d="M792 500 C790 524 800 540 812 542 C820 532 822 516 820 504Z"/>
+  </g>
+  <path d="M776 528 C760 560 752 610 750 660 C748 700 742 730 734 750" fill="none" stroke="#F6A65A" stroke-width="2.4" opacity="0.7"/>
+  <path d="M786 486 C784 462 798 448 814 450" fill="none" stroke="#F6A65A" stroke-width="2.4" opacity="0.75"/>
+  <path d="M790 540 C770 572 748 600 726 616" fill="none" stroke="#F6C46A" stroke-width="2.2" opacity="0.8"/>
+  <!-- a few sheep resting behind -->
+  <g id="sheep"></g>
+  <rect y="736" width="1080" height="86" fill="url(#fade)"/>
+  <rect y="818" width="1080" height="532" fill="#0A111B"/>
+</svg>
+<div class="top">
+  <div class="lock"><svg viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#lg)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#lg)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#lg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#lg)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#lg)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg><div class="rule"></div><div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div></div>
+  <div class="chip"><i></i>Today's Sermon</div>
+</div>
+<div class="copy">
+  <div class="kicker">Exodus 4:2-4 &middot; Purpose</div>
+  <h1>What is that<em>in thine hand?</em></h1>
+  <p class="sub">God didn't argue with Moses' list of excuses &mdash; He pointed at an old shepherd's stick, and <b>a surrendered rod</b> became the rod of God.</p>
+</div>
+<div class="cta">
+  <div class="verse">&ldquo;And the LORD said unto him, What is that in thine hand? And he said, A rod.&rdquo;<span>Exodus 4:2</span></div>
+  <div class="btn"><span class="l1">Read the sermon &rarr;</span><span class="l2">wfnglobal.org</span></div>
+</div>
+</div>
+<script>
+  let s = 4204; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, a, p) { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; }
+  const st = document.getElementById("stars");
+  for (let i = 0; i < 80; i++) el("circle", { cx: r() * 1080, cy: r() * 300, r: (r() * 1.3 + 0.3).toFixed(2), fill: "#E6F2FF", opacity: (0.15 + r() * 0.6).toFixed(2) }, st);
+  const bu = document.getElementById("bush");
+  for (let i = 0; i < 26; i++) { const a = r() * Math.PI, d = 18 + r() * 34; const x = 196 + Math.cos(a) * d * 1.4, y = 606 - Math.sin(a) * d;
+    el("path", { d: `M196 612 Q${(196 + x) / 2} ${y + 10} ${x} ${y}`, stroke: "#2A160C", "stroke-width": 3, fill: "none", "stroke-linecap": "round" }, bu); }
+  const fl = document.getElementById("flames");
+  const cols = ["#FFF2C2", "#FFD068", "#FFA53E", "#F0702A", "#E0552A"];
+  const fb = el("g", { filter: "url(#b3)", opacity: 0.9 }, fl);
+  for (let i = 0; i < 14; i++) el("circle", { cx: 172 + r() * 48, cy: 596 - r() * 14, r: 9 + r() * 9, fill: "#3A2414" }, fl);
+  for (let pass = 0; pass < 2; pass++) for (let i = 0; i < 18; i++) { const x = 162 + r() * 68, base = 602 - r() * 16, h = (pass ? 30 : 50) + r() * (pass ? 50 : 80), w = (pass ? 6 : 10) + r() * 10, lean = (r() - 0.5) * 34 + (x - 196) * 0.35, c = pass ? cols[Math.floor(r() * 2)] : cols[2 + Math.floor(r() * 3)];
+    el("path", { d: `M${x - w} ${base} Q${x - w * 1.6} ${base - h * 0.45} ${x + lean} ${base - h} Q${x + w * 1.7} ${base - h * 0.4} ${x + w} ${base} Q${x} ${base + w * 0.8} ${x - w} ${base} Z`, fill: c, opacity: (0.6 + r() * 0.35).toFixed(2) }, pass ? fl : fb); }
+  const rp = document.getElementById("ripples");
+  for (let i = 0; i < 46; i++) { const y = 630 + Math.pow(r(), 1.3) * 160, x = r() * 1080, w = 20 + (y - 620) * 0.6 * r();
+    el("path", { d: `M${x} ${y} Q${x + w / 2} ${y - 4} ${x + w} ${y}`, "stroke-width": (0.8 + (y - 620) / 90).toFixed(2) }, rp); }
+  const sp = document.getElementById("sparks");
+  for (let i = 0; i < 26; i++) { const t = r(), x = 646 + 78 * t + (r() - 0.5) * 50, y = 746 - 142 * t + (r() - 0.5) * 50;
+    el("circle", { cx: x, cy: y, r: (0.8 + r() * 2.2).toFixed(1), fill: r() < 0.5 ? "#FFF2C8" : "#FFC25E", opacity: (0.4 + r() * 0.6).toFixed(2) }, sp); }
+  const sh = document.getElementById("sheep");
+  [[930, 640, 1], [985, 652, 0.85], [895, 660, 0.9]].forEach(([x, y, k]) => {
+    [-12, -4, 6, 13].forEach(dx => el("rect", { x: x + dx * k, y: y + 6 * k, width: 3 * k, height: 12 * k, rx: 1, fill: "#3A2A20" }, sh));
+    el("ellipse", { cx: x, cy: y, rx: 22 * k, ry: 12 * k, fill: "#D9C3A0", opacity: 0.9 }, sh);
+    el("ellipse", { cx: x - 22 * k, cy: y - 4 * k, rx: 7 * k, ry: 6 * k, fill: "#3A2A20" }, sh);
+    el("path", { d: `M${x - 22 * k} ${y - 12 * k} Q${x} ${y - 16 * k} ${x + 20 * k} ${y - 8 * k}`, stroke: "#FFE2AE", "stroke-width": 1.5, fill: "none", opacity: 0.6 }, sh); });
+</script>
+</body></html>

@@ -1,0 +1,19 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "Moses had a whole list of reasons this wasn't his assignment.", "visual": "shepherd" },
+    { "text": "And the LORD said unto him, What is that in thine hand? And he said, A rod.", "visual": "shepherd", "scripture": true },
+    { "text": "And he cast it on the ground, and it became a serpent; and Moses fled from before it.", "visual": "serpent", "scripture": true },
+    { "text": "What you carry can look dangerous right before God is about to use it.", "visual": "serpent" },
+    { "text": "Put forth thine hand, and take it by the tail. And it became a rod in his hand again.", "visual": "grip", "scripture": true },
+    { "text": "The fear didn't leave. He just reached past it anyway.", "visual": "grip" },
+    { "text": "What's in your hand was never too small. It was only waiting on obedience.", "visual": "authority" },
+    { "text": "Throw it down. Pick it back up. Let God rename what's already yours. In Jesus' name, amen.", "visual": "authority" }
+  ],
+  "bold": "It was only waiting on obedience",
+  "title": "Word and Faith Network",
+  "subtitle": "Throw It Down",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A four-scene illustrated short film: a lone shepherd and his staff in the wilderness at dusk, the staff thrown to the ground and transforming into a serpent in a tense dark grove, a hand reaching back to grip the serpent as it turns back into a rod in breaking gold light, and the shepherd standing tall holding the rod aloft under a triumphant blue-gold dawn. A visual telling of Exodus 4:2-4 - the ordinary thing in your hand, surrendered and renamed by God."
+}

@@ -1,0 +1,202 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  WFN X poster, 1080x1350 (4:5): "The Chain Just Broke" (Nov 14, 2026) for
+  the Fire Prayer Against Dream Attacks ("Every Chain Snaps at Midnight",
+  Psalm 107:14). New scene + new palette from prior days: two heavy iron
+  chain-links, one upper-left and one upper-right, each shattering apart
+  at a bright white-cyan fracture of light, with broken fragments and
+  sparks scattering outward and a few spent, dim iron links already
+  fallen and dead on the ground. A believer stands at the center in a
+  burst of icy-white fire, arms lifted free, head at peace, nothing
+  touching them. Deep obsidian/teal-black night with a cool white-cyan
+  "holy fire" glow — distinct from the warm gold/amber, wine/garnet, and
+  violet/plum nights used 11/8-11/13. Brand lockup, chip, and CTA bar
+  kept per the approved reference. Render with social/render-poster.js.
+-->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#040708;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden;
+    background:linear-gradient(180deg,#040B12 0%,#0A1620 24%,#0D2430 44%,#0A2A28 66%,#051512 86%,#020504 100%);}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(190,239,255,0), rgba(190,239,255,0.8), rgba(190,239,255,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#BEEFFF;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(220,240,246,0.72);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#DFF6FF; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(142,230,255,0.4); background:rgba(142,230,255,0.1); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#8EE6FF; box-shadow:0 0 12px 3px rgba(142,230,255,0.85);}
+  .copy{position:absolute; left:0; right:0; top:752px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(190,239,255,0.85);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:124px; line-height:0.94; letter-spacing:-0.035em; color:#F2FAFD; text-shadow:0 6px 40px rgba(0,0,0,0.6);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em;
+    background:linear-gradient(180deg,#FFFFFF 0%,#D8F6FF 32%,#8EE6FF 66%,#3AA7FF 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(142,230,255,0.5)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:800px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(226,240,244,0.86);}
+  .sub b{color:#BEEFFF; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:21px; line-height:1.3; color:rgba(230,246,250,0.9); max-width:540px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#8EE6FF;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#06222E; background:linear-gradient(180deg,#EAFBFF,#8EE6FF); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(142,230,255,0.7);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#F2FBFF;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <radialGradient id="iceGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#F2FBFF" stop-opacity="0.8"/><stop offset="0.4" stop-color="#8EE6FF" stop-opacity="0.28"/><stop offset="1" stop-color="#8EE6FF" stop-opacity="0"/></radialGradient>
+    <radialGradient id="groundGlow" cx="0.5" cy="0.95" r="0.75"><stop offset="0" stop-color="#BEEFFF" stop-opacity="0.22"/><stop offset="0.7" stop-color="#3AA7FF" stop-opacity="0.08"/><stop offset="1" stop-color="#3AA7FF" stop-opacity="0"/></radialGradient>
+    <linearGradient id="iron" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E4EAEE"/><stop offset="0.45" stop-color="#8E9CA6"/><stop offset="1" stop-color="#333C43"/></linearGradient>
+    <linearGradient id="ironDead" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4A5258"/><stop offset="1" stop-color="#1B2024"/></linearGradient>
+    <linearGradient id="fracture" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#1F6E99" stop-opacity="0.2"/><stop offset="0.4" stop-color="#3AA7FF"/><stop offset="0.75" stop-color="#BEEFFF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient>
+    <linearGradient id="fractureCore" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#BEEFFF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient>
+    <linearGradient id="shadow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#020407" stop-opacity="0.96"/><stop offset="1" stop-color="#0A1A22" stop-opacity="0"/></linearGradient>
+    <linearGradient id="cloudFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0D1821"/><stop offset="1" stop-color="#070D13"/></linearGradient>
+    <linearGradient id="cloudNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#081017"/><stop offset="1" stop-color="#04080C"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#08171C"/><stop offset="1" stop-color="#020504"/></linearGradient>
+    <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="blur3"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="blur16"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="smoke" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="3" seed="11"/><feDisplacementMap in="SourceGraphic" scale="60"/><feGaussianBlur stdDeviation="2.5"/></filter>
+  </defs>
+
+  <g id="stars"></g>
+
+  <!-- quiet night clouds, cool teal-black -->
+  <path d="M-20 300 C120 260 220 300 330 270 C420 245 470 200 520 190 C560 200 600 245 660 270 C760 305 870 260 1000 290 C1050 300 1080 310 1100 305 L1100 420 L-20 420Z" fill="url(#cloudFar)" opacity="0.92"/>
+  <path d="M-20 360 C140 330 260 365 380 345 C450 332 480 300 540 296 C590 300 630 332 710 345 C830 365 940 330 1100 360 L1100 460 L-20 460Z" fill="url(#cloudNear)"/>
+
+  <!-- the holy fire breaking out where the chain snaps -->
+  <circle cx="540" cy="420" r="300" fill="url(#iceGlow)"/>
+  <g id="rays" opacity="0.5"></g>
+
+  <!-- shadow powers recoiling to either side as the fire breaks out -->
+  <g filter="url(#smoke)" opacity="0.9">
+    <path d="M-40 520 C90 535 190 575 270 630 C312 659 322 682 306 698 C280 683 250 673 224 681 C250 709 258 732 240 750 C212 724 178 716 148 724 C168 752 166 778 146 798 C106 760 44 752 -40 760Z" fill="url(#shadow)"/>
+    <path d="M1120 540 C995 548 890 588 814 640 C776 666 764 688 782 702 C810 686 842 678 868 686 C842 712 836 734 854 750 C882 726 916 718 946 726 C924 752 928 778 950 796 C992 756 1044 748 1120 756Z" fill="#020407" opacity="0.85"/>
+  </g>
+
+  <!-- upper-left chain-link, shattering -->
+  <g transform="translate(300 330) rotate(-18)">
+    <path d="M-70 0 a44 60 0 1 1 0 0.1" fill="none" stroke="url(#iron)" stroke-width="26" stroke-linecap="round" transform="rotate(-8)"/>
+    <path d="M-20 -46 C8 -60 30 -40 24 -12" fill="none" stroke="url(#fracture)" stroke-width="22" stroke-linecap="round"/>
+    <path d="M18 2 C34 10 40 30 24 48" fill="none" stroke="url(#fracture)" stroke-width="22" stroke-linecap="round" opacity="0.95"/>
+    <circle cx="22" cy="-6" r="20" fill="url(#fractureCore)" opacity="0.95" filter="url(#blur3)"/>
+  </g>
+  <!-- upper-right chain-link, shattering -->
+  <g transform="translate(792 356) rotate(16) scale(-1,1)">
+    <path d="M-70 0 a44 60 0 1 1 0 0.1" fill="none" stroke="url(#iron)" stroke-width="26" stroke-linecap="round" transform="rotate(-8)"/>
+    <path d="M-20 -46 C8 -60 30 -40 24 -12" fill="none" stroke="url(#fracture)" stroke-width="22" stroke-linecap="round"/>
+    <path d="M18 2 C34 10 40 30 24 48" fill="none" stroke="url(#fracture)" stroke-width="22" stroke-linecap="round" opacity="0.95"/>
+    <circle cx="22" cy="-6" r="20" fill="url(#fractureCore)" opacity="0.95" filter="url(#blur3)"/>
+  </g>
+
+  <!-- fragments flying outward from the two breaks -->
+  <g opacity="0.92">
+    <rect x="178" y="248" width="34" height="58" rx="17" fill="url(#iron)" transform="rotate(-50 195 277)"/>
+    <rect x="128" y="368" width="30" height="52" rx="16" fill="url(#iron)" transform="rotate(35 143 394)"/>
+    <rect x="900" y="268" width="34" height="58" rx="17" fill="url(#iron)" transform="rotate(50 917 297)"/>
+    <rect x="948" y="392" width="30" height="52" rx="16" fill="url(#iron)" transform="rotate(-35 963 418)"/>
+  </g>
+
+  <!-- the central fracture of pure fire where the chain gave way -->
+  <circle cx="540" cy="356" r="30" fill="url(#fractureCore)" opacity="0.95" filter="url(#blur3)"/>
+  <g stroke="url(#fractureCore)" stroke-width="2.6" opacity="0.85" fill="none" stroke-linecap="round">
+    <path d="M540 356 L478 320"/>
+    <path d="M540 356 L602 322"/>
+    <path d="M540 356 L516 410"/>
+    <path d="M540 356 L566 408"/>
+  </g>
+
+  <!-- ground -->
+  <path d="M0 790 C300 772 780 772 1080 790 L1080 1350 L0 1350Z" fill="url(#ground)"/>
+  <ellipse cx="540" cy="800" rx="420" ry="130" fill="url(#groundGlow)"/>
+
+  <!-- the believer, standing free in the fire, arms lifted, untouched -->
+  <g transform="translate(540 636)">
+    <ellipse cx="0" cy="72" rx="44" ry="10" fill="#000" opacity="0.32" filter="url(#blur8)"/>
+    <circle cx="0" cy="24" r="96" fill="url(#iceGlow)" opacity="0.45"/>
+    <path d="M-26 68 C-28 24 -19 -4 0 -4 C19 -4 28 24 26 68Z" fill="#0E1418"/>
+    <path d="M-26 34 C-48 14 -58 -14 -50 -40" stroke="#0E1418" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <path d="M26 34 C48 14 58 -14 50 -40" stroke="#0E1418" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <circle cx="0" cy="-18" r="15" fill="#171E22"/>
+  </g>
+
+  <g id="embers"></g>
+</svg>
+
+<div class="top">
+  <div class="lock">
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F2FBFF"/><stop offset="0.5" stop-color="#8EE6FF"/><stop offset="1" stop-color="#3AA7FF"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#g)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#g)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#g)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#g)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg>
+    <div class="rule"></div>
+    <div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div>
+  </div>
+  <div class="chip"><i></i>Fire Prayer &middot; Tonight</div>
+</div>
+
+<div class="copy">
+  <div class="kicker">Every bond fashioned in the dark</div>
+  <h1>The chain<em>just broke.</em></h1>
+  <p class="sub">Every rope, yoke, and cord fastened on me while I sleep &mdash; <b>snapped by the fire that broke every bond at Calvary.</b></p>
+</div>
+
+<div class="cta">
+  <div class="verse">&ldquo;He brought them out of darkness and the shadow of death, and brake their bands in sunder.&rdquo;<span>Psalm 107:14</span></div>
+  <div class="btn"><span class="l1">Pray it before bed &rarr;</span><span class="l2">wfnglobal.org/dreams</span></div>
+</div>
+</div>
+<script>
+  // deterministic RNG
+  let s = 29; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 160; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const y = r() * 300;
+    c.setAttribute("cx", r() * 1080); c.setAttribute("cy", y);
+    c.setAttribute("r", (r() * 1.3 + 0.3).toFixed(2));
+    c.setAttribute("fill", r() > 0.85 ? "#BEEFFF" : "#D7E0E6");
+    c.setAttribute("opacity", (0.2 + r() * 0.6).toFixed(2));
+    stars.appendChild(c);
+  }
+  // rays bursting from the fire where the chain gave way
+  const rays = document.getElementById("rays");
+  for (let i = 0; i < 20; i++) {
+    const a = (i / 20) * Math.PI * 2;
+    const x1 = 540 + Math.cos(a) * 80, y1 = 356 + Math.sin(a) * 80;
+    const x2 = 540 + Math.cos(a) * 300, y2 = 356 + Math.sin(a) * 300;
+    const l = document.createElementNS(NS, "line");
+    l.setAttribute("x1", x1); l.setAttribute("y1", y1); l.setAttribute("x2", x2); l.setAttribute("y2", y2);
+    l.setAttribute("stroke", "#BEEFFF"); l.setAttribute("stroke-width", (r() * 1.7 + 0.4).toFixed(2));
+    l.setAttribute("opacity", (0.08 + r() * 0.16).toFixed(2));
+    rays.appendChild(l);
+  }
+  // sparks scattering from the two breaking points
+  const em = document.getElementById("embers");
+  for (let i = 0; i < 55; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const leftSide = r() > 0.5;
+    const bx = leftSide ? 322 : 770, by = leftSide ? 356 : 382;
+    c.setAttribute("cx", bx + (r() - 0.5) * 220);
+    c.setAttribute("cy", by + (r() - 0.5) * 220);
+    c.setAttribute("r", (r() * 2.1 + 0.5).toFixed(2));
+    c.setAttribute("fill", r() > 0.5 ? "#D8F6FF" : "#8EE6FF");
+    c.setAttribute("opacity", (0.3 + r() * 0.55).toFixed(2));
+    em.appendChild(c);
+  }
+</script>
+</body></html>

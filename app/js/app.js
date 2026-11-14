@@ -124,21 +124,21 @@
   // purpose: never about one specific dream scenario, always a general
   // covering. points[] renders as numbered prayer points, no markdown.
   const DREAM_FIRE_PRAYER = {
-    title: "No Verdict Against Me Stands",
-    date: "November 13, 2026",
-    intro: "Tonight's shield prayer meets every secret court convened in the dark — every accuser summoned, every false charge filed, every gavel raised while you cannot answer — with a Blood that has already settled your case. Pray it out loud before you sleep and let no verdict stand that Heaven did not sign.",
+    title: "Every Chain Snaps at Midnight",
+    date: "November 14, 2026",
+    intro: "Tonight's shield prayer is not about one dream scene — it is fire sent ahead of you into every altar, every chase, every chain, and every evil assignment that waits for sleep before it moves. Pray it out loud before you close your eyes and let nothing hold what the blood has already loosed.",
     points: [
-      "Every secret court convened against me tonight — every accuser summoned, every false witness sworn in, every gavel lifted to pass sentence on my life — I plead the blood of Jesus over the docket, and I decree: no verdict stands that was not signed in Heaven, in the mighty name of Jesus!",
-      "Every altar lit on my account before midnight, every incense raised, every name called over fire that is not Mine — catch the fire you did not kindle, scatter to ash before dawn, and let every officiating hand burn in the name of Jesus!",
-      "Every power assigned to chase me, trap me, or trade my portion for another's in the dream realm tonight — I bind you with chains of fire, and I command: run into your own net, fall into your own pit, in Jesus' mighty name!",
-      "Every mark, ring, garment, or covering any hand dares place on me while I sleep — I refuse it, I reject it, I command it to catch fire on contact and turn to smoke before it ever touches my skin, in the name of Jesus!",
-      "Every witchcraft table set to review my file, cast lots over my name, or vote away my blessing — the fire of God invades your session now, your table catches flame, and your coven scatters before you finish your meeting, in Jesus' mighty name!",
-      "Every ledger of accusation opened against me in the dark, every record kept to use against my morning — I set it ablaze by the blood of Jesus, and let it burn to nothing before the sun rises, in the mighty name of Jesus!",
-      "If my spirit has been summoned, arrested, exchanged, or carried anywhere outside the will of God tonight, I sound the alarm of recall now — ministering angels, go and fetch me home, spirit, soul, and body, untouched and unexchanged, in Jesus' mighty name!",
-      "Every evil decree spoken over my sleep, every curse timed for the midnight hour, every word released to work while I cannot answer — I answer now, wide awake in the Spirit: it shall not stand, it shall not work, it is overruled, in the name of Jesus!",
-      "Let the fire that answered Elijah answer for me and for everyone under this roof tonight — every room sealed, every bed covered, every name in this house hidden under the blood where no weapon formed in the dark can find its mark, in Jesus' mighty name!",
-      "I summon the Advocate who ever lives to plead for me — Jesus Christ, the Righteous Judge's own Son — to stand in the gate of midnight, answer every charge, overturn every verdict, and hold the field until I wake, in the name of Jesus!",
-      "So I decree over tonight: the court of hell is adjourned, the case against me is dismissed, and the only word that stands over my sleep is the word of my Father. I will wake in the morning free, covered, and victorious, in the mighty, all-consuming name of Jesus Christ, amen! 🔥"
+      "Every strange door shut against me, every gate locked to trap me inside any dream chamber tonight — I summon the fire of the Holy Ghost to melt every bolt, and I decree: no door closes on me that God Himself does not open, in the mighty name of Jesus!",
+      "Every altar lit on my account before midnight, every summons sent to call my name over strange fire — I return your fire to your own house sevenfold, and I set your altar ablaze with a flame you cannot explain, in Jesus' mighty name!",
+      "Every power assigned to chase me, trap me, or exchange my portion for another's in the dream realm tonight — I overtake you before you overtake me, I recover whatever you intended to carry away, and I command: fall into your own net, in the name of Jesus!",
+      "Every mark, ring, garment, or covering any hand dares place on me while I sleep — catch fire on contact, turn to ash before it ever touches my skin, and let the hand that reached for me wither, in the mighty name of Jesus!",
+      "Every chain, yoke, rope, or cord fashioned in the dark to bind me in my sleep — snap now by the fire that broke every bond at Calvary, and let me rise this morning walking free in every joint, in Jesus' mighty name!",
+      "Every strange covenant, union, or exchange of vows assigned to me in the spirit realm while I rest — I renounce it, I nullify it by the blood of Jesus, and I stand married only to my covenant with Christ, in the mighty name of Jesus!",
+      "Every witchcraft table set to review my file, cast lots over my name, or vote away my blessing before I wake — the fire of God crashes your session now, your table catches flame, and your coven scatters before the meeting ends, in Jesus' mighty name!",
+      "Every dream engineered to drain my strength, waste my time, or delay my destiny while I sleep — I cancel the assignment, I reclaim every hour, and I decree that I will rise refreshed, not robbed, in the name of Jesus!",
+      "If my spirit has been summoned, arrested, or carried anywhere outside the will of God tonight, I sound the alarm of recall now — ministering angels, go and fetch me home, spirit, soul, and body, untouched and unexchanged, in Jesus' mighty name!",
+      "Let the fire that answered Elijah answer for me and for everyone under this roof tonight — every room sealed, every bed covered, every chain in this house broken before it is ever fastened, in Jesus' mighty name!",
+      "So I decree over tonight: every altar is quenched, every chain is broken, every table is scattered, and the only hand that holds me while I sleep is the hand of my Father. I will wake in the morning loosed, covered, and victorious, in the mighty, all-consuming name of Jesus Christ, amen! 🔥"
     ]
   };
 

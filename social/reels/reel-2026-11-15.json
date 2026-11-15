@@ -1,0 +1,17 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "The valley was full of bones, and lo, they were very dry.", "visual": "drybones", "scripture": true, "chapter": "Ezekiel 37" },
+    { "text": "Nobody was praying over them anymore. God asked one question instead.", "visual": "drybones" },
+    { "text": "Thus saith the Lord GOD unto these bones: I will cause breath to enter into you, and ye shall live.", "visual": "breath", "scripture": true },
+    { "text": "The fear didn't leave the valley. The prophet just kept speaking until breath came.", "visual": "breath" },
+    { "text": "So breath came into them, and they stood up upon their feet, an exceeding great army.", "visual": "army", "scripture": true },
+    { "text": "Whatever looks dead in your life is not past His breath. Speak to it until it stands. In Jesus' name, amen.", "visual": "army" }
+  ],
+  "bold": "Speak to it until it stands",
+  "title": "Word and Faith Network",
+  "subtitle": "These Bones Shall Live",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A three-scene illustrated short film visualizing Ezekiel 37's valley of dry bones: sun-bleached bones scattered across an ash-grey valley floor, a lone prophet lifting his hands as teal breath breaks through the grey, and the bones standing up as a great army under a gold-blue dawn."
+}

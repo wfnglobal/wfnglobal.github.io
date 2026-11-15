@@ -107,6 +107,9 @@
   body[data-shot="serpent"]{--accent:#4E8A52;}
   body[data-shot="grip"]{--accent:#F2A94E;}
   body[data-shot="authority"]{--accent:#F2D98A;}
+  body[data-shot="drybones"]{--accent:#C9BFA0;}
+  body[data-shot="breath"]{--accent:#5FD6CC;}
+  body[data-shot="army"]{--accent:#FFD98A;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -1926,6 +1929,132 @@
     </div>
     <div class="fx" data-type="motes" data-n="26" data-color="255,233,180"></div>
     <div class="fx" data-type="bokeh" data-n="10"></div>
+  </section>
+
+  <!-- ============ DRYBONES: a wide valley floor littered with sun-bleached bones under an ash-grey sky ============ -->
+  <section class="scene" data-scene="drybones" data-kb="pull" style="--ox:50%; --oy:70%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="db-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0A0A08"/><stop offset="0.38" stop-color="#3A362C"/>
+            <stop offset="0.7" stop-color="#8C8268"/><stop offset="1" stop-color="#D9D0B4"/>
+          </linearGradient>
+          <radialGradient id="db-haze" cx="0.5" cy="0.8" r="0.5"><stop offset="0" stop-color="#E2D8B8" stop-opacity="0.4"/><stop offset="1" stop-color="#E2D8B8" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#db-sky)"/>
+        <rect width="1080" height="1920" fill="url(#db-haze)"/>
+        <path d="M 0 1120 L 200 1060 L 380 1100 L 580 1030 L 790 1090 L 1080 1040 L 1080 1240 L 0 1240 Z" fill="#2E2A22" opacity="0.8"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="db-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5C5648"/><stop offset="1" stop-color="#0A0906"/></linearGradient>
+          <g id="db-bone">
+            <rect x="-58" y="-9" width="116" height="18" rx="9" fill="#E2D8BC"/>
+            <circle cx="-58" cy="0" r="13" fill="#E2D8BC"/>
+            <circle cx="58" cy="0" r="13" fill="#E2D8BC"/>
+          </g>
+        </defs>
+        <path d="M 0 1300 C 280 1278 760 1288 1080 1300 L 1080 1920 L 0 1920 Z" fill="url(#db-floor)"/>
+        <ellipse cx="300" cy="1420" rx="220" ry="40" fill="#000" opacity="0.28"/>
+        <ellipse cx="760" cy="1540" rx="260" ry="46" fill="#000" opacity="0.26"/>
+        <g opacity="0.85" transform="translate(240 1400) rotate(-18) scale(1.0)"><use href="#db-bone" fill="#CFC4A4"/></g>
+        <g opacity="0.8" transform="translate(420 1460) rotate(24) scale(0.78)"><use href="#db-bone" fill="#C2B896"/></g>
+        <g opacity="0.9" transform="translate(640 1420) rotate(-8) scale(1.1)"><use href="#db-bone" fill="#E2D8BC"/></g>
+        <g opacity="0.75" transform="translate(820 1500) rotate(40) scale(0.7)"><use href="#db-bone" fill="#B8AE8C"/></g>
+        <g opacity="0.82" transform="translate(140 1560) rotate(10) scale(0.9)"><use href="#db-bone" fill="#CFC4A4"/></g>
+        <g opacity="0.7" transform="translate(940 1600) rotate(-30) scale(0.62)"><use href="#db-bone" fill="#B8AE8C"/></g>
+        <g opacity="0.85" transform="translate(540 1620) rotate(70) scale(0.95)"><use href="#db-bone" fill="#E2D8BC"/></g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="30" data-color="200,192,164"></div>
+  </section>
+
+  <!-- ============ BREATH: wind breaking through the grey, a prophet with arms raised calling breath into the valley ============ -->
+  <section class="scene" data-scene="breath" data-kb="rise" style="--ox:50%; --oy:58%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="br-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#061412"/><stop offset="0.4" stop-color="#123430"/>
+            <stop offset="0.72" stop-color="#1F6E66"/><stop offset="1" stop-color="#5FD6CC"/>
+          </linearGradient>
+          <radialGradient id="br-glow" cx="0.5" cy="0.74" r="0.46"><stop offset="0" stop-color="#9CF0E6" stop-opacity="0.55"/><stop offset="1" stop-color="#9CF0E6" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#br-sky)"/>
+        <rect width="1080" height="1920" fill="url(#br-glow)"/>
+        <path d="M 0 1140 L 200 1080 L 380 1120 L 580 1050 L 790 1110 L 1080 1060 L 1080 1240 L 0 1240 Z" fill="#0C2420" opacity="0.82"/>
+      </svg>
+      <div class="drift" style="--drift:-70px; --ddur:34s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <g filter="url(#cblur)" stroke="#BFF2EA" fill="none" opacity="0.5">
+            <path d="M -200 760 C 160 700 480 820 900 740 C 1040 716 1160 740 1300 720" stroke-width="5"/>
+            <path d="M -200 900 C 200 950 560 860 980 920 C 1100 938 1200 918 1300 936" stroke-width="4"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="br-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A3A34"/><stop offset="1" stop-color="#040A08"/></linearGradient>
+        </defs>
+        <path d="M 0 1320 C 280 1296 760 1308 1080 1320 L 1080 1920 L 0 1920 Z" fill="url(#br-floor)"/>
+        <path d="M 180 1540 C 300 1470 420 1560 540 1500 C 660 1440 780 1540 900 1480" stroke="#7FE8DC" stroke-width="10" fill="none" opacity="0.35" filter="url(#glow8)"/>
+        <g transform="translate(540 1420) scale(0.62)">
+          <ellipse cx="0" cy="58" rx="150" ry="22" fill="#000" opacity="0.5"/>
+          <use href="#fig-raise" fill="#9CF0E6" filter="url(#glow8)" opacity="0.7"/>
+          <use href="#fig-raise" fill="#04140F"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="30" data-color="160,240,224"></div>
+  </section>
+
+  <!-- ============ ARMY: the valley floor rises as an exceeding great army, standing under a triumphant gold-blue dawn ============ -->
+  <section class="scene" data-scene="army" data-kb="rise" style="--ox:50%; --oy:50%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ar-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0A1C2E"/><stop offset="0.4" stop-color="#2A4A66"/>
+            <stop offset="0.72" stop-color="#C98A4A"/><stop offset="1" stop-color="#FFE2A0"/>
+          </linearGradient>
+          <radialGradient id="ar-glow" cx="0.5" cy="0.76" r="0.44"><stop offset="0" stop-color="#FFF2C4" stop-opacity="0.7"/><stop offset="1" stop-color="#FFF2C4" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#ar-sky)"/>
+        <rect width="1080" height="1920" fill="url(#ar-glow)"/>
+      </svg>
+      <div class="spin" style="--rx:540px; --ry:1380px; --sdur:95s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <g class="rays-gen" data-cx="540" data-cy="1380" data-n="16" data-len="1700" data-w="2" fill="#FFE9BC" opacity="0.1"></g>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ar-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5C4420"/><stop offset="1" stop-color="#0A0804"/></linearGradient>
+        </defs>
+        <path d="M 0 1340 C 280 1316 760 1328 1080 1340 L 1080 1920 L 0 1920 Z" fill="url(#ar-floor)"/>
+        <g transform="translate(300 1420) scale(0.5)">
+          <ellipse cx="0" cy="58" rx="140" ry="20" fill="#000" opacity="0.4"/>
+          <use href="#fig-robe" fill="#FFD98A" filter="url(#glow8)" opacity="0.6"/><use href="#fig-robe" fill="#1A1206"/>
+        </g>
+        <g transform="translate(540 1400) scale(0.6)">
+          <ellipse cx="0" cy="58" rx="158" ry="22" fill="#000" opacity="0.45"/>
+          <use href="#fig-staff" fill="#FFE2A0" filter="url(#glow8)" opacity="0.65"/><use href="#fig-staff" fill="#1A1206"/>
+        </g>
+        <g transform="translate(780 1430) scale(0.48)">
+          <ellipse cx="0" cy="58" rx="136" ry="20" fill="#000" opacity="0.4"/>
+          <use href="#fig-david" fill="#FFD98A" filter="url(#glow8)" opacity="0.6"/><use href="#fig-david" fill="#1A1206"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="30" data-color="255,222,160"></div>
+    <div class="fx" data-type="bokeh" data-n="12"></div>
   </section>
 
 </div>

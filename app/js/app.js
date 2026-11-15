@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "And I will restore to you the years that the locust hath eaten, the cankerworm, and the caterpiller, and the palmerworm, my great army which I sent among you.", ref: "Joel 2:25" },
     { text: "Not by might, nor by power, but by my spirit, saith the LORD of hosts.", ref: "Zechariah 4:6" },
     { text: "Cast thy burden upon the LORD, and he shall sustain thee: he shall never suffer the righteous to be moved.", ref: "Psalm 55:22" },
     { text: "For the vision is yet for an appointed time, but at the end it shall speak, and not lie: though it tarry, wait for it; because it will surely come, it will not tarry.", ref: "Habakkuk 2:3" },
@@ -88,21 +89,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that what is in my hand is enough, because it is in Your hand!",
-      "I will not despise the day of small things — my little is Your starting point!",
-      "I lay my gift, my plans, my past, and my provision at Your feet — take it, Lord, it is Yours!",
+      "Father, I declare today that nothing in my life is too dry for Your breath!",
+      "I will not call dead what You are still asking about — Lord God, You know!",
+      "I refuse to make peace with my valley — I walk through it with my eyes open and my faith awake!",
       "",
-      "I will not run from the serpent — fear, failure, and every lying voice lose their bite at the word of God!",
-      "I put forth my hand at Your command, and what tried to frighten me becomes a rod in my grip!",
-      "No power of Egypt has authority over a life that God has called!",
+      "I stop describing the bones, and I start speaking to them — dry bones, hear the word of the LORD!",
+      "I prophesy to my family, my finances, my body, and my calling — come together, bone to his bone!",
+      "Every rattle in my valley is a sign that God is moving, and I will not stop speaking until it stands!",
       "",
-      "Not by might, nor by power, but by Your Spirit — this is how I win!",
-      "What I surrendered comes back as the rod of God — it parts seas, opens rocks, and wins battles!",
-      "I go where You send me, and I take the rod of God in my hand!",
+      "Breath, enter into me — the same Spirit that raised Christ from the dead quickens me today!",
+      "The Lord restores to me the years the locust has eaten, and what was scattered rises as an exceeding great army!",
+      "My hope is not lost — my graves are opening, and I shall live!",
       "",
-      "Save this. Speak it over your house today. What is in my hand is in His hand, and Pharaoh must let go! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. Dry is not dead to God, and dead is not done — these bones shall live! In Jesus' mighty name, amen!"
     ],
-    ref: "Exodus 4:2-4"
+    ref: "Ezekiel 37:3-5"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -143,6 +144,7 @@
   };
 
   const SERMONS = [
+    { slug: "can-these-bones-live", title: "Can These Bones Live?", ref: "Ezekiel 37:3-5", date: "November 15, 2026", excerpt: "The valley was full, the bones were very dry, and nobody was praying about it anymore. God asked the prophet one question — can these bones live? — then told him to preach to what was dead until breath came back into it." },
     { slug: "what-is-that-in-thine-hand", title: "What Is That in Thine Hand?", ref: "Exodus 4:2-4", date: "November 14, 2026", excerpt: "Moses had a list of reasons he couldn't go. God didn't argue with one of them. He asked a question — what is that in thine hand? — and turned an old shepherd's stick into the rod of God." },
     { slug: "trade-your-yoke", title: "Trade Your Yoke", ref: "Matthew 11:28-30", date: "November 13, 2026", excerpt: "Jesus never told the weary to stop carrying everything. He told them to come and trade — your yoke for His, your heavy for His light — and find a rest that reaches all the way down to the soul." },
     { slug: "go-again-seven-times", title: "Go Again Seven Times", ref: "1 Kings 18:43-44", date: "November 12, 2026", excerpt: "Six times the servant looked toward the sea and came back with the same report: there is nothing. Elijah never argued with the report — he just said, go again. The seventh time, a cloud like a man's hand, and the prophet told the king to get his chariot ready." },

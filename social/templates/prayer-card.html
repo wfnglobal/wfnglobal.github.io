@@ -1,0 +1,76 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- Instagram Daily Prayer card v2 (approved Nov 15, 2026). Rendered by social/generate-card.js. -->
+<style>
+@font-face{font-family:Fraunces;font-weight:400;src:url(../fonts/fraunces-latin-400-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:600;src:url(../fonts/fraunces-latin-600-normal.woff2)}
+@font-face{font-family:Fraunces;font-style:italic;font-weight:400;src:url(../fonts/fraunces-latin-400-italic.woff2)}
+@font-face{font-family:Newsreader;font-style:italic;font-weight:400;src:url(../fonts/newsreader-latin-400-italic.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(../fonts/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(../fonts/inter-latin-600-normal.woff2)}
+:root{--ink:#2A1F16;--ink2:#4E3E30;--gold:#A8722A;--goldsoft:#C9964E;--paper:#F3E6CF;--card:rgba(255,248,236,.62);--line:rgba(110,78,44,.16)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1350px}
+body{background:#E9D9BC;font-family:Inter,sans-serif;color:var(--ink);position:relative;overflow:hidden;-webkit-font-smoothing:antialiased}
+.sheet{position:absolute;inset:36px;border-radius:34px;overflow:hidden;
+ background:radial-gradient(900px 640px at 92% -6%,rgba(214,150,62,.22),transparent 62%),
+            radial-gradient(800px 600px at -8% 108%,rgba(176,96,48,.12),transparent 60%),var(--paper);
+ box-shadow:0 2px 0 rgba(255,255,255,.5) inset,0 18px 50px rgba(92,58,24,.18)}
+.grain{position:absolute;inset:0;opacity:.22;mix-blend-mode:multiply;pointer-events:none}
+.wrap{position:absolute;inset:0;padding:70px 76px 60px;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:14px;font-family:Fraunces;font-weight:600;font-size:24px;color:var(--ink)}
+.brand svg{width:40px;height:40px}
+.chip{font-weight:600;font-size:15px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);background:rgba(168,114,42,.1);border-radius:999px;padding:10px 18px}
+.kicker{margin-top:86px;font-weight:600;font-size:18px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.truth{margin-top:24px;font-family:Fraunces;font-weight:400;font-size:var(--tsize,78px);line-height:1.1;letter-spacing:-.018em;color:var(--ink);text-wrap:balance}
+.truth em{font-style:italic;color:var(--gold)}
+.seam{margin:40px 0 0;height:3px;width:120px;border-radius:3px;background:linear-gradient(90deg,#8A5718,#E7B358 45%,#FFE3A6 55%,#B9802E)}
+.pray{margin-top:40px;background:var(--card);border:1px solid rgba(255,255,255,.55);border-radius:24px;padding:34px 38px 36px;box-shadow:0 8px 26px rgba(110,72,30,.08)}
+.pray b{display:block;font-weight:600;font-size:15px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.pray p{font-family:Newsreader;font-style:italic;font-size:var(--psize,38px);line-height:1.42;color:var(--ink2);text-wrap:pretty}
+.spacer{flex:1;min-height:24px}
+.verse{display:flex;gap:22px;align-items:flex-start;background:rgba(168,114,42,.08);border-radius:20px;padding:24px 30px}
+.verse svg{flex:none;width:30px;height:30px;margin-top:4px}
+.verse p{font-family:Fraunces;font-style:italic;font-size:26px;line-height:1.42;color:var(--ink)}
+.verse span{display:block;margin-top:8px;font-family:Inter;font-style:normal;font-weight:600;font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:#8A7358}
+.foot{margin-top:26px;display:flex;justify-content:space-between;align-items:center;font-weight:500;font-size:17px;letter-spacing:.04em;color:#6A5642}
+.foot i{font-style:normal;font-weight:600;color:var(--gold)}
+.foot .save{display:flex;align-items:center;gap:10px}
+</style></head><body>
+<div class="sheet">
+ <svg class="grain" width="100%" height="100%"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .45  0 0 0 0 .32  0 0 0 0 .2  0 0 0 .55 0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+ <div class="wrap">
+  <div class="top">
+   <div class="brand"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18.5" fill="none" stroke="#A8722A" stroke-width="1.6"/><path d="M11 27V14l4.5 7 4.5-9 4.5 9 4.5-7v13" fill="none" stroke="#A8722A" stroke-width="1.8" stroke-linejoin="round"/></svg>Word &amp; Faith Network</div>
+   <div class="chip" id="chip">Daily Prayer</div>
+  </div>
+  <div class="kicker" id="kicker"></div>
+  <h1 class="truth" id="truth"></h1>
+  <div class="seam"></div>
+  <div class="pray"><b>Pray</b><p id="pray"></p></div>
+  <div class="spacer"></div>
+  <div class="verse"><svg viewBox="0 0 30 30"><path d="M4 6h9v18H4zM17 6h9v18h-9z" fill="none" stroke="#A8722A" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 6c1.2-1.4 2.8-1.4 4 0" fill="none" stroke="#A8722A" stroke-width="1.6"/></svg><p id="verse"></p></div>
+  <div class="foot"><span class="save"><svg width="16" height="18" viewBox="0 0 16 18"><path d="M2 1h12v16l-6-4-6 4z" fill="none" stroke="#6A5642" stroke-width="1.6" stroke-linejoin="round"/></svg><span id="save">Save this · Share it with someone</span></span><i>wfnglobal.org</i></div>
+ </div>
+</div>
+<script>
+const C=window.CONTENT||{};
+const esc=s=>String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;");
+document.getElementById("kicker").textContent=C.kicker||"";
+let t=esc(C.truth);
+if(C.accent)t=t.replace(esc(C.accent),"<em>"+esc(C.accent)+"</em>");
+document.getElementById("truth").innerHTML=t;
+document.getElementById("pray").textContent=C.prayer||"";
+document.getElementById("verse").innerHTML="“"+esc(C.verse&&C.verse.text)+"”<span>"+esc(C.verse&&C.verse.ref)+" · KJV</span>";
+if(C.save)document.getElementById("save").textContent=C.save;
+if(C.chip)document.getElementById("chip").textContent=C.chip;
+const r=document.documentElement.style,tl=(C.truth||"").length,pl=(C.prayer||"").length;
+let ts=tl<45?90:tl<70?78:tl<95?68:60;
+r.setProperty("--tsize",ts+"px");
+r.setProperty("--psize",(pl<130?38:pl<190?34:31)+"px");
+const wrap=document.querySelector(".wrap");
+for(let i=0;i<20&&wrap.scrollHeight>wrap.clientHeight;i++){ts-=3;r.setProperty("--tsize",ts+"px")}
+document.body.dataset.fit=wrap.scrollHeight<=wrap.clientHeight?"ok":"overflow";
+</script>
+</body></html>

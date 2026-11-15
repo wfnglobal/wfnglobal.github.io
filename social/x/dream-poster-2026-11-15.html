@@ -1,0 +1,186 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  WFN X poster, 1080x1350 (4:5): "Passed Over. Not Touched." (Nov 15,
+  2026) for the Fire Prayer Against Dream Attacks ("No Destroyer Crosses
+  My Door", Exodus 12:23). New scene + new palette from prior days: a
+  single sealed door in a sleeping village, its lintel and side posts
+  marked with a glowing blood-gold stroke, warm firelight spilling from
+  beneath it — and a tall hooded shadow (the destroyer) caught mid-turn
+  just outside the glow, smoke dragging off its cloak as it is forced
+  back from a threshold it cannot cross. Palette: garnet / wine-dark
+  night warming to amber-gold at the door (no blue, no violet, no teal —
+  distinct from the last four days). Render with social/render-poster.js.
+-->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#0A0508;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden;
+    background:linear-gradient(180deg,#0A0508 0%,#1B0A10 20%,#3A1016 40%,#4C131A 56%,#28090F 76%,#0A0406 100%);}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.72);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9A0; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(255,170,90,0.45); background:rgba(255,120,40,0.1); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FF8A3A; box-shadow:0 0 12px 3px rgba(255,120,40,0.8);}
+  .copy{position:absolute; left:0; right:0; top:780px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(255,214,160,0.85);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:118px; line-height:0.96; letter-spacing:-0.03em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.55);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.02em;
+    background:linear-gradient(180deg,#FFE6B0 0%,#FFB15A 36%,#E85A2A 68%,#C21F1F 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(226,70,30,0.45)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:800px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.86);}
+  .sub b{color:#FFD49A; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:22px; line-height:1.3; color:rgba(246,236,214,0.9); max-width:530px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A0C05; background:linear-gradient(180deg,#FFD488,#FF9A45); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(255,120,40,0.7);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <radialGradient id="moonHalo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE9C8" stop-opacity="0.3"/><stop offset="0.4" stop-color="#E8A878" stop-opacity="0.08"/><stop offset="1" stop-color="#E8A878" stop-opacity="0"/></radialGradient>
+    <radialGradient id="moon" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#FFF8E8"/><stop offset="1" stop-color="#E8CBA8"/></radialGradient>
+    <radialGradient id="doorGlow" cx="0.5" cy="0.62" r="0.5"><stop offset="0" stop-color="#FFE9C0" stop-opacity="0.95"/><stop offset="0.35" stop-color="#FFB15A" stop-opacity="0.55"/><stop offset="0.7" stop-color="#E2401C" stop-opacity="0.16"/><stop offset="1" stop-color="#E2401C" stop-opacity="0"/></radialGradient>
+    <linearGradient id="bloodMark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE3B0"/><stop offset="0.35" stop-color="#FF9A45"/><stop offset="0.7" stop-color="#D62C1E"/><stop offset="1" stop-color="#7A1410"/></linearGradient>
+    <linearGradient id="doorWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2C1410"/><stop offset="1" stop-color="#140806"/></linearGradient>
+    <linearGradient id="postStone" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3A2420"/><stop offset="1" stop-color="#1C100E"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E0E12"/><stop offset="1" stop-color="#0A0406"/></linearGradient>
+    <radialGradient id="windowGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE6B0" stop-opacity="0.9"/><stop offset="1" stop-color="#FFB15A" stop-opacity="0"/></radialGradient>
+    <linearGradient id="shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05020A" stop-opacity="0.97"/><stop offset="1" stop-color="#05020A" stop-opacity="0.65"/></linearGradient>
+    <filter id="blur10"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="glowBlur"><feGaussianBlur stdDeviation="3.2"/></filter>
+    <filter id="smoke" x="-60%" y="-60%" width="220%" height="220%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.022" numOctaves="3" seed="21"/><feDisplacementMap in="SourceGraphic" scale="70"/><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+
+  <g id="stars"></g>
+  <!-- moon -->
+  <circle cx="250" cy="220" r="170" fill="url(#moonHalo)"/>
+  <g transform="translate(250 220)">
+    <mask id="cres"><rect x="-80" y="-80" width="160" height="160" fill="#fff"/><circle r="58" cx="-26" cy="-14" fill="#000"/></mask>
+    <circle r="60" fill="url(#moon)" mask="url(#cres)"/>
+  </g>
+
+  <!-- rooftop skyline, sleeping village -->
+  <path d="M0 560 L60 560 L60 520 L120 520 L120 495 L170 495 L170 540 L230 540 L230 505 L300 505 L300 545 L370 545 L370 510 L420 480 L470 510 L470 545 L540 545 L540 515 L600 515 L600 555 L660 555 L660 500 L705 468 L750 500 L750 555 L820 555 L820 520 L880 520 L880 548 L950 548 L950 500 L1010 500 L1010 560 L1080 560 L1080 760 L0 760 Z" fill="#160709" opacity="0.92"/>
+  <path d="M0 620 L90 620 L90 595 L160 595 L160 630 L250 630 L250 600 L330 600 L330 640 L430 640 L430 605 L520 605 L520 645 L620 645 L620 610 L710 610 L710 648 L800 648 L800 615 L900 615 L900 650 L1000 650 L1000 620 L1080 620 L1080 780 L0 780 Z" fill="#1F0A0C"/>
+
+  <!-- darkness driven back from the threshold: thinning smoke tendrils dissolving into the night, no figure -->
+  <g filter="url(#smoke)" opacity="0.8">
+    <path d="M760 700 C830 680 900 650 950 600 C920 640 915 680 935 710 C975 690 1010 655 1030 610 C1015 655 1020 695 1045 722 C1075 690 1095 645 1095 600" fill="none" stroke="#120611" stroke-width="22" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#smoke)" opacity="0.55">
+    <path d="M820 760 C880 745 935 715 975 672" fill="none" stroke="#0C0410" stroke-width="14" stroke-linecap="round"/>
+  </g>
+  <!-- ground mist retreating from the threshold -->
+  <g filter="url(#blur10)" opacity="0.5">
+    <ellipse cx="900" cy="830" rx="150" ry="24" fill="#160509"/>
+    <ellipse cx="1010" cy="812" rx="95" ry="16" fill="#160509"/>
+  </g>
+
+  <!-- ground -->
+  <path d="M0 735 C300 716 780 716 1080 735 L1080 1350 L0 1350Z" fill="url(#ground)"/>
+
+  <!-- doorway glow -->
+  <ellipse cx="500" cy="760" rx="340" ry="230" fill="url(#doorGlow)"/>
+
+  <!-- the house wall around the door -->
+  <rect x="330" y="470" width="340" height="300" rx="4" fill="#20090A"/>
+  <rect x="330" y="470" width="340" height="300" rx="4" fill="none" stroke="#3A1412" stroke-width="2" opacity="0.5"/>
+  <!-- small window beside the door, warm light inside -->
+  <rect x="560" y="520" width="64" height="78" rx="3" fill="#3A1A12"/>
+  <rect x="567" y="527" width="50" height="64" rx="2" fill="url(#windowGlow)"/>
+  <path d="M592 527 L592 591 M567 559 L617 559" stroke="#20090A" stroke-width="3"/>
+
+  <!-- door posts (lintel + two side posts) -->
+  <rect x="372" y="520" width="26" height="250" fill="url(#postStone)"/>
+  <rect x="502" y="520" width="26" height="250" fill="url(#postStone)"/>
+  <rect x="366" y="500" width="168" height="30" rx="4" fill="url(#postStone)"/>
+
+  <!-- the door itself, shut, light escaping at every edge -->
+  <path d="M398 770 L398 540 C398 520 414 508 430 508 L470 508 C486 508 502 520 502 540 L502 770Z" fill="url(#doorWood)"/>
+  <path d="M398 770 L398 540 C398 520 414 508 430 508 L470 508 C486 508 502 520 502 540 L502 770" fill="none" stroke="#1C0E0D" stroke-width="2"/>
+  <path d="M406 560 L406 762 M494 560 L494 762 M406 620 L494 620 M406 690 L494 690" stroke="#120707" stroke-width="2" opacity="0.6"/>
+  <circle cx="486" cy="660" r="5" fill="#E8C77E"/>
+  <!-- light bleeding out around the door frame -->
+  <g opacity="0.9" filter="url(#glowBlur)">
+    <path d="M394 540 L394 770" stroke="#FFD9A0" stroke-width="4"/>
+    <path d="M506 540 L506 770" stroke="#FFD9A0" stroke-width="4"/>
+    <path d="M400 528 C415 512 445 504 465 504 C485 504 505 512 506 528" stroke="#FFD9A0" stroke-width="4" fill="none"/>
+    <path d="M396 766 L504 766" stroke="#FFE9C0" stroke-width="6"/>
+  </g>
+
+  <!-- the blood mark across the lintel and down both posts -->
+  <g filter="url(#glowBlur)">
+    <path d="M362 514 C400 498 440 492 466 492 C492 492 528 498 540 516" fill="none" stroke="url(#bloodMark)" stroke-width="9" stroke-linecap="round"/>
+    <path d="M378 522 C374 580 372 650 376 715" fill="none" stroke="url(#bloodMark)" stroke-width="7" stroke-linecap="round" opacity="0.9"/>
+    <path d="M524 522 C528 580 530 650 526 715" fill="none" stroke="url(#bloodMark)" stroke-width="7" stroke-linecap="round" opacity="0.9"/>
+  </g>
+  <g opacity="0.85">
+    <circle cx="465" cy="498" r="5" fill="#FFE3B0"/>
+    <circle cx="377" cy="560" r="3.4" fill="#FFB15A"/>
+    <circle cx="525" cy="600" r="3" fill="#FFB15A"/>
+  </g>
+
+  <!-- hyssop branch and basin at the threshold -->
+  <g transform="translate(345 758)">
+    <ellipse cx="0" cy="10" rx="22" ry="7" fill="#1C0E0C"/>
+    <path d="M-2 8 C-4 -10 2 -30 14 -46" stroke="#4A2E1C" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+    <path d="M14 -46 C8 -42 2 -40 -4 -40 M14 -46 C16 -40 20 -36 26 -34 M10 -32 C4 -30 -2 -30 -8 -28 M10 -32 C14 -26 20 -22 26 -20" stroke="#6B4A26" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>
+
+<div class="top">
+  <div class="lock">
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#g)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#g)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#g)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#g)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg>
+    <div class="rule"></div>
+    <div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div>
+  </div>
+  <div class="chip"><i></i>Fire Prayer &middot; Tonight</div>
+</div>
+
+<div class="copy">
+  <div class="kicker">Exodus 12:23, over my door tonight</div>
+  <h1>Passed over.<em>Not touched.</em></h1>
+  <p class="sub">Every altar, every chase, every mark assigned to find me tonight meets a door <b>already marked by a better blood.</b></p>
+</div>
+
+<div class="cta">
+  <div class="verse">&ldquo;When he seeth the blood upon the lintel, and on the two side posts, the LORD will pass over the door, and will not suffer the destroyer to come in.&rdquo;<span>Exodus 12:23</span></div>
+  <div class="btn"><span class="l1">Pray it before bed &rarr;</span><span class="l2">wfnglobal.org/dreams</span></div>
+</div>
+</div>
+<script>
+  // deterministic RNG
+  let s = 29; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 150; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const y = r() * 560;
+    c.setAttribute("cx", r() * 1080); c.setAttribute("cy", y);
+    c.setAttribute("r", (r() * 1.3 + 0.3).toFixed(2));
+    c.setAttribute("fill", r() > 0.85 ? "#FFD9A0" : "#F3E4D8");
+    c.setAttribute("opacity", (0.2 + r() * 0.65 * (1 - y / 760)).toFixed(2));
+    stars.appendChild(c);
+  }
+</script>
+</body></html>

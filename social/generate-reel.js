@@ -110,6 +110,12 @@
  *                                                  // to read, not an internal production note.
  * }
  *
+ * PAINTED SHOTS ("scenes" / "action" only): any line may also carry
+ * "image" (a painted 9:16 picture, path from the repo root), plus optional
+ * "focus" ("x% y%") and "kb" (push|pull|panl|panr|rise). That line then
+ * plays the painted picture with a slow camera move instead of an SVG
+ * scene. See social/reel-images/README.md and social/lib/painted-scenes.js.
+ *
  * Every rendered piece - cinematic or classic - should also be added to
  * the public video archive at videos/manifest.json (newest entries can
  * go anywhere in the array; the page sorts by date) so it shows up on
@@ -123,6 +129,7 @@ const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
 const { chromium } = require("playwright");
+const { applyPaintedScenes, injectPaintedScenes } = require("./lib/painted-scenes");
 
 const BASE_INTRO_DURATION = 4.0; // seconds - MUST match templates/reel-prayer.html's .intro animation-delay
 // reel-scenes.html plays the WFN "global reach" intro (0-4.4s), then
@@ -222,6 +229,10 @@ async function main() {
   const isScenes = content.template === "scenes" || isAction;
   const isCinematic = content.template === "cinematic" || isScenes;
   if (isScenes) INTRO_DURATION = SCENES_INTRO_DURATION;
+  // Lines with an "image" get a painted shot (social/lib/painted-scenes.js);
+  // this sets their "visual" key before the timeline is built.
+  const paintedShots = isScenes ? applyPaintedScenes(content, path.join(__dirname, "..")) : [];
+  if (paintedShots.length) console.log("Painted shots: " + paintedShots.length);
   const lines = buildLines(content, isCinematic);
   if (lines.length === 0) {
     console.error("content.json must have at least one line (opener and/or lines[]).");
@@ -292,6 +303,7 @@ async function main() {
   const templateFile = isAction ? "reel-action.html" : isScenes ? "reel-scenes.html" : isCinematic ? "reel-cinematic.html" : "reel-prayer.html";
   const templatePath = path.join(__dirname, "templates", templateFile);
   fs.copyFileSync(templatePath, renderHtmlPath);
+  if (paintedShots.length) fs.writeFileSync(renderHtmlPath, injectPaintedScenes(fs.readFileSync(renderHtmlPath, "utf8"), paintedShots));
 
   // Templates are laid out in fixed 1080x1920 CSS pixels. NOTE: an
   // earlier version of this tried deviceScaleFactor:2 + a larger

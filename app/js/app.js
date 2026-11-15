@@ -3391,6 +3391,15 @@
 
   var LIBRARY_BOOKS = [
     {
+      badge: "Book Five", slug: "arise-and-eat",
+      top: "ARISE", bottom: "AND EAT",
+      bg0: "#2A2152", bg1: "#4A2C5E", bg2: "#0B0C26",
+      gold0: "#FFF3D9", gold1: "#E39A45",
+      cover: "assets/library/arise-and-eat-cover.jpg",
+      title: "Arise and Eat",
+      desc: "For the tired believer who is still called — eight chapters with Elijah from the juniper tree to the still small voice, and back into his calling."
+    },
+    {
       badge: "Book Four", slug: "another-jesus",
       top: "ANOTHER", bottom: "JESUS",
       bg0: "#241B4A", bg1: "#140F30", bg2: "#070512",
@@ -3703,7 +3712,7 @@
       return `
       <div class="section-label">${esc(b.badge)}</div>
       <div class="library-row">
-        <div class="library-cover">
+        <div class="library-cover">${b.cover ? `<img src="/${esc(b.cover)}" alt="${esc(b.title)} cover" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">` : `
           <svg viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
             <defs>
               <linearGradient id="${gradId}" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -3717,7 +3726,7 @@
             <text x="300" y="460" text-anchor="middle" font-family="Georgia, serif" font-size="${topSize}" font-weight="900" fill="url(#${textId})">${esc(b.top)}</text>
             <text x="300" y="548" text-anchor="middle" font-family="Georgia, serif" font-size="${bottomSize}" font-weight="900" fill="url(#${textId})">${esc(b.bottom)}</text>
             <text x="300" y="800" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#F0DFAE">OLADAPO OLALEYE</text>
-          </svg>
+          </svg>`}
         </div>
         <div class="body">
           <h3>${esc(b.title)}</h3>

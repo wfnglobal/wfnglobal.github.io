@@ -71,7 +71,7 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
 .site-search-empty{text-align:center; color:var(--ink-3); font-size:14px; padding:24px 0;}
 .book-card{display:block; text-decoration:none; color:inherit; background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:border-color .15s, transform .15s;}
 .book-card:hover{border-color:var(--gold); transform:translateY(-2px);}
-.book-cover{aspect-ratio:2/3; width:100%; display:block;}
+.book-cover{aspect-ratio:2/3; width:100%; height:auto; display:block; object-fit:cover;}
 .book-card-body{padding:18px 18px 22px;}
 .book-badge{font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); background:var(--gold-wash); padding:4px 10px; border-radius:100px; display:inline-block; margin-bottom:10px;}
 .book-card-title{font-size:1.15rem; margin-bottom:6px; line-height:1.25;}
@@ -381,8 +381,18 @@ body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-in
         <span class="book-card-link">Read the Book &rarr;</span>
       </div>
     </a>
+    <a class="book-card" href="arise-and-eat.html">
+      <img class="book-cover" src="/assets/library/arise-and-eat-cover.jpg" width="1152" height="1728" loading="lazy" alt="Arise and Eat — Word and Faith Network, by Oladapo Olaleye. Book cover: the prophet Elijah asleep under a juniper tree in the desert at dawn, beside a fire of coals with bread and a jar of water.">
+      <div class="book-card-body">
+        <span class="book-badge">Book Five</span>
+        <h2 class="book-card-title">Arise and Eat</h2>
+        <p class="book-card-author">By Oladapo Olaleye</p>
+        <p class="book-card-desc">For the tired believer who is still called — eight chapters with Elijah from the juniper tree to the still small voice, and back into his calling.</p>
+        <span class="book-card-link">Read the Book &rarr;</span>
+      </div>
+    </a>
     <div class="soon-card">
-      <p class="soon-text">Book Five coming soon — a new title every two weeks.</p>
+      <p class="soon-text">Book Six coming soon — a new title every two weeks.</p>
     </div>
   </div>
 </main>

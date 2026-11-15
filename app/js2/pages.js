@@ -249,7 +249,7 @@
     <div class="page">
       ${W.intro("library", { eyebrow: "Welcome to the archive", title: "Be a Berean with these pages too", tone: "slate", body: ["A book on glass is still a book to study. Full books by Oladapo Olaleye, free to read in the app or download as a PDF.", "Read with your Bible open, and search the Scriptures to see whether these things are so."], verse: "They received the word with all readiness of mind, and searched the scriptures daily, whether those things were so.", ref: "Acts 17:11" })}
       <section class="section"><div class="section-head"><h2 class="h2">Books</h2><span class="small muted">A new book every two weeks</span></div>
-        <div class="hscroll">${books.map((b) => `<a class="book-cover" href="#/book/${b.slug}"><img src="${W.BASE}assets/library/${b.slug}-cover.svg" alt="" loading="lazy" onerror="this.style.background='${b.bg1}'"><span>${esc(b.title)}</span></a>`).join("")}</div>
+        <div class="hscroll">${books.map((b) => `<a class="book-cover" href="#/book/${b.slug}"><img src="${W.BASE}${b.cover || "assets/library/" + b.slug + "-cover.svg"}" alt="" loading="lazy" onerror="this.style.background='${b.bg1}'"><span>${esc(b.title)}</span></a>`).join("")}</div>
         <div class="card list">${books.map((b) => `<a class="row-link" href="#/book/${b.slug}"><span class="grow"><span class="label serif" style="font-size:17px">${esc(b.title)}</span><span class="hint">${esc(b.badge || "")}</span></span><span class="chev">${icon("chev", "xs")}</span></a>`).join("")}</div>
       </section>
       ${plans.length ? `<section class="section"><h2 class="h2" style="padding:0 4px">Reading plans</h2>${plans.map((pl) => { const pr = W.S.getPlanProgress(pl.slug); const n = (pr && pr.completedDays || []).length; return `<a class="card pad" href="#/plan/${pl.slug}" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink)"><span class="eyebrow spruce">${pl.days.length} days${n ? " · " + n + " done" : ""}</span><span class="h2">${esc(pl.title)}</span><span class="small ink2">${esc(pl.subtitle)}</span></a>`; }).join("")}</section>` : ""}
@@ -409,7 +409,7 @@
     const b = (C.LIBRARY_BOOKS || []).find((x) => x.slug === parts[0]);
     if (!b) return W.go("#/library");
     main.innerHTML = W.topbar(b.badge, { back: "#/library" }) + `<div class="page">
-      <div style="display:flex;justify-content:center;padding-top:6px"><img src="${W.BASE}assets/library/${b.slug}-cover.svg" alt="${esc(b.title)} cover" style="width:200px;aspect-ratio:2/3;object-fit:cover;border-radius:12px;box-shadow:0 30px 50px -26px rgba(0,0,0,0.6);background:${b.bg1}"></div>
+      <div style="display:flex;justify-content:center;padding-top:6px"><img src="${W.BASE}${b.cover || "assets/library/" + b.slug + "-cover.svg"}" alt="${esc(b.title)} cover" style="width:200px;aspect-ratio:2/3;object-fit:cover;border-radius:12px;box-shadow:0 30px 50px -26px rgba(0,0,0,0.6);background:${b.bg1}"></div>
       <div style="display:flex;flex-direction:column;gap:8px;text-align:center"><h1 style="margin:0;font:400 30px/36px var(--serif)">${esc(b.title)}</h1><span class="small muted">By Oladapo Olaleye · Word and Faith Network</span></div>
       <p class="serif" style="font-size:18px;line-height:29px">${esc(b.desc)}</p>
       <a class="btn lg block" href="${W.BASE}library/${b.slug}.html">${icon("bible", "sm")}Read the book</a>

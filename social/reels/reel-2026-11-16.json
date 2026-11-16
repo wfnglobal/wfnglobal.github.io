@@ -1,0 +1,38 @@
+{
+  "template": "scenes",
+  "lines": [
+    {
+      "text": "Three times Paul begged God to take the thorn away.",
+      "visual": "thorn",
+      "chapter": "2 Corinthians 12"
+    },
+    {
+      "text": "Three times, heaven said no — and gave him something else instead.",
+      "visual": "thorn"
+    },
+    {
+      "text": "My grace is sufficient for thee: for my strength is made perfect in weakness.",
+      "visual": "weak",
+      "scripture": true
+    },
+    {
+      "text": "Whatever won't leave you doesn't mean you're forgotten. It means there's room for His power to show up loud.",
+      "visual": "weak"
+    },
+    {
+      "text": "Most gladly therefore will I rather glory in my infirmities, that the power of Christ may rest upon me.",
+      "visual": "grace",
+      "scripture": true
+    },
+    {
+      "text": "The thorn stayed. So did He. In Jesus' name, amen.",
+      "visual": "grace"
+    }
+  ],
+  "bold": "my strength is made perfect in weakness",
+  "title": "Word and Faith Network",
+  "subtitle": "When the Thorn Stays",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A three-scene illustrated short film on 2 Corinthians 12: a kneeling figure praying beside a wine-dusk thorn bramble that won't move, a single crack of gold light breaking through near-black as the weakness is named honestly, and warm dawn light pouring out over that same thorn as the figure stands with arms raised — grace poured out around what never left."
+}

@@ -45,6 +45,12 @@
     serpent   - near-black green grove, a staff thrown to the ground becomes a serpent, a figure recoiling
     grip      - dark-to-gold transition light, a hand reaches back for it as the serpent re-forms into a rod
     authority - triumphant blue-gold dawn, the rod lifted high, faint parted-light bands glowing at the base
+    drybones  - ash-grey dusk valley floor scattered with sun-bleached bones
+    breath    - teal dawn breaking through grey, a figure with arms raised calling breath into the valley
+    army      - gold-blue triumphant dawn, the valley floor risen as a standing army
+    thorn     - wine-plum dusk hillside, a gnarled thorn bramble, a figure kneeling before it in prayer
+    weak      - near-black, a single crack of gold light breaking through the dark like a vessel cracking open, a bowed figure beneath it
+    grace     - warm gold-rose dawn, the same thorn bramble still at the figure's feet, a figure standing with arms raised in the light
 
   Each scene is built from layers (l-back / l-front) that get different
   Ken Burns moves for a 2.5D parallax camera, plus an HTML particle layer
@@ -110,6 +116,9 @@
   body[data-shot="drybones"]{--accent:#C9BFA0;}
   body[data-shot="breath"]{--accent:#5FD6CC;}
   body[data-shot="army"]{--accent:#FFD98A;}
+  body[data-shot="thorn"]{--accent:#E8738C;}
+  body[data-shot="weak"]{--accent:#F2C879;}
+  body[data-shot="grace"]{--accent:#FFD9A0;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -405,6 +414,21 @@
     <g id="prop-boat">
       <path d="M -280 -54 C -232 18 -120 48 0 50 C 120 48 232 18 280 -54 C 232 -16 120 10 0 12 C -120 10 -232 -16 -280 -54 Z"/>
       <rect x="-7" y="-250" width="14" height="250" rx="3"/>
+    </g>
+
+    <!-- A gnarled thorn branch: a stick of three angled segments with small
+         triangular thorns, base at y=0, growing upward (negative y). Used
+         for THORN and GRACE below, each instance resized/rotated/mirrored
+         to build a bramble patch. -->
+    <g id="prop-thorn">
+      <rect x="-5" y="-90" width="10" height="94" rx="5"/>
+      <rect x="-4" y="-170" width="8" height="90" rx="4" transform="rotate(-12 0 -86)"/>
+      <rect x="-4" y="-232" width="7" height="72" rx="4" transform="rotate(16 0 -162)"/>
+      <polygon points="2,-46 30,-58 14,-30"/>
+      <polygon points="-2,-96 -28,-110 -12,-80"/>
+      <polygon points="4,-146 32,-160 16,-130"/>
+      <polygon points="-4,-196 -32,-208 -14,-180"/>
+      <polygon points="2,-220 24,-236 12,-204"/>
     </g>
   </defs>
 </svg>
@@ -2097,6 +2121,117 @@
     </div>
     <div class="fx" data-type="motes" data-n="30" data-color="255,222,160"></div>
     <div class="fx" data-type="bokeh" data-n="12"></div>
+  </section>
+
+  <!-- ============ THORN: wine-plum dusk hillside, a bramble of thorns, a kneeling figure praying over what won't leave ============ -->
+  <section class="scene" data-scene="thorn" data-kb="push" style="--ox:50%; --oy:72%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="tn-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0A0410"/><stop offset="0.38" stop-color="#3A1428"/>
+            <stop offset="0.7" stop-color="#7A2C44"/><stop offset="1" stop-color="#D97E92"/>
+          </linearGradient>
+          <radialGradient id="tn-haze" cx="0.5" cy="0.78" r="0.5"><stop offset="0" stop-color="#E8A2AE" stop-opacity="0.35"/><stop offset="1" stop-color="#E8A2AE" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#tn-sky)"/>
+        <rect width="1080" height="1920" fill="url(#tn-haze)"/>
+        <path d="M 0 1100 L 220 1040 L 400 1090 L 600 1010 L 800 1080 L 1080 1020 L 1080 1240 L 0 1240 Z" fill="#2A1020" opacity="0.82"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="tn-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A1624"/><stop offset="1" stop-color="#09040A"/></linearGradient>
+        </defs>
+        <path d="M 0 1260 C 280 1238 760 1248 1080 1260 L 1080 1920 L 0 1920 Z" fill="url(#tn-floor)"/>
+        <ellipse cx="540" cy="1420" rx="260" ry="46" fill="#000" opacity="0.32"/>
+        <g opacity="0.88" transform="translate(220 1420) rotate(-4) scale(1.3)"><use href="#prop-thorn" fill="#1E0C16"/></g>
+        <g opacity="0.9" transform="translate(360 1400) rotate(6) scale(1.5)"><use href="#prop-thorn" fill="#180A12"/></g>
+        <g opacity="0.85" transform="translate(760 1410) rotate(-10) scale(-1.4,1.4)"><use href="#prop-thorn" fill="#1E0C16"/></g>
+        <g opacity="0.8" transform="translate(900 1430) rotate(8) scale(-1.2,1.2)"><use href="#prop-thorn" fill="#180A12"/></g>
+        <g opacity="0.75" transform="translate(620 1450) rotate(-2) scale(1.0)"><use href="#prop-thorn" fill="#230E18"/></g>
+        <g transform="translate(540 1430) scale(0.9)">
+          <use href="#fig-seated" fill="#E8738C" filter="url(#glow8)" opacity="0.45"/>
+          <use href="#fig-seated" fill="#0C0509" style="--rim:#E8738C"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="26" data-color="232,162,174"></div>
+  </section>
+
+  <!-- ============ WEAK: near-black, a single crack of gold light breaking through the dark like a vessel cracking open, a bowed figure beneath it ============ -->
+  <section class="scene" data-scene="weak" data-kb="rise" style="--ox:50%; --oy:56%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wk-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#040303"/><stop offset="0.55" stop-color="#0C0906"/><stop offset="1" stop-color="#14100A"/>
+          </linearGradient>
+          <radialGradient id="wk-backlight" cx="0.5" cy="0.78" r="0.4"><stop offset="0" stop-color="#F2C879" stop-opacity="0.45"/><stop offset="1" stop-color="#F2C879" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#wk-sky)"/>
+        <rect width="1080" height="1920" fill="url(#wk-backlight)"/>
+        <path d="M 540 90 L 556 320 L 524 460 L 562 640 L 518 800 L 560 1000 L 512 1180 L 556 1380 L 528 1560 L 548 1760 L 540 1920"
+          fill="none" stroke="#F2C879" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow8)" opacity="0.95"/>
+        <path d="M 540 90 L 556 320 L 524 460 L 562 640 L 518 800 L 560 1000 L 512 1180 L 556 1380 L 528 1560 L 548 1760 L 540 1920"
+          fill="none" stroke="#FFF3D4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+        <path d="M 560 1000 L 650 1060 M 512 1180 L 432 1250" fill="none" stroke="#F2C879" stroke-width="4" stroke-linecap="round" filter="url(#glow4)" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wk-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#140F0A"/><stop offset="1" stop-color="#030202"/></linearGradient>
+        </defs>
+        <path d="M 0 1420 C 280 1398 760 1408 1080 1420 L 1080 1920 L 0 1920 Z" fill="url(#wk-floor)"/>
+        <ellipse cx="540" cy="1480" rx="220" ry="36" fill="#000" opacity="0.5"/>
+        <g transform="translate(540 1460) scale(1.0)">
+          <use href="#fig-seated" fill="#F2C879" filter="url(#glow8)" opacity="0.65"/>
+          <use href="#fig-seated" fill="#060304" style="--rim:#F2C879"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="22" data-color="242,200,121"></div>
+  </section>
+
+  <!-- ============ GRACE: warm gold-rose dawn, the thorn still there at the figure's feet, light poured out over it instead of removing it ============ -->
+  <section class="scene" data-scene="grace" data-kb="pull" style="--ox:50%; --oy:50%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="gc-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1C1024"/><stop offset="0.4" stop-color="#6A3048"/>
+            <stop offset="0.72" stop-color="#E8824A"/><stop offset="1" stop-color="#FFD9A0"/>
+          </linearGradient>
+          <radialGradient id="gc-glow" cx="0.5" cy="0.76" r="0.46"><stop offset="0" stop-color="#FFF0C4" stop-opacity="0.75"/><stop offset="1" stop-color="#FFF0C4" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#gc-sky)"/>
+        <rect width="1080" height="1920" fill="url(#gc-glow)"/>
+      </svg>
+      <div class="spin" style="--rx:540px; --ry:1400px; --sdur:100s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <g class="rays-gen" data-cx="540" data-cy="1400" data-n="14" data-len="1700" data-w="2" fill="#FFE2B8" opacity="0.1"></g>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="gc-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5A3828"/><stop offset="1" stop-color="#0A0604"/></linearGradient>
+        </defs>
+        <path d="M 0 1360 C 280 1338 760 1348 1080 1360 L 1080 1920 L 0 1920 Z" fill="url(#gc-floor)"/>
+        <g opacity="0.55" transform="translate(400 1430) rotate(-4) scale(1.0)"><use href="#prop-thorn" fill="#2A160E"/></g>
+        <g opacity="0.5" transform="translate(700 1440) rotate(6) scale(-0.9,0.9)"><use href="#prop-thorn" fill="#30190F"/></g>
+        <g transform="translate(540 1400) scale(0.66)">
+          <ellipse cx="0" cy="58" rx="150" ry="22" fill="#000" opacity="0.4"/>
+          <use href="#fig-raise" fill="#FFD9A0" filter="url(#glow8)" opacity="0.7"/>
+          <use href="#fig-raise" fill="#1C1008" style="--rim:#FFD9A0"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="26" data-color="255,222,170"></div>
+    <div class="fx" data-type="bokeh" data-n="10"></div>
   </section>
 
 </div>

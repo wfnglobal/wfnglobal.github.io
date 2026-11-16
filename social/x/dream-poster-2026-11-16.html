@@ -1,0 +1,202 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  WFN X poster, 1080x1350 (4:5): "I Am Not Going Back." (Nov 16, 2026)
+  for the Fire Prayer Against Dream Attacks ("Arise and Go Forward",
+  Deuteronomy 1:6-7 / Isaiah 43:18-19). New scene + new palette from
+  prior days: a worn circular rut cut into the ground by endless pacing
+  in place — the groove of a stagnant, backward-looping dream — cracked
+  open on the near side, with dim embers and a few retreating
+  shadow-wisps still smoldering inside the broken ring, while a single
+  straight road of dawn-light breaks through the fracture and runs out
+  toward a rising sun on the horizon. A lone traveler stands at the
+  break, one foot already past the ring, walking out of the circle and
+  onto the road. Palette: deep indigo night overhead warming down into
+  a dawn band of rose-gold and amber at the horizon (no garnet, no
+  obsidian-teal, no slate, no violet-dome — distinct from the last five
+  days). Render with social/render-poster.js.
+-->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#070A1C;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden;
+    background:linear-gradient(180deg,#05061A 0%,#0B0E2E 26%,#1C1640 46%,#3A2244 62%,#7A3A3C 76%,#C4713F 86%,#2A1220 100%);}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.72);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9A0; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(255,170,90,0.45); background:rgba(255,120,40,0.1); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FF8A3A; box-shadow:0 0 12px 3px rgba(255,120,40,0.8);}
+  .copy{position:absolute; left:0; right:0; top:800px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(255,214,160,0.9);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:116px; line-height:0.97; letter-spacing:-0.03em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.02em;
+    background:linear-gradient(180deg,#FFE9C2 0%,#FFB45E 40%,#FF7A3D 72%,#E23B2E 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(255,120,60,0.45)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:800px; font-family:'IN'; font-size:21px; line-height:1.45; color:rgba(240,232,220,0.86);}
+  .sub b{color:#FFD49A; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:22px; line-height:1.32; color:rgba(246,236,214,0.9); max-width:530px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A0C05; background:linear-gradient(180deg,#FFD488,#FF9A45); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(255,120,40,0.7);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <radialGradient id="sunHalo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE9B0" stop-opacity="0.55"/><stop offset="0.5" stop-color="#FF9A4A" stop-opacity="0.16"/><stop offset="1" stop-color="#FF9A4A" stop-opacity="0"/></radialGradient>
+    <radialGradient id="sun" cx="0.4" cy="0.38" r="0.65"><stop offset="0" stop-color="#FFF6E0"/><stop offset="0.6" stop-color="#FFD37A"/><stop offset="1" stop-color="#FF9A45"/></radialGradient>
+    <linearGradient id="road" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF8A3A" stop-opacity="0.08"/><stop offset="0.55" stop-color="#FFC88A" stop-opacity="0.55"/><stop offset="1" stop-color="#FFF3D2" stop-opacity="0.95"/></linearGradient>
+    <linearGradient id="dirt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3C2A34"/><stop offset="1" stop-color="#241620"/></linearGradient>
+    <radialGradient id="emberGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FF6A2A" stop-opacity="0.5"/><stop offset="1" stop-color="#FF6A2A" stop-opacity="0"/></radialGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241530"/><stop offset="0.5" stop-color="#3A2024"/><stop offset="1" stop-color="#140A14"/></linearGradient>
+    <filter id="blur10"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="smoke" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.016 0.026" numOctaves="3" seed="21"/><feDisplacementMap in="SourceGraphic" scale="34"/><feGaussianBlur stdDeviation="1.8"/></filter>
+  </defs>
+
+  <g id="stars"></g>
+
+  <!-- the sunrise, off-center at the horizon — a new day, not a hovering light -->
+  <circle cx="710" cy="298" r="200" fill="url(#sunHalo)"/>
+  <circle cx="710" cy="298" r="64" fill="url(#sun)"/>
+  <g opacity="0.45">
+    <rect x="706" y="270" width="7" height="56" rx="2" fill="#FFF6E0"/>
+    <rect x="688" y="288" width="44" height="7" rx="2" fill="#FFF6E0"/>
+  </g>
+
+  <!-- distant horizon hills -->
+  <path d="M0 560 C160 534 300 546 460 528 C600 512 720 534 860 522 C960 514 1030 522 1080 516 L1080 620 L0 620Z" fill="#2A1A36" opacity="0.92"/>
+  <path d="M0 544 C150 522 280 532 440 516 C600 500 740 518 880 506 C970 498 1030 504 1080 498" fill="none" stroke="#FFC98A" stroke-width="2" opacity="0.4"/>
+
+  <!-- ground -->
+  <path d="M0 600 C300 582 780 582 1080 600 L1080 1350 L0 1350Z" fill="url(#ground)"/>
+
+  <!-- the worn circular path: dry, cracked earth where feet have paced the same loop for years, broken open on the near side -->
+  <g transform="translate(360 700)">
+    <path d="M-150 10 C-150 -56 150 -56 150 10 C150 50 90 72 0 72 C-62 72 -120 54 -144 28 Z" fill="url(#dirt)" opacity="0.9"/>
+    <path d="M-150 10 C-150 -56 150 -56 150 10" fill="none" stroke="#6B5068" stroke-width="3" opacity="0.5"/>
+    <!-- cracks radiating through the dead ground -->
+    <g stroke="#140B14" stroke-width="2.5" opacity="0.6" fill="none">
+      <path d="M-40 -24 L-16 2 L-34 24"/>
+      <path d="M30 -30 L50 -6 L36 20"/>
+      <path d="M-4 -40 L6 -10"/>
+    </g>
+    <!-- the fracture: the loop broken open, spilling dust and a few dying embers -->
+    <g filter="url(#smoke)" opacity="0.7">
+      <path d="M90 50 C120 66 150 70 170 58 C160 80 128 92 100 84 C92 78 88 64 90 50Z" fill="#140A14"/>
+    </g>
+    <g opacity="0.65">
+      <circle cx="128" cy="62" r="4.2" fill="#FF7A34"/>
+      <circle cx="146" cy="72" r="2.8" fill="#FFB266"/>
+      <circle cx="108" cy="78" r="2.6" fill="#FF7A34"/>
+    </g>
+    <!-- old footprints, worn smooth, tracing the dead loop -->
+    <g fill="#140B14" opacity="0.55">
+      <ellipse cx="-120" cy="-20" rx="9" ry="5" transform="rotate(30 -120 -20)"/>
+      <ellipse cx="-70" cy="-48" rx="9" ry="5" transform="rotate(10 -70 -48)"/>
+      <ellipse cx="10" cy="-56" rx="9" ry="5"/>
+      <ellipse cx="90" cy="-44" rx="9" ry="5" transform="rotate(-15 90 -44)"/>
+      <ellipse cx="134" cy="-10" rx="9" ry="5" transform="rotate(-35 134 -10)"/>
+    </g>
+  </g>
+
+  <!-- the new road: a straight line of dawn-light breaking away from the loop, climbing toward the sunrise, softening into an ambient glow rather than a hard beam -->
+  <ellipse cx="560" cy="700" rx="130" ry="150" fill="url(#emberGlow)" opacity="0.55" filter="url(#blur10)"/>
+  <path d="M552 616 L608 616 L660 800 L460 800 Z" fill="url(#road)" opacity="0.8" filter="url(#blur4)"/>
+  <path d="M560 616 L600 616" stroke="#FFF3D2" stroke-width="3" opacity="0.6"/>
+
+  <!-- fresh footprints, just a few, between the loop and the traveler -->
+  <g fill="#FFE7B4" opacity="0.45">
+    <ellipse cx="596" cy="672" rx="6" ry="9" transform="rotate(8 596 672)"/>
+    <ellipse cx="572" cy="712" rx="7" ry="10" transform="rotate(6 572 712)"/>
+  </g>
+
+  <!-- the traveler, walking away from the broken loop and up the road toward the light -->
+  <g transform="translate(588 700) scale(0.52)">
+    <ellipse cx="0" cy="118" rx="58" ry="14" fill="#000" opacity="0.4" filter="url(#blur10)"/>
+    <!-- cloak, caught mid-stride, lit from the road ahead -->
+    <path d="M-30 -58 C-54 -10 -46 48 -20 110 L8 112 C2 54 -2 -4 -14 -58Z" fill="#241428"/>
+    <path d="M6 -56 C22 -8 30 42 34 96 L58 100 C52 44 40 -8 18 -56Z" fill="#2E1A30"/>
+    <path d="M-20 -50 C-34 -8 -28 40 -10 100" stroke="#FFD9A0" stroke-width="2" opacity="0.45" fill="none"/>
+    <!-- torso -->
+    <path d="M-14 -62 C-16 -84 16 -84 14 -62 L18 -28 L-18 -28 Z" fill="#2A1830"/>
+    <!-- head, bowed slightly forward in motion, facing away toward the light -->
+    <ellipse cx="2" cy="-96" rx="15" ry="17" fill="#4A2A1C"/>
+    <path d="M-12 -104 C-14 -116 10 -118 14 -104 C14 -112 2 -116 -8 -112Z" fill="#1C100A"/>
+    <!-- striding legs -->
+    <path d="M6 -28 C16 2 10 44 26 78" stroke="#241428" stroke-width="15" stroke-linecap="round" fill="none"/>
+    <path d="M-6 -28 C-18 6 -8 48 -24 72" stroke="#1C0F22" stroke-width="15" stroke-linecap="round" fill="none"/>
+    <!-- trailing arm, swinging back toward the loop it is leaving -->
+    <path d="M-12 -56 C-28 -40 -36 -16 -32 8" stroke="#241428" stroke-width="11" stroke-linecap="round" fill="none"/>
+    <!-- rim light along the far side from the road ahead -->
+    <path d="M16 -86 C24 -40 26 10 20 76" stroke="#FFE2A8" stroke-width="2.6" opacity="0.55" fill="none"/>
+  </g>
+
+  <g id="embers"></g>
+</svg>
+
+<div class="top">
+  <div class="lock">
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#g)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#g)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#g)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#g)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg>
+    <div class="rule"></div>
+    <div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div>
+  </div>
+  <div class="chip"><i></i>Fire Prayer · Tonight</div>
+</div>
+
+<div class="copy">
+  <div class="kicker">Before you close your eyes tonight</div>
+  <h1>I am not<em>going back.</em></h1>
+  <p class="sub">Every old altar, every old cycle, every dream built to turn you around — <b>broken by fire before you ever wake.</b></p>
+</div>
+
+<div class="cta">
+  <div class="verse">&ldquo;The path of the just is as the shining light, that shineth more and more unto the perfect day.&rdquo;<span>Proverbs 4:18</span></div>
+  <div class="btn"><span class="l1">Pray it before bed &rarr;</span><span class="l2">wfnglobal.org/dreams</span></div>
+</div>
+</div>
+<script>
+  // deterministic RNG
+  let s = 23; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 160; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const y = r() * 520;
+    c.setAttribute("cx", r() * 1080); c.setAttribute("cy", y);
+    c.setAttribute("r", (r() * 1.3 + 0.3).toFixed(2));
+    c.setAttribute("fill", r() > 0.85 ? "#FFE4B5" : "#E9E6FF");
+    c.setAttribute("opacity", (0.2 + r() * 0.65 * (1 - y / 700)).toFixed(2));
+    stars.appendChild(c);
+  }
+  // a few dying embers rising off the broken loop, drifting up into the dawn
+  const em = document.getElementById("embers");
+  for (let i = 0; i < 26; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const x = 470 + (r() - 0.3) * 180;
+    c.setAttribute("cx", x);
+    c.setAttribute("cy", 700 - r() * 160);
+    c.setAttribute("r", (r() * 1.8 + 0.4).toFixed(2));
+    c.setAttribute("fill", r() > 0.5 ? "#FFC266" : "#FF8A4A");
+    c.setAttribute("opacity", (0.2 + r() * 0.5).toFixed(2));
+    em.appendChild(c);
+  }
+</script>
+</body></html>

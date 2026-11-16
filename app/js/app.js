@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "He giveth power to the faint; and to them that have no might he increaseth strength.", ref: "Isaiah 40:29" },
     { text: "And I will restore to you the years that the locust hath eaten, the cankerworm, and the caterpiller, and the palmerworm, my great army which I sent among you.", ref: "Joel 2:25" },
     { text: "Not by might, nor by power, but by my spirit, saith the LORD of hosts.", ref: "Zechariah 4:6" },
     { text: "Cast thy burden upon the LORD, and he shall sustain thee: he shall never suffer the righteous to be moved.", ref: "Psalm 55:22" },
@@ -89,21 +90,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that nothing in my life is too dry for Your breath!",
-      "I will not call dead what You are still asking about — Lord God, You know!",
-      "I refuse to make peace with my valley — I walk through it with my eyes open and my faith awake!",
+      "Father, I declare today that Your grace is sufficient for me — not barely enough, but more than enough!",
+      "I will not measure Your love by the thorn that stayed — You answered me, and Your answer is grace!",
+      "The weak place in my life is not my end — it is where Your strength is made perfect!",
       "",
-      "I stop describing the bones, and I start speaking to them — dry bones, hear the word of the LORD!",
-      "I prophesy to my family, my finances, my body, and my calling — come together, bone to his bone!",
-      "Every rattle in my valley is a sign that God is moving, and I will not stop speaking until it stands!",
+      "I stop hiding what hurts, and I lift it up before You — let the power of Christ rest upon me!",
+      "Over my body, my mind, my finances and my family, the tent of Your power is pitched today!",
+      "No messenger of Satan can buffet me out from under Your covering!",
       "",
-      "Breath, enter into me — the same Spirit that raised Christ from the dead quickens me today!",
-      "The Lord restores to me the years the locust has eaten, and what was scattered rises as an exceeding great army!",
-      "My hope is not lost — my graves are opening, and I shall live!",
+      "When I am faint, You give me power; when I have no might, You increase my strength!",
+      "I can do all things through Christ which strengtheneth me!",
+      "When I am weak, then am I strong!",
       "",
-      "Save this. Speak it over your house today. Dry is not dead to God, and dead is not done — these bones shall live! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. The thorn may be in my side, but His power is over my head — His grace is sufficient for me! In Jesus' mighty name, amen!"
     ],
-    ref: "Ezekiel 37:3-5"
+    ref: "2 Corinthians 12:9-10"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -144,6 +145,7 @@
   };
 
   const SERMONS = [
+    { slug: "when-the-thorn-stays", title: "When the Thorn Stays", ref: "2 Corinthians 12:8-10", date: "November 16, 2026", excerpt: "Paul prayed three times for the thorn to leave, and it stayed. But heaven's answer wasn't silence — it was grace enough to carry it, and the power of Christ resting on the very place he felt weakest." },
     { slug: "can-these-bones-live", title: "Can These Bones Live?", ref: "Ezekiel 37:3-5", date: "November 15, 2026", excerpt: "The valley was full, the bones were very dry, and nobody was praying about it anymore. God asked the prophet one question — can these bones live? — then told him to preach to what was dead until breath came back into it." },
     { slug: "what-is-that-in-thine-hand", title: "What Is That in Thine Hand?", ref: "Exodus 4:2-4", date: "November 14, 2026", excerpt: "Moses had a list of reasons he couldn't go. God didn't argue with one of them. He asked a question — what is that in thine hand? — and turned an old shepherd's stick into the rod of God." },
     { slug: "trade-your-yoke", title: "Trade Your Yoke", ref: "Matthew 11:28-30", date: "November 13, 2026", excerpt: "Jesus never told the weary to stop carrying everything. He told them to come and trade — your yoke for His, your heavy for His light — and find a rest that reaches all the way down to the soul." },

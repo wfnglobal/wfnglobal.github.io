@@ -3420,6 +3420,15 @@
 
   var LIBRARY_BOOKS = [
     {
+      badge: "Book Six", slug: "detained-in-the-village",
+      top: "DETAINED", bottom: "IN THE VILLAGE",
+      bg0: "#0F1A44", bg1: "#1B2457", bg2: "#070A1F",
+      gold0: "#FFE9B0", gold1: "#E0A24C",
+      cover: "assets/library/detained-in-the-village-cover.jpg",
+      title: "Detained in the Village",
+      desc: "For everyone whose body left home but whose life is still held there — eight chapters, seven steps and a prophetic prayer for breaking free from the village."
+    },
+    {
       badge: "Book Five", slug: "arise-and-eat",
       top: "ARISE", bottom: "AND EAT",
       bg0: "#2A2152", bg1: "#4A2C5E", bg2: "#0B0C26",

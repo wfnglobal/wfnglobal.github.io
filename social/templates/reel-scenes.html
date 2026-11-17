@@ -119,6 +119,9 @@
   body[data-shot="thorn"]{--accent:#E8738C;}
   body[data-shot="weak"]{--accent:#F2C879;}
   body[data-shot="grace"]{--accent:#FFD9A0;}
+  body[data-shot="pit"]{--accent:#C98A52;}
+  body[data-shot="chains"]{--accent:#8FA8C8;}
+  body[data-shot="embrace"]{--accent:#F2A868;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -2231,6 +2234,109 @@
       </svg>
     </div>
     <div class="fx" data-type="motes" data-n="26" data-color="255,222,170"></div>
+    <div class="fx" data-type="bokeh" data-n="10"></div>
+  </section>
+
+  <!-- ============ PIT: a narrow shaft of amber light far above, dry cistern walls falling into near-black, two small silhouettes at the rim looking down ============ -->
+  <section class="scene" data-scene="pit" data-kb="push" style="--ox:50%; --oy:38%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="pt-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#E3B06A"/><stop offset="0.14" stop-color="#8A5A34"/>
+            <stop offset="0.36" stop-color="#3A2416"/><stop offset="0.68" stop-color="#160E09"/><stop offset="1" stop-color="#050302"/>
+          </linearGradient>
+          <radialGradient id="pt-mouth" cx="0.5" cy="0.05" r="0.32"><stop offset="0" stop-color="#FFE2A6" stop-opacity="0.85"/><stop offset="1" stop-color="#FFE2A6" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#pt-sky)"/>
+        <rect width="1080" height="1920" fill="url(#pt-mouth)"/>
+        <g transform="translate(410 160) scale(0.15)"><use href="#fig-robe" fill="#1A1008"/></g>
+        <g transform="translate(650 172) scale(-0.14,0.14)"><use href="#fig-robe" fill="#1A1008"/></g>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="pt-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#140D08"/><stop offset="1" stop-color="#040302"/></linearGradient>
+        </defs>
+        <path d="M 0 60 L 240 40 L 70 1920 L 0 1920 Z" fill="#0A0604" opacity="0.92"/>
+        <path d="M 1080 60 L 840 40 L 1010 1920 L 1080 1920 Z" fill="#0A0604" opacity="0.92"/>
+        <path d="M 0 1480 C 280 1456 760 1468 1080 1480 L 1080 1920 L 0 1920 Z" fill="url(#pt-floor)"/>
+        <ellipse cx="540" cy="1560" rx="190" ry="34" fill="#000" opacity="0.5"/>
+        <g transform="translate(540 1540) scale(0.56)">
+          <use href="#fig-seated" fill="#D9A868" filter="url(#glow8)" opacity="0.3"/>
+          <use href="#fig-seated" fill="#07050A" style="--rim:#D9A868"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="20" data-color="200,160,110"></div>
+  </section>
+
+  <!-- ============ CHAINS: a cold forgotten cell, a sliver of light from a high barred window, bar-shadows sliding slowly across the floor as years pass ============ -->
+  <section class="scene" data-scene="chains" data-kb="rise" style="--ox:50%; --oy:56%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ch-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#05060A"/><stop offset="0.5" stop-color="#0C1018"/><stop offset="1" stop-color="#141C26"/>
+          </linearGradient>
+          <radialGradient id="ch-window" cx="0.5" cy="0.1" r="0.3"><stop offset="0" stop-color="#CFE0F0" stop-opacity="0.65"/><stop offset="1" stop-color="#CFE0F0" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#ch-sky)"/>
+        <rect width="1080" height="1920" fill="url(#ch-window)"/>
+        <g stroke="#030406" stroke-width="12" opacity="0.95"><line x1="460" y1="20" x2="460" y2="260"/><line x1="540" y1="20" x2="540" y2="260"/><line x1="620" y1="20" x2="620" y2="260"/></g>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ch-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12161E"/><stop offset="1" stop-color="#030406"/></linearGradient>
+        </defs>
+        <path d="M 0 1360 C 280 1336 760 1348 1080 1360 L 1080 1920 L 0 1920 Z" fill="url(#ch-floor)"/>
+        <g fill="#8FA8C8" opacity="0.16"><rect x="400" y="260" width="20" height="1700" transform="skewX(-3)"/><rect x="520" y="260" width="20" height="1700" transform="skewX(-3)"/><rect x="640" y="260" width="20" height="1700" transform="skewX(-3)"/></g>
+        <ellipse cx="540" cy="1440" rx="190" ry="34" fill="#000" opacity="0.5"/>
+        <g transform="translate(540 1420) scale(0.68)">
+          <use href="#fig-seated" fill="#8FA8C8" filter="url(#glow8)" opacity="0.55"/>
+          <use href="#fig-seated" fill="#070A10" style="--rim:#8FA8C8"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="14" data-color="180,200,220"></div>
+  </section>
+
+  <!-- ============ EMBRACE: warm rose-gold morning, two close silhouettes folded into one another, the pit and the prison both behind them now ============ -->
+  <section class="scene" data-scene="embrace" data-kb="pull" style="--ox:50%; --oy:54%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="em-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#241826"/><stop offset="0.36" stop-color="#7A3E3E"/>
+            <stop offset="0.64" stop-color="#E8864E"/><stop offset="1" stop-color="#FFDDAE"/>
+          </linearGradient>
+          <radialGradient id="em-glow" cx="0.5" cy="0.74" r="0.48"><stop offset="0" stop-color="#FFEAC2" stop-opacity="0.8"/><stop offset="1" stop-color="#FFEAC2" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#em-sky)"/>
+        <rect width="1080" height="1920" fill="url(#em-glow)"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="em-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6E4228"/><stop offset="1" stop-color="#0E0806"/></linearGradient>
+        </defs>
+        <path d="M 0 1380 C 280 1356 760 1368 1080 1380 L 1080 1920 L 0 1920 Z" fill="url(#em-floor)"/>
+        <ellipse cx="540" cy="1440" rx="210" ry="36" fill="#000" opacity="0.42"/>
+        <g transform="translate(486 1424) scale(0.56)">
+          <use href="#fig-raise" fill="#FFDDAE" filter="url(#glow8)" opacity="0.55"/>
+          <use href="#fig-raise" fill="#1C0E08" style="--rim:#FFDDAE"/>
+        </g>
+        <g transform="translate(596 1424) scale(-0.5,0.5)">
+          <use href="#fig-robe" fill="#FFDDAE" filter="url(#glow8)" opacity="0.5"/>
+          <use href="#fig-robe" fill="#180C06" style="--rim:#FFDDAE"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="24" data-color="255,222,180"></div>
     <div class="fx" data-type="bokeh" data-n="10"></div>
   </section>
 

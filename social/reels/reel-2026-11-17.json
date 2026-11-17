@@ -1,0 +1,37 @@
+{
+  "template": "scenes",
+  "lines": [
+    {
+      "text": "His own brothers threw him into a pit and sold him into slavery.",
+      "visual": "pit"
+    },
+    {
+      "text": "Years in another man's house, then a prison that forgot he even existed.",
+      "visual": "pit"
+    },
+    {
+      "text": "Ye thought evil against me; but God meant it unto good.",
+      "visual": "chains",
+      "scripture": true
+    },
+    {
+      "text": "Every room they left him in, God was already turning into the room where he would save them.",
+      "visual": "chains"
+    },
+    {
+      "text": "And we know that all things work together for good to them that love God.",
+      "visual": "embrace",
+      "scripture": true
+    },
+    {
+      "text": "The brothers who sold him wept in his arms. The pit was never the end of the story. In Jesus' name, amen.",
+      "visual": "embrace"
+    }
+  ],
+  "bold": "God meant it unto good",
+  "title": "Word and Faith Network",
+  "subtitle": "But God Meant It Unto Good",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A three-scene illustrated short film on Genesis 50: brothers lowering Joseph into a dusty cistern at dusk, a single figure forgotten in a cold barred cell as the years pass, and two silhouettes folded into one another in warm rose-gold morning light as the brothers who betrayed him are wept over and forgiven."
+}

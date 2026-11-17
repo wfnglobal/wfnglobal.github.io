@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "And we know that all things work together for good to them that love God, to them who are the called according to his purpose.", ref: "Romans 8:28" },
     { text: "He giveth power to the faint; and to them that have no might he increaseth strength.", ref: "Isaiah 40:29" },
     { text: "And I will restore to you the years that the locust hath eaten, the cankerworm, and the caterpiller, and the palmerworm, my great army which I sent among you.", ref: "Joel 2:25" },
     { text: "Not by might, nor by power, but by my spirit, saith the LORD of hosts.", ref: "Zechariah 4:6" },
@@ -90,21 +91,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that Your grace is sufficient for me — not barely enough, but more than enough!",
-      "I will not measure Your love by the thorn that stayed — You answered me, and Your answer is grace!",
-      "The weak place in my life is not my end — it is where Your strength is made perfect!",
+      "Father, I declare today that what was meant to destroy me, You have meant unto good!",
+      "The pit was not my end — it was my road to the palace!",
+      "Every betrayal, every lie, every door that forgot me is working together for my good!",
       "",
-      "I stop hiding what hurts, and I lift it up before You — let the power of Christ rest upon me!",
-      "Over my body, my mind, my finances and my family, the tent of Your power is pitched today!",
-      "No messenger of Satan can buffet me out from under Your covering!",
+      "I will not sit in the place of God — I hand You the judgment seat, and I take my peace back!",
+      "Bitterness will not feed on my future, and offence will not rule my house!",
+      "I name the wrong honestly, and I release it fully, because You are writing the last chapter!",
       "",
-      "When I am faint, You give me power; when I have no might, You increase my strength!",
-      "I can do all things through Christ which strengtheneth me!",
-      "When I am weak, then am I strong!",
+      "In the land of my affliction, You are making me fruitful!",
+      "What the enemy built as a prison, You are turning into a platform to save much people alive!",
+      "I will nourish my family, comfort the fearful, and speak kindly — the healed, not the hurt, will speak through me!",
       "",
-      "Save this. Speak it over your house today. The thorn may be in my side, but His power is over my head — His grace is sufficient for me! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. They meant it for evil, but God meant it unto good — and God has the final word! In Jesus' mighty name, amen!"
     ],
-    ref: "2 Corinthians 12:9-10"
+    ref: "Genesis 50:19-21"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -148,6 +149,7 @@
   };
 
   const SERMONS = [
+    { slug: "but-god-meant-it-unto-good", title: "But God Meant It Unto Good", ref: "Genesis 50:19-21", date: "November 17, 2026", excerpt: "His brothers sold him, a liar framed him, and a prison forgot him. Years later Joseph looked at the very people who did it and spoke the sentence that heals families: ye thought evil against me; but God meant it unto good." },
     { slug: "when-the-thorn-stays", title: "When the Thorn Stays", ref: "2 Corinthians 12:8-10", date: "November 16, 2026", excerpt: "Paul prayed three times for the thorn to leave, and it stayed. But heaven's answer wasn't silence — it was grace enough to carry it, and the power of Christ resting on the very place he felt weakest." },
     { slug: "can-these-bones-live", title: "Can These Bones Live?", ref: "Ezekiel 37:3-5", date: "November 15, 2026", excerpt: "The valley was full, the bones were very dry, and nobody was praying about it anymore. God asked the prophet one question — can these bones live? — then told him to preach to what was dead until breath came back into it." },
     { slug: "what-is-that-in-thine-hand", title: "What Is That in Thine Hand?", ref: "Exodus 4:2-4", date: "November 14, 2026", excerpt: "Moses had a list of reasons he couldn't go. God didn't argue with one of them. He asked a question — what is that in thine hand? — and turned an old shepherd's stick into the rod of God." },

@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "The blessing of the LORD, it maketh rich, and he addeth no sorrow with it.", ref: "Proverbs 10:22" },
     { text: "And we know that all things work together for good to them that love God, to them who are the called according to his purpose.", ref: "Romans 8:28" },
     { text: "He giveth power to the faint; and to them that have no might he increaseth strength.", ref: "Isaiah 40:29" },
     { text: "And I will restore to you the years that the locust hath eaten, the cankerworm, and the caterpiller, and the palmerworm, my great army which I sent among you.", ref: "Joel 2:25" },
@@ -91,21 +92,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that what was meant to destroy me, You have meant unto good!",
-      "The pit was not my end — it was my road to the palace!",
-      "Every betrayal, every lie, every door that forgot me is working together for my good!",
+      "Father, I declare today that my empty night is not my final report!",
+      "I have toiled and taken nothing — nevertheless, at Your word, I will let down the net!",
+      "My experience does not get the last vote. Your word does!",
       "",
-      "I will not sit in the place of God — I hand You the judgment seat, and I take my peace back!",
-      "Bitterness will not feed on my future, and offence will not rule my house!",
-      "I name the wrong honestly, and I release it fully, because You are writing the last chapter!",
+      "Jesus, I lend You my boat — my work, my home, my empty places — use them as You will!",
+      "I will not stay in the shallows of my own understanding. I launch out into the deep!",
+      "Whatsoever You say unto me, I will do it, even before it makes sense!",
       "",
-      "In the land of my affliction, You are making me fruitful!",
-      "What the enemy built as a prison, You are turning into a platform to save much people alive!",
-      "I will nourish my family, comfort the fearful, and speak kindly — the healed, not the hurt, will speak through me!",
+      "My nets will be filled, and my partners will be blessed with me!",
+      "The blessing of the LORD makes me rich, and He adds no sorrow with it!",
+      "What I could not catch all night, You are sending in one throw!",
       "",
-      "Save this. Speak it over your house today. They meant it for evil, but God meant it unto good — and God has the final word! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. Toiled all night? Nevertheless at His word — the nets are about to break! In Jesus' mighty name, amen!"
     ],
-    ref: "Genesis 50:19-21"
+    ref: "Luke 5:4-6"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -147,6 +148,7 @@
   };
 
   const SERMONS = [
+    { slug: "nevertheless-at-thy-word", title: "Nevertheless at Thy Word", ref: "Luke 5:4-6", date: "November 18, 2026", excerpt: "Peter fished all night with every skill he had and came home with empty nets. Then a Carpenter told the fisherman where to throw — and one word of obedience, nevertheless at thy word, filled two boats until they began to sink." },
     { slug: "but-god-meant-it-unto-good", title: "But God Meant It Unto Good", ref: "Genesis 50:19-21", date: "November 17, 2026", excerpt: "His brothers sold him, a liar framed him, and a prison forgot him. Years later Joseph looked at the very people who did it and spoke the sentence that heals families: ye thought evil against me; but God meant it unto good." },
     { slug: "when-the-thorn-stays", title: "When the Thorn Stays", ref: "2 Corinthians 12:8-10", date: "November 16, 2026", excerpt: "Paul prayed three times for the thorn to leave, and it stayed. But heaven's answer wasn't silence — it was grace enough to carry it, and the power of Christ resting on the very place he felt weakest." },
     { slug: "can-these-bones-live", title: "Can These Bones Live?", ref: "Ezekiel 37:3-5", date: "November 15, 2026", excerpt: "The valley was full, the bones were very dry, and nobody was praying about it anymore. God asked the prophet one question — can these bones live? — then told him to preach to what was dead until breath came back into it." },

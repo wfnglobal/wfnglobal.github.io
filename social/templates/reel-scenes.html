@@ -51,6 +51,12 @@
     thorn     - wine-plum dusk hillside, a gnarled thorn bramble, a figure kneeling before it in prayer
     weak      - near-black, a single crack of gold light breaking through the dark like a vessel cracking open, a bowed figure beneath it
     grace     - warm gold-rose dawn, the same thorn bramble still at the figure's feet, a figure standing with arms raised in the light
+    pit       - warm dusk cistern mouth seen from inside, two small figures above at the rim
+    chains    - cold blue-grey prison cell, a sliver of barred light, a seated figure
+    embrace   - warm rose-gold morning, two close silhouettes folded into one another
+    nets      - grey-teal pre-dawn lakeshore, a beached boat, a limp empty net draped over the side, a weary seated figure
+    deep      - brightening teal-cyan dawn water, the boat pushed out further from shore, a standing figure gesturing out over the water, a net lowering in
+    catch     - gold sunrise burst over the water, the same boat riding low, a straining/tearing net glinting with fish, two figures hauling it in
 
   Each scene is built from layers (l-back / l-front) that get different
   Ken Burns moves for a 2.5D parallax camera, plus an HTML particle layer
@@ -122,6 +128,9 @@
   body[data-shot="pit"]{--accent:#C98A52;}
   body[data-shot="chains"]{--accent:#8FA8C8;}
   body[data-shot="embrace"]{--accent:#F2A868;}
+  body[data-shot="nets"]{--accent:#8C9A86;}
+  body[data-shot="deep"]{--accent:#8FD4C6;}
+  body[data-shot="catch"]{--accent:#FFE2A0;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -2337,6 +2346,143 @@
       </svg>
     </div>
     <div class="fx" data-type="motes" data-n="24" data-color="255,222,180"></div>
+    <div class="fx" data-type="bokeh" data-n="10"></div>
+  </section>
+
+  <!-- ============ NETS: grey-teal pre-dawn lakeshore, a beached boat, a limp empty net draped over the side, a weary seated figure ============ -->
+  <section class="scene" data-scene="nets" data-kb="push" style="--ox:50%; --oy:60%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="nt-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1C2838"/><stop offset="0.42" stop-color="#3A4A50"/>
+            <stop offset="0.72" stop-color="#6E7E74"/><stop offset="1" stop-color="#8C9A86"/>
+          </linearGradient>
+          <radialGradient id="nt-glow" cx="0.5" cy="0.08" r="0.3"><stop offset="0" stop-color="#C9D8CC" stop-opacity="0.4"/><stop offset="1" stop-color="#C9D8CC" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#nt-sky)"/>
+        <rect width="1080" height="1920" fill="url(#nt-glow)"/>
+        <path d="M 0 1180 L 1080 1180 L 1080 1216 L 0 1216 Z" fill="#2E3A36" opacity="0.4"/>
+      </svg>
+      <div class="fx" data-type="motes" data-n="16" data-color="190,204,196"></div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="nt-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#28342E"/><stop offset="1" stop-color="#050908"/></linearGradient>
+        </defs>
+        <path d="M 0 1200 C 280 1176 760 1188 1080 1200 L 1080 1920 L 0 1920 Z" fill="url(#nt-floor)"/>
+        <g stroke="#18221E" stroke-width="4" fill="none" opacity="0.7">
+          <path d="M 0 1260 C 220 1232 420 1272 640 1240 C 820 1214 940 1248 1080 1222"/>
+        </g>
+        <g transform="translate(540 1320) scale(0.6)">
+          <ellipse cx="0" cy="56" rx="230" ry="26" fill="#000" opacity="0.5"/>
+          <use href="#prop-boat" fill="#7A8C84" filter="url(#glow8)" opacity="0.35"/>
+          <use href="#prop-boat" fill="#060A08"/>
+          <g stroke="#0A0F0C" stroke-width="3" fill="none" opacity="0.85">
+            <path d="M -220 40 C -180 90 -120 112 -40 108 C 10 106 40 96 70 70"/>
+            <path d="M -200 54 L -210 100"/><path d="M -160 72 L -168 118"/><path d="M -120 86 L -126 128"/><path d="M -80 96 L -84 134"/><path d="M -40 100 L -42 136"/>
+          </g>
+          <g transform="translate(-30 -8) scale(0.5)">
+            <use href="#fig-seated" fill="#5E6E66" filter="url(#glow4)" opacity="0.3"/>
+            <use href="#fig-seated" fill="#040806" style="--rim:#8C9A86"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="10" data-color="180,194,186"></div>
+  </section>
+
+  <!-- ============ DEEP: brightening teal-cyan dawn water, the boat pushed out further, a standing figure gesturing out, a net lowering in ============ -->
+  <section class="scene" data-scene="deep" data-kb="pull" style="--ox:50%; --oy:56%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="dp-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#132A3A"/><stop offset="0.4" stop-color="#1C4E58"/>
+            <stop offset="0.7" stop-color="#3E8C8E"/><stop offset="1" stop-color="#8FD4C6"/>
+          </linearGradient>
+          <radialGradient id="dp-sun" cx="0.5" cy="0.62" r="0.4"><stop offset="0" stop-color="#FFE9B8" stop-opacity="0.8"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#dp-sky)"/>
+        <circle cx="560" cy="1180" r="500" fill="url(#dp-sun)"/>
+      </svg>
+      <div class="drift" style="--drift:-100px; --ddur:44s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <path d="M -200 900 C 200 860 600 880 1300 840 L 1300 940 C 600 976 200 964 -200 1000 Z" fill="#1E4A50" opacity="0.4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="dp-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E6E68" stop-opacity="0.6"/><stop offset="1" stop-color="#06120E"/></linearGradient>
+        </defs>
+        <path d="M 0 1300 C 260 1276 700 1296 1080 1272 L 1080 1920 L 0 1920 Z" fill="url(#dp-floor)"/>
+        <g stroke="#CFF0E6" stroke-width="2.5" fill="none" opacity="0.35">
+          <path d="M 60 1340 C 280 1316 520 1340 760 1310"/>
+          <path d="M 160 1440 C 400 1412 640 1438 900 1404"/>
+        </g>
+        <g transform="translate(540 1360) scale(0.62)">
+          <ellipse cx="0" cy="54" rx="240" ry="26" fill="#02100C" opacity="0.4"/>
+          <use href="#prop-boat" fill="#BFE8DC" filter="url(#glow8)" opacity="0.5"/>
+          <use href="#prop-boat" fill="#06140F"/>
+          <g transform="translate(10 -34) scale(0.56)">
+            <use href="#fig-robe" fill="#D9F2E8" filter="url(#glow8)" opacity="0.6"/>
+            <use href="#fig-robe" fill="#040E0A" style="--rim:#D9F2E8"/>
+          </g>
+          <g transform="translate(-150 -10) scale(0.36)"><use href="#fig-seated" fill="#BFE8DC" filter="url(#glow4)" opacity="0.4"/><use href="#fig-seated" fill="#040E0A" style="--rim:#BFE8DC"/></g>
+          <g stroke="#06140F" stroke-width="3" fill="none" opacity="0.8">
+            <path d="M 80 20 L 130 90"/><path d="M 100 30 L 150 96"/><path d="M 120 42 L 164 104"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="bokeh" data-n="12"></div>
+  </section>
+
+  <!-- ============ CATCH: gold sunrise burst, the boat riding low, a straining/tearing net full of fish, two figures hauling it in ============ -->
+  <section class="scene" data-scene="catch" data-kb="rise" style="--ox:50%; --oy:58%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ct-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1C1A2A"/><stop offset="0.34" stop-color="#5A4A3E"/>
+            <stop offset="0.6" stop-color="#E8A858"/><stop offset="1" stop-color="#FFE7B0"/>
+          </linearGradient>
+          <radialGradient id="ct-burst" cx="0.5" cy="0.62" r="0.5"><stop offset="0" stop-color="#FFFBE6" stop-opacity="0.95"/><stop offset="0.3" stop-color="#FFE2A0" stop-opacity="0.5"/><stop offset="1" stop-color="#FFE2A0" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#ct-sky)"/>
+        <circle cx="540" cy="1180" r="620" fill="url(#ct-burst)"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ct-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C98A4A" stop-opacity="0.5"/><stop offset="1" stop-color="#140A06"/></linearGradient>
+        </defs>
+        <path d="M 0 1360 C 260 1336 700 1356 1080 1332 L 1080 1920 L 0 1920 Z" fill="url(#ct-floor)"/>
+        <g stroke="#FFE2A0" stroke-width="2.5" fill="none" opacity="0.45">
+          <path d="M 60 1400 C 300 1374 560 1400 820 1368"/>
+          <path d="M 140 1500 C 380 1472 640 1498 920 1462"/>
+        </g>
+        <g transform="translate(540 1420) scale(0.68)">
+          <ellipse cx="0" cy="50" rx="260" ry="30" fill="#1A0E06" opacity="0.45"/>
+          <use href="#prop-boat" fill="#FFE2A0" filter="url(#glow8)" opacity="0.65"/>
+          <use href="#prop-boat" fill="#1A0E06"/>
+          <g stroke="#1A0E06" stroke-width="4" fill="none" opacity="0.9">
+            <path d="M -220 36 C -160 86 -80 100 0 96 C 90 92 160 78 210 40"/>
+            <path d="M -220 36 L -236 92"/><path d="M -160 68 L -172 118"/><path d="M -90 88 L -96 132"/><path d="M 10 92 L 10 134"/><path d="M 100 84 L 108 126"/><path d="M 180 56 L 196 100"/>
+          </g>
+          <g fill="#FFE2A0" opacity="0.85">
+            <ellipse cx="-150" cy="96" rx="9" ry="4"/><ellipse cx="-40" cy="106" rx="10" ry="4"/><ellipse cx="60" cy="98" rx="9" ry="4"/><ellipse cx="150" cy="78" rx="8" ry="4"/>
+          </g>
+          <g transform="translate(-130 -14) scale(0.42)"><use href="#fig-robe" fill="#FFE2A0" filter="url(#glow8)" opacity="0.6"/><use href="#fig-robe" fill="#1A0E06" style="--rim:#FFE2A0"/></g>
+          <g transform="translate(120 -16) scale(0.4)"><use href="#fig-raise" fill="#FFE2A0" filter="url(#glow8)" opacity="0.6"/><use href="#fig-raise" fill="#1A0E06" style="--rim:#FFE2A0"/></g>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="24" data-color="255,226,160"></div>
     <div class="fx" data-type="bokeh" data-n="10"></div>
   </section>
 

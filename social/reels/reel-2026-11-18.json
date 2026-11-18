@@ -1,0 +1,37 @@
+{
+  "template": "scenes",
+  "lines": [
+    {
+      "text": "You already know what it feels like to try your hardest all night and still come up with nothing.",
+      "visual": "nets"
+    },
+    {
+      "text": "Peter was that tired, washing out nets he never wanted to touch again, in front of the very crowd watching him fail.",
+      "visual": "nets"
+    },
+    {
+      "text": "Launch out into the deep, and let down your nets for a draught.",
+      "visual": "deep",
+      "scripture": true
+    },
+    {
+      "text": "Nevertheless at thy word, I will let down the net.",
+      "visual": "deep",
+      "scripture": true
+    },
+    {
+      "text": "The net came up so full it started to break, and both boats began to sink under everything it couldn't hold.",
+      "visual": "catch"
+    },
+    {
+      "text": "Whatever you tried and lost, try again at His word. In Jesus' name, amen.",
+      "visual": "catch"
+    }
+  ],
+  "bold": "try again at His word",
+  "title": "Word and Faith Network",
+  "subtitle": "Nevertheless at Thy Word",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A three-scene illustrated short film on Luke 5: a weary fisherman slumped over an empty net at grey dawn, a boat pushed out into brightening teal water as Jesus says launch into the deep, and a gold sunrise catch so large the net begins to tear and the boats begin to sink under it."
+}

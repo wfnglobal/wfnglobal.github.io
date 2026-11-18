@@ -113,7 +113,7 @@ Send this to someone starting something scary this month.
 ## Day 41: The decision you'd take back
 You know exactly which decision you'd take back if you could. You can't rewrite that page — but He's still writing the ones after it.
 
-"I will restore to you the years that the locust hath eaten." — Joel 2:25
+"To appoint unto them that mourn in Zion, to give unto them beauty for ashes." — Isaiah 61:3
 
 Pray: Lord, redeem what I can't undo. Make something good out of it.
 

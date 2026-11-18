@@ -1,0 +1,192 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  WFN X poster, 1080x1350 (4:5): "The Chase Is Over" (Nov 18, 2026), the
+  daily stop-to-scroll poster for the Fire Prayer Against Dream Attacks.
+  Scene: a dove breaking free into a cooling teal night sky while a torn,
+  empty snare lies broken below and shadow hunters dissolve into smoke
+  at the edges, dawn glowing warm at the very bottom. Brand elements kept
+  exactly per social/templates/dream-poster-reference.html: the WFN
+  lockup (top-left), status chip (top-right), the glass CTA bar (verse +
+  button + wfnglobal.org/dreams link), 1080x1350 size, and the ../fonts/
+  font-face paths. Render with social/render-poster.js.
+-->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#03040D;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden;
+    background:linear-gradient(180deg,#03040D 0%,#0B0A28 22%,#0C2436 42%,#123A3A 58%,#1E3A28 72%,#3A2A16 88%,#140D08 100%);}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.72);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9A0; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(255,170,90,0.45); background:rgba(255,120,40,0.1); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FF8A3A; box-shadow:0 0 12px 3px rgba(255,120,40,0.8);}
+  .copy{position:absolute; left:0; right:0; top:758px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(255,214,160,0.85);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:122px; line-height:0.94; letter-spacing:-0.035em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em;
+    background:linear-gradient(180deg,#FFF1C7 0%,#D9C878 30%,#8FD9C4 68%,#4FA896 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(143,217,196,0.35)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:820px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.86);}
+  .sub b{color:#FFD49A; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.9); max-width:520px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A0C05; background:linear-gradient(180deg,#FFD488,#FF9A45); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(255,120,40,0.7);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <radialGradient id="moonHalo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#D9E8FF" stop-opacity="0.3"/><stop offset="0.4" stop-color="#9FD8D0" stop-opacity="0.10"/><stop offset="1" stop-color="#9FD8D0" stop-opacity="0"/></radialGradient>
+    <radialGradient id="moon" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#F6FBFF"/><stop offset="1" stop-color="#C9D9E0"/></radialGradient>
+    <radialGradient id="dawnGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFC978" stop-opacity="0.6"/><stop offset="0.5" stop-color="#FF9A4A" stop-opacity="0.22"/><stop offset="1" stop-color="#FF9A4A" stop-opacity="0"/></radialGradient>
+    <radialGradient id="birdGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFFBE8" stop-opacity="0.9"/><stop offset="0.55" stop-color="#FFE3A0" stop-opacity="0.4"/><stop offset="1" stop-color="#FFE3A0" stop-opacity="0"/></radialGradient>
+    <linearGradient id="wingUp" x1="0" y1="0" x2="1" y2="0.3"><stop offset="0" stop-color="#FFFCF0"/><stop offset="1" stop-color="#FFD98F"/></linearGradient>
+    <linearGradient id="wingDown" x1="0" y1="0" x2="1" y2="0.3"><stop offset="0" stop-color="#FFE9BE"/><stop offset="1" stop-color="#F0B24A"/></linearGradient>
+    <linearGradient id="shadow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#03030A" stop-opacity="0.95"/><stop offset="1" stop-color="#0D1A14" stop-opacity="0"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#20270F" stop-opacity="0"/><stop offset="1" stop-color="#0A0705"/></linearGradient>
+    <linearGradient id="rope" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8A6B48"/><stop offset="1" stop-color="#3A2A1C"/></linearGradient>
+    <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="blur16"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="smoke" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="3" seed="9"/><feDisplacementMap in="SourceGraphic" scale="55"/><feGaussianBlur stdDeviation="2.5"/></filter>
+  </defs>
+
+  <g id="stars"></g>
+  <!-- waning moon, cool and high, watching the chase end -->
+  <circle cx="230" cy="210" r="140" fill="url(#moonHalo)"/>
+  <g transform="translate(230 210)">
+    <mask id="cres"><rect x="-70" y="-70" width="140" height="140" fill="#fff"/><circle r="50" cx="-22" cy="-13" fill="#000"/></mask>
+    <circle r="52" fill="url(#moon)" mask="url(#cres)"/>
+  </g>
+
+  <!-- distant hills, cooling from indigo to teal, well clear of the headline -->
+  <path d="M0 640 C150 612 270 626 390 600 C530 572 630 610 770 590 C890 574 980 598 1080 582 L1080 700 L0 700Z" fill="#101A2C" opacity="0.9"/>
+  <path d="M0 672 C190 650 310 666 470 646 C630 626 760 658 900 642 C980 632 1040 638 1080 634 L1080 700 L0 700Z" fill="#0D2224"/>
+
+  <!-- shadow hunters retreating into the hills, dissolving to smoke -->
+  <g filter="url(#smoke)" opacity="0.85">
+    <path d="M30 648 C66 606 112 598 150 616 C178 630 190 654 182 674 C166 664 150 662 138 668 C148 684 146 700 132 710 C112 692 90 688 70 694 C78 676 70 660 54 654 C46 650 38 648 30 648Z" fill="#06100A"/>
+    <path d="M1050 660 C1014 614 966 606 926 626 C898 640 886 664 896 684 C912 672 930 670 942 678 C930 694 934 710 950 718 C968 698 992 694 1012 702 C1002 682 1012 664 1030 658 C1038 654 1046 656 1050 660Z" fill="#06100A"/>
+  </g>
+  <!-- their eyes, already fading -->
+  <g opacity="0.45"><circle cx="96" cy="652" r="3" fill="#FF3B2F"/><circle cx="112" cy="650" r="3" fill="#FF3B2F"/><circle cx="968" cy="664" r="2.6" fill="#FF3B2F"/><circle cx="984" cy="662" r="2.6" fill="#FF3B2F"/></g>
+
+  <!-- dawn breaking low at the horizon, where the chase finally ends -->
+  <ellipse cx="540" cy="1250" rx="560" ry="230" fill="url(#dawnGlow)"/>
+
+  <!-- the torn, empty snare lying open just above the light -->
+  <ellipse cx="540" cy="1144" rx="130" ry="46" fill="url(#dawnGlow)" opacity="0.8"/>
+  <g transform="translate(540 1144) scale(0.72)" opacity="0.98">
+    <ellipse cx="0" cy="18" rx="150" ry="18" fill="#000" opacity="0.3" filter="url(#blur8)"/>
+    <path d="M-120 2 C-86 -26 -30 -34 10 -22 C-6 -10 -24 2 -34 16 C-54 6 -78 2 -98 10 C-108 14 -116 8 -120 2Z" fill="none" stroke="#C9A06A" stroke-width="8" stroke-linecap="round"/>
+    <path d="M118 6 C88 -22 36 -32 -4 -22 C10 -10 26 2 34 16 C54 8 76 6 94 14 C104 18 112 12 118 6Z" fill="none" stroke="#C9A06A" stroke-width="8" stroke-linecap="round"/>
+    <path d="M-34 16 C-28 4 -16 -6 -4 -10" stroke="#8A6B48" stroke-width="5.5" stroke-linecap="round" fill="none" opacity="0.9"/>
+    <path d="M34 16 C26 4 14 -6 4 -10" stroke="#8A6B48" stroke-width="5.5" stroke-linecap="round" fill="none" opacity="0.9"/>
+    <!-- loose broken ends curling free -->
+    <path d="M-120 2 C-134 -6 -140 -18 -134 -28" stroke="#C9A06A" stroke-width="7" stroke-linecap="round" fill="none"/>
+    <path d="M118 6 C130 -4 134 -16 126 -26" stroke="#C9A06A" stroke-width="7" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- ground -->
+  <path d="M0 1150 C300 1136 780 1136 1080 1150 L1080 1350 L0 1350Z" fill="url(#ground)"/>
+
+  <!-- the dove, already clear of the snare, rising into the cool night -->
+  <g id="trails"></g>
+  <g transform="translate(650 460) rotate(-16)">
+    <ellipse cx="0" cy="4" rx="118" ry="96" fill="url(#birdGlow)"/>
+    <!-- tail, trailing lower-left -->
+    <path d="M-34 24 C-66 34 -96 50 -116 76 C-88 62 -58 54 -28 46Z" fill="#FFE3A0"/>
+    <!-- lower wing, swept back and down -->
+    <path d="M-10 14 C-54 30 -100 52 -132 90 C-92 64 -48 50 -4 38 C0 29 -4 20 -10 14Z" fill="url(#wingDown)"/>
+    <!-- body -->
+    <path d="M-14 6 C-8 -8 8 -12 20 -4 C32 4 32 20 20 30 C8 40 -8 38 -16 26 C-20 19 -18 11 -14 6Z" fill="#FFF6DE"/>
+    <!-- upper wing, raised in the upstroke -->
+    <path d="M2 -4 C-32 -38 -86 -52 -138 -40 C-92 -28 -48 -12 -8 10 C0 6 4 1 2 -4Z" fill="url(#wingUp)"/>
+    <!-- head + beak -->
+    <circle cx="24" cy="-6" r="10" fill="#FFF6DE"/>
+    <path d="M33 -8 L46 -4 L33 1Z" fill="#F0B24A"/>
+  </g>
+
+  <g id="embers"></g>
+</svg>
+
+<div class="top">
+  <div class="lock">
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#g)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#g)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#g)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#g)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg>
+    <div class="rule"></div>
+    <div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div>
+  </div>
+  <div class="chip"><i></i>Fire Prayer · Tonight</div>
+</div>
+
+<div class="copy">
+  <div class="kicker">Before any hunter closes in tonight</div>
+  <h1>The chase<em>is over.</em></h1>
+  <p class="sub">Every snare, every pursuer, every dream assigned to chase, corner, or run you down &mdash; <b>broken before it closes, in the name of Jesus.</b></p>
+</div>
+
+<div class="cta">
+  <div class="verse">&ldquo;Our soul is escaped as a bird out of the snare of the fowlers: the snare is broken, and we are escaped.&rdquo;<span>Psalm 124:7</span></div>
+  <div class="btn"><span class="l1">Pray it before bed &rarr;</span><span class="l2">wfnglobal.org/dreams</span></div>
+</div>
+</div>
+<script>
+  // deterministic RNG
+  let s = 23; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 150; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const y = r() * 620;
+    c.setAttribute("cx", r() * 1080); c.setAttribute("cy", y);
+    c.setAttribute("r", (r() * 1.3 + 0.35).toFixed(2));
+    c.setAttribute("fill", r() > 0.85 ? "#CFEFE6" : "#E9E6FF");
+    c.setAttribute("opacity", (0.25 + r() * 0.65 * (1 - y / 760)).toFixed(2));
+    stars.appendChild(c);
+  }
+  // a short light trail just behind the dove's tail, nowhere near the copy block
+  const trails = document.getElementById("trails");
+  for (let i = 0; i < 4; i++) {
+    const p = document.createElementNS(NS, "path");
+    const x0 = 598 - i * 10, y0 = 528 + i * 20;
+    const x1 = 636 - i * 4, y1 = 470 + i * 12;
+    p.setAttribute("d", `M${x0} ${y0} Q${x0 + 18} ${(y0 + y1) / 2} ${x1} ${y1}`);
+    p.setAttribute("stroke", "#FFE3A0");
+    p.setAttribute("stroke-width", (3 - i * 0.5).toFixed(1));
+    p.setAttribute("stroke-linecap", "round");
+    p.setAttribute("fill", "none");
+    p.setAttribute("opacity", (0.42 - i * 0.07).toFixed(2));
+    trails.appendChild(p);
+  }
+  // light motes drifting up from the broken snare toward the dove
+  const em = document.getElementById("embers");
+  for (let i = 0; i < 46; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const t = r();
+    c.setAttribute("cx", (540 + (r() - 0.5) * 260).toFixed(1));
+    c.setAttribute("cy", (1150 - t * 560).toFixed(1));
+    c.setAttribute("r", (r() * 1.8 + 0.4).toFixed(2));
+    c.setAttribute("fill", r() > 0.5 ? "#FFE3A0" : "#CFEFE6");
+    c.setAttribute("opacity", (0.25 + r() * 0.5).toFixed(2));
+    em.appendChild(c);
+  }
+</script>
+</body></html>

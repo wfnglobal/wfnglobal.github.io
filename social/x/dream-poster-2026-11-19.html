@@ -1,0 +1,243 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  WFN X poster, 1080x1350 (4:5): "Not their water. Only His river." (Nov 19,
+  2026), the daily stop-to-scroll poster for the Fire Prayer Against Dream
+  Attacks, built from tonight's prayer "No Covenant in Strange Waters."
+  New scene for tonight: a river of light flowing down from a radiant cross
+  (Revelation 22:1's "pure river of water of life... proceeding out of the
+  throne of God") past a sleeper at perfect peace, while a dark, powerless
+  sea retreats to the horizon and a low line of fire guards the bank where
+  river meets sea. New teal/emerald-to-black palette with an aqua-gold
+  accent gradient, replacing the midnight-blue/maroon palettes of recent
+  nights. Brand elements kept exactly: WFN lockup top-left, status chip
+  top-right, CTA bar (verse + button + wfnglobal.org/dreams), 1080x1350,
+  font-face paths (../fonts/). Render with social/render-poster.js.
+-->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#010908;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden;
+    background:linear-gradient(180deg,#02100F 0%,#04211D 26%,#063B34 46%,#053029 64%,#041613 82%,#010504 100%);}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.72);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#C8FFF1; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(110,231,211,0.45); background:rgba(20,184,166,0.12); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#2DD4BF; box-shadow:0 0 12px 3px rgba(45,212,191,0.8);}
+  .copy{position:absolute; left:0; right:0; top:752px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(190,255,235,0.85);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:112px; line-height:0.96; letter-spacing:-0.03em; color:#F2FBF6; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.02em;
+    background:linear-gradient(180deg,#FFF6D8 0%,#AFF3E4 42%,#2DD4BF 76%,#0E8E82 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(45,212,191,0.4)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:830px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(226,242,236,0.86);}
+  .sub b{color:#9FF1DD; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.055); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:21px; line-height:1.32; color:rgba(230,248,240,0.9); max-width:560px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#042420; background:linear-gradient(180deg,#D7FFF3,#3FD9BE); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(45,212,191,0.65);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#F2FBF6;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <radialGradient id="throneHalo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF6D8" stop-opacity="0.45"/><stop offset="0.4" stop-color="#5BE6CE" stop-opacity="0.14"/><stop offset="1" stop-color="#5BE6CE" stop-opacity="0"/></radialGradient>
+    <radialGradient id="throneCore" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#FFFCF0"/><stop offset="1" stop-color="#C9F3E4"/></radialGradient>
+    <linearGradient id="riverBeam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EFFFF9" stop-opacity="0.5"/><stop offset="0.55" stop-color="#7BE8D2" stop-opacity="0.16"/><stop offset="1" stop-color="#7BE8D2" stop-opacity="0"/></linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFB45A" stop-opacity="0.5"/><stop offset="0.45" stop-color="#FF6A2A" stop-opacity="0.16"/><stop offset="1" stop-color="#FF6A2A" stop-opacity="0"/></radialGradient>
+    <linearGradient id="river" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAFFF8" stop-opacity="0.95"/><stop offset="0.5" stop-color="#6FE3CC" stop-opacity="0.85"/><stop offset="1" stop-color="#1D8E7D" stop-opacity="0.65"/></linearGradient>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#C7280F"/><stop offset="0.35" stop-color="#FF6A1F"/><stop offset="0.7" stop-color="#FFB347"/><stop offset="1" stop-color="#FFF1B8"/></linearGradient>
+    <linearGradient id="flameCore" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFB347"/><stop offset="1" stop-color="#FFFBE6"/></linearGradient>
+    <linearGradient id="shadow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#010706" stop-opacity="0.95"/><stop offset="1" stop-color="#062420" stop-opacity="0"/></linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#031917" stop-opacity="0.95"/><stop offset="1" stop-color="#010504" stop-opacity="0"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A2420" stop-opacity="0.9"/><stop offset="1" stop-color="#010504" stop-opacity="0"/></linearGradient>
+    <linearGradient id="blanket" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6E6C8"/><stop offset="1" stop-color="#C9A877"/></linearGradient>
+    <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="blur14"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="smoke" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="60"/><feGaussianBlur stdDeviation="2.5"/></filter>
+    <filter id="ripple" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.01 0.06" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="14"/></filter>
+  </defs>
+
+  <g id="stars"></g>
+
+  <!-- the throne / radiant cross, source of the river of life -->
+  <circle cx="540" cy="224" r="210" fill="url(#throneHalo)"/>
+  <g transform="translate(540 224)">
+    <circle r="58" fill="url(#throneCore)"/>
+    <rect x="-3" y="-34" width="6" height="68" rx="3" fill="#0B3B34"/>
+    <rect x="-20" y="-15" width="40" height="6" rx="3" fill="#0B3B34"/>
+  </g>
+  <!-- the river beam, flowing down from the throne -->
+  <path d="M472 252 C 448 400 430 500 398 650 C 382 728 392 818 372 900 L 708 900 C 690 818 700 728 684 650 C 652 500 634 400 608 252 Z" fill="url(#riverBeam)"/>
+
+  <!-- the distant sea: dark, hazy, retreating -->
+  <path d="M0 560 C140 538 260 552 380 536 C520 518 620 548 760 534 C880 522 980 544 1080 530 L1080 640 L0 640Z" fill="url(#sea)"/>
+  <g opacity="0.55" filter="url(#ripple)">
+    <path d="M0 586 C120 574 220 590 340 578 C460 566 560 584 680 574 C800 564 900 580 1080 568" stroke="#0E3B35" stroke-width="3" fill="none" opacity="0.6"/>
+    <path d="M0 606 C160 596 300 610 460 600 C620 590 760 606 940 596 C1000 592 1040 594 1080 592" stroke="#0E3B35" stroke-width="2.4" fill="none" opacity="0.5"/>
+  </g>
+  <!-- shadow powers of the sea, dissolving at the edges, no longer a threat -->
+  <g filter="url(#smoke)" opacity="0.8">
+    <path d="M-50 500 C60 510 150 545 215 595 C248 622 258 642 244 654 C222 642 196 632 174 638 C196 662 202 684 188 698 C164 674 134 666 108 674 C126 698 126 722 108 738 C74 706 22 698 -50 706Z" fill="url(#shadow)"/>
+    <path d="M1130 520 C1020 528 930 566 868 614 C838 640 830 660 844 672 C866 660 894 652 916 658 C894 680 890 700 904 714 C928 692 958 686 984 692 C966 716 968 740 986 756 C1024 724 1068 716 1130 722Z" fill="url(#shadow)" style="opacity:0.78"/>
+  </g>
+  <g opacity="0.45"><circle cx="140" cy="600" r="2.6" fill="#FF3B2F"/><circle cx="156" cy="598" r="2.6" fill="#FF3B2F"/><circle cx="930" cy="624" r="2.4" fill="#FF3B2F"/><circle cx="946" cy="622" r="2.4" fill="#FF3B2F"/></g>
+
+  <g transform="translate(540 650) scale(1.14) translate(-540 -742)">
+  <!-- near bank / ground -->
+  <path d="M0 640 C140 612 260 628 380 602 C520 576 620 612 760 594 C880 578 980 604 1080 588 L1080 760 L0 760Z" fill="#06211D" opacity="0.92"/>
+  <path d="M0 690 C180 664 300 684 460 660 C620 638 760 674 900 656 C980 646 1040 654 1080 648 L1080 780 L0 780Z" fill="#0A2E28"/>
+
+  <!-- ground glow where river meets bank -->
+  <ellipse cx="540" cy="735" rx="470" ry="118" fill="url(#glow)" opacity="0.5"/>
+  <ellipse cx="540" cy="738" rx="420" ry="96" fill="url(#river)" opacity="0.4" filter="url(#blur14)"/>
+
+  <!-- the river of light, flowing past the sleeper toward the viewer -->
+  <path d="M470 440 C440 540 540 560 520 660 C505 730 560 760 540 820 C520 880 600 920 580 980 L420 980 C400 920 480 880 460 820 C440 760 495 730 480 660 C460 560 560 540 530 440Z" fill="url(#river)" opacity="0.5" filter="url(#ripple)"/>
+  <path d="M500 460 C480 540 550 566 536 650 M544 700 C560 750 520 772 532 820" stroke="#EAFFF8" stroke-width="2.5" opacity="0.55" fill="none" stroke-linecap="round"/>
+
+  <!-- low line of fire guarding the bank where river meets sea -->
+  <g id="fireBack"></g>
+
+  <!-- the bed and the sleeper, at peace on the bank -->
+  <g transform="translate(540 700)">
+    <ellipse cx="0" cy="38" rx="230" ry="22" fill="#000" opacity="0.4" filter="url(#blur8)"/>
+    <!-- headboard -->
+    <rect x="-214" y="-104" width="14" height="136" rx="5" fill="#1E3A35"/>
+    <rect x="-158" y="-104" width="14" height="136" rx="5" fill="#1E3A35"/>
+    <rect x="-202" y="-92" width="46" height="70" rx="4" fill="#2A4C45"/>
+    <path d="M-196 -84 L-162 -84 M-196 -70 L-162 -70 M-196 -56 L-162 -56 M-196 -42 L-162 -42" stroke="#1E3A35" stroke-width="2"/>
+    <circle cx="-207" cy="-108" r="7" fill="#355F56"/><circle cx="-151" cy="-108" r="7" fill="#355F56"/>
+    <!-- frame -->
+    <rect x="-210" y="0" width="420" height="30" rx="8" fill="#22413B"/>
+    <rect x="180" y="-34" width="26" height="64" rx="6" fill="#1E3A35"/>
+    <!-- mattress -->
+    <rect x="-150" y="-26" width="335" height="30" rx="10" fill="#E9DCC4"/>
+    <!-- pillow -->
+    <path d="M-148 -30 C-150 -56 -128 -64 -96 -62 C-70 -60 -62 -48 -64 -32 C-90 -24 -125 -24 -148 -30Z" fill="#FFF8EA"/>
+    <!-- head -->
+    <circle cx="-98" cy="-56" r="21" fill="#6B3F2A"/>
+    <path d="M-119 -60 C-118 -78 -96 -84 -82 -74 C-88 -72 -100 -68 -108 -60Z" fill="#2A1710"/>
+    <path d="M-92 -54 C-88 -51 -84 -51 -81 -54" stroke="#2A1710" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- blanket -->
+    <path d="M-84 -40 C-60 -70 10 -78 70 -62 C120 -50 160 -46 188 -40 L190 2 L-86 2Z" fill="url(#blanket)"/>
+    <path d="M-60 -50 C0 -66 60 -60 120 -46" stroke="#B48E5C" stroke-width="2" fill="none" opacity="0.6"/>
+    <path d="M-84 -40 L-86 2" stroke="#B48E5C" stroke-width="3"/>
+    <!-- Bible on the nightstand -->
+    <g transform="translate(-260 -6)">
+      <rect x="-28" y="0" width="56" height="38" rx="3" fill="#102420"/>
+      <rect x="-24" y="-12" width="48" height="12" rx="2" fill="#7A2E22"/>
+      <rect x="-24" y="-12" width="48" height="2.5" fill="#E8C77E"/>
+      <rect x="-1.2" y="-10" width="2.4" height="7" fill="#E8C77E"/>
+      <rect x="-3.5" y="-8" width="7" height="2.2" fill="#E8C77E"/>
+    </g>
+    <!-- Zzz of peace -->
+    <g font-family="Fraunces, serif" font-style="italic" fill="#CFFBEE" opacity="0.8">
+      <text x="-70" y="-98" font-size="22">z</text><text x="-50" y="-122" font-size="28">z</text><text x="-24" y="-152" font-size="34">z</text>
+    </g>
+  </g>
+
+  <g id="fire"></g>
+  <g id="embers"></g>
+  </g>
+</svg>
+
+<div class="top">
+  <div class="lock">
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#g)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#g)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#g)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#g)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg>
+    <div class="rule"></div>
+    <div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div>
+  </div>
+  <div class="chip"><i></i>Fire Prayer · Tonight</div>
+</div>
+
+<div class="copy">
+  <div class="kicker">Before any water claims you tonight</div>
+  <h1>Not their water.<em>Only His river.</em></h1>
+  <p class="sub">Every evil baptism, every marine altar, every covenant sealed in strange water &mdash; <b>the sea has no more claim,</b> and the river of life flows over you instead.</p>
+</div>
+
+<div class="cta">
+  <div class="verse">&ldquo;He shewed me a pure river of water of life, clear as crystal, proceeding out of the throne of God and of the Lamb.&rdquo;<span>Revelation 22:1</span></div>
+  <div class="btn"><span class="l1">Pray it before bed &rarr;</span><span class="l2">wfnglobal.org/dreams</span></div>
+</div>
+</div>
+<script>
+  // deterministic RNG
+  let s = 19; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 170; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const y = r() * 560;
+    c.setAttribute("cx", r() * 1080); c.setAttribute("cy", y);
+    c.setAttribute("r", (r() * 1.4 + 0.35).toFixed(2));
+    c.setAttribute("fill", r() > 0.85 ? "#FFE9C2" : "#D6FFF2");
+    c.setAttribute("opacity", (0.22 + r() * 0.68 * (1 - y / 760)).toFixed(2));
+    stars.appendChild(c);
+  }
+  // a low line of fire along the bank, where the river meets the sea
+  const fire = document.getElementById("fire"), fireBack = document.getElementById("fireBack");
+  const cx = 540, cy = 742, rx = 322, ry = 58;
+  const items = [];
+  for (let i = 0; i < 56; i++) {
+    const t = (i / 56) * Math.PI * 2 + r() * 0.05;
+    const x = cx + Math.cos(t) * rx, y = cy + Math.sin(t) * ry;
+    const front = Math.sin(t) > 0;
+    const h = (front ? 54 : 38) * (0.7 + r() * 0.6) * (1 - 0.25 * Math.abs(Math.cos(t)));
+    const w = (front ? 20 : 15) * (0.75 + r() * 0.5);
+    items.push({ x, y, h, w, front, lean: (r() - 0.5) * 0.5 });
+  }
+  items.sort((a, b) => a.y - b.y);
+  function flamePath(x, y, w, h, lean) {
+    const tx = x + lean * h, ty = y - h;
+    return `M${x - w / 2} ${y} C${x - w * 0.75} ${y - h * 0.45} ${tx - w * 0.25} ${y - h * 0.7} ${tx} ${ty} C${tx + w * 0.15} ${y - h * 0.62} ${x + w * 0.8} ${y - h * 0.45} ${x + w / 2} ${y} Z`;
+  }
+  const g = document.createElementNS(NS, "ellipse");
+  g.setAttribute("cx", cx); g.setAttribute("cy", cy - 10); g.setAttribute("rx", rx + 60); g.setAttribute("ry", ry + 36);
+  g.setAttribute("fill", "url(#glow)"); fireBack.appendChild(g);
+  const haloB = document.createElementNS(NS, "g"); haloB.setAttribute("filter", "url(#blur8)"); haloB.setAttribute("opacity", "0.85"); fireBack.appendChild(haloB);
+  const halo = document.createElementNS(NS, "g"); halo.setAttribute("filter", "url(#blur8)"); halo.setAttribute("opacity", "0.85"); fire.appendChild(halo);
+  items.forEach(f => {
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", flamePath(f.x, f.y, f.w * 1.6, f.h * 1.1, f.lean)); p.setAttribute("fill", "#FF6A1F"); (f.front ? halo : haloB).appendChild(p);
+  });
+  items.forEach(f => { const fire_ = f.front ? fire : fireBack;
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", flamePath(f.x, f.y, f.w, f.h, f.lean)); p.setAttribute("fill", "url(#flame)");
+    p.setAttribute("opacity", f.front ? 1 : 0.78); fire_.appendChild(p);
+    const c = document.createElementNS(NS, "path");
+    c.setAttribute("d", flamePath(f.x + f.lean * 4, f.y, f.w * 0.42, f.h * 0.55, f.lean)); c.setAttribute("fill", "url(#flameCore)");
+    c.setAttribute("opacity", 0.9); fire_.appendChild(c);
+  });
+  // rising sparkles — gold and aqua mixed, river meeting fire
+  const em = document.getElementById("embers");
+  for (let i = 0; i < 70; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const a = r() * Math.PI * 2;
+    c.setAttribute("cx", cx + Math.cos(a) * rx * (0.7 + r() * 0.45));
+    c.setAttribute("cy", cy - 20 - r() * 300);
+    c.setAttribute("r", (r() * 2.2 + 0.6).toFixed(2));
+    c.setAttribute("fill", r() > 0.5 ? "#9FF1DD" : "#FFC266");
+    c.setAttribute("opacity", (0.3 + r() * 0.55).toFixed(2));
+    em.appendChild(c);
+  }
+</script>
+</body></html>

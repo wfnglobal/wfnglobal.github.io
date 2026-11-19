@@ -131,6 +131,9 @@
   body[data-shot="nets"]{--accent:#8C9A86;}
   body[data-shot="deep"]{--accent:#8FD4C6;}
   body[data-shot="catch"]{--accent:#FFE2A0;}
+  body[data-shot="stumble"]{--accent:#8498B8;}
+  body[data-shot="ash"]{--accent:#C9824E;}
+  body[data-shot="arise"]{--accent:#FFE6B0;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -2484,6 +2487,105 @@
     </div>
     <div class="fx" data-type="motes" data-n="24" data-color="255,226,160"></div>
     <div class="fx" data-type="bokeh" data-n="10"></div>
+  </section>
+
+  <!-- ============ STUMBLE: cold blue-grey dusk, a figure mid-fall caught off balance, a second small silhouette standing off to the side watching and laughing ============ -->
+  <section class="scene" data-scene="stumble" data-kb="push" style="--ox:46%; --oy:66%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sb-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0E1420"/><stop offset="0.4" stop-color="#22304A"/>
+            <stop offset="0.72" stop-color="#48607E"/><stop offset="1" stop-color="#7488A2"/>
+          </linearGradient>
+          <radialGradient id="sb-glow" cx="0.74" cy="0.2" r="0.26"><stop offset="0" stop-color="#C6D4E6" stop-opacity="0.4"/><stop offset="1" stop-color="#C6D4E6" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#sb-sky)"/>
+        <rect width="1080" height="1920" fill="url(#sb-glow)"/>
+        <g transform="translate(790 300) scale(0.16)" opacity="0.9"><use href="#fig-robe" fill="#0A0E16"/></g>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sb-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#202C3E"/><stop offset="1" stop-color="#05070C"/></linearGradient>
+        </defs>
+        <path d="M 0 1420 C 280 1396 760 1408 1080 1420 L 1080 1920 L 0 1920 Z" fill="url(#sb-floor)"/>
+        <ellipse cx="470" cy="1492" rx="180" ry="30" fill="#000" opacity="0.5"/>
+        <g transform="translate(470 1420) rotate(-24) scale(0.6)">
+          <use href="#fig-robe" fill="#7488A2" filter="url(#glow8)" opacity="0.4"/>
+          <use href="#fig-robe" fill="#080A10" style="--rim:#8498B8"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="14" data-color="140,160,186"></div>
+  </section>
+
+  <!-- ============ ASH: near-total darkness, a lone seated figure motionless on bare ground, the faintest warm ember glow low at the edge of the frame ============ -->
+  <section class="scene" data-scene="ash" data-kb="rise" style="--ox:50%; --oy:62%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="as-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#030302"/><stop offset="0.6" stop-color="#0A0604"/><stop offset="1" stop-color="#160E08"/>
+          </linearGradient>
+          <radialGradient id="as-ember" cx="0.5" cy="0.92" r="0.3"><stop offset="0" stop-color="#C9824E" stop-opacity="0.35"/><stop offset="1" stop-color="#C9824E" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#as-sky)"/>
+        <rect width="1080" height="1920" fill="url(#as-ember)"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="as-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#120B07"/><stop offset="1" stop-color="#020201"/></linearGradient>
+        </defs>
+        <path d="M 0 1500 C 280 1478 760 1488 1080 1500 L 1080 1920 L 0 1920 Z" fill="url(#as-floor)"/>
+        <ellipse cx="540" cy="1560" rx="170" ry="28" fill="#000" opacity="0.6"/>
+        <g transform="translate(540 1542) scale(0.56)">
+          <use href="#fig-seated" fill="#C9824E" filter="url(#glow8)" opacity="0.22"/>
+          <use href="#fig-seated" fill="#050302" style="--rim:#C9824E"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="10" data-color="160,110,70"></div>
+  </section>
+
+  <!-- ============ ARISE: dawn breaking gold over deep blue, the same figure standing tall with arms lifted into the light ============ -->
+  <section class="scene" data-scene="arise" data-kb="pull" style="--ox:50%; --oy:52%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ar-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1A1830"/><stop offset="0.32" stop-color="#5A4A3E"/>
+            <stop offset="0.62" stop-color="#E8A858"/><stop offset="1" stop-color="#FFEFC2"/>
+          </linearGradient>
+          <radialGradient id="ar-burst" cx="0.5" cy="0.66" r="0.5"><stop offset="0" stop-color="#FFFBE6" stop-opacity="0.95"/><stop offset="0.3" stop-color="#FFE6B0" stop-opacity="0.5"/><stop offset="1" stop-color="#FFE6B0" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#ar-sky)"/>
+        <circle cx="540" cy="1260" r="600" fill="url(#ar-burst)"/>
+      </svg>
+      <div class="drift" style="--drift:-60px; --ddur:50s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <path d="M -200 1100 C 200 1070 600 1090 1300 1050 L 1300 1150 C 600 1186 200 1174 -200 1210 Z" fill="#E8A858" opacity="0.18"/>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ar-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C98A4A" stop-opacity="0.5"/><stop offset="1" stop-color="#140A06"/></linearGradient>
+        </defs>
+        <path d="M 0 1440 C 280 1416 760 1436 1080 1412 L 1080 1920 L 0 1920 Z" fill="url(#ar-floor)"/>
+        <ellipse cx="540" cy="1500" rx="200" ry="32" fill="#1A0E06" opacity="0.45"/>
+        <g transform="translate(540 1460) scale(0.62)">
+          <use href="#fig-raise" fill="#FFE6B0" filter="url(#glow8)" opacity="0.6"/>
+          <use href="#fig-raise" fill="#1A0E06" style="--rim:#FFE6B0"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="26" data-color="255,230,176"></div>
+    <div class="fx" data-type="bokeh" data-n="12"></div>
   </section>
 
 </div>

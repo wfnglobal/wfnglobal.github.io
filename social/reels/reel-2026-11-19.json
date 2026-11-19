@@ -1,0 +1,46 @@
+{
+  "template": "scenes",
+  "lines": [
+    {
+      "text": "Some of what knocked you down tonight, you already know, was your own doing.",
+      "visual": "stumble"
+    },
+    {
+      "text": "And somewhere close by, someone is still laughing about it.",
+      "visual": "stumble"
+    },
+    {
+      "text": "Rejoice not against me, O mine enemy:",
+      "visual": "ash",
+      "scripture": true
+    },
+    {
+      "text": "Micah doesn't argue the point. He just refuses to stay on the floor.",
+      "visual": "ash"
+    },
+    {
+      "text": "When I fall, I shall arise;",
+      "visual": "ash",
+      "scripture": true
+    },
+    {
+      "text": "when I sit in darkness, the LORD shall be a light unto me.",
+      "visual": "arise",
+      "scripture": true
+    },
+    {
+      "text": "Let your fall be the last thing they laugh at.",
+      "visual": "arise"
+    },
+    {
+      "text": "Get up. He is already the light you're standing up into. In Jesus' name, amen.",
+      "visual": "arise"
+    }
+  ],
+  "bold": "the light you're standing up into",
+  "title": "Word and Faith Network",
+  "subtitle": "When I Fall, I Shall Arise",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A three-scene illustrated short film on Micah 7:8-9: a lone figure caught mid-stumble in cold blue dusk while a small distant silhouette looks on, the same figure seated motionless in near-total darkness, and dawn finally breaking gold as they rise with arms lifted into the light."
+}

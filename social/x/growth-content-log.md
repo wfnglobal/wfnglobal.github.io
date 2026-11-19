@@ -111,4 +111,14 @@ Added November 18, 2026. Full text in `social/samples/x-growth-batch-2026-11-18-
 
 Psalm 55:22, Philippians 4:19, Ecclesiastes 3:11, Matthew 5:4, Proverbs 4:23, Matthew 11:28, Habakkuk 2:3, Romans 8:1, Proverbs 17:17, James 5:16
 
-<!-- Next batch (Day 65 onward) appends below this line. Keep the table format. -->
+## November 19, 2026
+
+Daily cadence starts here (Oladapo, Nov 18, 2026: "14 days is too far, make it daily"). Full post text also in `social/samples/x-growth-daily-2026-11.md`.
+
+| Slot | Area: Topic | Verse |
+| --- | --- | --- |
+| Morning | Rest: Tired before the day even started | Exodus 33:14 |
+| Midday | Friendship: The one who remembers the time difference and still calls | (none: tag engagement) |
+| Evening | Grief: The first Christmas without them | Psalm 73:26 |
+
+<!-- Next batch appends below this line. Keep the table format. -->

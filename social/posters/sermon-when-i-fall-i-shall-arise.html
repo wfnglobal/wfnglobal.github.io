@@ -1,0 +1,147 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- WFN sermon poster - When I Fall, I Shall Arise (Micah 7:8-9), Nov 19, 2026 -->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#0B0D10;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden; background:#0B0D10;}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(255,206,140,0), rgba(255,206,140,0.8), rgba(255,206,140,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E9D7A0;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.78);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#F3EBDD; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(255,200,130,0.45); background:rgba(10,10,12,0.55); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FFE2A8; box-shadow:0 0 12px 3px #F2A33A;}
+  .copy{position:absolute; left:0; right:0; top:800px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(246,190,110,0.95);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:94px; line-height:0.94; letter-spacing:-0.035em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em; background:linear-gradient(180deg,#FFF8E6 0%,#FFE0A0 32%,#F4B04A 64%,#D9772A 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(255,190,100,0.38)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:830px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.88); text-wrap:balance;}
+  .sub b{color:#FFD38A; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.92); max-width:540px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#F4B860;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#14110A; background:linear-gradient(180deg,#FFE6DA,#F2A33A); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(242,163,58,0.5);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070A"/><stop offset="0.5" stop-color="#111A20"/><stop offset="1" stop-color="#1E2629"/></linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3D0" stop-opacity="0.85"/><stop offset="0.45" stop-color="#FFC866" stop-opacity="0.38"/><stop offset="1" stop-color="#F2A33A" stop-opacity="0.12"/></linearGradient>
+    <radialGradient id="pool" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFDB8A" stop-opacity="0.75"/><stop offset="0.5" stop-color="#F2A33A" stop-opacity="0.25"/><stop offset="1" stop-color="#F2A33A" stop-opacity="0"/></radialGradient>
+    <radialGradient id="src" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFFBEF"/><stop offset="0.3" stop-color="#FFE3A6" stop-opacity="0.8"/><stop offset="1" stop-color="#F2A33A" stop-opacity="0"/></radialGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3236"/><stop offset="1" stop-color="#121619"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B2A26"/><stop offset="1" stop-color="#0B0D10"/></linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B0D10" stop-opacity="0"/><stop offset="1" stop-color="#0B0D10"/></linearGradient>
+    <filter id="b3"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="b8"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="b24"><feGaussianBlur stdDeviation="24"/></filter>
+  </defs>
+  <rect width="1080" height="830" fill="url(#sky)"/>
+  <g id="stars"></g>
+  <!-- ruined back wall with broken arch -->
+  <path d="M120 330 L120 700 L960 700 L960 300 L900 300 L890 340 L840 330 L820 360 L760 350 L760 700 L700 700 L700 470 C700 380 620 320 540 320 C460 320 380 380 380 470 L380 700 L320 700 L320 360 L270 372 L240 340 L190 352 Z" fill="#161C20" opacity="0.95"/>
+  <g stroke="#0B0F12" stroke-width="2" opacity="0.8" fill="none">
+    <path d="M120 400 H320 M120 470 H320 M120 540 H380 M120 610 H380 M760 410 H960 M760 480 H960 M700 550 H960 M700 620 H960"/>
+    <path d="M180 330 V400 M250 400 V470 M200 470 V540 M300 540 V610 M820 410 V480 M900 480 V550 M780 550 V620 M880 620 V700"/>
+  </g>
+  <!-- broken pillars, left and right -->
+  <g fill="url(#stone)">
+    <path d="M40 760 L40 330 L60 312 L92 324 L104 300 L122 316 L122 760Z"/>
+    <path d="M28 330 H134 V350 H28Z"/>
+    <path d="M950 760 L950 420 L968 402 L990 418 L1012 396 L1036 412 L1036 760Z"/>
+    <path d="M940 420 H1046 V440 H940Z"/>
+  </g>
+  <!-- fallen pillar drum on the floor -->
+  <ellipse cx="200" cy="752" rx="70" ry="22" fill="#1A2024"/>
+  <path d="M130 752 L130 720 L270 712 L270 752Z" fill="#20272B"/>
+  <ellipse cx="270" cy="732" rx="12" ry="21" fill="#2E363A"/>
+  <!-- mockers in the shadows, shrinking back from the light -->
+  <g fill="#07090B" opacity="0.92">
+    <path d="M170 700 C166 640 176 600 196 590 C186 572 194 552 212 552 C230 552 236 574 226 590 C244 602 250 648 246 700Z"/>
+    <path d="M250 706 C248 660 254 630 268 622 C262 610 268 596 280 596 C292 596 296 612 290 622 C302 632 304 668 302 706Z" opacity="0.8"/>
+    <path d="M830 700 C834 646 826 606 808 596 C818 578 810 560 794 560 C778 560 772 580 782 596 C766 606 760 650 764 700Z"/>
+    <path d="M880 712 C882 670 876 642 864 634 C870 622 864 608 852 608 C840 608 836 624 842 634 C830 644 828 676 830 712Z" opacity="0.8"/>
+  </g>
+  <g fill="#F2A33A" opacity="0.5">
+    <circle cx="207" cy="570" r="2"/><circle cx="217" cy="570" r="2"/>
+    <circle cx="790" cy="578" r="2"/><circle cx="800" cy="578" r="2"/>
+  </g>
+  <!-- floor -->
+  <path d="M0 700 L1080 700 L1080 830 L0 830Z" fill="url(#floor)"/>
+  <g id="cracks" stroke="#0A0B0C" stroke-width="2.2" fill="none" opacity="0.85"></g>
+  <!-- light source and beam -->
+  <circle cx="560" cy="40" r="220" fill="url(#src)" opacity="0.7"/>
+  <path d="M500 0 L630 0 L800 760 L330 760Z" fill="url(#beam)" filter="url(#b8)"/>
+  <path d="M535 0 L595 0 L690 760 L420 760Z" fill="#FFF0C8" opacity="0.14" filter="url(#b8)"/>
+  <ellipse cx="545" cy="738" rx="250" ry="46" fill="url(#pool)"/>
+  <g id="dust"></g>
+  <!-- the man rising from one knee, reaching into the light -->
+  <g id="man"></g>
+  <rect y="770" width="1080" height="62" fill="url(#fade)"/>
+  <rect y="828" width="1080" height="522" fill="#0B0D10"/>
+</svg>
+<div class="top">
+  <div class="lock"><svg viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#lg)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#lg)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#lg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#lg)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#lg)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg><div class="rule"></div><div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div></div>
+  <div class="chip"><i></i>Today's Sermon</div>
+</div>
+<div class="copy">
+  <div class="kicker">Micah 7:8-9 &middot; Rising Again</div>
+  <h1>Knocked down?<em>Not knocked out.</em></h1>
+  <p class="sub">The enemy laughed when you went down. Heaven says <b>the floor is not your finish</b>.</p>
+</div>
+<div class="cta">
+  <div class="verse">&ldquo;When I fall, I shall arise; when I sit in darkness, the LORD shall be a light unto me.&rdquo;<span>Micah 7:8</span></div>
+  <div class="btn"><span class="l1">Read the sermon &rarr;</span><span class="l2">wfnglobal.org</span></div>
+</div>
+</div>
+<script>
+  let s = 7819; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, a, p) { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; }
+  const st = document.getElementById("stars");
+  for (let i = 0; i < 60; i++) el("circle", { cx: (r() * 1080).toFixed(1), cy: (r() * 280).toFixed(1), r: (r() * 1.1 + 0.3).toFixed(2), fill: "#E8EEF2", opacity: (0.1 + r() * 0.45).toFixed(2) }, st);
+  const ck = document.getElementById("cracks");
+  for (let i = 0; i < 14; i++) { let x = r() * 1080, y = 706 + r() * 110, d = `M${x.toFixed(0)} ${y.toFixed(0)}`;
+    for (let k = 0; k < 4; k++) { x += (r() - 0.5) * 90; y += (r() - 0.3) * 18; d += ` L${x.toFixed(0)} ${y.toFixed(0)}`; } el("path", { d }, ck); }
+  const du = document.getElementById("dust");
+  for (let i = 0; i < 110; i++) { const y = r() * 740, half = 65 + y * 0.31, x = 565 + (y * 0.0) + (r() - 0.5) * 2 * half;
+    el("circle", { cx: x.toFixed(1), cy: y.toFixed(1), r: (0.6 + r() * 2).toFixed(1), fill: "#FFEBC0", opacity: (0.2 + r() * 0.6).toFixed(2) }, du); }
+  const man = document.getElementById("man");
+  function figure(g, col, w) {
+    const limb = (d, sw) => el("path", { d, stroke: col, "stroke-width": sw + w, "stroke-linecap": "round", "stroke-linejoin": "round", fill: "none" }, g);
+    limb("M530 650 L500 722 L432 728", 30);          // kneeling leg: hip -> knee on floor -> foot back
+    limb("M548 652 L606 652 L614 728", 30);          // front leg: hip -> raised knee -> planted foot
+    limb("M612 730 L642 732", 18);                   // front foot
+    // robe over torso and hips
+    el("path", { d: "M546 528 C566 518 594 530 600 552 C606 590 612 630 618 668 C590 680 548 682 512 672 C508 628 516 572 546 528Z", fill: col, stroke: col, "stroke-width": w, "stroke-linejoin": "round" }, g);
+    limb("M586 556 L618 600 L612 644", 21);          // near arm: elbow out, hand braced on the knee
+    limb("M564 540 L608 494 L640 452", 20);          // far arm reaching up into the light
+    el("ellipse", { cx: 645, cy: 440, rx: 9 + w / 2, ry: 15 + w / 2, transform: "rotate(36 645 440)", fill: col }, g); // open hand
+    limb("M574 530 L580 516", 18);                   // neck
+    el("circle", { cx: 586, cy: 500, r: 22 + w / 2, fill: col }, g); // head, lifted toward the light
+  }
+  const glow = el("g", { filter: "url(#b8)", opacity: 0.85 }, man); figure(glow, "#FFC866", 10);
+  const rim = el("g", { transform: "translate(1 -3)" }, man); figure(rim, "#FFE1A0", 4);
+  const body = el("g", {}, man); figure(body, "#0D0F12", 0);
+  // dust kicked up where the knee meets the floor
+  for (let i = 0; i < 26; i++) el("circle", { cx: (470 + r() * 120).toFixed(1), cy: (712 + r() * 22).toFixed(1), r: (0.8 + r() * 2.2).toFixed(1), fill: "#FFE2A8", opacity: (0.25 + r() * 0.5).toFixed(2) }, man);
+</script>
+</body></html>

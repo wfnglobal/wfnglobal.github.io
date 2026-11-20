@@ -1,0 +1,41 @@
+{
+  "template": "scenes",
+  "lines": [
+    {
+      "text": "Nehemiah was already building when the invitations started — four times, same offer, dressed up as reasonable.",
+      "visual": "wall"
+    },
+    {
+      "text": "Come down, let's talk, let's meet halfway. It never once looked like an attack.",
+      "visual": "wall"
+    },
+    {
+      "text": "I am doing a great work,",
+      "visual": "letter",
+      "scripture": true
+    },
+    {
+      "text": "so that I cannot come down.",
+      "visual": "letter",
+      "scripture": true
+    },
+    {
+      "text": "Maybe you've gotten the same invitation today — a call, a scroll, a reasonable-sounding reason to leave the wall unfinished.",
+      "visual": "answer"
+    },
+    {
+      "text": "Give it the same answer, every single time it comes back dressed differently.",
+      "visual": "answer"
+    },
+    {
+      "text": "Keep building. The wall still needs you. In Jesus' name, amen.",
+      "visual": "answer"
+    }
+  ],
+  "bold": "the wall still needs you",
+  "title": "Word and Faith Network",
+  "subtitle": "I Cannot Come Down",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A three-scene illustrated short film on Nehemiah 6:2-4: a lone figure working a torchlit stone wall at night while amber light glows beyond it, a sealed scroll resting on a flat hazy plain with a small distant figure beckoning from far off, and dawn breaking gold over the same figure standing firm atop the finished wall with arms raised."
+}

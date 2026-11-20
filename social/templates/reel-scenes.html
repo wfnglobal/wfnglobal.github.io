@@ -134,6 +134,9 @@
   body[data-shot="stumble"]{--accent:#8498B8;}
   body[data-shot="ash"]{--accent:#C9824E;}
   body[data-shot="arise"]{--accent:#FFE6B0;}
+  body[data-shot="wall"]{--accent:#E8974A;}
+  body[data-shot="letter"]{--accent:#C9B88A;}
+  body[data-shot="answer"]{--accent:#FFCE7A;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -2586,6 +2589,119 @@
     </div>
     <div class="fx" data-type="motes" data-n="26" data-color="255,230,176"></div>
     <div class="fx" data-type="bokeh" data-n="12"></div>
+  </section>
+
+  <!-- ============ WALL: night, torchlight amber glow over a half-built stone wall, a lone figure working beside it ============ -->
+  <section class="scene" data-scene="wall" data-kb="panr" style="--ox:48%; --oy:60%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wl-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0A0A10" stop-opacity="1"/><stop offset="0.55" stop-color="#1C1610" stop-opacity="1"/>
+            <stop offset="1" stop-color="#3A2612" stop-opacity="1"/>
+          </linearGradient>
+          <radialGradient id="wl-glow" cx="0.72" cy="0.78" r="0.3"><stop offset="0" stop-color="#E8974A" stop-opacity="0.55"/><stop offset="1" stop-color="#E8974A" stop-opacity="0"/></radialGradient>
+          <radialGradient id="wl-glow2" cx="0.22" cy="0.8" r="0.22"><stop offset="0" stop-color="#E8974A" stop-opacity="0.4"/><stop offset="1" stop-color="#E8974A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#wl-sky)"/>
+        <rect width="1080" height="1920" fill="url(#wl-glow)"/>
+        <rect width="1080" height="1920" fill="url(#wl-glow2)"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wl-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241A10"/><stop offset="1" stop-color="#060402"/></linearGradient>
+          <linearGradient id="wl-stone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A2C1E"/><stop offset="1" stop-color="#120D08"/></linearGradient>
+        </defs>
+        <path d="M 0 1560 C 300 1540 760 1552 1080 1560 L 1080 1920 L 0 1920 Z" fill="url(#wl-floor)"/>
+        <path d="M 0 1560 L 0 1480 L 110 1480 L 110 1430 L 220 1430 L 220 1480 L 330 1480 L 330 1420 L 440 1420 L 440 1480 L 550 1480 L 550 1430 L 660 1430 L 660 1480 L 770 1480 L 770 1420 L 880 1420 L 880 1480 L 990 1480 L 990 1430 L 1080 1430 L 1080 1560 L 0 1560 Z" fill="url(#wl-stone)"/>
+        <g opacity="0.5" stroke="#5C4228" stroke-width="2">
+          <path d="M 110 1480 L 110 1560 M 330 1480 L 330 1560 M 550 1480 L 550 1560 M 770 1480 L 770 1560 M 990 1480 L 990 1560"/>
+        </g>
+        <circle cx="130" cy="1424" r="10" fill="#E8974A" filter="url(#glow8)" opacity="0.85"/>
+        <circle cx="860" cy="1414" r="10" fill="#E8974A" filter="url(#glow8)" opacity="0.85"/>
+        <ellipse cx="640" cy="1536" rx="150" ry="26" fill="#000" opacity="0.5"/>
+        <g transform="translate(640 1478) rotate(6) scale(0.56)">
+          <use href="#fig-staff" fill="#E8974A" filter="url(#glow8)" opacity="0.3"/>
+          <use href="#fig-staff" fill="#0C0806" style="--rim:#E8974A"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="ember" data-n="16" data-color="232,151,74"></div>
+  </section>
+
+  <!-- ============ LETTER: flat, hazy daylight over an open plain, a sealed scroll held out in the foreground and a lone distant figure beckoning ============ -->
+  <section class="scene" data-scene="letter" data-kb="panl" style="--ox:50%; --oy:64%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="lt-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#C9B88A"/><stop offset="0.5" stop-color="#D9CBA0"/><stop offset="1" stop-color="#E8DCB8"/>
+          </linearGradient>
+          <linearGradient id="lt-haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="0.3"/></linearGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#lt-sky)"/>
+        <rect y="1200" width="1080" height="300" fill="url(#lt-haze)"/>
+        <rect y="1478" width="1080" height="4" fill="#8A7A54" opacity="0.35"/>
+        <g transform="translate(860 1478) scale(0.1)" opacity="0.6">
+          <use href="#fig-robe" fill="#7A6A48"/>
+        </g>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="lt-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B8A572"/><stop offset="1" stop-color="#4A3E26"/></linearGradient>
+        </defs>
+        <path d="M 0 1480 C 300 1460 760 1472 1080 1480 L 1080 1920 L 0 1920 Z" fill="url(#lt-floor)"/>
+        <ellipse cx="540" cy="1640" rx="190" ry="28" fill="#000" opacity="0.28"/>
+        <g transform="translate(470 1555) rotate(-8) scale(1.15)">
+          <rect x="-120" y="-30" width="240" height="60" rx="30" fill="#EDE2C0" stroke="#8A7A54" stroke-width="3"/>
+          <rect x="-120" y="-30" width="34" height="60" rx="17" fill="#D9CB9E"/>
+          <rect x="86" y="-30" width="34" height="60" rx="17" fill="#D9CB9E"/>
+          <circle cx="0" cy="0" r="16" fill="#9E3B2E"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="10" data-color="200,186,140"></div>
+  </section>
+
+  <!-- ============ ANSWER: dawn gold breaking over the finished wall, the figure standing firm on top of it, arms resolute ============ -->
+  <section class="scene" data-scene="answer" data-kb="rise" style="--ox:50%; --oy:50%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="aw-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1E1830" stop-opacity="1"/><stop offset="0.34" stop-color="#6A3E2A" stop-opacity="1"/>
+            <stop offset="0.66" stop-color="#E8974A" stop-opacity="1"/><stop offset="1" stop-color="#FFE2A0" stop-opacity="1"/>
+          </linearGradient>
+          <radialGradient id="aw-burst" cx="0.5" cy="0.62" r="0.48"><stop offset="0" stop-color="#FFEFC2" stop-opacity="0.95"/><stop offset="0.3" stop-color="#FFCE7A" stop-opacity="0.5"/><stop offset="1" stop-color="#FFCE7A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#aw-sky)"/>
+        <circle cx="540" cy="1180" r="580" fill="url(#aw-burst)"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="aw-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C98A4A" stop-opacity="0.55"/><stop offset="1" stop-color="#140A06"/></linearGradient>
+          <linearGradient id="aw-stone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A3420"/><stop offset="1" stop-color="#160E08"/></linearGradient>
+        </defs>
+        <path d="M 0 1560 C 300 1540 760 1552 1080 1560 L 1080 1920 L 0 1920 Z" fill="url(#aw-floor)"/>
+        <path d="M 0 1600 L 0 1500 L 1080 1500 L 1080 1600 Z" fill="url(#aw-stone)"/>
+        <g opacity="0.4" stroke="#6A4E30" stroke-width="2">
+          <path d="M 180 1500 L 180 1600 M 420 1500 L 420 1600 M 660 1500 L 660 1600 M 900 1500 L 900 1600"/>
+        </g>
+        <ellipse cx="540" cy="1512" rx="190" ry="28" fill="#000" opacity="0.4"/>
+        <g transform="translate(540 1478) scale(0.6)">
+          <use href="#fig-raise" fill="#FFCE7A" filter="url(#glow8)" opacity="0.55"/>
+          <use href="#fig-raise" fill="#1A0E06" style="--rim:#FFCE7A"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="22" data-color="255,206,122"></div>
+    <div class="fx" data-type="bokeh" data-n="10"></div>
   </section>
 
 </div>

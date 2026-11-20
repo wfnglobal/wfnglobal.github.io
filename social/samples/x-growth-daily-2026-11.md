@@ -27,3 +27,33 @@ This will be the first Christmas without them. Nobody warns you how loud an empt
 Pray: Lord, be my strength in what still hurts.
 
 Save this for whoever's dreading an empty seat this December.
+
+## November 20
+
+### Morning: Marriage
+
+Both of you have been quiet since last night's argument.
+
+Fear says: whoever apologizes first loses.
+Faith says: whoever apologizes first loves harder.
+God says: "A soft answer turneth away wrath: but grievous words stir up anger." — Proverbs 15:1
+
+Repost if you're choosing peace before noon.
+
+### Midday: Singleness
+
+This wedding season has asked you "and when is your own own?" at least four times already. 😅
+
+Type "still waiting" if you're smiling through it and still trusting God's timing.
+
+### Evening: Purpose
+
+"What's the actual plan?" Someone asked that at the family function and your answer didn't even convince you.
+
+You don't need the whole map. Just the next step.
+
+"A man's heart deviseth his way: but the LORD directeth his steps." — Proverbs 16:9
+
+Pray: Lord, direct my steps even when I can't see the whole road.
+
+Save this for next time someone asks "the plan."

@@ -121,4 +121,14 @@ Daily cadence starts here (Oladapo, Nov 18, 2026: "14 days is too far, make it d
 | Midday | Friendship: The one who remembers the time difference and still calls | (none: tag engagement) |
 | Evening | Grief: The first Christmas without them | Psalm 73:26 |
 
+## November 20, 2026
+
+Full post text also in `social/samples/x-growth-daily-2026-11.md`.
+
+| Slot | Area: Topic | Verse |
+| --- | --- | --- |
+| Morning | Marriage: Who apologizes first | Proverbs 15:1 |
+| Midday | Singleness: Wedding season questions | (none: one-word reply) |
+| Evening | Purpose: "What's the actual plan?" | Proverbs 16:9 |
+
 <!-- Next batch appends below this line. Keep the table format. -->

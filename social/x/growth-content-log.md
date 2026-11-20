@@ -167,4 +167,23 @@ engagement post may skip the verse). Full post text also in `social/samples/x-gr
 | 9 | Tag-bait | The friend who prays for you without being asked |
 | 10 | Hot take | Leaving a job that's killing your peace doesn't need a "word" |
 
+## November 20, 2026 — comfort/encouragement batch (10, requested for conversation + healing, "a pat on the back")
+
+Requested after the viral batch: warm, relatable posts meant to comfort, heal and encourage — not hot takes —
+each still ending in a genuine reply invite to start real conversation. Full post text also in
+`social/samples/x-growth-daily-2026-11.md`.
+
+| # | Topic | Verse |
+| --- | --- | --- |
+| 1 | The 2am exhaustion (newborn, sick parent, racing thoughts) | Numbers 6:24-26 |
+| 2 | The effort nobody noticed today | Psalm 94:19 |
+| 3 | Starting over after a hard ending | Psalm 30:11 |
+| 4 | Carrying everyone else, who's carrying you | Isaiah 40:11 |
+| 5 | A hard day that needs no explanation | 2 Corinthians 1:3-4 |
+| 6 | Not knowing which way to go | Psalm 121:1-2 |
+| 7 | Peace in the middle of the noise, not just after | 2 Thessalonians 3:16 |
+| 8 | One storm rolling into the next | Nahum 1:7 |
+| 9 | Anxiety about tomorrow | Matthew 6:34 |
+| 10 | Celebrating a small win | Psalm 16:11 |
+
 <!-- Next batch appends below this line. Keep the table format. -->

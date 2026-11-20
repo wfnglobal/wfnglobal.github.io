@@ -241,3 +241,90 @@ They don't post about it. They just do it. Let's appreciate them today. 🙏
 You don't need a "word from the Lord" to leave a job that's quietly killing your peace. Sometimes the confirmation is just: you're not okay.
 
 Retweet if common sense is also a gift from God.
+
+## November 20 — comfort/encouragement batch (10, requested for conversation + healing)
+
+Requested after the viral batch: warm, relatable posts meant to comfort, heal and encourage — a pat on the
+back, "keep going" — not hot takes, but each still ends in a genuine reply invite to start real conversation.
+
+### 1. The 2am exhaustion
+
+You've been up since 2am — a crying baby, a sick parent, or just your own racing thoughts.
+
+You're doing better than you think.
+
+"The LORD bless thee, and keep thee: the LORD make his face shine upon thee, and be gracious unto thee: the LORD lift up his countenance upon thee, and give thee peace." — Numbers 6:24-26
+
+Reply "I needed this" if today's been long already. Praying this over you right now.
+
+### 2. The effort nobody noticed
+
+Nobody clapped for the meal you cooked, the deadline you hit quietly, or the patience you held onto today. God saw every bit of it.
+
+"In the multitude of my thoughts within me thy comforts delight my soul." — Psalm 94:19
+
+Tell me one thing you did today that nobody noticed. I'll notice it with you. 💛
+
+### 3. Starting over after a hard ending
+
+However today ended, you're not disqualified. You're just between chapters.
+
+"Thou hast turned for me my mourning into dancing: thou hast put off my sackcloth, and girded me with gladness." — Psalm 30:11
+
+Reply "starting again" if you're giving yourself permission to try one more time.
+
+### 4. Carrying everyone else
+
+Carrying everyone else today and wondering who's carrying you?
+
+"He shall feed his flock like a shepherd: he shall gather the lambs with his arm, and carry them in his bosom." — Isaiah 40:11
+
+You're the lamb today too. Tell me what you're tired of carrying — I'll hold it in prayer with you.
+
+### 5. A hard day that needs no explanation
+
+You don't have to explain why today was hard. Some days just are, and that's allowed.
+
+"The Father of mercies, and the God of all comfort; who comforteth us in all our tribulation." — 2 Corinthians 1:3-4
+
+If today knocked the wind out of you a little, just reply with a 🤍. No details needed. I see you.
+
+### 6. Not knowing which way to go
+
+When you don't know which way to go, you don't have to pretend you do.
+
+"I will lift up mine eyes unto the hills, from whence cometh my help. My help cometh from the LORD." — Psalm 121:1-2
+
+Tell me what you need help with right now. Let's lift our eyes together.
+
+### 7. Peace in the middle of the noise
+
+Whatever noise is happening around you right now — the house, the group chat, the inbox — you're allowed to have peace in the middle of it, not just after it.
+
+"Now the Lord of peace himself give you peace always by all means." — 2 Thessalonians 3:16
+
+Reply with the one word for what you need peace over tonight.
+
+### 8. One storm rolling into the next
+
+If this season has felt like one storm rolling into the next, you haven't been fighting it alone. You've had a stronghold the whole time.
+
+"The LORD is good, a strong hold in the day of trouble; and he knoweth them that trust in him." — Nahum 1:7
+
+Keep going. Tell me — what's the storm you're standing in right now?
+
+### 9. Anxiety about tomorrow
+
+Stop doing math on tomorrow's problems with today's strength. You don't have tomorrow's grace yet — you don't need it yet.
+
+"Take therefore no thought for the morrow... sufficient unto the day is the evil thereof." — Matthew 6:34
+
+Reply "just today" if you're putting tomorrow down for tonight.
+
+### 10. Celebrating a small win
+
+However small today's win was — you showed up, you tried, you didn't quit — that counts. That really counts.
+
+"In thy presence is fulness of joy." — Psalm 16:11
+
+Tell me one small win from today. I'll celebrate it with you, however small. You're doing better than you know. Keep going. 👏

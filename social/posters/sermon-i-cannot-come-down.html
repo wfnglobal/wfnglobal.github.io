@@ -1,0 +1,151 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- WFN sermon poster - I Cannot Come Down (Nehemiah 6:2-4), Nov 20, 2026 -->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#120B1C;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden; background:#120B1C;}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(255,206,140,0), rgba(255,180,150,0.8), rgba(255,206,140,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#F6DCC4;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(246,226,214,0.78);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#F3EBDD; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(255,160,130,0.5); background:rgba(20,10,24,0.55); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FFD9C2; box-shadow:0 0 12px 3px #F27A5E;}
+  .copy{position:absolute; left:0; right:0; top:800px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(255,170,135,0.95);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:94px; line-height:0.94; letter-spacing:-0.035em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em; background:linear-gradient(180deg,#FFF3E6 0%,#FFC9A0 30%,#F2866A 64%,#D24E6C 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(255,130,110,0.38)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:830px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.88); text-wrap:balance;}
+  .sub b{color:#FFC2A2; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.92); max-width:540px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#FF9E80;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A0E14; background:linear-gradient(180deg,#FFE9DC,#F2866A); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(242,120,100,0.5);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#140B22"/><stop offset="0.38" stop-color="#3B1A3E"/><stop offset="0.66" stop-color="#9A3F5A"/><stop offset="0.86" stop-color="#E9805F"/><stop offset="1" stop-color="#FFC08A"/></linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF1D6"/><stop offset="0.25" stop-color="#FFC890" stop-opacity="0.9"/><stop offset="1" stop-color="#F2866A" stop-opacity="0"/></radialGradient>
+    <linearGradient id="hillFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6B2F4A"/><stop offset="1" stop-color="#3A1A33"/></linearGradient>
+    <linearGradient id="ridge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E1529"/><stop offset="1" stop-color="#160B19"/></linearGradient>
+    <linearGradient id="plain" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#231225"/><stop offset="1" stop-color="#120B1C"/></linearGradient>
+    <linearGradient id="wallFace" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B9705E"/><stop offset="1" stop-color="#5A2E3C"/></linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#120B1C" stop-opacity="0"/><stop offset="1" stop-color="#120B1C"/></linearGradient>
+    <radialGradient id="lamp" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE7B0"/><stop offset="0.3" stop-color="#FFB25A" stop-opacity="0.7"/><stop offset="1" stop-color="#FF8A3A" stop-opacity="0"/></radialGradient>
+    <filter id="b8" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="b3"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1080" height="830" fill="url(#sky)"/>
+  <g id="stars"></g>
+  <circle cx="250" cy="560" r="260" fill="url(#sun)" opacity="0.85"/>
+  <circle cx="250" cy="575" r="54" fill="#FFE9C8" opacity="0.95"/>
+  <!-- far hills -->
+  <path d="M0 560 C120 530 220 548 330 536 C460 522 560 548 700 530 C820 516 940 540 1080 520 L1080 640 L0 640Z" fill="url(#hillFar)"/>
+  <!-- the low plain of Ono, foreground left -->
+  <path d="M0 640 C200 628 380 640 560 660 L560 830 L0 830Z" fill="url(#plain)"/>
+  <!-- ridge the wall stands on -->
+  <path d="M330 830 C400 700 440 600 470 520 L1080 470 L1080 830Z" fill="url(#ridge)"/>
+  <!-- winding path down from the wall to the plain -->
+  <path d="M520 560 C500 610 560 640 520 690 C480 740 360 730 300 760" stroke="#4A2338" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.8"/>
+  <!-- the wall -->
+  <g id="wall"></g>
+  <!-- the builder on top of the wall -->
+  <g id="man"></g>
+  <!-- the beckoners on the plain -->
+  <g id="crowd"></g>
+  <rect y="770" width="1080" height="62" fill="url(#fade)"/>
+  <rect y="828" width="1080" height="522" fill="#120B1C"/>
+</svg>
+<div class="top">
+  <div class="lock"><svg viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#lg)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#lg)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#lg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#lg)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#lg)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg><div class="rule"></div><div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div></div>
+  <div class="chip"><i></i>Today's Sermon</div>
+</div>
+<div class="copy">
+  <div class="kicker">Nehemiah 6:3 &middot; Stay on the Wall</div>
+  <h1>Not every invite<em>is an opportunity.</em></h1>
+  <p class="sub">What couldn&rsquo;t stop the wall by attack tried to stop it by appointment. Nehemiah&rsquo;s answer: <b>I cannot come down</b>.</p>
+</div>
+<div class="cta">
+  <div class="verse">&ldquo;I am doing a great work, so that I cannot come down: why should the work cease?&rdquo;<span>Nehemiah 6:3</span></div>
+  <div class="btn"><span class="l1">Read the sermon &rarr;</span><span class="l2">wfnglobal.org</span></div>
+</div>
+</div>
+<script>
+  let s = 6031; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, a, p) { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; }
+  const st = document.getElementById("stars");
+  for (let i = 0; i < 50; i++) el("circle", { cx: (r() * 1080).toFixed(1), cy: (r() * 300).toFixed(1), r: (r() * 1.1 + 0.3).toFixed(2), fill: "#FCE8E8", opacity: (0.1 + r() * 0.5).toFixed(2) }, st);
+  // wall: courses of sandstone blocks from x=480 to 1080, top at y=430 (left end) rising slightly in perspective
+  const w = document.getElementById("wall");
+  const x0 = 470, x1 = 1080, topY = 432, baseL = 530, baseR = 480;
+  el("path", { d: `M${x0} ${topY} L${x1} 392 L${x1} ${baseR} L${x0} ${baseL}Z`, fill: "url(#wallFace)" }, w);
+  const rows = 6;
+  for (let i = 0; i < rows; i++) {
+    const t0 = i / rows, t1 = (i + 1) / rows;
+    let x = x0 - (i % 2) * 30;
+    while (x < x1) {
+      const bw = 46 + r() * 30, xa = Math.max(x, x0), xb = Math.min(x + bw, x1);
+      const yTop = (xx) => { const k = (xx - x0) / (x1 - x0); const top = topY + (392 - topY) * k, base = baseL + (baseR - baseL) * k; return [top + (base - top) * t0, top + (base - top) * t1]; };
+      const [a0, a1] = yTop(xa), [b0, b1] = yTop(xb);
+      const shade = 0.75 + r() * 0.35;
+      const col = `rgb(${Math.round(196 * shade)},${Math.round(120 * shade)},${Math.round(98 * shade)})`;
+      el("path", { d: `M${xa + 2} ${a0 + 2} L${xb - 2} ${b0 + 2} L${xb - 2} ${b1 - 2} L${xa + 2} ${a1 - 2}Z`, fill: col, opacity: (0.55 + 0.45 * (1 - t0)).toFixed(2) }, w);
+      x += bw;
+    }
+  }
+  // warm sunset rim along the wall top
+  el("path", { d: `M${x0} ${topY} L${x1} 392`, stroke: "#FFC9A0", "stroke-width": 3, opacity: 0.9 }, w);
+  // gateway with no doors yet hung
+  el("path", { d: "M860 503 L860 446 C860 420 912 416 912 444 L912 497Z", fill: "#1A0C17" }, w);
+  // unfinished top course on the far right, loose stones stacked
+  for (let i = 0; i < 4; i++) el("rect", { x: 980 + i * 22, y: 378 - (i % 2) * 10, width: 30, height: 16, rx: 2, fill: "#C98068", opacity: 0.9 }, w);
+  // the builder: standing tall, trowel raised, stone on shoulder
+  const man = document.getElementById("man");
+  function figure(g, col, k) {
+    const limb = (d, sw) => el("path", { d, stroke: col, "stroke-width": sw + k, "stroke-linecap": "round", "stroke-linejoin": "round", fill: "none" }, g);
+    limb("M636 330 L624 372 L618 412", 16);   // left leg
+    limb("M652 330 L664 372 L672 412", 16);   // right leg
+    el("path", { d: "M628 270 C640 262 656 262 664 270 L670 336 C654 342 634 342 620 336Z", fill: col, stroke: col, "stroke-width": k, "stroke-linejoin": "round" }, g); // tunic
+    limb("M630 276 L606 300 L594 334", 12);   // left arm down, trowel in hand
+    limb("M660 276 L672 252 L662 236", 12);   // right arm up, steadying the stone
+    el("rect", { x: 648 - k / 2, y: 214 - k / 2, width: 40 + k, height: 24 + k, rx: 3, fill: col, transform: "rotate(-8 668 226)" }, g); // stone on shoulder
+    limb("M645 266 L645 254", 11);            // neck
+    el("circle", { cx: 643, cy: 242, r: 14 + k / 2, fill: col }, g); // head
+    el("path", { d: "M590 334 L578 352 L596 346Z", fill: col, stroke: col, "stroke-width": k }, g); // trowel blade
+  }
+  const glow = el("g", { filter: "url(#b8)", opacity: 0.8 }, man); figure(glow, "#FF9E80", 10);
+  const rim = el("g", { transform: "translate(-2 -1)" }, man); figure(rim, "#FFD2B0", 3);
+  figure(el("g", {}, man), "#1A0C17", 0);
+  // beckoning figures down on the plain, small and far below, with lanterns
+  const cr = document.getElementById("crowd");
+  [[150, 738, 1], [215, 746, 0.92], [282, 734, 0.96]].forEach(([x, y, sc], i) => {
+    const g = el("g", { transform: `translate(${x} ${y}) scale(${sc})` }, cr);
+    el("path", { d: "M-12 0 C-13 -26 -10 -42 0 -46 C10 -42 13 -26 12 0Z", fill: "#0E0712" }, g);
+    el("circle", { cx: 0, cy: -54, r: 8, fill: "#0E0712" }, g);
+    el("path", { d: i === 1 ? "M6 -40 L18 -62 L22 -78" : "M6 -40 L20 -58 L30 -70", stroke: "#0E0712", "stroke-width": 5, "stroke-linecap": "round", fill: "none" }, g); // arm waving up toward the wall
+    el("path", { d: "M-6 -38 L-16 -24", stroke: "#0E0712", "stroke-width": 5, "stroke-linecap": "round" }, g);
+    el("circle", { cx: -18, cy: -18, r: 26, fill: "url(#lamp)" }, g);
+    el("circle", { cx: -18, cy: -18, r: 4, fill: "#FFE7B0" }, g);
+  });
+</script>
+</body></html>

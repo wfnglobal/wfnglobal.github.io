@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "Let thine eyes look right on, and let thine eyelids look straight before thee.", ref: "Proverbs 4:25" },
     { text: "But thou, O LORD, art a shield for me; my glory, and the lifter up of mine head.", ref: "Psalm 3:3" },
     { text: "The blessing of the LORD, it maketh rich, and he addeth no sorrow with it.", ref: "Proverbs 10:22" },
     { text: "And we know that all things work together for good to them that love God, to them who are the called according to his purpose.", ref: "Romans 8:28" },
@@ -93,21 +94,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that my fall is not my finish!",
-      "Let no enemy rejoice over me — when I fall, I shall arise!",
-      "The floor is not my address. I am getting back up!",
+      "Father, I declare today that I am doing a great work — and I cannot come down!",
+      "Every invitation to the plain of Ono is declined, in Jesus' name!",
+      "What could not stop me by attack will not stop me by appointment!",
       "",
-      "When I sit in darkness, the LORD shall be a light unto me!",
-      "I will not make my home in the dark place. Your light has found me here!",
-      "You are my shield, my glory, and the lifter up of my head!",
+      "I will not trade my wall for an argument!",
+      "My eyes look right on, and my eyelids look straight before me!",
+      "Four times the same lie, four times the same answer: I am not coming down!",
       "",
-      "I own my mistakes, but my mistakes do not own me!",
-      "Jesus Christ the righteous pleads my cause before the Father!",
-      "You will bring me forth to the light, and I shall behold Your righteousness!",
+      "Now therefore, O God, strengthen my hands!",
+      "Should such a one as I flee? I will not run, and I will not stop!",
+      "What You started in me will be finished, and they shall know this work was wrought of God!",
       "",
-      "Save this. Speak it over your house today. Knocked down is not knocked out — when I fall, I shall arise! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. I am doing a great work, so that I cannot come down! In Jesus' mighty name, amen!"
     ],
-    ref: "Micah 7:8-9"
+    ref: "Nehemiah 6:3, 9"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -150,6 +151,7 @@
   };
 
   const SERMONS = [
+    { slug: "i-cannot-come-down", title: "I Cannot Come Down", ref: "Nehemiah 6:2-4", date: "November 20, 2026", excerpt: "The wall was half built when the invitations started — a friendly meeting in the plain of Ono, four times, same offer. Nehemiah saw the trap behind the courtesy and gave the same answer every time: I am doing a great work, so that I cannot come down." },
     { slug: "when-i-fall-i-shall-arise", title: "When I Fall, I Shall Arise", ref: "Micah 7:8-9", date: "November 19, 2026", excerpt: "The enemy laughed when you went down, and some of the fall was your own fault. Micah doesn't deny either one — he just refuses to stay on the floor: when I fall, I shall arise; when I sit in darkness, the LORD shall be a light unto me." },
     { slug: "nevertheless-at-thy-word", title: "Nevertheless at Thy Word", ref: "Luke 5:4-6", date: "November 18, 2026", excerpt: "Peter fished all night with every skill he had and came home with empty nets. Then a Carpenter told the fisherman where to throw — and one word of obedience, nevertheless at thy word, filled two boats until they began to sink." },
     { slug: "but-god-meant-it-unto-good", title: "But God Meant It Unto Good", ref: "Genesis 50:19-21", date: "November 17, 2026", excerpt: "His brothers sold him, a liar framed him, and a prison forgot him. Years later Joseph looked at the very people who did it and spoke the sentence that heals families: ye thought evil against me; but God meant it unto good." },

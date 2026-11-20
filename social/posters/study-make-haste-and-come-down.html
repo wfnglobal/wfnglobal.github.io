@@ -1,0 +1,165 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- WFN Bible study poster - Make Haste, and Come Down (Luke 19:1-10, Zacchaeus), Nov 20, 2026 -->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#0E1B12;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden; background:#0E1B12;}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.8), rgba(255,255,255,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#FFF6E0;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(255,246,224,0.82);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#1F2D16; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(31,45,22,0.25); background:rgba(255,246,224,0.82); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#2E6B3E; box-shadow:0 0 12px 3px rgba(46,107,62,0.7);}
+  .copy{position:absolute; left:0; right:0; top:788px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(255,246,224,0.86);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:106px; line-height:0.96; letter-spacing:-0.03em; color:#FFFBF0; text-shadow:0 6px 40px rgba(0,0,0,0.55);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.02em; background:linear-gradient(180deg,#FFF1C2 0%,#FFD27A 40%,#D98C3A 75%,#A85F1E 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(255,190,90,0.35)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:810px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,243,232,0.9);}
+  .sub b{color:#FFD98F; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:22px; line-height:1.3; color:rgba(246,250,236,0.92); max-width:540px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#FFD27A;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A1405; background:linear-gradient(180deg,#FFE7A6,#E9B24F); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(233,178,79,0.6);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9FD4E8"/><stop offset="0.3" stop-color="#C9E6C2"/><stop offset="0.58" stop-color="#E9D896"/><stop offset="0.78" stop-color="#E3A95A"/><stop offset="1" stop-color="#B9772F"/>
+    </linearGradient>
+    <linearGradient id="city" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C79A5E" stop-opacity="0.55"/><stop offset="1" stop-color="#8A6336" stop-opacity="0.75"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D9B36B"/><stop offset="1" stop-color="#9C7336"/></linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF6D8" stop-opacity="0.9"/><stop offset="0.5" stop-color="#FFD98F" stop-opacity="0.35"/><stop offset="1" stop-color="#FFD98F" stop-opacity="0"/></radialGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFFBE8"/><stop offset="0.4" stop-color="#FFE9A8" stop-opacity="0.7"/><stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="leafA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3C6B2E"/><stop offset="1" stop-color="#1F4A1E"/></linearGradient>
+    <linearGradient id="leafB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4E7F38"/><stop offset="1" stop-color="#2A5420"/></linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E1B12" stop-opacity="0"/><stop offset="1" stop-color="#0E1B12"/></linearGradient>
+    <filter id="b8"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="b3"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+
+  <rect width="1080" height="820" fill="url(#sky)"/>
+  <circle cx="860" cy="190" r="230" fill="url(#sun)"/>
+  <circle cx="860" cy="190" r="58" fill="#FFF8E0"/>
+
+  <!-- Jericho's rooftops along the horizon -->
+  <g fill="url(#city)">
+    <rect x="0" y="330" width="120" height="70"/>
+    <rect x="95" y="300" width="90" height="100"/>
+    <rect x="175" y="340" width="130" height="60"/>
+    <rect x="290" y="315" width="80" height="85"/>
+    <polygon points="330,315 370,315 350,285"/>
+    <rect x="700" y="335" width="110" height="65"/>
+    <rect x="800" y="305" width="95" height="95"/>
+    <polygon points="830,305 880,305 855,270"/>
+    <rect x="890" y="345" width="130" height="55"/>
+    <rect x="1000" y="320" width="80" height="80"/>
+  </g>
+  <rect y="385" width="1080" height="30" fill="#0E1B12" opacity="0.18"/>
+
+  <!-- rolling ground -->
+  <path d="M0 470 C220 440 420 460 620 440 C800 423 940 448 1080 430 L1080 1350 L0 1350Z" fill="url(#ground)"/>
+  <path d="M0 470 C220 440 420 460 620 440 C800 423 940 448 1080 430" fill="none" stroke="#B88A48" stroke-width="3" opacity="0.5"/>
+
+  <!-- the loose crowd, left, drifting on toward the road -->
+  <g id="crowd"></g>
+
+  <!-- the sycamore tree, right of center, trunk and canopy -- kept well above the fade line -->
+  <g id="tree">
+    <path d="M706 760 C702 660 696 560 712 480 C718 440 710 410 720 376" stroke="#4A3620" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <path d="M712 480 C676 456 636 442 600 450" stroke="#4A3620" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <path d="M716 430 C756 410 798 402 836 414" stroke="#4A3620" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <path d="M720 376 C712 338 724 302 752 274" stroke="#4A3620" stroke-width="11" fill="none" stroke-linecap="round"/>
+    <ellipse cx="760" cy="350" rx="190" ry="150" fill="url(#leafA)"/>
+    <ellipse cx="668" cy="398" rx="120" ry="96" fill="url(#leafB)" opacity="0.92"/>
+    <ellipse cx="852" cy="392" rx="128" ry="100" fill="url(#leafB)" opacity="0.92"/>
+    <ellipse cx="760" cy="282" rx="138" ry="98" fill="url(#leafB)" opacity="0.85"/>
+    <g id="leafdots"></g>
+  </g>
+
+  <!-- Zacchaeus, seated up in the branches -->
+  <g transform="translate(744 352) scale(0.85)">
+    <ellipse cx="0" cy="34" rx="30" ry="12" fill="#0E1B12" opacity="0.28" filter="url(#b8)"/>
+    <path d="M-20 10 C-24 -14 -14 -34 0 -34 C14 -34 24 -14 20 10 C20 26 10 34 0 34 C-10 34 -20 26 -20 10Z" fill="#241B10"/>
+    <circle cx="0" cy="-46" r="15" fill="#241B10"/>
+    <path d="M-20 4 C-32 14 -40 24 -42 38" stroke="#241B10" stroke-width="9" stroke-linecap="round"/>
+    <path d="M20 2 C30 -6 38 -10 46 -6" stroke="#241B10" stroke-width="9" stroke-linecap="round"/>
+    <path d="M-16 28 L-18 54 M14 28 L18 54" stroke="#241B10" stroke-width="10" stroke-linecap="round"/>
+  </g>
+
+  <!-- Jesus, standing at the foot of the tree, one arm raised calling him down -- scaled to stay clear of the fade line -->
+  <g transform="translate(696 650) scale(0.78)">
+    <circle cx="0" cy="-40" r="70" fill="url(#halo)"/>
+    <path d="M-28 20 C-34 -24 -30 -56 0 -58 C30 -56 34 -24 28 20 L34 120 C34 150 -34 150 -34 120Z" fill="#F4ECD8"/>
+    <path d="M-10 -58 C-26 -40 -30 -10 -24 20 L-8 18 C-14 -10 -10 -38 2 -56Z" fill="#C9AE7E" opacity="0.65"/>
+    <circle cx="0" cy="-70" r="16" fill="#3A2A18"/>
+    <path d="M18 -36 C34 -52 48 -58 60 -56" stroke="#F4ECD8" stroke-width="13" stroke-linecap="round"/>
+    <path d="M58 -58 L68 -78" stroke="#F4ECD8" stroke-width="12" stroke-linecap="round"/>
+    <path d="M-22 -34 C-30 -14 -32 10 -30 32" stroke="#F4ECD8" stroke-width="13" stroke-linecap="round"/>
+  </g>
+
+  <rect y="690" width="1080" height="110" fill="url(#fade)"/>
+  <rect y="800" width="1080" height="550" fill="#0E1B12"/>
+
+</svg>
+<div class="top">
+  <div class="lock"><svg viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFBE8"/><stop offset="0.5" stop-color="#F6E3A8"/><stop offset="1" stop-color="#D4AE5E"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#lg)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.25)" stroke="url(#lg)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#lg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#lg)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#lg)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg><div class="rule"></div><div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div></div>
+  <div class="chip"><i></i>Daily Bible Study</div>
+</div>
+<div class="copy">
+  <div class="kicker">Luke 19:1&ndash;10 &middot; Zacchaeus</div>
+  <h1>Make haste,<em>and come down.</em></h1>
+  <p class="sub">He climbed a tree for a glimpse. Jesus called him by name and <b>invited Himself to dinner.</b></p>
+</div>
+<div class="cta">
+  <div class="verse">&ldquo;For the Son of man is come to seek and to save that which was lost.&rdquo;<span>Luke 19:10</span></div>
+  <div class="btn"><span class="l1">Study it today &rarr;</span><span class="l2">wfnglobal.org/study</span></div>
+</div>
+</div>
+<script>
+  let s = 11; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || document.querySelector("svg.art")).appendChild(e); return e; }
+
+  // the loose crowd drifting toward the road, cool slate-blue silhouettes, shrinking into the distance
+  const crowd = document.getElementById("crowd");
+  for (let i = 0; i < 22; i++) {
+    const t = i / 21; const x = 40 + t * 560 + (r() - 0.5) * 30; const y = 560 + t * 2 + (r() - 0.5) * 10; const sc = 0.55 + r() * 0.5;
+    const tone = r() < 0.5 ? "#2B3A42" : "#38495A";
+    el("path", { d: `M${x - 9 * sc} ${y + 60 * sc} C${x - 11 * sc} ${y + 24 * sc} ${x - 10 * sc} ${y} ${x - 8 * sc} ${y - 4 * sc} L${x + 8 * sc} ${y - 4 * sc} C${x + 10 * sc} ${y} ${x + 11 * sc} ${y + 24 * sc} ${x + 9 * sc} ${y + 60 * sc}Z`, fill: tone, opacity: 0.8 }, crowd);
+    el("circle", { cx: x, cy: y - 10 * sc, r: 7 * sc, fill: tone, opacity: 0.8 }, crowd);
+  }
+
+  // scattered leaf texture across the canopy
+  const leafdots = document.getElementById("leafdots");
+  for (let i = 0; i < 140; i++) {
+    const a = r() * Math.PI * 2; const rad = r() * 190; const x = 760 + Math.cos(a) * rad * (0.7 + r() * 0.3); const y = 335 + Math.sin(a) * rad * 0.62 * (0.7 + r() * 0.3);
+    el("circle", { cx: x, cy: y, r: (r() * 3 + 1.4).toFixed(2), fill: r() < 0.5 ? "#5C8F43" : "#28501F", opacity: (0.3 + r() * 0.35).toFixed(2) }, leafdots);
+  }
+  // a few dappled gold sun-flecks through the leaves
+  for (let i = 0; i < 18; i++) {
+    const x = 590 + r() * 340; const y = 230 + r() * 220;
+    el("circle", { cx: x, cy: y, r: (r() * 4 + 2).toFixed(2), fill: "#FFE9A8", opacity: (0.25 + r() * 0.3).toFixed(2), filter: "url(#b3)" }, leafdots);
+  }
+</script>
+</body></html>

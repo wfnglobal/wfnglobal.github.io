@@ -163,3 +163,81 @@ It's not too late. It's just a new season.
 "To every thing there is a season, and a time to every purpose under the heaven." — Ecclesiastes 3:1
 
 Save this if you're quietly considering a change.
+
+## November 20 — viral/engagement batch (10, requested after feedback)
+
+Oladapo's feedback: the daily-formula posts "won't make me like or retweet" — asked for posts built to
+generate likes, retweets and followers. These lean on hooks that travel on X: hot takes, "this you?"
+confessions, polls, fill-in-the-blank, tag-bait, quote-bait. Most skip a cited verse on purpose — per the
+standard, a pure engagement post can.
+
+### 1. Unpopular opinion
+
+Unpopular opinion: "I'm not available" is a complete answer. You don't owe anyone — or God — a speech explaining your boundaries.
+
+Retweet if you needed permission to stop over-explaining your "no."
+
+### 2. Reply-bait list
+
+Things Nigerian parents say that are actually prophecy:
+
+1. "You will not fail."
+2. "God is not through with you."
+3. "This one will carry us."
+
+Reply with yours. 😂👇
+
+### 3. "This you?" meme
+
+This you? 📱
+
+Texting "Lord help me" at 2am right after an hour of content you already know you shouldn't have watched.
+
+Reply "guilty" and let's laugh-cry together.
+
+### 4. Quote-bait declaration
+
+God is not confused about your delay. He's just not in a hurry to explain Himself to you.
+
+Quote this with the delay you're trusting Him through.
+
+### 5. Hot take
+
+Hot take: "just pray about it" is sometimes incomplete advice. Pray AND go to the doctor. Pray AND send the resume. Faith works with your hands, not instead of them.
+
+Retweet if you've been told to "just pray" about something you also needed to act on.
+
+### 6. Nostalgia humor
+
+Growing up, "we're not rich, but we're not poor" was said in every tone except the one that matched the actual bank account. 😂
+
+Retweet if you grew up "managing."
+
+### 7. Fill-in-the-blank
+
+Finish this: "If God brought me through ______, He can bring me through anything."
+
+Reply below. I'll pray over the first 20 tonight. 🙏
+
+### 8. X poll
+
+Which one hits different at 2am?
+
+A) "This too shall pass"
+B) "God is working it out"
+C) "It is well"
+D) None, I just cry 😂
+
+Vote, then tell me why in the replies.
+
+### 9. Tag-bait
+
+Tag the friend who prays for you without you ever having to ask.
+
+They don't post about it. They just do it. Let's appreciate them today. 🙏
+
+### 10. Hot take
+
+You don't need a "word from the Lord" to leave a job that's quietly killing your peace. Sometimes the confirmation is just: you're not okay.
+
+Retweet if common sense is also a gift from God.

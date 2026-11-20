@@ -148,4 +148,23 @@ Full post text also in `social/samples/x-growth-daily-2026-11.md`.
 | 9 | Engagement: New Year goals already renegotiated | (none: one-word reply, humor) |
 | 10 | Purpose: Too late to pivot careers? | Ecclesiastes 3:1 |
 
+## November 20, 2026 — viral/engagement batch (10, requested after feedback that the daily-formula posts "won't make me like or retweet")
+
+Different style on purpose: hooks built for likes/retweets/replies/follows — hot takes, "this you?" confessions,
+polls, fill-in-the-blank, tag-bait, quote-bait — mostly without a cited KJV reference (per the standard, a pure
+engagement post may skip the verse). Full post text also in `social/samples/x-growth-daily-2026-11.md`.
+
+| # | Format | Topic |
+| --- | --- | --- |
+| 1 | Unpopular opinion | "I'm not available" is a complete answer |
+| 2 | Reply-bait list | Nigerian-parent sayings that are actually prophecy |
+| 3 | "This you?" meme | Texting "Lord help me" after doomscrolling at 2am |
+| 4 | Quote-bait declaration | God isn't confused about your delay |
+| 5 | Hot take | "Just pray about it" is sometimes incomplete advice |
+| 6 | Nostalgia humor | "We're not rich, but we're not poor" |
+| 7 | Fill-in-the-blank | "If God brought me through ___, He can bring me through anything" |
+| 8 | X poll | Which phrase hits different at 2am |
+| 9 | Tag-bait | The friend who prays for you without being asked |
+| 10 | Hot take | Leaving a job that's killing your peace doesn't need a "word" |
+
 <!-- Next batch appends below this line. Keep the table format. -->

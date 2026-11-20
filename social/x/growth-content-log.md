@@ -131,4 +131,21 @@ Full post text also in `social/samples/x-growth-daily-2026-11.md`.
 | Midday | Singleness: Wedding season questions | (none: one-word reply) |
 | Evening | Purpose: "What's the actual plan?" | Proverbs 16:9 |
 
+## November 20, 2026 — extra batch (10 more, requested ad hoc)
+
+Full post text also in `social/samples/x-growth-daily-2026-11.md`.
+
+| # | Area: Topic | Verse |
+| --- | --- | --- |
+| 1 | Work: Blamed unfairly in a meeting | Psalm 37:6 |
+| 2 | Health: Invisible/chronic pain | 2 Corinthians 4:16 |
+| 3 | Money: Small business slow season | Isaiah 58:11 |
+| 4 | Family: Estranged sibling | Psalm 133:1 |
+| 5 | Waiting: "We'll call you back" after an interview | Psalm 27:14 |
+| 6 | Fear: Shaking before a presentation | Exodus 4:12 |
+| 7 | Grief: The anniversary nobody else remembers | John 11:25 |
+| 8 | Trust: Lost money on something you prayed about | Psalm 34:19 |
+| 9 | Engagement: New Year goals already renegotiated | (none: one-word reply, humor) |
+| 10 | Purpose: Too late to pivot careers? | Ecclesiastes 3:1 |
+
 <!-- Next batch appends below this line. Keep the table format. -->

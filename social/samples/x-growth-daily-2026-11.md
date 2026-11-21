@@ -328,3 +328,34 @@ However small today's win was — you showed up, you tried, you didn't quit — 
 "In thy presence is fulness of joy." — Psalm 16:11
 
 Tell me one small win from today. I'll celebrate it with you, however small. You're doing better than you know. Keep going. 👏
+
+## November 21
+
+### Morning: Career path (identity declaration / contrast)
+
+Fear says: you've changed your mind too many times to start over again.
+Faith says: every version of you got you ready for this one.
+God says: "I will instruct thee and teach thee in the way that thou shalt go." — Psalm 32:8
+
+Repost if you're trusting your path, not your timeline.
+
+### Midday: Engagement poll (Waiting on God)
+
+Poll: what are you waiting on God for right now?
+
+🅰️ A job or breakthrough
+🅱️ A spouse or family
+🅲️ Healing
+🅳️ Just peace of mind
+
+Vote below. We're praying over this thread today. 🙏
+
+### Evening: Living abroad
+
+Your family's group chat is full of party photos from back home, and you're standing in snow you haven't learned to walk on yet.
+
+"I am with thee, and will keep thee in all places whither thou goest." — Genesis 28:15
+
+Pray: Lord, be the home I carry everywhere I go.
+
+Save this for your first winter away from everyone you love.

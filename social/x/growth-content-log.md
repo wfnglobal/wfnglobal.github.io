@@ -186,4 +186,14 @@ each still ending in a genuine reply invite to start real conversation. Full pos
 | 9 | Anxiety about tomorrow | Matthew 6:34 |
 | 10 | Celebrating a small win | Psalm 16:11 |
 
+## November 21, 2026
+
+Full post text also in `social/samples/x-growth-daily-2026-11.md`.
+
+| Slot | Area: Topic | Verse |
+| --- | --- | --- |
+| Morning | Career path: Starting over again | Psalm 32:8 |
+| Midday | Waiting: Poll — what are you waiting on God for | (none: X poll) |
+| Evening | Living abroad: First winter away from everyone you love | Genesis 28:15 |
+
 <!-- Next batch appends below this line. Keep the table format. -->

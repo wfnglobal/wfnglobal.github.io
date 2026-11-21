@@ -1,0 +1,38 @@
+{
+  "template": "scenes",
+  "lines": [
+    {
+      "text": "The servant woke at dawn and froze — an army had surrounded the city overnight.",
+      "visual": "siege",
+      "chapter": "2 Kings 6"
+    },
+    {
+      "text": "He ran back in shaking: Alas, my master! How shall we do?",
+      "visual": "siege"
+    },
+    {
+      "text": "Elisha didn't argue with what his servant saw. He just prayed one sentence: LORD, open his eyes, that he may see.",
+      "visual": "sight",
+      "scripture": true
+    },
+    {
+      "text": "And the LORD opened the eyes of the young man; and he saw: and, behold, the mountain was full of horses and chariots of fire.",
+      "visual": "fire-host",
+      "scripture": true
+    },
+    {
+      "text": "Nothing outside the city changed. What changed was what he could see.",
+      "visual": "fire-host"
+    },
+    {
+      "text": "Whatever surrounds you today, more surrounds it. Fear not — they that be with us are more than they that be with them. In Jesus' name, amen.",
+      "visual": "fire-host"
+    }
+  ],
+  "bold": "chariots of fire",
+  "title": "Word and Faith Network",
+  "subtitle": "They That Be With Us Are More",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A three-scene illustrated short film on 2 Kings 6:15-17: a servant frozen with fear at a mist-grey dawn wall as an army surrounds the city, Elisha kneeling in prayer as a single shaft of gold breaks the grey, and the same hillside revealed ablaze with horses and chariots of fire as the servant finally sees what surrounded him all along."
+}

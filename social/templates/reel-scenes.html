@@ -57,6 +57,9 @@
     nets      - grey-teal pre-dawn lakeshore, a beached boat, a limp empty net draped over the side, a weary seated figure
     deep      - brightening teal-cyan dawn water, the boat pushed out further from shore, a standing figure gesturing out over the water, a net lowering in
     catch     - gold sunrise burst over the water, the same boat riding low, a straining/tearing net glinting with fish, two figures hauling it in
+    siege     - cold slate-grey mist-dawn hillside, a low stone wall, distant ember-dot watchfires ringing the horizon, a small lone figure at the wall looking out afraid
+    sight     - the same grey breaking into a thin gold band at the horizon, a kneeling prophet and a smaller figure beside him lit by a single descending shaft of light
+    fire-host - the ridge revealed ablaze in gold-crimson dawn fire, a line of small flame-chariot shapes along the hilltop, a figure standing with arms raised against the blaze
 
   Each scene is built from layers (l-back / l-front) that get different
   Ken Burns moves for a 2.5D parallax camera, plus an HTML particle layer
@@ -137,6 +140,9 @@
   body[data-shot="wall"]{--accent:#E8974A;}
   body[data-shot="letter"]{--accent:#C9B88A;}
   body[data-shot="answer"]{--accent:#FFCE7A;}
+  body[data-shot="siege"]{--accent:#8FA0C8;}
+  body[data-shot="sight"]{--accent:#F2D98A;}
+  body[data-shot="fire-host"]{--accent:#FF8A3D;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -2702,6 +2708,140 @@
     </div>
     <div class="fx" data-type="motes" data-n="22" data-color="255,206,122"></div>
     <div class="fx" data-type="bokeh" data-n="10"></div>
+  </section>
+
+  <!-- ============ SIEGE: cold mist-grey pre-dawn hillside, a low stone wall, distant watchfires ringing the horizon, a lone small figure afraid at the wall ============ -->
+  <section class="scene" data-scene="siege" data-kb="pull" style="--ox:50%; --oy:62%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sg-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#10131E"/><stop offset="0.45" stop-color="#2A3242"/>
+            <stop offset="0.78" stop-color="#4A5466"/><stop offset="1" stop-color="#707C8A"/>
+          </linearGradient>
+          <radialGradient id="sg-haze" cx="0.5" cy="0.8" r="0.55"><stop offset="0" stop-color="#9AA6B4" stop-opacity="0.3"/><stop offset="1" stop-color="#9AA6B4" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#sg-sky)"/>
+        <rect width="1080" height="1920" fill="url(#sg-haze)"/>
+        <path d="M 0 1180 L 160 1120 L 340 1160 L 520 1100 L 700 1150 L 880 1100 L 1080 1140 L 1080 1280 L 0 1280 Z" fill="#161B26" opacity="0.85"/>
+        <circle cx="110" cy="1128" r="5" fill="#E8734A" filter="url(#glow8)" opacity="0.8"/>
+        <circle cx="330" cy="1152" r="4" fill="#E8734A" filter="url(#glow8)" opacity="0.7"/>
+        <circle cx="560" cy="1108" r="5" fill="#E8734A" filter="url(#glow8)" opacity="0.8"/>
+        <circle cx="790" cy="1148" r="4" fill="#E8734A" filter="url(#glow8)" opacity="0.65"/>
+        <circle cx="970" cy="1112" r="5" fill="#E8734A" filter="url(#glow8)" opacity="0.75"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sg-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2C3340"/><stop offset="1" stop-color="#060709"/></linearGradient>
+          <linearGradient id="sg-stone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3E4654"/><stop offset="1" stop-color="#14171E"/></linearGradient>
+        </defs>
+        <path d="M 0 1540 C 300 1520 760 1532 1080 1540 L 1080 1920 L 0 1920 Z" fill="url(#sg-floor)"/>
+        <path d="M 0 1460 L 1080 1460 L 1080 1560 L 0 1560 Z" fill="url(#sg-stone)"/>
+        <g opacity="0.45" stroke="#1E232C" stroke-width="2">
+          <path d="M 140 1460 L 140 1560 M 380 1460 L 380 1560 M 620 1460 L 620 1560 M 860 1460 L 860 1560"/>
+        </g>
+        <ellipse cx="540" cy="1512" rx="140" ry="22" fill="#000" opacity="0.4"/>
+        <g transform="translate(540 1456) scale(0.52)">
+          <use href="#fig-robe" fill="#9AA6B4" filter="url(#glow8)" opacity="0.45"/>
+          <use href="#fig-robe" fill="#0A0C10" style="--rim:#9AA6B4"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="24" data-color="150,160,176"></div>
+  </section>
+
+  <!-- ============ SIGHT: the grey breaking into a thin gold band at the horizon, a kneeling prophet and the servant beside him lit by a single shaft of light ============ -->
+  <section class="scene" data-scene="sight" data-kb="push" style="--ox:50%; --oy:62%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sh-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#181C28"/><stop offset="0.5" stop-color="#3A3A3C"/>
+            <stop offset="0.76" stop-color="#C9A868"/><stop offset="1" stop-color="#F2D98A"/>
+          </linearGradient>
+          <radialGradient id="sh-burst" cx="0.5" cy="0.74" r="0.4"><stop offset="0" stop-color="#FFEFC2" stop-opacity="0.8"/><stop offset="1" stop-color="#FFEFC2" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#sh-sky)"/>
+        <rect width="1080" height="1920" fill="url(#sh-burst)"/>
+        <rect x="500" y="200" width="80" height="1200" fill="url(#sh-burst)" opacity="0.55"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sh-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A3E2A"/><stop offset="1" stop-color="#0A0806"/></linearGradient>
+        </defs>
+        <path d="M 0 1540 C 300 1520 760 1532 1080 1540 L 1080 1920 L 0 1920 Z" fill="url(#sh-floor)"/>
+        <ellipse cx="520" cy="1560" rx="170" ry="26" fill="#000" opacity="0.4"/>
+        <g transform="translate(460 1500) scale(0.58)">
+          <use href="#fig-staff" fill="#F2D98A" filter="url(#glow8)" opacity="0.55"/>
+          <use href="#fig-staff" fill="#120E08" style="--rim:#F2D98A"/>
+        </g>
+        <g transform="translate(640 1520) scale(0.42)">
+          <use href="#fig-robe" fill="#F2D98A" filter="url(#glow8)" opacity="0.5"/>
+          <use href="#fig-robe" fill="#120E08" style="--rim:#F2D98A"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="26" data-color="242,217,138"></div>
+  </section>
+
+  <!-- ============ FIRE-HOST: the ridge revealed ablaze in gold-crimson dawn fire, flame-chariot shapes along the hilltop, a figure standing with arms raised against the blaze ============ -->
+  <section class="scene" data-scene="fire-host" data-kb="rise" style="--ox:50%; --oy:50%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="fh-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2A0E10"/><stop offset="0.36" stop-color="#8A2E1C"/>
+            <stop offset="0.68" stop-color="#E8622A"/><stop offset="1" stop-color="#FFC878"/>
+          </linearGradient>
+          <radialGradient id="fh-burst" cx="0.5" cy="0.64" r="0.5"><stop offset="0" stop-color="#FFE2A0" stop-opacity="0.95"/><stop offset="0.32" stop-color="#FF8A3D" stop-opacity="0.5"/><stop offset="1" stop-color="#FF8A3D" stop-opacity="0"/></radialGradient>
+          <g id="fh-flame">
+            <path d="M 0 0 C -10 -18 -6 -34 2 -44 C 6 -32 14 -26 12 -14 C 20 -20 22 -32 18 -42 C 30 -32 34 -16 26 0 Z"/>
+          </g>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#fh-sky)"/>
+        <circle cx="540" cy="1180" r="620" fill="url(#fh-burst)"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="fh-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9622A"/><stop offset="1" stop-color="#140604"/></linearGradient>
+        </defs>
+        <path d="M 0 1500 C 300 1478 760 1490 1080 1500 L 1080 1920 L 0 1920 Z" fill="url(#fh-floor)"/>
+        <g fill="#FFCE7A" filter="url(#glow4)" opacity="0.6">
+          <use href="#fh-flame" transform="translate(130 1470) scale(2.2)"/>
+          <use href="#fh-flame" transform="translate(300 1450) scale(2.8)"/>
+          <use href="#fh-flame" transform="translate(470 1460) scale(2.0)"/>
+          <use href="#fh-flame" transform="translate(760 1450) scale(2.6)"/>
+          <use href="#fh-flame" transform="translate(930 1468) scale(2.1)"/>
+        </g>
+        <g fill="#FFE9BC">
+          <use href="#fh-flame" transform="translate(130 1470) scale(2.2)"/>
+          <use href="#fh-flame" transform="translate(300 1450) scale(2.8)"/>
+          <use href="#fh-flame" transform="translate(470 1460) scale(2.0)"/>
+          <use href="#fh-flame" transform="translate(760 1450) scale(2.6)"/>
+          <use href="#fh-flame" transform="translate(930 1468) scale(2.1)"/>
+        </g>
+        <g fill="#C9420E" opacity="0.5">
+          <use href="#fh-flame" transform="translate(130 1470) scale(2.2) translate(-3 2)"/>
+          <use href="#fh-flame" transform="translate(300 1450) scale(2.8) translate(-3 2)"/>
+          <use href="#fh-flame" transform="translate(470 1460) scale(2.0) translate(-3 2)"/>
+          <use href="#fh-flame" transform="translate(760 1450) scale(2.6) translate(-3 2)"/>
+          <use href="#fh-flame" transform="translate(930 1468) scale(2.1) translate(-3 2)"/>
+        </g>
+        <ellipse cx="540" cy="1512" rx="190" ry="28" fill="#000" opacity="0.4"/>
+        <g transform="translate(540 1478) scale(0.6)">
+          <use href="#fig-raise" fill="#FFE2A0" filter="url(#glow8)" opacity="0.6"/>
+          <use href="#fig-raise" fill="#1A0804" style="--rim:#FFE2A0"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="ember" data-n="26"></div>
+    <div class="fx" data-type="motes" data-n="16" data-color="255,206,122"></div>
   </section>
 
 </div>

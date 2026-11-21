@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?", ref: "Psalm 27:1" },
     { text: "Let thine eyes look right on, and let thine eyelids look straight before thee.", ref: "Proverbs 4:25" },
     { text: "But thou, O LORD, art a shield for me; my glory, and the lifter up of mine head.", ref: "Psalm 3:3" },
     { text: "The blessing of the LORD, it maketh rich, and he addeth no sorrow with it.", ref: "Proverbs 10:22" },
@@ -94,21 +95,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that I am doing a great work — and I cannot come down!",
-      "Every invitation to the plain of Ono is declined, in Jesus' name!",
-      "What could not stop me by attack will not stop me by appointment!",
+      "Father, I declare today that they that be with me are more than they that be with them!",
+      "I am not outnumbered — I am surrounded by fire!",
+      "The LORD is my light and my salvation; whom shall I fear?",
       "",
-      "I will not trade my wall for an argument!",
-      "My eyes look right on, and my eyelids look straight before me!",
-      "Four times the same lie, four times the same answer: I am not coming down!",
+      "Lord, open my eyes, that I may see!",
+      "I will not count their horses — I will lift my eyes to the mountain!",
+      "Every army that compassed my house is smitten, led away, and sent home finished!",
       "",
-      "Now therefore, O God, strengthen my hands!",
-      "Should such a one as I flee? I will not run, and I will not stop!",
-      "What You started in me will be finished, and they shall know this work was wrought of God!",
+      "The angel of the LORD encampeth round about me, and delivereth me!",
+      "Greater is He that is in me than he that is in the world!",
+      "My help was here before my prayer, and it is not going anywhere!",
       "",
-      "Save this. Speak it over your house today. I am doing a great work, so that I cannot come down! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. Fear not — they that be with us are more than they that be with them! In Jesus' mighty name, amen!"
     ],
-    ref: "Nehemiah 6:3, 9"
+    ref: "2 Kings 6:16-17; Psalm 27:1"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -151,6 +152,7 @@
   };
 
   const SERMONS = [
+    { slug: "they-that-be-with-us-are-more", title: "They That Be With Us Are More", ref: "2 Kings 6:15-17", date: "November 21, 2026", excerpt: "The servant opened the door at dawn and saw an army around the city. Elisha saw the same army and never flinched — because he saw something else too. One short prayer, LORD, open his eyes, and the mountain was full of horses and chariots of fire." },
     { slug: "i-cannot-come-down", title: "I Cannot Come Down", ref: "Nehemiah 6:2-4", date: "November 20, 2026", excerpt: "The wall was half built when the invitations started — a friendly meeting in the plain of Ono, four times, same offer. Nehemiah saw the trap behind the courtesy and gave the same answer every time: I am doing a great work, so that I cannot come down." },
     { slug: "when-i-fall-i-shall-arise", title: "When I Fall, I Shall Arise", ref: "Micah 7:8-9", date: "November 19, 2026", excerpt: "The enemy laughed when you went down, and some of the fall was your own fault. Micah doesn't deny either one — he just refuses to stay on the floor: when I fall, I shall arise; when I sit in darkness, the LORD shall be a light unto me." },
     { slug: "nevertheless-at-thy-word", title: "Nevertheless at Thy Word", ref: "Luke 5:4-6", date: "November 18, 2026", excerpt: "Peter fished all night with every skill he had and came home with empty nets. Then a Carpenter told the fisherman where to throw — and one word of obedience, nevertheless at thy word, filled two boats until they began to sink." },

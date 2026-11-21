@@ -1,0 +1,170 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- WFN Bible study poster - Go, and Do Thou Likewise (Luke 10:30-37, the Good Samaritan), Nov 21, 2026 -->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#1C0F14;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden; background:#1C0F14;}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.8), rgba(255,255,255,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#FFEEE0;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(255,238,224,0.8);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#FBE9D9; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(255,196,150,0.4); background:rgba(70,30,30,0.45); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FF9C5C; box-shadow:0 0 12px 3px rgba(255,156,92,0.7);}
+  .copy{position:absolute; left:0; right:0; top:788px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(255,230,214,0.88);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:112px; line-height:0.95; letter-spacing:-0.03em; color:#FFF6EC; text-shadow:0 6px 40px rgba(0,0,0,0.55);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.02em; background:linear-gradient(180deg,#FFE3B0 0%,#FF9D5C 40%,#E5673C 75%,#A83A2A 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(255,140,80,0.35)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:800px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(250,236,224,0.9);}
+  .sub b{color:#FFC08A; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:22px; line-height:1.3; color:rgba(250,240,230,0.92); max-width:540px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#FFB37A;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#2A1206; background:linear-gradient(180deg,#FFD9A0,#E98A4A); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(233,138,74,0.6);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FFF6EC;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#241330"/><stop offset="0.3" stop-color="#4A2440"/><stop offset="0.55" stop-color="#8A3F42"/><stop offset="0.78" stop-color="#C9693F"/><stop offset="1" stop-color="#E9A355"/>
+    </linearGradient>
+    <linearGradient id="hills" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5B2E35" stop-opacity="0.85"/><stop offset="1" stop-color="#2E1620" stop-opacity="0.9"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9C5636"/><stop offset="1" stop-color="#4A2518"/></linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFEFCB"/><stop offset="0.4" stop-color="#FFB46A" stop-opacity="0.65"/><stop offset="1" stop-color="#FFB46A" stop-opacity="0"/></radialGradient>
+    <radialGradient id="oilglow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE9B0" stop-opacity="0.95"/><stop offset="1" stop-color="#FFB46A" stop-opacity="0"/></radialGradient>
+    <linearGradient id="samaritan" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C96A33"/><stop offset="1" stop-color="#7A3A1C"/></linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1C0F14" stop-opacity="0"/><stop offset="1" stop-color="#1C0F14"/></linearGradient>
+    <filter id="b10"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="b4"><feGaussianBlur stdDeviation="4"/></filter>
+  </defs>
+
+  <rect width="1080" height="820" fill="url(#sky)"/>
+  <circle cx="880" cy="300" r="260" fill="url(#sun)"/>
+  <circle cx="880" cy="300" r="60" fill="#FFE9C0"/>
+
+  <!-- far hills of the Jericho road -->
+  <path d="M0 400 C180 370 340 392 520 368 C700 344 860 378 1080 352 L1080 800 L0 800Z" fill="url(#hills)"/>
+  <path d="M0 455 C220 430 420 448 640 430 C820 416 960 440 1080 420 L1080 800 L0 800Z" fill="url(#hills)" opacity="0.9"/>
+
+  <!-- the priest and Levite, receding up the road, backs turned, small and distant -->
+  <g id="departing"></g>
+
+  <!-- rolling dusty ground, foreground -->
+  <path d="M0 520 C220 492 420 512 620 492 C800 476 940 500 1080 484 L1080 1350 L0 1350Z" fill="url(#ground)"/>
+  <path d="M0 520 C220 492 420 512 620 492 C800 476 940 500 1080 484" fill="none" stroke="#C9803F" stroke-width="3" opacity="0.4"/>
+
+  <!-- scattered rocks and scrub along the dangerous road -->
+  <g id="rocks"></g>
+
+  <!-- the beast, standing saddled nearby, waiting -->
+  <g transform="translate(880 560) scale(0.65)">
+    <ellipse cx="0" cy="90" rx="62" ry="12" fill="#1C0F14" opacity="0.3" filter="url(#b10)"/>
+    <path d="M-55 20 C-60 -10 -40 -28 0 -28 C34 -28 54 -8 50 24 C48 48 38 64 20 70 L24 92 L10 92 L6 72 L-22 72 L-26 92 L-40 92 L-34 68 C-46 56 -53 40 -55 20Z" fill="#5A3A28"/>
+    <path d="M0 -28 C-6 -42 -4 -56 6 -62 C14 -56 16 -42 10 -28Z" fill="#5A3A28"/>
+    <path d="M6 -62 L-4 -76 M6 -62 L16 -78" stroke="#5A3A28" stroke-width="5" stroke-linecap="round"/>
+    <path d="M40 -6 C56 -12 70 -8 78 6" stroke="#43291C" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <rect x="-20" y="-4" width="48" height="18" rx="5" fill="#8A5A34" opacity="0.9"/>
+  </g>
+
+  <!-- the wounded traveler, lying in the foreground -->
+  <g transform="translate(430 590) scale(1.05)">
+    <ellipse cx="10" cy="56" rx="150" ry="24" fill="#1C0F14" opacity="0.4" filter="url(#b10)"/>
+    <path d="M-150 30 C-110 10 -40 2 20 8 C70 12 110 22 140 42 L132 58 C90 44 40 36 -20 34 C-70 32 -118 40 -148 50Z" fill="#8A3E2C" stroke="#4A1C12" stroke-width="2.5" opacity="0.97"/>
+    <path d="M-150 30 C-110 10 -40 2 20 8 C70 12 110 22 140 42" fill="none" stroke="#C9693F" stroke-width="3" opacity="0.5"/>
+    <circle cx="-158" cy="20" r="22" fill="#6B3A26" stroke="#4A1C12" stroke-width="2"/>
+    <path d="M-176 10 C-180 -2 -172 -14 -158 -16 C-144 -14 -138 -2 -142 10Z" fill="#E8C27A" opacity="0.85"/>
+    <path d="M-150 26 L-176 14" stroke="#6B3A26" stroke-width="11" stroke-linecap="round"/>
+    <path d="M110 34 L142 50 M112 44 L138 64" stroke="#6B3A26" stroke-width="10" stroke-linecap="round"/>
+    <path d="M-40 14 C-20 2 10 -2 36 6" stroke="#5E2418" stroke-width="5" opacity="0.5" fill="none"/>
+  </g>
+
+  <!-- the Samaritan, kneeling at his side, pouring oil onto the wound -->
+  <g transform="translate(330 578) scale(1.05)">
+    <ellipse cx="0" cy="118" rx="80" ry="18" fill="#1C0F14" opacity="0.38" filter="url(#b10)"/>
+    <path d="M-50 -10 C-62 30 -58 72 -34 108 L44 108 C54 76 50 36 36 0 C26 -26 -36 -32 -50 -10Z" fill="url(#samaritan)"/>
+    <circle cx="-20" cy="-38" r="22" fill="#6B3420"/>
+    <path d="M-40 -46 C-44 -58 -28 -66 -10 -62 C4 -58 2 -44 -6 -36 L-38 -32Z" fill="#E8C27A"/>
+    <path d="M-66 10 C-56 -16 -40 -34 -18 -40" stroke="url(#samaritan)" stroke-width="16" fill="none" stroke-linecap="round"/>
+    <path d="M-66 10 C-74 26 -78 42 -72 58" stroke="#6B3420" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <path d="M18 -36 C34 -30 46 -16 48 2" stroke="url(#samaritan)" stroke-width="16" fill="none" stroke-linecap="round"/>
+    <path d="M48 2 C54 16 58 26 56 36" stroke="#6B3420" stroke-width="11" fill="none" stroke-linecap="round"/>
+    <path d="M50 24 L70 54 L58 62 L40 34Z" fill="#3A281A"/>
+    <circle cx="68" cy="58" r="22" fill="url(#oilglow)"/>
+  </g>
+
+  <rect y="690" width="1080" height="130" fill="url(#fade)"/>
+  <rect y="800" width="1080" height="550" fill="#1C0F14"/>
+
+</svg>
+<div class="top">
+  <div class="lock"><svg viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFEFD8"/><stop offset="0.5" stop-color="#F0C090"/><stop offset="1" stop-color="#C98050"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#lg)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.3)" stroke="url(#lg)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#lg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#lg)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#lg)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg><div class="rule"></div><div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div></div>
+  <div class="chip"><i></i>Daily Bible Study</div>
+</div>
+<div class="copy">
+  <div class="kicker">Luke 10:30&ndash;37 &middot; The Good Samaritan</div>
+  <h1>Go, and do<em>thou likewise.</em></h1>
+  <p class="sub">Two religious men crossed the road to avoid him. The one everyone despised <b>stopped, and paid for it.</b></p>
+</div>
+<div class="cta">
+  <div class="verse">&ldquo;And when he saw him, he had compassion on him, and went to him, and bound up his wounds.&rdquo;<span>Luke 10:33&ndash;34</span></div>
+  <div class="btn"><span class="l1">Study it today &rarr;</span><span class="l2">wfnglobal.org/study</span></div>
+</div>
+</div>
+<script>
+  let s = 19; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || document.querySelector("svg.art")).appendChild(e); return e; }
+
+  // the priest and Levite, two small cool-toned silhouettes walking away up the road, backs to us
+  const departing = document.getElementById("departing");
+  const pair = [[150, 470, 0.62, "#3A2A30"], [205, 478, 0.58, "#2E2228"]];
+  pair.forEach(([x, y, sc, tone]) => {
+    el("path", { d: `M${x - 8 * sc} ${y + 50 * sc} C${x - 10 * sc} ${y + 18 * sc} ${x - 9 * sc} ${y} ${x - 7 * sc} ${y - 4 * sc} L${x + 7 * sc} ${y - 4 * sc} C${x + 9 * sc} ${y} ${x + 10 * sc} ${y + 18 * sc} ${x + 8 * sc} ${y + 50 * sc}Z`, fill: tone, opacity: 0.85 }, departing);
+    el("circle", { cx: x, cy: y - 10 * sc, r: 6.5 * sc, fill: tone, opacity: 0.85 }, departing);
+    el("path", { d: `M${x - 6 * sc} ${y - 14 * sc} C${x - 8 * sc} ${y - 20 * sc} ${x + 8 * sc} ${y - 20 * sc} ${x + 6 * sc} ${y - 14 * sc}Z`, fill: tone, opacity: 0.85 }, departing);
+  });
+  // a faint trailing dust where they walked
+  for (let i = 0; i < 10; i++) {
+    const x = 130 + r() * 110; const y = 490 + r() * 14;
+    el("circle", { cx: x, cy: y, r: (r() * 5 + 2).toFixed(2), fill: "#C98050", opacity: (0.08 + r() * 0.1).toFixed(2), filter: "url(#b4)" }, departing);
+  }
+
+  // scattered rocks and dry scrub along the roadside
+  const rocks = document.getElementById("rocks");
+  const rockSpots = [[90, 600], [150, 650], [1010, 640], [1040, 600], [60, 730], [990, 500]];
+  rockSpots.forEach(([x, y]) => {
+    const w = 30 + r() * 40, h = 16 + r() * 16;
+    el("ellipse", { cx: x, cy: y, rx: w, ry: h, fill: "#3E2318", opacity: 0.6 }, rocks);
+    el("ellipse", { cx: x - w * 0.2, cy: y - h * 0.3, rx: w * 0.5, ry: h * 0.4, fill: "#5A3322", opacity: 0.5 }, rocks);
+  });
+  for (let i = 0; i < 24; i++) {
+    const x = r() * 1080; const y = 620 + r() * 160;
+    el("path", { d: `M${x} ${y} L${x + (r() - 0.5) * 6} ${y - 14 - r() * 10}`, stroke: "#6B3A22", "stroke-width": 1.4, opacity: 0.4, "stroke-linecap": "round" }, rocks);
+  }
+
+  // dust haze drifting low across the road
+  for (let i = 0; i < 14; i++) {
+    const x = r() * 1080; const y = 500 + r() * 60;
+    el("ellipse", { cx: x, cy: y, rx: 60 + r() * 60, ry: 10 + r() * 8, fill: "#E9A355", opacity: (0.05 + r() * 0.06).toFixed(2), filter: "url(#b10)" }, rocks);
+  }
+</script>
+</body></html>

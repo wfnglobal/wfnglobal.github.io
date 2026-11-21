@@ -196,4 +196,22 @@ Full post text also in `social/samples/x-growth-daily-2026-11.md`.
 | Midday | Waiting: Poll — what are you waiting on God for | (none: X poll) |
 | Evening | Living abroad: First winter away from everyone you love | Genesis 28:15 |
 
+## November 21, 2026 — time/season/event batch (10, requested ad hoc: "punchy, witty, funny, prayer and declaration")
+
+Different structure on purpose: each post pairs a time-, season- or calendar-event-anchored hook with a verse,
+a "Pray:" line AND a separate "Declare:" line. Full post text also in `social/samples/x-growth-daily-2026-11.md`.
+
+| # | Event/Season: Topic | Verse |
+| --- | --- | --- |
+| 1 | Black Friday: Contentment vs the cart | Philippians 4:11 |
+| 2 | Thanksgiving/Friendsgiving: Everyone brings jollof | James 1:17 |
+| 3 | Harmattan: Dry season renewal | Psalm 103:5 |
+| 4 | Year-end countdown: 32 days left in 2026 | Psalm 90:12 |
+| 5 | 13th month / December salary | Psalm 65:11 |
+| 6 | Advent: Choir rehearsing since October | Luke 2:11 |
+| 7 | Early darkness at 5pm | John 1:5 |
+| 8 | December performance review / "quick chat" | 1 Samuel 16:7 |
+| 9 | NYE group chat planning before Christmas | Ecclesiastes 7:8 |
+| 10 | Cyber Monday abandoned cart | Matthew 6:19-20 |
+
 <!-- Next batch appends below this line. Keep the table format. -->

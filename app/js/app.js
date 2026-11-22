@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "For his anger endureth but a moment; in his favour is life: weeping may endure for a night, but joy cometh in the morning.", ref: "Psalm 30:5" },
     { text: "The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?", ref: "Psalm 27:1" },
     { text: "Let thine eyes look right on, and let thine eyelids look straight before thee.", ref: "Proverbs 4:25" },
     { text: "But thou, O LORD, art a shield for me; my glory, and the lifter up of mine head.", ref: "Psalm 3:3" },
@@ -95,21 +96,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that they that be with me are more than they that be with them!",
-      "I am not outnumbered — I am surrounded by fire!",
-      "The LORD is my light and my salvation; whom shall I fear?",
+      "Father, I declare today that my tears are not wasted — they are seed!",
+      "I will not eat my seed because I am hungry!",
+      "I go forth bearing precious seed, and I shall doubtless come again with rejoicing!",
       "",
-      "Lord, open my eyes, that I may see!",
-      "I will not count their horses — I will lift my eyes to the mountain!",
-      "Every army that compassed my house is smitten, led away, and sent home finished!",
+      "Every tear I have cried in Your will is in Your bottle and in Your book!",
+      "What I buried in obedience is not lost — it is working!",
+      "Turn again my captivity, O LORD, as the streams in the south!",
       "",
-      "The angel of the LORD encampeth round about me, and delivereth me!",
-      "Greater is He that is in me than he that is in the world!",
-      "My help was here before my prayer, and it is not going anywhere!",
+      "Weeping may endure for a night, but joy cometh in the morning!",
+      "I will not be weary in well doing — in due season I shall reap, for I will not faint!",
+      "I went out with a handful; I am coming back with sheaves!",
       "",
-      "Save this. Speak it over your house today. Fear not — they that be with us are more than they that be with them! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. They that sow in tears shall reap in joy! In Jesus' mighty name, amen!"
     ],
-    ref: "2 Kings 6:16-17; Psalm 27:1"
+    ref: "Psalm 126:4-6; Psalm 30:5"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -152,6 +153,7 @@
   };
 
   const SERMONS = [
+    { slug: "he-shall-doubtless-come-again", title: "He Shall Doubtless Come Again", ref: "Psalm 126:5-6", date: "November 22, 2026", excerpt: "In a lean year the seed in the farmer's hand was his children's supper, so he walked into the field crying — and planted it anyway. Heaven wrote one word over his harvest that no drought can cancel: doubtless." },
     { slug: "they-that-be-with-us-are-more", title: "They That Be With Us Are More", ref: "2 Kings 6:15-17", date: "November 21, 2026", excerpt: "The servant opened the door at dawn and saw an army around the city. Elisha saw the same army and never flinched — because he saw something else too. One short prayer, LORD, open his eyes, and the mountain was full of horses and chariots of fire." },
     { slug: "i-cannot-come-down", title: "I Cannot Come Down", ref: "Nehemiah 6:2-4", date: "November 20, 2026", excerpt: "The wall was half built when the invitations started — a friendly meeting in the plain of Ono, four times, same offer. Nehemiah saw the trap behind the courtesy and gave the same answer every time: I am doing a great work, so that I cannot come down." },
     { slug: "when-i-fall-i-shall-arise", title: "When I Fall, I Shall Arise", ref: "Micah 7:8-9", date: "November 19, 2026", excerpt: "The enemy laughed when you went down, and some of the fall was your own fault. Micah doesn't deny either one — he just refuses to stay on the floor: when I fall, I shall arise; when I sit in darkness, the LORD shall be a light unto me." },

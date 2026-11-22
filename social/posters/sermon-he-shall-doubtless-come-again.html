@@ -1,0 +1,153 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- WFN sermon poster - He Shall Doubtless Come Again (Psalm 126:5-6), Nov 22, 2026 -->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#0C0E1C;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden; background:#0C0E1C;}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(255,206,140,0), rgba(255,206,140,0.8), rgba(255,206,140,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E9D7A0;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.78);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#F3EBDD; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(240,180,150,0.45); background:rgba(10,10,12,0.55); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FFE6C2; box-shadow:0 0 12px 3px #E8907A;}
+  .copy{position:absolute; left:0; right:0; top:800px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(240,196,150,0.95);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:96px; line-height:0.94; letter-spacing:-0.035em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em; background:linear-gradient(180deg,#FFF6DC 0%,#F7DC94 30%,#EDAE6E 64%,#D9727C 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(240,170,130,0.38)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:830px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.88); text-wrap:balance;}
+  .sub b{color:#F7D28E; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.92); max-width:540px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#EFB38A;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#14110A; background:linear-gradient(180deg,#FFEBD2,#E9A06E); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(233,140,110,0.5);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A0D1F"/><stop offset="0.38" stop-color="#1F1F42"/><stop offset="0.66" stop-color="#5A3654"/><stop offset="0.86" stop-color="#B8605E"/><stop offset="1" stop-color="#F0A86A"/></linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF6DA"/><stop offset="0.18" stop-color="#FFD98E" stop-opacity="0.9"/><stop offset="0.5" stop-color="#F08F62" stop-opacity="0.35"/><stop offset="1" stop-color="#E06A60" stop-opacity="0"/></radialGradient>
+    <linearGradient id="field" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A2634"/><stop offset="0.35" stop-color="#22182A"/><stop offset="1" stop-color="#0C0E1C"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFEBB0"/><stop offset="0.5" stop-color="#F0C164"/><stop offset="1" stop-color="#B9733E"/></linearGradient>
+    <linearGradient id="hz" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F3B074" stop-opacity="0"/><stop offset="0.65" stop-color="#FFD592" stop-opacity="0.55"/><stop offset="1" stop-color="#F3B074" stop-opacity="0.2"/></linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0C0E1C" stop-opacity="0"/><stop offset="1" stop-color="#0C0E1C"/></linearGradient>
+    <filter id="b3" x="-50%" y="-200%" width="200%" height="500%"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="b8"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="b24" x="-50%" y="-200%" width="200%" height="500%"><feGaussianBlur stdDeviation="24"/></filter>
+  </defs>
+  <rect width="1080" height="830" fill="url(#sky)"/>
+  <g id="stars"></g>
+  <!-- rising sun at the far edge of the field -->
+  <circle cx="790" cy="492" r="300" fill="url(#sun)"/>
+  <circle cx="790" cy="492" r="46" fill="#FFF1CC" opacity="0.95" filter="url(#b3)"/>
+  <!-- distant hills -->
+  <path d="M0 470 C120 440 220 452 330 462 C450 472 560 446 680 458 C800 470 930 450 1080 462 L1080 500 L0 500Z" fill="#2B1F35" opacity="0.9"/>
+  <!-- field -->
+  <path d="M0 492 L1080 492 L1080 830 L0 830Z" fill="url(#field)"/>
+  <rect x="0" y="488" width="1080" height="14" fill="url(#hz)" filter="url(#b3)"/>
+  <g id="furrows" fill="none"></g>
+  <!-- harvest band glowing on the far side -->
+  <g id="harvest"></g>
+  <!-- seed arc and the sower -->
+  <g id="seed"></g>
+  <g id="man"></g>
+  <!-- foreground ripe wheat, lower right -->
+  <g id="wheat"></g>
+  <rect y="770" width="1080" height="62" fill="url(#fade)"/>
+  <rect y="828" width="1080" height="522" fill="#0C0E1C"/>
+</svg>
+<div class="top">
+
+  <div class="lock"><svg viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#lg)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#lg)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#lg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#lg)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#lg)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg><div class="rule"></div><div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div></div>
+  <div class="chip"><i></i>Today's Sermon</div>
+</div>
+<div class="copy">
+  <div class="kicker">Psalm 126:5-6 &middot; Tears &amp; Harvest</div>
+  <h1>Planted it crying?<em>Harvest is doubtless.</em></h1>
+  <p class="sub">Every seed you sowed with wet eyes is <b>in the ground, working</b> &mdash; and heaven already signed for the sheaves.</p>
+</div>
+<div class="cta">
+  <div class="verse">&ldquo;They that sow in tears shall reap in joy.&rdquo;<span>Psalm 126:5</span></div>
+  <div class="btn"><span class="l1">Read the sermon &rarr;</span><span class="l2">wfnglobal.org</span></div>
+</div>
+</div>
+<script>
+  let s = 12621; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, a, p) { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; }
+  const st = document.getElementById("stars");
+  for (let i = 0; i < 70; i++) el("circle", { cx: (r() * 1080).toFixed(1), cy: (r() * 300).toFixed(1), r: (r() * 1.1 + 0.3).toFixed(2), fill: "#EDEBFF", opacity: (0.1 + r() * 0.5).toFixed(2) }, st);
+  // furrows converging toward the sunrise
+  const fu = document.getElementById("furrows");
+  for (let i = -14; i <= 14; i++) {
+    const xb = 540 + i * 120, xt = 790 + i * 9;
+    el("path", { d: `M${xt} 496 L${xb} 830`, stroke: "#0A0A14", "stroke-width": 3, opacity: 0.7 }, fu);
+    el("path", { d: `M${xt + 2} 496 L${xb + 14} 830`, stroke: "#E9A07A", "stroke-width": 1.2, opacity: 0.16 }, fu);
+  }
+  // sheaves (stooks) catching the first light
+  const hv = document.getElementById("harvest");
+  el("ellipse", { cx: 800, cy: 520, rx: 330, ry: 26, fill: "#FFCB7A", opacity: 0.35, filter: "url(#b24)" }, hv);
+  function stook(x, y, h) {
+    const w = h * 0.42;
+    const g = el("g", {}, hv);
+    el("path", { d: `M${x - w} ${y} L${x - w * 0.3} ${y - h * 0.55} L${x - w * 0.55} ${y - h} L${x} ${y - h * 0.72} L${x + w * 0.55} ${y - h} L${x + w * 0.3} ${y - h * 0.55} L${x + w} ${y}Z`, fill: "url(#gold)" }, g);
+    el("path", { d: `M${x - w * 0.34} ${y - h * 0.55} L${x + w * 0.34} ${y - h * 0.55}`, stroke: "#8A4E2A", "stroke-width": Math.max(1.5, h * 0.05) }, g);
+    for (let k = 0; k < 7; k++) { const a = -0.9 + k * 0.3; el("line", { x1: x, y1: y - h * 0.72, x2: (x + Math.sin(a) * h * 0.5).toFixed(1), y2: (y - h * 0.72 - Math.cos(a) * h * 0.42).toFixed(1), stroke: "#FFE7A8", "stroke-width": 1.4, opacity: 0.8 }, g); }
+  }
+  [[600,512,26],[650,514,30],[705,516,34],[880,516,34],[935,514,30],[985,512,27],[1035,511,24],[560,511,22]].forEach(a => stook(...a));
+  stook(760, 540, 52); stook(835, 545, 48);
+  // the sower
+  const man = document.getElementById("man");
+  function figure(g, col, w) {
+    const limb = (d, sw) => el("path", { d, stroke: col, "stroke-width": sw + w, "stroke-linecap": "round", "stroke-linejoin": "round", fill: "none" }, g);
+    limb("M372 640 L350 704 L322 760", 20);      // back leg striding
+    limb("M392 640 L420 700 L440 762", 20);      // front leg
+    limb("M318 762 L304 764", 13); limb("M440 764 L462 766", 13); // feet
+    el("path", { d: "M372 500 C384 494 402 494 412 502 C420 552 428 612 436 666 C410 676 368 678 338 668 C346 610 358 552 372 500Z", fill: col, stroke: col, "stroke-width": w, "stroke-linejoin": "round" }, g); // robe
+    limb("M378 512 L362 556 L352 590", 14);      // near arm down into the bag
+    limb("M406 510 L448 540 L500 528", 14);      // sowing arm flung toward the sunrise
+    el("ellipse", { cx: 507, cy: 525, rx: 8 + w / 2, ry: 6 + w / 2, transform: "rotate(-18 507 525)", fill: col }, g); // open hand
+    el("ellipse", { cx: 348, cy: 602, rx: 26 + w / 2, ry: 32 + w / 2, fill: col }, g);  // seed bag
+    limb("M408 504 L350 574", 5);                // strap
+    limb("M392 494 L396 482", 12);               // neck
+    el("ellipse", { cx: 400, cy: 466, rx: 17 + w / 2, ry: 20 + w / 2, transform: "rotate(12 400 466)", fill: col }, g); // head, bowed
+    el("path", { d: "M384 452 C388 438 404 434 414 442 C404 448 394 462 390 500 L376 500 C376 482 378 464 384 452Z", fill: col }, g); // head cloth falling behind
+  }
+  const glow = el("g", { filter: "url(#b8)", opacity: 0.6 }, man); figure(glow, "#F2A070", 8);
+  const rim = el("g", { transform: "translate(3 -1)" }, man); figure(rim, "#FFD6A0", 3);
+  const body = el("g", {}, man); figure(body, "#0E0C16", 0);
+  // a tear catching the sunrise
+  el("circle", { cx: 416, cy: 478, r: 6, fill: "#FFE7B8", opacity: 0.55, filter: "url(#b3)" }, man);
+  el("path", { d: "M415.5 471 C417.5 475 419 478 418.5 480 C418 482 414 482 413.5 480 C413 478 414 475 415.5 471Z", fill: "#FFF6E0" }, man);
+  // seed flying from the hand in an arc
+  const sd = document.getElementById("seed");
+  for (let i = 0; i < 70; i++) { const t = r(); const x = 514 + t * 230 + (r() - 0.5) * 30, y = 528 - Math.sin(t * Math.PI) * 60 + t * 190 + (r() - 0.5) * 26;
+    el("circle", { cx: x.toFixed(1), cy: y.toFixed(1), r: (1 + r() * 2.2).toFixed(1), fill: "#FFE2B0", opacity: (0.45 + r() * 0.5).toFixed(2) }, sd); }
+  // foreground ripe wheat in the lower right, lit from behind
+  const wh = document.getElementById("wheat");
+  for (let i = 0; i < 26; i++) { const x = 820 + r() * 280, top = 610 + r() * 90, lean = (r() - 0.3) * 40;
+    el("path", { d: `M${x.toFixed(0)} 830 Q${(x + lean * 0.4).toFixed(0)} ${(top + 120).toFixed(0)} ${(x + lean).toFixed(0)} ${top.toFixed(0)}`, stroke: "#3A2630", "stroke-width": 3, fill: "none" }, wh);
+    for (let k = 0; k < 6; k++) { const yy = top + k * 9, xx = x + lean - k * lean * 0.02;
+      el("ellipse", { cx: (xx - 4).toFixed(1), cy: yy.toFixed(1), rx: 3.2, ry: 6, transform: `rotate(-24 ${(xx - 4).toFixed(1)} ${yy.toFixed(1)})`, fill: "url(#gold)" }, wh);
+      el("ellipse", { cx: (xx + 4).toFixed(1), cy: (yy + 4).toFixed(1), rx: 3.2, ry: 6, transform: `rotate(24 ${(xx + 4).toFixed(1)} ${(yy + 4).toFixed(1)})`, fill: "url(#gold)" }, wh); }
+  }
+</script>
+</body></html>

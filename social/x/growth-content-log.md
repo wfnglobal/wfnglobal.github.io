@@ -196,6 +196,16 @@ Full post text also in `social/samples/x-growth-daily-2026-11.md`.
 | Midday | Waiting: Poll — what are you waiting on God for | (none: X poll) |
 | Evening | Living abroad: First winter away from everyone you love | Genesis 28:15 |
 
+## November 22, 2026
+
+Full post text also in `social/samples/x-growth-daily-2026-11.md`.
+
+| Slot | Area: Topic | Verse |
+| --- | --- | --- |
+| Morning | Fear: The scary message you're about to open | Mark 5:36 |
+| Midday | Money: The "I go pay you back" that never came | (none: one-word reply, humor) |
+| Evening | Family: Hosting falls on the same house every year | Ruth 2:12 |
+
 ## November 21, 2026 — time/season/event batch (10, requested ad hoc: "punchy, witty, funny, prayer and declaration")
 
 Different structure on purpose: each post pairs a time-, season- or calendar-event-anchored hook with a verse,

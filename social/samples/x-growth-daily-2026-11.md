@@ -476,3 +476,29 @@ Pray: Lord, help me spend like someone who knows where the real treasure is.
 Declare: My joy isn't shipped to my door.
 
 Reply "closed the cart" if you talked yourself out of an impulse buy today. 😅
+
+## November 22
+
+### Morning: Fear
+
+Fear says "open it later." Faith says "open it now." God already knows what's inside — and He's not worried.
+
+"Be not afraid, only believe." — Mark 5:36
+
+Repost if you're opening the scary message anyway.
+
+### Midday: Money
+
+The "I go pay you back" message hits different when YOU'RE the one still waiting. 😅
+
+Reply "still waiting" if someone has owed you since forever.
+
+### Evening: Family
+
+Every family gathering lands at your house. You cook, clean, host — then hear "you didn't do much." 😑
+
+"The LORD recompense thy work, and a full reward be given thee of the LORD God of Israel." — Ruth 2:12
+
+Pray: Lord, be my reward when nobody says thank you.
+
+Save this if you're hosting again this year.

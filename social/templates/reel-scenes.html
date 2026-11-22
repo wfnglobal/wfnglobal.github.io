@@ -60,6 +60,9 @@
     siege     - cold slate-grey mist-dawn hillside, a low stone wall, distant ember-dot watchfires ringing the horizon, a small lone figure at the wall looking out afraid
     sight     - the same grey breaking into a thin gold band at the horizon, a kneeling prophet and a smaller figure beside him lit by a single descending shaft of light
     fire-host - the ridge revealed ablaze in gold-crimson dawn fire, a line of small flame-chariot shapes along the hilltop, a figure standing with arms raised against the blaze
+    weeping   - dusk violet-grey ploughed field, muted and sorrowful, a stooped figure mid-field with seed falling from a raised hand
+    seedtime  - close dark furrowed earth with dawn just beginning to break gold at the horizon, a single buried seed glowing faintly
+    sheaves   - wide gold sunrise field, bundled wheat sheaves standing either side, a figure standing with arms lifted in triumphant light
 
   Each scene is built from layers (l-back / l-front) that get different
   Ken Burns moves for a 2.5D parallax camera, plus an HTML particle layer
@@ -143,6 +146,9 @@
   body[data-shot="siege"]{--accent:#8FA0C8;}
   body[data-shot="sight"]{--accent:#F2D98A;}
   body[data-shot="fire-host"]{--accent:#FF8A3D;}
+  body[data-shot="weeping"]{--accent:#B9A8C6;}
+  body[data-shot="seedtime"]{--accent:#F2C879;}
+  body[data-shot="sheaves"]{--accent:#FFE6A0;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -2842,6 +2848,123 @@
     </div>
     <div class="fx" data-type="ember" data-n="26"></div>
     <div class="fx" data-type="motes" data-n="16" data-color="255,206,122"></div>
+  </section>
+
+  <!-- ============ WEEPING: dusk-violet ploughed field, a sower scattering seed through tears ============ -->
+  <section class="scene" data-scene="weeping" data-kb="panl" style="--ox:50%; --oy:62%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wp-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#15131E"/><stop offset="0.4" stop-color="#2E2A44"/>
+            <stop offset="0.72" stop-color="#4E4458"/><stop offset="1" stop-color="#6E5C62"/>
+          </linearGradient>
+          <radialGradient id="wp-haze" cx="0.5" cy="0.7" r="0.6"><stop offset="0" stop-color="#8E7A8A" stop-opacity="0.35"/><stop offset="1" stop-color="#8E7A8A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#wp-sky)"/>
+        <rect width="1080" height="1920" fill="url(#wp-haze)"/>
+        <path d="M 0 1040 L 200 980 L 400 1030 L 600 970 L 820 1020 L 1080 980 L 1080 1140 L 0 1140 Z" fill="#241F30" opacity="0.75"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wp-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#362E3E"/><stop offset="1" stop-color="#0A0810"/></linearGradient>
+        </defs>
+        <path d="M 0 1180 C 280 1154 760 1166 1080 1180 L 1080 1920 L 0 1920 Z" fill="url(#wp-floor)"/>
+        <g stroke="#140F1A" stroke-width="7" fill="none" opacity="0.8" stroke-linecap="round">
+          <path d="M 40 1860 C 140 1600 200 1380 240 1200"/>
+          <path d="M 260 1880 C 340 1620 390 1400 420 1220"/>
+          <path d="M 660 1220 C 700 1400 760 1620 840 1880"/>
+          <path d="M 820 1200 C 870 1380 940 1600 1020 1860"/>
+        </g>
+        <g transform="translate(520 1360) scale(0.56)">
+          <ellipse cx="0" cy="58" rx="150" ry="24" fill="#000" opacity="0.5"/>
+          <use href="#fig-robe" fill="#5A4E66" filter="url(#glow8)" opacity="0.5"/>
+          <use href="#fig-robe" fill="#0C0910" style="--rim:#9E8CA6"/>
+        </g>
+        <g fill="#C9BBA8" opacity="0.85">
+          <circle cx="610" cy="1330" r="5"/><circle cx="630" cy="1352" r="4.5"/><circle cx="648" cy="1378" r="5"/>
+          <circle cx="662" cy="1404" r="4"/><circle cx="678" cy="1430" r="4.5"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="rain" data-n="10"></div>
+    <div class="fx" data-type="dust" data-n="18" data-color="160,150,170"></div>
+  </section>
+
+  <!-- ============ SEEDTIME: close dark furrowed earth, a seed glowing as dawn breaks at the horizon ============ -->
+  <section class="scene" data-scene="seedtime" data-kb="push" style="--ox:50%; --oy:70%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sd-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1A1420"/><stop offset="0.55" stop-color="#3A2A30"/>
+            <stop offset="0.82" stop-color="#8A5A3C"/><stop offset="1" stop-color="#E8A858"/>
+          </linearGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#sd-sky)"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sd-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241A14"/><stop offset="1" stop-color="#060402"/></linearGradient>
+          <radialGradient id="sd-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE9B8" stop-opacity="0.95"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient>
+        </defs>
+        <path d="M 0 1060 C 280 1030 760 1044 1080 1060 L 1080 1920 L 0 1920 Z" fill="url(#sd-floor)"/>
+        <g stroke="#0A0604" stroke-width="10" fill="none" opacity="0.9" stroke-linecap="round">
+          <path d="M 0 1300 C 260 1270 820 1286 1080 1300"/>
+          <path d="M 0 1460 C 260 1428 820 1446 1080 1460"/>
+          <path d="M 0 1640 C 260 1606 820 1626 1080 1640"/>
+        </g>
+        <circle cx="540" cy="1220" r="90" fill="url(#sd-glow)"/>
+        <circle cx="540" cy="1220" r="14" fill="#FFF8E4"/>
+        <ellipse cx="500" cy="1250" rx="8" ry="11" fill="#2A1A0E"/>
+        <ellipse cx="560" cy="1256" rx="7" ry="10" fill="#2A1A0E"/>
+        <ellipse cx="540" cy="1270" rx="8" ry="11" fill="#2A1A0E"/>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="20" data-color="255,222,160"></div>
+  </section>
+
+  <!-- ============ SHEAVES: gold sunrise field, arms lifted among bundled sheaves ============ -->
+  <section class="scene" data-scene="sheaves" data-kb="rise" style="--ox:50%; --oy:60%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sv-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#C98A3E"/><stop offset="0.3" stop-color="#F0BE72"/>
+            <stop offset="0.62" stop-color="#FCE0A0"/><stop offset="1" stop-color="#FFF6DE"/>
+          </linearGradient>
+          <radialGradient id="sv-sun" cx="0.5" cy="0.42" r="0.42"><stop offset="0" stop-color="#FFFCEC" stop-opacity="0.95"/><stop offset="1" stop-color="#FFFCEC" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#sv-sky)"/>
+        <circle cx="540" cy="780" r="440" fill="url(#sv-sun)"/>
+        <circle cx="540" cy="780" r="82" fill="#FFFEF6"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sv-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9962E"/><stop offset="1" stop-color="#241804"/></linearGradient>
+        </defs>
+        <path d="M 0 1280 C 280 1252 760 1266 1080 1280 L 1080 1920 L 0 1920 Z" fill="url(#sv-floor)"/>
+        <g stroke="#FFD98A" stroke-width="7" opacity="0.9" stroke-linecap="round" filter="url(#glow4)">
+          <path d="M 330 1820 L 318 1540"/><path d="M 360 1820 L 352 1526"/><path d="M 392 1820 L 388 1542"/>
+          <path d="M 688 1820 L 700 1540"/><path d="M 718 1820 L 726 1526"/><path d="M 750 1820 L 754 1542"/>
+        </g>
+        <ellipse cx="358" cy="1600" rx="54" ry="20" fill="#FFD98A" opacity="0.95"/>
+        <ellipse cx="720" cy="1600" rx="54" ry="20" fill="#FFD98A" opacity="0.95"/>
+        <g transform="translate(540 1420) scale(0.62)">
+          <ellipse cx="0" cy="60" rx="150" ry="24" fill="#2A1C06" opacity="0.4"/>
+          <use href="#fig-raise" fill="#FFF3C8" filter="url(#glow8)" opacity="0.65"/>
+          <use href="#fig-raise" fill="#1E1408" style="--rim:#FFF3C8"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="30" data-color="255,236,180"></div>
+    <div class="fx" data-type="bokeh" data-n="12"></div>
   </section>
 
 </div>

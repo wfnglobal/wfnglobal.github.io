@@ -1,0 +1,33 @@
+{
+  "template": "scenes",
+  "lines": [
+    {
+      "text": "Some years the seed in your hand is the only thing standing between you and hunger.",
+      "visual": "weeping"
+    },
+    {
+      "text": "He went forth weeping, bearing precious seed.",
+      "visual": "weeping",
+      "scripture": true
+    },
+    {
+      "text": "What you bury in obedience, heaven does not forget — even in the dark, even when nothing shows yet.",
+      "visual": "seedtime"
+    },
+    {
+      "text": "He shall doubtless come again with rejoicing, bringing his sheaves with him.",
+      "visual": "sheaves",
+      "scripture": true
+    },
+    {
+      "text": "Whatever you're sowing in tears today, the seed is not wasted. Doubtless — you will come again with joy. In Jesus' name, amen.",
+      "visual": "sheaves"
+    }
+  ],
+  "bold": "the seed is not wasted",
+  "title": "Word and Faith Network",
+  "subtitle": "He Shall Doubtless Come Again",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A sower walks a dusk field in tears, scattering seed he can't afford to lose; a single seed glows in the dark earth as dawn begins; and the same field returns at golden sunrise, the sower standing amid bundled sheaves with arms raised in joy."
+}

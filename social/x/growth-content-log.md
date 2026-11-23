@@ -224,4 +224,14 @@ a "Pray:" line AND a separate "Declare:" line. Full post text also in `social/sa
 | 9 | NYE group chat planning before Christmas | Ecclesiastes 7:8 |
 | 10 | Cyber Monday abandoned cart | Matthew 6:19-20 |
 
+## November 23, 2026
+
+Full post text also in `social/samples/x-growth-daily-2026-11.md`.
+
+| Slot | Area: Topic | Verse |
+| --- | --- | --- |
+| Morning | Trust: Starting the week without the full picture | Psalm 9:10 |
+| Midday | Work: The Monday "quick sync" meeting | (none: reply-bait, humor) |
+| Evening | Health: The appointment you keep rescheduling | Psalm 103:3 |
+
 <!-- Next batch appends below this line. Keep the table format. -->

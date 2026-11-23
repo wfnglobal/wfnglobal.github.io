@@ -502,3 +502,29 @@ Every family gathering lands at your house. You cook, clean, host — then hear 
 Pray: Lord, be my reward when nobody says thank you.
 
 Save this if you're hosting again this year.
+
+## November 23
+
+### Morning: Trust (identity declaration / contrast)
+
+Fear says: you don't know how this week ends.
+Faith says: you don't need to, just today's step.
+God says: "They that know thy name will put their trust in thee: for thou, LORD, hast not forsaken them that seek thee." — Psalm 9:10
+
+Repost if you're trusting the process, not the whole picture.
+
+### Midday: Work (reply-bait, humor)
+
+The Monday 9am meeting titled "Quick sync," no agenda, sent Friday at 4:58pm. We already know how this goes. 😅
+
+Reply with the worst meeting title you've ever gotten.
+
+### Evening: Health
+
+You've rescheduled the appointment twice. Not because you're busy — because you're scared of what they'll say.
+
+"Who forgiveth all thine iniquities; who healeth all thy diseases." — Psalm 103:3
+
+Pray: Lord, go into that room with me. You already know what they'll find, and You're still good.
+
+Save this for the appointment you keep pushing back.

@@ -1,0 +1,18 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "There's a kind of tired that doesn't show up until the house goes quiet and everyone else is asleep.", "visual": "nightshift" },
+    { "text": "That's usually when the question comes, quiet and honest: does anyone actually see what I'm carrying?", "visual": "nightshift" },
+    { "text": "The phone stays dark. The reply doesn't come. The silence starts to sound like an answer.", "visual": "unanswered" },
+    { "text": "But silence was never the same thing as absence.", "visual": "unanswered" },
+    { "text": "He giveth power to the faint; and to them that have no might he increaseth strength.", "visual": "dawnlight", "scripture": true },
+    { "text": "You don't have to perform your way back to strong. You just have to stay close enough to receive it.", "visual": "dawnlight" },
+    { "text": "In Jesus' name, amen.", "visual": "dawnlight" }
+  ],
+  "bold": "silence was never the same thing as absence",
+  "title": "Word and Faith Network",
+  "subtitle": "Not As Alone As It Feels",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A weary figure sits alone under a single lamp at midnight while the house sleeps, then holds a phone glowing unanswered in a dark room, and finally rises into warm gold light with hands lifted - the question every tired heart asks, answered by Isaiah 40:29: He giveth power to the faint."
+}

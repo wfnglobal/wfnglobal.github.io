@@ -1,0 +1,160 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- WFN sermon poster - Master, Carest Thou Not? (Mark 4:38-40), Nov 23, 2026 -->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#06121A;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden; background:#06121A;}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(170,225,235,0), rgba(170,225,235,0.8), rgba(170,225,235,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#DCEBEA;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(210,232,232,0.78);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#F3EBDD; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(150,220,235,0.45); background:rgba(10,10,12,0.55); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#E8FBFF; box-shadow:0 0 12px 3px #6FD3E8;}
+  .copy{position:absolute; left:0; right:0; top:800px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(140,214,228,0.95);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:96px; line-height:0.94; letter-spacing:-0.035em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em; background:linear-gradient(180deg,#FFFFFF 0%,#D8F6FA 28%,#8FDCE8 62%,#E8C982 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(120,210,230,0.38)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:830px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.88); text-wrap:balance;}
+  .sub b{color:#A9E8F0; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.92); max-width:540px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#8FD6E3;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#14110A; background:linear-gradient(180deg,#F2FDFF,#86D3E0); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(110,200,220,0.5);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#03080D"/><stop offset="0.45" stop-color="#0B1D26"/><stop offset="0.8" stop-color="#173A44"/><stop offset="1" stop-color="#1F4B55"/></linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0F3640"/><stop offset="0.5" stop-color="#0A222B"/><stop offset="1" stop-color="#06121A"/></linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6FAFF" stop-opacity="0.55"/><stop offset="0.7" stop-color="#BDEFF7" stop-opacity="0.18"/><stop offset="1" stop-color="#BDEFF7" stop-opacity="0"/></linearGradient>
+    <linearGradient id="hull" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6A4A33"/><stop offset="1" stop-color="#22150E"/></linearGradient>
+    <linearGradient id="wave" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2D6E78"/><stop offset="0.4" stop-color="#123842"/><stop offset="1" stop-color="#081820"/></linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06121A" stop-opacity="0"/><stop offset="1" stop-color="#06121A"/></linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#F4FDFF" stop-opacity="0.75"/><stop offset="0.4" stop-color="#9FE3EE" stop-opacity="0.25"/><stop offset="1" stop-color="#9FE3EE" stop-opacity="0"/></radialGradient>
+    <filter id="b3" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="b10" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="b30" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="30"/></filter>
+  </defs>
+  <rect width="1080" height="830" fill="url(#sky)"/>
+  <!-- storm clouds -->
+  <g id="clouds" filter="url(#b30)"></g>
+  <!-- lightning, upper left -->
+  <g id="bolt" transform="translate(-40 110) scale(0.9)"></g>
+  <!-- moonlight breaking through onto the boat -->
+  <path d="M640 0 L770 0 L480 640 L280 640Z" fill="url(#beam)" filter="url(#b10)"/>
+  <ellipse cx="705" cy="30" rx="150" ry="70" fill="url(#halo)"/>
+  <!-- the sea -->
+  <rect x="0" y="560" width="1080" height="270" fill="url(#sea)"/>
+  <g id="backwaves"></g>
+  <!-- the boat -->
+  <g id="boat" transform="rotate(-9 540 600)"></g>
+  <g id="frontwaves"></g>
+  <g id="rain"></g>
+  <rect y="760" width="1080" height="72" fill="url(#fade)"/>
+  <rect y="828" width="1080" height="522" fill="#06121A"/>
+</svg>
+<div class="top">
+
+  <div class="lock"><svg viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#lg)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#lg)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#lg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#lg)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#lg)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg><div class="rule"></div><div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div></div>
+  <div class="chip"><i></i>Today's Sermon</div>
+</div>
+<div class="copy">
+  <div class="kicker">Mark 4:38-40 &middot; The Storm</div>
+  <h1>The storm is loud.<em>His word is louder.</em></h1>
+  <p class="sub">The One asleep in your boat already named <b>the other side</b> &mdash; three words, and the sea goes quiet.</p>
+</div>
+<div class="cta">
+  <div class="verse">&ldquo;And he arose, and rebuked the wind, and said unto the sea, Peace, be still.&rdquo;<span>Mark 4:39</span></div>
+  <div class="btn"><span class="l1">Read the sermon &rarr;</span><span class="l2">wfnglobal.org</span></div>
+</div>
+</div>
+<script>
+  let s = 42317; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, a, p) { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; }
+  // heavy clouds
+  const cl = document.getElementById("clouds");
+  for (let i = 0; i < 26; i++) el("ellipse", { cx: (r() * 1180 - 50).toFixed(0), cy: (40 + r() * 330).toFixed(0), rx: (120 + r() * 160).toFixed(0), ry: (40 + r() * 60).toFixed(0), fill: r() < 0.5 ? "#16303A" : "#0A1820", opacity: (0.6 + r() * 0.4).toFixed(2) }, cl);
+  el("ellipse", { cx: 200, cy: 210, rx: 200, ry: 90, fill: "#6FB7C6", opacity: 0.22 }, cl); // lit cloud behind bolt
+  // lightning
+  const bo = document.getElementById("bolt");
+  const bd = "M210 120 L178 230 L214 228 L160 360 L240 300 L204 300 L262 190 L226 192 Z";
+  el("path", { d: bd, fill: "#BFF3FF", filter: "url(#b10)", opacity: 0.9 }, bo);
+  el("path", { d: bd, fill: "#F4FEFF" }, bo);
+  el("path", { d: "M160 360 L132 430 M200 300 L248 352", stroke: "#DFF9FF", "stroke-width": 3, "stroke-linecap": "round", opacity: 0.7 }, bo);
+  // waves: layered crests with foam
+  function waveRow(g, y0, amp, len, col, foam, op, ph) {
+    let d = `M-20 ${y0}`;
+    for (let x = -20; x <= 1100; x += len) { const h = amp * (0.6 + r() * 0.8); d += ` Q${x + len * 0.35} ${y0 - h} ${x + len * 0.55} ${y0 - h * 0.7} T${x + len} ${y0}`; }
+    d += ` L1100 840 L-20 840Z`;
+    el("path", { d, fill: col, opacity: op }, g);
+    if (foam) el("path", { d: d.split(" L1100")[0], fill: "none", stroke: "#CFF4F8", "stroke-width": 2.2, opacity: 0.45 }, g);
+  }
+  const bw = document.getElementById("backwaves");
+  waveRow(bw, 590, 26, 120, "#123A44", true, 0.9);
+  waveRow(bw, 640, 34, 160, "#0E2F38", true, 0.95);
+  // the big wave rising behind the boat
+  el("path", { d: "M640 700 C700 640 760 520 850 440 C910 390 990 380 1040 420 C1000 412 960 426 944 452 C990 446 1020 470 1024 500 C1000 486 970 488 950 510 C930 560 960 640 1000 700Z", fill: "url(#wave)" }, bw);
+  el("path", { d: "M760 560 C790 500 820 470 850 440 C910 390 990 380 1040 420", fill: "none", stroke: "#E6FBFF", "stroke-width": 3, opacity: 0.75 }, bw);
+  for (let i = 0; i < 55; i++) { const t = r(); el("circle", { cx: (850 + t * 190 + (r() - 0.5) * 30).toFixed(1), cy: (420 - Math.sin(t * 3) * 20 + r() * 60 - 30).toFixed(1), r: (1 + r() * 2.5).toFixed(1), fill: "#E9FCFF", opacity: (0.3 + r() * 0.6).toFixed(2) }, bw); }
+  // boat
+  const b = document.getElementById("boat");
+  el("path", { d: "M300 600 L780 600 C770 640 730 672 660 680 L420 680 C360 674 318 646 300 600Z", fill: "url(#hull)" }, b);
+  el("path", { d: "M300 600 L780 600", stroke: "#B48A5E", "stroke-width": 4 }, b);
+  for (let k = 0; k < 3; k++) el("path", { d: `M${316 + k * 6} ${616 + k * 20} C450 ${626 + k * 20} 640 ${626 + k * 20} ${766 - k * 22} ${616 + k * 20}`, stroke: "#1A100A", "stroke-width": 2, fill: "none", opacity: 0.6 }, b);
+  // stern-post
+  el("path", { d: "M300 600 C292 580 292 560 302 546", stroke: "#4E3524", "stroke-width": 10, fill: "none", "stroke-linecap": "round" }, b);
+  // mast and torn sail
+  el("line", { x1: 560, y1: 600, x2: 560, y2: 330, stroke: "#2A1B12", "stroke-width": 9 }, b);
+  el("line", { x1: 480, y1: 360, x2: 650, y2: 350, stroke: "#2A1B12", "stroke-width": 6 }, b);
+  el("path", { d: "M486 364 C520 420 600 440 646 356 C640 410 620 470 600 500 L540 470 C520 480 500 430 486 364Z", fill: "#C9C2AE", opacity: 0.85 }, b);
+  el("path", { d: "M600 500 L612 520 L590 512 L596 530", stroke: "#C9C2AE", "stroke-width": 3, fill: "none", opacity: 0.8 }, b);
+  // disciples silhouettes, alarmed
+  function person(x, y, armsUp) {
+    el("ellipse", { cx: x, cy: y - 58, rx: 11, ry: 13, fill: "#05090D" }, b);
+    el("path", { d: `M${x - 16} ${y} C${x - 18} ${y - 26} ${x - 14} ${y - 44} ${x} ${y - 46} C${x + 14} ${y - 44} ${x + 18} ${y - 26} ${x + 16} ${y}Z`, fill: "#05090D" }, b);
+    const arm = (d) => el("path", { d, stroke: "#05090D", "stroke-width": 8, "stroke-linecap": "round", fill: "none" }, b);
+    if (armsUp) { arm(`M${x - 10} ${y - 38} L${x - 26} ${y - 74}`); arm(`M${x + 10} ${y - 38} L${x + 24} ${y - 76}`); }
+    else { arm(`M${x - 10} ${y - 38} L${x - 30} ${y - 16}`); arm(`M${x + 10} ${y - 38} L${x + 34} ${y - 26}`); }
+  }
+  person(640, 600, true); person(700, 600, false); person(600, 600, false);
+  // Jesus asleep in the stern on a pillow, lit by the moonbeam
+  const lit = el("g", {}, b);
+  el("ellipse", { cx: 380, cy: 586, rx: 110, ry: 40, fill: "#DDF8FF", opacity: 0.25, filter: "url(#b10)" }, lit);
+  el("ellipse", { cx: 330, cy: 586, rx: 26, ry: 12, fill: "#E3DDCB" }, lit);                 // pillow
+  el("ellipse", { cx: 340, cy: 574, rx: 13, ry: 12, fill: "#3A2A20" }, lit);                 // head resting
+  el("path", { d: "M330 568 C336 558 352 558 356 570 C350 566 340 566 330 572Z", fill: "#1E140E" }, lit); // hair
+  el("path", { d: "M350 582 C380 568 430 568 470 578 C478 588 470 598 460 598 L352 598 C344 594 344 586 350 582Z", fill: "#E9E4D6" }, lit); // robe
+  el("path", { d: "M372 576 C392 586 420 588 446 582", stroke: "#B9B19B", "stroke-width": 2, fill: "none" }, lit);
+  el("path", { d: "M380 570 C400 562 440 562 470 578", stroke: "#F7F3E8", "stroke-width": 2, fill: "none", opacity: 0.9 }, lit);
+  // front waves crashing over the bow side
+  const fw = document.getElementById("frontwaves");
+  waveRow(fw, 720, 40, 190, "#0B2830", true, 0.97);
+  el("path", { d: "M740 690 C790 640 840 610 900 612 C870 626 860 650 880 680 L900 720 L740 720Z", fill: "#123842" }, fw);
+  for (let i = 0; i < 50; i++) el("circle", { cx: (720 + r() * 200).toFixed(1), cy: (600 + r() * 90).toFixed(1), r: (1 + r() * 2.6).toFixed(1), fill: "#E6FBFF", opacity: (0.25 + r() * 0.55).toFixed(2) }, fw);
+  waveRow(fw, 790, 30, 140, "#081B22", false, 1);
+  // driving rain
+  const rn = document.getElementById("rain");
+  for (let i = 0; i < 220; i++) { const x = r() * 1180 - 50, y = r() * 780, l = 18 + r() * 26;
+    el("line", { x1: x.toFixed(1), y1: y.toFixed(1), x2: (x - l * 0.35).toFixed(1), y2: (y + l).toFixed(1), stroke: "#BFE7EE", "stroke-width": 1.2, opacity: (0.12 + r() * 0.3).toFixed(2) }, rn); }
+</script>
+</body></html>

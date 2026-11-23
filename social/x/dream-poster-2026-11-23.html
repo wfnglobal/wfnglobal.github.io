@@ -1,0 +1,204 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  WFN X poster, 1080x1350 (4:5): "Only His Word Stands Tonight" (Nov 23,
+  2026), tonight's Fire Prayer poster. New scene: an open Bible blazing
+  with golden fire on a stone stand, living letters of light rising off
+  the page like embers into the night, while torn dark decree-scrolls
+  crumble to ash and smoke in the shadow below and retreat off the edges
+  — Psalm 119:89. New palette: deep indigo-violet night into warm
+  gold-parchment light (not the midnight-blue/orange or teal/amber used
+  on prior nights). Brand elements kept: WFN lockup (top-left), status
+  chip (top-right), glass CTA bar (verse + button + wfnglobal.org/dreams
+  link), 1080x1350, fonts from ../fonts/.
+-->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#07061A;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden;
+    background:linear-gradient(180deg,#050414 0%,#0B0A2E 26%,#211349 48%,#3A1E3E 66%,#1C0E1E 82%,#09060C 100%);}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.72);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9A0; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(255,170,90,0.45); background:rgba(255,120,40,0.1); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FF8A3A; box-shadow:0 0 12px 3px rgba(255,120,40,0.8);}
+  .copy{position:absolute; left:0; right:0; top:752px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(255,214,160,0.85);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:114px; line-height:0.96; letter-spacing:-0.03em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.02em;
+    background:linear-gradient(180deg,#FFF6D2 0%,#FFD98A 32%,#E8A23C 64%,#C2401C 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(232,164,60,0.45)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:800px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.86);}
+  .sub b{color:#FFD49A; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.9); max-width:520px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A0C05; background:linear-gradient(180deg,#FFD488,#FF9A45); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(255,120,40,0.7);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <radialGradient id="bookGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE9B0" stop-opacity="0.65"/><stop offset="0.45" stop-color="#FFB24D" stop-opacity="0.2"/><stop offset="1" stop-color="#FFB24D" stop-opacity="0"/></radialGradient>
+    <radialGradient id="haloWide" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF3D0" stop-opacity="0.3"/><stop offset="0.5" stop-color="#C9A6FF" stop-opacity="0.08"/><stop offset="1" stop-color="#C9A6FF" stop-opacity="0"/></radialGradient>
+    <linearGradient id="pageGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF8E2"/><stop offset="1" stop-color="#FFD98A"/></linearGradient>
+    <linearGradient id="pageGrad2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFEFC4"/><stop offset="1" stop-color="#F0B35E"/></linearGradient>
+    <linearGradient id="cover" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7A2E22"/><stop offset="1" stop-color="#4A1A14"/></linearGradient>
+    <linearGradient id="stand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A3350"/><stop offset="1" stop-color="#17132A"/></linearGradient>
+    <linearGradient id="scrollDark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1A28"/><stop offset="1" stop-color="#0E0812"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241238"/><stop offset="1" stop-color="#09060C"/></linearGradient>
+    <linearGradient id="shadowFade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#04030A" stop-opacity="0.95"/><stop offset="1" stop-color="#04030A" stop-opacity="0"/></linearGradient>
+    <filter id="blur10"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="smoke" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.013 0.02" numOctaves="3" seed="9"/><feDisplacementMap in="SourceGraphic" scale="58"/><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+
+  <g id="stars"></g>
+
+  <!-- wide halo behind the book, reaching up into the sky -->
+  <ellipse cx="540" cy="470" rx="420" ry="420" fill="url(#haloWide)"/>
+
+  <!-- retreating dark decree-scrolls, torn and crumbling, pushed to the edges below the light -->
+  <g filter="url(#smoke)" opacity="0.92">
+    <path d="M-40 980 C90 965 170 1000 230 1055 C266 1088 270 1112 252 1126 C228 1112 200 1106 178 1115 C198 1142 202 1164 186 1180 C162 1158 132 1150 106 1158 C120 1184 116 1208 98 1222 C68 1192 22 1184 -40 1190Z" fill="#0A0612"/>
+    <path d="M1120 1010 C1000 998 918 1032 858 1084 C824 1114 816 1136 832 1148 C856 1134 884 1128 904 1136 C884 1158 880 1180 896 1194 C920 1174 950 1168 976 1176 C962 1200 966 1222 984 1236 C1020 1208 1062 1202 1120 1206Z" fill="#0A0612"/>
+  </g>
+  <!-- torn, charred strips of the dark scrolls, scattered, nearly ash -->
+  <g opacity="0.85">
+    <rect x="70" y="1140" width="86" height="16" rx="6" fill="url(#scrollDark)" transform="rotate(-10 113 1148)"/>
+    <rect x="150" y="1178" width="70" height="14" rx="6" fill="url(#scrollDark)" transform="rotate(8 185 1185)"/>
+    <rect x="870" y="1150" width="90" height="16" rx="6" fill="url(#scrollDark)" transform="rotate(12 915 1158)"/>
+    <rect x="930" y="1190" width="64" height="13" rx="6" fill="url(#scrollDark)" transform="rotate(-7 962 1196)"/>
+  </g>
+  <g opacity="0.5"><circle cx="110" cy="1150" r="2.6" fill="#FF3B2F"/><circle cx="124" cy="1148" r="2.6" fill="#FF3B2F"/><circle cx="930" cy="1162" r="2.4" fill="#FF3B2F"/><circle cx="944" cy="1160" r="2.4" fill="#FF3B2F"/></g>
+
+  <!-- ground -->
+  <path d="M0 1270 C320 1252 760 1252 1080 1270 L1080 1350 L0 1350Z" fill="url(#ground)"/>
+
+  <!-- stone lectern holding the book, rising from the ground -->
+  <g transform="translate(540 620)">
+    <ellipse cx="0" cy="118" rx="210" ry="30" fill="url(#bookGlow)" opacity="0.8"/>
+    <!-- flat plinth top -->
+    <path d="M-118 36 L118 36 L128 54 L-128 54 Z" fill="url(#stand)"/>
+    <!-- straight stone column -->
+    <path d="M-66 54 L66 54 L66 150 L-66 150 Z" fill="url(#stand)"/>
+    <!-- base plinth -->
+    <path d="M-92 150 L92 150 L104 172 L-104 172 Z" fill="url(#stand)"/>
+    <path d="M-56 70 L56 70 M-56 94 L56 94 M-56 118 L56 118 M-56 134 L56 134" stroke="#0D0A1C" stroke-width="3" opacity="0.4"/>
+    <rect x="-66" y="54" width="132" height="8" fill="#241F3C" opacity="0.6"/>
+
+    <!-- the open Bible, blazing -->
+    <g transform="translate(0 10)">
+      <ellipse cx="0" cy="48" rx="190" ry="20" fill="#000" opacity="0.4" filter="url(#blur10)"/>
+      <!-- covers -->
+      <path d="M-182 10 C-110 -16 -40 -8 -4 8 L-4 44 C-44 28 -112 20 -182 44 Z" fill="url(#cover)"/>
+      <path d="M182 10 C110 -16 40 -8 4 8 L4 44 C44 28 112 20 182 44 Z" fill="url(#cover)"/>
+      <!-- pages -->
+      <path d="M-176 14 C-106 -10 -38 -4 -4 10 L-4 40 C-38 26 -106 18 -176 40 Z" fill="url(#pageGrad)"/>
+      <path d="M176 14 C106 -10 38 -4 4 10 L4 40 C38 26 106 18 176 40 Z" fill="url(#pageGrad2)"/>
+      <path d="M-160 12 L-18 2 M-160 22 L-18 12 M-160 32 L-18 22" stroke="#C98A3E" stroke-width="1.4" opacity="0.55"/>
+      <path d="M160 12 L18 2 M160 22 L18 12 M160 32 L18 22" stroke="#C98A3E" stroke-width="1.4" opacity="0.55"/>
+      <rect x="-5" y="2" width="10" height="42" fill="#5A2018"/>
+      <!-- glowing core at the spine -->
+      <ellipse cx="0" cy="18" rx="30" ry="22" fill="url(#bookGlow)"/>
+    </g>
+
+    <!-- a radiant cross of light hovering above the open book -->
+    <g transform="translate(0 -160)" opacity="0.95">
+      <circle r="40" fill="url(#bookGlow)"/>
+      <rect x="-3" y="-26" width="6" height="52" rx="2.5" fill="#FFF3D0"/>
+      <rect x="-16" y="-12" width="32" height="6" rx="2.5" fill="#FFF3D0"/>
+    </g>
+  </g>
+
+  <g id="letters"></g>
+  <g id="embers"></g>
+</svg>
+
+<div class="top">
+  <div class="lock">
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#g)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#g)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#g)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#g)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg>
+    <div class="rule"></div>
+    <div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div>
+  </div>
+  <div class="chip"><i></i>Fire Prayer · Tonight</div>
+</div>
+
+<div class="copy">
+  <div class="kicker">Before any voice decrees over you tonight</div>
+  <h1>No other word<em>stands tonight.</em></h1>
+  <p class="sub">Every curse, every verdict, every decree muttered at a dark table &mdash; <b>cancelled by the word already settled in heaven.</b></p>
+</div>
+
+<div class="cta">
+  <div class="verse">&ldquo;For ever, O LORD, thy word is settled in heaven.&rdquo;<span>Psalm 119:89</span></div>
+  <div class="btn"><span class="l1">Pray it before bed &rarr;</span><span class="l2">wfnglobal.org/dreams</span></div>
+</div>
+</div>
+<script>
+  // deterministic RNG
+  let s = 23; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 160; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const y = r() * 560;
+    c.setAttribute("cx", r() * 1080); c.setAttribute("cy", y);
+    c.setAttribute("r", (r() * 1.3 + 0.3).toFixed(2));
+    c.setAttribute("fill", r() > 0.85 ? "#FFE4B5" : "#D9CBFF");
+    c.setAttribute("opacity", (0.2 + r() * 0.65 * (1 - y / 760)).toFixed(2));
+    stars.appendChild(c);
+  }
+  // letters of light rising off the open book, like embers shaped as small glyphs
+  const letters = document.getElementById("letters");
+  const glyphs = ["WORD", "LIFE", "TRUTH", "LIGHT"];
+  const slots = [
+    { a: -1.95, d: 120 }, { a: -1.3, d: 175 }, { a: -0.7, d: 150 }, { a: -2.5, d: 165 },
+    { a: -1.0, d: 260 }, { a: -2.05, d: 250 }, { a: -1.55, d: 330 }, { a: -0.5, d: 300 }
+  ];
+  slots.forEach((slot, i) => {
+    const t = document.createElementNS(NS, "text");
+    const cx = 540 + Math.cos(slot.a) * slot.d;
+    const cy = 650 + Math.sin(slot.a) * slot.d * 1.35;
+    t.setAttribute("x", cx); t.setAttribute("y", cy);
+    t.setAttribute("text-anchor", "middle");
+    t.setAttribute("font-family", "IN, sans-serif");
+    t.setAttribute("font-weight", "700");
+    t.setAttribute("letter-spacing", "0.08em");
+    t.setAttribute("font-size", (12 + slot.d / 300 * 11).toFixed(1));
+    t.setAttribute("fill", i % 2 === 0 ? "#FFE4A0" : "#FFC266");
+    t.setAttribute("opacity", (0.55 - slot.d / 330 * 0.3).toFixed(2));
+    t.textContent = glyphs[i % glyphs.length];
+    letters.appendChild(t);
+  });
+  // embers rising from the book toward the cross of light
+  const em = document.getElementById("embers");
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const a = r() * Math.PI * 2;
+    c.setAttribute("cx", 540 + Math.cos(a) * (40 + r() * 170));
+    c.setAttribute("cy", 630 - 20 - r() * 360);
+    c.setAttribute("r", (r() * 2.1 + 0.6).toFixed(2));
+    c.setAttribute("fill", r() > 0.5 ? "#FFD488" : "#FFB24D");
+    c.setAttribute("opacity", (0.3 + r() * 0.6).toFixed(2));
+    em.appendChild(c);
+  }
+</script>
+</body></html>

@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "He healeth the broken in heart, and bindeth up their wounds.", ref: "Psalm 147:3" },
     { text: "When thou passest through the waters, I will be with thee; and through the rivers, they shall not overflow thee: when thou walkest through the fire, thou shalt not be burned; neither shall the flame kindle upon thee.", ref: "Isaiah 43:2" },
     { text: "For his anger endureth but a moment; in his favour is life: weeping may endure for a night, but joy cometh in the morning.", ref: "Psalm 30:5" },
     { text: "The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?", ref: "Psalm 27:1" },
@@ -97,21 +98,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that You care for me — the wind does not get to tell me otherwise!",
-      "This storm is not proof that I missed You — I am crossing over to the other side!",
-      "The One in my boat has never lost a crossing!",
+      "Father, I declare today that I will be made whole — I am done making peace with what You came to heal!",
+      "You saw me lying there, and You knew how long — not one year of my waiting was hidden from You!",
+      "The length of my wait does not set the length of my deliverance!",
       "",
-      "I will not measure Your love by the noise of the wind — I measure it by the nails!",
-      "I cast all my care upon You, for You care for me!",
-      "He that keepeth me shall neither slumber nor sleep!",
+      "I have no man — but I have the Son of Man, and He does not need the water to move!",
+      "When my father and my mother forsake me, then the LORD will take me up!",
+      "No one will step down before me into what God has written for me!",
       "",
-      "Every storm raging against my house, my health, and my finances — Peace, be still!",
-      "When I pass through the waters, You are with me; the rivers shall not overflow me!",
-      "I will not be fearful — I hold on to the word You spoke before the storm began!",
+      "I rise! I take up my bed! I walk!",
+      "What used to carry me, I now carry as a testimony!",
+      "He healeth the broken in heart, and bindeth up their wounds — and that includes mine!",
       "",
-      "Save this. Speak it over your house today. Peace, be still — I am going over to the other side! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. Rise, take up thy bed, and walk — I will be made whole! In Jesus' mighty name, amen!"
     ],
-    ref: "Mark 4:38-40; Isaiah 43:2"
+    ref: "John 5:6-8; Psalm 147:3"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -153,6 +154,7 @@
   };
 
   const SERMONS = [
+    { slug: "wilt-thou-be-made-whole", title: "Wilt Thou Be Made Whole?", ref: "John 5:6-8", date: "November 24, 2026", excerpt: "Thirty-eight years by the pool, and somebody always reached the water first. Jesus stood over his mat and asked a question that sounds almost rude — wilt thou be made whole? — then bypassed the water entirely: Rise, take up thy bed, and walk." },
     { slug: "master-carest-thou-not", title: "Master, Carest Thou Not?", ref: "Mark 4:38-40", date: "November 23, 2026", excerpt: "The storm was filling the boat and Jesus was asleep on a pillow. The disciples woke Him with the question every frightened heart has asked — Master, carest thou not that we perish? He answered the sea with three words: Peace, be still." },
     { slug: "he-shall-doubtless-come-again", title: "He Shall Doubtless Come Again", ref: "Psalm 126:5-6", date: "November 22, 2026", excerpt: "In a lean year the seed in the farmer's hand was his children's supper, so he walked into the field crying — and planted it anyway. Heaven wrote one word over his harvest that no drought can cancel: doubtless." },
     { slug: "they-that-be-with-us-are-more", title: "They That Be With Us Are More", ref: "2 Kings 6:15-17", date: "November 21, 2026", excerpt: "The servant opened the door at dawn and saw an army around the city. Elisha saw the same army and never flinched — because he saw something else too. One short prayer, LORD, open his eyes, and the mountain was full of horses and chariots of fire." },

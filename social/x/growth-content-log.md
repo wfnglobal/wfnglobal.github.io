@@ -244,4 +244,19 @@ Full post text also in `social/samples/x-growth-daily-2026-11.md`.
 | Midday | Friendship: The Secret Santa chat gone quiet | (none: one-word reply, humor) |
 | Evening | Grief: The voicemail you won't delete | John 14:18 |
 
+## November 24, 2026 — volume increase (requested: "lately the growth content is bad... I insisted on at least 10 content posts a day" + natural voice, no repetition, prayer, hope, a smile, "be a shoulder," reminders to pray)
+
+8 more for the same day, bringing today to 11 total. Full post text also in `social/samples/x-growth-daily-2026-11.md`.
+
+| # | Area: Topic | Verse |
+| --- | --- | --- |
+| 1 | Health: The results portal that still says "pending" | Psalm 41:3 |
+| 2 | Money: The "please God" dance at checkout | Psalm 37:5 |
+| 3 | Work: "Per my last email" | (none: reply-bait, humor + a prayer nudge) |
+| 4 | Purpose: "Next year," three years running | 2 Peter 3:8 |
+| 5 | Singleness: Stopped announcing you're single | Song of Solomon 8:4 |
+| 6 | Rest: The self-care Sunday that wasn't | Psalm 23:2 |
+| 7 | Living abroad: The grocery run that costs more than rent used to | Deuteronomy 2:7 |
+| 8 | Prayer life: Haven't prayed today, didn't know where to start | Psalm 145:18 |
+
 <!-- Next batch appends below this line. Keep the table format. -->

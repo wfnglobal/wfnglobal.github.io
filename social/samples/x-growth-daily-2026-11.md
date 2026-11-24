@@ -553,3 +553,83 @@ You still haven't deleted their last voicemail. Deleting it feels like losing th
 Pray: Lord, be near in the places grief doesn't let go.
 
 Save this for the voicemail, chat or voice note you're not ready to delete.
+
+## November 24 — volume increase (8 more, same day)
+
+Requested after feedback that recent content felt flat and too thin in volume: "I insisted on at least 10 content
+posts a day and they must sound natural, no repetition, prayer, hope, put a smile on someone's face, be a
+shoulder, remind them to always pray... be more creative." These 8 join the original 3 above for 11 total today.
+
+### Health: The results portal that still says "pending"
+
+You've refreshed the results portal four times since lunch. Still says "pending."
+
+"The LORD will strengthen him upon the bed of languishing..." — Psalm 41:3
+
+Pray: Lord, steady me while I wait.
+
+Save this for the portal you keep refreshing. (And still go to that appointment.)
+
+### Money: The "please God" dance at checkout
+
+Mid-November and your account is already doing the "please God" dance at checkout. 😅
+
+"Commit thy way unto the LORD; trust also in him; and he shall bring it to pass." — Psalm 37:5
+
+Pray: Lord, stretch what's left and steady what's coming.
+
+Type "amen" if you prayed that prayer at a register this week too.
+
+### Work: "Per my last email"
+
+"Per my last email" lives rent-free in your spirit. 😬
+
+Pray before you reply. Then reply nicely.
+
+Reply with the email that broke your peace this week.
+
+### Purpose: "Next year," three years running
+
+You've said "next year" about the same dream three years running.
+
+God doesn't read your calendar the way you do.
+
+"One day is with the Lord as a thousand years, and a thousand years as one day." — 2 Peter 3:8
+
+Repost if this is the year you stop saying "next year."
+
+### Singleness: Stopped announcing you're single
+
+You've stopped announcing you're single because of the advice that follows. 🙂
+
+God isn't rushing what He's still perfecting.
+
+"I charge you... stir not up, nor awake my love, until he please." — Song of Solomon 8:4
+
+Save this for the next time somebody has "just the person" for you.
+
+### Rest: The self-care Sunday that wasn't
+
+Your "self-care Sunday" turned into laundry, meal prep, and crying a little during worship. That counts too. 🥺
+
+"He maketh me to lie down in green pastures: he leadeth me beside the still waters." — Psalm 23:2
+
+Tag someone whose self-care day never goes as planned.
+
+### Living abroad: The grocery run that costs more than rent used to
+
+Your international grocery run costs more than your rent back home used to. The jollof tax is real. 😅
+
+"These forty years the LORD thy God hath been with thee; thou hast lacked nothing." — Deuteronomy 2:7
+
+Save this for your next receipt-induced sigh.
+
+### Prayer life: Haven't prayed today, didn't know where to start
+
+You haven't prayed today. Not because you forgot — because you didn't know where to start.
+
+Start anywhere. He's not grading the opening line.
+
+"The LORD is nigh unto all them that call upon him, to all that call upon him in truth." — Psalm 145:18
+
+Reply with one word you want to bring to God right now. 🙏

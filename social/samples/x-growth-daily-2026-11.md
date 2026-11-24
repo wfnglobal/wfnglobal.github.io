@@ -528,3 +528,28 @@ You've rescheduled the appointment twice. Not because you're busy — because yo
 Pray: Lord, go into that room with me. You already know what they'll find, and You're still good.
 
 Save this for the appointment you keep pushing back.
+
+## November 24
+
+### Morning: Marriage
+
+Fear says this Christmas fight means you married wrong.
+Faith says two people building one home will clash sometimes — that's not failure.
+God says: "Therefore shall a man leave his father and his mother... and they shall be one flesh." — Genesis 2:24
+Repost if you're building one new family out of two old ones.
+
+### Midday: Friendship
+
+The group chat said "Secret Santa, names out by December 1st" on November 1st. It's November 24th. Nobody has sent a name. 😅
+
+Reply with the person in your gift exchange still "getting to it."
+
+### Evening: Grief
+
+You still haven't deleted their last voicemail. Deleting it feels like losing them twice.
+
+"I will not leave you comfortless: I will come to you." — John 14:18
+
+Pray: Lord, be near in the places grief doesn't let go.
+
+Save this for the voicemail, chat or voice note you're not ready to delete.

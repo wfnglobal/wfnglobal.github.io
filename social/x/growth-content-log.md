@@ -234,4 +234,14 @@ Full post text also in `social/samples/x-growth-daily-2026-11.md`.
 | Midday | Work: The Monday "quick sync" meeting | (none: reply-bait, humor) |
 | Evening | Health: The appointment you keep rescheduling | Psalm 103:3 |
 
+## November 24, 2026
+
+Full post text also in `social/samples/x-growth-daily-2026-11.md`.
+
+| Slot | Area: Topic | Verse |
+| --- | --- | --- |
+| Morning | Marriage: The Christmas-plans fight | Genesis 2:24 |
+| Midday | Friendship: The Secret Santa chat gone quiet | (none: one-word reply, humor) |
+| Evening | Grief: The voicemail you won't delete | John 14:18 |
+
 <!-- Next batch appends below this line. Keep the table format. -->

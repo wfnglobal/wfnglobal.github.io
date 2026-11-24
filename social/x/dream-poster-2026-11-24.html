@@ -1,0 +1,259 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  WFN X poster, 1080x1350 (4:5): "The Key Was Never His" (Nov 24, 2026),
+  for tonight's Fire Prayer Against Dream Attacks: "The Key Is Not In
+  Their Hand". New scene from the reference: a chained stone doorway,
+  cracked open, a broken padlock, and a radiant key hanging in the gap,
+  pouring light over a sleeper at peace while shadow hands recoil. New
+  palette: deep slate-indigo night breaking into warm candle-gold
+  door-light, with cool iron chain instead of the reference's orange
+  fire-ring.
+-->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#05060D;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden;
+    background:linear-gradient(180deg,#05060D 0%,#0A0D22 30%,#141935 52%,#1B1430 68%,#120B1C 84%,#07060C 100%);}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.72);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#FFE3AE; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(255,206,120,0.45); background:rgba(255,190,80,0.1); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FFC24A; box-shadow:0 0 12px 3px rgba(255,194,74,0.8);}
+  .copy{position:absolute; left:0; right:0; top:782px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(255,224,170,0.85);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:112px; line-height:0.96; letter-spacing:-0.035em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em;
+    background:linear-gradient(180deg,#FFF6D8 0%,#FFD98A 34%,#E8AA4E 68%,#B9792C 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(255,190,100,0.4)); padding:0 14px 10px;}
+  .sub{margin:14px auto 0; max-width:820px; font-family:'IN'; font-size:21px; line-height:1.42; color:rgba(240,232,220,0.86);}
+  .sub b{color:#FFD49A; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.9); max-width:520px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A0C05; background:linear-gradient(180deg,#FFE3A0,#E8A94A); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(232,170,74,0.65);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <radialGradient id="moonHalo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF2D6" stop-opacity="0.3"/><stop offset="0.4" stop-color="#B7C8FF" stop-opacity="0.09"/><stop offset="1" stop-color="#B7C8FF" stop-opacity="0"/></radialGradient>
+    <radialGradient id="moon" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#FFF8E8"/><stop offset="1" stop-color="#DCD2E8"/></radialGradient>
+    <radialGradient id="doorGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE9B0" stop-opacity="0.95"/><stop offset="0.4" stop-color="#FFC866" stop-opacity="0.4"/><stop offset="1" stop-color="#FFC866" stop-opacity="0"/></radialGradient>
+    <radialGradient id="groundGlow" cx="0.5" cy="0.95" r="0.75"><stop offset="0" stop-color="#FFD58A" stop-opacity="0.22"/><stop offset="0.7" stop-color="#E8A94A" stop-opacity="0.07"/><stop offset="1" stop-color="#E8A94A" stop-opacity="0"/></radialGradient>
+    <linearGradient id="doorInside" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6DC"/><stop offset="0.45" stop-color="#FFD98A"/><stop offset="1" stop-color="#E8A94A"/></linearGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2A2440"/><stop offset="0.5" stop-color="#352C4C"/><stop offset="1" stop-color="#211C34"/></linearGradient>
+    <linearGradient id="stoneDark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1C1830"/><stop offset="1" stop-color="#100D1C"/></linearGradient>
+    <linearGradient id="doorWood" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#241A2E"/><stop offset="0.5" stop-color="#2E2138"/><stop offset="1" stop-color="#1C1424"/></linearGradient>
+    <linearGradient id="chainMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C9D4E8"/><stop offset="0.5" stop-color="#8793AD"/><stop offset="1" stop-color="#4C5268"/></linearGradient>
+    <linearGradient id="keyGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF8E0"/><stop offset="0.4" stop-color="#FFDE94"/><stop offset="1" stop-color="#D79B3F"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241A30"/><stop offset="1" stop-color="#07060C"/></linearGradient>
+    <linearGradient id="blanket" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3E6CC"/><stop offset="1" stop-color="#C6A574"/></linearGradient>
+    <linearGradient id="shadow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#03030A" stop-opacity="0.95"/><stop offset="1" stop-color="#0F0A1E" stop-opacity="0"/></linearGradient>
+    <filter id="blur10"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="blur16"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="smoke" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="3" seed="19"/><feDisplacementMap in="SourceGraphic" scale="60"/><feGaussianBlur stdDeviation="2.5"/></filter>
+  </defs>
+
+  <g id="stars"></g>
+  <!-- moon, faint, high -->
+  <circle cx="175" cy="200" r="150" fill="url(#moonHalo)"/>
+  <g transform="translate(175 200)">
+    <mask id="cres"><rect x="-80" y="-80" width="160" height="160" fill="#fff"/><circle r="50" cx="-24" cy="-13" fill="#000"/></mask>
+    <circle r="52" fill="url(#moon)" mask="url(#cres)"/>
+  </g>
+
+  <!-- distant hills -->
+  <path d="M0 640 C140 600 260 615 380 590 C520 562 620 600 760 580 C880 563 980 590 1080 572 L1080 760 L0 760Z" fill="#150E30" opacity="0.9"/>
+  <path d="M0 690 C180 660 300 680 460 655 C620 632 760 670 900 650 C980 640 1040 648 1080 642 L1080 780 L0 780Z" fill="#1C1032"/>
+
+  <!-- shadow hands recoiling from the light -->
+  <g filter="url(#smoke)" opacity="0.92">
+    <path d="M-50 400 C70 400 160 440 236 500 C274 532 284 554 270 568 C246 554 218 544 194 552 C216 578 224 600 210 616 C184 590 152 582 124 590 C142 616 142 642 124 660 C88 626 32 616 -50 624Z" fill="url(#shadow)"/>
+    <path d="M1130 420 C1012 420 918 464 852 518 C818 546 808 568 822 582 C846 568 876 560 898 568 C876 592 870 614 884 628 C908 604 940 596 968 604 C950 628 952 652 970 670 C1008 636 1056 626 1130 634Z" fill="#03030A" opacity="0.8"/>
+  </g>
+  <!-- faint red eyes, far, retreating into the dark -->
+  <g opacity="0.5"><circle cx="150" cy="486" r="3" fill="#FF3B2F"/><circle cx="167" cy="484" r="3" fill="#FF3B2F"/><circle cx="930" cy="516" r="2.8" fill="#FF3B2F"/><circle cx="946" cy="514" r="2.8" fill="#FF3B2F"/></g>
+
+  <!-- ground -->
+  <path d="M0 735 C300 716 780 716 1080 735 L1080 1350 L0 1350Z" fill="url(#ground)"/>
+  <ellipse cx="540" cy="735" rx="460" ry="120" fill="url(#groundGlow)"/>
+
+  <!-- stone archway doorway -->
+  <path d="M276 742 L276 540 C276 432 368 388 540 388 C712 388 804 432 804 540 L804 742Z" fill="url(#stoneDark)"/>
+  <path d="M276 742 L276 540 C276 432 368 388 540 388 C712 388 804 432 804 540 L804 742" fill="none" stroke="url(#stone)" stroke-width="24"/>
+  <path d="M302 742 L302 542 C302 444 384 412 540 412 C696 412 778 444 778 542 L778 742" fill="none" stroke="#120E20" stroke-width="4" opacity="0.6"/>
+  <!-- keystone -->
+  <path d="M508 392 L572 392 L582 430 L498 430Z" fill="url(#stone)"/>
+
+  <!-- warm light flooding from the gap of the door -->
+  <circle cx="548" cy="560" r="300" fill="url(#doorGlow)"/>
+  <g id="beams"></g>
+
+  <!-- left door leaf (shut) -->
+  <path d="M310 740 L310 552 C310 460 364 410 452 404 L452 740Z" fill="url(#doorWood)"/>
+  <path d="M330 530 L432 530 M330 460 L432 460" stroke="#120E1C" stroke-width="3" opacity="0.6"/>
+  <circle cx="436" cy="600" r="7" fill="url(#chainMetal)"/>
+
+  <!-- right door leaf (ajar, swung back to reveal the light) -->
+  <path d="M770 740 L770 552 C770 466 730 418 672 400 L706 736Z" fill="url(#doorWood)" opacity="0.96"/>
+  <path d="M726 530 L696 526 M720 460 L694 458" stroke="#120E1C" stroke-width="3" opacity="0.55"/>
+
+  <!-- the open gap: pure light -->
+  <path d="M452 740 L452 404 C508 400 576 428 602 482 C622 524 624 650 620 720 L618 740Z" fill="url(#doorInside)"/>
+  <path d="M452 740 L452 404" stroke="#FFF6DC" stroke-width="2" opacity="0.5"/>
+
+  <!-- broken chain and open padlock draped across the gap -->
+  <g id="chain" transform="translate(538 548) scale(0.82)">
+    <!-- hasp ends, severed, flung apart -->
+    <g transform="rotate(-18)"><rect x="-150" y="-9" width="70" height="18" rx="9" fill="none" stroke="url(#chainMetal)" stroke-width="9"/></g>
+    <g transform="translate(-58 6) rotate(-34)"><rect x="-26" y="-9" width="52" height="18" rx="9" fill="none" stroke="url(#chainMetal)" stroke-width="9"/></g>
+    <g transform="translate(70 -10) rotate(22)"><rect x="4" y="-9" width="70" height="18" rx="9" fill="none" stroke="url(#chainMetal)" stroke-width="9"/></g>
+    <g transform="translate(118 10) rotate(44)"><rect x="4" y="-9" width="54" height="18" rx="9" fill="none" stroke="url(#chainMetal)" stroke-width="9"/></g>
+    <!-- open padlock, falling -->
+    <g transform="translate(96 66) rotate(12)">
+      <path d="M-20 -6 C-20 -34 20 -34 20 -6" fill="none" stroke="url(#chainMetal)" stroke-width="8" stroke-linecap="round"/>
+      <rect x="-26" y="-6" width="52" height="40" rx="7" fill="#3A3F52"/>
+      <rect x="-26" y="-6" width="52" height="40" rx="7" fill="none" stroke="url(#chainMetal)" stroke-width="2.5"/>
+      <circle cx="0" cy="14" r="5.5" fill="#1A1C28"/>
+    </g>
+    <!-- spark burst where the chain snapped -->
+    <g filter="url(#blur4)" opacity="0.9">
+      <circle cx="10" cy="-2" r="20" fill="#FFE9B0"/>
+    </g>
+    <circle cx="10" cy="-2" r="8" fill="#FFF8E0"/>
+  </g>
+
+  <!-- the radiant key, hanging in the gap above the broken chain -->
+  <g transform="translate(540 452)">
+    <circle r="78" fill="url(#doorGlow)" filter="url(#blur4)"/>
+    <g transform="rotate(10)">
+      <circle r="24" fill="none" stroke="url(#keyGold)" stroke-width="10"/>
+      <circle r="24" fill="none" stroke="#FFF8E0" stroke-width="2" opacity="0.7"/>
+      <rect x="-5" y="22" width="10" height="78" rx="4" fill="url(#keyGold)"/>
+      <rect x="5" y="72" width="20" height="9" rx="2" fill="url(#keyGold)"/>
+      <rect x="5" y="88" width="14" height="9" rx="2" fill="url(#keyGold)"/>
+    </g>
+  </g>
+
+  <!-- the bed and the sleeper, lit warm from the open door, at peace -->
+  <g transform="translate(540 700)">
+    <ellipse cx="0" cy="38" rx="230" ry="22" fill="#000" opacity="0.35" filter="url(#blur10)"/>
+    <!-- headboard -->
+    <rect x="-214" y="-104" width="14" height="136" rx="5" fill="#332236"/>
+    <rect x="-158" y="-104" width="14" height="136" rx="5" fill="#332236"/>
+    <rect x="-202" y="-92" width="46" height="70" rx="4" fill="#452C44"/>
+    <path d="M-196 -84 L-162 -84 M-196 -70 L-162 -70 M-196 -56 L-162 -56 M-196 -42 L-162 -42" stroke="#332236" stroke-width="2"/>
+    <circle cx="-207" cy="-108" r="7" fill="#523350"/><circle cx="-151" cy="-108" r="7" fill="#523350"/>
+    <!-- frame -->
+    <rect x="-210" y="0" width="420" height="30" rx="8" fill="#3C2740"/>
+    <rect x="180" y="-34" width="26" height="64" rx="6" fill="#332236"/>
+    <!-- mattress -->
+    <rect x="-150" y="-26" width="335" height="30" rx="10" fill="#E9DCC4"/>
+    <!-- pillow -->
+    <path d="M-148 -30 C-150 -56 -128 -64 -96 -62 C-70 -60 -62 -48 -64 -32 C-90 -24 -125 -24 -148 -30Z" fill="#FFF8EA"/>
+    <!-- head, at peace -->
+    <circle cx="-98" cy="-56" r="21" fill="#6B3F2A"/>
+    <path d="M-119 -60 C-118 -78 -96 -84 -82 -74 C-88 -72 -100 -68 -108 -60Z" fill="#2A1710"/>
+    <path d="M-92 -54 C-88 -51 -84 -51 -81 -54" stroke="#2A1710" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- blanket, lit warm from the open door -->
+    <path d="M-84 -40 C-60 -70 10 -78 70 -62 C120 -50 160 -46 188 -40 L190 2 L-86 2Z" fill="url(#blanket)"/>
+    <path d="M-60 -50 C0 -66 60 -60 120 -46" stroke="#AE895A" stroke-width="2" fill="none" opacity="0.6"/>
+    <path d="M-84 -40 L-86 2" stroke="#AE895A" stroke-width="3"/>
+    <!-- Bible on the nightstand -->
+    <g transform="translate(-260 -6)">
+      <rect x="-28" y="0" width="56" height="38" rx="3" fill="#2A1A2C"/>
+      <rect x="-24" y="-12" width="48" height="12" rx="2" fill="#7A5A28"/>
+      <rect x="-24" y="-12" width="48" height="2.5" fill="#E8C77E"/>
+      <rect x="-1.2" y="-10" width="2.4" height="7" fill="#E8C77E"/>
+      <rect x="-3.5" y="-8" width="7" height="2.2" fill="#E8C77E"/>
+    </g>
+    <!-- Zzz of peace -->
+    <g font-family="Fraunces, serif" font-style="italic" fill="#FFEAC0" opacity="0.85">
+      <text x="-70" y="-98" font-size="22">z</text><text x="-50" y="-122" font-size="28">z</text><text x="-24" y="-152" font-size="34">z</text>
+    </g>
+  </g>
+</svg>
+
+<div class="top">
+  <div class="lock">
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#g)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#g)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#g)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#g)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg>
+    <div class="rule"></div>
+    <div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div>
+  </div>
+  <div class="chip"><i></i>Fire Prayer &middot; Tonight</div>
+</div>
+
+<div class="copy">
+  <div class="kicker">Before any door shuts on you tonight</div>
+  <h1>The key<em>was never his.</em></h1>
+  <p class="sub">Every cage, chain, and locked door built around you in the dream realm tonight &mdash; <b>broken, opened, and left behind by morning.</b></p>
+</div>
+
+<div class="cta">
+  <div class="verse">&ldquo;For he hath broken the gates of brass, and cut the bars of iron in sunder.&rdquo;<span>Psalm 107:16</span></div>
+  <div class="btn"><span class="l1">Pray it before bed &rarr;</span><span class="l2">wfnglobal.org/dreams</span></div>
+</div>
+</div>
+<script>
+  // deterministic RNG
+  let s = 24; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 180; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const y = r() * 560;
+    c.setAttribute("cx", r() * 1080); c.setAttribute("cy", y);
+    c.setAttribute("r", (r() * 1.4 + 0.35).toFixed(2));
+    c.setAttribute("fill", r() > 0.85 ? "#FFE9C2" : "#E6E8FF");
+    c.setAttribute("opacity", (0.25 + r() * 0.7 * (1 - y / 760)).toFixed(2));
+    stars.appendChild(c);
+  }
+  // soft golden light beams fanning up out of the doorway gap, behind the door leaves
+  const beams = document.getElementById("beams");
+  const bx = 548, by = 540;
+  for (let i = 0; i < 7; i++) {
+    const t = (i / 6 - 0.5) * 0.8;
+    const len = 420 + r() * 90;
+    const spread = 0.045 + r() * 0.025;
+    const x1 = bx + Math.sin(t - spread) * len, y1 = by - Math.cos(t - spread) * len;
+    const x2 = bx + Math.sin(t + spread) * len, y2 = by - Math.cos(t + spread) * len;
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", `M${bx} ${by} L${x1} ${y1} L${x2} ${y2} Z`);
+    p.setAttribute("fill", "#FFDE9A");
+    p.setAttribute("opacity", (0.1 + r() * 0.08).toFixed(2));
+    p.setAttribute("filter", "url(#blur16)");
+    beams.appendChild(p);
+  }
+  // rising motes of light near the doorway
+  for (let i = 0; i < 40; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const a = (r() - 0.5) * 1.3;
+    const d = 30 + r() * 220;
+    c.setAttribute("cx", bx + Math.sin(a) * d * 0.55);
+    c.setAttribute("cy", by - 50 - r() * 300 + Math.cos(a) * 16);
+    c.setAttribute("r", (r() * 2.2 + 0.6).toFixed(2));
+    c.setAttribute("fill", r() > 0.5 ? "#FFE9B0" : "#FFD98A");
+    c.setAttribute("opacity", (0.3 + r() * 0.5).toFixed(2));
+    beams.appendChild(c);
+  }
+</script>
+</body></html>

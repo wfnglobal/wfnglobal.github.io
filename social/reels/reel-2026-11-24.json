@@ -1,0 +1,18 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "There's a kind of tired that comes from waiting on the same miracle for years, watching everyone else get there first.", "visual": "poolside" },
+    { "text": "You stop expecting your turn. You just learn the excuses by heart.", "visual": "poolside" },
+    { "text": "Then one question breaks through the noise you've gotten used to: do you even want this to change?", "visual": "asked" },
+    { "text": "Rise, take up thy bed, and walk.", "visual": "asked", "scripture": true },
+    { "text": "Healing didn't wait for him to reach the water. It met him standing still.", "visual": "walking" },
+    { "text": "Whatever you've been waiting beside, you don't have to wait there anymore.", "visual": "walking" },
+    { "text": "In Jesus' name, amen.", "visual": "walking" }
+  ],
+  "bold": "It met him standing still",
+  "title": "Word and Faith Network",
+  "subtitle": "Wilt Thou Be Made Whole?",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A weary figure waits beside a still, mist-grey pool at dawn, lifts into warm breaking light at a quiet question, then rises and walks forward into open blue-gold daylight carrying the mat that used to hold him down - the healing at Bethesda, met before he ever reached the water."
+}

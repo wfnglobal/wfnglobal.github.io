@@ -155,6 +155,9 @@
   body[data-shot="nightshift"]{--accent:#FFC98A;}
   body[data-shot="unanswered"]{--accent:#8FE0E8;}
   body[data-shot="dawnlight"]{--accent:#FFE9C0;}
+  body[data-shot="poolside"]{--accent:#7FC9C4;}
+  body[data-shot="asked"]{--accent:#F2B86A;}
+  body[data-shot="walking"]{--accent:#FFD98A;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -3079,6 +3082,109 @@
       </svg>
     </div>
     <div class="fx" data-type="motes" data-n="24" data-color="255,226,170"></div>
+  </section>
+
+  <!-- ============ POOLSIDE: cool teal-grey dawn mist over a still pool, a hunched figure waiting by the water's edge ============ -->
+  <section class="scene" data-scene="poolside" data-kb="panr" style="--ox:48%; --oy:64%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="pls-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0A1A1E"/><stop offset="0.45" stop-color="#1C3C42"/>
+            <stop offset="0.75" stop-color="#2F5C5C"/><stop offset="1" stop-color="#437A74"/>
+          </linearGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#pls-sky)"/>
+      </svg>
+      <div class="fx" data-type="bokeh" data-n="8"></div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="pls-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A5852" stop-opacity="0.75"/><stop offset="1" stop-color="#051A18"/></linearGradient>
+        </defs>
+        <path d="M 0 1240 C 280 1210 760 1230 1080 1216 L 1080 1920 L 0 1920 Z" fill="url(#pls-water)"/>
+        <g stroke="#7FC9C4" stroke-opacity="0.18" stroke-width="3" fill="none">
+          <path d="M 60 1300 C 300 1288 500 1312 780 1296"/>
+          <path d="M 120 1380 C 360 1368 560 1392 920 1374"/>
+          <path d="M 40 1460 C 320 1448 600 1470 1000 1452"/>
+        </g>
+        <g transform="translate(460 1360) scale(0.56)">
+          <ellipse cx="0" cy="56" rx="170" ry="22" fill="#000" opacity="0.5"/>
+          <use href="#fig-seated" fill="#123032" filter="url(#glow4)" opacity="0.4"/>
+          <use href="#fig-seated" fill="#030C0D" style="--rim:#7FC9C4"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="8" data-color="140,200,195"></div>
+  </section>
+
+  <!-- ============ ASKED: warm gold light breaking through grey mist as a robed figure with a staff draws near ============ -->
+  <section class="scene" data-scene="asked" data-kb="push" style="--ox:52%; --oy:56%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ak-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1C2230"/><stop offset="0.4" stop-color="#4A4438"/>
+            <stop offset="0.7" stop-color="#C98A4E"/><stop offset="1" stop-color="#F2C078"/>
+          </linearGradient>
+          <radialGradient id="ak-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE9B8" stop-opacity="0.8"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#ak-sky)"/>
+        <circle cx="620" cy="760" r="420" fill="url(#ak-glow)"/>
+      </svg>
+      <div class="fx" data-type="bokeh" data-n="10"></div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ak-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C98A4E" stop-opacity="0.45"/><stop offset="1" stop-color="#180F08"/></linearGradient>
+        </defs>
+        <path d="M 0 1280 C 280 1256 760 1272 1080 1252 L 1080 1920 L 0 1920 Z" fill="url(#ak-floor)"/>
+        <g transform="translate(560 1420) scale(0.62)">
+          <ellipse cx="0" cy="58" rx="160" ry="24" fill="#140A04" opacity="0.4"/>
+          <use href="#fig-staff" fill="#8A5A30" filter="url(#glow8)" opacity="0.45"/>
+          <use href="#fig-staff" fill="#160D06" style="--rim:#FFE2A0"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="16" data-color="255,222,170"></div>
+  </section>
+
+  <!-- ============ WALKING: full warm daylight, open sky, a figure risen and walking forward carrying what used to hold him down ============ -->
+  <section class="scene" data-scene="walking" data-kb="rise" style="--ox:50%; --oy:58%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wlk-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#4E86A8"/><stop offset="0.45" stop-color="#9AC4D8"/>
+            <stop offset="0.8" stop-color="#F2DCA0"/><stop offset="1" stop-color="#FFEFC4"/>
+          </linearGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#wlk-sky)"/>
+      </svg>
+      <div class="drift" style="--drift:-60px; --ddur:46s;">
+        <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <ellipse cx="300" cy="420" rx="160" ry="46" fill="#FFFFFF" opacity="0.4"/>
+          <ellipse cx="820" cy="520" rx="200" ry="52" fill="#FFFFFF" opacity="0.32"/>
+        </svg>
+      </div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wlk-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8C878" stop-opacity="0.55"/><stop offset="1" stop-color="#241804"/></linearGradient>
+        </defs>
+        <path d="M 0 1320 C 280 1296 760 1312 1080 1292 L 1080 1920 L 0 1920 Z" fill="url(#wlk-floor)"/>
+        <g transform="translate(520 1430) scale(0.6)">
+          <ellipse cx="0" cy="56" rx="160" ry="24" fill="#1C1404" opacity="0.4"/>
+          <use href="#fig-robe" fill="#8A6A2E" filter="url(#glow8)" opacity="0.4"/>
+          <use href="#fig-robe" fill="#1A1206" style="--rim:#FFE9C0"/>
+          <rect x="58" y="-300" width="150" height="42" rx="10" fill="#1A1206" opacity="0.9" transform="rotate(-8 58 -300)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="20" data-color="255,236,190"></div>
   </section>
 
 </div>

@@ -259,4 +259,28 @@ Full post text also in `social/samples/x-growth-daily-2026-11.md`.
 | 7 | Living abroad: The grocery run that costs more than rent used to | Deuteronomy 2:7 |
 | 8 | Prayer life: Haven't prayed today, didn't know where to start | Psalm 145:18 |
 
+## November 25, 2026
+
+13 posts today (3 anchors + 10 more), continuing the volume standard set November 24
+("I insisted on at least 10 content posts a day") with a deliberate push for more varied
+formats per feedback that batches were starting to repeat the same "Fear says / Faith
+says / God says" and hook-verse-Pray-save shape. Full post text also in
+`social/samples/x-growth-daily-2026-11.md`.
+
+| Slot | Area: Topic | Verse |
+| --- | --- | --- |
+| Morning | Fear: Doomscrolling before you're even out of bed | Psalm 56:4 |
+| Midday | Rest/Work: Lunch at your desk again, calendar packed | Psalm 116:7 |
+| Evening | Grief/Family: One less plate at tomorrow's table | Isaiah 25:8 |
+| 1 | Comfort (pure shoulder, no verse): Crying in the car before you have to be fine inside | (none: comfort only) |
+| 2 | Prayer life: A prayer to pray along with, right now | (none: the post is the prayer itself) |
+| 3 | Career/Hope: The job search that's gone silent | Romans 15:13 |
+| 4 | Family (humor): The aunty who brings her own Tupperware | (none: humor, tag) |
+| 5 | Prayer life: An explicit, immediate nudge to stop and pray | James 4:8 |
+| 6 | Marriage: Feeling like roommates, not a marriage | 1 Peter 4:8 |
+| 7 | Singleness: Your younger sibling just got engaged | 1 Corinthians 7:32 |
+| 8 | Waiting: The file that's been sitting with the agency for months | Psalm 40:1 |
+| 9 | Living abroad: First Thanksgiving abroad, nobody's had real jollof | Psalm 121:8 |
+| 10 | Friendship: The friend who never finishes "I'm going through something" | Proverbs 18:24 |
+
 <!-- Next batch appends below this line. Keep the table format. -->

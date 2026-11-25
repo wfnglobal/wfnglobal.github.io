@@ -633,3 +633,135 @@ Start anywhere. He's not grading the opening line.
 "The LORD is nigh unto all them that call upon him, to all that call upon him in truth." — Psalm 145:18
 
 Reply with one word you want to bring to God right now. 🙏
+
+## November 25
+
+### Morning: Fear — Doomscrolling before you're even out of bed
+
+You hadn't even brushed your teeth yet and you already knew three things wrong with the world.
+
+Close the app. Breathe. The news doesn't get the last word over your day.
+
+"I will not fear what flesh can do unto me." — Psalm 56:4
+
+Reply 🌅 if you're starting today on purpose, not on panic.
+
+### Midday: Rest/Work — Lunch at your desk again, calendar packed
+
+Lunch again at your desk, calendar packed shoulder to shoulder, inbox breeding while you type.
+
+Your soul needs a sabbath too, not just your body.
+
+"Return unto thy rest, O my soul." — Psalm 116:7
+
+Save this for the next meeting that could've been an email. 😅
+
+### Evening: Grief/Family — One less plate at tomorrow's table
+
+Tomorrow's table has one less plate than last year.
+
+Everyone else is excited about turkey. You're just trying to get through dinner.
+
+"The Lord GOD will wipe away tears from off all faces." — Isaiah 25:8
+
+Pray: Lord, sit with me at that table tomorrow.
+
+Save this for whoever's dreading tomorrow's chair.
+
+### Comfort: Crying in the car before you have to be fine inside
+
+If you cried in the car before you walked inside and had to be fine for everyone at the table — I see you.
+
+You don't have to perform being okay tonight. Not here.
+
+You're not alone in this, even when it feels like you are.
+
+Reply 🕊️ if you need someone to know that tonight.
+
+### Prayer life: A prayer to pray along with, right now
+
+Pray this with me right now, wherever you are:
+
+Lord, I'm tired in places I can't explain. Quiet the noise in my head. Steady what's shaking in me. Carry what I can't put down today. Remind me You're near, even now.
+
+In Jesus' name, amen.
+
+Reply "amen" if you prayed that with me.
+
+### Career/Hope: The job search that's gone silent
+
+Three more "we'll keep your resume on file" emails this month. Silence after that.
+
+Nothing looks like it's moving. Something is — you just can't see it yet.
+
+"The God of hope fill you with all joy and peace in believing." — Romans 15:13
+
+Repost if you're still applying, still believing.
+
+### Family (humor): The aunty who brings her own Tupperware
+
+Grace hasn't even started and Aunty already has her Tupperware ready on her lap. 😂
+
+Some people come to eat. Some people come with a strategic plan.
+
+Tag the relative who shows up to every gathering with containers.
+
+### Prayer life: An explicit, immediate nudge to stop and pray
+
+Stop whatever you're doing for the next thirty seconds.
+
+Don't ask God for anything yet. Just tell Him you're there. That's all prayer has to be to start.
+
+"Draw nigh to God, and he will draw nigh to you." — James 4:8
+
+Go ahead — I'll wait. Reply 🙏 when you're back.
+
+### Marriage: Feeling like roommates, not a marriage
+
+You still show up for the same table, still post the anniversary photo — but some days it feels like roommates, not marriage.
+
+Distance isn't the end. It's a signal to turn back toward each other.
+
+"Charity shall cover the multitude of sins." — 1 Peter 4:8
+
+Reply 💍 if you're turning back toward your spouse today.
+
+### Singleness: Your younger sibling just got engaged
+
+Your younger sibling just got engaged — at the table everyone's been watching you at too.
+
+Clap for them. Mean it. Your story isn't behind, it's just on its own page.
+
+"He that is unmarried careth for the things that belong to the Lord." — 1 Corinthians 7:32
+
+Save this for the next announcement that stings a little.
+
+### Waiting: The file that's been sitting with the agency for months
+
+Your file's been sitting with the agency for months. No call. No update. Just silence.
+
+Patience isn't doing nothing — it's trusting Someone while people stay quiet.
+
+"I waited patiently for the LORD; and he inclined unto me, and heard my cry." — Psalm 40:1
+
+Type "still waiting" if something's sitting on someone else's desk too long.
+
+### Living abroad: First Thanksgiving abroad, nobody's had real jollof
+
+First Thanksgiving abroad and nobody at this table has had real jollof. You brought a dish anyway. Barely anyone touched it. 😅
+
+Far from home doesn't mean far from covered.
+
+"The LORD shall preserve thy going out and thy coming in." — Psalm 121:8
+
+Repost for everyone far from their own table today.
+
+### Friendship: The friend who never finishes "I'm going through something"
+
+Your friend keeps saying "I'm going through something" and never finishes the sentence. You don't know what to say, so you just keep showing up.
+
+That's enough. Showing up is the whole prayer sometimes.
+
+"A friend sticketh closer than a brother." — Proverbs 18:24
+
+Tag the friend who shows up without needing the details.

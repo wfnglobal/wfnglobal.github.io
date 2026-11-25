@@ -66,6 +66,9 @@
     weeping   - dusk violet-grey ploughed field, muted and sorrowful, a stooped figure mid-field with seed falling from a raised hand
     seedtime  - close dark furrowed earth with dawn just beginning to break gold at the horizon, a single buried seed glowing faintly
     sheaves   - wide gold sunrise field, bundled wheat sheaves standing either side, a figure standing with arms lifted in triumphant light
+    decree    - indigo-crimson dusk, a towering gold image looming on a plinth, a bowed crowd in torchlight, three figures left standing unbowed
+    furnace   - white-gold firestorm roaring around three unshaken figures, no fear in the stance, embers rising thick
+    delivered - cool dawn breaking gold-blue over three figures walking forward free, untouched, not even smelling of smoke
 
   Each scene is built from layers (l-back / l-front) that get different
   Ken Burns moves for a 2.5D parallax camera, plus an HTML particle layer
@@ -158,6 +161,9 @@
   body[data-shot="poolside"]{--accent:#7FC9C4;}
   body[data-shot="asked"]{--accent:#F2B86A;}
   body[data-shot="walking"]{--accent:#FFD98A;}
+  body[data-shot="decree"]{--accent:#E8B04A;}
+  body[data-shot="furnace"]{--accent:#FFEFC2;}
+  body[data-shot="delivered"]{--accent:#BFD8FF;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -3185,6 +3191,151 @@
       </svg>
     </div>
     <div class="fx" data-type="motes" data-n="20" data-color="255,236,190"></div>
+  </section>
+
+  <!-- ============ DECREE: towering gold image against indigo-crimson dusk, a bowed crowd in torchlight, three left standing ============ -->
+  <section class="scene" data-scene="decree" data-kb="pull" style="--ox:50%; --oy:55%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="dc-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#100810"/><stop offset="0.42" stop-color="#2E1420"/>
+            <stop offset="0.74" stop-color="#6E2A24"/><stop offset="1" stop-color="#C9682E"/>
+          </linearGradient>
+          <radialGradient id="dc-glow" cx="0.5" cy="0.22" r="0.3"><stop offset="0" stop-color="#F2C06A" stop-opacity="0.4"/><stop offset="1" stop-color="#F2C06A" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#dc-sky)"/>
+        <rect width="1080" height="1920" fill="url(#dc-glow)"/>
+        <!-- towering gold image: base, body, shoulders, head -->
+        <rect x="410" y="590" width="260" height="46" fill="#5E3E16" opacity="0.9"/>
+        <path d="M 440 600 L 440 340 C 440 310 460 296 540 296 C 620 296 640 310 640 340 L 640 600 Z" fill="#CB9A34"/>
+        <path d="M 468 340 L 440 410 L 470 410 Z" fill="#B3842A"/>
+        <path d="M 612 340 L 640 410 L 610 410 Z" fill="#B3842A"/>
+        <circle cx="540" cy="230" r="76" fill="#E8B750"/>
+        <rect x="498" y="290" width="84" height="30" fill="#CB9A34"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="dc-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A2418"/><stop offset="1" stop-color="#0A0604"/></linearGradient>
+        </defs>
+        <path d="M 0 1480 C 300 1458 760 1470 1080 1480 L 1080 1920 L 0 1920 Z" fill="url(#dc-floor)"/>
+        <g fill="#2E1A10" opacity="0.92">
+          <g transform="translate(200 1600) scale(0.3) rotate(8)"><use href="#fig-seated" fill="#2E1A10"/></g>
+          <g transform="translate(320 1630) scale(0.26) rotate(-6)"><use href="#fig-seated" fill="#2E1A10"/></g>
+          <g transform="translate(770 1630) scale(0.26) rotate(6)"><use href="#fig-seated" fill="#2E1A10"/></g>
+          <g transform="translate(890 1600) scale(0.3) rotate(-8)"><use href="#fig-seated" fill="#2E1A10"/></g>
+        </g>
+        <ellipse cx="540" cy="1546" rx="200" ry="28" fill="#000" opacity="0.4"/>
+        <g transform="translate(430 1500) scale(0.52)">
+          <use href="#fig-robe" fill="#F2C06A" filter="url(#glow8)" opacity="0.6"/>
+          <use href="#fig-robe" fill="#1A0A06" style="--rim:#F2C06A"/>
+        </g>
+        <g transform="translate(540 1510) scale(0.54)">
+          <use href="#fig-robe" fill="#F2C06A" filter="url(#glow8)" opacity="0.6"/>
+          <use href="#fig-robe" fill="#1A0A06" style="--rim:#F2C06A"/>
+        </g>
+        <g transform="translate(650 1500) scale(0.52)">
+          <use href="#fig-robe" fill="#F2C06A" filter="url(#glow8)" opacity="0.6"/>
+          <use href="#fig-robe" fill="#1A0A06" style="--rim:#F2C06A"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="ember" data-n="14"></div>
+  </section>
+
+  <!-- ============ FURNACE: white-gold fire roaring around three unshaken figures ============ -->
+  <section class="scene" data-scene="furnace" data-kb="push" style="--ox:50%; --oy:58%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="fn-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#160604"/><stop offset="0.4" stop-color="#5A1A0C"/>
+            <stop offset="0.74" stop-color="#E85A1E"/><stop offset="1" stop-color="#FFE2A0"/>
+          </linearGradient>
+          <radialGradient id="fn-burst" cx="0.5" cy="0.6" r="0.55"><stop offset="0" stop-color="#FFF6DE" stop-opacity="0.95"/><stop offset="0.4" stop-color="#FF8A3D" stop-opacity="0.5"/><stop offset="1" stop-color="#FF8A3D" stop-opacity="0"/></radialGradient>
+          <g id="fn-flame">
+            <path d="M 0 0 C -12 -22 -8 -40 2 -52 C 8 -38 18 -30 14 -16 C 24 -24 26 -38 22 -50 C 36 -38 40 -18 30 0 Z"/>
+          </g>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#fn-sky)"/>
+        <circle cx="540" cy="1200" r="700" fill="url(#fn-burst)"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="fn-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9420E"/><stop offset="1" stop-color="#1A0604"/></linearGradient>
+        </defs>
+        <path d="M 0 1540 C 300 1518 760 1530 1080 1540 L 1080 1920 L 0 1920 Z" fill="url(#fn-floor)"/>
+        <g fill="#FFCE7A" filter="url(#glow4)" opacity="0.65">
+          <use href="#fn-flame" transform="translate(120 1500) scale(2.4)"/>
+          <use href="#fn-flame" transform="translate(340 1480) scale(3.0)"/>
+          <use href="#fn-flame" transform="translate(740 1480) scale(3.0)"/>
+          <use href="#fn-flame" transform="translate(960 1500) scale(2.4)"/>
+        </g>
+        <g fill="#FFE9BC">
+          <use href="#fn-flame" transform="translate(120 1500) scale(2.4)"/>
+          <use href="#fn-flame" transform="translate(340 1480) scale(3.0)"/>
+          <use href="#fn-flame" transform="translate(740 1480) scale(3.0)"/>
+          <use href="#fn-flame" transform="translate(960 1500) scale(2.4)"/>
+        </g>
+        <ellipse cx="540" cy="1512" rx="210" ry="30" fill="#000" opacity="0.35"/>
+        <g transform="translate(440 1470) scale(0.5)">
+          <use href="#fig-raise" fill="#FFF6DE" filter="url(#glow8)" opacity="0.6"/>
+          <use href="#fig-raise" fill="#2A0C04" style="--rim:#FFE2A0"/>
+        </g>
+        <g transform="translate(540 1480) scale(0.52)">
+          <use href="#fig-raise" fill="#FFF6DE" filter="url(#glow8)" opacity="0.6"/>
+          <use href="#fig-raise" fill="#2A0C04" style="--rim:#FFE2A0"/>
+        </g>
+        <g transform="translate(640 1470) scale(0.5)">
+          <use href="#fig-raise" fill="#FFF6DE" filter="url(#glow8)" opacity="0.6"/>
+          <use href="#fig-raise" fill="#2A0C04" style="--rim:#FFE2A0"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="ember" data-n="30"></div>
+  </section>
+
+  <!-- ============ DELIVERED: cool dawn breaking gold-blue over three figures walking forward free, untouched ============ -->
+  <section class="scene" data-scene="delivered" data-kb="rise" style="--ox:50%; --oy:56%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="dv-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1C2440"/><stop offset="0.4" stop-color="#4A5A8A"/>
+            <stop offset="0.74" stop-color="#E8B870"/><stop offset="1" stop-color="#FFF2D2"/>
+          </linearGradient>
+          <radialGradient id="dv-sun" cx="0.5" cy="0.62" r="0.42"><stop offset="0" stop-color="#FFFBEC" stop-opacity="0.95"/><stop offset="1" stop-color="#FFFBEC" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#dv-sky)"/>
+        <circle cx="540" cy="1180" r="480" fill="url(#dv-sun)"/>
+      </svg>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="dv-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9A05A"/><stop offset="1" stop-color="#14100A"/></linearGradient>
+        </defs>
+        <path d="M 0 1520 C 300 1498 760 1510 1080 1520 L 1080 1920 L 0 1920 Z" fill="url(#dv-floor)"/>
+        <ellipse cx="540" cy="1552" rx="210" ry="28" fill="#000" opacity="0.3"/>
+        <g transform="translate(440 1490) scale(0.5)">
+          <use href="#fig-robe" fill="#FFE9BC" filter="url(#glow8)" opacity="0.55"/>
+          <use href="#fig-robe" fill="#140E08" style="--rim:#FFE9BC"/>
+        </g>
+        <g transform="translate(540 1500) scale(0.52)">
+          <use href="#fig-robe" fill="#FFE9BC" filter="url(#glow8)" opacity="0.55"/>
+          <use href="#fig-robe" fill="#140E08" style="--rim:#FFE9BC"/>
+        </g>
+        <g transform="translate(640 1490) scale(0.5)">
+          <use href="#fig-robe" fill="#FFE9BC" filter="url(#glow8)" opacity="0.55"/>
+          <use href="#fig-robe" fill="#140E08" style="--rim:#FFE9BC"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="22" data-color="255,230,180"></div>
   </section>
 
 </div>

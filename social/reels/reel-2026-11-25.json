@@ -1,0 +1,17 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "Three men stood in front of a furnace with no promise that the fire would ever let them out.", "visual": "decree" },
+    { "text": "The king said bow. They said no — not because they were sure of the outcome, but because they were sure of God.", "visual": "decree" },
+    { "text": "But if not, be it known unto thee, O king, that we will not serve thy gods.", "visual": "furnace", "scripture": true },
+    { "text": "The flames got hotter. Their faith didn't move.", "visual": "furnace" },
+    { "text": "When the fire opened, they walked out untouched — not even smelling of smoke.", "visual": "delivered" },
+    { "text": "Whatever you're standing in front of today, you don't have to know the ending to stay standing. In Jesus' name, amen.", "visual": "delivered" }
+  ],
+  "bold": "you don't have to know the ending to stay standing",
+  "title": "Word and Faith Network",
+  "subtitle": "But If Not",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A king's golden image demands total loyalty and a crowd bends low in torchlight, but three figures stay standing. The furnace roars white-gold around them without touching them, and they walk out into cool morning light, not even smelling of smoke."
+}

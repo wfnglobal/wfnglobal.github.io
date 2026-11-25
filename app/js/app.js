@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "God is our refuge and strength, a very present help in trouble.", ref: "Psalm 46:1" },
     { text: "He healeth the broken in heart, and bindeth up their wounds.", ref: "Psalm 147:3" },
     { text: "When thou passest through the waters, I will be with thee; and through the rivers, they shall not overflow thee: when thou walkest through the fire, thou shalt not be burned; neither shall the flame kindle upon thee.", ref: "Isaiah 43:2" },
     { text: "For his anger endureth but a moment; in his favour is life: weeping may endure for a night, but joy cometh in the morning.", ref: "Psalm 30:5" },
@@ -98,21 +99,22 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that I will be made whole — I am done making peace with what You came to heal!",
-      "You saw me lying there, and You knew how long — not one year of my waiting was hidden from You!",
-      "The length of my wait does not set the length of my deliverance!",
+      "Father, I declare today that I will not bow — not to fear, not to pressure, not to any idol this world sets up!",
+      "My God whom I serve is able to deliver me — and He will deliver me!",
+      "But if not, I still will not bow!",
       "",
-      "I have no man — but I have the Son of Man, and He does not need the water to move!",
-      "When my father and my mother forsake me, then the LORD will take me up!",
-      "No one will step down before me into what God has written for me!",
+      "My worship is not a transaction — rescue or no rescue, You are still God!",
+      "When the music plays and everyone kneels, I will stay standing!",
+      "No delay will break me and no bribe will buy me — this question is already settled!",
       "",
-      "I rise! I take up my bed! I walk!",
-      "What used to carry me, I now carry as a testimony!",
-      "He healeth the broken in heart, and bindeth up their wounds — and that includes mine!",
+      "If the furnace gets seven times hotter, the Fourth Man is already in the fire with me!",
+      "The fire burns my ropes, not my body — I walk loose and I have no hurt!",
+      "God is my refuge and strength, a very present help in trouble!",
+      "I will come out without even the smell of smoke on me!",
       "",
-      "Save this. Speak it over your house today. Rise, take up thy bed, and walk — I will be made whole! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. Our God is able — but if not, we will not bow! In Jesus' mighty name, amen!"
     ],
-    ref: "John 5:6-8; Psalm 147:3"
+    ref: "Daniel 3:17-18; Psalm 46:1"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -155,6 +157,7 @@
   };
 
   const SERMONS = [
+    { slug: "but-if-not", title: "But If Not", ref: "Daniel 3:17-18", date: "November 25, 2026", excerpt: "The music played, the whole empire bowed, and three Hebrew men stayed standing. They told the king their God was able to deliver them — then added three words that fireproof a faith: but if not, we will not bow." },
     { slug: "wilt-thou-be-made-whole", title: "Wilt Thou Be Made Whole?", ref: "John 5:6-8", date: "November 24, 2026", excerpt: "Thirty-eight years by the pool, and somebody always reached the water first. Jesus stood over his mat and asked a question that sounds almost rude — wilt thou be made whole? — then bypassed the water entirely: Rise, take up thy bed, and walk." },
     { slug: "master-carest-thou-not", title: "Master, Carest Thou Not?", ref: "Mark 4:38-40", date: "November 23, 2026", excerpt: "The storm was filling the boat and Jesus was asleep on a pillow. The disciples woke Him with the question every frightened heart has asked — Master, carest thou not that we perish? He answered the sea with three words: Peace, be still." },
     { slug: "he-shall-doubtless-come-again", title: "He Shall Doubtless Come Again", ref: "Psalm 126:5-6", date: "November 22, 2026", excerpt: "In a lean year the seed in the farmer's hand was his children's supper, so he walked into the field crying — and planted it anyway. Heaven wrote one word over his harvest that no drought can cancel: doubtless." },

@@ -134,6 +134,8 @@
         <h3>${esc(t.study.title)}</h3><p>${esc(t.study.excerpt)}</p></span>
       </a>
 
+      ${W.storyFeature ? W.storyFeature() : ""}
+
       <a class="feature" href="#/sermon/${esc(t.sermon.slug)}">
         <img class="poster" src="${esc(W.sermonPoster(t.sermon.slug))}" alt="" loading="lazy" onerror="this.remove()">
         <span class="meta"><span class="eyebrow slate">Today’s sermon · ${esc(t.sermon.ref || "")}</span>
@@ -164,6 +166,7 @@
         <div class="explore">
           <a class="card" href="${lastRead ? `#/bible/${esc(lastRead.slug)}/${lastRead.ch}` : "#/bible/genesis/1"}"><span class="tile-ic lg c-amber">${icon("bible")}</span><span><span class="t">Read the Bible</span><br><span class="s">${lastRead ? "Back to " + esc(lastRead.name) + " " + lastRead.ch : "Start with Genesis, or any book"}</span></span></a>
           <a class="card" href="#/studies"><span class="tile-ic lg c-spruce">${icon("summary")}</span><span><span class="t">Bible Study</span><br><span class="s">A new study every morning</span></span></a>
+          <a class="card" href="#/stories"><span class="tile-ic lg c-ink">${icon("library")}</span><span><span class="t">Nothing New Under the Sun</span><br><span class="s">A story that has happened before</span></span></a>
           <a class="card" href="#/sermons"><span class="tile-ic lg c-slate">${icon("sermons")}</span><span><span class="t">Sermons</span><br><span class="s">Today’s and every past sermon</span></span></a>
           <a class="card" href="${plan ? "#/plan/" + esc(plan.slug) : "#/library"}"><span class="tile-ic lg c-amber">${icon("check")}</span><span><span class="t">Reading Plans</span><br><span class="s">A few minutes a day</span></span></a>
           <a class="card" href="#/library"><span class="tile-ic lg c-slate">${icon("library")}</span><span><span class="t">The Library</span><br><span class="s">Full books, free to read</span></span></a>

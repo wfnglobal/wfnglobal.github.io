@@ -6,7 +6,10 @@ window.WFN_STORY = {
     title: "Nothing New Under the Sun",
     verse: "The thing that hath been, it is that which shall be; and that which is done is that which shall be done: and there is no new thing under the sun.",
     ref: "Ecclesiastes 1:9",
-    blurb: "A modern story, a little at a time. Every chapter has happened before, somewhere in the Bible. It always has."
+    blurb: "A modern story, a little at a time. Every chapter has happened before, somewhere in the Bible. It always has.",
+    poster: "/assets/story/series/poster_ig_4x5.jpg",
+    trailer: "/assets/story/still-speaking/ch01/teaser-x.mp4",
+    trailerPoster: "/assets/story/series/poster_x_16x9.jpg"
   },
   volumes: [
     { slug: "still-speaking", number: "Volume One", title: "Still Speaking", mirror: "David in the wilderness", lead: "Maya Brooks has done everything right. Her boss has spent eighteen months trying to get rid of her for it." }
@@ -19,6 +22,24 @@ window.WFN_STORY = {
       title: "The Cave",
       date: "November 26, 2026",
       mirror: "1 Samuel 24",
+      film: { vertical: "/assets/story/still-speaking/ch01/film-vertical.mp4", wide: "/assets/story/still-speaking/ch01/film-wide.mp4", poster: "/assets/story/still-speaking/ch01/film-vertical.jpg", posterWide: "/assets/story/still-speaking/ch01/film-wide.jpg", minutes: 8 },
+      book: [
+        "/assets/story/still-speaking/ch01/book/01.jpg",
+        "/assets/story/still-speaking/ch01/book/02.jpg",
+        "/assets/story/still-speaking/ch01/book/03.jpg",
+        "/assets/story/still-speaking/ch01/book/04.jpg",
+        "/assets/story/still-speaking/ch01/book/05.jpg",
+        "/assets/story/still-speaking/ch01/book/06.jpg",
+        "/assets/story/still-speaking/ch01/book/07.jpg",
+        "/assets/story/still-speaking/ch01/book/08.jpg",
+        "/assets/story/still-speaking/ch01/book/09.jpg",
+        "/assets/story/still-speaking/ch01/book/10.jpg",
+        "/assets/story/still-speaking/ch01/book/11.jpg",
+        "/assets/story/still-speaking/ch01/book/12.jpg",
+        "/assets/story/still-speaking/ch01/book/13.jpg",
+        "/assets/story/still-speaking/ch01/book/14.jpg",
+        "/assets/story/still-speaking/ch01/book/15.jpg"
+      ],
       excerpt: "Maya had eleven minutes to answer an email that could decide the next ten years of her life.",
       cards: [
         { src: "/assets/story/still-speaking/ch01/card-1-maya.jpg", alt: "Maya in a dark stairwell under a red exit sign, holding a glowing phone" },

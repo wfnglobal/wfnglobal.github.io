@@ -1,5 +1,14 @@
 [
   {
+    "id": "story-still-speaking-1",
+    "date": "2026-11-26",
+    "title": "Still Speaking, Chapter One: The Cave",
+    "description": "Nothing New Under the Sun, Volume One. Maya has eleven minutes to answer an email that could end the man who spent eighteen months trying to end her. Three thousand years ago, David stood in the same dark, in a cave at En-gedi. The chapter as a film, with an original piano score.",
+    "style": "story",
+    "videoUrl": "/assets/story/still-speaking/ch01/film-wide.mp4",
+    "posterUrl": "/assets/story/still-speaking/ch01/film-wide.jpg"
+  },
+  {
     "id": "reel-2026-11-26",
     "date": "2026-11-26",
     "title": "Where Are the Nine?",

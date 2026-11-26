@@ -26,6 +26,8 @@
     prayer: "M12 3c-3 2.5-5 5.5-5 9v8M12 3c3 2.5 5 5.5 5 9v8M12 3v17M4 20h16",
     library: "M4 4h4v16H4zM10 4h4v16h-4zM16.5 4.5l3.5 1-4 15-3.5-1",
     you: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0",
+    stories: "M7 3h10a1 1 0 0 1 1 1v17l-6-4-6 4V4a1 1 0 0 1 1-1zM9.5 8.5h5M9.5 11.5h3",
+    play: "M8 5.5v13l10-6.5z",
     back: "M15 18l-6-6 6-6",
     chev: "M9 6l6 6-6 6",
     down: "M6 9l6 6 6-6",
@@ -335,8 +337,8 @@
   }
 
   // ---------- nav + router ----------
-  const TABS = [["today", "Today", ""], ["bible", "Bible", "bible"], ["sermons", "Sermons", "sermons"], ["prayer", "Prayer", "prayer"], ["library", "Library", "library"], ["you", "You", "you"]];
-  const TAB_OF = { "": "today", home: "today", bible: "bible", search: "bible", prayer: "prayer", dreams: "prayer", library: "library", sermons: "sermons", sermon: "sermons", studies: "bible", study: "bible", plan: "library", book: "library", you: "you", kept: "you", journal: "you", note: "you", invite: "you", scan: "you", give: "you", settings: "you", jesus: "today", climb: "today" };
+  const TABS = [["today", "Today", ""], ["bible", "Bible", "bible"], ["sermons", "Sermons", "sermons"], ["prayer", "Prayer", "prayer"], ["library", "Library", "library"], ["stories", "Stories", "stories"], ["you", "You", "you"]];
+  const TAB_OF = { "": "today", home: "today", bible: "bible", search: "bible", prayer: "prayer", dreams: "prayer", library: "library", sermons: "sermons", sermon: "sermons", studies: "bible", study: "bible", plan: "library", book: "library", you: "you", kept: "you", journal: "you", note: "you", invite: "you", scan: "you", give: "you", settings: "you", jesus: "today", climb: "today", stories: "stories", story: "stories" };
   const NO_NAV = { scan: 1, invite: 1, climb: 1 };
   function renderNav(active) {
     $("#nav").innerHTML = TABS.map(([k, label, h]) =>

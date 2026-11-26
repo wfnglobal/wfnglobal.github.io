@@ -1,0 +1,264 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  WFN X poster, 1080x1350 (4:5), November 26, 2026: "Not One Seed Survives
+  the Fire" — tonight's Fire Prayer is against every foreign deposit, seed,
+  or object planted into the body or spirit through a dream. New scene: a
+  sealed clay vessel on a stone altar, cracking open with refining gold
+  fire as dark planted seeds are flung out and burned to embers — not the
+  bed/dome-of-fire composition used on prior nights. New palette: deep
+  garnet-ember (not the recurring midnight-blue-and-orange wash). Render
+  with social/render-poster.js.
+-->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#0A0407;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden;
+    background:linear-gradient(180deg,#0A0509 0%,#260912 24%,#431018 46%,#5C1721 64%,#2C0C14 82%,#0B0407 100%);}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.72);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9A0; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(255,170,90,0.45); background:rgba(255,120,40,0.1); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FF8A3A; box-shadow:0 0 12px 3px rgba(255,120,40,0.8);}
+  .copy{position:absolute; left:0; right:0; top:752px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(255,214,160,0.85);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:112px; line-height:0.96; letter-spacing:-0.03em; color:#FBF0E4; text-shadow:0 6px 40px rgba(0,0,0,0.55);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.02em;
+    background:linear-gradient(180deg,#FFF8E2 0%,#FFD9A0 30%,#E8A862 58%,#C4581F 84%,#8E2A12 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 26px rgba(255,150,60,0.4)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:800px; font-family:'IN'; font-size:21px; line-height:1.45; color:rgba(244,232,222,0.86);}
+  .sub b{color:#FFC98A; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.9); max-width:520px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A0C05; background:linear-gradient(180deg,#FFD488,#FF9A45); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(255,120,40,0.7);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <radialGradient id="moonHalo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FF9A5A" stop-opacity="0.30"/><stop offset="0.45" stop-color="#C23A2A" stop-opacity="0.10"/><stop offset="1" stop-color="#C23A2A" stop-opacity="0"/></radialGradient>
+    <radialGradient id="moon" cx="0.38" cy="0.32" r="0.75"><stop offset="0" stop-color="#FFD9A8"/><stop offset="1" stop-color="#C96A3E"/></radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFC877" stop-opacity="0.65"/><stop offset="0.45" stop-color="#FF7A2E" stop-opacity="0.22"/><stop offset="1" stop-color="#FF7A2E" stop-opacity="0"/></radialGradient>
+    <radialGradient id="vesselGlow" cx="0.5" cy="0.42" r="0.6"><stop offset="0" stop-color="#FFE9B8" stop-opacity="0.9"/><stop offset="0.5" stop-color="#FFB45A" stop-opacity="0.3"/><stop offset="1" stop-color="#FFB45A" stop-opacity="0"/></radialGradient>
+    <linearGradient id="clay" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6B2A22"/><stop offset="0.45" stop-color="#8F3B2A"/><stop offset="0.55" stop-color="#9C4430"/><stop offset="1" stop-color="#4E1D18"/></linearGradient>
+    <linearGradient id="clayDark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A140F"/><stop offset="1" stop-color="#220B08"/></linearGradient>
+    <linearGradient id="crack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6D8"/><stop offset="0.5" stop-color="#FFC877"/><stop offset="1" stop-color="#FF8A3A"/></linearGradient>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#B8260F"/><stop offset="0.35" stop-color="#FF6A1F"/><stop offset="0.7" stop-color="#FFB347"/><stop offset="1" stop-color="#FFF1B8"/></linearGradient>
+    <linearGradient id="flameCore" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFB347"/><stop offset="1" stop-color="#FFFBE6"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A1016"/><stop offset="1" stop-color="#0A0407"/></linearGradient>
+    <linearGradient id="altar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E1310"/><stop offset="1" stop-color="#160807"/></linearGradient>
+    <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="blur14"><feGaussianBlur stdDeviation="14"/></filter>
+  </defs>
+
+  <g id="stars"></g>
+  <!-- ember moon, half-veiled -->
+  <circle cx="800" cy="240" r="175" fill="url(#moonHalo)"/>
+  <circle cx="800" cy="240" r="58" fill="url(#moon)"/>
+  <path d="M742 200 C 770 190 820 195 846 222 C 820 212 780 212 752 232 Z" fill="#2C0C14" opacity="0.5" filter="url(#blur4)"/>
+
+  <g transform="translate(540 660) scale(1.1) translate(-540 -742)">
+  <!-- distant hills -->
+  <path d="M0 640 C140 612 260 624 380 602 C520 578 620 608 760 592 C880 578 980 600 1080 586 L1080 760 L0 760Z" fill="#2A0D12" opacity="0.9"/>
+  <path d="M0 690 C180 666 300 682 460 660 C620 640 760 672 900 656 C980 648 1040 654 1080 650 L1080 780 L0 780Z" fill="#200A0E"/>
+
+  <!-- ground -->
+  <path d="M0 735 C300 718 780 718 1080 735 L1080 1350 L0 1350Z" fill="url(#ground)"/>
+  <ellipse cx="540" cy="760" rx="420" ry="140" fill="url(#glow)" opacity="0.8"/>
+
+  <!-- stone altar -->
+  <g transform="translate(540 800)">
+    <ellipse cx="0" cy="118" rx="220" ry="26" fill="#000" opacity="0.4" filter="url(#blur8)"/>
+    <path d="M-190 60 L-150 -10 L150 -10 L190 60 L190 108 L-190 108 Z" fill="url(#altar)"/>
+    <path d="M-150 -10 L150 -10 L170 20 L-170 20 Z" fill="#401814"/>
+    <path d="M-170 20 L170 20 L170 30 L-170 30 Z" fill="#5A2018" opacity="0.8"/>
+    <path d="M-150 -10 L150 -10" stroke="#FFC877" stroke-width="1.4" opacity="0.45"/>
+
+    <!-- glow pouring up from the vessel's mouth -->
+    <ellipse cx="0" cy="-200" rx="160" ry="230" fill="url(#vesselGlow)"/>
+
+    <!-- the vessel -->
+    <g transform="translate(0 -40)">
+      <ellipse cx="0" cy="38" rx="78" ry="16" fill="#1A0908" opacity="0.6" filter="url(#blur4)"/>
+      <!-- body -->
+      <path d="M-30 -232 C-88 -224 -138 -172 -140 -96 C-142 -36 -116 18 -78 52 C-66 64 -58 76 -58 90
+               L58 90 C58 76 66 64 78 52 C116 18 142 -36 140 -96 C138 -172 88 -224 30 -232
+               C30 -246 -30 -246 -30 -232 Z" fill="url(#clay)"/>
+      <path d="M-30 -232 C-88 -224 -138 -172 -140 -96 C-141 -60 -132 -26 -114 2 L-96 2
+               C-110 -30 -118 -64 -116 -98 C-114 -166 -72 -212 -22 -224 Z" fill="#431812" opacity="0.65"/>
+      <path d="M30 -232 C88 -224 138 -172 140 -96 C141 -50 128 -8 104 26 L120 30
+               C144 -8 156 -52 154 -98 C151 -172 98 -222 36 -232 Z" fill="#B4593C" opacity="0.5"/>
+      <!-- neck rim -->
+      <ellipse cx="0" cy="-232" rx="30" ry="9" fill="#2A0F0C"/>
+      <ellipse cx="0" cy="-236" rx="26" ry="7" fill="#1A0907"/>
+      <!-- handles -->
+      <path d="M-138 -150 C-178 -140 -180 -84 -144 -62" fill="none" stroke="url(#clay)" stroke-width="16" stroke-linecap="round"/>
+      <path d="M138 -150 C178 -140 180 -84 144 -62" fill="none" stroke="url(#clay)" stroke-width="16" stroke-linecap="round"/>
+      <!-- base shadow -->
+      <path d="M-58 90 L58 90 L46 112 L-46 112 Z" fill="url(#clayDark)"/>
+
+      <!-- glowing cracks -->
+      <g stroke="url(#crack)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#blur4)" opacity="0.95">
+        <path d="M-10 -222 L-28 -170 L-8 -128 L-34 -78 L-12 -30"/>
+        <path d="M18 -200 L40 -156 L22 -104 L48 -56 L30 -4"/>
+        <path d="M-40 -60 L-20 -20 L-44 24"/>
+      </g>
+      <g stroke="#FFF6E0" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.85">
+        <path d="M-10 -222 L-28 -170 L-8 -128 L-34 -78 L-12 -30"/>
+        <path d="M18 -200 L40 -156 L22 -104 L48 -56 L30 -4"/>
+      </g>
+
+      <!-- fire pouring from the mouth -->
+      <g id="jarFire"></g>
+    </g>
+  </g>
+
+  <g id="seeds"></g>
+  <g id="embers"></g>
+  </g>
+</svg>
+
+<div class="top">
+  <div class="lock">
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#g)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#g)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#g)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#g)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg>
+    <div class="rule"></div>
+    <div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div>
+  </div>
+  <div class="chip"><i></i>Fire Prayer &middot; Tonight</div>
+</div>
+
+<div class="copy">
+  <div class="kicker">Before anything is planted in you tonight</div>
+  <h1>Not one seed<em>survives the fire.</em></h1>
+  <p class="sub">Every object, mark, or substance deposited into your body or blood in a dream tonight &mdash; <b>rooted up and burned out by the blood of Jesus.</b></p>
+</div>
+
+<div class="cta">
+  <div class="verse">&ldquo;Every plant, which my heavenly Father hath not planted, shall be rooted up.&rdquo;<span>Matthew 15:13</span></div>
+  <div class="btn"><span class="l1">Pray it before bed &rarr;</span><span class="l2">wfnglobal.org/dreams</span></div>
+</div>
+</div>
+<script>
+  // deterministic RNG
+  let s = 23; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 160; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const y = r() * 560;
+    c.setAttribute("cx", r() * 1080); c.setAttribute("cy", y);
+    c.setAttribute("r", (r() * 1.3 + 0.35).toFixed(2));
+    c.setAttribute("fill", r() > 0.8 ? "#FFC98A" : "#FBDFD2");
+    c.setAttribute("opacity", (0.2 + r() * 0.65 * (1 - y / 760)).toFixed(2));
+    stars.appendChild(c);
+  }
+
+  function flamePath(x, y, w, h, lean) {
+    const tx = x + lean * h, ty = y - h;
+    return `M${x - w / 2} ${y} C${x - w * 0.75} ${y - h * 0.45} ${tx - w * 0.25} ${y - h * 0.7} ${tx} ${ty} C${tx + w * 0.15} ${y - h * 0.62} ${x + w * 0.8} ${y - h * 0.45} ${x + w / 2} ${y} Z`;
+  }
+
+  // fire licking up out of the jar's mouth
+  const jarFire = document.getElementById("jarFire");
+  const flames = [];
+  for (let i = 0; i < 9; i++) {
+    const x = -24 + (i / 8) * 48;
+    const h = 46 + r() * 70;
+    const w = 14 + r() * 10;
+    flames.push({ x, y: -232, h, w, lean: (r() - 0.5) * 0.7 });
+  }
+  flames.forEach(f => {
+    const halo = document.createElementNS(NS, "path");
+    halo.setAttribute("d", flamePath(f.x, f.y, f.w * 1.8, f.h * 1.2, f.lean));
+    halo.setAttribute("fill", "#FF8A3A"); halo.setAttribute("opacity", "0.5"); halo.setAttribute("filter", "url(#blur8)");
+    jarFire.appendChild(halo);
+  });
+  flames.forEach(f => {
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", flamePath(f.x, f.y, f.w, f.h, f.lean)); p.setAttribute("fill", "url(#flame)");
+    jarFire.appendChild(p);
+    const c = document.createElementNS(NS, "path");
+    c.setAttribute("d", flamePath(f.x + f.lean * 4, f.y, f.w * 0.4, f.h * 0.55, f.lean)); c.setAttribute("fill", "url(#flameCore)");
+    c.setAttribute("opacity", "0.9"); jarFire.appendChild(c);
+  });
+
+  // dark seeds ejected from the cracks, dissolving into gold embers as they rise
+  const seeds = document.getElementById("seeds");
+  const origins = [
+    { x: 528, y: 520 }, { x: 560, y: 500 }, { x: 512, y: 580 },
+    { x: 572, y: 610 }, { x: 540, y: 460 }, { x: 586, y: 560 }
+  ];
+  origins.forEach((o, i) => {
+    const ang = -Math.PI / 2 + (r() - 0.5) * 1.3;
+    const dist = 140 + r() * 220;
+    const ex = o.x + Math.cos(ang) * dist;
+    const ey = o.y + Math.sin(ang) * dist * 1.3 - 40;
+    const midx = (o.x + ex) / 2 + (r() - 0.5) * 80;
+    const midy = Math.min(o.y, ey) - 60 - r() * 40;
+    const trail = document.createElementNS(NS, "path");
+    trail.setAttribute("d", `M${o.x} ${o.y} Q${midx} ${midy} ${ex} ${ey}`);
+    trail.setAttribute("fill", "none"); trail.setAttribute("stroke", "#FFB45A");
+    trail.setAttribute("stroke-width", "1.2"); trail.setAttribute("stroke-dasharray", "1 7");
+    trail.setAttribute("stroke-linecap", "round"); trail.setAttribute("opacity", "0.35");
+    seeds.appendChild(trail);
+
+    // the dark seed itself, near its origin
+    const pts = [];
+    const n = 5 + Math.floor(r() * 2);
+    const rad = 7 + r() * 4;
+    for (let k = 0; k < n; k++) {
+      const a = (k / n) * Math.PI * 2;
+      const rr = rad * (0.6 + r() * 0.7);
+      pts.push(`${(o.x + Math.cos(a) * rr).toFixed(1)},${(o.y + Math.sin(a) * rr * 0.8).toFixed(1)}`);
+    }
+    const seed = document.createElementNS(NS, "polygon");
+    seed.setAttribute("points", pts.join(" "));
+    seed.setAttribute("fill", "#1C0906"); seed.setAttribute("stroke", "#3A120D"); seed.setAttribute("stroke-width", "1");
+    seeds.appendChild(seed);
+
+    // embers the seed dissolves into along its path
+    for (let k = 1; k <= 4; k++) {
+      const t = k / 4;
+      const px = (1 - t) * (1 - t) * o.x + 2 * (1 - t) * t * midx + t * t * ex;
+      const py = (1 - t) * (1 - t) * o.y + 2 * (1 - t) * t * midy + t * t * ey;
+      const c = document.createElementNS(NS, "circle");
+      c.setAttribute("cx", px.toFixed(1)); c.setAttribute("cy", py.toFixed(1));
+      c.setAttribute("r", (1.4 + r() * 2.2 * t).toFixed(2));
+      c.setAttribute("fill", t > 0.5 ? "#FFD79A" : "#FF7A2F");
+      c.setAttribute("opacity", (0.85 - t * 0.5).toFixed(2));
+      seeds.appendChild(c);
+    }
+  });
+
+  // ambient embers rising around the altar
+  const em = document.getElementById("embers");
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", 540 + (r() - 0.5) * 520);
+    c.setAttribute("cy", 820 - r() * 520);
+    c.setAttribute("r", (r() * 2 + 0.5).toFixed(2));
+    c.setAttribute("fill", r() > 0.5 ? "#FFC877" : "#FF7A2F");
+    c.setAttribute("opacity", (0.3 + r() * 0.55).toFixed(2));
+    em.appendChild(c);
+  }
+</script>
+</body></html>

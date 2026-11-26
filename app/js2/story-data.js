@@ -42,10 +42,10 @@ window.WFN_STORY = {
       ],
       excerpt: "Maya had eleven minutes to answer an email that could decide the next ten years of her life.",
       cards: [
-        { src: "/assets/story/still-speaking/ch01/card-1-maya.jpg", alt: "Maya in a dark stairwell under a red exit sign, holding a glowing phone" },
-        { src: "/assets/story/still-speaking/ch01/card-2-happened-before.jpg", alt: "This has happened before. It always has." },
-        { src: "/assets/story/still-speaking/ch01/card-3-the-cave.jpg", alt: "Saul at the mouth of the cave at En-gedi, David hidden in the dark with a knife" },
-        { src: "/assets/story/still-speaking/ch01/card-4-the-robe.jpg", alt: "He had the king's whole life in his hand. He cut a corner off his robe instead, and felt guilty even for that." },
+        { src: "/assets/story/still-speaking/ch01/card-1-maya.jpg", alt: "Stairs climbing to an arch of light beneath a red EXIT sign" },
+        { src: "/assets/story/still-speaking/ch01/card-2-happened-before.jpg", alt: "The same arched doorway, a stairwell now and a cave three thousand years ago" },
+        { src: "/assets/story/still-speaking/ch01/card-3-the-cave.jpg", alt: "The cave at En-gedi, lit from within" },
+        { src: "/assets/story/still-speaking/ch01/card-4-the-robe.jpg", alt: "A crimson robe with one corner cut away, and a blade beside it" },
         { src: "/assets/story/still-speaking/ch01/card-5-chapter-live.jpg", alt: "Chapter One is live. Still Speaking: The Cave" }
       ],
       story: [

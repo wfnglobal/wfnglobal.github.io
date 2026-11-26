@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "O give thanks unto the LORD, for he is good: for his mercy endureth for ever.", ref: "Psalm 107:1" },
     { text: "God is our refuge and strength, a very present help in trouble.", ref: "Psalm 46:1" },
     { text: "He healeth the broken in heart, and bindeth up their wounds.", ref: "Psalm 147:3" },
     { text: "When thou passest through the waters, I will be with thee; and through the rivers, they shall not overflow thee: when thou walkest through the fire, thou shalt not be burned; neither shall the flame kindle upon thee.", ref: "Isaiah 43:2" },
@@ -99,22 +100,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that I will not bow — not to fear, not to pressure, not to any idol this world sets up!",
-      "My God whom I serve is able to deliver me — and He will deliver me!",
-      "But if not, I still will not bow!",
+      "Father, I declare today that I am not one of the nine — I see what You have done, and I am coming back to say thank You!",
+      "I will not be loud in my trouble and silent in my blessing!",
+      "With a loud voice I glorify God, and I fall at the feet of Jesus!",
       "",
-      "My worship is not a transaction — rescue or no rescue, You are still God!",
-      "When the music plays and everyone kneels, I will stay standing!",
-      "No delay will break me and no bribe will buy me — this question is already settled!",
+      "I was healed on the way — so I keep walking even before I see it!",
+      "What You did for me will never become just normal to me!",
+      "I forget not all His benefits — He forgiveth all my iniquities, He healeth all my diseases!",
       "",
-      "If the furnace gets seven times hotter, the Fourth Man is already in the fire with me!",
-      "The fire burns my ropes, not my body — I walk loose and I have no hurt!",
-      "God is my refuge and strength, a very present help in trouble!",
-      "I will come out without even the smell of smoke on me!",
+      "I am not only cleansed — my faith has made me whole!",
+      "My gratitude is a door, not a goodbye — I go from the miracle to the Master!",
+      "O give thanks unto the LORD, for He is good: His mercy endureth for ever!",
       "",
-      "Save this. Speak it over your house today. Our God is able — but if not, we will not bow! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. We are the one who came back — and we are made whole! In Jesus' mighty name, amen!"
     ],
-    ref: "Daniel 3:17-18; Psalm 46:1"
+    ref: "Luke 17:15-19; Psalm 107:1"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -157,6 +157,7 @@
   };
 
   const SERMONS = [
+    { slug: "where-are-the-nine", title: "Where Are the Nine?", ref: "Luke 17:15-17", date: "November 26, 2026", excerpt: "Ten lepers cried for mercy, and all ten were cleansed on the road. Only one turned back to fall at Jesus' feet — and Jesus asked a question that still stings: were there not ten cleansed? but where are the nine?" },
     { slug: "but-if-not", title: "But If Not", ref: "Daniel 3:17-18", date: "November 25, 2026", excerpt: "The music played, the whole empire bowed, and three Hebrew men stayed standing. They told the king their God was able to deliver them — then added three words that fireproof a faith: but if not, we will not bow." },
     { slug: "wilt-thou-be-made-whole", title: "Wilt Thou Be Made Whole?", ref: "John 5:6-8", date: "November 24, 2026", excerpt: "Thirty-eight years by the pool, and somebody always reached the water first. Jesus stood over his mat and asked a question that sounds almost rude — wilt thou be made whole? — then bypassed the water entirely: Rise, take up thy bed, and walk." },
     { slug: "master-carest-thou-not", title: "Master, Carest Thou Not?", ref: "Mark 4:38-40", date: "November 23, 2026", excerpt: "The storm was filling the boat and Jesus was asleep on a pillow. The disciples woke Him with the question every frightened heart has asked — Master, carest thou not that we perish? He answered the sea with three words: Peace, be still." },

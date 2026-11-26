@@ -164,6 +164,9 @@
   body[data-shot="decree"]{--accent:#E8B04A;}
   body[data-shot="furnace"]{--accent:#FFEFC2;}
   body[data-shot="delivered"]{--accent:#BFD8FF;}
+  body[data-shot="scattered"]{--accent:#F2B88A;}
+  body[data-shot="turning"]{--accent:#FFCE8C;}
+  body[data-shot="thanksgiving"]{--accent:#FFE2A4;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -3336,6 +3339,111 @@
       </svg>
     </div>
     <div class="fx" data-type="motes" data-n="22" data-color="255,230,180"></div>
+  </section>
+
+  <!-- ============ SCATTERED: dusty road at midday, several figures already walking away in every direction, none looking back ============ -->
+  <section class="scene" data-scene="scattered" data-kb="panl" style="--ox:50%; --oy:62%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sc-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#D8A868"/><stop offset="0.45" stop-color="#E8C48A"/>
+            <stop offset="0.8" stop-color="#F2DCAE"/><stop offset="1" stop-color="#F7E8C8"/>
+          </linearGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#sc-sky)"/>
+      </svg>
+      <div class="fx" data-type="dust" data-n="10" data-color="200,160,110"></div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sc-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9985C" stop-opacity="0.6"/><stop offset="1" stop-color="#241804"/></linearGradient>
+        </defs>
+        <path d="M 0 1260 C 280 1232 760 1250 1080 1228 L 1080 1920 L 0 1920 Z" fill="url(#sc-floor)"/>
+        <g fill="#4A3418" opacity="0.88">
+          <g transform="translate(220 1420) scale(0.34) rotate(-4)"><use href="#fig-robe"/></g>
+          <g transform="translate(400 1470) scale(0.4) rotate(3)"><use href="#fig-staff"/></g>
+          <g transform="translate(760 1460) scale(0.38) rotate(-3)"><use href="#fig-robe"/></g>
+          <g transform="translate(900 1410) scale(0.3) rotate(5)"><use href="#fig-robe"/></g>
+        </g>
+        <g transform="translate(560 1400) scale(0.56)">
+          <ellipse cx="0" cy="56" rx="160" ry="22" fill="#2A1A08" opacity="0.4"/>
+          <use href="#fig-robe" fill="#D8A868" filter="url(#glow4)" opacity="0.4"/>
+          <use href="#fig-robe" fill="#241604" style="--rim:#F2DCAE"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="12" data-color="210,170,120"></div>
+  </section>
+
+  <!-- ============ TURNING: one figure breaks from the road, body already turned back toward the light ============ -->
+  <section class="scene" data-scene="turning" data-kb="push" style="--ox:52%; --oy:58%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="tn-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3A2410"/><stop offset="0.42" stop-color="#9A6428"/>
+            <stop offset="0.76" stop-color="#E8A84A"/><stop offset="1" stop-color="#FFE2A0"/>
+          </linearGradient>
+          <radialGradient id="tn-glow" cx="0.5" cy="0.46" r="0.44"><stop offset="0" stop-color="#FFEFC0" stop-opacity="0.85"/><stop offset="1" stop-color="#FFEFC0" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#tn-sky)"/>
+        <circle cx="540" cy="880" r="440" fill="url(#tn-glow)"/>
+      </svg>
+      <div class="fx" data-type="bokeh" data-n="10"></div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="tn-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8A84A" stop-opacity="0.5"/><stop offset="1" stop-color="#1C1004"/></linearGradient>
+        </defs>
+        <path d="M 0 1300 C 280 1276 760 1292 1080 1272 L 1080 1920 L 0 1920 Z" fill="url(#tn-floor)"/>
+        <g transform="translate(540 1400) scale(0.6)">
+          <ellipse cx="0" cy="58" rx="170" ry="24" fill="#1C1004" opacity="0.42"/>
+          <use href="#fig-raise" fill="#FFD98A" filter="url(#glow8)" opacity="0.5"/>
+          <use href="#fig-raise" fill="#1C0E04" style="--rim:#FFE9BC"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="motes" data-n="18" data-color="255,222,170"></div>
+  </section>
+
+  <!-- ============ THANKSGIVING: the one who returned, fallen at the feet of the One who healed him, deep warm gold ============ -->
+  <section class="scene" data-scene="thanksgiving" data-kb="rise" style="--ox:50%; --oy:60%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="tg-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#241404"/><stop offset="0.4" stop-color="#6E4414"/>
+            <stop offset="0.74" stop-color="#C98A3A"/><stop offset="1" stop-color="#FFE2A0"/>
+          </linearGradient>
+          <radialGradient id="tg-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF2CE" stop-opacity="0.9"/><stop offset="1" stop-color="#FFF2CE" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#tg-sky)"/>
+        <circle cx="540" cy="900" r="460" fill="url(#tg-glow)"/>
+      </svg>
+      <div class="fx" data-type="motes" data-n="14" data-color="255,236,200"></div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="tg-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C98A3A" stop-opacity="0.5"/><stop offset="1" stop-color="#180C02"/></linearGradient>
+        </defs>
+        <path d="M 0 1360 C 280 1338 760 1352 1080 1336 L 1080 1920 L 0 1920 Z" fill="url(#tg-floor)"/>
+        <g transform="translate(690 1390) scale(0.58)">
+          <ellipse cx="0" cy="58" rx="160" ry="24" fill="#140A02" opacity="0.4"/>
+          <use href="#fig-staff" fill="#FFE9BC" filter="url(#glow8)" opacity="0.5"/>
+          <use href="#fig-staff" fill="#1A0E04" style="--rim:#FFE9BC"/>
+        </g>
+        <g transform="translate(430 1400) scale(0.5) rotate(-6)">
+          <ellipse cx="0" cy="40" rx="150" ry="20" fill="#140A02" opacity="0.42"/>
+          <use href="#fig-seated" fill="#E8A84A" filter="url(#glow4)" opacity="0.5"/>
+          <use href="#fig-seated" fill="#1A0E04" style="--rim:#FFE2A0"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="ember" data-n="10"></div>
   </section>
 
 </div>

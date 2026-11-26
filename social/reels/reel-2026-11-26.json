@@ -1,0 +1,17 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "Ten people prayed the same desperate prayer, and all ten got the same miracle on the same road.", "visual": "scattered" },
+    { "text": "Nine of them just kept walking — new life, new plans, no reason left to look back.", "visual": "scattered" },
+    { "text": "But one of them stopped.", "visual": "turning" },
+    { "text": "And with a loud voice glorified God, and fell down on his face at his feet, giving him thanks.", "visual": "thanksgiving", "scripture": true },
+    { "text": "Whatever He's already done for you, don't let the thank-you be the part of the prayer you forgot to finish.", "visual": "thanksgiving" },
+    { "text": "In Jesus' name, amen.", "visual": "thanksgiving" }
+  ],
+  "bold": "the part of the prayer you forgot to finish",
+  "title": "Word and Faith Network",
+  "subtitle": "Where Are the Nine?",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "Ten robed travelers scatter down a sunlit, dusty road at midday, already walking off in every direction without a backward glance. One breaks away, turning back into warm amber light with arms lifting in praise. In the final scene he falls at the feet of a gold-rimmed figure under a deep golden glow — the one prayer that got finished with thanks."
+}

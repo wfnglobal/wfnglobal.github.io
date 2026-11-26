@@ -283,4 +283,29 @@ says / God says" and hook-verse-Pray-save shape. Full post text also in
 | 9 | Living abroad: First Thanksgiving abroad, nobody's had real jollof | Psalm 121:8 |
 | 10 | Friendship: The friend who never finishes "I'm going through something" | Proverbs 18:24 |
 
+## November 26, 2026
+
+14 posts today (3 anchors + 11 more), continuing the daily volume standard
+("I insisted on at least 10 content posts a day") on Thanksgiving Day, with
+a deliberate mix of formats so nothing repeats the "Fear says / Faith says /
+God says" or hook-verse-Pray-save shape back to back. Full post text also in
+`social/samples/x-growth-daily-2026-11.md`.
+
+| Slot | Area: Topic | Verse |
+| --- | --- | --- |
+| Morning | Gratitude: The Thanksgiving video call home | 1 Chronicles 16:34 |
+| Midday | Work (humor): The office potluck | (none: humor, reply) |
+| Evening | Rest: Cooked since sunrise, gone in two hours | Isaiah 32:18 |
+| 1 | Prayer life: A prayer to pray along with tonight | (none: the post is the prayer itself) |
+| 2 | Career/Hope: The application "under review" since September | Proverbs 23:18 |
+| 3 | Comfort (pure shoulder, no verse): Thankful feels like a performance some days | (none: comfort only) |
+| 4 | Prayer nudge: Close your eyes for ten seconds, right now | Matthew 6:6 |
+| 5 | Money: The Black Friday cart and "I'll sort it out in January" | Matthew 6:26 |
+| 6 | Fear / Living abroad: "So when are you coming home for good?" | Isaiah 35:4 |
+| 7 | Singleness (humor): Uncle's grace-prayer altar call | (none: humor, reply) |
+| 8 | Health/Waiting: The second opinion isn't until January | Psalm 71:14 |
+| 9 | Marriage: The correction at the table tonight | 1 Corinthians 13:7 |
+| 10 | Friendship (humor): The group chat of read receipts since September | (none: humor, tag) |
+| 11 | Purpose: Poll — what do you want God to do before 2026 ends | (none: X poll) |
+
 <!-- Next batch appends below this line. Keep the table format. -->

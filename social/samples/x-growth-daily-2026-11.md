@@ -765,3 +765,136 @@ That's enough. Showing up is the whole prayer sometimes.
 "A friend sticketh closer than a brother." — Proverbs 18:24
 
 Tag the friend who shows up without needing the details.
+
+## November 26 — Thanksgiving Day (volume standard: 14 posts)
+
+14 today (3 anchors + 11 more), deliberately mixed formats — straight prayer,
+pure comfort, explicit prayer nudge, humor, a poll — so the feed doesn't
+settle into one shape.
+
+### Morning: Gratitude — The Thanksgiving video call home
+
+Grandma asked on the video call what you cooked for Thanksgiving. You said jollof. You actually microwaved leftovers. Some things stay between you and God.
+
+Small table, bad wifi, nobody back home even celebrating today — thank Him anyway.
+
+"O give thanks unto the LORD; for he is good; for his mercy endureth for ever." — 1 Chronicles 16:34
+
+Reply with the one real thing you're thankful for today.
+
+### Midday: Work (humor) — The office potluck
+
+The office potluck happened. Somebody's jollof vanished in four minutes flat. Your "famous" dish is still sitting there, untouched, judging you quietly from the corner table.
+
+It's fine. There's always next year.
+
+Reply with the dish that never survives the potluck.
+
+### Evening: Rest — Cooked since sunrise, gone in two hours
+
+You've been on your feet since before sunrise — stirring, basting, setting a table for people who'll eat in twenty minutes and be gone in two hours.
+
+Nobody clapped for you in that kitchen today. He saw it.
+
+"And my people shall dwell in a peaceable habitation... in quiet resting places." — Isaiah 32:18
+
+Save this for the one who cooked for everybody and ate standing up.
+
+### 1. Prayer life: A prayer to pray along with tonight
+
+A prayer for tonight, wherever you're reading this from:
+
+Lord, thank You. Not because today was easy, but because You were in it — in the kitchen, in the traffic, in the family group chat, in the quiet moment nobody else saw.
+
+Thank You for the ones still here. Thank You for the ones who prayed me through. Thank You for not being finished with me yet.
+
+In Jesus' name, amen.
+
+Pray this one out loud if it's yours tonight.
+
+### 2. Career/Hope: The application "under review" since September
+
+That application you sent in September is still sitting there. "Under review." No update since.
+
+You haven't been forgotten. Your file isn't lost. Heaven doesn't lose paperwork.
+
+"For surely there is an end; and thine expectation shall not be cut off." — Proverbs 23:18
+
+Tag someone still waiting on that one email.
+
+### 3. Comfort (pure shoulder, no verse): Thankful feels like a performance some days
+
+If today was full of gratitude everyone else seemed to feel, and you were just getting through it — I see you.
+
+You don't have to perform thankful. You don't have to explain why this season is heavy. You're allowed to just be tired and still loved.
+
+You're not behind. You're not broken. You're just human, and that's allowed here.
+
+### 4. Prayer nudge: Close your eyes for ten seconds, right now
+
+Before you open one more tab — close your eyes for ten seconds. Not to scroll a prayer someone else wrote. To actually talk to Him, out loud if you can.
+
+"When thou prayest, enter into thy closet... and thy Father which seeth in secret shall reward thee openly." — Matthew 6:6
+
+Go. I'll wait. He's already listening.
+
+### 5. Money: The Black Friday cart and "I'll sort it out in January"
+
+The Black Friday cart has twelve things in it and a plan that starts with "I'll sort it out by January."
+
+Funny how we trust next month's money more than we trust today's God.
+
+"Behold the fowls of the air: for they sow not, neither do they reap... yet your heavenly Father feedeth them." — Matthew 6:26
+
+Reply "feedeth" if you're trusting Him with the budget, not just the wishlist.
+
+### 6. Fear / Living abroad: "So when are you coming home for good?"
+
+The question you've been dodging all through dinner: "So when are you coming home for good?"
+
+Behind it is a fear you haven't said out loud — that choosing this life abroad means choosing distance from everyone who raised you.
+
+"Be strong, fear not... behold, your God will come." — Isaiah 35:4
+
+He's not confused about where you are. Reply if this is you tonight.
+
+### 7. Singleness (humor): Uncle's grace-prayer altar call
+
+Uncle said grace, thanked God for the food, the family, the journey mercies... then somehow ended the prayer with "and Lord, bring her a husband soon." Everybody said amen. Nobody asked you first.
+
+Reply "still praying" if you've survived this exact prayer before.
+
+### 8. Health/Waiting: The second opinion isn't until January
+
+The second opinion isn't until January. That's a long time to carry a question mark in your body.
+
+You don't have to have peace about the diagnosis. Just about who's holding you through it.
+
+"But I will hope continually, and will yet praise thee more and more." — Psalm 71:14
+
+Tag someone waiting on results, a callback, or just an answer.
+
+### 9. Marriage: The correction at the table tonight
+
+You corrected each other in front of everyone at the table tonight. Small thing. Both of you felt it. Neither of you is saying anything about it in the car.
+
+Love "beareth all things, believeth all things, hopeth all things, endureth all things." — 1 Corinthians 13:7
+
+Pray: Lord, let us talk about it tonight instead of carrying it into tomorrow.
+
+### 10. Friendship (humor): The group chat of read receipts since September
+
+The friend group chat has been nothing but read receipts since September. Everyone's "busy." Everyone still opens it.
+
+Tag the one friend who'd actually text back if you just said "I miss us."
+
+### 11. Purpose: Poll — what do you want God to do before 2026 ends
+
+With 35 days left in 2026 — what's the one thing you want God to do before the year ends?
+
+🙏 Heal something
+💼 Open a door
+💰 Turn things around financially
+❤️ Restore a relationship
+
+Vote, then tell us in the replies.

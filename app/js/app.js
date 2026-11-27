@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit.", ref: "Romans 8:1" },
     { text: "O give thanks unto the LORD, for he is good: for his mercy endureth for ever.", ref: "Psalm 107:1" },
     { text: "God is our refuge and strength, a very present help in trouble.", ref: "Psalm 46:1" },
     { text: "He healeth the broken in heart, and bindeth up their wounds.", ref: "Psalm 147:3" },
@@ -100,21 +101,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that I am not one of the nine — I see what You have done, and I am coming back to say thank You!",
-      "I will not be loud in my trouble and silent in my blessing!",
-      "With a loud voice I glorify God, and I fall at the feet of Jesus!",
+      "Father, I declare today that I am coming out of Lo-debar — I am not hiding from my King anymore!",
+      "The knock at my door is not a sword — it is an invitation!",
+      "I was sought before I ever searched, for Jesus' sake!",
       "",
-      "I was healed on the way — so I keep walking even before I see it!",
-      "What You did for me will never become just normal to me!",
-      "I forget not all His benefits — He forgiveth all my iniquities, He healeth all my diseases!",
+      "I am not what fell on me — I am who the King calls me!",
+      "I will not call myself a dead dog when Heaven calls me a son!",
+      "There is therefore now no condemnation for me in Christ Jesus!",
       "",
-      "I am not only cleansed — my faith has made me whole!",
-      "My gratitude is a door, not a goodbye — I go from the miracle to the Master!",
-      "O give thanks unto the LORD, for He is good: His mercy endureth for ever!",
+      "Everything the enemy stole from my house, the King restores!",
+      "My feet may limp, but my seat is secure!",
+      "I shall eat bread at my King's table continually!",
       "",
-      "Save this. Speak it over your house today. We are the one who came back — and we are made whole! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. We are sought, named, restored and seated at the King's table! In Jesus' mighty name, amen!"
     ],
-    ref: "Luke 17:15-19; Psalm 107:1"
+    ref: "2 Samuel 9:7-8, 13; Romans 8:1"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -157,6 +158,7 @@
   };
 
   const SERMONS = [
+    { slug: "thou-shalt-eat-bread-at-my-table", title: "Thou Shalt Eat Bread at My Table", ref: "2 Samuel 9:7-8", date: "November 27, 2026", excerpt: "He was dropped at five, raised in hiding in Lo-debar, and expected the king's knock to be a sword. Instead David said, Fear not — thou shalt eat bread at my table continually. Mephibosheth called himself a dead dog. The king called him to the family table." },
     { slug: "where-are-the-nine", title: "Where Are the Nine?", ref: "Luke 17:15-17", date: "November 26, 2026", excerpt: "Ten lepers cried for mercy, and all ten were cleansed on the road. Only one turned back to fall at Jesus' feet — and Jesus asked a question that still stings: were there not ten cleansed? but where are the nine?" },
     { slug: "but-if-not", title: "But If Not", ref: "Daniel 3:17-18", date: "November 25, 2026", excerpt: "The music played, the whole empire bowed, and three Hebrew men stayed standing. They told the king their God was able to deliver them — then added three words that fireproof a faith: but if not, we will not bow." },
     { slug: "wilt-thou-be-made-whole", title: "Wilt Thou Be Made Whole?", ref: "John 5:6-8", date: "November 24, 2026", excerpt: "Thirty-eight years by the pool, and somebody always reached the water first. Jesus stood over his mat and asked a question that sounds almost rude — wilt thou be made whole? — then bypassed the water entirely: Rise, take up thy bed, and walk." },

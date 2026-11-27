@@ -1,0 +1,17 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "Mephibosheth was five when he fell, and he spent his whole life afterward waiting for someone to remember him for the wrong reasons.", "visual": "lodebar" },
+    { "text": "He lived in a place called Lo-debar - a name that literally means no pasture, nothing growing.", "visual": "lodebar" },
+    { "text": "Then a summons came from the king's own house, and he braced for a sword.", "visual": "summons" },
+    { "text": "Fear not: for I will surely shew thee kindness, and thou shalt eat bread at my table continually.", "visual": "table", "scripture": true },
+    { "text": "He came in expecting a sentence. He left with a permanent seat at the family table.", "visual": "table" },
+    { "text": "Whatever you've been hiding in your own Lo-debar, the door isn't closing. It's opening. In Jesus' name, amen.", "visual": "table" }
+  ],
+  "bold": "a permanent seat at the family table",
+  "title": "Word and Faith Network",
+  "subtitle": "Thou Shalt Eat Bread at My Table",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "A boy who fell at five grows into a man hidden away in a forgotten village called Lo-debar, then is summoned without warning to the king's own house expecting judgment - and finds a permanent chair waiting for him at the royal table instead, scars and all."
+}

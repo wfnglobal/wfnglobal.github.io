@@ -308,4 +308,31 @@ God says" or hook-verse-Pray-save shape back to back. Full post text also in
 | 10 | Friendship (humor): The group chat of read receipts since September | (none: humor, tag) |
 | 11 | Purpose: Poll — what do you want God to do before 2026 ends | (none: X poll) |
 
+## November 27, 2026
+
+13 posts today (3 anchors + 10 more), Black Friday / the day after Thanksgiving,
+continuing the daily volume standard ("I insisted on at least 10 content posts a
+day") with a deliberate mix of formats — a pure prayer, a pure comfort/shoulder
+post, an explicit prayer nudge, two humor posts, a hope post, and spread across
+fear, money, family, grief, purpose, health, trust, marriage, singleness, living
+abroad and work — so nothing repeats the "Fear says / Faith says / God says" or
+hook-verse-Pray-save shape back to back. Full post text also in
+`social/samples/x-growth-daily-2026-11.md`.
+
+| Slot | Area: Topic | Verse |
+| --- | --- | --- |
+| Morning | Fear: Anxious the morning after a good day | Psalm 143:8 |
+| Midday | Money (humor): Black Friday cart guilt | 1 Timothy 6:6 |
+| Evening | Family/Grief: The quiet house after goodbyes | Deuteronomy 33:27 |
+| 1 | Prayer life: A prayer to pray along with tonight | (none: the post is the prayer itself) |
+| 2 | Purpose/Hope: The dream you shelved "for now" | Proverbs 13:12 |
+| 3 | Family/Friendship (humor): The post-Thanksgiving group chat | (none: humor, tag) |
+| 4 | Health (pure shoulder, no verse): Poured out and nobody asked | (none: comfort only) |
+| 5 | Rest/Prayer nudge: Stop scrolling for ten seconds, right now | 1 Chronicles 16:11 |
+| 6 | Trust: The apology that still hasn't come | Proverbs 20:22 |
+| 7 | Marriage: The love language they keep forgetting | Ephesians 4:2 |
+| 8 | Singleness: The blank plus-one line | Isaiah 30:18 |
+| 9 | Living abroad: First snow, nobody to call to the window | 1 Kings 8:57 |
+| 10 | Work (humor): The Friday 4:58pm "Quick Sync" invite | (none: humor, reply) |
+
 <!-- Next batch appends below this line. Keep the table format. -->

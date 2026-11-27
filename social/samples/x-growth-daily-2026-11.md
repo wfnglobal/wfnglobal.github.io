@@ -898,3 +898,125 @@ With 35 days left in 2026 — what's the one thing you want God to do before the
 ❤️ Restore a relationship
 
 Vote, then tell us in the replies.
+
+## November 27
+
+### Morning (6-8am): Fear: Anxious the morning after a good day
+
+You had such a good day yesterday — full table, full heart — and you woke up anxious anyway, for no reason you can name.
+
+That's not ingratitude. That's just a body that forgot the good news overnight.
+
+"Cause me to hear thy lovingkindness in the morning; for in thee do I trust." — Psalm 143:8
+
+Pray this before your feet even hit the floor today.
+
+### Midday (12-1pm): Money (humor): Black Friday cart guilt
+
+Fourteen items in the cart. None of them needed. All of them "on sale," which we both know is code for something else.
+
+Closed the tab anyway. Felt like a whole spiritual discipline.
+
+"Godliness with contentment is great gain." — 1 Timothy 6:6
+
+Reply 🛒 if you closed a cart today too.
+
+### Evening (8-9pm): Family/Grief: The quiet house after goodbyes
+
+Hugged them at the door. Watched the car pull off. Came back inside to a house that's suddenly too quiet and dishes that are suddenly too many.
+
+Grief and gratitude can sit at the same table tonight.
+
+"The eternal God is thy refuge, and underneath are the everlasting arms." — Deuteronomy 33:27
+
+Tag someone who said goodbye to family this weekend.
+
+### 1. Prayer life: A prayer to pray along with tonight
+
+A prayer for wherever this week left you:
+
+Lord, thank You for the days behind me and the ones still coming. Quiet what's loud in my head. Steady what's shaking in my hands. Remind me, before I sleep, that You were in the room the whole time.
+
+In Jesus' name, amen. Pray this with me.
+
+### 2. Purpose/Hope: The dream you shelved "for now"
+
+The notebook where you used to write your dreams down is now just a to-do list for everyone else.
+
+That dream didn't die. It's just waiting on you to pick the pen back up.
+
+"Hope deferred maketh the heart sick: but when the desire cometh, it is a tree of life." — Proverbs 13:12
+
+Save this for the next time you think it's too late.
+
+### 3. Family/Friendship (humor): The post-Thanksgiving group chat
+
+The family group chat the week after Thanksgiving: fourteen people typing at once, three photo dumps, and one person still asking "who's bringing the rice container back."
+
+Nobody's winning. Everybody's staying.
+
+Tag the one who never leaves the chat, even on mute.
+
+### 4. Health (pure shoulder, no verse): Poured out and nobody asked
+
+You hosted. Cooked. Cleaned up twice. Smiled through all of it. And now it's quiet, and nobody's asked how YOU are since Thursday.
+
+I'm asking. You don't have to perform an answer — you can just say "tired."
+
+### 5. Rest/Prayer nudge: Stop scrolling for ten seconds, right now
+
+Stop scrolling for ten seconds. Actually stop.
+
+Say His name out loud, right where you are — kitchen, car, office chair, it doesn't matter.
+
+"Seek the LORD and his strength, seek his face continually." — 1 Chronicles 16:11
+
+Go ahead. I'll wait.
+
+### 6. Trust: The apology that still hasn't come
+
+Still waiting on the apology. Still replaying the conversation in your head. Still haven't said the thing you wanted to say back.
+
+Let it go where it actually belongs.
+
+"Say not thou, I will recompense evil; but wait on the LORD, and he shall save thee." — Proverbs 20:22
+
+Pray: Lord, take what I keep picking back up.
+
+### 7. Marriage: The love language they keep forgetting
+
+You've explained your love language four different ways, four different times, and they still default to theirs.
+
+Marriage isn't two people who get it right. It's two people who keep choosing patient.
+
+"With all lowliness and meekness, with longsuffering, forbearing one another in love." — Ephesians 4:2
+
+Send this to the one you're still learning.
+
+### 8. Singleness: The blank plus-one line
+
+Left the plus-one line blank on another wedding RSVP. Wrote your own name, nothing else, handed it back like it was nothing.
+
+It wasn't nothing. God saw you write it anyway.
+
+"Blessed are all they that wait for him." — Isaiah 30:18
+
+Reply if you've RSVP'd solo more times than you can count.
+
+### 9. Living abroad: First snow, nobody to call to the window
+
+First snow of the season came down tonight, and there was no one outside to call you to the window.
+
+You carried your faith across that ocean. He came too.
+
+"The LORD our God be with us, as he was with our fathers: let him not leave us, nor forsake us." — 1 Kings 8:57
+
+Tag someone spending their first winter away from home.
+
+### 10. Work (humor): The Friday 4:58pm "Quick Sync" invite
+
+The calendar invite that lands at 4:58pm on a Friday, titled "Quick Sync — Monday," no agenda attached.
+
+We know. We know exactly what that means.
+
+Reply with the most unhinged meeting title you've ever received.

@@ -1,0 +1,254 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  WFN X poster, 1080x1350 (4:5): "Not Every Voice Is His" (Nov 27, 2026),
+  for tonight's Fire Prayer "I Answer Only One Voice" — every stranger's
+  call, summons, or whisper of your name in the dream realm, answered by
+  the one voice you were made to know. New scene: a sleeper at rest under
+  smooth gold sound-rings falling from a single star (the Shepherd's
+  voice), while jagged dark voice-lines reaching in from the shadow fringe
+  shatter into embers at the boundary of the light. New palette: steel-blue
+  night warming to amber/gold at the center, distinct from the indigo,
+  crimson and teal palettes used on recent nights. Render with
+  social/render-poster.js.
+-->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#03040A;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden;
+    background:linear-gradient(180deg,#02030A 0%,#06101F 28%,#0A1C30 48%,#163247 64%,#2E2412 82%,#0A0804 100%);}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.72);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9A0; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(255,170,90,0.45); background:rgba(255,120,40,0.1); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FF8A3A; box-shadow:0 0 12px 3px rgba(255,120,40,0.8);}
+  .copy{position:absolute; left:0; right:0; top:752px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(255,214,160,0.85);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:112px; line-height:0.96; letter-spacing:-0.03em; color:#FBF3E4; text-shadow:0 6px 40px rgba(0,0,0,0.5);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.02em;
+    background:linear-gradient(180deg,#FFF1C7 0%,#FFCB70 36%,#FF9A3E 70%,#E8690F 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 24px rgba(255,150,50,0.45)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:830px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,232,220,0.86);}
+  .sub b{color:#FFD49A; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,236,214,0.9); max-width:530px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#1A0C05; background:linear-gradient(180deg,#FFD488,#FF9A45); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(255,120,40,0.7);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <radialGradient id="starHalo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF2D6" stop-opacity="0.55"/><stop offset="0.45" stop-color="#FFC878" stop-opacity="0.14"/><stop offset="1" stop-color="#FFC878" stop-opacity="0"/></radialGradient>
+    <radialGradient id="star" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#FFFBEF"/><stop offset="1" stop-color="#FFD89A"/></radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFC37A" stop-opacity="0.5"/><stop offset="0.45" stop-color="#FF9A3E" stop-opacity="0.16"/><stop offset="1" stop-color="#FF9A3E" stop-opacity="0"/></radialGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE8B8" stop-opacity="0.55"/><stop offset="1" stop-color="#FFE8B8" stop-opacity="0"/></linearGradient>
+    <linearGradient id="shadow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#02030A" stop-opacity="0.95"/><stop offset="1" stop-color="#0E1A22" stop-opacity="0"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1C2414"/><stop offset="1" stop-color="#07090A"/></linearGradient>
+    <linearGradient id="blanket" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4E7C8"/><stop offset="1" stop-color="#C7A876"/></linearGradient>
+    <filter id="blur10"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="rough" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.09 0.16" numOctaves="2" seed="5"/><feDisplacementMap in="SourceGraphic" scale="14"/></filter>
+  </defs>
+
+  <g id="stars"></g>
+
+  <!-- the one star / voice above -->
+  <circle cx="540" cy="212" r="230" fill="url(#starHalo)"/>
+  <circle cx="540" cy="212" r="40" fill="url(#star)"/>
+  <path d="M540 212 L540 700" stroke="url(#beam)" stroke-width="130" opacity="0.8"/>
+
+  <!-- distant hills -->
+  <path d="M0 636 C150 604 260 618 390 596 C520 572 630 606 760 588 C880 572 980 596 1080 580 L1080 760 L0 760Z" fill="#0E1A1C" opacity="0.92"/>
+  <path d="M0 684 C190 658 310 676 470 654 C630 632 770 666 910 648 C990 638 1040 646 1080 640 L1080 780 L0 780Z" fill="#132522"/>
+
+  <!-- shadow voices at the fringe, reaching in, never arriving -->
+  <g id="voicesLeft" transform="translate(150 560)" filter="url(#rough)">
+    <path d="M0 0 C-10 -40 6 -78 34 -92 C62 -106 92 -94 100 -66 C108 -40 94 -14 66 -4 C40 6 10 10 0 0Z" fill="#070B10" opacity="0.92"/>
+  </g>
+  <g id="voicesRight" transform="translate(930 572)" filter="url(#rough)">
+    <path d="M0 0 C8 -38 -8 -76 -36 -88 C-64 -100 -92 -86 -98 -58 C-104 -32 -88 -8 -60 2 C-34 12 -8 10 0 0Z" fill="#070B10" opacity="0.92"/>
+  </g>
+  <g opacity="0.6"><circle cx="156" cy="528" r="3.4" fill="#FF5A3A"/><circle cx="172" cy="526" r="3.4" fill="#FF5A3A"/><circle cx="922" cy="540" r="3.4" fill="#FF5A3A"/><circle cx="906" cy="538" r="3.4" fill="#FF5A3A"/></g>
+  <!-- muted voice-squiggles at the mouth of each shadow, dissolving into dashes -->
+  <g stroke="#C2583A" stroke-width="3.4" fill="none" stroke-linecap="round" opacity="0.8">
+    <path d="M190 548 C202 538 202 558 214 548 C226 538 226 558 238 548" stroke-dasharray="1 10"/>
+    <path d="M188 596 C200 586 200 606 212 596 C224 586 224 606 236 596" stroke-dasharray="1 9" opacity="0.6"/>
+    <path d="M890 556 C878 546 878 566 866 556 C854 546 854 566 842 556" stroke-dasharray="1 10"/>
+    <path d="M892 604 C880 594 880 614 868 604 C856 594 856 614 844 604" stroke-dasharray="1 9" opacity="0.6"/>
+  </g>
+  <g id="shoutLeft" stroke="#E07A3F" stroke-width="5.5" fill="none" stroke-linecap="round" opacity="0.9" filter="url(#blur4)"></g>
+  <g id="shoutRight" stroke="#E07A3F" stroke-width="5.5" fill="none" stroke-linecap="round" opacity="0.9" filter="url(#blur4)"></g>
+  <g id="shoutLeftCore" stroke="#FFD9A0" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.95"></g>
+  <g id="shoutRightCore" stroke="#FFD9A0" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.95"></g>
+  <g id="shatter"></g>
+
+  <!-- ground -->
+  <path d="M0 735 C300 716 780 716 1080 735 L1080 1350 L0 1350Z" fill="url(#ground)"/>
+  <ellipse cx="540" cy="735" rx="420" ry="110" fill="url(#glow)"/>
+
+  <!-- sound rings of the known voice, falling on the sleeper -->
+  <g id="rings" stroke="#FFE2A6" fill="none" opacity="0.8"></g>
+
+  <!-- shepherd's staff of light, planted beside the bed -->
+  <g transform="translate(300 742)" opacity="0.95">
+    <rect x="-3" y="-190" width="6" height="190" rx="3" fill="#E8C77E"/>
+    <path d="M-3 -190 C-26 -190 -30 -168 -8 -162" stroke="#E8C77E" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <circle cx="0" cy="-190" r="16" fill="url(#glow)"/>
+  </g>
+
+  <!-- the bed and the sleeper, at peace -->
+  <g transform="translate(560 702)">
+    <ellipse cx="0" cy="38" rx="230" ry="22" fill="#000" opacity="0.4" filter="url(#blur10)"/>
+    <rect x="-214" y="-104" width="14" height="136" rx="5" fill="#2A2420"/>
+    <rect x="-158" y="-104" width="14" height="136" rx="5" fill="#2A2420"/>
+    <rect x="-202" y="-92" width="46" height="70" rx="4" fill="#3A322A"/>
+    <path d="M-196 -84 L-162 -84 M-196 -70 L-162 -70 M-196 -56 L-162 -56 M-196 -42 L-162 -42" stroke="#2A2420" stroke-width="2"/>
+    <circle cx="-207" cy="-108" r="7" fill="#463C32"/><circle cx="-151" cy="-108" r="7" fill="#463C32"/>
+    <rect x="-210" y="0" width="420" height="30" rx="8" fill="#332C24"/>
+    <rect x="180" y="-34" width="26" height="64" rx="6" fill="#2A2420"/>
+    <rect x="-150" y="-26" width="335" height="30" rx="10" fill="#E9DCC4"/>
+    <path d="M-148 -30 C-150 -56 -128 -64 -96 -62 C-70 -60 -62 -48 -64 -32 C-90 -24 -125 -24 -148 -30Z" fill="#FFF8EA"/>
+    <circle cx="-98" cy="-56" r="21" fill="#6B3F2A"/>
+    <path d="M-119 -60 C-118 -78 -96 -84 -82 -74 C-88 -72 -100 -68 -108 -60Z" fill="#2A1710"/>
+    <path d="M-92 -54 C-88 -51 -84 -51 -81 -54" stroke="#2A1710" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M-84 -40 C-60 -70 10 -78 70 -62 C120 -50 160 -46 188 -40 L190 2 L-86 2Z" fill="url(#blanket)"/>
+    <path d="M-60 -50 C0 -66 60 -60 120 -46" stroke="#B48E5C" stroke-width="2" fill="none" opacity="0.6"/>
+    <path d="M-84 -40 L-86 2" stroke="#B48E5C" stroke-width="3"/>
+    <g transform="translate(-260 -6)">
+      <rect x="-28" y="0" width="56" height="38" rx="3" fill="#241E1A"/>
+      <rect x="-24" y="-12" width="48" height="12" rx="2" fill="#7A2E22"/>
+      <rect x="-24" y="-12" width="48" height="2.5" fill="#E8C77E"/>
+      <rect x="-1.2" y="-10" width="2.4" height="7" fill="#E8C77E"/>
+      <rect x="-3.5" y="-8" width="7" height="2.2" fill="#E8C77E"/>
+    </g>
+    <g font-family="Fraunces, serif" font-style="italic" fill="#FFE6B8" opacity="0.8">
+      <text x="-70" y="-98" font-size="22">z</text><text x="-50" y="-122" font-size="28">z</text><text x="-24" y="-152" font-size="34">z</text>
+    </g>
+  </g>
+
+  <g id="embers"></g>
+  </svg>
+
+<div class="top">
+  <div class="lock">
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#g)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#g)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#g)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#g)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg>
+    <div class="rule"></div>
+    <div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div>
+  </div>
+  <div class="chip"><i></i>Fire Prayer &middot; Tonight</div>
+</div>
+
+<div class="copy">
+  <div class="kicker">Before any voice calls your name tonight</div>
+  <h1>Not every<em>voice is His.</em></h1>
+  <p class="sub">Every stranger that summons you, turns you, or calls your name in the dream realm &mdash; <b>gets no answer, because you know your Shepherd's voice.</b></p>
+</div>
+
+<div class="cta">
+  <div class="verse">&ldquo;My sheep hear my voice, and I know them, and they follow me.&rdquo;<span>John 10:27</span></div>
+  <div class="btn"><span class="l1">Pray it before bed &rarr;</span><span class="l2">wfnglobal.org/dreams</span></div>
+</div>
+</div>
+<script>
+  // deterministic RNG
+  let s = 27; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 170; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const y = r() * 600;
+    c.setAttribute("cx", r() * 1080); c.setAttribute("cy", y);
+    c.setAttribute("r", (r() * 1.4 + 0.35).toFixed(2));
+    c.setAttribute("fill", r() > 0.85 ? "#FFE4B5" : "#DCEAF0");
+    c.setAttribute("opacity", (0.25 + r() * 0.7 * (1 - y / 800)).toFixed(2));
+    stars.appendChild(c);
+  }
+
+  // smooth gold sound-rings of the known voice, descending onto the sleeper
+  const rings = document.getElementById("rings");
+  for (let i = 0; i < 6; i++) {
+    const e = document.createElementNS(NS, "ellipse");
+    const ry = 18 + i * 17;
+    e.setAttribute("cx", 540); e.setAttribute("cy", 240 + i * 2);
+    e.setAttribute("rx", ry * 1.35); e.setAttribute("ry", ry);
+    e.setAttribute("stroke-width", (3.2 - i * 0.32).toFixed(2));
+    e.setAttribute("opacity", (0.62 - i * 0.07).toFixed(2));
+    rings.appendChild(e);
+  }
+
+  // jagged stranger-voice lines reaching in from the shadow fringe, and
+  // shattering into embers before they cross into the light
+  function jagPath(x0, y0, x1, y1) {
+    let pts = [[x0, y0]];
+    const steps = 7;
+    for (let i = 1; i < steps; i++) {
+      const t = i / steps;
+      const x = x0 + (x1 - x0) * t;
+      const y = y0 + (y1 - y0) * t + (r() - 0.5) * 34;
+      pts.push([x, y]);
+    }
+    pts.push([x1, y1]);
+    const d = pts.map((p, i) => (i === 0 ? "M" : "L") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+    return { d, stop: pts[pts.length - 2] };
+  }
+  function shout(glowC, coreC, x0, y0, x1, y1) {
+    const { d, stop } = jagPath(x0, y0, x1, y1);
+    const p1 = document.createElementNS(NS, "path"); p1.setAttribute("d", d); glowC.appendChild(p1);
+    const p2 = document.createElementNS(NS, "path"); p2.setAttribute("d", d); coreC.appendChild(p2);
+    return stop;
+  }
+  const shatter = document.getElementById("shatter");
+  function burst(x, y, n) {
+    for (let i = 0; i < n; i++) {
+      const a = r() * Math.PI * 2, d = 10 + r() * 30;
+      const c = document.createElementNS(NS, "circle");
+      c.setAttribute("cx", x + Math.cos(a) * d); c.setAttribute("cy", y + Math.sin(a) * d);
+      c.setAttribute("r", (r() * 3.2 + 0.8).toFixed(2));
+      c.setAttribute("fill", r() > 0.5 ? "#FFB066" : "#FF7A3A");
+      c.setAttribute("opacity", (0.55 + r() * 0.4).toFixed(2));
+      shatter.appendChild(c);
+    }
+    const g = document.createElementNS(NS, "circle");
+    g.setAttribute("cx", x); g.setAttribute("cy", y); g.setAttribute("r", 30);
+    g.setAttribute("fill", "url(#glow)");
+    shatter.insertBefore(g, shatter.firstChild);
+  }
+  const sl = document.getElementById("shoutLeft"), sr = document.getElementById("shoutRight");
+  const slc = document.getElementById("shoutLeftCore"), src = document.getElementById("shoutRightCore");
+  const stopL = shout(sl, slc, 206, 546, 428, 598); burst(stopL[0], stopL[1], 12);
+  const stopL2 = shout(sl, slc, 186, 594, 416, 644); burst(stopL2[0], stopL2[1], 9);
+  const stopR = shout(sr, src, 874, 554, 652, 602); burst(stopR[0], stopR[1], 12);
+  const stopR2 = shout(sr, src, 894, 602, 664, 650); burst(stopR2[0], stopR2[1], 9);
+
+  // embers drifting up around the bed, warmed by the voice above
+  const em = document.getElementById("embers");
+  for (let i = 0; i < 50; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const a = r() * Math.PI * 2;
+    c.setAttribute("cx", 540 + Math.cos(a) * (120 + r() * 220));
+    c.setAttribute("cy", 700 - r() * 420);
+    c.setAttribute("r", (r() * 2 + 0.5).toFixed(2));
+    c.setAttribute("fill", r() > 0.5 ? "#FFD79A" : "#FFB066");
+    c.setAttribute("opacity", (0.3 + r() * 0.55).toFixed(2));
+    em.appendChild(c);
+  }
+</script>
+</body></html>

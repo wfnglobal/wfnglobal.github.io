@@ -335,4 +335,32 @@ hook-verse-Pray-save shape back to back. Full post text also in
 | 9 | Living abroad: First snow, nobody to call to the window | 1 Kings 8:57 |
 | 10 | Work (humor): The Friday 4:58pm "Quick Sync" invite | (none: humor, reply) |
 
+## November 28, 2026
+
+13 posts today (3 anchors + 10 more), the Saturday after Black Friday,
+continuing the daily volume standard ("I insisted on at least 10 content
+posts a day") with a deliberate mix of formats — a pure prayer, a pure
+comfort/shoulder post, an explicit prayer nudge, two humor posts, and a
+spread across rest, work/money, marriage, fear, career, family, health,
+waiting, purpose, singleness, friendship and grief — so nothing repeats
+the "Fear says / Faith says / God says" or hook-verse-Pray-save shape back
+to back, and nothing echoes the day's sermon (Mark 2:5) or study (2 Kings
+5:13) X packs. Full post text also in `social/samples/x-growth-daily-2026-11.md`.
+
+| Slot | Area: Topic | Verse |
+| --- | --- | --- |
+| Morning | Rest: Sleeping past your alarm on your one day off | Exodus 23:12 |
+| Midday | Work/Money: Clocking into the side hustle on your day off | Ecclesiastes 2:24 |
+| Evening | Marriage: The silent treatment after an argument | Proverbs 17:9 |
+| 1 | Fear: The unknown number calling twice in a row | Psalm 34:4 |
+| 2 | Career: The "open to new opportunities" post you keep deleting | Psalm 37:23 |
+| 3 | Family (humor): Mum calling to ask if you've eaten, again | (none: humor, tag) |
+| 4 | Health (pure shoulder, no verse): The pain nobody asks about anymore | (none: comfort only) |
+| 5 | Waiting: A prayer for everyone still waiting on an answer | (none: the post is the prayer itself) |
+| 6 | Purpose/Hope: The thing you prayed about in January hasn't moved | Jeremiah 17:7 |
+| 7 | Singleness (humor): Pre-drafting the Christmas "are you seeing anyone" answer | Psalm 20:4 |
+| 8 | Friendship (explicit prayer nudge): The friend whose name just crossed your mind | Philippians 1:3-4 |
+| 9 | Grief: Remembering the recipe now that they're not here to call | John 16:22 |
+| 10 | Engagement: Poll — one prayer answered instantly today | (none: X poll) |
+
 <!-- Next batch appends below this line. Keep the table format. -->

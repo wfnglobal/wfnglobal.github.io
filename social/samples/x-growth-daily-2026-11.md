@@ -1020,3 +1020,129 @@ The calendar invite that lands at 4:58pm on a Friday, titled "Quick Sync — Mon
 We know. We know exactly what that means.
 
 Reply with the most unhinged meeting title you've ever received.
+
+## November 28
+
+### Morning (6-8am): Rest: Sleeping past your alarm on your one day off
+
+You slept past your alarm on your only day off and the first thing you felt was guilt, not rest.
+
+Take the rest. You earned it.
+
+"Six days thou shalt do thy work, and on the seventh day thou shalt rest." — Exodus 23:12
+
+Reply "resting" if you're actually letting yourself rest today.
+
+### Midday (12-1pm): Work/Money: Clocking into the side hustle on your day off
+
+Clocked out of the 9-5 on Friday. Clocked into the side hustle app by 7am Saturday.
+
+One job was never the plan. It's just where you are right now.
+
+"There is nothing better for a man... than that he should enjoy good in his labour." — Ecclesiastes 2:24
+
+Type "grinding" if today's a work day too.
+
+### Evening (8-9pm): Marriage: The silent treatment after an argument
+
+Nobody's said a word since the argument. You're both just quiet in the same house.
+
+Silence isn't peace. It's unfinished business.
+
+"He that covereth a transgression seeketh love; but he that repeateth a matter separateth very friends." — Proverbs 17:9
+
+Pray: Lord, give me courage to speak first tonight.
+
+### 1. Fear: The unknown number calling twice in a row
+
+Unknown number calls twice in a row and your whole body tenses up before you even answer.
+
+"I sought the LORD, and he heard me, and delivered me from all my fears." — Psalm 34:4
+
+Pray: Lord, meet me before the phone even rings again.
+
+Repost if you're not letting fear answer your calls for you.
+
+### 2. Career: The "open to new opportunities" post you keep deleting
+
+You've typed "Open to new opportunities 👀" into LinkedIn four times this month and deleted it four times.
+
+Your next door isn't stuck. You're just early.
+
+"The steps of a good man are ordered by the LORD: and he delighteth in his way." — Psalm 37:23
+
+Type "ready" when you finally post it. We're cheering.
+
+### 3. Family (humor): Mum calling to ask if you've eaten, again
+
+Mum has called three times this week to ask if you've eaten. You're 29.
+
+She's not checking your calendar. She's checking your heart. 😅
+
+Tag the person who still asks you that.
+
+### 4. Health (pure shoulder, no verse): The pain nobody asks about anymore
+
+Nobody asks how the pain is anymore. They just assume you're used to it by now.
+
+You're not used to it. You're tired of explaining it.
+
+I see you carrying something most people can't see. You're not making it up, and you're not alone in it.
+
+(If it's been a while — book the appointment. You deserve to be looked at.)
+
+### 5. Waiting (the post is the prayer itself): A prayer for everyone still waiting on an answer
+
+A short prayer for everyone still waiting on an answer tonight —
+
+Lord, You see the applications I've sent, the doors I've knocked on, the promise I'm still holding onto with tired hands. I'm not asking You to rush Your timing. I'm asking You to steady mine. Let me trust You in the waiting room, not just after I leave it. In Jesus' name, amen.
+
+Reply "amen" if you prayed this with me.
+
+### 6. Purpose/Hope: The thing you prayed about in January hasn't moved
+
+The thing you prayed about in January is still sitting exactly where it was in January.
+
+That's not a no. That's not even a not-yet. It's just not finished.
+
+"Blessed is the man that trusteth in the LORD, and whose hope the LORD is." — Jeremiah 17:7
+
+Repost if you're still hoping, quietly, on purpose.
+
+### 7. Singleness (humor): Pre-drafting the Christmas "are you seeing anyone" answer
+
+You've already rehearsed your answer to "so, are you seeing anyone?" and Christmas is still weeks away. 😂
+
+Practice the answer. Don't practice the panic.
+
+"Grant thee according to thine own heart, and fulfil all thy counsel." — Psalm 20:4
+
+Reply with your go-to line. We need material too.
+
+### 8. Friendship (explicit prayer nudge): The friend whose name just crossed your mind
+
+A friend's name just crossed your mind reading this. That wasn't random.
+
+Stop scrolling for ten seconds and actually pray for them right now — not "I'll send a verse later."
+
+"I thank my God upon every remembrance of you... always in every prayer of mine for you all making request with joy." — Philippians 1:3-4
+
+Tell us you prayed. Not who.
+
+### 9. Grief: Remembering the recipe now that they're not here to call
+
+Christmas cooking is coming, and you're the one who has to remember the recipe now — the one who knew it by heart isn't here to call and ask.
+
+"Ye now therefore have sorrow: but I will see you again, and your heart shall rejoice, and your joy no man taketh from you." — John 16:22
+
+Tag someone cooking from memory this year.
+
+### 10. Engagement: Poll — one prayer answered instantly today
+
+If God answered one prayer instantly today, which one would you pick?
+
+Poll options (post as an X poll):
+1. Healing in my body
+2. A breakthrough at work
+3. Peace of mind
+4. Someone's salvation

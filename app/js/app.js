@@ -52,6 +52,7 @@
   // { slug, title, ref } — ref is BIBLE_STUDY[0].verses[0].ref — since the
   // website only shows a teaser card linking into the app's full study.
   const VERSES = [
+    { text: "Bear ye one another's burdens, and so fulfil the law of Christ.", ref: "Galatians 6:2" },
     { text: "There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit.", ref: "Romans 8:1" },
     { text: "O give thanks unto the LORD, for he is good: for his mercy endureth for ever.", ref: "Psalm 107:1" },
     { text: "God is our refuge and strength, a very present help in trouble.", ref: "Psalm 46:1" },
@@ -101,21 +102,21 @@
   // stanza break (a blank line in the layout), not a line of its own.
   const DECLARATION = {
     lines: [
-      "Father, I declare today that I am coming out of Lo-debar — I am not hiding from my King anymore!",
-      "The knock at my door is not a sword — it is an invitation!",
-      "I was sought before I ever searched, for Jesus' sake!",
+      "Father, I declare today that I will not leave the people I love at the door!",
+      "When the crowd is thick, my faith climbs!",
+      "I take my corner, and I will not let go!",
       "",
-      "I am not what fell on me — I am who the King calls me!",
-      "I will not call myself a dead dog when Heaven calls me a son!",
-      "There is therefore now no condemnation for me in Christ Jesus!",
+      "Every roof between my family and Jesus is coming open!",
+      "No door is too jammed and no ceiling too strong for faith that digs!",
+      "I bear their burdens, and I fulfil the law of Christ!",
       "",
-      "Everything the enemy stole from my house, the King restores!",
-      "My feet may limp, but my seat is secure!",
-      "I shall eat bread at my King's table continually!",
+      "Jesus sees our faith — and He speaks forgiveness over my house!",
+      "What was carried in on a mat shall walk out before them all!",
+      "They shall say of my family, We never saw it on this fashion!",
       "",
-      "Save this. Speak it over your house today. We are sought, named, restored and seated at the King's table! In Jesus' mighty name, amen!"
+      "Save this. Speak it over your house today. We are carried, we are carriers, and every one we bring to Jesus shall rise! In Jesus' mighty name, amen!"
     ],
-    ref: "2 Samuel 9:7-8, 13; Romans 8:1"
+    ref: "Mark 2:3-5, 12; Galatians 6:2"
   };
 
   // Night Prayer, shown on Home stacked behind the Verse of the Day card —
@@ -158,6 +159,7 @@
   };
 
   const SERMONS = [
+    { slug: "when-jesus-saw-their-faith", title: "When Jesus Saw Their Faith", ref: "Mark 2:3-5", date: "November 28, 2026", excerpt: "The house was packed and the door was jammed, so four friends climbed onto the roof, broke it open, and let a paralyzed man down at Jesus' feet. Mark records one line that should change how you pray for the people you love: when Jesus saw their faith." },
     { slug: "thou-shalt-eat-bread-at-my-table", title: "Thou Shalt Eat Bread at My Table", ref: "2 Samuel 9:7-8", date: "November 27, 2026", excerpt: "He was dropped at five, raised in hiding in Lo-debar, and expected the king's knock to be a sword. Instead David said, Fear not — thou shalt eat bread at my table continually. Mephibosheth called himself a dead dog. The king called him to the family table." },
     { slug: "where-are-the-nine", title: "Where Are the Nine?", ref: "Luke 17:15-17", date: "November 26, 2026", excerpt: "Ten lepers cried for mercy, and all ten were cleansed on the road. Only one turned back to fall at Jesus' feet — and Jesus asked a question that still stings: were there not ten cleansed? but where are the nine?" },
     { slug: "but-if-not", title: "But If Not", ref: "Daniel 3:17-18", date: "November 25, 2026", excerpt: "The music played, the whole empire bowed, and three Hebrew men stayed standing. They told the king their God was able to deliver them — then added three words that fireproof a faith: but if not, we will not bow." },

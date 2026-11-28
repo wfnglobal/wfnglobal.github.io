@@ -170,6 +170,7 @@
         ${set.lookup !== false ? `<p class="small" id="tapHint" style="font-family:var(--sans);margin:0 0 14px;opacity:.7">Tap any word for its meaning. Tap a verse number, or the space beside a verse, to highlight, save or share.</p>` : ""}
         <p id="verses" style="margin:0"></p>
       </article>
+      ${W.puzzleCard ? W.puzzleCard("#/puzzle/bible/" + slug + "/" + ch, "Puzzle this chapter", "Solve the clues from " + esc(b.name) + " " + ch + ". Your answers write the summary.") : ""}
       <nav class="chapter-nav" aria-label="Chapters">
         ${prev ? `<a class="btn ghost" href="${prev}">${icon("back", "sm")}Previous</a>` : "<span></span>"}
         ${next ? `<a class="btn" href="${next}">Next chapter${icon("chev", "sm")}</a>` : ""}

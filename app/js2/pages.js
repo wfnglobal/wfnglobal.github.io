@@ -252,6 +252,7 @@
         <div class="hscroll">${books.map((b) => `<a class="book-cover" href="#/book/${b.slug}"><img src="${W.BASE}${b.cover || "assets/library/" + b.slug + "-cover.svg"}" alt="" loading="lazy" onerror="this.style.background='${b.bg1}'"><span>${esc(b.title)}</span></a>`).join("")}</div>
         <div class="card list">${books.map((b) => `<a class="row-link" href="#/book/${b.slug}"><span class="grow"><span class="label serif" style="font-size:17px">${esc(b.title)}</span><span class="hint">${esc(b.badge || "")}</span></span><span class="chev">${icon("chev", "xs")}</span></a>`).join("")}</div>
       </section>
+      <section class="section">${W.puzzleCard ? W.puzzleCard("#/puzzles", "Word puzzles", "Learn a chapter, a sermon or a book by solving it.") : ""}</section>
       ${plans.length ? `<section class="section"><h2 class="h2" style="padding:0 4px">Reading plans</h2>${plans.map((pl) => { const pr = W.S.getPlanProgress(pl.slug); const n = (pr && pr.completedDays || []).length; return `<a class="card pad" href="#/plan/${pl.slug}" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink)"><span class="eyebrow spruce">${pl.days.length} days${n ? " · " + n + " done" : ""}</span><span class="h2">${esc(pl.title)}</span><span class="small ink2">${esc(pl.subtitle)}</span></a>`; }).join("")}</section>` : ""}
     </div>`;
   });
@@ -330,6 +331,7 @@
       </div>
       ${sText ? `<blockquote class="scripture-box"><p data-tr>${esc(sText)}</p><cite>${esc(sRef)}</cite></blockquote>` : ""}
       ${bodyHtml ? `<div class="prose">${bodyHtml}</div>` : `<div class="empty">The full sermon opens on the website.<br><br><a class="btn" href="${W.BASE}articles/${esc(slug)}.html">Read on wfnglobal.org</a></div>`}
+      ${W.puzzleCard ? W.puzzleCard("#/puzzle/sermon/" + slug, "Puzzle this sermon", "Solve the clues; your answers write the summary.") : ""}
       <div class="band" style="display:flex;flex-direction:column;gap:12px">
         <span class="eyebrow">At the end of every sermon</span>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button class="btn" id="amen">Amen</button><button class="btn ghost" id="shr">${icon("share", "sm")}Share</button></div>
@@ -363,6 +365,7 @@
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="small muted" style="flex-grow:1">${Math.max(3, Math.round(words / 220))} min read · ${(s.verses || []).length} passages</span>${W.translateBtn("#stdy")}</div></div>
       ${(s.verses || []).map((v) => `<blockquote class="scripture-box"><p data-tr>${esc(v.text)}</p><cite>${esc(v.ref)} · KJV</cite></blockquote>`).join("")}
       <div class="prose">${(s.body || []).map((p) => `<p data-tr>${esc(p)}</p>`).join("")}</div>
+      ${W.puzzleCard ? W.puzzleCard("#/puzzle/study/" + s.slug, "Puzzle this study", "Solve the clues; your answers write the summary.") : ""}
       <div class="band" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
         <button class="btn" id="amen">Amen</button>
         <button class="btn ghost" id="note">${icon("pen", "sm")}Note</button>
@@ -414,6 +417,7 @@
       <p class="serif" style="font-size:18px;line-height:29px">${esc(b.desc)}</p>
       <a class="btn lg block" href="${W.BASE}library/${b.slug}.html">${icon("bible", "sm")}Read the book</a>
       <a class="btn block soft" href="${W.BASE}assets/library/${b.slug}.pdf" target="_blank" rel="noopener">${icon("download", "sm")}Download the PDF</a>
+      ${W.puzzleCard ? W.puzzleCard("#/puzzle/book/" + b.slug, "Puzzle this book", "A word puzzle built from the book. Your answers write the summary.") : ""}
       <button class="btn lg block ghost" id="shr">${icon("share", "sm")}Share this book</button>
     </div>`;
     W.$("#shr").onclick = () => W.shareOrCopy({ title: b.title, text: b.title + " by Oladapo Olaleye — " + b.desc, url: "https://wfnglobal.org/library/" + b.slug + ".html" });

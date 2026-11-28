@@ -24,6 +24,7 @@ const SHELL_ASSETS = [
   "/app/js2/pages.js",
   "/app/js2/story-data.js",
   "/app/js2/story.js",
+  "/app/js2/puzzle.js",
   "/app/js2/you.js",
   "/app/js2/extras.js",
   "/app/js2/climb-refs.js",

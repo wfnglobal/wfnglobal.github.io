@@ -97,6 +97,7 @@
         ${c.scripture.map((s) => `<blockquote class="scripture-box"><p data-tr>${esc(s.text)}</p><cite>${esc(s.ref)} · KJV</cite></blockquote>`).join("")}</div>
       <div class="prose">${c.parallel.map((p) => `<p data-tr>${esc(p)}</p>`).join("")}</div>
       <p class="nn-q" data-tr>${esc(c.question)}</p>
+      ${c.puzzle && W.puzzleCard ? W.puzzleCard("#/puzzle/story/" + c.slug, "Test what you read", "A word puzzle from the chapter and 1 Samuel 24. Your answers write the summary.") : ""}
       ${c.next ? `<div class="nn-next"><span>Next</span><p class="serif" data-tr style="margin:0;font-size:17px;line-height:26px">${esc(c.next)}</p></div>` : ""}
       <div class="band" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
         <button class="btn" id="amen">Amen</button>

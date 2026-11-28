@@ -171,6 +171,7 @@
           <a class="card" href="${plan ? "#/plan/" + esc(plan.slug) : "#/library"}"><span class="tile-ic lg c-amber">${icon("check")}</span><span><span class="t">Reading Plans</span><br><span class="s">A few minutes a day</span></span></a>
           <a class="card" href="#/library"><span class="tile-ic lg c-slate">${icon("library")}</span><span><span class="t">The Library</span><br><span class="s">Full books, free to read</span></span></a>
           <a class="card" href="#/jesus"><span class="tile-ic lg c-amber">${icon("gate")}</span><span><span class="t">The Story of Jesus</span><br><span class="s">Walk it like a museum, 12 galleries</span></span></a>
+          <a class="card" href="#/puzzles"><span class="tile-ic lg c-amber">${icon("summary")}</span><span><span class="t">Word Puzzles</span><br><span class="s">Learn it by solving it</span></span></a>
           <a class="card" href="#/climb"><span class="tile-ic lg c-spruce">${icon("mount")}</span><span><span class="t">The Word Climb</span><br><span class="s">100-question Bible quiz</span></span></a>
           <a class="card" href="#/dreams"><span class="tile-ic lg c-slate">${icon("moon")}</span><span><span class="t">Dreams</span><br><span class="s">Discernment and fire prayer</span></span></a>
           <a class="card" href="#/invite"><span class="tile-ic lg c-ink">${icon("qr")}</span><span><span class="t">Invite a friend</span><br><span class="s">Share WFN with your QR code</span></span></a>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Cave: Word Puzzle · Nothing New Under the Sun · WFN</title>
+<meta name="description" content="A word puzzle from Chapter One of Nothing New Under the Sun. Solve the clues from the story and 1 Samuel 24, and your answers write the summary.">
+<link rel="canonical" href="https://wfnglobal.org/story/still-speaking-1-puzzle.html">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1017;--panel:#121A25;--line:#243044;--ink:#F3EEE4;--mute:#8FA0B8;--gold:#C9A968;--red:#E5372B;--ok:#7FB98A;--cs:34px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+body{padding:max(18px,env(safe-area-inset-top)) 16px 60px;background:radial-gradient(ellipse 90% 40% at 50% 0,#17233a 0,transparent 70%),var(--bg)}
+.wrap{max-width:760px;margin:0 auto}
+.eyebrow{font-size:11px;letter-spacing:.26em;font-weight:600;color:var(--gold);text-transform:uppercase}
+h1{font:600 clamp(32px,8vw,48px)/1.05 Fraunces,serif;margin:10px 0 8px}
+.sub{font:italic 400 17px/1.5 Fraunces,serif;color:#CFC5B3;margin:0 0 6px}
+.how{font-size:13.5px;line-height:1.55;color:var(--mute);margin:0 0 18px}
+.bar{display:flex;align-items:center;gap:12px;margin:0 0 14px}
+.track{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,#8E7440,var(--gold));transition:width .4s}
+.count{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--gold);white-space:nowrap}
+.now{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px;min-height:84px}
+.now .tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:3px 8px;border-radius:99px;margin-right:8px}
+.tag.story{background:#1E3B66;color:#BFD6FF}.tag.scripture{background:#4A1620;color:#F0C9CF}
+.now .ref{font-size:12px;color:var(--mute)}.now .txt{font:400 17px/1.45 Fraunces,serif;margin-top:7px}
+.gridbox{display:flex;justify-content:center;margin:6px 0 14px;overflow:hidden}
+#grid{display:grid;gap:2px;touch-action:manipulation}
+.c{width:var(--cs);height:var(--cs);position:relative;border-radius:5px;background:#0F1620;border:1px solid #1E2938;display:flex;align-items:center;justify-content:center;font:600 calc(var(--cs)*.52)/1 Inter;color:var(--ink);cursor:pointer;user-select:none}
+.c.x{background:transparent;border:0;cursor:default}
+.c .n{position:absolute;top:1px;left:3px;font-size:calc(var(--cs)*.28);font-weight:600;color:var(--gold);line-height:1}
+.c.w{background:#1A2536;border-color:#38506f}.c.cur{background:#3A3016;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.c.bad{color:#FF8A80;background:#3a1516}.c.done{color:var(--gold)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+button{font:600 13px Inter;letter-spacing:.04em;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;cursor:pointer}
+button:active{transform:scale(.97)}button.pri{background:var(--gold);color:#241a07;border-color:var(--gold)}
+h2{font:600 22px/1.2 Fraunces,serif;margin:26px 0 10px}
+.cols{display:grid;grid-template-columns:1fr;gap:18px}@media(min-width:640px){.cols{grid-template-columns:1fr 1fr}}
+.cl h3{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+.cl ol{list-style:none;margin:0;padding:0}.cl li{display:flex;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;font-size:14.5px;line-height:1.45;color:#D9D3C6}
+.cl li b{color:var(--gold);min-width:22px}.cl li.on{background:#1A2536}.cl li.ok{color:var(--mute);text-decoration:line-through;text-decoration-color:#4a5a73}
+.cl li small{display:block;color:var(--mute);font-size:11.5px;margin-top:2px}
+.sum{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px 18px;margin-top:8px}
+.sum p{font:400 18px/1.75 Fraunces,serif;margin:0 0 14px;color:#E8E1D2}
+.sum p em{color:var(--gold)}
+.bl{display:inline-block;min-width:3.2em;border-bottom:2px solid #55688a;margin:0 2px;padding:0 3px;text-align:center;font:600 .86em Inter;letter-spacing:.14em;color:transparent;cursor:pointer;vertical-align:baseline;position:relative}
+.bl i{position:absolute;left:0;right:0;top:-.9em;font:600 9px Inter;letter-spacing:.08em;color:var(--mute);font-style:normal}
+.bl.f{color:var(--gold);border-color:var(--gold)}.bl.f i{display:none}
+.fin{display:none;margin-top:18px;border-top:1px solid var(--line);padding-top:16px}.fin.on{display:block}
+.fin q{display:block;font:italic 400 22px/1.4 Fraunces,serif;color:var(--gold);quotes:none;margin-bottom:14px}
+.fin a{display:inline-block;background:var(--gold);color:#241a07;text-decoration:none;font:600 14px Inter;padding:12px 18px;border-radius:12px}
+.foot{margin-top:30px;font-size:12px;color:var(--mute);text-align:center;letter-spacing:.06em}
+#kb{position:fixed;left:-200px;top:0;width:10px;height:10px;opacity:0;font-size:16px}
+</style></head><body><div class="wrap">
+<div class="eyebrow">Nothing New Under the Sun · Still Speaking</div>
+<h1>The Cave: Word Puzzle</h1>
+<p class="sub">Solve it to understand the story. When the grid is full, so is the summary.</p>
+<p class="how">Tap a square, then type. Tap it again to switch between across and down. Clues come from Maya’s Chapter One and from 1 Samuel 24, so they teach you the story and the verses as you solve. Every answer drops into the summary below.</p>
+<div class="bar"><div class="track"><div class="fill" id="fill"></div></div><div class="count" id="count">0 / 16</div></div>
+<div class="now" id="now"></div>
+<div class="gridbox"><div id="grid"></div></div>
+<div class="btns"><button id="chk" class="pri">Check</button><button id="hint">Reveal letter</button><button id="rev">Reveal word</button><button id="rst">Start over</button></div>
+<div class="cols"><div class="cl"><h3>Across</h3><ol id="ac"></ol></div><div class="cl"><h3>Down</h3><ol id="dn"></ol></div></div>
+<h2>The story, in your words</h2>
+<div class="sum" id="sum"><div id="sumtxt"></div>
+<div class="fin" id="fin"><q>Whose hand gets to do it?</q><a href="/story/still-speaking-1.html">Read Chapter One: The Cave</a></div></div>
+<div class="foot"><a href="/story/still-speaking-1.html" style="color:#C9A968">Read Chapter One</a> · <a href="/story/" style="color:#C9A968">All chapters</a><br><br>WORD AND FAITH NETWORK · wfnglobal.org/story</div>
+<input id="kb" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false">
+</div>
+<script>
+const D={"rows": 14, "cols": 15, "ents": [{"a": "CONSOLIDATED", "clue": "The word companies use when they mean “removed,” but want it to sound like housekeeping", "tag": "story", "ref": "Chapter 1", "r": 10, "c": 3, "dir": "A", "n": 13}, {"a": "SCREENSHOT", "clue": "Not a forward. Something smaller: the two-second act she did to tell herself she wasn't really doing anything", "tag": "story", "ref": "Chapter 1", "r": 4, "c": 6, "dir": "D", "n": 5}, {"a": "STAIRWELL", "clue": "The east ______ of the Calder building: the only room on the fourteenth floor where nobody is watching you", "tag": "story", "ref": "Chapter 1", "r": 8, "c": 0, "dir": "A", "n": 10}, {"a": "ANOINTED", "clue": "“The LORD forbid … to stretch forth mine hand against him, seeing he is the ______ of the LORD”", "tag": "scripture", "ref": "1 Samuel 24:6", "r": 12, "c": 4, "dir": "A", "n": 15}, {"a": "TUESDAY", "clue": "“The most dangerous time of the week” was 8:49 on this day. “Tuesday is when people get brave.”", "tag": "story", "ref": "Chapter 1", "r": 4, "c": 3, "dir": "A", "n": 4}, {"a": "FOLDER", "clue": "Where the screenshot went: a ______ called “Just in case”", "tag": "story", "ref": "Chapter 1", "r": 6, "c": 1, "dir": "A", "n": 7}, {"a": "GRAHAM", "clue": "Vice President of Operations, and Maya's boss", "tag": "story", "ref": "Chapter 1", "r": 0, "c": 8, "dir": "D", "n": 2}, {"a": "TESSA", "clue": "The one in Finance who never sent emails, only sticky notes, until this Tuesday", "tag": "story", "ref": "Chapter 1", "r": 8, "c": 1, "dir": "D", "n": 11}, {"a": "HEART", "clue": "“David’s ______ smote him, because he had cut off Saul’s skirt”", "tag": "scripture", "ref": "1 Samuel 24:5", "r": 2, "c": 6, "dir": "A", "n": 3}, {"a": "DAVID", "clue": "He cut off a piece of the robe, and then “his heart smote him”", "tag": "scripture", "ref": "1 Samuel 24:5", "r": 6, "c": 14, "dir": "D", "n": 9}, {"a": "SKIRT", "clue": "“Then David arose, and cut off the ______ of Saul’s robe privily” (KJV)", "tag": "scripture", "ref": "1 Samuel 24:4", "r": 0, "c": 3, "dir": "D", "n": 1}, {"a": "JUDGE", "clue": "“The LORD ______ between me and thee, and the LORD avenge me of thee”", "tag": "scripture", "ref": "1 Samuel 24:12", "r": 8, "c": 10, "dir": "D", "n": 12}, {"a": "HAND", "clue": "“The LORD judge between me and thee … but mine ______ shall not be upon thee”", "tag": "scripture", "ref": "1 Samuel 24:12", "r": 6, "c": 11, "dir": "A", "n": 8}, {"a": "CAVE", "clue": "Where Saul went in alone, with David hiding in its sides", "tag": "scripture", "ref": "1 Samuel 24:3", "r": 5, "c": 12, "dir": "D", "n": 6}, {"a": "EXIT", "clue": "The red sign over the steps where Maya sat in the dark", "tag": "story", "ref": "Chapter 1", "r": 10, "c": 13, "dir": "D", "n": 14}, {"a": "SAUL", "clue": "The king who had spent years hunting a young man for being good at his job", "tag": "scripture", "ref": "1 Samuel 24", "r": 0, "c": 3, "dir": "A", "n": 1}], "summary": ["On a {TUESDAY} morning, at 8:49, Maya Brooks got a message from {TESSA}: a spreadsheet of seven yellow rows, every one signed off by her own boss, {GRAHAM}. In minutes he would tell the board her job had been “{CONSOLIDATED}.” Maya slipped into the {STAIRWELL}, sat under the red {EXIT} sign, and overheard Graham on the phone: a tired man with no board and no slides, saying, “Tell her Dad’s coming.” She took a {SCREENSHOT} and saved it in a {FOLDER} called “Just in case.” It took two seconds and sat in her chest like a stone. She did not forward it. She typed: “No. Not like this.”", "Three thousand years earlier, {SAUL} walked alone into a {CAVE}, and {DAVID} was already inside. His men said, this is your day. David crept close and cut only the {SKIRT} of the robe, and his {HEART} smote him even for that. He would not touch the LORD’s {ANOINTED}. “The LORD {JUDGE} between me and thee … but mine {HAND} shall not be upon thee.”", "Same stairwell. Same choice. The question is never whether they deserve it. It is <em>whose hand gets to do it</em>."]};
+const E=D.ents.map((e,i)=>({...e,i,cells:[...e.a].map((_,k)=>[e.r+(e.dir==='D'?k:0),e.c+(e.dir==='A'?k:0)])}));
+const cells={};E.forEach(e=>e.cells.forEach(([r,c],k)=>{const key=r+','+c;(cells[key]=cells[key]||{r,c,a:e.a[k],ents:[],num:0,v:''}).ents.push(e.i);if(k===0)cells[key].num=e.n}));
+let cur=null,dir='A',bad=new Set(),SK='cave-puzzle-v1';
+try{const s=JSON.parse(localStorage.getItem(SK)||'{}');for(const k in s)if(cells[k])cells[k].v=s[k]}catch(_){}
+const $=id=>document.getElementById(id);
+function save(){try{const o={};for(const k in cells)if(cells[k].v)o[k]=cells[k].v;localStorage.setItem(SK,JSON.stringify(o))}catch(_){}}
+const g=$('grid');
+function size(){const w=Math.min(innerWidth-32,720);const cs=Math.max(22,Math.min(46,Math.floor((w-(D.cols-1)*2)/D.cols)));document.documentElement.style.setProperty('--cs',cs+'px')}
+g.style.gridTemplateColumns=`repeat(${D.cols},var(--cs))`;
+for(let r=0;r<D.rows;r++)for(let c=0;c<D.cols;c++){const d=document.createElement('div');const x=cells[r+','+c];d.className='c'+(x?'':' x');d.id='c'+r+'_'+c;if(x){d.innerHTML=(x.num?`<span class="n">${x.num}</span>`:'')+'<span class="l"></span>';d.onclick=()=>pick(x)}g.appendChild(d)}
+const entOf=()=>cur?E.find(e=>e.cells.some(([r,c])=>r===cur.r&&c===cur.c)&&e.dir===dir)||E[cur.ents[0]]:null;
+function pick(x){if(cur===x&&x.ents.length>1)dir=dir==='A'?'D':'A';else if(!x.ents.some(i=>E[i].dir===dir))dir=E[x.ents[0]].dir;cur=x;render();$('kb').focus({preventScroll:true})}
+const solved=e=>e.cells.every(([r,c],k)=>cells[r+','+c].v===e.a[k]);
+function render(){
+ const act=cur?E[cur.ents.find(i=>E[i].dir===dir)??cur.ents[0]]:null;
+ for(const k in cells){const x=cells[k],d=$('c'+x.r+'_'+x.c);d.querySelector('.l').textContent=x.v;
+  const ee=x.ents.map(i=>E[i]);d.className='c'+(act&&act.cells.some(([r,c])=>r===x.r&&c===x.c)?' w':'')+(cur===x?' cur':'')+(bad.has(k)?' bad':'')+(ee.some(solved)&&!bad.has(k)?' done':'')}
+ let n=0;E.forEach(e=>{const ok=solved(e);if(ok)n++;const li=$('li'+e.i);li.className=(act&&act.i===e.i?'on ':'')+(ok?'ok':'')});
+ $('fill').style.width=(n/E.length*100)+'%';$('count').textContent=n+' / '+E.length;
+ const a=act;$('now').innerHTML=a?`<span class="tag ${a.tag}">${a.tag==='story'?'Story':'Scripture'}</span><span class="ref">${a.ref} · ${a.n} ${a.dir==='A'?'across':'down'} · ${a.a.length} letters</span><div class="txt">${a.clue}</div>`:`<div class="txt" style="color:var(--mute)">Tap any square to begin. Clues from the story and from 1 Samuel 24 will appear here.</div>`;
+ document.querySelectorAll('.bl').forEach(b=>{const e=E[b.dataset.i],ok=solved(e);b.classList.toggle('f',ok);b.textContent=ok?e.a:'_'.repeat(Math.min(e.a.length,8)).replace(/_/g,'  ');if(!ok){b.innerHTML=`<i>${e.n}${e.dir==='A'?'A':'D'}</i>${' '.repeat(Math.max(3,Math.round(e.a.length*1.1)))}`}});
+ $('fin').classList.toggle('on',n===E.length);save()}
+function lists(){['A','D'].forEach(d=>{const ol=$(d==='A'?'ac':'dn');E.filter(e=>e.dir===d).sort((a,b)=>a.n-b.n).forEach(e=>{const li=document.createElement('li');li.id='li'+e.i;li.innerHTML=`<b>${e.n}</b><span>${e.clue}<small>${e.tag==='story'?'Story':'Scripture'} · ${e.ref}</small></span>`;li.onclick=()=>{cur=cells[e.cells[0].join(',')];dir=e.dir;render();$('kb').focus({preventScroll:true});window.scrollTo({top:g.getBoundingClientRect().top+scrollY-120,behavior:'smooth'})};ol.appendChild(li)})})}
+function summary(){const t=$('sumtxt');t.innerHTML=D.summary.map(p=>'<p>'+p.replace(/\{([A-Z]+)\}/g,(m,w)=>{const e=E.find(x=>x.a===w);return `<span class="bl" data-i="${e.i}"></span>`})+'</p>').join('');t.querySelectorAll('.bl').forEach(b=>b.onclick=()=>{const e=E[b.dataset.i];cur=cells[e.cells[0].join(',')];dir=e.dir;render();window.scrollTo({top:g.getBoundingClientRect().top+scrollY-120,behavior:'smooth'});$('kb').focus({preventScroll:true})})}
+function move(step){const e=entOf();if(!e)return;const k=e.cells.findIndex(([r,c])=>r===cur.r&&c===cur.c)+step;if(k>=0&&k<e.cells.length)cur=cells[e.cells[k].join(',')]}
+function type(ch){if(!cur)return;const key=cur.r+','+cur.c;bad.delete(key);cur.v=ch;move(1);render()}
+function back(){if(!cur)return;const key=cur.r+','+cur.c;bad.delete(key);if(cur.v){cur.v=''}else{move(-1);cur.v='';}render()}
+const kb=$('kb');
+kb.addEventListener('input',()=>{const v=kb.value.toUpperCase().replace(/[^A-Z]/g,'');kb.value='';if(v)type(v.slice(-1))});
+kb.addEventListener('keydown',ev=>{const k=ev.key;if(k==='Backspace'){ev.preventDefault();back()}else if(k.startsWith('Arrow')){ev.preventDefault();const dd={ArrowRight:[0,1],ArrowLeft:[0,-1],ArrowDown:[1,0],ArrowUp:[-1,0]}[k];if(!cur)return;let r=cur.r+dd[0],c=cur.c+dd[1];while(r>=0&&c>=0&&r<D.rows&&c<D.cols){if(cells[r+','+c]){cur=cells[r+','+c];break}r+=dd[0];c+=dd[1]}render()}else if(k==='Tab'||k==='Enter'){ev.preventDefault();const o=[...E].sort((a,b)=>a.dir.localeCompare(b.dir)||a.n-b.n);const e=entOf();const j=(o.indexOf(e)+(ev.shiftKey?-1:1)+o.length)%o.length;dir=o[j].dir;cur=cells[o[j].cells[0].join(',')];render()}});
+$('chk').onclick=()=>{bad.clear();for(const k in cells){const x=cells[k];if(x.v&&x.v!==x.a)bad.add(k)}render()};
+$('hint').onclick=()=>{if(!cur)return;cur.v=cur.a;bad.delete(cur.r+','+cur.c);move(1);render()};
+$('rev').onclick=()=>{const e=entOf();if(!e)return;e.cells.forEach(([r,c],k)=>{cells[r+','+c].v=e.a[k];bad.delete(r+','+c)});render()};
+$('rst').onclick=()=>{for(const k in cells)cells[k].v='';bad.clear();cur=null;render()};
+addEventListener('resize',size);size();lists();summary();render();
+</script></body></html>

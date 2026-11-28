@@ -1,0 +1,220 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!--
+  WFN X poster, 1080x1350 (4:5): "Every Altar Catches Fire" (Nov 28, 2026),
+  the daily stop-to-scroll poster for the Fire Prayer Against Dream Attacks.
+  Scene: a three-tier stone altar split wide open by a molten-gold fire,
+  stone flying, smoke retreating — while a believer rests untouched in a
+  small dome of light, far from the wreck. Obsidian-to-ember-garnet
+  palette (not the midnight-blue-and-orange of the reference). Rendered
+  with social/render-poster.js.
+-->
+<style>
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'FR'; src:url(../fonts/fraunces-latin-400-italic.woff2); font-weight:400; font-style:italic;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'CG'; src:url(../fonts/cormorant-garamond-latin-500-italic.woff2); font-weight:500; font-style:italic;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-400-normal.woff2); font-weight:400;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-500-normal.woff2); font-weight:500;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-600-normal.woff2); font-weight:600;}
+  @font-face{font-family:'IN'; src:url(../fonts/inter-latin-700-normal.woff2); font-weight:700;}
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html,body{width:1080px; height:1350px; overflow:hidden; background:#030202;}
+  .poster{position:relative; width:1080px; height:1350px; overflow:hidden;
+    background:linear-gradient(180deg,#030202 0%,#170906 22%,#3B1206 42%,#5C1C08 58%,#2B0F08 74%,#0C0502 90%,#030202 100%);}
+  svg.art{position:absolute; left:0; top:0; width:1080px; height:1350px;}
+  .top{position:absolute; top:62px; left:64px; right:64px; display:flex; align-items:center; justify-content:space-between;}
+  .lock{display:flex; align-items:center; gap:14px;}
+  .lock svg{width:50px; height:50px;}
+  .lock .rule{width:1px; height:38px; background:linear-gradient(to bottom, rgba(232,199,122,0), rgba(232,199,122,0.8), rgba(232,199,122,0));}
+  .abbr{display:block; font-family:'CG'; font-weight:600; font-size:29px; line-height:1; letter-spacing:0.34em; color:#E8C77E;}
+  .full{display:block; margin-top:7px; font-family:'IN'; font-weight:500; font-size:10.5px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(240,226,196,0.72);}
+  .chip{font-family:'IN'; font-weight:600; font-size:14px; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9A0; padding:12px 20px 12px 18px; border-radius:100px; border:1px solid rgba(255,150,60,0.45); background:rgba(255,90,20,0.12); display:flex; align-items:center; gap:10px; backdrop-filter:blur(6px);}
+  .chip i{width:9px; height:9px; border-radius:50%; background:#FF7A2F; box-shadow:0 0 12px 3px rgba(255,100,30,0.8);}
+  .copy{position:absolute; left:0; right:0; top:752px; text-align:center; padding:0 70px;}
+  .kicker{font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.32em; text-transform:uppercase; color:rgba(255,206,140,0.85);}
+  h1{margin-top:18px; font-family:'FR'; font-weight:600; font-size:122px; line-height:0.94; letter-spacing:-0.035em; color:#FBF0E0; text-shadow:0 6px 40px rgba(0,0,0,0.55);}
+  h1 em{display:block; font-style:italic; font-weight:400; letter-spacing:-0.025em;
+    background:linear-gradient(180deg,#FFF3D2 0%,#FFCE7A 30%,#FF8A3A 58%,#D8431A 82%,#7A1604 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 26px rgba(255,100,40,0.45)); padding:0 14px 10px;}
+  .sub{margin:16px auto 0; max-width:820px; font-family:'IN'; font-size:22px; line-height:1.45; color:rgba(240,228,214,0.86);}
+  .sub b{color:#FFCE8A; font-weight:600;}
+  .cta{position:absolute; left:64px; right:64px; bottom:62px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 26px 22px 30px; border-radius:26px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(10px);}
+  .verse{font-family:'CG'; font-style:italic; font-weight:500; font-size:23px; line-height:1.3; color:rgba(246,232,214,0.9); max-width:520px;}
+  .verse span{display:block; margin-top:6px; font-family:'IN'; font-style:normal; font-weight:600; font-size:12.5px; letter-spacing:0.24em; text-transform:uppercase; color:#E8C77E;}
+  .btn{flex:none; text-align:right;}
+  .btn .l1{display:inline-block; font-family:'IN'; font-weight:700; font-size:19px; color:#2A0E02; background:linear-gradient(180deg,#FFD98A,#E8671F); padding:15px 24px; border-radius:100px; box-shadow:0 10px 30px -8px rgba(232,103,31,0.7);}
+  .btn .l2{display:block; margin-top:10px; font-family:'IN'; font-weight:600; font-size:17px; letter-spacing:0.02em; color:#FBF3E4;}
+</style></head>
+<body><div class="poster">
+<svg class="art" viewBox="0 0 1080 1350">
+  <defs>
+    <radialGradient id="moonHalo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFEBC2" stop-opacity="0.3"/><stop offset="0.4" stop-color="#FFB46A" stop-opacity="0.08"/><stop offset="1" stop-color="#FFB46A" stop-opacity="0"/></radialGradient>
+    <radialGradient id="moon" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#FFF8E8"/><stop offset="1" stop-color="#E8D2B0"/></radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FF9A3A" stop-opacity="0.55"/><stop offset="0.45" stop-color="#E85A1A" stop-opacity="0.18"/><stop offset="1" stop-color="#E85A1A" stop-opacity="0"/></radialGradient>
+    <radialGradient id="protect" cx="0.5" cy="0.6" r="0.6"><stop offset="0" stop-color="#FFE7B0" stop-opacity="0.5"/><stop offset="0.6" stop-color="#FFB85A" stop-opacity="0.14"/><stop offset="1" stop-color="#FFB85A" stop-opacity="0"/></radialGradient>
+    <linearGradient id="crack" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFF3C2"/><stop offset="0.3" stop-color="#FFC266"/><stop offset="0.65" stop-color="#FF6A1F"/><stop offset="1" stop-color="#7A1604"/></linearGradient>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7A1604"/><stop offset="0.35" stop-color="#FF6A1F"/><stop offset="0.7" stop-color="#FFB347"/><stop offset="1" stop-color="#FFF1B8"/></linearGradient>
+    <linearGradient id="flameCore" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFB347"/><stop offset="1" stop-color="#FFFBE6"/></linearGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A3A34"/><stop offset="1" stop-color="#241A16"/></linearGradient>
+    <linearGradient id="stoneLit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6A4A36"/><stop offset="1" stop-color="#2E1A10"/></linearGradient>
+    <linearGradient id="smoke" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#140B08" stop-opacity="0.92"/><stop offset="1" stop-color="#140B08" stop-opacity="0"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1208"/><stop offset="1" stop-color="#050302"/></linearGradient>
+    <linearGradient id="blanket" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2E2C4"/><stop offset="1" stop-color="#C4A072"/></linearGradient>
+    <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="blur14"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="smokeTurb" x="-40%" y="-40%" width="200%" height="200%"><feTurbulence type="fractalNoise" baseFrequency="0.014 0.022" numOctaves="3" seed="9"/><feDisplacementMap in="SourceGraphic" scale="70"/><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+
+  <g id="stars"></g>
+  <!-- moon, upper right -->
+  <circle cx="860" cy="200" r="160" fill="url(#moonHalo)"/>
+  <g transform="translate(860 200)">
+    <mask id="cres"><rect x="-80" y="-80" width="160" height="160" fill="#fff"/><circle r="55" cx="25" cy="-14" fill="#000"/></mask>
+    <circle r="55" fill="url(#moon)" mask="url(#cres)"/>
+  </g>
+
+  <!-- ground + glow, well beneath the copy -->
+  <path d="M0 880 C300 862 780 862 1080 880 L1080 1350 L0 1350Z" fill="url(#ground)"/>
+  <ellipse cx="615" cy="770" rx="400" ry="150" fill="url(#glow)"/>
+
+  <!-- smoke retreating from the broken altar, dissolving at the edges -->
+  <g filter="url(#smokeTurb)" opacity="0.8">
+    <path d="M500 470 C360 450 220 436 60 472 C14 484 -22 508 -40 534 C36 516 102 514 150 526 C104 550 76 570 58 594 C132 566 188 560 224 572 C192 598 180 618 184 638 C244 604 290 592 322 598Z" fill="url(#smoke)"/>
+    <path d="M720 470 C860 450 982 436 1120 474 C1166 486 1200 510 1218 536 C1144 516 1082 514 1036 526 C1080 550 1108 570 1126 594 C1054 566 1000 560 966 572 C996 598 1008 618 1004 638 C946 604 902 592 872 598Z" fill="url(#smoke)"/>
+  </g>
+
+  <!-- the altar, split wide open and burning -->
+  <g transform="translate(620 580)">
+    <ellipse cx="0" cy="150" rx="250" ry="26" fill="#000" opacity="0.42" filter="url(#blur8)"/>
+
+    <!-- plinth (base) -->
+    <path d="M-220 150 L-180 70 L180 70 L220 150 Z" fill="url(#stone)"/>
+    <path d="M-180 70 L-180 72 L180 72 L180 70 Z" fill="none"/>
+    <!-- altar table, tapering up to the basin rim -->
+    <path d="M-150 70 L-118 -36 L118 -36 L150 70 Z" fill="url(#stoneLit)"/>
+    <!-- basin notch cut into the top, where the fire rises from -->
+    <path d="M-82 -36 C-60 -64 60 -64 82 -36 Z" fill="#0B0705"/>
+    <path d="M-82 -36 C-60 -58 60 -58 82 -36" fill="none" stroke="#1C120C" stroke-width="3" opacity="0.8"/>
+
+    <!-- carved seams for stone texture -->
+    <g stroke="#140D09" stroke-width="2" opacity="0.55" fill="none">
+      <path d="M-180 70 L180 70"/>
+      <path d="M-150 70 L150 70" opacity="0.4"/>
+      <path d="M-118 -36 L-94 18 M118 -36 L94 18"/>
+    </g>
+
+    <!-- the molten crack splitting table and plinth clean in two -->
+    <path d="M-10 -58 L-30 10 L-14 70 L-24 150 L24 150 L14 70 L30 10 L10 -58 Z" fill="url(#crack)" filter="url(#blur3)" opacity="0.95"/>
+    <g stroke="url(#crack)" stroke-width="3" fill="none" opacity="0.8" stroke-linecap="round">
+      <path d="M-14 70 C-56 84 -96 96 -140 112"/>
+      <path d="M14 70 C56 86 98 98 142 114"/>
+    </g>
+
+    <!-- broken stone, mid-collapse -->
+    <g fill="url(#stoneLit)" stroke="#0E0906" stroke-width="1.5">
+      <polygon points="-210,-70 -184,-82 -166,-58 -188,-44" opacity="0.95"/>
+      <polygon points="178,-96 206,-104 220,-80 196,-68" opacity="0.95"/>
+      <polygon points="-268,-8 -244,-20 -226,0 -248,14" opacity="0.9"/>
+      <polygon points="244,16 270,4 288,24 264,40" opacity="0.9"/>
+      <polygon points="-60,-130 -42,-142 -26,-122 -44,-110" opacity="0.85"/>
+      <polygon points="48,-150 66,-160 82,-140 64,-130" opacity="0.85"/>
+    </g>
+
+    <g id="altarFire"></g>
+  </g>
+  <g id="embers"></g>
+
+  <!-- the believer, untouched, resting far from the wreck -->
+  <g transform="translate(185 660) scale(0.82)">
+    <ellipse cx="0" cy="56" rx="150" ry="38" fill="url(#protect)"/>
+    <path d="M-132 58 C-132 -34 132 -34 132 58Z" fill="none" stroke="#FFE2A6" stroke-width="1.6" opacity="0.4" stroke-dasharray="2 8"/>
+    <ellipse cx="0" cy="40" rx="88" ry="15" fill="#000" opacity="0.3" filter="url(#blur8)"/>
+    <rect x="-92" y="2" width="184" height="20" rx="8" fill="#3A2A22"/>
+    <rect x="-76" y="-16" width="152" height="22" rx="9" fill="#EFE0C2"/>
+    <path d="M-74 -20 C-76 -38 -58 -46 -34 -44 C-14 -42 -8 -32 -10 -20 C-32 -14 -58 -14 -74 -20Z" fill="#FFF8EA"/>
+    <circle cx="-42" cy="-38" r="16" fill="#6B3F2A"/>
+    <path d="M-58 -40 C-57 -54 -40 -58 -30 -50 C-36 -48 -46 -45 -52 -40Z" fill="#2A1710"/>
+    <path d="M-38 -34 C-35 -32 -32 -32 -30 -34" stroke="#2A1710" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <path d="M-32 -24 C-12 -42 30 -46 62 -34 C82 -26 96 -22 104 -18 L104 10 L-34 10Z" fill="url(#blanket)"/>
+    <g font-family="Fraunces, serif" font-style="italic" fill="#FFE6B8" opacity="0.75">
+      <text x="-10" y="-66" font-size="14">z</text><text x="2" y="-80" font-size="18">z</text><text x="18" y="-98" font-size="22">z</text>
+    </g>
+  </g>
+</svg>
+
+<div class="top">
+  <div class="lock">
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6E3A8"/><stop offset="0.5" stop-color="#D4AE5E"/><stop offset="1" stop-color="#A9823F"/></linearGradient></defs>
+      <circle cx="24" cy="24" r="22.8" fill="none" stroke="url(#g)" stroke-width="0.7" opacity="0.5"/>
+      <circle cx="24" cy="24" r="20.4" fill="rgba(0,0,0,0.35)" stroke="url(#g)" stroke-width="1.2"/>
+      <path d="M15 31.5 L18.5 16 L21.75 27 L24 18 L26.25 27 L29.5 16 L33 31.5" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 16 C21.75 12 22.25 8.5 24 5.5 C25.75 8.5 26.25 12 24 16 Z" fill="url(#g)"/>
+      <path d="M16.5 35.2 L31.5 35.2" stroke="url(#g)" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/></svg>
+    <div class="rule"></div>
+    <div><span class="abbr">WFN</span><span class="full">Word &amp; Faith Network</span></div>
+  </div>
+  <div class="chip"><i></i>Fire Prayer &middot; Tonight</div>
+</div>
+
+<div class="copy">
+  <div class="kicker">Before any shrine is lit against you tonight</div>
+  <h1>Every altar<em>catches fire.</em></h1>
+  <p class="sub">Every image, record, and name planted against you on an evil altar is found, broken, and burned &mdash; <b>by a fire no shrine can survive.</b></p>
+</div>
+
+<div class="cta">
+  <div class="verse">&ldquo;For the LORD thy God is a consuming fire, even a jealous God.&rdquo;<span>Deuteronomy 4:24</span></div>
+  <div class="btn"><span class="l1">Pray it before bed &rarr;</span><span class="l2">wfnglobal.org/dreams</span></div>
+</div>
+</div>
+<script>
+  // deterministic RNG
+  let s = 28; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const NS = "http://www.w3.org/2000/svg";
+  const stars = document.getElementById("stars");
+  for (let i = 0; i < 170; i++) {
+    const c = document.createElementNS(NS, "circle");
+    const y = r() * 560;
+    c.setAttribute("cx", r() * 1080); c.setAttribute("cy", y);
+    c.setAttribute("r", (r() * 1.4 + 0.35).toFixed(2));
+    c.setAttribute("fill", r() > 0.85 ? "#FFD9A0" : "#F0E6D8");
+    c.setAttribute("opacity", (0.2 + r() * 0.65 * (1 - y / 760)).toFixed(2));
+    stars.appendChild(c);
+  }
+  // flames bursting from the basin and the crack in the altar
+  const altarFire = document.getElementById("altarFire");
+  const anchors = [
+    {x:0, y:-48, big:1.5}, {x:-24, y:-40, big:1.1}, {x:24, y:-40, big:1.1},
+    {x:-48, y:-30, big:0.75}, {x:48, y:-30, big:0.75}, {x:-10, y:10, big:0.5},
+    {x:10, y:10, big:0.5}, {x:-18, y:70, big:0.4}, {x:18, y:70, big:0.4}
+  ];
+  function flamePath(x, y, w, h, lean) {
+    const tx = x + lean * h, ty = y - h;
+    return `M${x - w / 2} ${y} C${x - w * 0.75} ${y - h * 0.45} ${tx - w * 0.25} ${y - h * 0.7} ${tx} ${ty} C${tx + w * 0.15} ${y - h * 0.62} ${x + w * 0.8} ${y - h * 0.45} ${x + w / 2} ${y} Z`;
+  }
+  const haloF = document.createElementNS(NS, "g"); haloF.setAttribute("filter", "url(#blur14)"); haloF.setAttribute("opacity", "0.95"); altarFire.appendChild(haloF);
+  anchors.forEach(a => {
+    const h = (90 + r() * 60) * a.big, w = (30 + r() * 16) * a.big, lean = (r() - 0.5) * 0.6;
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", flamePath(a.x, a.y, w * 1.7, h * 1.1, lean)); p.setAttribute("fill", "#FF6A1F"); haloF.appendChild(p);
+  });
+  anchors.forEach(a => {
+    const h = (90 + r() * 60) * a.big, w = (30 + r() * 16) * a.big, lean = (r() - 0.5) * 0.6;
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", flamePath(a.x, a.y, w, h, lean)); p.setAttribute("fill", "url(#flame)"); altarFire.appendChild(p);
+    const c = document.createElementNS(NS, "path");
+    c.setAttribute("d", flamePath(a.x + lean * 4, a.y, w * 0.4, h * 0.55, lean)); c.setAttribute("fill", "url(#flameCore)"); c.setAttribute("opacity", "0.9"); altarFire.appendChild(c);
+  });
+  // embers rising from the altar into the night
+  const em = document.getElementById("embers");
+  for (let i = 0; i < 90; i++) {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", 620 + (r() - 0.5) * 400);
+    c.setAttribute("cy", 560 - r() * 420);
+    c.setAttribute("r", (r() * 2.2 + 0.6).toFixed(2));
+    c.setAttribute("fill", r() > 0.5 ? "#FFC266" : "#FF7A2F");
+    c.setAttribute("opacity", (0.3 + r() * 0.6).toFixed(2));
+    em.appendChild(c);
+  }
+</script>
+</body></html>

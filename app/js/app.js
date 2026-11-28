@@ -122,7 +122,7 @@
   // kept current every day (by 8pm) the same way as VERSES[0], SERMONS[0],
   // and DECLARATION above.
   const NIGHT_PRAYER = {
-    text: "Father, thank You for every mercy that reached me today before I even thought to notice it, the same way nine men were healed without turning back to say so. Tonight I bring You the gratitude I keep meaning to speak out loud and haven't, the prayer I've carried so long I almost stopped expecting an answer, and a comparison with someone else's life that stole a peace I didn't need to lose — You are big enough to answer all three tonight. Teach my heart to turn back like the one did, not walk on like the nine, and let me wake tomorrow quicker to say thank You than to ask for more.",
+    text: "Father, thank You for calling me to Your table today, even on the days I still feel more like the one hiding in Lo-debar than the one seated as a son. Tonight I hand You the shame I haven't fully set down, the guilt from who I used to be that still follows me into the room, and the quiet fear that being truly known might cost me the welcome I've been given — You are gracious enough to settle all three before I sleep. Quiet the voice in me that keeps calling itself unworthy, and let me wake tomorrow believing the invitation more than I believe the reasons I once had to refuse it.",
     amen: "In Jesus' name, amen."
   };
 

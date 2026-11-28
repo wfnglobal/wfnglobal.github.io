@@ -1,0 +1,15 @@
+{
+  "template": "scenes",
+  "lines": [
+    { "text": "Four men carried their paralyzed friend to Jesus, but the house was so packed they couldn't get near the door.", "visual": "packedhouse" },
+    { "text": "So they climbed up, tore a hole in someone else's roof, and started lowering him down on his mat.", "visual": "rooftop" },
+    { "text": "When Jesus saw their faith, he said unto the sick of the palsy, Son, thy sins be forgiven thee.", "visual": "lowered", "scripture": true },
+    { "text": "He got in because four friends refused to let a crowd decide he couldn't. Whoever you're carrying today, don't stop at the door. In Jesus' name, amen.", "visual": "lowered" }
+  ],
+  "bold": "don't stop at the door",
+  "title": "Word and Faith Network",
+  "subtitle": "When Jesus Saw Their Faith",
+  "handle": "@wordfaithnetwork",
+  "site": "wfnglobal.org",
+  "story": "Four friends carry a paralyzed man through a house too packed to enter, climb onto the roof, tear it open, and lower him down on his mat until he lands at Jesus' feet - and it's their faith, not his, that gets him healed and forgiven in the same breath."
+}

@@ -170,6 +170,9 @@
   body[data-shot="lodebar"]{--accent:#A0906C;}
   body[data-shot="summons"]{--accent:#F2C878;}
   body[data-shot="table"]{--accent:#FFDB9A;}
+  body[data-shot="packedhouse"]{--accent:#E8935A;}
+  body[data-shot="rooftop"]{--accent:#9FB4D9;}
+  body[data-shot="lowered"]{--accent:#FFD27A;}
 
   #stage{position:absolute; inset:0; overflow:hidden;}
   /* Only the live scene(s) exist in the render tree at all - keeping all
@@ -3569,6 +3572,118 @@
       </svg>
     </div>
     <div class="fx" data-type="ember" data-n="12"></div>
+  </section>
+
+  <!-- ============ PACKEDHOUSE: a dim terracotta room, a crowd pressed shoulder to shoulder against a low archway ============ -->
+  <section class="scene" data-scene="packedhouse" data-kb="pull" style="--ox:50%; --oy:64%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ph-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1C0E06"/><stop offset="0.45" stop-color="#4A2812"/>
+            <stop offset="0.78" stop-color="#9A5A28"/><stop offset="1" stop-color="#E8935A"/>
+          </linearGradient>
+          <radialGradient id="ph-glow" cx="0.5" cy="0.62" r="0.3"><stop offset="0" stop-color="#FFD9A0" stop-opacity="0.85"/><stop offset="1" stop-color="#FFD9A0" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#ph-sky)"/>
+        <path d="M 400 1360 C 400 1120 440 980 540 980 C 640 980 680 1120 680 1360 Z" fill="url(#ph-glow)"/>
+      </svg>
+      <div class="fx" data-type="dust" data-n="14" data-color="200,150,96"></div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="ph-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9A5A28" stop-opacity="0.5"/><stop offset="1" stop-color="#0C0602"/></linearGradient>
+        </defs>
+        <path d="M 0 1360 C 300 1336 760 1352 1080 1336 L 1080 1920 L 0 1920 Z" fill="url(#ph-floor)"/>
+        <g fill="#140A04" opacity="0.92">
+          <g transform="translate(250 1370) scale(0.4) rotate(-5)"><use href="#fig-robe"/></g>
+          <g transform="translate(850 1366) scale(0.4) rotate(5)"><use href="#fig-robe"/></g>
+        </g>
+        <g fill="#0E0802">
+          <g transform="translate(320 1420) scale(0.48) rotate(-3)"><use href="#fig-robe"/></g>
+          <g transform="translate(440 1440) scale(0.52)"><use href="#fig-robe"/></g>
+          <g transform="translate(570 1430) scale(0.5) rotate(2)"><use href="#fig-seated"/></g>
+          <g transform="translate(690 1438) scale(0.52) rotate(-2)"><use href="#fig-robe"/></g>
+          <g transform="translate(810 1422) scale(0.48) rotate(3)"><use href="#fig-robe"/></g>
+        </g>
+        <ellipse cx="540" cy="1480" rx="380" ry="30" fill="#000" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="10" data-color="160,100,60"></div>
+  </section>
+
+  <!-- ============ ROOFTOP: a moonlit flat roof, bent silhouettes tearing a gold-rimmed hole open ============ -->
+  <section class="scene" data-scene="rooftop" data-kb="panl" style="--ox:50%; --oy:62%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="rf-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0A0E1C"/><stop offset="0.5" stop-color="#1A2446"/>
+            <stop offset="0.8" stop-color="#3C4E80"/><stop offset="1" stop-color="#9FB4D9"/>
+          </linearGradient>
+          <radialGradient id="rf-moon" cx="0.72" cy="0.18" r="0.1"><stop offset="0" stop-color="#F2F6FF" stop-opacity="0.95"/><stop offset="1" stop-color="#F2F6FF" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#rf-sky)"/>
+        <circle cx="780" cy="340" r="160" fill="url(#rf-moon)"/>
+        <circle cx="780" cy="340" r="54" fill="#F2F6FF" opacity="0.9"/>
+      </svg>
+      <div class="fx" data-type="star" data-n="50" data-area="0,0,1080,700"></div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="rf-roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3C4E70" stop-opacity="0.9"/><stop offset="1" stop-color="#05060C"/></linearGradient>
+          <radialGradient id="rf-hole" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE2A0" stop-opacity="0.9"/><stop offset="0.7" stop-color="#8A6A2E" stop-opacity="0.5"/><stop offset="1" stop-color="#8A6A2E" stop-opacity="0"/></radialGradient>
+        </defs>
+        <path d="M 0 1180 L 1080 1140 L 1080 1920 L 0 1920 Z" fill="url(#rf-roof)"/>
+        <path d="M 0 1180 L 1080 1140" stroke="#CFE0FF" stroke-width="4" opacity="0.5"/>
+        <ellipse cx="540" cy="1300" rx="130" ry="46" fill="url(#rf-hole)"/>
+        <ellipse cx="540" cy="1300" rx="130" ry="46" fill="none" stroke="#05060C" stroke-width="10"/>
+        <g fill="#05060C">
+          <g transform="translate(390 1330) scale(0.46) rotate(-20)"><use href="#fig-seated"/></g>
+          <g transform="translate(545 1322) scale(0.5) rotate(10)"><use href="#fig-seated"/></g>
+          <g transform="translate(690 1334) scale(0.44) rotate(-8)"><use href="#fig-seated"/></g>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="dust" data-n="12" data-color="160,180,224"></div>
+  </section>
+
+  <!-- ============ LOWERED: a torn gold shaft from above, a mat descending on ropes to a waiting figure ============ -->
+  <section class="scene" data-scene="lowered" data-kb="rise" style="--ox:50%; --oy:56%;">
+    <div class="layer l-back">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="lw-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#140C04"/><stop offset="0.4" stop-color="#241604"/>
+            <stop offset="0.7" stop-color="#6A4414"/><stop offset="1" stop-color="#FFD27A"/>
+          </linearGradient>
+          <linearGradient id="lw-shaft" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFEAB0" stop-opacity="0.95"/><stop offset="1" stop-color="#FFEAB0" stop-opacity="0.08"/></linearGradient>
+        </defs>
+        <rect width="1080" height="1920" fill="url(#lw-sky)"/>
+        <path d="M 420 0 L 660 0 L 760 1920 L 320 1920 Z" fill="url(#lw-shaft)" opacity="0.5"/>
+      </svg>
+      <div class="fx" data-type="motes" data-n="22" data-color="255,226,170"></div>
+    </div>
+    <div class="layer l-front">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="lw-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6A4414" stop-opacity="0.5"/><stop offset="1" stop-color="#0A0602"/></linearGradient>
+        </defs>
+        <path d="M 0 1460 C 300 1434 760 1452 1080 1434 L 1080 1920 L 0 1920 Z" fill="url(#lw-floor)"/>
+        <g stroke="#2A1A08" stroke-width="5" opacity="0.8">
+          <line x1="470" y1="420" x2="470" y2="1180"/>
+          <line x1="610" y1="420" x2="610" y2="1180"/>
+        </g>
+        <rect x="430" y="1150" width="220" height="60" rx="26" fill="#1A1004"/>
+        <g transform="translate(540 1430) scale(0.56)">
+          <use href="#fig-raise" fill="#FFE2A0" filter="url(#glow8)" opacity="0.6"/>
+          <use href="#fig-raise" fill="#1A0E04" style="--rim:#FFE9BC"/>
+        </g>
+      </svg>
+    </div>
+    <div class="fx" data-type="ember" data-n="10"></div>
   </section>
 
 </div>
